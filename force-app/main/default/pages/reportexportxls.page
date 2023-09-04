@@ -1,0 +1,590 @@
+<apex:page controller="exportXLSController" cache="true" contentType="application/vnd.ms-excel#QualityAssuranceReport.xls" readOnly="true">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
+    </head>
+    <table>
+        <tr>
+            <td>SERVICIO</td><!-- QUOTE INFO -->
+            <td>FOLIO</td>
+            {! IF(airServ || seaServ, '<td>SERVICE MODE</td>', '')}
+            {! IF(airServ || seaServ, '<td>SERVICE TYPE</td>', '')}            
+            <td>CLIENTE</td>
+            <td>VENTA</td>
+            <td>PLAZA</td>
+            <td>VENDEDOR</td>
+            <td>IEQ CURRENCY</td>
+            <td>VENTA IEQ</td>
+            <td>COSTO IEQ</td>
+            <td>SHIPMNT CURRENCY</td>
+            <td>VENTA SHIPMENT</td>
+            <td>COSTO SHIPMENT</td>
+            <td>CREATE DATE IEQ</td>
+            <!--<td>CREATE DATE SHIPMENT</td> QUOTE INFO -->
+            <td>QUOTE BEING PREPARED</td><!-- QUOTE STATUS -->
+            <td>AWAITING</td>
+            <td>SEND AWAITING</td>
+            <td>APPROVED</td>
+            <td>QUOTE DECLINED</td><!-- QUOTE STATUS -->
+            {! IF(fnServ, '<td>PENDING</td>', '')}<!-- Estatus Planner -->
+            {! IF(fnServ, '<td>IN PROGRESS</td>', '')}
+            {! IF(fnServ, '<td>CONFIRMED</td>', '')}
+            {! IF(fnServ, '<td>RE-ASSIGNED</td>', '')}
+            {! IF(fnServ, '<td>CANCEL</td>', '')}
+            {! IF(fnServ, '<td>REJECTED PAKCONTROL</td>', '')}<!-- Estatus Planner -->
+            {! IF(fnServ, '<td>PLANNED</td>', '')}<!-- Estatus Monitoreo -->
+            {! IF(fnServ, '<td>IN PROGRESS</td>', '')}
+            {! IF(fnServ, '<td>AWAITING LOAD</td>', '')}
+            {! IF(fnServ, '<td>LOADING</td>', '')}
+            {! IF(fnServ, '<td>DELIVERY EN ROUTE</td>', '')}
+            {! IF(fnServ, '<td>AWAITING UNLOAD</td>', '')}
+            {! IF(fnServ, '<td>UNLOADING</td>', '')}
+            {! IF(fnServ, '<td>FINISHED</td>', '')}
+            {! IF(fnServ, '<td>FAILURE</td>', '')}
+            {! IF(fnServ, '<td>INCIDENT</td>', '')}
+            {! IF(fnServ, '<td>CANCEL</td>', '')}
+            {! IF(fnServ, '<td>IN WAREHOUSE</td>', '')}
+            {! IF(fnServ, '<td>FALSO</td>', '')}
+            {! IF(fnServ, '<td>OPERATIVE FAILURE</td>', '')}
+            {! IF(fnServ, '<td>CLOSED</td>', '')}<!-- Estatus Monitoreo -->
+            <!--<td>FALSO</td>  NO -->           
+            {! IF(airServ, '<td>Contact with Origin</td>', '')}<!-- Estatus Aereo Impo -->
+            {! IF(airServ, '<td>Pickup and Delivery to Airline</td>', '')}
+            {! IF(airServ, '<td>Documentation</td>', '')}
+            {! IF(airServ, '<td>Flight Confirmation</td>', '')}
+            {! IF(airServ, '<td>Layover</td>', '')}
+            {! IF(airServ, '<td>Arrival Confirmation</td>', '')}
+            {! IF(airServ, '<td>Pending with Customs Broker</td>', '')}
+            {! IF(airServ, '<td>Final Delivery</td>', '')}
+            {! IF(airServ, '<td>Finish</td>', '')}<!-- Estatus Aereo Impo -->    
+             {! IF(airServ, '<td>CLOSED</td>', '')}
+            <!--{! IF(airServ, '<td>Contact with Origin</td>', '')}
+            {! IF(airServ, '<td>Pickup and Delivery to Airline</td>', '')}
+            {! IF(airServ, '<td>Documentation</td>', '')}
+            {! IF(airServ, '<td>Flight Confirmation</td>', '')}
+            {! IF(airServ, '<td>Layover</td>', '')}
+            {! IF(airServ, '<td>Arrival Confirmation</td>', '')}
+            {! IF(airServ, '<td>Pending with Customs Broker</td>', '')}
+            {! IF(airServ, '<td>Final Delivery</td>', '')}
+            {! IF(airServ, '<td>Finish</td>', '')}-->
+            {! IF(seaServ, '<td>BOOKING REQUEST</td>', '')}<!-- Estatus Sea Impo -->
+            {! IF(seaServ, '<td>BOOKING CONFIRMATION</td>', '')}<!-- Estatus Sea Impo -->                       
+            {! IF(seaServ, '<td>PICK UP CONFIRMATION</td>', '')}
+            {! IF(seaServ, '<td>DOCUMENTS</td>', '')}
+            {! IF(seaServ, '<td>ETD</td>', '')}
+            {! IF(seaServ, '<td>ETA - 15</td>', '')}
+            {! IF(seaServ, '<td>ETA - 10</td>', '')}
+            {! IF(seaServ, '<td>ETA - 7</td>', '')}
+            {! IF(seaServ, '<td>ETA - 4</td>', '')}
+            {! IF(seaServ, '<td>ETA</td>', '')}
+            {! IF(seaServ, '<td>TELEX CONFIRMATION</td>', '')}
+            {! IF(seaServ, '<td>CUSTOMS CLEARANCE</td>', '')}
+            {! IF(seaServ, '<td>FINAL DELIVERY</td>', '')}
+            {! IF(seaServ, '<td>FINISHED</td>', '')}<!-- Estatus Sea Impo -->
+            {! IF(seaServ, '<td>SCHEDULES</td>', '')}<!-- Estatus Sea Expo -->
+            {! IF(seaServ, '<td>BOOKING CONFIRMATION</td>', '')}
+            {! IF(seaServ, '<td>PICK UP</td>', '')}
+            {! IF(seaServ, '<td>DOCUMENTS</td>', '')}
+            {! IF(seaServ, '<td>SHIPPING INSTRUCTIONS/VGM</td>', '')}
+            {! IF(seaServ, '<td>CUT OFF</td>', '')}
+            {! IF(seaServ, '<td>BL DRAFT</td>', '')}
+            {! IF(seaServ, '<td>ETD</td>', '')}
+            {! IF(seaServ, '<td>INVOICE</td>', '')}
+            {! IF(seaServ, '<td>MBL/HBL</td>', '')}
+            {! IF(seaServ, '<td>PAYMENT</td>', '')}
+            {! IF(seaServ, '<td>ETA - 15</td>', '')}
+            {! IF(seaServ, '<td>ETA - 10</td>', '')}
+            {! IF(seaServ, '<td>ETA - 7</td>', '')}
+            {! IF(seaServ, '<td>ETA - 4</td>', '')}
+            {! IF(seaServ, '<td>ETA</td>', '')}
+            {! IF(seaServ, '<td>TLX CONFIRMATION</td>', '')}
+            {! IF(seaServ, '<td>DELIVERY ON ROUTE</td>', '')}
+            {! IF(seaServ, '<td>FINISHED</td>', '')}<!-- Estatus Sea Expo -->
+            {! IF(seaServ, '<td>CLOSED</td>', '')}
+             {! IF(seaRServ, '<td>Notificación al consignatario</td>', '')}
+             {! IF(seaRServ, '<td>Gestión de Documentos</td>', '')}
+             {! IF(seaRServ, '<td>Liberación de embarque</td>', '')}
+             {! IF(seaRServ, '<td>Confirmación de revalidación</td>', '')}
+             {! IF(seaRServ, '<td>Recuperación de EIR</td>', '')}
+             {! IF(seaRServ, '<td>Gastos Extras</td>', '')}
+             {! IF(seaRServ, '<td>Finalizado</td>', '')}
+             {! IF(seaRServ, '<td>Closed</td>', '')}
+        </tr>
+        <apex:repeat value="{!lstDataQuery}" var="col">
+            <apex:repeat value="{!col}" var="d">
+                <tr>
+                    <td>{!d.servicio}</td>
+                    <td>{!d.folio}</td>
+                    {! IF(airServ || seaServ, '<td>', '')}
+                    <apex:outputText value="{!d.serviceMode}" rendered="{! IF(airServ || seaServ, true, false)}"></apex:outputText>
+            		{! IF(airServ || seaServ, '</td>', '')}  
+                    {! IF(airServ || seaServ, '<td>', '')}
+                    <apex:outputText value="{!d.serviceType}" rendered="{! IF(airServ || seaServ, true, false)}"></apex:outputText>
+            		{! IF(airServ || seaServ, '</td>', '')} 
+                    <td>{!d.cliente}</td>
+                    <td>{!d.venta}</td>
+                    <td>{!d.plaza}</td>
+                    <td>{!d.vendedor}</td>
+                    <td>{!d.divIeq}</td>
+                    <td>{!d.ventaQ}</td>
+                    <td>{!d.costoQ}</td>
+                    <td>{!d.divShip}</td>
+                    <td>{!d.ventaShip}</td>
+                    <td>{!d.costoShip}</td>
+                    <td>
+                        <apex:outputText value="{0,date,dd/MM/yyyy hh:mm aaa}">
+                            <apex:param value="{!d.createDate}" />
+                        </apex:outputText>
+                    </td>
+                    <!--<td>
+                        <apex:outputText value="{0,date,dd/MM/yyyy hh:mm aaa}">
+                            <apex:param value="{!d.createDateShipment}" />
+                        </apex:outputText>
+                    </td>-->
+                    <td>
+                        <apex:outputText value="{0,date,dd/MM/yyyy hh:mm aaa}">
+                            <apex:param value="{!d.quote1}" />
+                        </apex:outputText>
+                    </td>
+                    <td>
+                        <apex:outputText value="{0,date,dd/MM/yyyy hh:mm aaa}">
+                            <apex:param value="{!d.quote2}" />
+                        </apex:outputText>
+                    </td>
+                    <td>
+                        <apex:outputText value="{0,date,dd/MM/yyyy hh:mm aaa}">
+                            <apex:param value="{!d.quote3}" />
+                        </apex:outputText>
+                    </td>
+                    <td>
+                        <apex:outputText value="{0,date,dd/MM/yyyy hh:mm aaa}">
+                            <apex:param value="{!d.quote4}" />
+                        </apex:outputText>
+                    </td>
+                    <td>
+                        <apex:outputText value="{0,date,dd/MM/yyyy hh:mm aaa}">
+                            <apex:param value="{!d.quote5}" />
+                        </apex:outputText>
+                    </td>
+                    {! IF(fnServ, '<td>', '')}
+                    <apex:outputText value="{0,date,dd/MM/yyyy hh:mm aaa}" rendered="{!fnServ}">
+                        <apex:param value="{!d.shipPlan1}" />
+                    </apex:outputText>
+                    {! IF(fnServ, '</td>', '')}
+                    {! IF(fnServ, '<td>', '')}
+                    <apex:outputText value="{0,date,dd/MM/yyyy hh:mm aaa}" rendered="{!fnServ}">
+                        <apex:param value="{!d.shipPlan2}" />
+                    </apex:outputText>
+                    {! IF(fnServ, '</td>', '')}
+                    {! IF(fnServ, '<td>', '')}
+                    <apex:outputText value="{0,date,dd/MM/yyyy hh:mm aaa}" rendered="{!fnServ}">
+                        <apex:param value="{!d.shipPlan3}" />
+                    </apex:outputText>
+                    {! IF(fnServ, '</td>', '')}
+                    {! IF(fnServ, '<td>', '')}
+                    <apex:outputText value="{0,date,dd/MM/yyyy hh:mm aaa}" rendered="{!fnServ}">
+                        <apex:param value="{!d.shipPlan4}" />
+                    </apex:outputText>
+                    {! IF(fnServ, '</td>', '')}
+                    <!--<td>
+<apex:outputText value="{0,date,dd/MM/yyyy hh:mm aaa}">
+<apex:param value="{!d.shipPlan5}" />
+</apex:outputText>
+</td>-->
+                    {! IF(fnServ, '<td>', '')}
+                    <apex:outputText value="{0,date,dd/MM/yyyy hh:mm aaa}" rendered="{!fnServ}">
+                        <apex:param value="{!d.shipPlan6}" />
+                    </apex:outputText>
+                    {! IF(fnServ, '</td>', '')}
+                    {! IF(fnServ, '<td>', '')}
+                    <apex:outputText value="{0,date,dd/MM/yyyy hh:mm aaa}" rendered="{!fnServ}">
+                        <apex:param value="{!d.shipPlan7}" />
+                    </apex:outputText>
+                    {! IF(fnServ, '</td>', '')}
+                    {! IF(fnServ, '<td>', '')}
+                    <apex:outputText value="{0,date,dd/MM/yyyy hh:mm aaa}" rendered="{!fnServ}">
+                        <apex:param value="{!d.shipMon1}" />
+                    </apex:outputText>
+                    {! IF(fnServ, '</td>', '')}
+                    {! IF(fnServ, IF(d.shipMon1Flag, "<td style='background: #ffe217'>", "<td>"), '')} <!-- estilo -->
+                    <apex:outputText value="{0,date,dd/MM/yyyy hh:mm aaa}" rendered="{!fnServ}">
+                            <apex:param value="{!d.shipMon2}" />
+                        </apex:outputText>
+                    {! IF(fnServ, '</td>', '')}
+                    {! IF(fnServ, '<td>', '')}
+                    <apex:outputText value="{0,date,dd/MM/yyyy hh:mm aaa}" >
+                        <apex:param value="{!d.shipMon3}" />
+                    </apex:outputText>
+                    {! IF(fnServ, '</td>', '')}
+                    {! IF(fnServ, '<td>', '')}
+                    <apex:outputText value="{0,date,dd/MM/yyyy hh:mm aaa}" rendered="{!fnServ}">
+                        <apex:param value="{!d.shipMon4}" />
+                    </apex:outputText>
+                    {! IF(fnServ, '</td>', '')}
+                    {! IF(fnServ, '<td>', '')}
+                    <apex:outputText value="{0,date,dd/MM/yyyy hh:mm aaa}" rendered="{!fnServ}">
+                        <apex:param value="{!d.shipMon5}" />
+                    </apex:outputText>
+                    {! IF(fnServ, '</td>', '')}
+                    {! IF(fnServ, '<td>', '')}
+                    <apex:outputText value="{0,date,dd/MM/yyyy hh:mm aaa}" rendered="{!fnServ}">
+                        <apex:param value="{!d.shipMon6}" />
+                    </apex:outputText>
+                    {! IF(fnServ, '</td>', '')}
+                    {! IF(fnServ, '<td>', '')}
+                    <apex:outputText value="{0,date,dd/MM/yyyy hh:mm aaa}" rendered="{!fnServ}">
+                        <apex:param value="{!d.shipMon7}" />
+                    </apex:outputText>
+                    {! IF(fnServ, '</td>', '')}
+                    {! IF(fnServ, '<td>', '')}
+                    <apex:outputText value="{0,date,dd/MM/yyyy hh:mm aaa}" rendered="{!fnServ}">
+                        <apex:param value="{!d.shipMon8}" />
+                    </apex:outputText>
+                    {! IF(fnServ, '</td>', '')}
+                    {! IF(fnServ, '<td>', '')}
+                    <apex:outputText value="{0,date,dd/MM/yyyy hh:mm aaa}" rendered="{!fnServ}">
+                        <apex:param value="{!d.shipMon9}" />
+                    </apex:outputText>
+                    {! IF(fnServ, '</td>', '')}
+                    {! IF(fnServ, '<td>', '')}
+                    <apex:outputText value="{0,date,dd/MM/yyyy hh:mm aaa}" rendered="{!fnServ}">
+                        <apex:param value="{!d.shipMon10}" />
+                    </apex:outputText>
+                    {! IF(fnServ, '</td>', '')}
+                    {! IF(fnServ, IF(d.shipMon2Flag, "<td style='background: #ffe217'>", "<td>"), '')} <!-- estilo -->
+                    <apex:outputText value="{0,date,dd/MM/yyyy hh:mm aaa}" rendered="{!fnServ}">
+                            <apex:param value="{!d.shipMon11}" />
+                        </apex:outputText>
+                    {! IF(fnServ, '</td>', '')}
+                    {! IF(fnServ, '<td>', '')}
+                    <apex:outputText value="{0,date,dd/MM/yyyy hh:mm aaa}" rendered="{!fnServ}">
+                        <apex:param value="{!d.shipMon12}" />
+                    </apex:outputText>
+                    {! IF(fnServ, '</td>', '')}
+                    {! IF(fnServ, IF(d.shipMon3Flag, "<td style='background: #ffe217'>", "<td>"), '')}<!-- estilo -->
+                    <apex:outputText value="{0,date,dd/MM/yyyy hh:mm aaa}" rendered="{!fnServ}">
+                            <apex:param value="{!d.shipMon13}" />
+                        </apex:outputText>
+                    {! IF(fnServ, '</td>', '')}
+                    {! IF(fnServ, '<td>', '')}
+                    <apex:outputText value="{0,date,dd/MM/yyyy hh:mm aaa}" rendered="{!fnServ}">
+                        <apex:param value="{!d.shipMon14}" />
+                    </apex:outputText>
+                    {! IF(fnServ, '</td>', '')}
+                    {! IF(fnServ, '<td>', '')}
+                    <apex:outputText value="{0,date,dd/MM/yyyy hh:mm aaa}" rendered="{!fnServ}">
+                        <apex:param value="{!d.shipPlan8}" />
+                    </apex:outputText>
+                    {! IF(fnServ, '</td>', '')}
+                     {! IF(airServ, '<td>', '')}
+                    <apex:outputText value="{0,date,dd/MM/yyyy hh:mm aaa}" rendered="{!airServ}">
+                        <apex:param value="{!d.shipAirImpo1}" />
+                    </apex:outputText>
+                    {! IF(airServ, '</td>', '')}
+                    {! IF(airServ, '<td>', '')}
+                    <apex:outputText value="{0,date,dd/MM/yyyy hh:mm aaa}" rendered="{!airServ}">
+                        <apex:param value="{!d.shipAirImpo2}" />
+                    </apex:outputText>
+                    {! IF(airServ, '</td>', '')}
+                    {! IF(airServ, '<td>', '')}
+                    <apex:outputText value="{0,date,dd/MM/yyyy hh:mm aaa}" rendered="{!airServ}">
+                        <apex:param value="{!d.shipAirImpo3}" />
+                    </apex:outputText>
+                    {! IF(airServ, '</td>', '')}
+                    {! IF(airServ, '<td>', '')}
+                    <apex:outputText value="{0,date,dd/MM/yyyy hh:mm aaa}" rendered="{!airServ}">
+                        <apex:param value="{!d.shipAirImpo4}" />
+                    </apex:outputText>
+                    {! IF(airServ, '</td>', '')}
+                    {! IF(airServ, '<td>', '')}
+                    <apex:outputText value="{0,date,dd/MM/yyyy hh:mm aaa}" rendered="{!airServ}">
+                        <apex:param value="{!d.shipAirImpo5}" />
+                    </apex:outputText>
+                    {! IF(airServ, '</td>', '')}
+                    {! IF(airServ, '<td>', '')}
+                    <apex:outputText value="{0,date,dd/MM/yyyy hh:mm aaa}" rendered="{!airServ}">
+                        <apex:param value="{!d.shipAirImpo6}" />
+                    </apex:outputText>
+                    {! IF(airServ, '</td>', '')}
+                    {! IF(airServ, '<td>', '')}
+                    <apex:outputText value="{0,date,dd/MM/yyyy hh:mm aaa}" rendered="{!airServ}">
+                        <apex:param value="{!d.shipAirImpo7}" />
+                    </apex:outputText>
+                    {! IF(airServ, '</td>', '')}
+                    {! IF(airServ, '<td>', '')}
+                    <apex:outputText value="{0,date,dd/MM/yyyy hh:mm aaa}" rendered="{!airServ}">
+                        <apex:param value="{!d.shipAirImpo8}" />
+                    </apex:outputText>
+                    {! IF(airServ, '</td>', '')}
+                    {! IF(airServ, '<td>', '')}
+                    <apex:outputText value="{0,date,dd/MM/yyyy hh:mm aaa}" rendered="{!airServ}">
+                        <apex:param value="{!d.shipAirImpo9}" />
+                    </apex:outputText>
+                    {! IF(airServ, '</td>', '')}
+                    <!--{! IF(airServ, '<td>', '')}
+                    <apex:outputText value="{0,date,dd/MM/yyyy hh:mm aaa}" rendered="{!airServ}">
+                        <apex:param value="{!d.shipAirExpo1}" />
+                    </apex:outputText>
+                    {! IF(airServ, '</td>', '')}
+                    {! IF(airServ, '<td>', '')}
+                    <apex:outputText value="{0,date,dd/MM/yyyy hh:mm aaa}" rendered="{!airServ}">
+                        <apex:param value="{!d.shipAirExpo2}" />
+                    </apex:outputText>
+                    {! IF(airServ, '</td>', '')}
+                    {! IF(airServ, '<td>', '')}
+                    <apex:outputText value="{0,date,dd/MM/yyyy hh:mm aaa}" rendered="{!airServ}">
+                        <apex:param value="{!d.shipAirExpo3}" />
+                    </apex:outputText>
+                    {! IF(airServ, '</td>', '')}
+                    {! IF(airServ, '<td>', '')}
+                    <apex:outputText value="{0,date,dd/MM/yyyy hh:mm aaa}" rendered="{!airServ}">
+                        <apex:param value="{!d.shipAirExpo4}" />
+                    </apex:outputText>
+                    {! IF(airServ, '</td>', '')}
+                    {! IF(airServ, '<td>', '')}
+                    <apex:outputText value="{0,date,dd/MM/yyyy hh:mm aaa}" rendered="{!airServ}">
+                        <apex:param value="{!d.shipAirExpo5}" />
+                    </apex:outputText>
+                    {! IF(airServ, '</td>', '')}
+                    {! IF(airServ, '<td>', '')}
+                    <apex:outputText value="{0,date,dd/MM/yyyy hh:mm aaa}" rendered="{!airServ}">
+                        <apex:param value="{!d.shipAirExpo6}" />
+                    </apex:outputText>
+                    {! IF(airServ, '</td>', '')}
+                    {! IF(airServ, '<td>', '')}
+                    <apex:outputText value="{0,date,dd/MM/yyyy hh:mm aaa}" rendered="{!airServ}">
+                        <apex:param value="{!d.shipAirExpo7}" />
+                    </apex:outputText>
+                    {! IF(airServ, '</td>', '')}
+                    {! IF(airServ, '<td>', '')}
+                    <apex:outputText value="{0,date,dd/MM/yyyy hh:mm aaa}" rendered="{!airServ}">
+                        <apex:param value="{!d.shipAirExpo8}" />
+                    </apex:outputText>
+                    {! IF(airServ, '</td>', '')}
+                    {! IF(airServ, '<td>', '')}
+                    <apex:outputText value="{0,date,dd/MM/yyyy hh:mm aaa}" rendered="{!airServ}">
+                        <apex:param value="{!d.shipAirExpo9}" />
+                    </apex:outputText>
+                    {! IF(airServ, '</td>', '')}-->
+                     {! IF(airServ, '<td>', '')}
+                      <apex:outputText value="{0,date,dd/MM/yyyy hh:mm aaa}" rendered="{!airServ}">
+                        <apex:param value="{!d.shipPlan8}" />
+                    </apex:outputText>
+                    {! IF(airServ, '</td>', '')}
+                  {! IF(seaServ, '<td>', '')}
+                    <apex:outputText value="{0,date,dd/MM/yyyy hh:mm aaa}" rendered="{!seaServ}">
+                        <apex:param value="{!d.shipSeaImpo14}" />
+                    </apex:outputText>
+                  <!--  {! IF(seaServ, '</td>', '')}
+                    {! IF(seaServ, '<td>', '')}
+                    {! IF(seaServ, '<td>', '')}-->
+                     {! IF(seaServ, '<td>', '')}
+                    <apex:outputText value="{0,date,dd/MM/yyyy hh:mm aaa}" rendered="{!seaServ}">
+                        <apex:param value="{!d.shipSeaImpo1}" />
+                    </apex:outputText>
+                    {! IF(seaServ, '</td>', '')}
+                    {! IF(seaServ, '<td>', '')}
+                    <apex:outputText value="{0,date,dd/MM/yyyy hh:mm aaa}" rendered="{!seaServ}">
+                        <apex:param value="{!d.shipSeaImpo2}" />
+                    </apex:outputText>
+                    {! IF(seaServ, '</td>', '')}
+                    {! IF(seaServ, '<td>', '')}
+                    <apex:outputText value="{0,date,dd/MM/yyyy hh:mm aaa}" rendered="{!seaServ}">
+                        <apex:param value="{!d.shipSeaImpo3}" />
+                    </apex:outputText>
+                    {! IF(seaServ, '</td>', '')}
+                    {! IF(seaServ, '<td>', '')}
+                    <apex:outputText value="{0,date,dd/MM/yyyy hh:mm aaa}" rendered="{!seaServ}">
+                        <apex:param value="{!d.shipSeaImpo4}" />
+                    </apex:outputText>
+                    {! IF(seaServ, '</td>', '')}
+                    {! IF(seaServ, '<td>', '')}
+                    <apex:outputText value="{0,date,dd/MM/yyyy hh:mm aaa}" rendered="{!seaServ}">
+                        <apex:param value="{!d.shipSeaImpo5}" />
+                    </apex:outputText>
+                    {! IF(seaServ, '</td>', '')}
+                    {! IF(seaServ, '<td>', '')}
+                    <apex:outputText value="{0,date,dd/MM/yyyy hh:mm aaa}" rendered="{!seaServ}">
+                        <apex:param value="{!d.shipSeaImpo6}" />
+                    </apex:outputText>
+                    {! IF(seaServ, '</td>', '')}
+                    {! IF(seaServ, '<td>', '')}
+                    <apex:outputText value="{0,date,dd/MM/yyyy hh:mm aaa}" rendered="{!seaServ}">
+                        <apex:param value="{!d.shipSeaImpo7}" />
+                    </apex:outputText>
+                    {! IF(seaServ, '</td>', '')}
+                    {! IF(seaServ, '<td>', '')}
+                    <apex:outputText value="{0,date,dd/MM/yyyy hh:mm aaa}" rendered="{!seaServ}">
+                        <apex:param value="{!d.shipSeaImpo8}" />
+                    </apex:outputText>
+                    {! IF(seaServ, '</td>', '')}
+                    {! IF(seaServ, '<td>', '')}
+                    <apex:outputText value="{0,date,dd/MM/yyyy hh:mm aaa}" rendered="{!seaServ}">
+                        <apex:param value="{!d.shipSeaImpo9}" />
+                    </apex:outputText>
+                    {! IF(seaServ, '</td>', '')}
+                    {! IF(seaServ, '<td>', '')}
+                    <apex:outputText value="{0,date,dd/MM/yyyy hh:mm aaa}" rendered="{!seaServ}">
+                        <apex:param value="{!d.shipSeaImpo10}" />
+                    </apex:outputText>
+                    {! IF(seaServ, '</td>', '')}
+                    {! IF(seaServ, '<td>', '')}
+                    <apex:outputText value="{0,date,dd/MM/yyyy hh:mm aaa}" rendered="{!seaServ}">
+                        <apex:param value="{!d.shipSeaImpo11}" />
+                    </apex:outputText>
+                    {! IF(seaServ, '</td>', '')}
+                    {! IF(seaServ, '<td>', '')}
+                    <apex:outputText value="{0,date,dd/MM/yyyy hh:mm aaa}" rendered="{!seaServ}">
+                        <apex:param value="{!d.shipSeaImpo12}" />
+                    </apex:outputText>
+                    {! IF(seaServ, '</td>', '')}
+                    {! IF(seaServ, '<td>', '')}
+                    <apex:outputText value="{0,date,dd/MM/yyyy hh:mm aaa}" rendered="{!seaServ}">
+                        <apex:param value="{!d.shipSeaImpo13}" />
+                    </apex:outputText>
+                    {! IF(seaServ, '</td>', '')}                   
+                    {! IF(seaServ, '<td>', '')}
+                    <apex:outputText value="{0,date,dd/MM/yyyy hh:mm aaa}" rendered="{!seaServ}">
+                        <apex:param value="{!d.shipSeaExpo1}" />
+                    </apex:outputText>
+                    {! IF(seaServ, '</td>', '')}
+                    {! IF(seaServ, '<td>', '')}
+                    <apex:outputText value="{0,date,dd/MM/yyyy hh:mm aaa}" rendered="{!seaServ}">
+                        <apex:param value="{!d.shipSeaExpo2}" />
+                    </apex:outputText>
+                    {! IF(seaServ, '</td>', '')}
+                    {! IF(seaServ, '<td>', '')}
+                    <apex:outputText value="{0,date,dd/MM/yyyy hh:mm aaa}" rendered="{!seaServ}">
+                        <apex:param value="{!d.shipSeaExpo3}" />
+                    </apex:outputText>
+                    {! IF(seaServ, '</td>', '')}
+                    {! IF(seaServ, '<td>', '')}
+                    <apex:outputText value="{0,date,dd/MM/yyyy hh:mm aaa}" rendered="{!seaServ}">
+                        <apex:param value="{!d.shipSeaExpo4}" />
+                    </apex:outputText>
+                    {! IF(seaServ, '</td>', '')}
+                    {! IF(seaServ, '<td>', '')}
+                    <apex:outputText value="{0,date,dd/MM/yyyy hh:mm aaa}" rendered="{!seaServ}">
+                        <apex:param value="{!d.shipSeaExpo5}" />
+                    </apex:outputText>
+                    {! IF(seaServ, '</td>', '')}
+                    {! IF(seaServ, '<td>', '')}
+                    <apex:outputText value="{0,date,dd/MM/yyyy hh:mm aaa}" rendered="{!seaServ}">
+                        <apex:param value="{!d.shipSeaExpo6}" />
+                    </apex:outputText>
+                    {! IF(seaServ, '</td>', '')}
+                    {! IF(seaServ, '<td>', '')}
+                    <apex:outputText value="{0,date,dd/MM/yyyy hh:mm aaa}" rendered="{!seaServ}">
+                        <apex:param value="{!d.shipSeaExpo7}" />
+                    </apex:outputText>
+                    {! IF(seaServ, '</td>', '')}
+                    {! IF(seaServ, '<td>', '')}
+                    <apex:outputText value="{0,date,dd/MM/yyyy hh:mm aaa}" rendered="{!seaServ}">
+                        <apex:param value="{!d.shipSeaExpo8}" />
+                    </apex:outputText>
+                    {! IF(seaServ, '</td>', '')}
+                    {! IF(seaServ, '<td>', '')}
+                    <apex:outputText value="{0,date,dd/MM/yyyy hh:mm aaa}" rendered="{!seaServ}">
+                        <apex:param value="{!d.shipSeaExpo9}" />
+                    </apex:outputText>
+                    {! IF(seaServ, '</td>', '')}
+                    {! IF(seaServ, '<td>', '')}
+                    <apex:outputText value="{0,date,dd/MM/yyyy hh:mm aaa}" rendered="{!seaServ}">
+                        <apex:param value="{!d.shipSeaExpo10}" />
+                    </apex:outputText>
+                    {! IF(seaServ, '</td>', '')}
+                    {! IF(seaServ, '<td>', '')}
+                    <apex:outputText value="{0,date,dd/MM/yyyy hh:mm aaa}" rendered="{!seaServ}">
+                        <apex:param value="{!d.shipSeaExpo11}" />
+                    </apex:outputText>
+                    {! IF(seaServ, '</td>', '')}
+                    {! IF(seaServ, '<td>', '')}
+                    <apex:outputText value="{0,date,dd/MM/yyyy hh:mm aaa}" rendered="{!seaServ}">
+                        <apex:param value="{!d.shipSeaExpo12}" />
+                    </apex:outputText>
+                    {! IF(seaServ, '</td>', '')}
+                    {! IF(seaServ, '<td>', '')}
+                    <apex:outputText value="{0,date,dd/MM/yyyy hh:mm aaa}" rendered="{!seaServ}">
+                        <apex:param value="{!d.shipSeaExpo13}" />
+                    </apex:outputText>
+                    {! IF(seaServ, '</td>', '')}
+                    {! IF(seaServ, '<td>', '')}
+                    <apex:outputText value="{0,date,dd/MM/yyyy hh:mm aaa}" rendered="{!seaServ}">
+                        <apex:param value="{!d.shipSeaExpo14}" />
+                    </apex:outputText>
+                    {! IF(seaServ, '</td>', '')}
+                    {! IF(seaServ, '<td>', '')}
+                    <apex:outputText value="{0,date,dd/MM/yyyy hh:mm aaa}" rendered="{!seaServ}">
+                        <apex:param value="{!d.shipSeaExpo15}" />
+                    </apex:outputText>
+                    {! IF(seaServ, '</td>', '')}
+                    {! IF(seaServ, '<td>', '')}
+                    <apex:outputText value="{0,date,dd/MM/yyyy hh:mm aaa}" rendered="{!seaServ}">
+                        <apex:param value="{!d.shipSeaExpo16}" />
+                    </apex:outputText>
+                    {! IF(seaServ, '</td>', '')}
+                    {! IF(seaServ, '<td>', '')}
+                    <apex:outputText value="{0,date,dd/MM/yyyy hh:mm aaa}" rendered="{!seaServ}">
+                        <apex:param value="{!d.shipSeaExpo17}" />
+                    </apex:outputText>
+                    {! IF(seaServ, '</td>', '')}
+                    {! IF(seaServ, '<td>', '')}
+                    <apex:outputText value="{0,date,dd/MM/yyyy hh:mm aaa}" rendered="{!seaServ}">
+                        <apex:param value="{!d.shipSeaExpo18}" />
+                    </apex:outputText>
+                    {! IF(seaServ, '</td>', '')}
+                    {! IF(seaServ, '<td>', '')}
+                    <apex:outputText value="{0,date,dd/MM/yyyy hh:mm aaa}" rendered="{!seaServ}">
+                        <apex:param value="{!d.shipSeaExpo19}" />
+                    </apex:outputText>
+                    {! IF(seaServ, '</td>', '')}
+                     {! IF(seaServ, '<td>', '')}
+                      <apex:outputText value="{0,date,dd/MM/yyyy hh:mm aaa}" rendered="{!seaServ}">
+                        <apex:param value="{!d.shipPlan8}" />
+                    </apex:outputText>
+                    {! IF(seaServ, '</td>', '')}
+                     {! IF(seaServ, '<td>', '')}
+                     <apex:outputText value="{0,date,dd/MM/yyyy hh:mm aaa}" rendered="{!seaRServ}">
+                        <apex:param value="{!d.shipR1}" />
+                    </apex:outputText>
+                    {! IF(seaRServ, '</td>', '')}
+                     {! IF(seaRServ, '<td>', '')}
+                     <apex:outputText value="{0,date,dd/MM/yyyy hh:mm aaa}" rendered="{!seaRServ}">
+                        <apex:param value="{!d.shipR8}" />
+                    </apex:outputText>
+                    {! IF(seaRServ, '</td>', '')}
+                     {! IF(seaRServ, '<td>', '')}
+                     <apex:outputText value="{0,date,dd/MM/yyyy hh:mm aaa}" rendered="{!seaRServ}">
+                        <apex:param value="{!d.shipR2}" />
+                    </apex:outputText>
+                    {! IF(seaRServ, '</td>', '')}
+                     {! IF(seaRServ, '<td>', '')}
+                     <apex:outputText value="{0,date,dd/MM/yyyy hh:mm aaa}" rendered="{!seaRServ}">
+                        <apex:param value="{!d.shipR3}" />
+                    </apex:outputText>
+                    {! IF(seaRServ, '</td>', '')}
+                     {! IF(seaRServ, '<td>', '')}
+                     <apex:outputText value="{0,date,dd/MM/yyyy hh:mm aaa}" rendered="{!seaRServ}">
+                        <apex:param value="{!d.shipR4}" />
+                    </apex:outputText>
+                    {! IF(seaRServ, '</td>', '')}
+                     {! IF(seaRServ, '<td>', '')}
+                     <apex:outputText value="{0,date,dd/MM/yyyy hh:mm aaa}" rendered="{!seaRServ}">
+                        <apex:param value="{!d.shipR5}" />
+                    </apex:outputText>
+                    {! IF(seaRServ, '</td>', '')}
+                     {! IF(seaRServ, '<td>', '')}
+                     <apex:outputText value="{0,date,dd/MM/yyyy hh:mm aaa}" rendered="{!seaRServ}">
+                        <apex:param value="{!d.shipR6}" />
+                    </apex:outputText>
+                    {! IF(seaRServ, '</td>', '')}
+                     {! IF(seaRServ, '<td>', '')}
+                      <apex:outputText value="{0,date,dd/MM/yyyy hh:mm aaa}" rendered="{!seaRServ}">
+                        <apex:param value="{!d.shipR7}" />
+                    </apex:outputText>
+                    {! IF(seaRServ, '</td>', '')}
+                     {! IF(seaRServ, '<td>', '')}
+                </tr>
+            </apex:repeat>
+        </apex:repeat>
+    </table>
+</apex:page>

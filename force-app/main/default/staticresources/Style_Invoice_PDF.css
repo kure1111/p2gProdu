@@ -1,0 +1,125 @@
+@page { 
+	size: A4;
+	margin-top: 1cm; 
+	margin-left: 1cm; 
+	margin-right: 1cm; 
+	margin-bottom: 1.25cm;
+	@bottom-center {
+	    font-size: 11px;
+		content: "Page " counter(page) " of " counter(pages);
+	} 
+}
+
+/* Para unir los bordes */
+table{border-spacing:0;}
+
+table tr.separator { height: 10px; }
+
+#contenedor {
+    font-size: 12px;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+p, h4, h3, h2 {
+	margin: 4px;
+}
+
+#table_head, #table_body {
+	width: 700px;
+	font-size: 11px;
+}
+
+#table_head p {
+	font-weight: normal;
+}
+
+#table_head th.info {
+	text-align: center;
+}
+
+#table_head img.logo {
+    width: 160px;
+}
+
+#table_head div {
+	border: 1px solid black;
+    padding: 2.5px;
+}
+
+#table_body div.firma {
+	border: 1px solid black;
+	height: 30px;
+}
+
+#table_body td, #table_foot td {
+	width: 12.5%;
+	border: 1px solid black;
+    padding: 2.5px;
+}
+
+#table_body div.descripcion {
+	float: left;
+	width: 25%;
+}
+
+#table_body div.moneda {
+	width: 10%;
+	float: left;
+	text-align: center;
+}
+
+#table_body div.tipoImpuesto {
+	width: 10%;
+	float: left;
+	text-align: center;
+}
+
+#table_body div.tipoRetencion {
+	width: 10%;
+	float: left;
+	text-align: center;
+}
+
+#table_body div.tipoRetencionISR {
+	width: 10%;
+	float: left;
+	text-align: center;
+}
+
+#table_body div.subtotal {
+	width: 10%;
+	float: left;
+	text-align: right;
+}
+
+#table_body div.impuesto {
+	width: 10%;
+	float: left;
+	text-align: right;
+}
+
+#table_body div.precio {
+	width: 15%;
+	float: left;
+	text-align: right;
+}
+
+#table_body div.total {
+	width: 100%;
+	font-weight: bold;
+	float: left;
+	text-align: right;
+}
+
+span.lineaFirma {
+	border-bottom: 1px solid black;
+	padding-left: 200px;
+}
+
+tr.lineas {
+	height: 300px;
+	vertical-align: text-top;
+}
+
+tr.lineas div {
+	margin-top: 10px;

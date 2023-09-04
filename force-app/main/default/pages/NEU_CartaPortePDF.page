@@ -1,0 +1,4 @@
+<apex:page standardController="Shipment__c" extensions="NEU_CartaPortePDF" standardStylesheets="false" renderas="pdf">
+<apex:stylesheet value="{!$Resource.carta_porte_style}"/>
+	<apex:outputText value="{!pdf}" escape="false"/>
+</apex:page>

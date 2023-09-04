@@ -1,0 +1,43 @@
+<apex:page StandardController="Customer_Quote__c" extensions="NEU_OM_Import_ExportSteps">
+<apex:includeScript value="{!$Resource.jquery_1_10_2}"/> 
+<apex:includeScript value="{!$Resource.neurored_jquery}"/> 
+<style>
+.step
+    {
+        display: inline-block;
+        position: relative;
+        background-color: #007cff;
+        text-decoration:none!important;
+        color: #fff;
+        padding:16px 10px 20px 10px;
+        margin-right: 10px;
+        height:44px;
+    }
+.step:after
+    {
+        content: '';
+        position: absolute;
+        top: 0;
+        right: -12px;
+        border-left: solid 12px #007cff;
+        border-top: solid 40px transparent;
+        border-bottom: solid 40px transparent;
+    }
+.step-alt
+    {
+        background-color: #9d9d9d;
+    }
+.step-alt:after
+    {
+        border-left-color: #9d9d9d;
+    }
+</style>
+
+    <apex:form >
+
+        <a href="javascript:void(0);" onclick="neu_navigateTop('{!urlCreateItemsLines}','{!urlCreateItemsLinesM}');" class="step{!if(stepNumber>1,' step-alt','')}">1.<br/>Create<br/>Items Lines</a>
+        <a href="javascript:void(0);" onclick="neu_navigateTop('{!urlCQLPriceList}','{!urlCQLPriceListM}');" class="step{!if(stepNumber>2,' step-alt','')}">2.<br/>Quote<br/>Fee Lines</a>
+        <a href="javascript:void(0);" onclick="neu_navigateTop('/apex/NEU_OM_Start_Clearance?id={!Customer_Quote__c.Id}');" class="step{!if(stepNumber>3,' step-alt','')}">3.<br/>Customs<br/>Clearance</a>
+        <a href="javascript:void(0);" onclick="neu_navigateTop('/apex/NEU_OM_Save_Generate_Quote?id={!Customer_Quote__c.Id}');" class="step{!if(stepNumber>4,' step-alt','')}">4.<br/>Generate<br/>Quote</a>
+    </apex:form>
+</apex:page>

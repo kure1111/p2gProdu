@@ -1,0 +1,16 @@
+<apex:page standardController="Shipment_Disbursement__c">
+    <apex:form >
+    	<apex:pageBlock title="Disbursement Lines">
+        	<apex:pageBlockTable value="{!Shipment_Disbursement__c.Disbursement_Lines__r}" var="ls">
+            	<apex:column value="{!ls.Name}"  />
+                <apex:column value="{!ls.Concept__c}"  />
+                <apex:column value="{!ls.Units__c}"  />
+                <apex:column value="{!ls.Unit_Price__c}"  />
+                <apex:column value="{!ls.Amount__c}"  />
+                <apex:column value="{!ls.VAT__c}"  />
+                <apex:column value="{!ls.Total_VAT__c}"  />
+                <apex:column value="{!ls.Total_Incl_VAT__c}"  />
+            </apex:pageBlockTable>
+        </apex:pageBlock>
+    </apex:form>
+</apex:page>

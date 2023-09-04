@@ -1,0 +1,229 @@
+<apex:page standardController="Price_List__c" extensions="NEU_OM_Allocated_Items" standardStylesheets="false" sidebar="false">
+<apex:includeScript value="{!$Resource.neu_jquery}"/> 
+<apex:includeScript value="{!$Resource.jquery_1_10_2}"/> 
+<apex:includeScript value="{!$Resource.jquery_ui_1_10_3}"/>
+<apex:includeScript value="{!$Resource.neurored_jquery}"/> 
+<apex:stylesheet value="{!URLFOR($Resource.jquery_ui_1_10_3_css,'jquery-ui-1.10.3.min.css')}"/>
+<script>
+        $(document).ready(function () {
+            $($.sfId('{!$Component.form.radio}')).buttonset();
+            setDecimalSep($($.sfId('{!$Component.form.decimalSep}')).val(),$($.sfId('{!$Component.form.thousandSep}')).val());
+        });
+        
+        function buscar()
+        {
+                document.getElementById('{!$Component.form.search_filter}').value = $(".buscar").val();
+                get_productos();
+        }
+        
+        function sort(letter)
+        {
+                var letra = letter;
+                if(letter == 'All')
+                {
+                    letra = '';
+                    $(".buscar").val('');
+                }
+                document.getElementById('{!$Component.form.search_filter}').value = letra;
+                get_productos();
+        }
+        function toggleCheckAll(checkAllBox) 
+        {
+            $('.checkableTable :checkbox').prop('checked', checkAllBox.checked);
+        }
+</script>
+    <apex:outputLink value="{!URLFOR($Action.Price_List__c.View,Price_List__c.Id)}">
+       <apex:sectionHeader subtitle="{!Price_List__c.Name}" title="Allocate {!$ObjectType.Sourcing_Item__c.labelPlural} to {!$ObjectType.Price_List__c.label}">
+       </apex:sectionHeader>
+    </apex:outputLink>
+<apex:form id="form">
+    <apex:inputHidden value="{!decimalSep}" id="decimalSep"/>
+    <apex:inputHidden value="{!thousandSep}" id="thousandSep"/>
+        <style>
+            .Custom67Tab .bPageBlock {border-top:3px solid #9e4fa5;}
+            .sort_table td {cursor: pointer;}
+        </style>
+          <apex:outputPanel id="radios" style="border-bottom: 3px solid #9e4fa5;">
+            <apex:selectRadio id="radio" value="{!newcategory}" onchange="changeradios();" style="border-bottom: 3px solid #9e4fa5;">
+                <apex:selectOptions value="{!newcategories}"/>
+            </apex:selectRadio>
+        </apex:outputPanel>
+        <apex:actionFunction name="changeradios"  status="myStatus" reRender="linesSelector"/>
+        <table border="0" cellspacing="5" cellpadding="5" class="actions_table">
+            <tr>
+                <td style="font-size: 14px; font-weight: bold;">Search Item Name</td>
+                <td><apex:inputText value="{!sort_value}" styleclass="buscar"/></td>
+                <td><input type="button" value="SEARCH" class="search_data btn" onclick="buscar();"/></td>
+            </tr>
+        </table>
+        
+        <apex:outputPanel id="abc">
+            <apex:pageBlock title="{!$ObjectType.Sourcing_Item__c.labelPlural}">
+                <table border="0" cellspacing="0" cellpadding="5" style="width:100%">
+                    <tr>
+                        <td>
+                    <table border="0" cellspacing="0" cellpadding="5">
+                        <tr>
+                            <td ><span onclick="sort('A');">A</span></td>
+                            <td class="sort_table_separator">|</td>
+                            <td><span onclick="sort('B');">B</span></td>
+                            <td class="sort_table_separator">|</td>
+                            <td><span onclick="sort('C');">C</span></td>
+                            <td class="sort_table_separator">|</td>
+                            <td><span onclick="sort('D');">D</span></td>
+                            <td class="sort_table_separator">|</td>
+                            <td><span onclick="sort('E');">E</span></td>
+                            <td class="sort_table_separator">|</td>
+                            <td><span onclick="sort('F');">F</span></td>
+                            <td class="sort_table_separator">|</td>
+                            <td><span onclick="sort('G');">G</span></td>
+                            <td class="sort_table_separator">|</td>
+                            <td><span onclick="sort('H');">H</span></td>
+                            <td class="sort_table_separator">|</td>
+                            <td><span onclick="sort('I');">I</span></td>
+                            <td class="sort_table_separator">|</td>
+                            <td><span onclick="sort('J');">J</span></td>
+                            <td class="sort_table_separator">|</td>
+                            <td><span onclick="sort('K');">K</span></td>
+                            <td class="sort_table_separator">|</td>
+                            <td><span onclick="sort('L');">L</span></td>
+                            <td class="sort_table_separator">|</td>
+                            <td><span onclick="sort('M');">M</span></td>
+                            <td class="sort_table_separator">|</td>
+                            <td><span onclick="sort('N');">N</span></td>
+                            <td class="sort_table_separator">|</td>
+                            <td><span onclick="sort('O');">O</span></td>
+                            <td class="sort_table_separator">|</td>
+                            <td><span onclick="sort('P');">P</span></td>
+                            <td class="sort_table_separator">|</td>
+                            <td><span onclick="sort('Q');">Q</span></td>
+                            <td class="sort_table_separator">|</td>
+                            <td><span onclick="sort('R');">R</span></td>
+                            <td class="sort_table_separator">|</td>
+                            <td><span onclick="sort('S');">S</span></td>
+                            <td class="sort_table_separator">|</td>
+                            <td><span onclick="sort('T');">T</span></td>
+                            <td class="sort_table_separator">|</td>
+                            <td><span onclick="sort('U');">U</span></td>
+                            <td class="sort_table_separator">|</td>
+                            <td><span onclick="sort('V');">V</span></td>
+                            <td class="sort_table_separator">|</td>
+                            <td><span onclick="sort('W');">W</span></td>
+                            <td class="sort_table_separator">|</td>
+                            <td><span onclick="sort('X');">X</span></td>
+                            <td class="sort_table_separator">|</td>
+                            <td><span onclick="sort('Y');">Y</span></td>
+                            <td class="sort_table_separator">|</td>
+                            <td><span onclick="sort('Z');">Z</span></td>
+                            <td class="sort_table_separator">|</td>
+                            <td><span onclick="sort('All');">All</span></td>
+                            <td>&nbsp;&nbsp;</td>
+                        </tr>
+                    </table>
+                    </td>
+                    <td style="text-align:right">
+                        
+                    </td>
+                    </tr>
+                </table>
+             <apex:outputPanel id="linesSelector">
+                <apex:pagemessages />
+                <apex:pageBlock id="block0">
+                    <apex:pageBlockButtons location="top">
+                            <apex:commandButton value="Allocate {!$ObjectType.Sourcing_Item__c.labelPlural} to {!$ObjectType.Price_List__c.label}" status="myStatus"  reRender="linesSelector"  action="{!asignar_price_list}"/>
+                            <apex:commandButton value="Return to {!$ObjectType.Price_List__c.label}" status="myStatus" reRender="linesSelector"  action="{!return_pricelist}"/>
+                            <div style="font-weight:bold;display:inline-block;float:right">% Markup/Discount (+/-): <apex:inputText value="{!discount}" style="text-align:right;width:5em;margin-left:.3em"/>
+                                <input type="button" value="Apply" class="search_data btn" onclick="updatelines();"/>
+                            </div>
+                    </apex:pageBlockButtons>
+                        <apex:pageBlockTable id="table" value="{!listado_pricelist}" var="line" styleclass="checkableTable">
+                        <apex:column headerValue="Subfamily">
+                            <c:customobject2 objid="{!line.listprice.Item_Name__r.Subfamily__r.Id}" objname="{!line.listprice.Item_Name__r.Subfamily__r.Name}" atarget="_blank"/>
+                            </apex:column>
+                        <apex:column headerValue="Item Name"> 
+                            <c:customobject2 objid="{!line.listprice.Item_Name__r.Id}" objname="{!line.listprice.Item_Name__r.Name}"/>
+                        </apex:column>
+                        <apex:column headerValue="Item Code" value="{!line.listprice.Item_Name__r.Sourcing_Item_Code__c}" />
+                        <apex:column headerValue="Item Owner" value="{!line.listprice.Item_Name__r.Account_Owner__c}" />
+                        <apex:column headerValue="Technical description" value="{!line.listprice.Item_Name__r.Technical_description__c}"  />
+                        <apex:column headerValue="Volume" value="{!line.listprice.Item_Name__r.Volume__c}"  style="text-align:right;"/>
+                        <apex:column headerValue="Unit" value="{!line.listprice.Item_Name__r.Unit_of_measure__c}"  />
+                        <apex:column value="{!line.listprice.Item_Name__r.Item_Price__c}" style="text-align:right">
+                            <apex:facet name="header"><div style="text-align:center">Item Price</div></apex:facet>
+                        </apex:column>
+                        <apex:column style="text-align:right">
+                            <apex:facet name="header"><div style="text-align:center">List Price (JIT)</div></apex:facet>
+                            <apex:inputField value="{!line.listprice.List_Price__c}" rendered="{!line.listprice.Id==null}" style="text-align:right;width:8em"/>
+                            <apex:outputField value="{!line.listprice.List_Price__c}" rendered="{!line.listprice.Id!=null}"/>
+                        </apex:column>
+                        
+                        <apex:column style="text-align:right">
+                            <apex:facet name="header"><div style="text-align:center">JIT MOQ</div></apex:facet>
+                            <apex:inputField value="{!line.listprice.JIT_MOQ__c}" rendered="{!line.listprice.Id==null}" style="text-align:right;width:8em"/>
+                            <apex:outputField value="{!line.listprice.JIT_MOQ__c}" rendered="{!line.listprice.Id!=null}"/>
+                        </apex:column>
+                        
+                        <apex:column style="text-align:right">
+                            <apex:facet name="header"><div style="text-align:center">List Price (STOCK)</div></apex:facet>
+                            <apex:inputField value="{!line.listprice.List_Price_STOCK__c}" rendered="{!line.listprice.Id==null}" style="text-align:right;width:8em"/>
+                            <apex:outputField value="{!line.listprice.List_Price_STOCK__c}" rendered="{!line.listprice.Id!=null}"/>
+                        </apex:column>
+                        
+                        <apex:column style="text-align:right">
+                            <apex:facet name="header"><div style="text-align:center">STOCK MOQ </div></apex:facet>
+                            <apex:inputField value="{!line.listprice.STOCK_MOQ__c}" rendered="{!line.listprice.Id==null}" style="text-align:right;width:8em"/>
+                            <apex:outputField value="{!line.listprice.STOCK_MOQ__c}" rendered="{!line.listprice.Id!=null}"/>
+                        </apex:column>
+                        
+                        <apex:column style="text-align:right">
+                            <apex:facet name="header"><div style="text-align:center">List Price (DROP)</div></apex:facet>
+                            <apex:inputField value="{!line.listprice.List_Price_DROP__c}" rendered="{!line.listprice.Id==null}" style="text-align:right;width:8em"/>
+                            <apex:outputField value="{!line.listprice.List_Price_DROP__c}" rendered="{!line.listprice.Id!=null}"/>
+                        </apex:column>
+                        
+                        <apex:column style="text-align:right">
+                            <apex:facet name="header"><div style="text-align:center">DROP MOQ</div></apex:facet>
+                            <apex:inputField value="{!line.listprice.DROP_MOQ__c}" rendered="{!line.listprice.Id==null}" style="text-align:right;width:8em"/>
+                            <apex:outputField value="{!line.listprice.DROP_MOQ__c}" rendered="{!line.listprice.Id!=null}"/>
+                        </apex:column>
+                        
+                        <apex:column style="text-align:center">
+                            <apex:facet name="header"><div style="text-align:center"><input type="checkbox" id="check_todos" onclick="toggleCheckAll(this)"/></div></apex:facet>
+                            <apex:inputCheckbox StyleClass="inputcheck" value="{!line.selected}"  rendered="{!line.listprice.Id==null}"/>
+                            <apex:image id="del_oi" value="/img/permissions_deny16.gif" onclick="delete_oi('{!line.listprice.Id}');" style="cursor:pointer;"  rendered="{!line.listprice.Id!=null}"/>
+                        </apex:column>
+                    </apex:pageBlockTable>
+                </apex:pageBlock>
+             </apex:outputPanel>
+           </apex:pageBlock>
+         </apex:outputPanel>
+        <apex:actionFunction name="delete_oi" action="{!delete_item_pricelist_select}" status="myStatus" reRender="linesSelector">
+            <apex:param name="first" assignTo="{!id_oi}" value=""/>
+        </apex:actionFunction>
+        <apex:actionFunction name="updatelines" action="{!updatelines}" status="myStatus" reRender="linesSelector">
+        </apex:actionFunction>
+        <apex:actionFunction name="get_productos"  reRender="linesSelector" status="myStatus"/><!-- action="{!get_productos}" -->
+        <apex:inputHidden value="{!step}" id="step"/>
+        <apex:inputHidden value="{!sort_value}" id="sort_value"/>
+        <apex:inputHidden value="{!search_filter}" id="search_filter"/>
+        <apex:outputpanel >
+           <apex:actionstatus id="myStatus">
+               <apex:facet name="start">
+                   <div class="waitingSearchDiv" id="el_loading" style="background-color: #fbfbfb;
+                          height: 100%;opacity:0.65;width:100%;"> 
+                       <div class="waitingHolder" style="top: 74.2px; width: 91px;">
+                           <img class="waitingImage" src="/img/loading.gif" title="Please Wait..." />
+                           <span class="waitingDescription">Loading...</span>
+                       </div>
+                   </div>
+               </apex:facet>
+           </apex:actionstatus>
+        </apex:outputpanel>
+         <div class="waitingSearchDiv" id="otherStatus" style="display:none;background-color:#fbfbfb;height:100%;opacity:0.65;width:100%;"> 
+            <div class="waitingHolder" style="top:74.2px;width:91px;">
+                <img class="waitingImage" src="/img/loading.gif" title="Please Wait..." />
+                <span class="waitingDescription">Loading...</span>
+            </div>
+        </div>
+    </apex:form>
+</apex:page>

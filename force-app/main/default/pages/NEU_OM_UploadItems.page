@@ -1,0 +1,365 @@
+<apex:page standardController="Supply_Project__c" extensions="NEU_OM_UploadItems" sidebar="false">
+    <apex:includeScript value="{!$Resource.jquery_1_10_2}"/> 
+    <apex:includeScript value="{!$Resource.jquery_ui_1_10_3}"/>
+    <apex:includeScript value="{!$Resource.neurored_jquery}"/> 
+    <apex:stylesheet value="{!URLFOR($Resource.jquery_ui_1_10_3_css,'jquery-ui-1.10.3.min.css')}"/>
+    <script>
+    
+        function del_oi(id)
+        {
+            document.getElementById('{!$Component.form.id_oi}').value = id;
+            delete_oi();
+        }
+        function get_oi()
+        {
+            get_oi_from_family();
+        }
+         var availableTags;
+         var nombres_items ;
+         var contador;
+        $(document).ready(function(){
+            $(function() {
+                $("#radio").buttonset();
+                $("#radio td").css('display','inline-block');
+            });
+            nombres_items = document.getElementById('{!$Component.form.block0.nombre_de_items}').value;
+            availableTags = nombres_items.split('_&_');
+            
+            setDecimalSep(document.getElementById('{!$Component.form.decimalSep}').value, document.getElementById('{!$Component.form.thousandSep}').value);
+            
+            
+        });
+        function alibaba(itemname) {
+            window.open('http://www.alibaba.com/trade/search?SearchText='+itemname);
+        }
+        
+        
+        function creineas()
+        {   
+            //comprobar si esta creado el item o no 
+            
+           document.getElementById('{!$Component.form.esta_creado_el_item}').value = false;
+            $.each(availableTags, function (ind, elem) { 
+                if(elem == $('.extensionname').val())
+                {
+                    document.getElementById('{!$Component.form.esta_creado_el_item}').value = true;
+                    return false;
+                }
+            });
+            var todos_rellenos = true;
+            if($('.extensionname').val() == '')
+            {
+                $('.extensionname').css('border','1px solid red');
+                todos_rellenos = false;
+            }
+            else
+                $('.extensionname').css('border','1px solid gray');
+            if($('.units').getInt() == 0)
+            {
+                $('.units').css('border','1px solid red');
+                todos_rellenos = false;
+            }
+            else
+                $('.units').css('border','1px solid gray');
+                
+            if(todos_rellenos == true)
+                crearlineas();  
+            else
+            {
+                $('#contenedormensaje').css("display", "block");
+                         $(function() {
+                $( "#contenedormensaje" ).dialog({
+                     height: 200,
+                     width: 280,
+                     modal: true,
+                      buttons: {
+                    "Accept": function() {
+                       $( this ).dialog( "close" );
+                    },
+                   
+                    }
+                     });
+                });
+            }
+        }
+        
+        /*  $( ".extensionname" ).focusout(function() {
+            var variable_a_buscar = $( ".extensionname" ).val();
+            updateItemName(variable_a_buscar);
+        });*/
+        
+        function updateItemName1()
+        {
+            var variable_a_buscar = $( ".extensionname" ).val();
+            updateItemName(variable_a_buscar);
+        }
+  
+        function updateItemName(valor_cogido)
+        {   
+             
+                availableTags = document.getElementById('{!$Component.form.block0.nombre_de_items}').value.split('_&_');
+                //$( ".units" ).focus();
+                var no_coincide = false;
+                $.each(availableTags, function (ind, elem) { 
+                      if(elem.toUpperCase()  == valor_cogido.toUpperCase())
+                      {
+                        $('.Technical_description').attr('disabled','disabled');
+                        $('.shipweight').attr('disabled','disabled');
+                        $('.shipvolume').attr('disabled','disabled');
+                        $('.price').attr('disabled','disabled');
+                        no_coincide = true;
+                        return;
+                      }
+                }); 
+                
+                if(no_coincide == false)
+                {
+                    $('.Technical_description').removeAttr('disabled');
+                    $('.shipweight').removeAttr('disabled');
+                    $('.shipvolume').removeAttr('disabled');
+                    $('.price').removeAttr('disabled');
+                }
+
+        }
+        
+        function revisar_errores()
+        {
+             if($("#errores").html()!='')
+            {
+                $( "#hay_errores" ).dialog({
+                  dialogClass: "no-close"
+                });
+            }
+        }
+        
+
+        
+        function posibilidades()
+        {
+            contador = 0;
+            availableTags = document.getElementById('{!$Component.form.block0.nombre_de_items}').value.split('_&_');
+            var array_filter  = new Array(); 
+            var variable_a_buscar = $( ".extensionname" ).val();
+            if(variable_a_buscar != '' && variable_a_buscar != null)
+            {
+                var logintud_a_buscar =variable_a_buscar.length;
+                var valor_de_cadena;
+                var contador_encuentros;
+                
+                $.each(availableTags, function (ind, elem) { 
+                  valor_de_cadena = elem.substring(0, logintud_a_buscar);
+                  console.log(valor_de_cadena);
+                  if(valor_de_cadena.toUpperCase()  == variable_a_buscar.toUpperCase() )
+                  {
+                    array_filter.push(elem);
+                    contador_encuentros ++;
+                  }
+                  if(contador_encuentros == 4)
+                    return false;
+                }); 
+                
+                console.log(array_filter);
+                $( ".extensionname" ).autocomplete({
+                  minLength:0,
+                 // source: array_filter
+                 
+                 //con filtro de tres
+                   source: function(request, response) {
+                        var results = $.ui.autocomplete.filter(array_filter, request.term);
+                
+                        response(results.slice(0, 4));
+                    },
+                    select: function( event, ui ) { contador = 1; updateItemName(ui.item.value);}
+                    
+                    //los que empiecen solo, no los que contengan no le puedo incorporar el slice
+                /*    source: function( request, response ) {
+                      var matcher = new RegExp( "^" + $.ui.autocomplete.escapeRegex( request.term ), "i" );
+                      
+                      response( $.grep( availableTags, function( item ){
+                          return matcher.test( item );
+                      }) );
+                  }*/
+                  
+                });
+            }
+        }
+        
+        
+    </script>
+    <style>
+        .th_right{text-align:right;}
+        .th_center{text-align:center;}
+    </style>
+    <apex:form id="form">
+      <apex:inputHidden value="{!decimalSep}" id="decimalSep"/>
+       <apex:inputHidden value="{!thousandSep}" id="thousandSep"/>
+     <apex:actionFunction name="crearlineas" action="{!crearlineaSupplyitem}" status="myStatus" reRender="linesSelector, error_mensaje" />
+    
+        <div style="display:none;" id="contenedormensaje" title="Error: Invalid Data.">
+             <p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>Review all error messages below to correct your data.</p>
+        </div>
+        <apex:sectionHeader title="Create Items Lines"/>
+          <span style="    position: relative;     top: -36px;     left: 258px;  font-size: 17px;">
+                 <a href="/{!Supply_Project__c.Id}" onblur="LookupHoverDetail.getHover(neu_getId(this)).hide();" onfocus="LookupHoverDetail.getHover(neu_getId(this),'/{!Supply_Project__c.Id}/m?isAjaxRequest=1').show();" onmouseout="LookupHoverDetail.getHover(neu_getId(this)).hide();" onmouseover="LookupHoverDetail.getHover(neu_getId(this),'/{!Supply_Project__c.Id}/m?isAjaxRequest=1').show();" target="_blank" id="new_id_1">{!Supply_Project__c.Name}</a>
+            </span>
+            <apex:pageMessages id="error_mensaje"/>
+            <div style="float: left; width: 100%;">
+                
+                
+            </div>
+        <apex:outputPanel id="radios">
+            <div id="radio">
+                <apex:selectRadio value="{!id_family}" onclick="get_oi();">
+                    <apex:selectOptions value="{!family_list}"/>
+                </apex:selectRadio>
+            </div>
+        </apex:outputPanel>
+        <apex:outputPanel id="linesSelector">
+         <div id="hay_errores" title="Error List" style="display:none;">
+                  <p id="errores">{!errores}</p>
+              </div>
+            <apex:outputText value="{!resultado}"/>
+            <apex:pageBlock id="block0" title="Actual Items related with this Family ({!current_family})">
+                <apex:pageBlockTable id="table" value="{!actual_items_family}" var="oif">
+                    <apex:column headerValue="Item Code" value="{!oif.Sourcing_Item__r.Sourcing_Item_Code__c}"/>
+                    <apex:column headerValue="Item Name" value="{!oif.Sourcing_Item__r.Name}"/>
+                    <apex:column headerValue="Item Owner" value="{!oif.Sourcing_Item__r.Account_Owner__c}"/>
+                    <apex:column headerValue="Technical Description" value="{!oif.Sourcing_Item__r.Technical_description__c}"/>
+                    <apex:column headerValue="Quantity" value="{!oif.Quantity__c}" style="text-align:right;" headerClass="th_right"/>
+                    <apex:column headerValue="Units x Box" value="{!oif.Sourcing_Item__r.Units_x_Master_Box__c}" style="text-align:right;" headerClass="th_right"/>
+                    <apex:column headerValue="Target Price" value="{!oif.Target_Price__c}" style="text-align:right;" headerClass="th_right"/>
+                    <apex:column headerValue="Observations for Suppliers" value="{!oif.Observations__c}"/>
+                    <apex:column headerValue="Delete" style="text-align:center;" headerClass="th_center">
+                        <apex:image id="del_oi" value="/img/permissions_deny16.gif" onclick="del_oi('{!oif.Id}');" style="cursor:pointer;"/>
+                    </apex:column>
+                </apex:pageBlockTable>
+                <apex:inputHidden value="{!nombre_de_items}" id="nombre_de_items"/>
+            </apex:pageBlock>
+            <apex:pageBlock id="block1" title="Select Items from this Family ({!current_family})">
+                <apex:pageBlockTable id="table2" value="{!new_items}" var="it">
+                    <apex:column headerValue="Item Code" value="{!it.item_code}"/>
+                    <apex:column headerValue="Item Name" value="{!it.item_name}"/>
+                    <apex:column headerValue="Item Owner" value="{!it.item.Account_Owner__c}"/>
+                    <apex:column headerValue="Technical Description" value="{!it.technical_description}" />
+                    <apex:column headerValue="Quantity" style="text-align:right; " headerClass="th_right">
+                       <!-- <apex:inputText value="{!it.item_to_supply.Quantity__c}" style="text-align:right; border-left: 3px solid red;"/>-->
+                        <apex:inputField value="{!it.item_to_supply.Quantity__c}" style="text-align:right; border-left: 3px solid red;"/>
+                    </apex:column>
+                    <apex:column headerValue="Units x Box" value="{!it.units_x_box}" style="text-align:right;" headerClass="th_right"/>
+                    <apex:column style="text-align:center">
+                        <apex:image value="{!$Resource.alibaba}" width="100" height="30" onclick="alibaba('{!URLENCODE(it.item_name)}');" style="cursor:pointer;cursor:hand;"/>
+                    </apex:column>
+                    <apex:column headerValue="Target Price" style="text-align:right;" headerClass="th_right">
+                        <!--<apex:inputText value="{!it.price}" style="text-align:right;"/>-->
+                        <apex:inputField value="{!it.item_to_supply.Target_Price__c}" style="text-align:right;"/>
+                    </apex:column>
+                    
+                     <apex:column headerValue="Currency" >
+                        <apex:selectList id="Currency_selector"  label="Currency" value="{!it.currency_selected}" size="1">
+                            <apex:selectOptions value="{!it.currencys}"/>
+                         </apex:selectList>
+                    </apex:column>
+                    
+                    <apex:column headerValue="Observations for Suppliers">
+                        <apex:inputTextarea value="{!it.observations}"/>
+                    </apex:column>
+                    <apex:column headerValue="Create" headerClass="th_center" style="text-align:center;">
+                        <apex:inputCheckbox value="{!it.selected}"/>
+                    </apex:column>
+                </apex:pageBlockTable>
+                <apex:pageBlockButtons >
+                    <apex:commandButton value="ASSIGN ITEMS" status="myStatus" reRender="linesSelector"  action="{!create_oi}" oncomplete="revisar_errores();"/>
+                    <apex:commandButton value="RETURN TO THE SUPPLY PROJECT" status="myStatus" action="{!return_project}"/>
+                </apex:pageBlockButtons>
+            </apex:pageBlock>
+            
+            <apex:pageBlock id="block3" title="Add new Items to this Family ({!current_family})">
+                <apex:pageBlockTable id="table3" value="{!Supply_Project__c}" var="lineanueva">
+                    <apex:column >
+                        <apex:image styleClass="nuevalinea" value="{!$Resource.Plus}" style="width: 24px;" onclick="creineas();"/>
+                    </apex:column>
+                    <apex:column headerValue="Line">
+                        <apex:inputText style="width: 50px; text-align: left;" StyleClass="numlinea" value="{!numerodelinea}" disabled="true"/>
+                    </apex:column>
+                    <apex:column >  
+                        <apex:facet name="header"><div style="text-align:left;">Item Name</div></apex:facet>
+                        <apex:inputText style="width: 138px; text-align: left; padding: 2px; border-left: 3px solid red;" StyleClass="extensionname" value="{!extensionitemname}" onKeyUp="posibilidades();" onchange="updateItemName1();" maxlength="80"/>
+                    </apex:column>
+                    <apex:column >  
+                        <apex:facet name="header"><div style="text-align:left;">Technical Description</div></apex:facet>
+                        <apex:inputText style="width: 138px; text-align: left; padding: 2px;" StyleClass="Technical_description" value="{!technical_description}"/>
+                    </apex:column>
+                    <apex:column style="text-align:center">
+                        <apex:facet name="header"><div style="text-align:center;">Quantity</div></apex:facet>
+                      <!--  <apex:inputText style="width: 138px; text-align: right; padding: 2px; border-left: 3px solid red;" StyleClass="units" value="{!units}"/>-->
+                          <apex:inputField style="width: 138px; text-align: right; padding: 2px; border-left: 3px solid red;" StyleClass="units" value="{!new_item_to_supply.Quantity__c}"/>
+                    </apex:column>
+                    <apex:column style="text-align:center">
+                            <apex:facet name="header"><div style="text-align:center;">Item Price</div></apex:facet>
+                            <!--<apex:inputText style="width: 138px; text-align: right; padding: 2px;" StyleClass="price" value="{!precio}"/>-->
+                            <apex:inputField style="width: 138px; text-align: right; padding: 2px;" StyleClass="price" value="{!new_sourcing_item.Item_Price__c}"/>
+                    </apex:column>
+                    <apex:column style="text-align: center;">
+                        <apex:facet name="header"><div style="text-align:center;">Total Shipping Weight (Kgs)</div></apex:facet>
+                        <apex:inputText style="width: 138px; text-align: right; padding: 2px;" StyleClass="shipweight" value="{!shippingweight}"/>
+                    </apex:column>
+                    <apex:column style="text-align: center;">
+                        <apex:facet name="header"><div style="text-align:center;">Total Shipping Volume (m3)</div></apex:facet>
+                        <apex:inputText style="width: 138px; text-align: right; padding: 2px;" StyleClass="shipvolume" value="{!volumen}"/>
+                    </apex:column>
+                    <apex:column style="text-align:center">
+                            <apex:facet name="header"><div style="text-align:center;">Target Price</div></apex:facet>
+                            <!--<apex:inputText style="width: 138px; text-align: right; padding: 2px;" StyleClass="price_objetivo" value="{!precio_objetivo}"/>-->
+                            <apex:inputField style="width: 138px; text-align: right; padding: 2px;" StyleClass="price_objetivo" value="{!new_item_to_supply.Target_Price__c}"/>
+                    </apex:column>
+                    
+                     <apex:column style="text-align:center">
+                            <apex:facet name="header"><div style="text-align:center;">Currency</div></apex:facet>
+                            <apex:selectList label="Currency" value="{!moneda_seleccionada_nuevo_item}" size="1">
+                                <apex:selectOptions value="{!options}"/>
+                            </apex:selectList>
+                    </apex:column>
+                    
+                    <apex:column style="text-align:center">
+                            <apex:facet name="header"><div style="text-align:center;">Observations for Suppliers</div></apex:facet>
+                            <apex:inputTextarea value="{!observations_for_suppliers}" StyleClass="observations_suppliers"/>
+                    </apex:column>
+                </apex:pageBlockTable>
+            </apex:pageBlock>
+            
+            <apex:pageBlock id="block2" title="Actual Items related with this Supply Project (All Families)">
+                <apex:pageBlockTable id="table" value="{!actual_items}" var="oi">
+                    <apex:column headerValue="Item Code" value="{!oi.Sourcing_Item__r.Sourcing_Item_Code__c}"/>
+                    <apex:column headerValue="Item Name" value="{!oi.Sourcing_Item__r.Name}"/>
+                    <apex:column headerValue="Item Owner" value="{!oi.Sourcing_Item__r.Account_Owner__c}"/>
+                    <apex:column headerValue="Technical Description" value="{!oi.Sourcing_Item__r.Technical_description__c}"/>
+                    <apex:column headerValue="Quantity" value="{!oi.Quantity__c}" style="text-align:right;" headerClass="th_right"/>
+                    <apex:column headerValue="Units x Box" value="{!oi.Sourcing_Item__r.Units_x_Master_Box__c}" style="text-align:right;" headerClass="th_right"/>
+                    <apex:column headerValue="Target Price" value="{!oi.Target_Price__c}" style="text-align:right;" headerClass="th_right"/>
+                    <apex:column headerValue="Observations for Suppliers" value="{!oi.Observations__c}"/>
+                    <apex:column headerValue="Delete" style="text-align:center;" headerClass="th_center">
+                        <apex:image id="del_oi" value="/img/permissions_deny16.gif" onclick="del_oi('{!oi.Id}');" style="cursor:pointer;"/>
+                    </apex:column>
+                </apex:pageBlockTable>
+            </apex:pageBlock>
+        </apex:outputPanel>
+        <apex:outputpanel >
+            <apex:actionstatus id="myStatus">
+                <apex:facet name="start">
+                   <div class="waitingSearchDiv" id="el_loading" style="background-color: #fbfbfb;
+                          height: 100%;opacity:0.65;width:100%;"> 
+                       <div class="waitingHolder" style="top: 74.2px; width: 91px;">
+                           <img class="waitingImage" src="/img/loading.gif" title="Please Wait..." />
+                           <span class="waitingDescription">Loading...</span>
+                       </div>
+                   </div>
+                </apex:facet>
+            </apex:actionstatus>
+        </apex:outputpanel>
+        <apex:actionFunction name="delete_oi" action="{!delete_oi}" status="myStatus" reRender="linesSelector"/>
+        <apex:actionFunction name="get_oi_from_family" action="{!get_oi_from_family}" status="myStatus" reRender="linesSelector"/>
+        <apex:inputHidden value="{!id_oi}" id="id_oi"/>
+        <apex:inputHidden value="{!esta_creado_el_item}" id="esta_creado_el_item"/>
+        <apex:inputHidden value="{!technical_description_input}" id="technical_description_input"/>
+    </apex:form>
+</apex:page>

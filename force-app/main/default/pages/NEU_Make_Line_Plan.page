@@ -1,0 +1,220 @@
+<apex:page extensions="NEU_Make_Line_Plan" standardController="Company_Plan__c" sidebar="false">
+<apex:includeScript value="{!$Resource.jquery_1_10_2}"/> 
+<apex:includeScript value="{!$Resource.jquery_ui_1_10_3}"/>
+<apex:includeScript value="{!$Resource.neurored_jquery}"/> 
+<apex:includeScript value="{!$Resource.scrolltofixed}"/> 
+<apex:stylesheet value="{!URLFOR($Resource.jquery_ui_1_10_3_css,'jquery-ui-1.10.3.min.css')}"/>
+<style>
+	.itemonth{
+		cursor:pointer;
+	}
+</style>
+<script>
+        $(document).ready(function () {
+            $("#accordion").accordion({heightStyle:"content",active:false,beforeActivate:function(event,ui){if(ui.newHeader.attr('id')=='itemLabel')updateLines();}});
+            $($.sfId('{!$Component.form}')).tooltip({track:true,show:{effect:"slideDown",delay:1000}});
+			$(window).scroll(function(){posleft();});
+	    });
+	    
+	    function posleft()
+	    {
+	    	var div=$('#leftpanel');
+	    	var offset=div.position().top-$(window).scrollTop()+120;
+			if(offset<0)
+				div.stop().animate({"marginTop":-offset+"px"},"slow");
+			else
+				div.stop().animate({"marginTop":"0"},"slow");
+	    }
+   
+        function updatedata()
+        {
+        	$("td.itemonth").click(function(){
+        		var tr=$(this).parent();
+        		if(!tr.hasClass('itemselected'))
+        		{
+					$('img.program').hide();
+	        		$('tr.itemselected').css('background-color','');
+			    	$('tr.itemselected').removeClass('itemselected');
+	        		tr.css('background-color','#f3f3f3');
+			    	tr.addClass('itemselected');
+					$($.sfId('{!$Component.form.block2.table3}')).hide();
+					$('#processinfo').hide();
+					tr.find('img.program').attr('src','{!$Resource.plus_png}').show();
+					updateProgram(tr.find('.itemitem a').attr('adata'),tr.find('.itemsubfamily a').attr('adata'),tr.find('.itemfamily a').attr('adata'));
+				}
+        	});
+        }
+ 
+            
+</script>
+<apex:form id="form">
+	<apex:sectionHeader title="Company Plan" subtitle="{!Company_Plan__c.Name}"/>
+    <apex:actionFunction name="updateLines" reRender="block2,block3,blockg" status="myStatus" oncomplete="updatedata();"/>
+    <apex:actionFunction name="updateProgram" reRender="itemorder,blockg" oncomplete="posleft();$('#processinfo').show('slide');" status="myStatus3">
+		<apex:param name="one" assignTo="{!currentItem}" value="" />
+		<apex:param name="two" assignTo="{!currentSubfamily}" value="" />
+		<apex:param name="three" assignTo="{!currentFamily}" value="" />
+    </apex:actionFunction>
+    <div id="accordion">
+        <h3 id="filterLabel">Filters</h3>
+        <apex:pageBlock id="block1" mode="maindetail">
+        	<div style="width:30%;display:table-cell">
+			<apex:pageBlockSection title="Company Plan" columns="1">
+	                <apex:outputField value="{!Company_Plan__c.Valid_From__c}"/>
+	                <apex:outputField value="{!Company_Plan__c.Valid_To__c}"/>
+	                <apex:outputField value="{!Company_Plan__c.Active__c}"/>
+            </apex:pageBlockSection>
+            </div>
+            <div style="display:table-cell">
+				<apex:pageBlockSection title="Family" columns="1">
+                    <apex:selectList multiselect="true" value="{!selected}" size="5">
+                        <apex:selectOptions value="{!familyList}"/>
+                    </apex:selectList>
+                </apex:pageBlockSection>
+            </div>
+            <div style="width:30%;display:table-cell">
+				<apex:pageBlockSection title="Data to Show" columns="1">
+	                <apex:pageBlockSectionItem >
+	                	<apex:outputLabel >Level of Agregation of Demand</apex:outputLabel>
+	                    <apex:selectList size="1" value="{!datatype}">
+							<apex:selectOption itemValue="families" itemLabel="Families"/>
+            				<apex:selectOption itemValue="subfamilies" itemLabel="Subfamilies"/>
+            				<apex:selectOption itemValue="items" itemLabel="Items"/>
+            			</apex:selectList>
+	                </apex:pageBlockSectionItem>
+	                <apex:pageBlockSectionItem >
+	                	<apex:outputLabel >Year</apex:outputLabel>
+	                    <apex:selectList value="{!year}" size="1">
+	                        <apex:selectOptions value="{!years}"/>
+	                    </apex:selectList>
+	                </apex:pageBlockSectionItem>
+                </apex:pageBlockSection>
+            </div>
+        </apex:pageBlock>
+        <h3 title="Long Term Capacity Planning" id="itemLabel"><span>LTCP</span></h3>
+        <div>
+      <div style="width:60%;display:table-cell;vertical-align:top">
+        <apex:pageBlock id="block2" mode="maindetail" title="{!familyName}">
+            <apex:pageBlockButtons location="top" id="buttons">
+                <apex:commandButton status="myStatus3" value="Automatic Allocation" rerender="block2,itemorder,blockg" oncomplete="updatedata();" action="{!automaticPlan}" title="The demand allocation will be done based on product allocation in capacity definition"/>
+            </apex:pageBlockButtons>
+            <apex:outputPanel style="margin:15px">
+            <div style="margin:15px">
+			<apex:pageBlockSection title="Demand Forcasting" columns="1">
+                <apex:pageBlockTable value="{!Items}" var="item"  id="table1" styleClass="tabla_items">
+                    <apex:column headerValue="Family" styleClass="itemfamily">
+                        <apex:facet name="header"><div style="min-width:50px">Family</div></apex:facet>
+                        <c:customobject2 objid="{!item.family.Id}" objname="{!item.family.Name}" adata="{!item.family.Id}"/>
+                    </apex:column>
+                    <apex:column headerValue="Subfamily" styleClass="itemsubfamily" rendered="{!datatype!='families'}">
+                        <apex:facet name="header"><div style="min-width:75px">Subfamily</div></apex:facet>
+                        <c:customobject2 objid="{!item.subfamily.Id}" objname="{!item.subfamily.Name}" adata="{!item.subfamily.Id}"/>
+                    </apex:column>
+                    <apex:column headerValue="Item" styleClass="itemitem" rendered="{!datatype=='items'}">
+                        <apex:facet name="header"><div style="min-width:200px">Item</div></apex:facet>
+                        <c:customobject2 objid="{!item.item.Id}" objname="{!item.item.Name}" adata="{!item.item.Id}"/>
+                    </apex:column>
+                    <apex:repeat value="{!nperiods}" var="period">
+                    <apex:column style="text-align:right" styleClass="itemonth">
+                        <apex:facet name="header"><div style="text-align:center">{!headers[period]}</div></apex:facet>
+                        <apex:outputText value="{!item.Units[period]}"/>
+                    </apex:column>
+                    </apex:repeat>
+                    <apex:column style="text-align:right;background-color:#fef9bd" styleClass="itemonth">
+                        <apex:facet name="header"><div style="text-align:center">Total {!year}</div></apex:facet>
+                        <apex:outputText value="{!item.Total}"/>
+                    </apex:column>
+                    <apex:column style="text-align:right;background-color:#fef9bd{!IF(item.Assigned!=item.Total,';color:red','')}" styleClass="itemonth">
+                        <apex:facet name="header"><div style="text-align:center">Allocated</div></apex:facet>
+                        <apex:outputText value="{!item.Assigned}"/>
+                    </apex:column>
+                    <apex:column style="background-color:#fef9bd">
+                        <apex:facet name="header"><div style="text-align:center"></div></apex:facet>
+                        <img class="program"/>
+                    </apex:column>
+                </apex:pageBlockTable>
+                </apex:pageBlockSection>
+             </div>
+          </apex:outputPanel>
+      </apex:pageBlock>
+      </div>
+      <div style="width:40%;display:table-cell">
+        <apex:pageBlock id="blockg" mode="maindetail">
+        	<div id="leftpanel">
+			<apex:chart height="300" width="100%" data="{!graphData}" id="grapf">
+		    	<apex:legend position="bottom"/>
+		    	<apex:axis type="Numeric" position="right" fields="Demand" grid="false" minimum="0"/>
+		    	<apex:axis type="Category" position="bottom" fields="DName"/>
+		        <apex:barSeries orientation="vertical" axis="right" xField="DName" yField="Demand" colorSet="#8eb4e3">
+		        	<apex:chartTips height="25" width="140"/>
+		        </apex:barSeries>
+			</apex:chart>
+			</div>
+		</apex:pageBlock>
+	        <apex:pageBlock id="block3" mode="maindetail">
+	            <div id="processinfo" style="display:none">
+	            <apex:pageBlockButtons location="top" id="buttons">
+	                <apex:commandButton status="myStatus3" value="Update Plan" rerender="block2,itemorder,blockg" action="{!updatePlan}" oncomplete="updatedata();"/>
+	            </apex:pageBlockButtons>
+	            <apex:messages />
+				<apex:pageBlockSection title="{!currentItemName}" columns="1" id="itemorder">
+	                <apex:pageBlockTable value="{!program}" var="prog"  id="table3" style="width:100%">
+	                    <apex:column headerValue="Factory Line">
+	                        <c:customobject2 objid="{!prog.Labor_Program__r.Factory_Line__r.Id}" objname="{!prog.Labor_Program__r.Factory_Line__r.Name}"/>
+	                    </apex:column>
+	                    <apex:column headerValue="Line Plan">
+	                        <c:customobject2 objid="{!prog.Labor_Program__r.id}" objname="{!prog.Labor_Program__r.Name}"/>
+	                    </apex:column>
+	                    <apex:column value="{!prog.Labor_Program__r.Unconstrained_Capacity_Utilisation__c}" style="text-align:right;color:#0070c0;font-size:1.1em;font-weight:bold">
+                        <apex:facet name="header"><div style="color:#0070c0;font-weight:bold">Unconstr.</div></apex:facet>
+	                    </apex:column>
+	                    <apex:column value="{!prog.Labor_Program__r.Constrained_Capacity_Utilisation__c}" style="text-align:right;color:#17375e;font-size:1.1em;font-weight:bold">
+                        <apex:facet name="header"><div style="color:#17375e;font-weight:bold">Constr.</div></apex:facet>
+	                    </apex:column>
+	                    <apex:column headerValue="Demand Allocation" style="text-align:right">
+	                    	<apex:inputField value="{!prog.Demand_Allocation__c}" style="width:80px;text-align:right" rendered="{!currentitem!=''}"/>
+	                    	<apex:outputField value="{!prog.Demand_Allocation__c}" style="width:80px;text-align:right" rendered="{!currentitem==''}"/>
+	                    </apex:column>
+	                    <apex:column value="{!prog.Product_Mix__c}" style="text-align:right" rendered="{!currentitem!=''}">
+	                    </apex:column>
+	                    <apex:column value="{!prog.Loading_Time__c}" style="text-align:right" rendered="{!currentitem!=''}">
+	                    </apex:column>
+	                </apex:pageBlockTable> 
+	            </apex:pageBlockSection>
+				</div>
+		       <apex:actionstatus id="myStatus3">
+		           <apex:facet name="start">
+		               <div class="waitingSearchDiv" id="el_loading3" style="background-color: #fbfbfb;
+		                      height: 100%;opacity:0.65;width:100%;"> 
+		                   <div class="waitingHolder" style="top: 74.2px; width: 91px;">
+		                       <img class="waitingImage" src="/img/loading.gif" title="Please Wait..." />
+		                       <span class="waitingDescription">Loading...</span>
+		                   </div>
+		               </div>
+		           </apex:facet>
+		       </apex:actionstatus>
+		 </apex:pageBlock>
+		 </div>
+      </div>
+    </div>
+    <apex:outputpanel >
+       <apex:actionstatus id="myStatus">
+           <apex:facet name="start">
+               <div class="waitingSearchDiv" id="el_loading" style="background-color: #fbfbfb;
+                      height: 100%;opacity:0.65;width:100%;"> 
+                   <div class="waitingHolder" style="top: 74.2px; width: 91px;">
+                       <img class="waitingImage" src="/img/loading.gif" title="Please Wait..." />
+                       <span class="waitingDescription">Loading...</span>
+                   </div>
+               </div>
+           </apex:facet>
+       </apex:actionstatus>
+    </apex:outputpanel>
+        <div class="waitingSearchDiv" id="otherStatus" style="display:none;background-color:#fbfbfb;height:100%;opacity:0.65;width:100%;"> 
+            <div class="waitingHolder" style="top:74.2px;width:91px;">
+                <img class="waitingImage" src="/img/loading.gif" title="Please Wait..." />
+                <span class="waitingDescription">Loading...</span>
+            </div>
+        </div>
+</apex:form>
+</apex:page>

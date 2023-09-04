@@ -1,0 +1,84 @@
+<apex:page standardController="Customer_Quote__c" extensions="NEU_Split_Quotation" id="page">
+    <apex:includeScript value="{!$Resource.jquery_1_10_2}"/> 
+    <apex:includeScript value="{!$Resource.jquery_ui_1_10_3}"/>
+    <apex:includeScript value="{!$Resource.neurored_jquery}"/> 
+    <apex:stylesheet value="{!URLFOR($Resource.jquery_ui_1_10_3_css,'jquery-ui-1.10.3.min.css')}"/>
+    <apex:stylesheet value="{!$Resource.NEU_Pagination_css}"/>
+   <apex:form id="form">
+    <apex:actionFunction name="sorting" action="{!sorting}" reRender="block_table" status="myStatus">
+        <apex:param name="one" assignTo="{!compareField}" value="" />
+        <apex:param name="two" assignTo="{!sortList}" value="" />
+    </apex:actionFunction>            
+            <apex:sectionHeader subtitle="{!Customer_Quote__c.Name}" title="{!$ObjectType.Customer_Quote__c.label}"/>
+          <apex:pageBlock id="block_table">
+            <apex:pageBlockButtons rendered="{!ShowImportExportItemLines}" location="top">
+                <apex:commandButton status="myStatus" value="Generate a new {!$ObjectType.Customer_Quote__c.label}" reRender="errors" action="{!generate}"/>
+                <apex:commandButton status="myStatus" value="Return" action="{!cancel}"/>
+            </apex:pageBlockButtons>
+            <apex:pagemessages id="errors"/>
+            <div>
+            <apex:pageBlockTable value="{!Lines}" var="item" id="mytable">
+                <apex:column style="text-align:center;">
+                    <apex:facet name="header"><div style="text-align:center" onclick="sorting('selected');" class="{!IF(compareField='selected',CompareClass,'compare')}">Select</div></apex:facet>
+                    <apex:inputCheckbox value="{!item.selected}"/>
+                </apex:column>
+                <apex:column >
+                    <apex:facet name="header"><div onclick="sorting('Name');" class="{!IF(compareField='Name',CompareClass,'compare')}">Line</div></apex:facet>
+                    <c:customobject2 objid="{!item.quote_line.Id}" objname="{!item.quote_line.Name}" html-neudata="{!item.quote_line.Id}" html-class="id_linea"/>
+                </apex:column>
+                <apex:column >
+                    <apex:facet name="header"><div onclick="sorting('Item_Name__r.Name');" class="{!IF(compareField='Item_Name__r.Name',CompareClass,'compare')}">Item Name</div></apex:facet>
+                    <c:customobject2 objid="{!item.quote_line.Item_Name__r.Id}" objname="{!item.quote_line.Item_Name__r.Name}"/>
+                </apex:column>
+                <apex:column title="Item aditional info">
+                    <apex:facet name="header"><div style="text-align:center" onclick="sorting('Extension_Item_Name__c');" class="{!IF(compareField='Extension_Item_Name__c',CompareClass,'compare')}">Extension Item Name</div></apex:facet>
+                    <apex:outputField value="{!item.quote_line.Extension_Item_Name__c}"/>
+                </apex:column>
+                <apex:column >
+                    <apex:facet name="header"><div onclick="sorting('Item_Name__r.Sourcing_Item_Code__c');" class="{!IF(compareField='Item_Name__r.Sourcing_Item_Code__c',CompareClass,'compare')}">Item Code</div></apex:facet>
+                        <apex:outputField value="{!item.quote_line.Item_Name__r.Sourcing_Item_Code__c}"/>
+                </apex:column>
+                <apex:column >
+                    <apex:facet name="header"><div onclick="sorting('Item_Supplier_Owner__r.Name');" class="{!IF(compareField='Item_Supplier_Owner__r.Name',CompareClass,'compare')}">Supplier/Item Owner</div></apex:facet>
+                    <c:customobject2 objid="{!item.quote_line.Item_Supplier_Owner__r.Id}" objname="{!item.quote_line.Item_Supplier_Owner__r.Name}"/>
+                </apex:column>
+                 <apex:column style="text-align: right;">
+                        <apex:facet name="header"><div style="text-align:center" onclick="sorting('Delivery_Number__c');" class="{!IF(compareField='Delivery_Number__c',CompareClass,'compare')}">Delivery<br/>Number</div></apex:facet>
+                        <apex:outputText value="{!item.quote_line.Delivery_Number__c}" style="text-align: right;" />
+                    </apex:column>
+                    <apex:column style="text-align: right;">
+                        <apex:facet name="header"><div style="text-align:center" onclick="sorting('Delivery_Date__c');" class="{!IF(compareField='Delivery_Date__c',CompareClass,'compare')}">Delivery<br/>Date</div></apex:facet>
+                        <apex:outputField value="{!item.quote_line.Delivery_Date__c}" style="text-align: right;" />
+                </apex:column>
+                 <apex:column style="text-align:right">
+                    <apex:facet name="header"><div style="text-align:center" onclick="sorting('Units__c');" class="{!IF(compareField='Units__c',CompareClass,'compare')}">Units</div></apex:facet>
+                    <apex:outputField value="{!item.quote_line.Units__c}"/> 
+                </apex:column>
+                 <apex:column style="text-align:right">
+                    <apex:facet name="header"><div style="text-align:center" onclick="sorting('Unit_Destination_Price__c');" class="{!IF(compareField='Unit_Destination_Price__c',CompareClass,'compare')}">Unit Destination<br/>Sell Price</div></apex:facet>
+                    <apex:outputField value="{!item.quote_line.Unit_Destination_Price__c}"/> 
+                </apex:column>
+                 <apex:column style="text-align:right">
+                    <apex:facet name="header"><div style="text-align:center" onclick="sorting('Total_Destination_Amount__c');" class="{!IF(compareField='Total_Destination_Amount__c',CompareClass,'compare')}">Destination<br/>Sell Amount</div></apex:facet>
+                    <apex:outputField value="{!item.quote_line.Total_Destination_Amount__c}"/> 
+                </apex:column>
+                <apex:column style="text-align:center">
+                    <apex:facet name="header"><div style="text-align:center">Cons</div></apex:facet>
+                    <c:checkbox value="{!item.quote_line.Consolidated__c}" checkedtitle="Consolidated" notcheckedtitle="Not consolidated"/>
+                </apex:column>
+            </apex:pageBlockTable>
+            </div>
+         </apex:pageBlock> 
+ <apex:actionstatus id="myStatus">
+     <apex:facet name="start">
+         <div class="waitingSearchDiv" id="el_loading" style="background-color: #fbfbfb;
+                height: 100%;opacity:0.65;width:100%;"> 
+             <div class="waitingHolder" style="top: 74.2px; width: 91px;">
+                 <img class="waitingImage" src="/img/loading.gif" title="Please Wait..." />
+                 <span class="waitingDescription">Loading...</span>
+             </div>
+         </div>
+     </apex:facet>
+ </apex:actionstatus>
+</apex:form>
+</apex:page>

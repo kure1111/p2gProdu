@@ -1,0 +1,114 @@
+<apex:page standardController="Account" extensions="NEU_MD_Select_Families_Supplied">
+	<apex:includeScript value="{!$Resource.jquery_1_10_2}"/> 
+	<script>
+		function get_oi()
+		{
+			get_oi_from_family();
+		}
+		function del_family(id)
+	   	{
+	   		document.getElementById('{!$Component.form.id_family}').value = id;
+	   		remove_family();
+	   	}
+	   	function toggleCheckAll(checkAllBox) 
+	   	{
+    		$('.checkableTable :checkbox').prop('checked', checkAllBox.checked);
+		}
+		function open_image(id_image)
+		{
+			var l =(screen.width-370)/2;
+			var t =(window.height-480)/2;
+			$('#tapa').css("display", "block");
+			$('#imagen_previa').attr("src", "{!$Site.BaseUrl}/servlet/servlet.ImageServer?id="+id_image+"&oid={!id_org}");
+			$('#imagen_previa').css('top', t + 'px');
+			$('#imagen_previa').css('left', l + 'px');
+			setTimeout('$("#imagen_previa").css("display", "block");',1000);
+		}
+		$(document).ready(function(){ 
+			$('#imagen_previa').click(function(){
+				$('#tapa').css("display", "none");
+				$('#imagen_previa').css("display", "none");
+			});
+		});
+	</script>
+	<style>
+		.th_center{text-align:center;}
+		
+		#imagen_previa
+		{
+			display:none; 
+			border-radius:10px; 
+			-webkit-box-shadow: 0 0 5px rgba(0, 0, 0, 0.25);
+			-moz-box-shadow: 0 0 5px rgba(0, 0, 0, 0.25); 
+			box-shadow: 0 0 5px rgba(0, 0, 0, 0.25); 
+			float:left; 
+			margin:0; 
+			padding:0; 
+			position:fixed;
+			z-index: 1200;
+			cursor:pointer;
+			height:370px;
+			width:370px;
+			border:10px solid white;
+		}
+		
+		#tapa
+		{
+			background-color: rgb(119, 119, 119);
+			opacity: 0.7;
+			height: 100%;
+			position: fixed;
+			top: 0;
+			left: 0;
+			width: 100%;
+			z-index: 1100;
+			display: none;
+			margin: 0;
+			padding: 0;
+			border: 0;
+		}
+	</style>
+	<img src="" id="imagen_previa"/>
+	<div id="tapa"></div>
+	<apex:form id="form">
+		<apex:sectionHeader title="Allocate Families Supplied to Account"/>
+	    <apex:outputPanel id="linesSelector">
+		    <apex:pageBlock id="block1" title="Families">
+				<apex:pageBlockTable value="{!familias}" var="f" StyleClass="checkableTable">
+					<apex:column headerValue="Image" style="background:{!if(f.created == true, '#e3f3ff', '#ffffff')};">
+						<apex:image value="{!URLFOR($Resource.camera_icon)}" onClick="open_image('{!f.id_image}');" style="cursor:pointer; height:15px;"/>
+					</apex:column>
+					<apex:column headerValue="Name" value="{!f.name}" style="background:{!if(f.created == true, '#e3f3ff', '#ffffff')};"/>
+					<apex:column headerValue="Business Area" value="{!f.business_area}" style="background:{!if(f.created == true, '#e3f3ff', '#ffffff')};"/>
+					<apex:column headerValue="Description" value="{!f.description}" style="background:{!if(f.created == true, '#e3f3ff', '#ffffff')};"/>
+					<apex:column style="background:{!if(f.created == true, '#e3f3ff', '#ffffff')};">
+						<apex:facet name="header">
+        					<input type="checkbox" id="checkAllBox" onclick="toggleCheckAll(this)"/>
+   	 					</apex:facet>
+						<apex:inputCheckbox value="{!f.selected}" style="display:{!if(f.created == true, 'none', 'block')};" disabled="{!f.created}"/>
+						<apex:image value="/img/permissions_deny16.gif" onclick="del_family('{!f.Id}');" style="display:{!if(f.created == true, 'block', 'none')}; cursor:pointer;"/>
+					</apex:column>
+		        </apex:pageBlockTable>
+		        <apex:pageBlockButtons >
+        			<apex:commandButton value="ALLOCATE FAMILIES" status="myStatus" reRender="linesSelector"  action="{!allocate_families}"/>
+        			<apex:commandButton value="RETURN TO THE ACCOUNT" status="myStatus" action="{!return_account}"/>
+       		 	</apex:pageBlockButtons>
+		    </apex:pageBlock>
+	    </apex:outputPanel>
+		<apex:outputpanel >
+       		<apex:actionstatus id="myStatus">
+	           	<apex:facet name="start">
+	               <div class="waitingSearchDiv" id="el_loading" style="background-color: #fbfbfb;
+	                      height: 100%;opacity:0.65;width:100%;"> 
+	                   <div class="waitingHolder" style="top: 74.2px; width: 91px;">
+	                       <img class="waitingImage" src="/img/loading.gif" title="Please Wait..." />
+	                       <span class="waitingDescription">Loading...</span>
+	                   </div>
+	               </div>
+	           	</apex:facet>
+       		</apex:actionstatus>
+   		</apex:outputpanel>
+   		<apex:actionFunction name="remove_family" action="{!remove_family}" reRender="linesSelector" status="myStatus"/>
+   		<apex:inputHidden value="{!id_family}" id="id_family"/>
+	</apex:form>
+</apex:page>

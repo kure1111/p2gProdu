@@ -1,0 +1,103 @@
+<apex:page standardController="Shipment__c" extensions="PAK_ShipmentBLOQ" sidebar="false" showHeader="false" lightningStylesheets="false">
+    <apex:form >
+        <apex:pageBlock title="Shipment Cargo Lines">
+            <apex:pageBlockTable value="{!CargoLines}" var="Lines">
+                <apex:column value="{!Lines.Name}" />
+                <apex:column value="{!Lines.Item_Name__r.Name}" />
+                <apex:column value="{!Lines.Container_Type__c}" />
+                <apex:column value="{!Lines.Units_Shipped__c}" />
+                <apex:column value="{!Lines.Unit_of_measure__c}" />
+                <apex:column value="{!Lines.Shipping_Weight_Kg__c}" />
+                <apex:column value="{!Lines.Shipping_Volume_m3__c}" />
+                <apex:column value="{!Lines.Delivered__c}" />
+            </apex:pageBlockTable>
+        </apex:pageBlock>
+        <apex:pageBlock title="Shipment Service Lines">
+            <apex:pageBlockButtons location="top" >
+                <apex:commandLink value="new" target="_parent" style="text-decoration:none;padding:4px;"
+                                  styleClass="btn" action="/apex/NEU_OM_ShipFeeLinesPriceListYDiscount?Id={!Shipment.Id}"/>
+                
+                <apex:commandLink value="Desbloquear" style="text-decoration:none;padding:4px;" rendered="true"
+                                  styleClass="btn" action="{!Desbloquear}"/>
+            </apex:pageBlockButtons>
+            <apex:pageBlockTable value="{!FeeLines}" var="Lines">
+                <apex:column headerValue="Desbloquear">
+                    <apex:inputField rendered="{!Lines.SAP__c}" value="{!Lines.SAP__c}" />
+                </apex:column>
+                <apex:column headerValue="Service Line">
+                    <apex:commandLink rendered="{!!Lines.SAP__c}" target="_parent" action="/{!Lines.Id}" value="{!Lines.Name}" />
+                    <apex:outputField rendered="{!Lines.SAP__c}" value="{!Lines.Name}" />
+                </apex:column>
+                <apex:column value="{!Lines.Service_Rate_Category__c}" />
+                <apex:column value="{!Lines.Service_Rate_Name__r.Name}" />
+                <apex:column value="{!Lines.Carrier__c}" />
+                <apex:column value="{!Lines.Rate_Type__c}" />
+                <apex:column value="{!Lines.Units__c}" />
+                <apex:column value="{!Lines.Sell_Amount__c}" />
+                <apex:column value="{!Lines.Std_Buy_Amount__c}" />
+                <apex:column value="{!Lines.Service_Std_Profit__c}" />
+                <apex:column value="{!Lines.Service_Rate_Name__r.SAP_Service_Type__r.Code__c}" />
+            </apex:pageBlockTable>
+        </apex:pageBlock>
+        <apex:pageBlock title="Disbursements">
+            <apex:pageBlockButtons location="top">
+                <apex:commandLink value="new" target="_parent" style="text-decoration:none;padding:4px;"
+                                  styleClass="btn" action="/apex/NEU_NewDisbursementButton?shipment_id={!Shipment.Id}"/>
+            </apex:pageBlockButtons>
+            <apex:pageBlockTable value="{!Disbursements}" var="Lines">
+                <apex:column headerValue="Disbursement Number" >
+                	<apex:commandLink target="_parent" action="/{!Lines.Id}" value="{!Lines.Name}" />
+                </apex:column>
+                <apex:column value="{!Lines.Disbursment_Concept__c}" />
+                <apex:column value="{!Lines.Account__r.Name}" />
+                <apex:column value="{!Lines.Invoice_Ref__c}" />
+                <apex:column value="{!Lines.Payment_Date__c}" />
+                <apex:column value="{!Lines.Total_Incl_VAT__c}" />
+            </apex:pageBlockTable>
+        </apex:pageBlock>
+        <apex:pageBlock title="Disbursement Lines">
+            <apex:pageBlockTable value="{!DisLines}" var="Lines">
+                <apex:column value="{!Lines.Name}" />
+                <apex:column value="{!Lines.Disbursement__r.Name}" />
+                <apex:column value="{!Lines.Concept__c}" />
+                <apex:column value="{!Lines.Units__c}" />
+                <apex:column value="{!Lines.Unit_Price__c}" />
+                <apex:column value="{!Lines.Amount__c}" />
+                <apex:column value="{!Lines.VAT__c}" />
+                <apex:column value="{!Lines.Total_VAT__c}" />
+                <apex:column value="{!Lines.Total_Incl_VAT__c}" />
+            </apex:pageBlockTable> 
+        </apex:pageBlock>
+        <apex:pageBlock title="Invoices">
+            <apex:pageBlockButtons location="top">
+                <apex:commandLink value="new" target="_parent" style="text-decoration:none;padding:4px;"
+                                  styleClass="btn" action="/lightning/o/Invoice__c/new?count=1&defaultFieldValues=Shipment__c={!Shipment__c.Id},Account__c={!Shipment.Account_for__c},Import_Export_Quote_Order__c={!ImportExportId}"/>
+            </apex:pageBlockButtons>
+            <apex:pageBlockTable value="{!Invoices}" var="Lines">
+                <apex:column headerValue="Invoice Number" >
+                	<apex:commandLink target="_parent" action="/{!Lines.Id}" value="{!Lines.Name}" />
+                </apex:column>
+                <apex:column value="{!Lines.Date_of_Invoice__c}" />
+                <apex:column value="{!Lines.Invoice_Concept__c}" />
+                <apex:column value="{!Lines.Payable_Before__c}" />
+                <apex:column value="{!Lines.Account__r.Name}" />
+                <apex:column value="{!Lines.Total_Excl_VAT__c}" />
+                <apex:column value="{!Lines.Invoice_Status__c}" />
+                <apex:column value="{!Lines.Invoiced__c}" />
+            </apex:pageBlockTable>
+        </apex:pageBlock>
+        <apex:pageBlock title="Invoice Lines">
+            <apex:pageBlockTable value="{!InvoiceLines}" var="Lines">
+                <apex:column value="{!Lines.Name}" />
+                <apex:column value="{!Lines.Invoice__r.Name}" />
+                <apex:column value="{!Lines.Concept__c}" />
+                <apex:column value="{!Lines.Units__c}" />
+                <apex:column value="{!Lines.Unit_Price__c}" />
+                <apex:column value="{!Lines.Amount__c}" />
+                <apex:column value="{!Lines.VAT__c}" />
+                <apex:column value="{!Lines.Total_VAT__c}" />
+                <apex:column value="{!Lines.Total_Incl_VAT__c}" />
+            </apex:pageBlockTable>
+        </apex:pageBlock>
+    </apex:form>
+</apex:page>

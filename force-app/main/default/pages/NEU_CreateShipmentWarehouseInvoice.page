@@ -1,0 +1,5 @@
+<apex:page standardcontroller="Shipment__c" extensions="NEU_CreateShipmentWarehouseInvoice" action="{!create_invoice}">
+    <apex:form >
+        <apex:pagemessages escape="false"/>
+    </apex:form>
+</apex:page>

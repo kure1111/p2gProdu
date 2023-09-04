@@ -1,0 +1,82 @@
+<apex:page extensions="NEU_Allocate_Account_Items" standardController="Account">
+<apex:includeScript value="{!$Resource.jquery_1_10_2}"/> 
+<apex:includeScript value="{!$Resource.jquery_ui_1_10_3}"/>
+<apex:includeScript value="{!$Resource.neurored_jquery}"/> 
+<apex:stylesheet value="{!URLFOR($Resource.jquery_ui_1_10_3_css,'jquery-ui-1.10.3.min.css')}"/>
+<apex:form >
+<apex:actionFunction name="changefamily" reRender="subfamiliesblock,itemsblock,result" status="myStatus" />
+<apex:actionFunction name="changesubfamily" reRender="itemsblock,result" status="myStatus" />
+    <!--<a href="{!URLFOR(URLFOR($Action.Account.View,Id))}" title="return to {!$ObjectType.Account.label}"><apex:sectionHeader title="{!$ObjectType.Account.label}" subtitle="{!Account.Name}"/></a>-->
+    <apex:outputLink value="{!$Site.BaseUrl}/{!Account.Id}">
+           <apex:sectionHeader subtitle="Allocate Families, Subfamilies or Items" title="{!$ObjectType.Account.label} {!Account.Name}"></apex:sectionHeader>
+    </apex:outputLink>
+    <apex:pagemessages id="result"/>
+    <div>
+    <div style="display:table-cell">
+	<apex:pageBlock mode="maindetail">
+	<apex:pageBlockButtons location="both">
+        <apex:commandButton status="myStatus" value="Allocate Families" action="{!allocatefamily}" rerender="result"/>
+    </apex:pageBlockButtons>
+       <apex:pageBlockSection title="Families" columns="1" id="familiesblock">
+           <apex:selectList multiselect="true"  value="{!family}" title="Push Control to Enable Multiselect" size="8" onchange="changefamily();">
+               <apex:selectOptions value="{!families}"/>
+           </apex:selectList>
+       </apex:pageBlockSection>
+    </apex:pageBlock>
+   </div>
+    <div style="min-width:20%;display:table-cell">
+	<apex:pageBlock mode="maindetail">
+	<apex:pageBlockButtons location="both">
+        <apex:commandButton status="myStatus" value="Allocate Subfamilies" action="{!allocatesubfamily}" rerender="result"/>
+    </apex:pageBlockButtons>
+       <apex:pageBlockSection title="Subfamilies" columns="1" id="subfamiliesblock">
+           <apex:selectList multiselect="true"  value="{!subfamily}" title="Push Control to Enable Multiselect" size="8" onchange="changesubfamily();">
+               <apex:selectOptions value="{!subfamilies}"/>
+           </apex:selectList>
+       </apex:pageBlockSection>
+   </apex:pageBlock>
+   </div>
+   <div style="min-width:50%;display:table-cell">
+    <apex:pageBlock mode="maindetail">
+    <apex:pageBlockButtons location="both">
+        <apex:commandButton status="myStatus" value="Allocate Items" action="{!allocateitem}" rerender="result"/>
+    </apex:pageBlockButtons>
+       <apex:pageBlockSection title="Items" columns="1" id="itemsblock">
+           <apex:pageBlockTable value="{!items}" var="i">
+                <apex:column >
+                    <apex:inputCheckbox value="{!i.selected}"/>
+                </apex:column>
+                <apex:column >
+                    <apex:facet name="header">Family</apex:facet>
+                    <c:customobject2 objid="{!i.item.Sourcing_Family__r.Id}" objname="{!i.item.Sourcing_Family__r.Name}"/>
+                </apex:column>
+                <apex:column >
+                    <apex:facet name="header">Subfamily</apex:facet>
+                    <c:customobject2 objid="{!i.item.Subfamily__r.Id}" objname="{!i.item.Subfamily__r.Name}"/>
+                </apex:column>
+                <apex:column value="{!i.item.Sourcing_Item_Code__c}"/>
+                <apex:column >
+                    <apex:facet name="header">Name</apex:facet>
+                    <c:customobject2 objid="{!i.item.Id}" objname="{!i.item.Name}"/>
+                </apex:column>
+                <apex:column value="{!i.item.Item_Description__c}"/>
+           </apex:pageBlockTable>
+       </apex:pageBlockSection>
+   </apex:pageBlock>
+   </div>
+</div>
+<apex:outputpanel >
+   <apex:actionstatus id="myStatus">
+       <apex:facet name="start">
+           <div class="waitingSearchDiv" id="el_loading" style="background-color: #fbfbfb;
+                  height: 100%;opacity:0.65;width:100%;"> 
+               <div class="waitingHolder" style="top: 74.2px; width: 91px;">
+                   <img class="waitingImage" src="/img/loading.gif" title="Please Wait..." />
+                   <span class="waitingDescription">Loading...</span>
+               </div>
+           </div>
+       </apex:facet>
+   </apex:actionstatus>
+</apex:outputpanel>
+</apex:form>
+</apex:page>

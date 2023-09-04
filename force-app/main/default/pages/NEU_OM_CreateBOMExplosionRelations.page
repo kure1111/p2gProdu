@@ -1,0 +1,177 @@
+<apex:page standardController="Sourcing_Item__c" extensions="NEU_OM_CreateBOMExplosionRelations">
+<apex:includeScript value="{!$Resource.neu_jquery}"/> 
+<apex:includeScript value="{!$Resource.jquery_1_10_2}"/> 
+<apex:includeScript value="{!$Resource.jquery_ui_1_10_3}"/>
+<apex:includeScript value="{!$Resource.neurored_jquery}"/> 
+<apex:stylesheet value="{!URLFOR($Resource.jquery_ui_1_10_3_css,'jquery-ui-1.10.3.min.css')}"/>
+<script type="text/javascript"> var __sfdcSessionId = '{!GETSESSIONID()}'; </script>
+<script src="/soap/ajax/28.0/connection.js" type="text/javascript"></script>
+<script>
+		$(document).ready(function () {
+		
+	  		cambiarsubfamilia();
+	  		
+	  		$(function() {
+	   			$( "#radio" ).buttonset();
+	  		});
+	  		
+  			$('#accept').click(function(){
+				$(location).href('/{!Sourcing_Item__c.Id}')
+			});	
+			
+			$('#cancel').click(function(){
+				$('#tapa').css("display", "none");
+				$('#noselect').css("display", "none");
+			});	
+		});
+	
+		function creineas()
+		{	
+				crearlineas();
+		}
+
+	  	function cambiarsubfamilia()
+	  	{
+	  		
+	  		$(function() {
+	   			$( "#radio" ).buttonset();
+	  		});
+	  		$(".listafamilias").click(function(){
+  				document.getElementById('{!$Component.form.subfamily_field}').value = $(this).attr('for');
+  				repintartablas();
+  			});
+  		
+	  	}
+	  	
+	  	function redireccionar()
+	  	{
+	  		if ($('.check').val() == 'false')
+			{
+				$('#contenedormensaje').css("display", "block");
+					   	 $(function() {
+	    		$( "#contenedormensaje" ).dialog({
+		     		 height: 200,
+		     		 width: 280,
+		     		 modal: true,
+		     		  buttons: {
+			        "Accept": function() {
+			       	 $('#otherStatus').show();
+			          location.href='/{!Sourcing_Item__c.Id}';
+			        },
+			        Cancel: function() {
+			          $( this ).dialog( "close" );
+			        }
+			        }
+		   			 });
+		  		});
+			}
+			else
+			{
+				$('#otherStatus').show();
+				location.href='/{!Sourcing_Item__c.Id}';
+			}
+	  }
+	  function change(valor)
+	  {
+		
+		//alert(valor);
+		var unidades =$(this).val();
+		//alert(unidades);
+		var total =valor*unidades;
+		//alert(total);
+			$(this).parent().parent().find(".price").val(total);
+	  }
+		
+</script>
+
+	<apex:form id="form">
+		<div style="display:none;" id="contenedormensaje" title="You haven't selected any Item">
+			<p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>You haven't selected any Item to create New BOM Relation. Do you want to continue?</p>
+		</div>
+	<apex:sectionHeader title="Create BOM Explosion Relation"/>
+	  <span id="j_id0:form:j_id8" style="    position: relative;     top: -36px;     left: 411px;    font-size: 17px;">
+    <a href="/{!Sourcing_Item__c.Id}" onblur="LookupHoverDetail.getHover(neu_getId(this)).hide();" onfocus="LookupHoverDetail.getHover(neu_getId(this),'/{!Sourcing_Item__c.Id}/m?isAjaxRequest=1').show();" onmouseout="LookupHoverDetail.getHover(neu_getId(this)).hide();" onmouseover="LookupHoverDetail.getHover(neu_getId(this),'/{!Sourcing_Item__c.Id}/m?isAjaxRequest=1').show();" target="_blank" id="new_id_1">{!Sourcing_Item__c.Name}</a></span>
+ 
+	<apex:outputPanel id="radios">
+	<div id="radio">
+    	<apex:outputText value="{!listado_familias}" escape="false" />
+    </div>
+    </apex:outputPanel><!--  -->
+	 <apex:actionFunction name="crearlineas" action="{!crearrelationbom}" status="myStatus" reRender="linesSelector" oncomplete="redireccionar();">
+  </apex:actionFunction>
+   <apex:actionFunction name="repintartablas" status="myStatus" reRender="linesSelector">
+  </apex:actionFunction>
+  <!-- <apex:actionFunction name="sacarsubfamilias" action="{!subfamilies}" status="myStatus" reRender="linesSelector, radios" oncomplete="cambiarsubfamilia();">
+  </apex:actionFunction>-->
+	<div>
+	    <apex:outputPanel id="linesSelector">
+	     <apex:inputText value="{!chekeados}" id="chekeados" styleclass="check" style="display:none;"/>
+			<apex:pageBlock id="block0" title="Actual BOM Relation">
+				<apex:pageBlockTable id="table" value="{!bom_relation}" var="item">
+		            <apex:column headerValue="Item Name">
+		            	<c:customobject2 objid="{!item.Input_Item__c}" objname="{!item.Input_Item__r.Name}"/>
+		            </apex:column>
+					<apex:column headerValue="Item Owner" value="{!item.Item_Owner_Input__c}"/>  
+					<apex:column headerValue="Current Supplier" value="{!item.Input_Item__r.Current_Supplier__c}" style="text-align: left;" />
+					<apex:column headerValue="Unit of measure" value="{!item.Input_Item__r.Unit_of_measure__c}"  style="text-align:left"/>
+					<apex:column headerValue="Item Price" value="{!item.Input_Item__r.Item_Price__c}"  style="text-align:right"/>
+					<apex:column headerValue="Uds. Input / Ud. Output" value="{!item.Uds_Input_Ud_Output__c}"  style="text-align:right"/>
+					<apex:column headerValue="% Rejection" value="{!item.Rejection__c}"  style="text-align:right"/>
+					<apex:column headerValue="Price Imputation" value="{!item.Price_Imputation__c}"  style="text-align:right"/>
+					<apex:column headerValue="Create" style="text-align: center;">
+						<apex:image styleClass="{!item.Id}" onclick="clickIcon('{!item.Id}');" value="{!$Resource.Check}"/>
+					</apex:column>
+		        </apex:pageBlockTable>
+		    </apex:pageBlock>
+		   <apex:pageBlock id="block1" title="New BOM Relation">
+				<apex:pageBlockTable id="table2" value="{!Item_List}" var="lineanueva">
+		            <apex:column headerValue="Item Name"  styleClass="id_item" >
+		           	 	<c:customobject2 objid="{!lineanueva.line.Id}" objname="{!lineanueva.line.Name}"/>
+		            </apex:column>
+					<apex:column headerValue="Item Owner" value="{!lineanueva.line.Account_Owner__r.Name}"/>
+					<apex:column headerValue="Current Supplier" value="{!lineanueva.line.Current_Supplier__c}" style="text-align: left;" />
+					<apex:column headerValue="Unit of measure" value="{!lineanueva.line.Unit_of_measure__c}"  style="text-align:left"/>
+					<apex:column headerValue="Item Price" value="{!lineanueva.line.Item_Price__c}"  style="text-align:right" styleclass="precioItems"/>
+					<apex:column headerValue="Uds. Input / Ud. Output"  style="text-align:center">
+						<apex:inputText style="width: 60px; text-align: right;" StyleClass="units" onchange="change('{!lineanueva.line.Item_Price__c}');" value="{!lineanueva.units}"/>
+					</apex:column>
+					<apex:column headerValue="% Rejection"  style="text-align:center">
+							<apex:inputText style="width: 60px; text-align: right;"  value="{!lineanueva.Rejection}"/>
+					</apex:column>
+				<!-- <apex:column headerValue="Price"  style="text-align:center" StyleClass="price" value="{!lineanueva.price}">
+					</apex:column>-->
+					<apex:column headerValue="Create">
+							<apex:inputCheckbox style="width: 138px; text-align: right;"  StyleClass="inputcheck" value="{!lineanueva.selected}"/>
+					</apex:column>
+		        </apex:pageBlockTable>
+		          <apex:pageBlockButtons >
+        				<apex:commandButton value="CREATE BOM RELATION" status="myStatus"  styleClass="calculate" action="{!crearrelationbom}" reRender="linesSelector"   oncomplete="redireccionar();"/>
+       		 	</apex:pageBlockButtons>
+		    </apex:pageBlock>
+	    </apex:outputPanel>
+	</div>
+<apex:outputpanel >
+       <apex:actionstatus id="myStatus">
+           <apex:facet name="start">
+               <div class="waitingSearchDiv" id="el_loading" style="background-color: #fbfbfb;
+                      height: 100%;opacity:0.65;width:100%;"> 
+                   <div class="waitingHolder" style="top: 74.2px; width: 91px;">
+                       <img class="waitingImage" src="/img/loading.gif" title="Please Wait..." />
+                       <span class="waitingDescription">Loading...</span>
+                   </div>
+               </div>
+           </apex:facet>
+       </apex:actionstatus>
+   	</apex:outputpanel>
+   	   	 <div class="waitingSearchDiv" id="otherStatus" style="display:none;background-color:#fbfbfb;height:100%;opacity:0.65;width:100%;"> 
+			<div class="waitingHolder" style="top:74.2px;width:91px;">
+				<img class="waitingImage" src="/img/loading.gif" title="Please Wait..." />
+				<span class="waitingDescription">Loading...</span>
+			</div>
+		</div>
+		<apex:inputHidden value="{!subfamily_field}" id="subfamily_field"/>
+		<apex:inputHidden value="{!field_accountpricelist}" id="field_accountpricelist"/>
+		<apex:inputHidden value="{!listadodecheck}" id="listadodecheck"/>
+		<apex:inputHidden value="{!nombrepricelist}" id="nombrepricelist"/>
+	</apex:form>
+</apex:page>

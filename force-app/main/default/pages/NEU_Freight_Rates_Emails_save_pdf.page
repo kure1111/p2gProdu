@@ -1,0 +1,118 @@
+<apex:page controller="NEU_Freight_Rates_Emails_save_pdf" tabStyle="Freight_Rates_Management__tab">
+ <apex:includeScript value="{!$Resource.neurored_jquery}"/> 
+    <apex:includeScript value="{!$Resource.jquery_1_10_2}"/> 
+    <apex:includeScript value="{!$Resource.jquery_ui_1_10_3}"/>
+    <apex:stylesheet value="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css"/>
+     <script>
+     </script>
+     <style>
+     #container{min-height: 100px; overflow-x: hidden;}
+     .requiredField {border-left-width: 4px;border-left-color: red;padding-left: 2px;}
+     .list_rateCategory {list-style: none;height: 0px; width: 22%;}
+     .list_aditional {margin-right: -15px; margin-left: -15px; float: left;}
+     .column_rate{width: 300px;}
+     .column_rate_title {margin-bottom: 2%;height: 20px;}
+     </style>
+    <apex:form >
+    <apex:sectionHeader title="{!$ObjectType.Fee__c.labelPlural}" subtitle="Generate Price List"/>
+        <apex:PageMessages id="errors"/>
+        <apex:pageBlock >
+            <apex:pageBlockButtons location="top">
+            	<apex:commandButton value="Show preview Document" status="myStatus" action="{!updateFilters}" rerender="mypdf,errors"/>
+                <apex:commandButton value="Create Associated Document" status="myStatus" action="{!crear}" rerender="errors"/>
+                <apex:outputLabel style="margin-left: 2%;" value="Document Name"/>
+                <apex:inputText style="margin-left: 1%;" styleClass="requiredField" value="{!documentName}"/>
+            </apex:pageBlockButtons>
+            
+         	<apex:pageBlock mode="" id="filtersblock">
+	         		<div style="display:table-cell;vertical-align:top">
+	                <apex:pageBlockSection columns="2" showHeader="false" id="f2">
+	                    <apex:inputField id="Account_for" value="{!filter.Account_for__c}"/>
+	                    <apex:pageBlockSectionItem >
+	                        <apex:outputLabel value="Show Rates"/>
+	                        <apex:selectList value="{!BuySell}" multiselect="false" size="1">
+	                            <apex:selectOptions value="{!BuySellList}"/>
+	                        </apex:selectList>
+	                    </apex:pageBlockSectionItem>
+	                    <apex:pageBlockSectionItem >
+	                    	<apex:outputLabel value="Currency"/>
+	                        <apex:outputPanel layout="block" styleClass="requiredInput">
+	                            <div class="requiredBlock"></div>
+	                            <apex:selectList value="{!filterCurrencyISOCode}" multiselect="false" size="1">
+	                            <apex:SelectOptions value="{!CurrencyISOCodeOptions}"/>
+	                            </apex:selectList>
+	                       </apex:outputPanel>
+	                    </apex:pageBlockSectionItem>
+	                    <apex:pageBlockSectionItem >
+	                       <apex:outputLabel value="Rate Type"/>
+	                        <apex:selectList value="{!filterRateTypeFreights}" multiselect="false" size="1">
+	                            <apex:selectOptions value="{!RateTypeList}"/>
+	                        </apex:selectList>
+	                    </apex:pageBlockSectionItem>
+	                    <apex:pageBlockSectionItem >
+	                    </apex:pageBlockSectionItem>
+	                    
+	                </apex:pageBlockSection>
+	            </div>
+	            <div style="display:table-cell;vertical-align:top">
+	                <apex:pageBlockSection columns="1" showHeader="false">
+	                    <apex:inputField value="{!filter.Carrier_Account__c}"/>
+	                    <apex:inputField styleClass="" value="{!filter.Valid_From__c}"/>
+	                    <apex:inputField styleClass="requiredField" value="{!filter.Valid_Until__c}"/>
+	                </apex:pageBlockSection>
+	            </div>
+	            <div style="display:table-cell;vertical-align:top">
+	                <apex:pageBlockSection columns="2" showHeader="false">
+	                    <apex:pageBlockSectionItem >
+	                        <apex:outputLabel value="Region of Load"/>
+	                        <apex:inputField value="{!loadFilter.Region__c}"/>
+	                    </apex:pageBlockSectionItem>
+	                    <apex:pageBlockSectionItem >
+	                        <apex:outputLabel value="Region of Discharge"/>
+	                        <apex:inputField value="{!dischargeFilter.Region__c}"/>
+	                    </apex:pageBlockSectionItem>
+	                    <apex:inputField value="{!filter.Route__r.Country_of_Load__c}"/>
+	                    <apex:inputField value="{!filter.Route__r.Country_of_Discharge__c}"/>
+	                    <apex:inputField value="{!filter.Route__r.Port_Airport_of_Load__c}"/>
+	                    <apex:inputField value="{!filter.Route__r.Port_Airport_of_Discharge__c}"/>
+	                </apex:pageBlockSection>
+	            </div>
+	            
+	            <!-- FREIGHTS AND RATES NAMES -->
+	            <apex:pageBlockSection title="Rates Selection" id="rateCategory">
+            	</apex:pageBlockSection>
+	            	<div id="container">
+			         	<apex:repeat value="{!feesReport}" var="fr" rendered="{!feesReport != 0}">
+		              	 		<ul class="list_rateCategory list_aditional">
+		              	 			<li class="column_rate"> 
+		              	 				<div class="column_rate_title">
+		              	 					<apex:inputCheckbox id="rateCategory" value="{!fr.selectedFee}"  styleClass="master_{!SUBSTITUTE(fr.NameFee, ' ', '')}" onclick="toggleCheckServiceRate(this)"/>
+		              	 					<apex:outputLabel for="rateCategory" styleClass="label_{!SUBSTITUTE(fr.NameFee, ' ', '')}" value="{!fr.NameFee}"/>
+		              	 				</div>
+		              	 			</li>
+		              	 		</ul>
+			            </apex:repeat>
+	         		</div>
+         	</apex:pageBlock>
+         	
+         
+         <apex:outputpanel id="mypdf">
+            <iframe scrolling="auto" src="NEU_Freight_Rates_Emails_pdf{!querystring}" width= "100%" height="850px">
+            </iframe>
+         </apex:outputpanel>
+       </apex:pageBlock>
+         <apex:outputpanel >
+               <apex:actionstatus id="myStatus">
+                   <apex:facet name="start">
+                       <div class="waitingSearchDiv" id="el_loading" style="background-color: #fbfbfb;
+                              height: 100%;opacity:0.65;width:100%;"> 
+                           <div class="waitingHolder" style="top: 74.2px; width: 91px;">
+                               <img class="waitingImage" src="/img/loading.gif" title="Please Wait..." />
+                               <span class="waitingDescription">Loading...</span>
+                           </div>
+                       </div>
+                   </apex:facet>
+               </apex:actionstatus>
+            </apex:outputpanel>
+        </apex:form>
+</apex:page>

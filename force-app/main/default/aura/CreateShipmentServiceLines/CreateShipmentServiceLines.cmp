@@ -1,0 +1,81 @@
+<aura:component implements="force:hasRecordId,force:lightningQuickActionWithoutHeader"
+                controller="CreateShipmentServiceLinesController">
+    <aura:attribute name="id" type="String" />
+    <aura:attribute name="shipment" type="Shipment__c" />
+    <aura:attribute name="activeSections" type="List" default="['A','B']" />
+    <aura:attribute type="Fee__c[]" name="ratesList"/>
+    <aura:attribute name="mycolumns" type="List"/>
+    <aura:attribute name="servicelinescolumns" type="List"/>
+    <aura:attribute name="selectedRowsCount" type="Integer" default="0"/>
+    <aura:attribute type="Fee__c[]" name="selectedRates"/>
+    <aura:attribute name="errors" type="Object" default="[]"/>
+    <aura:attribute name="draftValues" type="Object" default="[]"/>
+    <aura:attribute type="Shipment_Fee_Line__c[]" name="serviceLines"/>
+    <aura:attribute name="isWTP" type="boolean" />
+    
+    <ltng:require styles="{!$Resource.popupCSS}" />
+    
+    <aura:handler name="init" value="{!this}" action="{!c.onInit}"/>
+    
+    
+    <lightning:spinner variant="brand" size="large" aura:id="Id_spinner" class="slds-hide" />
+    
+    <div class="slds-is-relative">
+        <h1 id="titulo">Create Shipment Service Lines</h1>
+        <h2 id="titulo2">{!v.shipment.Name}</h2>
+        <br/>
+        <br/>
+        <aura:renderIf isTrue="{!v.isWTP}">
+            <div style="font-weight: bold; color: red;">  La combinacion Ruta Unidad no pertenece al WTP, Cotizarlo como Proyecto.</div>
+        </aura:renderIf> 
+        <br/>
+        <br/>
+        <aura:renderIf isTrue="{!empty(v.ratesList)}">
+            <div style="font-weight: bold; color: red;">  SOLICITAR ALTA DE TARIFA CON DEPARTAMENTO DE COMPRAS POR MEDIO DE CHATTER.</div>
+        </aura:renderIf> 
+        <br/>
+        <br/>
+        
+         <div align="center">
+                    <lightning:button onclick="{!c.createRecord}"
+                                      class="slds-m-top--large"
+                                      variant="brand"
+                                      label="Create Service Rate"
+                                      iconName="utility:add"/>
+                </div><br/>
+        
+        <lightning:accordion allowMultipleSectionsOpen="true" activeSectionName="{! v.activeSections }">
+            <lightning:accordionSection name="A" label="Actual Shipment Service Lines">
+                <div style="height: 150px">
+                    <lightning:datatable aura:id="serviceLinesTable" data="{! v.serviceLines }"
+                                         columns="{! v.servicelinescolumns }"
+                                         keyField="id"
+                                         showRowNumberColumn="true"
+                                         hideCheckboxColumn="true"
+                                         />
+                </div>
+            </lightning:accordionSection>
+            <lightning:accordionSection name="B" label="New Shipment Service Lines">
+               
+                 <div align="center">
+                    <lightning:button onclick="{!c.crearLineas}"
+                                      class="slds-m-top--large"
+                                      variant="brand"
+                                      label="Create Shipment Service Lines"
+                                      iconName="utility:add"/>
+                </div><br/>
+                <div style="height: 300px">
+                    <lightning:datatable aura:id="ratesTable" data="{! v.ratesList }"
+                                         columns="{! v.mycolumns }"
+                                         keyField="Id"
+                                         onrowselection="{! c.rowSelection }"
+                                         errors="{! v.errors }"
+                                         draftValues="{! v.draftValues }"
+                                         onsave="{! c.handleSaveEdition }"
+                                         />
+                </div>
+               
+            </lightning:accordionSection>
+        </lightning:accordion>
+    </div>
+</aura:component>

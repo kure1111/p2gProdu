@@ -1,0 +1,167 @@
+<apex:page standardController="Account" extensions="NEU_New_Client" sidebar="false" showHeader="false">
+<apex:includeScript value="{!$Resource.jquery_1_10_2}"/> 
+<apex:includeScript value="{!$Resource.jquery_ui_1_10_3}"/>
+<apex:includeScript value="{!$Resource.neurored_jquery}"/> 
+<apex:stylesheet value="{!URLFOR($Resource.jquery_ui_1_10_3_css,'jquery-ui-1.10.3.min.css')}"/>
+<apex:stylesheet value="{!$Resource.Estilo_NewSupplier}"/>
+<script>
+    function toggleCheckAll(checkAllBox) 
+    {
+        $('.checkableTable :checkbox').prop('checked', checkAllBox.checked);
+    }
+    function open_image(id_image)
+    {
+        if(id_image)
+        {
+            var l =(screen.width-370)/2;
+            var t =(window.height-480)/2;
+            $('#tapa').css("display", "block");
+            $('#imagen_previa').attr("src", id_image); 
+            $('#imagen_previa').css('top', t + 'px');
+            $('#imagen_previa').css('left', l + 'px');
+            setTimeout('$("#imagen_previa").css("display", "block");',1000);
+        }
+    }
+    $(document).ready(function(){ 
+        $('#imagen_previa').click(function(){
+            $('#tapa').css("display", "none");
+            $('#imagen_previa').css("display", "none");
+        });
+    });
+</script>
+    <style>
+        .th_center{text-align:center;}
+        
+        #imagen_previa
+        {
+            display:none; 
+            border-radius:10px; 
+            -webkit-box-shadow: 0 0 5px rgba(0, 0, 0, 0.25);
+            -moz-box-shadow: 0 0 5px rgba(0, 0, 0, 0.25); 
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.25); 
+            float:left; 
+            margin:0; 
+            padding:0; 
+            position:fixed;
+            z-index: 1200;
+            cursor:pointer;
+            height:370px;
+            width:370px;
+            border:10px solid white;
+        }
+        
+        #tapa
+        {
+            background-color: rgb(119, 119, 119);
+            opacity: 0.7;
+            height: 100%;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1100;
+            display: none;
+            margin: 0;
+            padding: 0;
+            border: 0;
+        }
+    </style>
+    <img src="" id="imagen_previa"/>
+    <div id="tapa"></div>
+<apex:form id="form" style="margin-left:10%;margin-right:10%;margin-top:3em">
+        <img src="{!$Resource.company_logo}" style="vertical-align:middle"/>
+        <div style="display:inline-block;width:30em">
+            <apex:sectionHeader title="Customer generator" subtitle="New Customer form"/>
+        </div>
+        <apex:pageBlock id="block1" mode="maindetail" title="Customer detail">
+        <apex:pageBlockButtons >
+            <apex:commandButton value="Send data" status="myStatus" action="{!send_form}"/>
+        </apex:pageBlockButtons>
+        <apex:pageMessages />
+        <apex:pageBlockSection title="Customer data">
+            <apex:inputField value="{!record.Name}" label="Customer name"/>
+            <apex:inputField value="{!record.Phone}" required="true"/>
+            <apex:inputField value="{!record.Brand_Name__c}"/>
+            <apex:inputField value="{!record.Fax}"/>
+            <apex:inputField value="{!record.NEU_Email__c}" required="true"/>
+            <apex:pageBlockSectionItem >
+                <apex:outputLabel value="Customer logo"/>
+                <apex:inputFile value="{!logo.Body}" filename="{!logo.Name}"/>
+            </apex:pageBlockSectionItem>
+            <apex:inputField value="{!record.Website}"/>
+            <apex:inputField value="{!record.Website_Marketplace__c}"/>
+            <apex:inputField value="{!record.TAX_ID__c}"/>
+            <apex:selectList id="Currency_selector"  label="Currency" value="{!currency_selected}" size="1">
+                <apex:selectOptions value="{!currencys}"/>
+             </apex:selectList>
+             <apex:inputField value="{!record.Country_of_Load__c}"/>
+             <apex:inputField value="{!record.Incoterm__c}"/>
+        	<apex:inputField value="{!record.State_of_Load_Discharge__c}"/>
+            <apex:inputField value="{!record.Port_Airport_of_Load__c}"/>
+        </apex:pageBlockSection>
+        <apex:pageBlockSection title="Customer bank data">
+            <apex:inputField value="{!record.Bank_Name_Supplier_Form__c}"/>
+            <apex:inputField value="{!record.Bank_Account_Number__c}"/>
+            <apex:inputField value="{!record.Bank_Account_Name__c}"/>
+            <apex:inputField value="{!record.Bank_Address__c}"/>
+            <apex:inputField value="{!record.Swift_Number__c}"/>
+        </apex:pageBlockSection>
+        <apex:pageBlockSection title="Family Supplied" columns="1">
+            <div style="overflow-y:auto;max-height:400px;width:100%">
+            <apex:pageBlockTable id="familiestable" value="{!families}" var="f" StyleClass="checkableTable">
+                <apex:column headerValue="Image">
+                    <apex:image value="{!URLFOR($Resource.camera_icon)}" onClick="open_image('{!f.id_image}');" style="cursor:pointer; height:15px;"/>
+                </apex:column>
+                <apex:column headerValue="Name" value="{!f.name}"/>
+                <apex:column headerValue="Business Area" value="{!f.business_area}"/>
+                <apex:column headerValue="Description" value="{!f.description}"/>
+                <apex:column >
+                    <apex:facet name="header">
+                        <input type="checkbox" id="checkAllBox" onclick="toggleCheckAll(this);"/>
+                    </apex:facet>
+                    <apex:inputCheckbox value="{!f.selected}"/>
+                </apex:column>
+               </apex:pageBlockTable>
+               </div>
+        </apex:pageBlockSection>
+        <apex:pageBlockSection title="Customer addresses">
+            <apex:inputField value="{!record.BillingStreet}"/>
+            <apex:inputField value="{!record.ShippingStreet}"/>
+            <apex:inputField value="{!record.BillingCity}"/>
+            <apex:inputField value="{!record.ShippingCity}"/>
+            <apex:inputField value="{!record.BillingState}"/>
+            <apex:inputField value="{!record.ShippingState}"/>
+            <apex:inputField value="{!record.BillingPostalCode}"/>
+            <apex:inputField value="{!record.ShippingPostalCode}"/>
+            <apex:inputField value="{!record.BillingCountry}"/>
+            <apex:inputField value="{!record.ShippingCountry}"/>
+        </apex:pageBlockSection>
+        <apex:pageBlockSection title="Customer contact">
+            <apex:inputField value="{!customercontact.FirstName}"/>
+            <apex:inputField value="{!customercontact.Email}" required="true"/>
+            <apex:inputField value="{!customercontact.LastName}"/>
+            <apex:inputField value="{!customercontact.Other_Email__c}"/>
+            <apex:inputField value="{!customercontact.Phone}" required="true"/>
+            <apex:inputField value="{!customercontact.Title}"/>
+            <apex:inputField value="{!customercontact.QQ_Messaging_Service__c}"/>
+        </apex:pageBlockSection>
+        
+        </apex:pageBlock>
+        <apex:actionstatus id="myStatus">
+            <apex:facet name="start">
+                <div class="waitingSearchDiv" id="el_loading" style="background-color:#fbfbfb;height:100%;opacity:0.65;width:100%;"> 
+                    <div class="waitingHolder" style="top:74.2px;width:91px;">
+                        <img class="waitingImage" src="/img/loading.gif" title="Please Wait..." />
+                        <span class="waitingDescription">Loading...</span>
+                    </div>
+                </div>
+            </apex:facet>
+        </apex:actionstatus>
+        <div class="waitingSearchDiv" id="otherStatus" style="display:none;background-color:#fbfbfb;height:100%;opacity:0.65;width:100%;"> 
+            <div class="waitingHolder" style="top:74.2px;width:91px;">
+                <img class="waitingImage" src="/img/loading.gif" title="Please Wait..." />
+                <span class="waitingDescription">Loading...</span>
+            </div>
+        </div>
+    </apex:form>
+</apex:page>

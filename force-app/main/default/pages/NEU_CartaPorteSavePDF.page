@@ -1,0 +1,34 @@
+<apex:page StandardController="Shipment__c" extensions="NEU_CartaPorteSavePDF" lightningStylesheets="false" >
+    <style>
+        .notes{width:100%; height:200px;}
+    </style>
+    <apex:form id="form">
+        <apex:outputLink value="{!URLFOR($Action.Shipment__c.View,Shipment__c.Id)}">
+            <apex:sectionHeader subtitle="{!Shipment__c.Name}" title="Generate {!$ObjectType.Shipment__c.labelPlural}"/>
+        </apex:outputLink>
+        <apex:pagemessages id="messages"/>
+        <apex:pageBlock id="block">
+            <apex:pageBlockButtons >  
+                <apex:commandbutton value="Refrescar información" status="myStatus" action="{!refresh_data}" styleClass="slds-vf-button_brand" rerender="messages, iframes" oncomplete="changeradios();"/>
+                <apex:commandButton rendered="{!if(Shipment__c.Traslado_Ingreso__c == 'Traslado' && (Shipment__c.Shipment_Type__c == 'FN'|| Shipment__c.Shipment_Type__c == 'PTO'||Shipment__c.Shipment_Type__c == 'FI'),true,false)}" value="Timbrar y almacenar PDF" onclick="if(!confirm('¿Esta seguro de remplazar esta carta porte?')){return false}" status="myStatus" rerender="iframes" styleClass="slds-vf-button_brand" action="{!crear}"  oncomplete="savePDF();" />
+             	  <apex:commandButton rendered="{!if(Shipment__c.Shipment_Type__c != 'FN'&& Shipment__c.Shipment_Type__c != 'PTO'&& Shipment__c.Shipment_Type__c != 'FI' ,true,false)}" value="Almacenar PDF" onclick="if(!confirm('¿Esta seguro de almacenar esta carta porte?')){return false}" status="myStatus" rerender="iframes" styleClass="slds-vf-button_brand" action="{!savePdfSinCP}"  oncomplete="savePDF();" />
+                <apex:actionFunction name="savePDF" action="{!savePdf}" status="myStatus" />
+            </apex:pageBlockButtons>
+            <apex:outputPanel id="iframes">
+                <iframe scrolling="auto" id="EN" src="/apex/NEU_CartaPortePDF?id={!Shipment__c.Id}" width= "100%" height="850px"/>
+            </apex:outputPanel>
+        </apex:pageBlock>
+        <apex:outputpanel >
+            <apex:actionstatus id="myStatus">
+                <apex:facet name="start">
+                    <div class="waitingSearchDiv" id="el_loading" style="background-color: #fbfbfb; height: 100%;opacity:0.65;width:100%;"> 
+                        <div class="waitingHolder" style="top: 74.2px; width: 91px;">
+                            <img class="waitingImage" src="/img/loading.gif" title="Please Wait..." />
+                            <span class="waitingDescription">Loading...</span>
+                        </div>
+                    </div>
+                </apex:facet>
+            </apex:actionstatus>
+        </apex:outputpanel>
+    </apex:form>
+</apex:page>

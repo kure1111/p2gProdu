@@ -1,0 +1,5 @@
+<aura:component controller="NEU_NewImportExportButton" implements="forceCommunity:availableForAllPageTypes">
+    <div id="main">
+		<ui:button label="Start with a New Import-Export Quote/Order" class="slds-button slds-button_neutral slds-size_large quote_request_button" press="{!c.createRecord}"/>                
+    </div>
+</aura:component>

@@ -1,0 +1,3 @@
+<apex:page standardController="Supply_Project__c" extensions="NEU_Clone_Supply_Projects" action="{!duplicate_supply_projects}">
+	<apex:outputText value="{!resultado}"/>
+</apex:page>

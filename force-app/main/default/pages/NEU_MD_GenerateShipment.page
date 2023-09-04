@@ -1,0 +1,67 @@
+<apex:page StandardController="Customer_Quote__c" extensions="NEU_MD_GenerateShipment"  >
+<apex:includeScript value="{!$Resource.neu_jquery}"/> 
+<apex:includeScript value="{!$Resource.jquery_1_10_2}"/> 
+<apex:includeScript value="{!$Resource.jquery_ui_1_10_3}"/>
+<apex:includeScript value="{!$Resource.neurored_jquery}"/> 
+<apex:stylesheet value="{!URLFOR($Resource.jquery_ui_1_10_3_css,'jquery-ui-1.10.3.min.css')}"/>
+<script>
+    
+    $(document).ready(function () {
+        crearshipment();
+         });
+        function sacarcapa()
+        {
+            
+            var id_del_shipment = $($.sfId('{!$Component.form.id_shipment}')).val();
+            if ($($.sfId('{!$Component.form.id_shipment}')).val() == '')
+            {
+                $('#contenedormensaje').css("display", "block");
+                         $(function() {
+                $( "#contenedormensaje" ).dialog({
+                     height: 200,
+                     width: 280,
+                     modal: true,
+                      buttons: {
+                    "Accept": function() {
+                       $( this ).dialog( "close" );
+                       location.href='/{!Customer_Quote__c.Id}';
+                    },
+                    //location.href='/{!Customer_Quote__c.Id}';
+                    }
+                     });
+                });
+            }
+            else
+            {
+                $('#otherStatus').show();
+                location.href='/'+id_del_shipment;
+            }
+      }
+</script>
+     <apex:form id="form">
+      <apex:actionFunction name="crearshipment" status="myStatus" reRender="linesSelector"  action="{!generate_shipment}" oncomplete="sacarcapa();"/>
+            
+        <!-- <apex:outputText value="{!result}"/>--->
+         <apex:outputPanel id="linesSelector">
+         <div style="display:none;" id="contenedormensaje" title="Errors">
+                <p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>{!errores}</p>
+            </div>
+            <apex:inputHidden value="{!result}" id="result"/>
+            <apex:inputHidden value="{!errores}" id="errores"/>
+            <apex:inputHidden value="{!id_shipment}" id="id_shipment"/>
+        </apex:outputPanel>
+        <apex:outputpanel >
+           <apex:actionstatus id="myStatus">
+               <apex:facet name="start">
+                   <div class="waitingSearchDiv" id="el_loading" style="background-color: #fbfbfb;
+                          height: 100%;opacity:0.65;width:100%;"> 
+                       <div class="waitingHolder" style="top: 74.2px; width: 91px;">
+                           <img class="waitingImage" src="/img/loading.gif" title="Please Wait..." />
+                           <span class="waitingDescription">Loading...</span>
+                       </div>
+                   </div>
+               </apex:facet>
+           </apex:actionstatus>
+        </apex:outputpanel>
+    </apex:form>    
+</apex:page>

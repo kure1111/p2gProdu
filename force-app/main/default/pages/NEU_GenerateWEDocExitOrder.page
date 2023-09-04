@@ -1,0 +1,4 @@
+<apex:page standardController="Warehouse_Exit_Order__c" extensions="NEU_GenerateWEDocExitOrder" standardStylesheets="false" renderas="pdf">
+<apex:stylesheet value="{!$Resource.wedoc_style}"/>
+	<apex:outputText value="{!doc}" escape="false"/>
+</apex:page>

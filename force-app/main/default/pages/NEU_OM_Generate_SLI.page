@@ -1,0 +1,5 @@
+<apex:page standardController="Shipment__c" extensions="NEU_OM_Generate_SLI" standardStylesheets="false" renderAs="pdf" action="{!update_shipment}">
+	<apex:form >		
+		<apex:outputText value="{!informe_sli}" escape="false"/>
+	</apex:form>
+</apex:page>

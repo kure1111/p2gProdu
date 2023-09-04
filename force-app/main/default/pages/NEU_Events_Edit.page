@@ -1,0 +1,74 @@
+<apex:page id="page" controller="NEU_Events_Edit" sidebar="false" showHeader="false">
+    <apex:includeScript value="{!$Resource.jquery_1_11_1}"/> 
+    <apex:includeScript value="{!$Resource.jquery_ui_1_11_4}"/>
+    <apex:includeScript value="{!$Resource.neurored_jquery}"/> 
+    <apex:stylesheet value="{!URLFOR($Resource.jquery_ui_1_11_4_css,'jquery-ui.min.css')}"/>
+    <apex:stylesheet value="{!$Resource.NEU_Pagination_css}"/>
+      <script type="text/javascript">
+        $(document).ready(function () {
+			setDecimalSep($('#page\\:form\\:decimalSep').val(),$('#page\\:form\\:thousandSep').val());
+        });
+        function validationOK(value,value0,value1,value2,value3,value4,value5,value6,value7,value8,value9)
+        {
+        	var validationOK=$('#page\\:form\\:validationOK');
+        	if(validationOK.val())
+        	{
+        		validationOK.val('');
+        		value(value0,value1,value2,value3,value4,value5,value6,value7,value8,value9);
+        	}
+        }
+        function closeEvents(mustUpdate)
+        {
+        	window.parent.closeEvents(mustUpdate);
+        }
+	    </script>
+    <apex:form id="form">
+	<apex:inputHidden value="{!decimalSep}" id="decimalSep"/>
+	<apex:inputHidden value="{!thousandSep}" id="thousandSep"/>
+    <apex:inputHidden value="{!validationOK}" id="validationOK"/>
+    <apex:actionFunction name="sorting" action="{!sorting}" status="myStatus" reRender="pageblock">
+        <apex:param name="one" assignTo="{!compareField}" value="" />
+    </apex:actionFunction>
+	<apex:sectionHeader title="{!parentTypeName}" subtitle="{!parentName}"/>
+        <apex:pageBlock mode="maindetail" id="pageblock">
+            <apex:pagemessages id="errors"/>
+			<apex:pageBlockButtons >
+                <apex:commandButton status="myStatus" value="Save" action="{!savedata}" rerender="pageblock,validationOK" oncomplete="validationOK(closeEvents,true);"/>
+                <apex:commandButton status="myStatus" value="Cancel" immediate="true" rerender="errors" oncomplete="closeEvents(false);"/>
+            </apex:pageBlockButtons>
+            <apex:pageBlockTable value="{!myList}" var="line" id="table">
+                <apex:column >
+                    <apex:facet name="header"><div onclick="sorting('Name');" class="{!IF(compareField='Name',CompareClass,'compare')}">{!$ObjectType.Event__c.fields.Name.Label}</div></apex:facet>
+                    <apex:outputField value="{!line.obj.Name}"/>
+                </apex:column>
+                <apex:column >
+                    <apex:facet name="header"><div>{!$ObjectType.Event__c.fields.Event__c.Label}</div></apex:facet>
+                    <apex:outputField value="{!line.obj.Event__c}"/>
+                </apex:column>
+                <apex:column >
+                    <apex:facet name="header"><div onclick="sorting('port');" class="{!IF(compareField='port',CompareClass,'compare')}">Port</div></apex:facet>
+                    <apex:inputText value="{!line.port}" rendered="{!(line.position==2)||(line.position==5)||(line.position==9)||(line.position==13)||(line.position==17)}"/>
+                </apex:column>
+                <apex:column >
+                    <apex:facet name="header"><div onclick="sorting('transport');" class="{!IF(compareField='transport',CompareClass,'compare')}">{!transportName}</div></apex:facet>
+                    <apex:inputText value="{!line.transport}" rendered="{!(line.position==4)||(line.position==8)||(line.position==12)||(line.position==16)}"/>
+                </apex:column>
+                <apex:column >
+                    <apex:facet name="header"><div onclick="sorting('DateTime');" class="{!IF(compareField='DateTime',CompareClass,'compare')}">{!$ObjectType.Event__c.fields.Date_Time__c.Label}</div></apex:facet>
+                    <apex:inputField value="{!line.objDateTime.Notified_Date_Time__c}" html-onpaste="return handlepaste(this,event);" style="width:8em"/>
+                </apex:column>
+            </apex:pageBlockTable>
+        </apex:pageBlock>
+       <apex:actionstatus id="myStatus">
+           <apex:facet name="start">
+               <div class="waitingSearchDiv" id="el_loading" style="background-color: #fbfbfb;
+                      height: 100%;opacity:0.65;width:100%;"> 
+                   <div class="waitingHolder" style="top: 74.2px; width: 91px;">
+                       <img class="waitingImage" src="/img/loading.gif" title="Please Wait..." />
+                       <span class="waitingDescription">Loading...</span>
+                   </div>
+               </div>
+           </apex:facet>
+       </apex:actionstatus>
+    </apex:form>
+</apex:page>

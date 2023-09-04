@@ -1,0 +1,16 @@
+<template>
+    <lightning-card title="Carga de Documentos"  icon-name="standard:work_type_group">
+        <div style="padding-left: 15px;padding-right: 171px;">
+            <lightning-combobox
+                id="doc"
+                name="progress"
+                label="Tipo de Documento"
+                value={selectedType}
+                placeholder="Selecciona el tipo de Documento"
+                options={listDocuments}
+                onchange={handleChange} >
+            </lightning-combobox>            
+            <c-l-w-c-_-upload-files recordid={recordId} document-type={documentType} sp-id="" ></c-l-w-c-_-upload-files>        
+        </div>
+    </lightning-card>
+</template>

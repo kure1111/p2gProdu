@@ -1,0 +1,4 @@
+<apex:page standardController="Shipment__c" extensions="NEU_GenerateWEDoc" standardStylesheets="false" renderas="pdf">
+<apex:stylesheet value="{!$Resource.wedoc_style}"/>
+	<apex:outputText value="{!doc}" escape="false"/>
+</apex:page>

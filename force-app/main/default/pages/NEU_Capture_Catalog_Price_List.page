@@ -1,0 +1,179 @@
+<apex:page id="page" standardController="Price_List__c" extensions="NEU_Capture_Catalog_Price_List" sidebar="false">
+    <apex:includeScript value="{!$Resource.jquery_1_10_2}"/> 
+    <apex:includeScript value="{!$Resource.jquery_ui_1_10_3}"/>
+    <apex:includeScript value="{!$Resource.neurored_jquery}"/> 
+    <apex:stylesheet value="{!URLFOR($Resource.jquery_ui_1_10_3_css,'jquery-ui-1.10.3.min.css')}"/>
+    <apex:stylesheet value="{!$Resource.NEU_Pagination_css}"/>
+<style>
+    .pasted
+    {
+        background-color:#FFFACD;
+    }
+</style>
+    <script type="text/javascript">
+        $(document).ready(function () {
+        });
+        function finishpaste(mytr,mycolumn){
+            $('#pastediv tr').each(function(a,pastetr){
+                if(mytr.length<1)
+                    return false;
+                var mytds=$('td',mytr);
+                $('td',pastetr).each(function(pastecolumn,pastetd){
+                    if(mytds.length<=pastecolumn+mycolumn)
+                        return false;
+                    var text=$(pastetd).text();
+                    $('input[type=text],select,textarea',mytds[pastecolumn+mycolumn]).each(function(a,e){
+                        var e=$(e);
+                        if(e.val(text).addClass('pasted').is('select'))
+                            if(e.val()!=text)
+                                e.append($("<option></option>").attr("value",text).text(text)).val(text);
+                    });
+                });
+                mytr=mytr.next('tr');
+            });
+        }
+        var linesTableId;
+        var linesRow;
+        var linesCol;
+        function linesComplete(){
+            var mytrs=$('tr',$($.sfId(linesTableId)));
+            if(mytrs.length>linesRow)
+                finishpaste($(mytrs[linesRow]),linesCol);
+        }
+        function handlepaste(elem,mycolumn,e) {
+            $('.pasted').removeClass('pasted');
+            if (e && e.clipboardData && e.clipboardData.getData) {
+                if (/text\/html/.test(e.clipboardData.types)) {
+                    $('#pastediv').html(e.clipboardData.getData('text/html'));
+                    elem=$(elem).closest('tr');
+                    var needtr=$('#pastediv tr').length-elem.nextAll('tr').length;
+                    if((needtr>0)||(mycolumn==0))
+                    {
+                        var mytable=elem.closest('table');
+                        linesTableId=neu_getId(mytable);
+                        var mytrid=neu_getId(elem);
+                        $('tr',mytable).each(function(myrow,mytr){
+                            if(neu_getId(mytr)==mytrid)
+                            {
+                                linesRow=myrow;
+                                return false;
+                            }
+                        });
+                        linesCol=mycolumn;
+                        if(mycolumn==0)
+                        {
+                            var idLines=null;
+                            $('#pastediv tr').each(function(a,pastetr){
+                                var pastetds=$('td',pastetr);
+                                if(pastetds.length>0)
+                                {
+                                    if(idLines==null)
+                                        idLines=$(pastetds[0]).text();
+                                    else
+                                        idLines=idLines+'_|_'+$(pastetds[0]).text();
+                                }
+                            });
+                            orderLines(idLines,linesRow-1);
+                        }
+                        else
+                            addLines(needtr);
+                    }
+                    else
+                        finishpaste(elem,mycolumn);
+                    if (e.preventDefault) {
+                        e.stopPropagation();
+                        e.preventDefault();
+                    }
+                    return false;
+                }
+                else if (/text\/plain/.test(e.clipboardData.types)) {
+                    $(elem).val(e.clipboardData.getData('text/plain')).addClass('pasted');
+                    if (e.preventDefault) {
+                        e.stopPropagation();
+                        e.preventDefault();
+                    }
+                    return false;
+                }
+            }
+        }
+    </script>
+    <apex:form id="form">
+    <apex:actionFunction name="sorting" action="{!sorting}" reRender="pageblock" status="myStatus">
+        <apex:param name="one" assignTo="{!compareField}" value="" />
+        <apex:param name="two" assignTo="{!sortList}" value="" />
+    </apex:actionFunction>
+    <apex:actionFunction name="addLines" action="{!addLines}" reRender="pageblock" status="myStatus" oncomplete="linesComplete();">
+        <apex:param name="one" assignTo="{!numLines}" value="" />
+    </apex:actionFunction>
+    <apex:actionFunction name="orderLines" action="{!orderLines}" reRender="pageblock" status="myStatus" oncomplete="linesComplete();">
+        <apex:param name="one" assignTo="{!idLines}" value="" />
+        <apex:param name="two" assignTo="{!firstLine}" value="" />
+    </apex:actionFunction>
+    <!--<apex:sectionHeader title="{!$ObjectType.Price_List__c.labelPlural}" subtitle="Capture {!$ObjectType.Price_List__c.label}"/>-->
+        <apex:outputLink value="{!$Site.BaseUrl}/{!Price_List__c.Id}">
+            <apex:sectionHeader subtitle="Capture {!$ObjectType.Price_List__c.label}" title="{!$ObjectType.Price_List__c.label} {!Price_List__c.Name}"></apex:sectionHeader>
+        </apex:outputLink>
+        <apex:pageBlock mode="maindetail">
+            <apex:pageBlockSection title="{!$ObjectType.Price_List__c.label} Detail" columns="2">
+                <apex:outputField value="{!Price_List__c.Name}"/>
+                <apex:outputField value="{!Price_List__c.Items_Account_Owner__c}"/>
+                <apex:outputField value="{!Price_List__c.Description__c}"/>
+                <apex:outputField value="{!Price_List__c.CreatedById}"/>
+                <apex:outputLabel />
+                <apex:outputField value="{!Price_List__c.LastModifiedById}"/>
+                <apex:outputField value="{!Price_List__c.Business_Area__c}"/>
+                <apex:outputLabel />
+                <apex:outputField value="{!Price_List__c.Number_of_Items__c}"/>
+            </apex:pageBlockSection>
+        </apex:pageBlock>
+        <apex:pageBlock mode="maindetail" id="pageblock">
+            <apex:pagemessages id="errors"/>
+            <apex:pageBlockButtons >
+                <apex:commandButton value="New Line" status="myStatus" reRender="pageblock" action="{!addLine}"/>
+                <apex:commandButton value="Save" status="myStatus" reRender="pageblock" action="{!saveData}"/>
+                <apex:commandButton value="Reset" status="myStatus" reRender="pageblock" action="{!resetData}"/>
+                <apex:commandButton value="Cancel" status="myStatus" reRender="pageblock" action="{!cancel}"/>
+            </apex:pageBlockButtons>
+            <apex:pageBlockSection title="Data" columns="1" id="blocklines">
+            <apex:pageBlockTable value="{!myList}" var="line" id="table">
+                <apex:column >
+                    <apex:facet name="header"><div onclick="sorting('Item_Name__r.Name');" class="{!IF(CompareField='Item_Name__r.Name',CompareClass,'compare')}">{!$ObjectType.Sourcing_Item__c.fields.Name.Label}</div></apex:facet>
+                    <apex:inputField value="{!line.ilp.Item_Name__r.Name}" html-onpaste="return handlepaste(this,0,event);" style="width:100%"/>
+                </apex:column>
+                <apex:column >
+                    <apex:facet name="header"><div onclick="sorting('Item_Name__r.Sourcing_Item_Code__c');" class="{!IF(CompareField='Item_Name__r.Sourcing_Item_Code__c',CompareClass,'compare')}">{!$ObjectType.Sourcing_Item__c.fields.Sourcing_Item_Code__c.Label}</div></apex:facet>
+                    <apex:inputField value="{!line.ilp.Item_Name__r.Sourcing_Item_Code__c}" html-onpaste="return handlepaste(this,1,event);" style="width:100%"/>
+                </apex:column>
+                <apex:column >
+                    <apex:facet name="header"><div onclick="sorting('Item_Name__r.Item_Description__c');" class="{!IF(CompareField='Item_Name__r.Item_Description__c',CompareClass,'compare')}">{!$ObjectType.Sourcing_Item__c.fields.Item_Description__c.Label}</div></apex:facet>
+                    <apex:inputField value="{!line.ilp.Item_Name__r.Item_Description__c}" html-onpaste="return handlepaste(this,2,event);" style="width:100%"/>
+                </apex:column>
+                <apex:column >
+                    <apex:facet name="header"><div onclick="sorting('Item_Name__r.Unit_of_measure__c');" class="{!IF(CompareField='Item_Name__r.Unit_of_measure__c',CompareClass,'compare')}">{!$ObjectType.Sourcing_Item__c.fields.Unit_of_measure__c.Label}</div></apex:facet>
+                    <apex:inputField value="{!line.ilp.Item_Name__r.Unit_of_measure__c}" html-onpaste="return handlepaste(this,3,event);" style="width:100%"/>
+                </apex:column>
+                <apex:column style="text-align:right">
+                    <apex:facet name="header"><div onclick="sorting('List_Price__c');" class="{!IF(CompareField='List_Price__c',CompareClass,'compare')}" style="text-align:center">{!$ObjectType.Item_List_Price__c.fields.List_Price__c.Label}</div></apex:facet>
+                    <apex:inputField value="{!line.ilp.List_Price__c}" html-onpaste="return handlepaste(this,4,event);" style="text-align:right;width:100%"/>
+                </apex:column>
+                <apex:column style="text-align:right">
+                    <apex:facet name="header"><div onclick="sorting('JIT_MOQ__c');" class="{!IF(CompareField='JIT_MOQ__c',CompareClass,'compare')}" style="text-align:center">{!$ObjectType.Item_List_Price__c.fields.JIT_MOQ__c.Label}</div></apex:facet>
+                    <apex:inputField value="{!line.ilp.JIT_MOQ__c}" html-onpaste="return handlepaste(this,5,event);" style="text-align:right;width:100%"/>
+                </apex:column>
+            </apex:pageBlockTable>
+            </apex:pageBlockSection>
+        </apex:pageBlock>
+       <apex:actionstatus id="myStatus">
+           <apex:facet name="start">
+               <div class="waitingSearchDiv" id="el_loading" style="background-color: #fbfbfb;
+                      height: 100%;opacity:0.65;width:100%;"> 
+                   <div class="waitingHolder" style="top: 74.2px; width: 91px;">
+                       <img class="waitingImage" src="/img/loading.gif" title="Please Wait..." />
+                       <span class="waitingDescription">Loading...</span>
+                   </div>
+               </div>
+           </apex:facet>
+       </apex:actionstatus>
+    </apex:form>
+    <div id='pastediv' style="display:none"></div>
+</apex:page>

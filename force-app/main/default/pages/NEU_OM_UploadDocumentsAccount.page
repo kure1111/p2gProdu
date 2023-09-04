@@ -1,0 +1,107 @@
+<apex:page StandardController="Account" extensions="NEU_OM_UploadDocumentsAccount"  cache="false" expires="0" sidebar="false" showHeader="false">
+<apex:includeScript value="{!$Resource.neu_jquery}"/> 
+<apex:stylesheet value="{!$Resource.Estilo_UploadImages}"/>
+    <apex:form enctype="multipart/form-data">
+        <style>
+            .detailList{width: 100%;}
+            .detailList  td{margin-bottom: 10px; float: left;}
+            /*.top_buttons {width: 100%;    text-align: center;}*/
+        </style>
+        <script>
+            $(document).ready(function(){
+                $('.imagenpaquetes').attr("src","{!$Resource.camera_icon}");
+                
+    
+            });
+            
+            function regresar()
+            {
+                upload_documents();
+            }
+        </script>
+        <!--<table border="0" cellspacing="5" cellpadding="5" class="tabla_listado">
+            <tr> 
+                <th style="width: 15%;">Packaging/Container</th>
+                <td style="{!ocupados1}; width: 35%;"><apex:inputFile value="{!CartonBox.Body}" filename="{!CartonBox.Name}"/><apex:outputText value="{!CartonBox_Document}" escape="false"/></td>
+                
+                <th style="width: 15%;">Labels </th>
+                <td style="{!ocupados2}; width: 35%;"><apex:inputFile value="{!Labels.Body}" filename="{!Labels.Name}"/><apex:outputText value="{!Labels_Document}" escape="false"/></td>
+            </tr>
+            <tr> 
+                <th style="width: 15%;">Poligag</th>
+                <td style="{!ocupados3}; width: 35%;"><apex:inputFile value="{!Poligag.Body}" filename="{!Poligag.Name}"/><apex:outputText value="{!Poligag_Document}" escape="false"/></td>
+                <th style="width: 15%;">Pallets</th>
+                <td style="{!ocupados4}"><apex:inputFile value="{!Pallets.Body}" filename="{!Pallets.Name}"/><apex:outputText value="{!Pallets_Document}" escape="false"/></td>
+            </tr>
+            <tr>
+                <td colspan="2"><span class="leyenda" style="background: #DFEDCD;"></span>
+                <span style="float: left;">Uploaded File</span>
+                <span  class="leyenda" style="background: white;"></span>
+                <span>Empty File</span></td>
+                <td class="td_button" align="center" colspan="2"><input type="button" value="UPLOAD DOCUMENTS" onclick="regresar();"/></td>
+            </tr>
+        </table>
+        <p class="resultado"><apex:outputText value="{!resultado}" escape="false"/></p>
+        <apex:actionFunction name="upload_documents" action="{!upload}"/>-->
+        <apex:pageBlock id="block1" mode="maindetail" html-style="    width: 100%;">
+              
+            <apex:pageBlockButtons location="top" styleClass="top_buttons">
+                <apex:commandButton value="Upload documents" action="{!upload}" /><!--oncomplete="recarga();"-->
+            </apex:pageBlockButtons>
+            <apex:pageBlockSection columns="2" html-style="    width: 100%;">
+                <apex:pageBlockSectionItem >
+                    <!--<apex:outputText value="Packaging/Container" />-->
+                     <apex:pageBlockSectionItem >
+                        <apex:outputLink value="{!Account.CartonBox_Document__c}" target="_blank" rendered="{!Account.CartonBox_Document__c !=null}">
+                                Packaging/Container
+                        </apex:outputLink>
+                        <apex:outputLabel value="Packaging/Container" rendered="{!Account.CartonBox_Document__c ==null}"/>
+                     </apex:pageBlockSectionItem>
+                    
+                    <apex:inputFile value="{!CartonBox}" filename="{!CartonBoxName}"/>
+                </apex:pageBlockSectionItem>
+                
+                <apex:pageBlockSectionItem >
+                    <!--<apex:outputText value="Labels" />-->
+                    
+                    <apex:pageBlockSectionItem >
+                        <apex:outputLink value="{!Account.Labels_Document__c}" target="_blank" rendered="{!Account.Labels_Document__c!=null}">
+                                Labels
+                        </apex:outputLink>
+                        <apex:outputLabel value="Labels" rendered="{!Account.Labels_Document__c==null}"/>
+                     </apex:pageBlockSectionItem>
+                     
+                    <apex:inputFile value="{!Labels}" filename="{!LabelsName}"/>
+                </apex:pageBlockSectionItem>
+                
+                
+                <apex:pageBlockSectionItem >
+                    <!--<apex:outputText value="Poligag" />-->
+                    <apex:pageBlockSectionItem >
+                        <apex:outputLink value="{!Account.Poligag_Document__c}" target="_blank" rendered="{!Account.Poligag_Document__c!=null}">
+                                Poligag
+                        </apex:outputLink>
+                        <apex:outputLabel value="Poligag" rendered="{!Account.Poligag_Document__c ==null}"/>
+                     </apex:pageBlockSectionItem>
+                    <apex:inputFile value="{!Poligag}" filename="{!PoligagName}"/>
+                 </apex:pageBlockSectionItem>
+                
+                 <apex:pageBlockSectionItem >
+                    <!--<apex:outputText value="Pallets" />-->
+                    
+                    <apex:pageBlockSectionItem >
+                        <apex:outputLink value="{!Account.Pallets_Document__c }" target="_blank" rendered="{!Account.Pallets_Document__c !=null}">
+                                Pallets
+                        </apex:outputLink>
+                        <apex:outputLabel value="Pallets" rendered="{!Account.Pallets_Document__c ==null}"/>
+                     </apex:pageBlockSectionItem>
+                     
+                    <apex:inputFile value="{!Pallets}" filename="{!PalletsName}"/>
+                </apex:pageBlockSectionItem>
+                
+            </apex:pageBlockSection>
+        </apex:pageblock>
+        <!--<apex:actionFunction name="recarga" rerender="block1"/>-->
+        <apex:pageMessages id="pagemessages"/>
+    </apex:form>
+</apex:page>

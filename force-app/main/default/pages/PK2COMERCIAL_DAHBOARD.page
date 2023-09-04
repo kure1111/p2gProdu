@@ -1,0 +1,13 @@
+<apex:page showHeader="false" tabStyle="Account">
+<head>
+  <base target="_top">
+  </base>
+</head> 
+    <apex:pageBlock title="DASHBOARD" mode="edit">
+        <apex:pageBlockSection title="" columns="4" >
+            <analytics:reportChart reportId="00O0Y000007p3Id" size="tiny"/>  
+            <analytics:reportChart reportId="00O0Y000007pECP" size="tiny"/> 
+            <analytics:reportChart reportId="00O0Y000007pEBW" size="tiny"/>
+         </apex:pageblocksection>
+    </apex:pageBlock>
+ </apex:page>

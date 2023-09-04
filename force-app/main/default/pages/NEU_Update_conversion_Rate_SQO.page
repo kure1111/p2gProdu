@@ -1,0 +1,2 @@
+<apex:page StandardController="Supplier_Quote__c" extensions="NEU_Update_conversion_Rate_SQO" sidebar="false" action="{!refresh_lines}">
+</apex:page>

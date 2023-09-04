@@ -1,0 +1,200 @@
+<aura:component >
+    
+    <!-- Atributos que vienen desde el componente padre -->
+    <aura:attribute name="cargo_line" type="Quote_Item_Line__c" default="{ 'sobjectType' : 'Quote_Item_Line__c'}"/>
+	<aura:attribute name="item" type="Sourcing_Item__c" default="{ 'sobjectType' : 'Sourcing_Item__c'}"/>
+	<aura:attribute name="cargo_line_s" type="NEU_Import_Export_Controller.Import_Export_Cargo_Line_s" default="{ 'sobjectType' : 'NEU_Import_Export_Controller.Import_Export_Cargo_Line_s'}"/>
+    <aura:attribute name="options" type="List"/>
+    <aura:attribute name="service_type" type="string"/>
+    <aura:attribute name="conType" type="String" default=""/>
+    
+    <aura:attribute name="dimensiones" type="String"/>
+    <aura:attribute name="pesos" type="String"/>
+
+    <form class="slds-form--stacked">
+
+        <lightning:layout >
+ 
+            <lightning:layoutItem padding="around-small" size="3">
+                <ui:inputNumber aura:id="cargo_line_Units" required="true" value="{!v.cargo_line.Units__c}" change="{!c.recalcular_units}" label="Packaging Units"/>            
+            </lightning:layoutItem>
+            
+            <lightning:layoutItem padding="around-small" size="3">            	
+                <lightning:select name="currenciesSelect" label="Currency" aura:id="currenciesSelect" value="{!v.cargo_line.CurrencyIsoCode}" class="blank">
+                    <aura:iteration items="{!v.options}" var="cur">
+                        <option text="{!cur}" value="{!cur}"/>
+                     </aura:iteration>
+                </lightning:select>  
+			</lightning:layoutItem>
+
+            <lightning:layoutItem padding="around-small" size="3">                
+                <ui:inputNumber aura:id="item_Price" required="true" value="{!v.cargo_line.Price__c}" change="{!c.recalcular_amount}" label="Unit Sell Price"/>                
+			</lightning:layoutItem>  
+            
+            <lightning:layoutItem padding="around-small" size="3">                
+                <label class="slds-form-element__label slds-no-flex" for="20:0" data-aura-rendered-by="24:0">
+                	<span data-aura-rendered-by="28:0">Total Amount</span>
+                </label>
+                <ui:outputText aura:id="total_amount" value="{!v.cargo_line.Amount__c}" class="input uiInput uiInput--default uiInput--input slds-text-align--right amount"/>                
+			</lightning:layoutItem>              
+        
+        </lightning:layout>
+        
+        <aura:renderif isTrue="{!or(v.service_type == 'FTL', v.service_type == 'FCL')}">
+            <lightning:layout >
+                <lightning:layoutItem padding="around-small" size="4">            
+                    <lightning:select aura:id="conType" class="blank espaciado" name="conType" label="Container Type" value="{!v.conType}" required="true">
+                        <option value="none">-None-</option>
+                        <option value="a0K0Y000005uu9vUAA">Caja 48 FT</option>
+                        <option value="a0K0Y000005uuA5UAI">Thermo 48 ft</option>
+                        <option value="a0K0Y000007eOgYUAU">Plataforma 53</option>
+                        <option value="a0K0Y000007eOfGUAU">Semi Lowboy 48 pies</option>
+                        <option value="a0K0Y000005us50UAA">3.5 Plataforma</option>
+                        <option value="a0K0Y000005uq2dUAA">20' RF</option>
+                        <option value="a0K0Y000007ganzUAA">53-FT Tractor Trailer</option>
+                        <option value="a0K0Y000007gankUAA">12-FT Straight Truck</option>
+                        <option value="a0K0Y000007ganfUAA">Cargo Van</option>
+                        <option value="a0K0Y000007ghBLUAY">Rabon 28 ft abierto</option>
+                        <option value="a0K0Y000005uq2nUAA">20' OT</option>
+                        <option value="a0K0Y000007ghDvUAI">Camioneta Redilas</option>
+                        <option value="a0K0Y000007ghBuUAI">Camion 3.5 Ton 20ft Cerrado</option>
+                        <option value="a0K0Y000005uq2xUAA">20' FR</option>
+                        <option value="a0K0Y000005uq1uUAA">40' RF</option>
+                        <option value="a0K0Y00000DwiOZUAZ">Multi Axle Extendable Step Deck</option>
+                        <option value="a0K0Y00000C6l0wUAB">24-FT Straight Truck</option>
+                        <option value="a0K0Y00000C3u8jUAB">Step Deck 53 pies</option>
+                        <option value="a0K0Y000005uu9qUAA">Torton Redilas</option>
+                        <option value="a0K0Y000005uuAAUAY">Plataforma 40</option>
+                        <option value="a0K0Y00000C3u8eUAB">Step Deck 48 pies</option>
+                        <option value="a0K0Y00000C6l0rUAB">Sprinter Van</option>
+                        <option value="a0K0Y000009Q3aUUAS">Plataforma 20</option>
+                        <option value="a0K0Y000005vOBuUAM">Plataforma 48</option>
+                        <option value="a0K0Y000003ZtukUAC">Caja 53 FT</option>
+                        <option value="a0K0Y000007iDdYUAU">Detachable Goose Neck Trailer</option>
+                        <option value="a0K0Y000005uquMUAQ">3.5 Caja</option>
+                        <option value="a0K0Y000005uq2JUAQ">40' DC</option>
+                        <option value="a0K0Y000005uq32UAA">20' DC</option>
+                        <option value="a0K0Y000005YXxOUAW">20 pies</option>
+                        <option value="a0K0Y000005YXxiUAG">40HC</option>
+                        <option value="a0K0Y000005w3WUUAY">Thermo Torton</option>
+                        <option value="a0K0Y000007ffobUAA">Lowboy Doble Caida</option>
+                        <option value="a0K0Y000007fflNUAQ">Semi Lowboy Cuello Desm</option>
+                        <option value="a0K0Y000007ffkUUAQ">Lowboy Modular</option>
+                        <option value="a0K0Y000007ffjgUAA">Rabon Redilas</option>
+                        <option value="a0K0Y000007ffjWUAQ">Rabon Plataforma</option>
+                        <option value="a0K0Y000007ffm1UAA">Plataforma Extendible</option>
+                        <option value="a0K0Y000007ffjbUAA">Rabon Thermoking</option>
+                        <option value="a0K0Y000005uq1zUAA">40' OT</option>
+                        <option value="a0K0Y000009QGq3UAG">FULL PLATAFORMA</option>
+                        <option value="a0K0Y000009QGpUUAW">FULL CAJA</option>
+                        <option value="a0K0Y000007gIkfUAE">Tractocamion Gondola 30T</option>
+                        <option value="a0K0Y000005wxywUAA">Pallet</option>
+                        <option value="a0K0Y000007gIcFUAU">Tractocamion Gondola 24T</option>
+                        <option value="a0K0Y000007eOfkUAE">Double Drop Trailer</option>
+                        <option value="a0K0Y000007eOfVUAU">Lowboy 48 pies</option>
+                        <option value="a0K0Y000005us55UAA">Thermo 53 ft</option>
+                        <option value="a0K0Y000005uq3CUAQ">20' HC</option>
+                        <option value="a0K0Y000007ganpUAA">18-FT Straight Truck</option>
+                        <option value="a0K0Y000007ghANUAY">Rabon 24 ft abierto</option>
+                        <option value="a0K0Y000007garNUAQ">Camion 3.5 Ton 20ft Abierto</option>
+                        <option value="a0K0Y000005uq2TUAQ">40' FR</option>
+                        <option value="a0K0Y000007ghB1UAI">Rabon 28 ft Cerrado</option>
+                        <option value="a0K0Y000007ghAwUAI">Rabon 24 ft Cerrado</option>
+                        <option value="a0K0Y000005us3GUAQ">Torton</option>
+                        <option value="a0K0Y000005us5FUAQ">Plataforma</option>
+                        <option value="a0K0Y000005us4qUAA">Rabon</option>
+                        <option value="a0K0Y000005us5AUAQ">Nissan</option>
+                        <option value="a0K0Y000009QJ7lUAG">Cama Baja</option>
+                        <option value="a0K0Y000005YXxYUAW">40 pies</option>   
+                    </lightning:select>
+                </lightning:layoutItem>             
+            </lightning:layout>
+        </aura:renderif>
+        
+        <aura:renderif isTrue="{!and(v.service_type != 'FTL', v.service_type != 'FCL')}">
+            <lightning:layout >       
+                
+                <lightning:layoutItem padding="around-small" size="3">
+                    <lightning:select aura:id="uom_dim" class="blank espaciado" name="selectDimUOM" label="UOM" value="{!v.dimensiones}">
+                        <option value="none">-Unit-</option>
+                        <option value="mm">MM</option>
+                        <option value="pul">PUL</option>
+                        <option value="cm">CM</option>
+                        <option value="m">M</option>
+                    </lightning:select>
+                    <ui:button label="Convert" class="slds-button slds-button_neutral" press="{!c.recalcular_dimensiones}" />
+                </lightning:layoutItem>             
+                
+                <lightning:layoutItem padding="around-small" size="3">       
+                    <lightning:input aura:id="lcmo" type="number" name="number" label="Length" value="0.00" class="espaciado blank slds-text-align--right"/>
+                    <ui:outputText aura:id="lcm" value="{!v.item.Master_Box_Length_cm__c}" class="input uiInput uiInput--default uiInput--input slds-text-align--right"/>
+                </lightning:layoutItem> 
+                
+                <lightning:layoutItem padding="around-small" size="3">       
+                    <lightning:input aura:id="wcmo" type="number" name="number" label="Width" value="0.00" class="espaciado blank slds-text-align--right"/>
+                    <ui:outputText aura:id="wcm" value="{!v.item.Master_Box_Width_cm__c}" class="input uiInput uiInput--default uiInput--input slds-text-align--right"/> 
+                </lightning:layoutItem>
+    
+                <lightning:layoutItem padding="around-small" size="3">       
+                    <lightning:input aura:id="hcmo" type="number" name="number" label="Height" value="0.00" class="espaciado blank slds-text-align--right"/>
+                    <ui:outputText aura:id="hcm" value="{!v.item.Master_Box_Height_cm__c}" class="input uiInput uiInput--default uiInput--input slds-text-align--right"/>    
+                </lightning:layoutItem>                
+                
+            </lightning:layout>  
+		</aura:renderif>
+        
+       	<lightning:layout >
+
+            <lightning:layoutItem padding="around-small" size="2">
+            	<lightning:select aura:id="uom_wei" class="blank espaciado" name="selectWeiUOM" label="UOM" value="{!v.pesos}">
+                    <option value="none">-Unit-</option>
+                    <option value="kg">KG</option>
+                    <option value="lb">LB</option>
+                    <option value="tons">TONS</option>
+                </lightning:select>
+                <ui:button label="Convert" class="slds-button slds-button_neutral" press="{!c.recalcular_pesos}" />
+            </lightning:layoutItem> 
+            
+            <lightning:layoutItem padding="around-small" size="5">
+                <lightning:input aura:id="pw" type="number" name="number" label="Packaging Weight" value="0.00" class="espaciado blank slds-text-align--right"/>
+                <ui:outputText aura:id="wkg" value="{!v.item.Master_Box_Packing_Weight_kg__c}" class="input uiInput uiInput--default uiInput--input slds-text-align--right"/>
+            </lightning:layoutItem>
+            
+            <lightning:layoutItem padding="around-small" size="5">  
+                 <label class="slds-form-element__label slds-no-flex" for="20:0" data-aura-rendered-by="24:0">
+                	<span data-aura-rendered-by="28:0">Total Shipping Weight</span>
+                </label>               
+                <ui:outputText aura:id="tw" value="" class="input uiInput uiInput--default uiInput--input slds-text-align--right"/>
+                <ui:outputText aura:id="tsw" value="{!v.cargo_line.Total_Shipping_Weight_Kgs__c}" class="input uiInput uiInput--default uiInput--input slds-text-align--right"/>                
+			</lightning:layoutItem>  
+            
+		</lightning:layout>        
+
+		<lightning:layout >
+ 			
+            <aura:renderif isTrue="{!and(v.service_type != 'FTL', v.service_type != 'FCL')}">
+                <lightning:layoutItem padding="around-small" size="6">       
+                    <label class="slds-form-element__label slds-no-flex" for="20:0" data-aura-rendered-by="24:0">
+                        <span data-aura-rendered-by="28:0">Volume (m3)</span>
+                    </label>
+                    <ui:outputText aura:id="vm" value="{!v.item.Master_Box_Volume_m3__c}" class="input uiInput uiInput--default uiInput--input slds-text-align--right"/> 
+                </lightning:layoutItem>
+            </aura:renderif>
+            
+             <lightning:layoutItem padding="around-small" size="6">
+                <label class="slds-form-element__label slds-no-flex" for="20:0" data-aura-rendered-by="24:0">
+                    <span data-aura-rendered-by="28:0">Total Shipping Volume (m3)</span>
+                </label>
+                <aura:renderif isTrue="{!and(v.service_type != 'FTL', v.service_type != 'FCL')}">
+                	<ui:outputText aura:id="vmt" value="{!v.cargo_line.Total_Shipping_Volume_m3__c}" class="input uiInput uiInput--default uiInput--input slds-text-align--right"/>
+                </aura:renderif>
+                <aura:renderif isTrue="{!or(v.service_type == 'FTL', v.service_type == 'FCL')}">
+                	<ui:inputNumber aura:id="vmt_manual" required="true" value="{!v.cargo_line.Total_Shipping_Volume_m3__c}"/> 
+                </aura:renderif>
+            </lightning:layoutItem>            
+            
+        </lightning:layout>              
+
+    </form>
+    
+</aura:component>

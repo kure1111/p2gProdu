@@ -1,0 +1,169 @@
+/*css generate Quote*/
+
+table
+{
+	border: 1px solid #CDCDCD;
+	border-radius: 10px 10px 10px 10px;
+	width: 100%;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 11px;
+}
+
+.tablasfees
+{
+	margin-bottom: 45px;
+}
+
+.tablasfees th
+{
+	background: #f2f3f3;
+	border-width: 0 0 1px 1px;
+	border-color: #e0e3e5;
+	color: #000;
+	font-size: .9em;
+	font-weight: bold;
+	padding: 5px 2px 4px 5px;
+}
+
+.tablasfees td
+{
+	padding: 4px 2px 4px 5px;
+	color: #333;
+}
+
+table th
+{
+	background: #F7F7F7;
+	background: -webkit-gradient(linear, 0 0, 0 bottom, from(#F7F7F7), to(#E0E0E0));
+	background: -webkit-linear-gradient(#F7F7F7, #E0E0E0);
+	background: -moz-linear-gradient(#F7F7F7, #E0E0E0);
+	background: -ms-linear-gradient(#F7F7F7, #E0E0E0);
+	background: -o-linear-gradient(#F7F7F7, #E0E0E0);
+	background: linear-gradient(#F7F7F7, #E0E0E0);
+	-webkit-box-shadow: 0 0 5px rgba(0, 0, 0, 0.25);
+	-moz-box-shadow: 0 0 5px rgba(0, 0, 0, 0.25);
+	box-shadow: 0 0 5px rgba(0, 0, 0, 0.25);
+}
+
+.tablacabecera
+{
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 11px;
+}
+
+.tablacabecera th
+{
+	background: #f2f3f3;
+	border-width: 0 0 1px 1px;
+	border-color: #e0e3e5;
+	color: #000;
+	font-size: .9em;
+	font-weight: bold;
+	padding: 5px 2px 4px 5px;
+}
+
+.tablacabecera td
+{
+	padding: 4px 2px 4px 5px;
+	color: #333;
+}
+
+.tablacabecera2
+{
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 11px;
+	margin-top: 20px;
+}
+
+.tablacabecera2 th
+{
+	background: #f2f3f3;
+	border-width: 0 0 1px 1px;
+	border-color: #e0e3e5;
+	color: #000;
+	font-size: .9em;
+	font-weight: bold;
+	padding: 5px 2px 4px 5px;
+}
+
+.tablacabecera2 td
+{
+	padding: 4px 2px 4px 5px;
+	color: #333;
+}
+
+.cabeceradiv .secondaryPalette
+{
+	margin-bottom: 0px;
+}
+.secondaryPalette
+{
+	margin-bottom: 45px;
+}
+
+
+
+.tertiaryPalette
+{
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 15px;
+	background-color: #8a9ebe;
+	border-color: #8a9ebe;
+	font-weight: bold;
+	margin-bottom: 2px;
+	font-family: Arial,Helvetica,sans-serif;
+	color: #fff;
+	margin-top: 25px;
+}
+
+.logo
+{
+	margin: 4px;
+	width: 85px;
+}
+
+.totales_parciales
+{
+	font-style: italic; 
+	font-weight: bold;
+	font-size: 11px;
+	float: right;
+	margin-top: 10px;
+	border: 1px black solid; 
+	padding: 10px;
+	width: 97%;
+	font-size: 14px;
+}
+
+.tabla_totales
+{
+	border: 1px solid #CDCDCD;
+}
+
+.tabla_totales th
+{
+	background: #f2f3f3;
+	border-width: 0 0 1px 1px;
+	border-color: #e0e3e5;
+	color: #000;
+	font-size: 13px;
+	font-weight: bold;
+	padding: 5px 2px 4px 5px;
+	text-align: center;
+}
+
+.pbBody, .pbBody a, .pbBody td, .lbBody a, .lbBodyDescription, .list .headerRow .noRowsHeader
+{
+	margin-bottom: 0px !important;
+}
+
+.Custom68Tab .secondaryPalette, .individualPalette .Custom68Block .secondaryPalette
+{
+	margin-bottom: 0px;
+}
+
+.mainTitle
+{
+	font-size: 12px;
+}
+

@@ -1,0 +1,109 @@
+<apex:page standardController="Customer_Quote__c" extensions="NEU_Standard_Fee_Calculation_Imp_Exp" standardStylesheets="false">
+<apex:includeScript value="{!$Resource.neu_jquery}"/> 
+<apex:includeScript value="{!$Resource.jquery_1_10_2}"/> 
+<apex:includeScript value="{!$Resource.jquery_ui_1_10_3}"/>
+<apex:includeScript value="{!$Resource.neurored_jquery}"/> 
+<apex:stylesheet value="{!URLFOR($Resource.jquery_ui_1_10_3_css,'jquery-ui-1.10.3.min.css')}"/>
+   <script>
+    $(document).ready(function () {
+        $($.sfId('{!$Component.form.block0}')).css('width', '721px');
+    });
+   </script>
+
+    <style>
+    #tabla_filtros th
+    {
+        font-family: Arial,Helvetica,sans-serif;
+        font-size: .9em;
+    }
+    #j_id0:form:block0
+    {
+        width:721px;
+    }
+    
+</style>
+     <apex:form id="form">
+     <apex:sectionHeader title="Automatic Calculation of Fees"/>
+     <span style="    position: relative;     top: -36px;     left: 380px;   font-size: 17px;">
+        <a href="/{!Customer_Quote__c.Id}" onblur="LookupHoverDetail.getHover(neu_getId(this)).hide();" onfocus="LookupHoverDetail.getHover(neu_getId(this),'/{!Customer_Quote__c.Id}/m?isAjaxRequest=1').show();" onmouseout="LookupHoverDetail.getHover(neu_getId(this)).hide();" onmouseover="LookupHoverDetail.getHover(neu_getId(this),'/{!Customer_Quote__c.Id}/m?isAjaxRequest=1').show();" target="_blank" id="new_id_1">{!Customer_Quote__c.Name}</a>
+    </span>
+     <apex:actionFunction name="save_route"  status="myStatus" reRender="linesSelector"  action="{!crear_fee_estandar}"/>
+     <apex:actionFunction name="cancel"  status="myStatus"  action="{!cancel}" />
+        <apex:outputPanel id="linesSelector">
+             <apex:pageBlock id="block0" >
+                
+                        
+                        <table style="" Id="tabla_filtros">
+                         <tr>
+                            <th>Route</th>
+                            <td>
+                                <apex:inputField value="{!record.Route__c}"/>
+                            </td>
+                            <td colspan="2" style="text-align: center;"></td>
+                        </tr>
+                        <!--<tr >
+                            <th>Country of Load</th>
+                            <td>
+                                <apex:inputField value="{!record.Country_ofLoad__c}" />
+                            </td>
+                            <th>Country of Discharge</th>
+                            <td>
+                                <apex:inputField value="{!record.Country_ofDischarge__c}" />
+                            </td>
+                        </tr>       
+                        <tr >
+                            
+                            <th>Port / Airport of Load</th>
+                            <td>
+                                <apex:inputField value="{!record.Place_of_Delivery__c}" />
+                            </td>
+                            <th>Port / Airport of Discharge</th>
+                            <td>
+                                <apex:inputField value="{!record.Place_of_Receipt__c}" />
+                            </td>
+                        </tr>-->
+                        <tr >
+                            <th>Pickup Zone</th>
+                            <td>
+                                <apex:inputField value="{!record.Pickup_Cartage__c}" />
+                            </td>
+                            <th>Delivery Zone</th>
+                            <td>
+                                <apex:inputField value="{!record.Delivery_Cartage__c}" />
+                            </td>
+                        </tr>
+                        <tr >
+                            <th>Purchase Incoterm</th>
+                            <td>
+                                <apex:inputField value="{!record.Purchase_Incoterm__c}" style="width: 173px;"/>
+                            </td>
+                            <th>Sales Incoterm</th>
+                            <td>
+                                <apex:inputField value="{!record.Sales_Incoterm__c}" style="  width: 173px;"/>
+                            </td>
+                        </tr>
+                        <tr style="text-align: center;">
+                            <td colspan="4"> <input type="button" value="Confirm" onclick="save_route();" class="btn" style="padding-left: 16px; padding-right: 16px;"/>
+                            
+                        <input type="button" value="Cancel" onclick="cancel();" class="btn" style="padding-left: 16px; padding-right: 16px;"/></td>
+                        </tr>
+                    </table>
+              
+            </apex:pageBlock>        
+        </apex:outputPanel>
+     
+        <apex:outputpanel >
+           <apex:actionstatus id="myStatus">
+               <apex:facet name="start">
+                   <div class="waitingSearchDiv" id="el_loading" style="background-color: #fbfbfb;
+                          height: 100%;opacity:0.65;width:100%;"> 
+                       <div class="waitingHolder" style="top: 74.2px; width: 91px;">
+                           <img class="waitingImage" src="/img/loading.gif" title="Please Wait..." />
+                           <span class="waitingDescription">Loading...</span>
+                       </div>
+                   </div>
+               </apex:facet>
+           </apex:actionstatus>
+        </apex:outputpanel>
+     </apex:form>
+</apex:page>

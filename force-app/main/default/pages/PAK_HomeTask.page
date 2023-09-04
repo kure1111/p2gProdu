@@ -1,0 +1,23 @@
+<apex:page controller="PK2_HomeTask"> 
+    <apex:form >
+        <apex:pageBlock title="Tasks">
+            <apex:pageBlockButtons location="top" >
+                <!--<apex:commandLink action="{!URLFOR($Action.Task.Mi_Agenda)}" style="text-decoration:none;padding:4px;"
+                                  styleClass="btn" value="new Task" target="_parent" />-->
+                     <apex:commandLink action="{!URLFOR($Action.Task.Mi_Agenda)}" style="text-decoration:none;padding:4px;"
+                                  styleClass="btn" value="Mi Agenda" target="_parent" />
+                     <apex:commandLink action="{!URLFOR($Action.Task.Mis_Citas   )}" style="text-decoration:none;padding:4px;"
+                                  styleClass="btn" value="Reporte Citas" target="_parent" />
+                     <apex:commandLink action="{!URLFOR($Action.Task.New_Prospect)}" style="text-decoration:none;padding:4px;"
+                                  styleClass="btn" value="New Prospect" target="_parent" />
+            </apex:pageBlockButtons>
+            <apex:pageBlockTable value="{!lsTask}" var="lsT">
+                <apex:column headerValue="Date" value="{!lsT.ActivityDate}" />
+                <apex:column headerValue="Status" value="{!lsT.Status}" />
+                <apex:column headerValue="Subject"><apex:outputField value="{!lsT.Subject}" /></apex:column>
+                <apex:column headerValue="Name" value="{!lsT.Who.Name}" />
+                <apex:column headerValue="Related To" value="{!lsT.What.Name}" />
+            </apex:pageBlockTable>
+        </apex:pageBlock>
+    </apex:form>
+</apex:page>

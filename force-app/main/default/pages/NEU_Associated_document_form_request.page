@@ -1,0 +1,97 @@
+<apex:page controller="NEU_Associated_document_form_request" cache="false" expires="0" sidebar="false" showHeader="false">
+<apex:includeScript value="{!$Resource.jquery_1_10_2}"/> 
+<apex:includeScript value="{!$Resource.jquery_ui_1_10_3}"/>
+<apex:includeScript value="{!$Resource.neurored_jquery}"/> 
+<apex:stylesheet value="{!URLFOR($Resource.jquery_ui_1_10_3_css,'jquery-ui-1.10.3.min.css')}"/>
+    <apex:form id="formulario">
+    <apex:actionFunction name="savedocument" action="{!Upload_Documents}"/>
+    <apex:image value="/img/icon/desk32.png" style="float: left; margin: 8px;"/>
+    <span style="margin-top: 9px; margin-bottom: 0; color: #000; font-size: 2em; font-family: Arial,Helvetica,sans-serif; font-weight: normal; float:left;">Associated Document</span>
+        <apex:pageBlock id="block1">    
+             <apex:pageBlockButtons >
+                <input type="button" value="Done" class="button_save" onclick="guardar();"/>
+                <input type="button" value="Cancel" class="button_cancel" onclick="cancelar();"/>
+                <div class="pbError error1" id="errorDiv_ep" style="display:none;"></div>
+            </apex:pageBlockButtons>
+            <apex:pageBlockSection id="secciones">
+                <apex:pageBlockSectionItem dataStyle="width:0;vertical-align:middle">
+                    <apex:outputText value="Document Type" />
+                    <apex:selectList id="chooseColor" value="{!Document_type}" size="1">
+                       <apex:selectOptions value="{!types}"/>
+                  </apex:selectList>
+                </apex:pageBlockSectionItem>
+                <apex:pageBlockSectionItem >
+                    <apex:outputText value="Document Reference" />
+                    <apex:inputText value="{!Document_Reference}"/>
+                </apex:pageBlockSectionItem>
+                
+                <apex:pageBlockSectionItem dataStyle="width:0;vertical-align:middle">
+                    <apex:outputText value="Document Description" />
+                    <apex:inputText value="{!Document_Description}" style="width: 290px;"/>
+                </apex:pageBlockSectionItem>
+                
+                <apex:pageBlockSectionItem dataStyle="width:0;vertical-align:middle" id="secciondocumento">
+                    <apex:outputText value="Document"/>
+                    <apex:inputFile value="{!documento_asociado}" filename="{!documento_asociadoName}"  styleClass="documento_adjunto" id="document_adjunto"/>
+                </apex:pageBlockSectionItem>
+                
+                <apex:pageBlockSectionItem dataStyle="width:0;vertical-align:middle">
+                    
+                </apex:pageBlockSectionItem>
+                <apex:pageBlockSectionItem dataStyle="width:0;vertical-align:middle " id="seccionurl">
+                    <apex:outputText value="Manual Document URL"/>
+                    <apex:inputText value="{!Manual_Document_URL}" style="width: 290px;"  styleClass="documento_url" id="document_url"/>
+                </apex:pageBlockSectionItem>
+                
+            </apex:pageBlockSection>
+        </apex:pageBlock>       
+    </apex:form>
+    <script>
+    
+    
+    
+         $(document).ready(function(){
+            var loc = document.location.href;
+            // si existe el interrogante
+            if(loc.indexOf('redirec')>0)
+            {
+                window.close(); 
+            }
+        
+        });
+        
+        function guardar()
+        {
+            //poner aviso en rojo
+            var documentos = document.getElementById('{!$Component.formulario.block1.secciones.seccionurl.document_url}').value;
+            var manual = document.getElementById('{!$Component.formulario.block1.secciones.secciondocumento.document_adjunto}').value;
+            if((documentos != null && documentos != '') && (manual == null || manual == ''))
+            {
+                savedocument();
+            }
+            if((manual != null && manual != '') && (documentos == null || documentos == ''))
+            {
+                savedocument();
+            }
+            if((documentos != null && documentos != '') && (manual != null && manual != ''))
+            {
+                $('.error1').html('You can upload a Document or an URL but not both');
+                $('.error1').css("display", "block");
+                $('.documento_adjunto').attr("class", "error");
+                $('.documento_url').attr("class", "error");
+            }
+            if(documentos == '' && manual == '')
+            {
+                $('.error1').html('You must select a Document or an URL');
+                $('.error1').css("display", "block");
+                $('.documento_adjunto').attr("class", "error");
+                $('.documento_url').attr("class", "error");
+            }
+        }
+        
+        function cancelar()
+        {
+            window.close(); 
+        }
+    </script>
+</apex:page>

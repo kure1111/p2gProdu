@@ -1,0 +1,2 @@
+<apex:page standardController="Air_Waybill__c" extensions="NEU_Air_Waybill_Recalculate" action="{!recalculate}">
+</apex:page>

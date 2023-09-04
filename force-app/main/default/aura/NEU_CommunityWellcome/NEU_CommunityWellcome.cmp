@@ -1,0 +1,119 @@
+<aura:component implements="forceCommunity:availableForAllPageTypes">
+    <div id="main">
+        <div class="home_community">
+			
+            <c:NEU_NewImportExportButton />
+
+            <div id="home_first_slide">
+                <ul id="first_list">
+                    <li class="first_list_li">
+                        <span id="first_list_li_img1"></span>
+                        <h3>Not sure where to start? <br/> Need help with the import?</h3>
+                        <ul class="second_list">
+                            <li>We give you advice in the process of import export</li>
+                            <li>We help you get that international business</li>
+                            <li>We analyze the the viability of import / export your products</li>
+                        </ul>
+                    </li>
+                    <li class="first_list_li middle_li">
+                        <span id="first_list_li_img2"></span>
+                        <h3>Confused with the load? <br/>Do i need a 20' or 40' container? <br/>Can i insure my merchandise? <br/>Is it better by seafreight or airfreight?</h3>
+                        <ul class="second_list">
+                            <li>We assemble your shipment and insure your goods</li>
+                            <li>We coordinate your shipments at origin and destination</li>
+                            <li>We take care of all the planning</li>
+                        </ul>
+                    </li>
+                    <li class="first_list_li">
+                        <span id="first_list_li_img3"></span>
+                        <h3>Do you constantly lose your shipment visibility? <br/>Did you use the best route for your import / export?</h3>
+                        <ul class="second_list">
+                            <li>We give you advice analyzing the best route to reduce costs</li>
+                            <li>With our technology we give you clarity and certanty during the whole process</li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+            <div id="separator"></div>
+            <div id="home_second_slide">
+                <ul id="first_list_services">
+                    <li class="first_list_services_li first_list_services_li_image1">
+                        <h4>Air freight services</h4>
+                        <ul class="second_list_services">
+                            <li class="second_list_services_li">
+                                <h5>Express</h5>
+                                <ul class="third_list_services">
+                                    <li>We transport your package or pallet instantly, 1 day transit time.</li>
+                                </ul>
+                            </li>
+                            <li class="second_list_services_li">
+                                <h5>Priority</h5>
+                                <ul class="third_list_services">
+                                    <li>Ideal for critical loads.</li>
+                                </ul>
+                            </li>
+                            <li class="second_list_services_li">
+                                <h5>Standard</h5>
+                                <ul class="third_list_services">
+                                    <li>For those important shipments, but no so criticals. 5 to 6 days transit time.</li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="first_list_services_li first_list_services_li_image2">
+                        <h4 class="middle_h4">Land freight services</h4>
+                        <ul class="second_list_services">
+                            <li class="second_list_services_li">
+                                <h5>Truck load services</h5>
+                                <ul class="third_list_services">
+                                    <li>We coordinate your shipments through México, United States and Canada.</li>
+                                    <li>Full truck load (FTL)</li>
+                                    <li>Less than truck load (LTL)</li>
+                                </ul>
+                            </li>
+                            <li class="second_list_services_li">
+                                <h5>Special services</h5>
+                                <ul class="third_list_services">
+                                    <li>We handle pharmaceuticals, bulk, chemicals, electronics, high value, hazardous.</li>
+                                </ul>
+                            </li>
+                            <li class="second_list_services_li">
+                                <h5>Equipment</h5>
+                                <ul class="third_list_services">
+                                    <li>Dry van</li>
+                                    <li>Reefer</li>
+                                    <li>Flat bed</li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="first_list_services_li first_list_services_li_image3">
+                        <h4>Sea freight services</h4>
+                        <ul class="second_list_services">
+                            <li class="second_list_services_li">
+                                <h5>FCL services (Full Container Load)</h5>
+                                <ul class="third_list_services">
+                                    <li>We coordinate the pickup at origin.</li>
+                                    <li>Seafreight service per container.</li>
+                                </ul>
+                            </li>
+                            <li class="second_list_services_li">
+                                <h5>LCL services (Less than Container Load)</h5>
+                                <ul class="third_list_services">
+                                    <li>We coordinate the pickup at origin and we consolidate</li>
+                                    <li>Service starting at 1 pallet.</li>
+                                </ul>
+                            </li>
+                            <li class="second_list_services_li">
+                                <h5>Special services<br/>&nbsp;</h5>
+                                <ul class="third_list_services">
+                                    <li>Over dimensions, special projects, heavy weight, bulk.</li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</aura:component>

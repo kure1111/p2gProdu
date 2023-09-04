@@ -1,0 +1,4 @@
+<apex:page standardController="Shipment__c" extensions="NEU_BL_pdf" showHeader="false" sideBar="false" renderAs="pdf" standardStylesheets="false" language="en_US">
+    <apex:stylesheet value="{!$Resource.hbl_style}"/>
+    <apex:outputText value="{!hbl}" escape="false"/>
+</apex:page>

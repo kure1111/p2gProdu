@@ -1,0 +1,2 @@
+<apex:page standardController="Invoice__c" extensions="PAK_INV_Ctr" action="{!Cancelar}">
+</apex:page>

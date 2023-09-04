@@ -1,0 +1,2 @@
+<apex:page standardController="Shipment_Disbursement__c" extensions="PAK_DIS_Ctr" action="{!Cancelar}">
+</apex:page>

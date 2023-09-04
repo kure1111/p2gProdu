@@ -1,0 +1,171 @@
+<aura:component controller="NEU_TrackTraceShipment" implements="forceCommunity:availableForAllPageTypes,flexipage:availableForAllPageTypes,force:hasRecordId" access="global">
+    
+	<aura:attribute name="map" type="Object"/> 
+	<aura:attribute name="markers" type="Object"/>
+    
+    <aura:attribute name="shipment" type="Shipment__c" default="{'sobjectType':'Shipment__c'}"/>
+    <aura:attribute name="shipment_track" type="Shipment_Track__c" default="{'sobjectType':'Shipment_Track__c'}"/>
+    <aura:attribute name="shipment_stops" type="List" />
+    <aura:attribute name="route_points" type="Object"/>
+    <aura:attribute name="recordId" type="String" />
+    <aura:handler name="init" value="{!this}" action="{!c.init}"/>
+   	
+    <div id="main">
+		
+        <lightning:card title="Track and Trace" iconName="standard:shipment">
+			
+            <aura:renderIf isTrue="{!v.shipment.Freight_Mode__c == 'Sea'}">
+                <h3 class="slds-section-title--divider">Vessel Last Position Information</h3>
+                <div class="slds-form--stacked slds-p-around--medium slds-m-bottom--x-small">
+                    <div class="slds-form-element">
+                        <lightning:recordViewForm recordId="{!v.recordId}" objectApiName="Shipment__c">
+                            <lightning:outputField fieldName="Truck_Vessel_Flight__c" />
+                            <lightning:outputField fieldName="Vessel_Latitude_Vessel__c" />
+                            <lightning:outputField fieldName="Vessel_Longitude_Vessel__c" />
+                            <lightning:outputField fieldName="Last_Update_Vessel__c" />
+                            <lightning:outputField fieldName="Vessel_Information_Vessel__c" />
+                        </lightning:recordViewForm>
+                    </div>
+                </div>
+                
+                <h3 class="slds-section-title--divider">Origin / Destination</h3>
+                <div class="slds-form--stacked slds-p-around--medium slds-m-bottom--x-small">
+                    <div class="slds-form-element">
+                        <lightning:recordViewForm recordId="{!v.recordId}" objectApiName="Shipment__c">
+                            <div class="slds-grid">
+                                <div class="slds-col slds-size_1-of-2">
+                                    <lightning:outputField fieldName="ETD__c" />
+                                    <lightning:outputField fieldName="" />
+                                    <lightning:outputField fieldName="Origin__c" />
+                                    <lightning:outputField fieldName="Origin_Code__c" />
+                                    <lightning:outputField fieldName="Port_Of_Loading__c" />
+                                    <lightning:outputField fieldName="Port_Of_Loading_Code__c" />
+                                </div>
+                                <div class="slds-col slds-size_1-of-2">
+                                    <lightning:outputField fieldName="ETA_ATA__c" />
+                                    <lightning:outputField fieldName="ATAPOD__c" />
+                                    <lightning:outputField fieldName="Final_Discharge__c" />
+                                    <lightning:outputField fieldName="Final_Discharge_Code__c" />
+                                    <lightning:outputField fieldName="Port_Of_Discharging__c" />
+                                    <lightning:outputField fieldName="Port_Of_Discharging_Code__c" />
+                                </div>
+                            </div>
+                        </lightning:recordViewForm>
+                    </div>
+                </div>
+                
+                <h3 class="slds-section-title--divider">Last Activity</h3>
+                <div class="slds-form--stacked slds-p-around--medium slds-m-bottom--x-small">
+                    <div class="slds-form-element">
+                        <lightning:recordViewForm recordId="{!v.recordId}" objectApiName="Shipment__c">
+                            <div class="slds-grid">
+                                <div class="slds-col slds-size_1-of-2">
+                                    <lightning:outputField fieldName="Last_Activity__c" />
+                                    <lightning:outputField fieldName="Date__c" />
+                                    <lightning:outputField fieldName="Location__c" />
+                                    <lightning:outputField fieldName="Location_Code__c" />
+                                </div>
+                                <div class="slds-col slds-size_1-of-2">
+                                    <lightning:outputField fieldName="OI_Status__c" />
+                                    <lightning:outputField fieldName="Voyage_Number__c" />
+                                    <lightning:outputField fieldName="Vessel_Name__c" />
+                                </div>
+                            </div>
+                        </lightning:recordViewForm>
+                    </div>
+                </div>
+            </aura:renderIf>
+
+            <h3 class="slds-section-title--divider">MAP</h3>
+            <div class="slds-form--stacked slds-p-around--medium slds-m-bottom--x-small" style="{!(and(v.shipment_track != null , v.shipment.Freight_Mode__c == 'Road') ? 'padding:0;' : '')}">
+                <div class="slds-form-element">
+                    <ul id="leyenda">
+                        <li class="li_origin">Origin</li>
+                        <li class="li_destination">Destination</li>
+                        <li class="li_stop" style="{!(v.shipment.Freight_Mode__c == 'Road' ? '' : 'display:none;')}">Stop</li>
+                        <li class="li_vessel" style="{!(v.shipment.Freight_Mode__c == 'Sea' ? '' : 'display:none;')}">Vessel</li>
+                        <li class="li_truck" style="{!(v.shipment.Freight_Mode__c == 'Road' ? '' : 'display:none;')}">Truck</li>
+                    </ul>
+                    <div id="mapa" class="capa_mapa">
+                        <aura:renderIf isTrue="{!v.shipment.Freight_Mode__c == 'Sea'}">
+                        	<iframe src="{!'/customers/NEU_SeaTrackTrace?id='+v.shipment.Id}" id="shipment_track_frame"/>
+                        </aura:renderIf>
+                        <aura:renderIf isTrue="{!v.shipment.Freight_Mode__c == 'Air'}">
+                            <iframe src="{!'/customers/NEU_AirTrackTrace?id='+v.shipment.Id}" id="shipment_track_frame"/>
+                        </aura:renderIf>
+                        <aura:renderIf isTrue="{!and(v.shipment_track == null, v.shipment.Freight_Mode__c == 'Road')}">
+                            <iframe src="{!'/customers/NEU_RoadTrackTrace?id='+v.shipment.Id}" id="shipment_track_frame"/>
+                        </aura:renderIf>
+                    </div>
+                </div>
+                <aura:renderIf isTrue="{!and(v.shipment_track != null, v.shipment.Freight_Mode__c == 'Road')}">
+                    <div class="hide_header"></div>
+                    <iframe src="{!v.shipment_track.Public_Sharing_URL__c}" id="shipment_track_frame"/>
+                </aura:renderIf>
+            </div>
+            
+            <aura:renderIf isTrue="{!and(v.shipment_track == null, v.shipment.Freight_Mode__c == 'Road')}">
+				<h3 class="slds-section-title--divider">Progress</h3>
+                <div class="slds-form--stacked slds-p-around--medium slds-m-bottom--x-small">
+                    <div class="slds-form-element">
+                        
+                        <div class="mobile_interface">
+                            <aura:iteration items="{!v.route_points}" var="point">
+                                <table class="mobile_table">
+                                    <tr>
+                                        <td class="td_button">
+                                            <div class="slds-truncate"><img src="{!'/sfsites/c/resource/'+point.Image}"/></div>
+                                        </td>
+                                        <td>
+                                            <p class="li_td name_ship">{!point.Address}</p>
+                                            <p class="li_td">{!point.Country}</p>
+                                            <p class="li_td">{!point.State}</p>
+                                            <p class="li_td">{!point.Location}</p>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </aura:iteration>						
+                        </div>
+                        
+                        <div class="pc_interface">
+                            <table class="slds-table slds-table--bordered slds-table--striped slds-table--cell-buffer slds-table--fixed-layout">
+                                <thead>
+                                    <tr class="slds-text-heading--label">
+                                        <th scope="col" style="width: 20%;"><div class="slds-truncate" title="Image">Name</div></th>
+                                        <th scope="col" style="width: 20%;"><div class="slds-truncate" title="Image">Country</div></th>
+                                        <th scope="col" style="width: 20%;"><div class="slds-truncate" title="Image">State</div></th>
+                                        <th scope="col" style="width: 20%;"><div class="slds-truncate" title="Image">Location</div></th>
+                                        <th scope="col" style="width: 20%;"><div class="slds-truncate" title="Image">Address</div></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <aura:iteration items="{!v.route_points}" var="point">
+                                        <tr>                                      
+                                            <td><div class="slds-truncate"><img src="{!'/sfsites/c/resource/'+point.Image}"/></div></td>
+                                            <td><div class="slds-truncate">{!point.Country}</div></td>
+                                            <td><div class="slds-truncate">{!point.State}</div></td>
+                                            <td><div class="slds-truncate">{!point.Location}</div></td>
+                                            <td><div class="slds-truncate">{!point.Address}</div></td>
+                                        </tr>
+                                    </aura:iteration>
+                                </tbody>
+                            </table>
+                        </div>
+                        
+                    </div>
+                </div>
+            </aura:renderIf>
+                
+            <aura:renderIf isTrue="{!v.shipment.Freight_Mode__c == 'Sea'}">
+                <h3 class="slds-section-title--divider">Progress</h3>
+                <div class="slds-form--stacked slds-p-around--medium slds-m-bottom--x-small">
+                    <div class="slds-form-element">
+                        <iframe src="{!'/customers/NEU_SeaMilestones?id='+v.shipment.Id}" id="milestones_frame"/>
+                    </div>
+                </div>
+            </aura:renderIf>
+            <lightning:spinner variant="brand" size="large" aura:id="mySpinner" alternativeText="Loading..."/>
+        </lightning:card>
+        
+    </div>
+</aura:component>

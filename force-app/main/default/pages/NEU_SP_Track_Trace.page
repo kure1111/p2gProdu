@@ -1,0 +1,38 @@
+<apex:page standardController="Shipment__c" extensions="NEU_SP_Track_Trace" sidebar="false" id="page" docType="html-5.0" showHeader="false">
+    <script>
+  function showMaps(shipId, fMode, groundTT) {
+    document.getElementById('buttonMaps').style.display = 'none';
+    document.getElementById('showMaps').style.display = 'block';
+
+    console.log(groundTT);
+
+    if(fMode !='Road' && fMode!='Rail')
+        document.getElementById('ttmap').src = '/apex/NEU_Track_and_Trace?id='+shipId;
+
+    if((fMode =='Road' || fMode =='Rail' )&& groundTT == 'false')
+        document.getElementById('svrmap').src = '/apex/NEU_Shipment_View_Route?id='+shipId;
+
+    if((fMode =='Road' || fMode =='Rail' )&& groundTT == 'true')
+        document.getElementById('gttmap').src = '/apex/NEU_Ground_Track_Trace?id='+shipId;
+  }
+    </script>
+    <style>
+    #buttonMaps { cursor: pointer; }
+    .mapIcon{margin-left: 38%;}
+    .linkIconMap{margin-left: 37.5%;font-size: x-large;}
+    </style>
+    <apex:form id="form">
+        <div id="buttonMaps">
+            <a onclick="showMaps('{!Shipment__c.Id}', '{!Shipment__c.Freight_Mode__c}', '{!Ground_Track_Trace_or_Road_Route}')">
+                <apex:image value="{!$Resource.googleMapsIcon}"  width="300" styleClass="mapIcon"/>
+                <br/>
+                <h2 class="linkIconMap">See Track on Google Maps</h2>
+            </a>
+        </div>
+        <div id="showMaps" style="display:none;">
+            <iframe id="ttmap" src="" width= "98%" height="1200px" style="border: 0px; display:{!IF(Shipment__c.Freight_Mode__c !='Road' && Shipment__c.Freight_Mode__c !='Rail','','none')}"></iframe>
+            <iframe id="svrmap" src="" width= "99%" height="1200px" style="border: 0px; display:{!IF(((Shipment__c.Freight_Mode__c == 'Road' || Shipment__c.Freight_Mode__c == 'Rail') && Ground_Track_Trace_or_Road_Route == false),'','none')}"></iframe>
+            <iframe id="gttmap" src="" width= "99%" height="1200px" style="border: 0px; display:{!IF(((Shipment__c.Freight_Mode__c == 'Road' || Shipment__c.Freight_Mode__c == 'Rail') && Ground_Track_Trace_or_Road_Route == true),'','none')}"></iframe>
+        </div>
+    </apex:form>
+</apex:page>

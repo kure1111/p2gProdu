@@ -1,0 +1,38 @@
+<apex:page standardController="Traffic__c" extensions="NEU_TrafficSummary" sidebar="false">
+	<apex:form id="form">
+		<apex:outputPanel id="grafics">
+			<apex:pageBlock title="Current Year ({!current_year})">
+		   		<apex:chart height="200" width="100%" data="{!datos_grafico_1}">
+			    	<apex:legend position="bottom" font="10px Calibri"/>
+                    <apex:axis type="Numeric" position="right" fields="REVENUE_OP,PROFIT_OP,REVENUE_PROYECTION,PROFIT_PROYECTION,REVENUE_OC,PROFIT_OC" grid="false" rendered="true"/>
+                    <apex:axis type="Category" position="bottom" fields="MONTH"/>
+                    <apex:barSeries title="Revenue (Order in Progress),Profit (Order in Progress),Revenue (Order Closed), Profit (Order Closed)" orientation="vertical" axis="right" xField="MONTH" yField="REVENUE_OP,PROFIT_OP,REVENUE_OC,PROFIT_OC">
+                        <apex:chartTips height="25" width="220"/>
+                    </apex:barSeries>
+                    <apex:lineSeries title="Revenue Proyection" axis="right" xField="MONTH" yField="REVENUE_PROYECTION" markerType="circle" markerSize="4">
+                        <apex:chartTips height="25" width="220"/>
+                    </apex:lineSeries>
+                    <apex:lineSeries title="Profit Proyection" axis="right" xField="MONTH" yField="PROFIT_PROYECTION" markerType="circle" markerSize="4">
+                        <apex:chartTips height="25" width="220"/>
+                    </apex:lineSeries>
+			    </apex:chart>
+		    </apex:pageBlock>
+		    <apex:pageBlock title="Last Year ({!last_year})">
+		   		<apex:chart height="200" width="100%" data="{!datos_grafico_2}">
+			    	<apex:legend position="bottom" font="10px Calibri"/>
+                    <apex:axis type="Numeric" position="right" fields="REVENUE_OP,PROFIT_OP,REVENUE_PROYECTION,PROFIT_PROYECTION,REVENUE_OC,PROFIT_OC" grid="false" rendered="true"/>
+                    <apex:axis type="Category" position="bottom" fields="MONTH"/>
+                    <apex:barSeries title="Revenue (Order in Progress),Profit (Order in Progress),Revenue (Order Closed), Profit (Order Closed)" orientation="vertical" axis="right" xField="MONTH" yField="REVENUE_OP,PROFIT_OP,REVENUE_OC,PROFIT_OC">
+                        <apex:chartTips height="25" width="220"/>
+                    </apex:barSeries>
+                    <apex:lineSeries title="Revenue Proyection" axis="right" xField="MONTH" yField="REVENUE_PROYECTION" markerType="circle" markerSize="4">
+                        <apex:chartTips height="25" width="220"/>
+                    </apex:lineSeries>
+                    <apex:lineSeries title="Profit Proyection" axis="right" xField="MONTH" yField="PROFIT_PROYECTION" markerType="circle" markerSize="4">
+                        <apex:chartTips height="25" width="220"/>
+                    </apex:lineSeries>
+			    </apex:chart>
+		    </apex:pageBlock>
+	   	</apex:outputPanel>
+	</apex:form>
+</apex:page>

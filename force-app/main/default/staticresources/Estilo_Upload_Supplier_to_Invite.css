@@ -1,0 +1,293 @@
+/* UPLOAD SUPPLIER TO INVITE */
+
+body
+{
+	font-family: Arial, Helvetica, sans-serif;
+	font-size:11px;
+}
+
+#contenedor
+{
+	display:block;
+	margin: 0 auto;
+    padding: 0;
+    width: 1000px;
+}
+
+#cabecera_titulo
+{
+	float: left;
+	width: 100%;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 20px;
+	text-align: center;
+}
+
+#bloques
+{
+	margin: 10px auto 0px;
+	padding:0;
+    border: 1px solid #283742;
+    border-radius: 10px;	
+	float:left;
+	text-align: center;
+	
+	background: #F7F7F7;
+	background: -webkit-gradient(linear, 0 0, 0 bottom, from(#F7F7F7), to(#E0E0E0));
+	background: -webkit-linear-gradient(#F7F7F7, #E0E0E0);
+	background: -moz-linear-gradient(#F7F7F7, #E0E0E0);
+	background: -ms-linear-gradient(#F7F7F7, #E0E0E0);
+	background: -o-linear-gradient(#F7F7F7, #E0E0E0);
+	background: linear-gradient(#F7F7F7, #E0E0E0);
+	-webkit-box-shadow: 0 0 5px rgba(0, 0, 0, 0.25);
+	-moz-box-shadow: 0 0 5px rgba(0, 0, 0, 0.25);
+	box-shadow: 0 0 5px rgba(0, 0, 0, 0.25);
+}
+
+#contenedor #bloques .tabla_listado
+{
+	float: left;
+	margin: 10px;
+	width:978px;
+	background: #F7F7F7;
+    border: 1px solid #CDCDCD;
+    border-radius: 10px 10px 10px 10px;
+	
+	background: #F7F7F7;
+	background: -webkit-gradient(linear, 0 0, 0 bottom, from(#F7F7F7), to(#E0E0E0));
+	background: -webkit-linear-gradient(#F7F7F7, #E0E0E0);
+	background: -moz-linear-gradient(#F7F7F7, #E0E0E0);
+	background: -ms-linear-gradient(#F7F7F7, #E0E0E0);
+	background: -o-linear-gradient(#F7F7F7, #E0E0E0);
+	background: linear-gradient(#F7F7F7, #E0E0E0);
+	-webkit-box-shadow: 0 0 5px rgba(0, 0, 0, 0.25);
+	-moz-box-shadow: 0 0 5px rgba(0, 0, 0, 0.25);
+	box-shadow: 0 0 5px rgba(0, 0, 0, 0.25);
+}
+
+
+#contenedor #bloques .tabla_listado th
+{
+	font-family: Arial, Helvetica, sans-serif;
+	font-size:11px;
+	color:#283742;
+    border: 1px solid #CDCDCD;
+    border-radius: 5px 5px 5px 5px;
+	vertical-align: middle;
+	text-align: left;
+	width: 150px;
+	font-weight:normal;
+	ackground: #5E71B6;
+	background: -webkit-gradient(linear, 0 0, 0 bottom, from(#FFFFFF), to(#5E71B6));
+	background: -webkit-linear-gradient(#FFFFFF, #5E71B6);
+	background: -moz-linear-gradient(#FFFFFF, #5E71B6);
+	background: -ms-linear-gradient(#FFFFFF, #5E71B6);
+	background: -o-linear-gradient(#FFFFFF, #5E71B6);
+	background: linear-gradient(#FFFFFF, #5E71B6);
+	-pie-background: linear-gradient(#FFFFFF, #5E71B6);
+	-webkit-box-shadow: 0 0 5px rgba(0, 0, 0, 0.25);
+	-moz-box-shadow: 0 0 5px rgba(0, 0, 0, 0.25);
+	box-shadow: 0 0 5px rgba(0, 0, 0, 0.25);
+}
+
+#fichas
+{
+	float: left;
+	width: 1097px;
+}
+
+.lista_fichas
+{
+	float: left;
+	list-style: none;
+	min-width: 240px;
+	max-width: 1233px;
+	border: 2px solid #CDCDCD;
+	background: none;
+	background: white;
+	border-radius: 5px 5px 0px 0px;
+	height: 40px;
+	padding-left: 0px;
+	background: #F1EDED;
+	margin-bottom: 0px;
+	border-bottom: 0px;
+}
+
+.lista_fichas li
+{
+	float: left;
+	height: 36px;
+	text-align: center;
+	vertical-align: middle;
+	width: 110px;
+	background: #CDCDCD;
+	margin: 4px;
+	padding-top: 8px;
+	cursor: pointer;
+}
+
+.lista_fichas li a
+{	
+	text-decoration: none;
+	color: black;
+	cursor: pointer;
+	padding: 3px 5px 5px 5px;
+	font-family: Arial, Helvetica, sans-serif;
+	float: left;
+	font-size: 12px;
+	height: 27px;
+	padding-top: 7px;
+	padding-left: 18px;
+
+}
+
+.lista_fichas li a:hover
+{
+	text-decoration: none;
+	color: black;
+	cursor: pointer;
+}
+
+#contenedor #bloques .tabla_listado td
+{
+	font-family: Arial, Helvetica, sans-serif;
+	font-size:11px;
+	color:#4F5051;
+	background: #FFFFFF;
+    border: 1px solid #CDCDCD;
+    border-radius: 5px 5px 5px 5px;
+	vertical-align: middle;
+	text-align:left;
+
+	-webkit-box-shadow: 0 0 5px rgba(0, 0, 0, 0.25);
+	-moz-box-shadow: 0 0 5px rgba(0, 0, 0, 0.25);
+	box-shadow: 0 0 5px rgba(0, 0, 0, 0.25);
+}
+
+.tabla_boton_leyenda
+{
+	width: 325px;
+}
+
+.tabla_boton_leyenda td
+{
+	text-align: justify;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size:11px;
+	color:#4F5051;
+}
+
+.boton_crear
+{
+	float: left;
+	padding: 10px;
+	margin: 0 0 10px 10px !important;
+	text-decoration: none;
+	color: #4F5051;
+	background: #FFFFFF;
+	cursor:pointer;
+	width: 300px;
+	
+	background: #F7F7F7;
+	background: -webkit-gradient(linear, 0 0, 0 bottom, from(#F7F7F7), to(#E0E0E0));
+	background: -webkit-linear-gradient(#F7F7F7, #E0E0E0);
+	background: -moz-linear-gradient(#F7F7F7, #E0E0E0);
+	background: -ms-linear-gradient(#F7F7F7, #E0E0E0);
+	background: -o-linear-gradient(#F7F7F7, #E0E0E0);
+	background: linear-gradient(#F7F7F7, #E0E0E0);
+	-webkit-box-shadow: 0 0 5px rgba(0, 0, 0, 0.25);
+	-moz-box-shadow: 0 0 5px rgba(0, 0, 0, 0.25);
+	box-shadow: 0 0 5px rgba(0, 0, 0, 0.25);
+	text-shadow: #000000 0px 0px 1px;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size:11px;
+	border-radius:10px;
+}
+
+.titulos_supplier
+{
+	font-weight: bold !important;
+	font-size: 12px !important;
+}
+
+.titulo_general
+{
+	text-align:center !important; 
+	font-weight: bold !important; 
+	font-size: 12px !important;
+}
+
+.create_label
+{
+	display: block;
+	float: left;
+	margin: 3px 0 0 0;
+	font-weight: bold;
+}
+
+.nombre_titulos {
+	background: #DFEDCD !important;
+	background: -webkit-gradient(linear, 0 0, 0 bottom, from(#FFFFFF), to(#DFEDCD))!important;
+	background: -webkit-linear-gradient(#FFFFFF, #DFEDCD)!important;
+	background: -moz-linear-gradient(#FFFFFF, #DFEDCD)!important;
+	background: -ms-linear-gradient(#FFFFFF, #DFEDCD)!important;
+	background: -o-linear-gradient(#FFFFFF, #DFEDCD)!important;
+	background: linear-gradient(#FFFFFF, #DFEDCD)!important;
+	-webkit-box-shadow: 0 0 5px rgba(0, 0, 0, 0.25)!important;
+	-moz-box-shadow: 0 0 5px rgba(0, 0, 0, 0.25)!important;
+	box-shadow: 0 0 5px rgba(0, 0, 0, 0.25)!important;
+	background: linear-gradient(#FFFFFF, #DFEDCD)!important;
+}
+#contenedor #bloques .tabla_listado .check_create
+{
+	margin: 3px 0 0 10px;
+	float: left;
+	width: 17px;
+}
+
+.separator
+{
+	opacity:0;
+}
+
+.lista_contactos
+{
+	float: left;
+	margin: 0;
+	padding: 0;
+	width: 100%;
+}
+
+.lista_contactos li
+{
+	float: left;
+	list-style-type: none;
+	margin: 0 15px 0 0;
+}
+
+.roles
+{
+	float:right;
+	padding:0;
+	margin:0;
+}
+
+.capa_activo
+{
+	float:right;
+	margin: 0 20px 0 0;
+}
+
+.capa_activo span
+{
+	display: block;
+	float: left;
+	margin: 3px 0 0 0;
+	font-weight: bold;
+}
+
+.capa_activo img
+{
+	float:right;
+	margin: 4px 0 0 10px;
+}

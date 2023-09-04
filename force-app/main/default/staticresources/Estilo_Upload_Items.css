@@ -1,0 +1,311 @@
+body
+{
+	font-family: Arial, Helvetica, sans-serif;
+	font-size:11px;
+}
+
+#contenedor
+{
+	display:block;
+	margin: 0 auto;
+    padding: 0;
+    
+}
+
+#bloques
+{
+	margin: 10px auto 25px;
+	padding:0;
+    border: 1px solid #475965;
+  	border-radius: 1px 10px 10px 10px;
+	float:left;
+	text-align: center;
+	
+	background: #F7F7F7;
+	background: -webkit-gradient(linear, 0 0, 0 bottom, from(#F7F7F7), to(#E0E0E0));
+	background: -webkit-linear-gradient(#F7F7F7, #E0E0E0);
+	background: -moz-linear-gradient(#F7F7F7, #E0E0E0);
+	background: -ms-linear-gradient(#F7F7F7, #E0E0E0);
+	background: -o-linear-gradient(#F7F7F7, #E0E0E0);
+	background: linear-gradient(#F7F7F7, #E0E0E0);
+	-webkit-box-shadow: 0 0 5px rgba(0, 0, 0, 0.25);
+	-moz-box-shadow: 0 0 5px rgba(0, 0, 0, 0.25);
+	box-shadow: 0 0 5px rgba(0, 0, 0, 0.25);
+	width: 1077px;
+	margin-top: 0px;
+}
+
+#cabecera_titulo
+{
+	float: left;
+	width: 100%;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 20px;
+	margin-left: 485px;
+	
+}
+
+#fichas
+{
+	float: left;
+	width: 1097px;
+}
+
+.lista_fichas
+{
+	float: left;
+	list-style: none;
+	min-width: 240px;
+	max-width: 1065px;
+	border: 2px solid #CDCDCD;
+	background: none;
+	background: white;
+	border-radius: 5px 5px 0px 0px;
+	
+	padding-left: 0px;
+	background: #F1EDED;
+	margin-bottom: 0px;
+	border-bottom: 0px;
+}
+
+.lista_fichas li
+{
+	float: left;
+	height: 45px;
+	text-align: center;
+	vertical-align: middle;
+	width: 110px;
+	background: #CDCDCD;
+	margin: 4px;
+	padding-top: 8px;
+	cursor: pointer;
+}
+
+.lista_fichas li a
+{	
+	text-decoration: none;
+	color: black;
+	cursor: pointer;
+	padding: 3px 5px 5px 5px;
+	font-family: Arial, Helvetica, sans-serif;
+	float: left;
+	font-size: 12px;
+	height: 27px;
+	padding-top: 7px;
+	padding-left: 18px;
+
+}
+
+.lista_fichas li a:hover
+{
+	text-decoration: none;
+	color: black;
+	cursor: pointer;
+}
+
+#contenedor #bloques .tabla_listado
+{
+	float: left;
+	margin: 10px;
+	width: 1054px;
+	background: #F7F7F7;
+    border: 1px solid #CDCDCD;
+    border-radius: 10px 10px 10px 10px;
+	
+	background: #F7F7F7;
+	background: -webkit-gradient(linear, 0 0, 0 bottom, from(#F7F7F7), to(#E0E0E0));
+	background: -webkit-linear-gradient(#F7F7F7, #E0E0E0);
+	background: -moz-linear-gradient(#F7F7F7, #E0E0E0);
+	background: -ms-linear-gradient(#F7F7F7, #E0E0E0);
+	background: -o-linear-gradient(#F7F7F7, #E0E0E0);
+	background: linear-gradient(#F7F7F7, #E0E0E0);
+	-webkit-box-shadow: 0 0 5px rgba(0, 0, 0, 0.25);
+	-moz-box-shadow: 0 0 5px rgba(0, 0, 0, 0.25);
+	box-shadow: 0 0 5px rgba(0, 0, 0, 0.25);
+}
+
+
+#contenedor #bloques .tabla_listado th
+{
+	font-family: Arial, Helvetica, sans-serif;
+	font-size:11px;
+	color:#283742;
+    border: 1px solid #CDCDCD;
+    border-radius: 5px 5px 5px 5px;
+	vertical-align: middle;
+	text-align: center;
+	font-weight: bold;
+	background: #5E71B6;
+	background: -webkit-gradient(linear, 0 0, 0 bottom, from(#FFFFFF), to(#5E71B6));
+	background: -webkit-linear-gradient(#FFFFFF, #5E71B6);
+	background: -moz-linear-gradient(#FFFFFF, #5E71B6);
+	background: -ms-linear-gradient(#FFFFFF, #5E71B6);
+	background: -o-linear-gradient(#FFFFFF, #5E71B6);
+	background: linear-gradient(#FFFFFF, #5E71B6);
+	-pie-background: linear-gradient(#FFFFFF, #5E71B6);
+}
+
+#contenedor #bloques .tabla_listado td
+{
+	font-family: Arial, Helvetica, sans-serif;
+	font-size:11px;
+	color:#4F5051;
+	background: #FFFFFF;
+    border: 1px solid #CDCDCD;
+    border-radius: 5px 5px 5px 5px;
+	vertical-align: middle;
+	text-align:left;
+
+	-webkit-box-shadow: 0 0 5px rgba(0, 0, 0, 0.25);
+	-moz-box-shadow: 0 0 5px rgba(0, 0, 0, 0.25);
+	box-shadow: 0 0 5px rgba(0, 0, 0, 0.25);
+}
+
+#contenedor #bloques .tabla_listado input
+{
+	font-family: Arial, Helvetica, sans-serif;
+	font-size:11px;
+	width: 104px;
+	text-align: right;
+}
+
+#contenedor #bloques .tabla_datos
+{
+	/*width: 752px;*/
+	width:100%;
+}
+
+
+#contenedor #bloques .tabla_datos th
+{
+	font-family: Arial, Helvetica, sans-serif;
+	font-size:11px;
+	color:#283742;
+    border: 1px solid #CDCDCD;
+    border-radius: 5px 5px 5px 5px;
+	vertical-align: middle;
+	text-align: left;
+	font-weight:normal;
+	padding:10px;
+	background: #DFEDCD !important;
+	background: -webkit-gradient(linear, 0 0, 0 bottom, from(#FFFFFF), to(#DFEDCD))!important;
+	background: -webkit-linear-gradient(#FFFFFF, #DFEDCD)!important;
+	background: -moz-linear-gradient(#FFFFFF, #DFEDCD)!important;
+	background: -ms-linear-gradient(#FFFFFF, #DFEDCD)!important;
+	background: -o-linear-gradient(#FFFFFF, #DFEDCD)!important;
+	background: linear-gradient(#FFFFFF, #DFEDCD)!important;
+}
+
+#contenedor #bloques .tabla_datos td
+{
+	font-family: Arial, Helvetica, sans-serif;
+	font-size:11px;
+	color:#4F5051;
+	background: #FFFFFF;
+    border: 1px solid #CDCDCD;
+    border-radius: 5px 5px 5px 5px;
+	vertical-align: middle;
+	text-align:left;
+	padding: 10px;
+
+	-webkit-box-shadow: 0 0 5px rgba(0, 0, 0, 0.25);
+	-moz-box-shadow: 0 0 5px rgba(0, 0, 0, 0.25);
+	box-shadow: 0 0 5px rgba(0, 0, 0, 0.25);
+}
+
+#contenedor #bloques .tabla_datos input
+{
+	font-family: Arial, Helvetica, sans-serif;
+	font-size:11px;
+	width: 104px;
+	text-align: right;
+	margin:0;
+	float: right;
+}
+
+.boton_crear
+{
+	float: left;
+	padding: 10px;
+	margin: 0 0 10px 10px !important;
+	text-decoration: none;
+	color: #4F5051;
+	background: #FFFFFF;
+	cursor:pointer;
+	width: 300px;
+	
+	background: #F7F7F7;
+	background: -webkit-gradient(linear, 0 0, 0 bottom, from(#F7F7F7), to(#E0E0E0));
+	background: -webkit-linear-gradient(#F7F7F7, #E0E0E0);
+	background: -moz-linear-gradient(#F7F7F7, #E0E0E0);
+	background: -ms-linear-gradient(#F7F7F7, #E0E0E0);
+	background: -o-linear-gradient(#F7F7F7, #E0E0E0);
+	background: linear-gradient(#F7F7F7, #E0E0E0);
+	-webkit-box-shadow: 0 0 5px rgba(0, 0, 0, 0.25);
+	-moz-box-shadow: 0 0 5px rgba(0, 0, 0, 0.25);
+	box-shadow: 0 0 5px rgba(0, 0, 0, 0.25);
+	text-shadow: #000000 0px 0px 1px;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size:11px;
+	border-radius:10px;
+	border: 1px solid #475965;
+}
+
+.create_label
+{
+	display: block;
+	float: left;
+	margin: 1px 0 0 0;
+	font-weight: bold;
+}
+
+#contenedor #bloques .tabla_listado .check_create
+{
+	margin: 1px 0 0 10px;
+	float: left;
+	width: 17px;
+}
+
+.separator
+{
+	opacity:0;
+}
+
+.imagen
+{
+	width:160px;
+	margin:10px;
+	border-radius:5px;
+	float:left;
+}
+
+.imagen2
+{
+	width:160px;
+	margin:10px;
+	border-radius:5px;
+	float:left;
+}
+
+.observaciones
+{
+	margin: 0;
+	width: 613px;
+	height: 70px;
+	resize:none;
+}
+
+/*CALENDIARIO*/
+.datepicker select { width: 72px; }
+.datepicker { border-collapse: collapse; border: 2px solid #999; position: absolute; z-index:1000;}
+.datepicker tr.controls th { height: 22px; font-size: 11px; text-align: center;}
+.datepicker select { font-size: 11px; }
+.datepicker tr.days th { height: 18px; text-align:center;}
+.datepicker tfoot td { height: 18px; text-align: center; text-transform: capitalize; }
+.datepicker th, .datepicker tfoot td { background: #eee; font: 10px/18px Verdana, Arial, Helvetica, sans-serif; }
+.datepicker th span, .datepicker tfoot td span { font-weight: bold; }
+
+.datepicker tbody td { width: 24px; height: 24px; border: 1px solid #ccc; font: 11px/22px Arial, Helvetica, sans-serif; text-align: center; background: #fff; }
+.datepicker tbody td.date { cursor: pointer; }
+.datepicker tbody td.date.over { background-color: #99ffff; }
+.datepicker tbody td.date.chosen { font-weight: bold; background-color: #ccffcc; }

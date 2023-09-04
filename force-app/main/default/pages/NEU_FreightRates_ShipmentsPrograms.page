@@ -1,0 +1,223 @@
+<apex:page standardController="Shipment_Program__c" extensions="NEU_FreightRates_ShipmentsPrograms">
+    <apex:includeScript value="{!$Resource.jquery_1_10_2}"/>
+    <script>
+     $(document).ready(function () {
+      });
+      
+        function close_message(n)
+        {
+            $(".alert_message_"+n).css("display","none");
+        }
+        
+        function sort_data_table(n)
+        {
+            document.getElementById('{!$Component.form.orden_fees_filtro}').value = n;
+            if(document.getElementById('{!$Component.form.orden_fees_filtro}').value ==$('#orderField2').val())
+            {
+                if($('#orderValue2').val()!='asc')
+                    $('#orderValue2').val('asc');
+                else
+                    $('#orderValue2').val('desc');
+  
+            }
+            else
+            {
+                $('#orderField2').val(n);
+                $('#orderValue2').val('desc');
+            }
+            
+            document.getElementById('{!$Component.form.orden_fees_filtro_modo}').value = $('#orderValue2').val();
+            ordenar_tabla_filtro_fees(); 
+        }
+        
+         function mostrar_ordenacion_fees_filtro()
+        {
+            var n = document.getElementById('{!$Component.form.orden_fees_filtro}').value;
+            $('.Service_Rate_Name_filtro').css('display','none');
+            var clase_ordenacion  = n.replace('.','');
+            clase_ordenacion = clase_ordenacion.replace('.','');
+            $('.fee'+clase_ordenacion).css('display','block');
+            if($('#orderValue2').val()=='asc')
+                $('.Service_Rate_Name_filtro').css('background-position-y','-15px');
+            else
+                $('.Service_Rate_Name_filtro').css('background-position-y','0px');
+        }
+        
+        function get_message(n)
+        {
+            var position;
+            position = $(".campo_products_"+n).position();
+            $(".alert_message_"+n).css("left",position.left -310);
+            $(".todas_las_lineas_alert").css("display","none");
+            $(".alert_message_"+n).css("display","block");
+            $(".alert_message_"+n).css("top","80px");
+            $(".custom_style_left2").css("background-position-y",position.top -75)
+        }
+    </script>
+    <style>
+        .actions_table
+        {
+            background: #f8f8f8;
+            border-right: 1px solid #e0e3e5;
+            border-left: 1px solid #e0e3e5;
+            border-top: 3px solid #6b2778;
+            border-bottom: 1px solid #e0e3e5;
+            border-radius: 5px;
+        }
+        .actions_table th
+        {
+            background: #f2f3f3;
+            border:1px solid #e0e3e5;
+            border-bottom:2px solid #cccccc;
+            color: #000;
+            font-size: .9em;
+            font-weight: bold;
+            padding: 5px 2px 4px 5px;
+        }
+        .actions_table td
+        {
+            background: #ffffff;
+            padding: 5px 0 0 0;
+        }
+        #alert_message{display:none; padding: 3px 6px 5px; margin-top: -12px; margin-right: 0; margin-bottom: 0; margin-left: -11px; background: transparent url(/img/sprites/hover_sprite.png) 15px -22px no-repeat; text-align:left; width: 301px;     width: 300px; background-size: 300px; }
+        #custom_style_left{/*background: transparent url(/img/alohaSkin/hover_arrow.png) -1px 3px no-repeat;*/background: transparent url({!$Resource.hover_arrow}) -1px 3px no-repeat; /*background: transparent url(/img/alohaSkin/hover_arrow.png) -40px 3px no-repeat;*/ width: 370px; padding-left: 15px; border: 0; margin: 0; border-top: none !important;     width: 393px;     width: 295px; width: 308px;     background-position-x: 303px;}
+        #custom_style_header{border-top: 3px solid #0043FF; margin: 0; border-radius: 4px; padding:6px 10px; color: rgb(51, 52, 53); font-family: Arial, Helvetica, sans-serif; font-size: 14px; font-weight: bold;     width: 351px;     width: 277px; width: 270px;}
+        #custom_style_body{font-family: Arial, Helvetica, sans-serif; font-size: 12px; font-weight: bold; /*height: 200px;*/ height: 125px; overflow-y: scroll;     overflow-y: hidden;     margin-top: -9px; margin-left: 0px;}
+        .cierre{float: right; display: block; cursor: pointer; background: #0043FF; color: #ffffff; padding: 3px; border-radius: 3px; cursor:pointer;     }
+        .table_bocadillo{ width: 316px;     width: 342px;     width: 300px; width: 250px;}
+        .table_bocadillo td{     font-weight: normal !important;     padding-left: 5px;}
+        .table_bocadillo th{        font-weight: bold !important;}
+        .boton_freight_rates_management{text-decoration: none;}
+        .boton_freight_rates_management:hover {text-decoration: none;}
+        #custom_style_footer{background: transparent url(/img/sprites/hover_sprite.png) no-repeat; display: block; position: absolute; /*width: 100%;*/    width: 298px; height: 14px; bottom: -14px; left: 15px;     width: 298px;     background-size: 300px;}
+        .capa_fija
+        {
+            height: 169px;
+            overflow-y: scroll; 
+        }
+        html{background-color:#ffffff !important;}
+    </style>
+    <apex:form id="form">
+         <!-- -ordenacion -->
+        <input type="hidden" id="orderField2" value="Name"/>
+        <input type="hidden" id="orderValue2" value="asc"/>
+        <apex:inputHidden value="{!orden_fees_filtro}" id="orden_fees_filtro"/>
+        <apex:inputHidden value="{!orden_fees_filtro_modo}" id="orden_fees_filtro_modo"/>
+        <apex:actionFunction name="ordenar_tabla_filtro_fees" action="{!ordenar_tabla_fees}" reRender="pageblock" status="myStatus" oncomplete="mostrar_ordenacion_fees_filtro();"/>
+        <apex:outputPanel >
+            <apex:pageBlock id="pageblock" title="Service Rates">
+                <apex:pageBlockButtons location="top">
+                    <div> 
+                        <a href="{!$Site.BaseUrl}/apex/NEU_New_Service_Rate_Internal?ships_program={!Shipment_Program__c.Id}" target="_parent" class="boton_freight_rates_management"><input type="button" class="btn boton_freight_rates_management" value="Freight Rates Management"/></a>
+                        <div style="    float: right;">
+                            <apex:outputLabel value="Carrier" style="font-weight: bold;    margin-right: 7px;"/>
+                            <apex:inputfield value="{!record_filter.Carrier_Account__c}" onchange="ordenar_tabla_filtro_fees();"/>
+                            <apex:outputLabel value="Display only Active Rates" style="font-weight: bold;    margin-right: 7px;    "/>
+                            <apex:inputCheckbox value="{!display_only_active_rates}" onchange="ordenar_tabla_filtro_fees();"/>
+                        </div>
+                    </div>
+                </apex:pageBlockButtons>
+                <table border="0" cellspacing="5" cellpadding="5" class="actions_table month_table" width="100%" style="border-top: 1px solid #e0e3e5;">
+                    <tr>
+                        <td colspan="10" style="padding: 0;">
+                            <div class="capa_fija">
+                                <table border="0" cellpadding="0" cellspacing="0" class="month_table" width="100%">
+                                    <tr>
+                                        <th class="th1" style ="cursor: pointer;" onclick="sort_data_table('Name');">Service Rate Name
+                                            <span style="       width: 10px;    height: 11px;    float: right;    margin: 0 5px;    vertical-align: 0px;    background: transparent url(/img/alohaSkin/sortArrows_sprite.png);    background-size: 16px;    background-repeat: no-repeat;    background-position: center 2px; display:block;" class="Service_Rate_Name_filtro feeName"/>
+                                        </th>
+                                        <th class="th2" style ="cursor: pointer;" onclick="sort_data_table('Fee_Category__c');">Service Rate Category
+                                            <span style="       width: 10px;    height: 11px;    float: right;    margin: 0 5px;    vertical-align: 0px;    background: transparent url(/img/alohaSkin/sortArrows_sprite.png);    background-size: 16px;    background-repeat: no-repeat;    background-position: center 2px; display:none;" class="Service_Rate_Name_filtro feeFee_Category__c"/>
+                                        </th>
+                                        <th class="th11" style ="cursor: pointer;" onclick="sort_data_table('Account_for__c');">Account for
+                                            <span style="       width: 10px;    height: 11px;    float: right;    margin: 0 5px;    vertical-align: 0px;    background: transparent url(/img/alohaSkin/sortArrows_sprite.png);    background-size: 16px;    background-repeat: no-repeat;    background-position: center 2px; display:none;" class="Service_Rate_Name_filtro feeAccount_for__c"/>
+                                        </th>
+                                        <th class="th3" style ="cursor: pointer;" onclick="sort_data_table('Carrier_Account__c');">Carrier Account
+                                            <span style="       width: 10px;    height: 11px;    float: right;    margin: 0 5px;    vertical-align: 0px;    background: transparent url(/img/alohaSkin/sortArrows_sprite.png);    background-size: 16px;    background-repeat: no-repeat;    background-position: center 2px; display:none;" class="Service_Rate_Name_filtro feeCarrier_Account__c"/>
+                                        </th>
+                                        <th class="th4" style ="cursor: pointer;" onclick="sort_data_table('TT_Days__c');">TT (Days)
+                                            <span style="       width: 10px;    height: 11px;    float: right;    margin: 0 5px;    vertical-align: 0px;    background: transparent url(/img/alohaSkin/sortArrows_sprite.png);    background-size: 16px;    background-repeat: no-repeat;    background-position: center 2px; display:none;" class="Service_Rate_Name_filtro feeTT_Days__c"/>
+                                        </th>
+                                        <th class="th5" style ="cursor: pointer;" onclick="sort_data_table('Rate_Type__c');">Rate Type
+                                            <span style="       width: 10px;    height: 11px;    float: right;    margin: 0 5px;    vertical-align: 0px;    background: transparent url(/img/alohaSkin/sortArrows_sprite.png);    background-size: 16px;    background-repeat: no-repeat;    background-position: center 2px; display:none;" class="Service_Rate_Name_filtro feeRate_Type__c"/>
+                                        </th>
+                                        <th class="th6" style ="cursor: pointer;" onclick="sort_data_table('Container_Type__c');">Cont./Pall. Type
+                                            <span style="       width: 10px;    height: 11px;    float: right;    margin: 0 5px;    vertical-align: 0px;    background: transparent url(/img/alohaSkin/sortArrows_sprite.png);    background-size: 16px;    background-repeat: no-repeat;    background-position: center 2px; display:none;" class="Service_Rate_Name_filtro feeContainer_Type__c"/>
+                                        </th>
+                                        <th class="th7" colspan="2" style ="cursor: pointer;" onclick="sort_data_table('Buy_Rate__c');">Buy Rate
+                                            <span style="       width: 10px;    height: 11px;    float: right;    margin: 0 5px;    vertical-align: 0px;    background: transparent url(/img/alohaSkin/sortArrows_sprite.png);    background-size: 16px;    background-repeat: no-repeat;    background-position: center 2px; display:none;" class="Service_Rate_Name_filtro feeBuy_Rate__c"/>
+                                        </th>
+                                        <th class="th8" style ="cursor: pointer;" onclick="sort_data_table('Fee_Rate__c');">Sell Rate
+                                            <span style="       width: 10px;    height: 11px;    float: right;    margin: 0 5px;    vertical-align: 0px;    background: transparent url(/img/alohaSkin/sortArrows_sprite.png);    background-size: 16px;    background-repeat: no-repeat;    background-position: center 2px; display:none;" class="Service_Rate_Name_filtro feeFee_Rate__c"/>
+                                        </th>
+                                        <th class="th9" style ="cursor: pointer;" onclick="sort_data_table('Valid_Until__c');">Valid Until
+                                            <span style="       width: 10px;    height: 11px;    float: right;    margin: 0 5px;    vertical-align: 0px;    background: transparent url(/img/alohaSkin/sortArrows_sprite.png);    background-size: 16px;    background-repeat: no-repeat;    background-position: center 2px; display:none;" class="Service_Rate_Name_filtro feeValid_Until__c"/>
+                                        </th>
+                                        <th class="th10" style ="cursor: pointer;" onclick="sort_data_table('Active__c');">Active
+                                            <span style="       width: 10px;    height: 11px;    float: right;    margin: 0 5px;    vertical-align: 0px;    background: transparent url(/img/alohaSkin/sortArrows_sprite.png);    background-size: 16px;    background-repeat: no-repeat;    background-position: center 2px; display:none;" class="Service_Rate_Name_filtro feeActive__c"/>
+                                        </th>
+                                    </tr>
+                                    <apex:repeat value="{!service_rates}" var="s">
+                                        <tr>
+                                            <td class="td1"><apex:outputLink value="/{!s.Id}" target="_blank">{!s.Name}</apex:outputLink></td>
+                                            <td class="td2"><apex:outputText value="{!s.Fee_Category__c}"/></td>
+                                            <td class="td11"><apex:outputLink value="/{!s.Account_for__c}" target="_blank">{!s.Account_for__r.Name}</apex:outputLink></td>
+                                            <td class="td3"><apex:outputLink value="/{!s.Carrier_Account__c}" target="_blank">{!s.Carrier_Account__r.Name}</apex:outputLink></td>
+                                            <td class="td4" style="    text-align: right; padding-right: 6px;"><apex:outputText value="{!s.TT_Days__c}"/></td>
+                                            <td class="td5"><apex:outputText value="{!s.Rate_Type__c}"/></td>
+                                            <td class="td6">
+                                                <apex:outputLink value="/{!s.Container_Type__c}" target="_blank" rendered="{!s.Container_Type__c != null}">{!s.Container_Type__r.Name}</apex:outputLink>
+                                                <apex:outputLink value="/{!s.Pallet_Type__c}" target="_blank" rendered="{!s.Container_Type__c == null}">{!s.Pallet_Type__r.Name}</apex:outputLink>
+                                            </td>
+                                            <td class="td7" style="padding-right: 5px;">
+                                                <div id="alert_message" style="display:none;" class="mruHoverDetail alert_message_{!s.Id} todas_las_lineas_alert" >
+                                                    <div id="custom_style_left" class="bPageBlock brandSecondaryBrd secondaryPalette custom_style_left2">
+                                                         <div id="custom_style_header" class="pbHeader brandSecondaryBrd">Concept Detail<span class="cierre" onclick="close_message('{!s.Id}');">X</span></div>
+                                                         <div id="custom_style_body" class="pbBody">
+                                                             <table class="table_bocadillo">
+                                                                 <tr>
+                                                                     <th>Concept</th>
+                                                                     <th>Cost</th>
+                                                                 </tr>
+                                                                 <tr style="display:{!if(s.Concept_1__c != null, '','none')}">
+                                                                     <td><apex:outputField value="{!s.Concept_1__c}" /></td>
+                                                                     <td style="    text-align: right;"><apex:outputField value="{!s.Cost_Concept_1__c}" /></td>
+                                                                 </tr>
+                                                                  <tr style="display:{!if(s.Cost_Concept_2__c != null, '','none')}"> 
+                                                                     <td><apex:outputField value="{!s.Concept_2__c}" /></td>
+                                                                     <td style="    text-align: right;"><apex:outputField value="{!s.Cost_Concept_2__c}" /></td>
+                                                                 </tr>
+                                                                 <tr style="display:{!if(s.Cost_Concept_3__c != null, '','none')}">
+                                                                     <td><apex:outputField value="{!s.Concept_3__c}" /></td>
+                                                                     <td style="    text-align: right;"><apex:outputField value="{!s.Cost_Concept_3__c}" /></td>
+                                                                 </tr>
+                                                                 <tr style="display:{!if(s.Cost_Concept_4__c != null, '','none')}">
+                                                                     <td><apex:outputField value="{!s.Concept_4__c}" /></td>
+                                                                     <td style="    text-align: right;"><apex:outputField value="{!s.Cost_Concept_4__c}" /></td>
+                                                                 </tr>
+                                                                 <tr style="display:{!if(s.Cost_Concept_5__c != null, '','none')}">
+                                                                     <td><apex:outputField value="{!s.Concept_5__c}" /></td>
+                                                                     <td style="    text-align: right;"><apex:outputField value="{!s.Cost_Concept_5__c}" /></td>
+                                                                 </tr>
+                                                             </table>
+                                                         </div>
+                                                         <div id="custom_style_footer" class="pbFooter secondaryPalette"><div class="bg"></div></div>
+                                                      </div>
+                                                  </div>
+                                                  <span class="campo_products_{!s.Id}" onclick="get_message('{!s.Id}');" style="    background: transparent url(/img/func_icons/util/lookup20.gif) no-repeat 0 0;    width: 18px;    height: 17px;     margin-right: 5px;   float: left; display:{!if(s.Cost_Concept_1__c != null || s.Cost_Concept_2__c != null || s.Cost_Concept_3__c != null || s.Cost_Concept_4__c != null || s.Cost_Concept_5__c != null , '', 'none')}"></span>
+                                            </td>
+                                            <td class="td7" style="    text-align: right; padding-right: 5px;"><apex:outputfield value="{!s.Buy_Rate__c}"/></td> 
+                                            <td class="td8" style="    text-align: right;     padding-right: 6px;"><apex:outputfield value="{!s.Fee_Rate__c}"/></td>
+                                            <td class="td9"><div style="color:{!if(s.Valid_Until__c != null && s.Valid_Until__c < TODAY(), 'red', '')}"><apex:outputfield value="{!s.Valid_Until__c}"/></div></td>
+                                            <td class="td10"><apex:outputfield value="{!s.Active__c}"/></td>
+                                        </tr>
+                                    </apex:repeat>
+                                </table>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </apex:pageBlock>
+        </apex:outputPanel>
+    </apex:form>
+</apex:page>

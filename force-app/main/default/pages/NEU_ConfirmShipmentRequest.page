@@ -1,0 +1,3 @@
+<apex:page StandardController="Shipment__c" extensions="NEU_ConfirmShipmentRequest" action="{!confirm_request}">
+    <apex:outputText value="{!resultado}"/>
+</apex:page>

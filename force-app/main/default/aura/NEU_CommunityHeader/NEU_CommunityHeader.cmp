@@ -1,0 +1,6 @@
+<aura:component implements="forceCommunity:availableForAllPageTypes">
+	<div id="main">
+        <div id="header_top">
+    	</div>
+    </div>
+</aura:component>

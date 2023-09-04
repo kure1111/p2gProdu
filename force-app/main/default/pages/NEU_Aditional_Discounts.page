@@ -1,0 +1,64 @@
+<apex:page standardController="Customer_Quote__c" extensions="NEU_Aditional_Discounts">
+    <apex:includeScript value="{!$Resource.jquery_1_10_2}"/> 
+    <apex:includeScript value="{!$Resource.jquery_ui_1_10_3}"/>
+    <apex:includeScript value="{!$Resource.neurored_jquery}"/> 
+    <apex:stylesheet value="{!URLFOR($Resource.jquery_ui_1_10_3_css,'jquery-ui-1.10.3.min.css')}"/>
+    <script>
+            $(document).ready(function () {
+                setDecimalSep($($.sfId('{!$Component.form.decimalSep}')).val(),$($.sfId('{!$Component.form.thousandSep}')).val());
+            });
+    </script>
+        <apex:outputLink value="{!URLFOR($Action.Customer_Quote__c.View,Customer_Quote__c.Id)}">
+           <apex:sectionHeader subtitle="{!Customer_Quote__c.Name}" title="Create {!$ObjectType.Import_Export_Discount_Line__c.labelPlural}">
+           </apex:sectionHeader>
+        </apex:outputLink>
+    <apex:pageBlock id="infoblock" title="{!$ObjectType.Customer_Quote__c.label} Detail" mode="maindetail">
+    <apex:pageBlockSection title="Landing Prices & Profit at Destination" columns="2">
+          <apex:outputField value="{!Customer_Quote__c.SUM_Sell_Destination_Amount__c}"/>
+          <apex:outputField value="{!Customer_Quote__c.Total_Standard_Margin__c}"/>
+          <apex:outputField value="{!Customer_Quote__c.Aditional_Discounts__c}"/>
+          <apex:outputField value="{!Customer_Quote__c.Total_Standard_Profit__c}"/>
+          <apex:outputField value="{!Customer_Quote__c.Sell_Amount_with_Discounts__c}"/>
+    </apex:pageBlockSection>
+    </apex:pageBlock>
+    <apex:relatedList list="Import_Export_Discounts_Lines__r" id="relatedlist"/>
+    <apex:form id="form">
+    <apex:inputHidden value="{!decimalSep}" id="decimalSep"/>
+    <apex:inputHidden value="{!thousandSep}" id="thousandSep"/>
+    <apex:pageBlock id="block1" title="New {!$ObjectType.Import_Export_Discount_Line__c.labelPlural}">
+        <apex:pageMessages />
+        <apex:pageBlockButtons >
+            <apex:commandButton value="Create {!$ObjectType.Import_Export_Discount_Line__c.labelPlural}" status="myStatus" action="{!apply_lines}" rerender="infoblock,relatedlist,block1"/>
+            <apex:commandButton value="Return to {!$ObjectType.Customer_Quote__c.label}" status="myStatus" action="{!return_quote}" rerender="infoblock,relatedlist,block1"/>
+        </apex:pageBlockButtons>
+        <apex:pageBlockTable id="table" value="{!lines}" var="line">
+            <apex:column headerValue="Discount Rule Name">
+                <c:customobject2 objid="{!line.line.Discount_Rule__r.Id}" objname="{!line.line.Discount_Rule__r.Name}" atarget="_blank"/>
+            </apex:column>
+            <apex:column value="{!line.line.Discount_Rule__r.Valid_From__c}"/>
+            <apex:column value="{!line.line.Discount_Rule__r.Valid_To__c}"/>
+            <apex:column style="text-align:center">
+                <apex:facet name="header"><div style="text-align:center;">% Discount</div></apex:facet>
+                <apex:inputField style="text-align:right;width:5em" value="{!line.line.Discount__c}"/>
+            </apex:column>
+            <apex:column style="text-align:center">
+                <apex:facet name="header"><div style="text-align:center;">Create</div></apex:facet>
+                <apex:inputCheckbox value="{!line.selected}"/>
+            </apex:column>
+        </apex:pageBlockTable>
+    </apex:pageBlock>
+    <apex:outputpanel >
+       <apex:actionstatus id="myStatus">
+           <apex:facet name="start">
+               <div class="waitingSearchDiv" id="el_loading" style="background-color: #fbfbfb;
+                      height: 100%;opacity:0.65;width:100%;"> 
+                   <div class="waitingHolder" style="top: 74.2px; width: 91px;">
+                       <img class="waitingImage" src="/img/loading.gif" title="Please Wait..." />
+                       <span class="waitingDescription">Loading...</span>
+                   </div>
+               </div>
+           </apex:facet>
+       </apex:actionstatus>
+    </apex:outputpanel>
+    </apex:form>
+</apex:page>

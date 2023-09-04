@@ -1,0 +1,20 @@
+.THIS {
+}
+
+.THIS .red{
+    color: #eb1717;
+}
+
+.THIS .slds-file-selector__dropzone .slds-file-selector__text{
+    display: none;
+}
+
+.THIS .slds-file-selector__dropzone .slds-file-selector__button{
+    font-size: 0;
+}
+
+.THIS .slds-file-selector__dropzone .slds-file-selector__button:after{
+    content: 'Cargar CSV';
+    font-size: .8125rem;
+    color: rgba(27, 82, 151, 1.0);
+}

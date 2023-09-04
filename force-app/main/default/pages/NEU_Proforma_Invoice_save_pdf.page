@@ -1,0 +1,61 @@
+<apex:page StandardController="Shipment__c" extensions="NEU_Proforma_Invoice_save_pdf" >
+ <apex:includeScript value="{!$Resource.neurored_jquery}"/> 
+    <apex:includeScript value="{!$Resource.jquery_1_10_2}"/> 
+    <apex:includeScript value="{!$Resource.jquery_1_10_2}"/>
+    <apex:includeScript value="{!$Resource.jquery_ui_1_10_3}"/>
+    <apex:stylesheet value="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css"/>
+    
+    <script>
+        $(document).ready(function () {
+             $('.radio').buttonset();
+             
+        });
+        
+        function changeradios()
+        {
+
+            if($("input:radio:checked").val() =='con_fees')
+            {
+                $('#con_fees').attr('src','/apex/NEU_Proforma_Invoice_pdf?id={!Shipment__c.Id}');
+            }
+            else
+            {
+                $('#con_fees').attr('src','/apex/NEU_Proforma_Invoice_pdf?id={!Shipment__c.Id}&services_charges=true');
+            }
+        }
+        
+    </script>
+    <apex:form >
+    <apex:sectionHeader title="Generate Proforma Invoice"/>
+        <apex:pageBlock >
+            <apex:pageBlockButtons >
+                <apex:commandButton value="Create Associated Document" status="myStatus"  styleClass="crear" action="{!crear}"/>
+               
+            </apex:pageBlockButtons>
+             <div id="capa_radios" style="margin-bottom: -5px;    margin-left: -14px;">
+                         <apex:outputPanel id="radios">
+                             <apex:selectRadio id="radio" value="{!service_charges}" onchange="changeradios();" html-class="radio">
+                                <apex:selectOption itemLabel="Service Charges Included in Product Item Price" itemValue="con_fees" html-checked="checked"/>
+                                <apex:selectOption itemLabel="Service Charges Detailed Apart" itemValue="sin_fees" />
+                            </apex:selectRadio>
+                         </apex:outputPanel>   
+                     </div>
+            <iframe  scrolling="auto" src="/apex/NEU_Proforma_Invoice_pdf?id={!Shipment__c.Id}" width= "100%" height="850px" id="con_fees">
+            </iframe>
+       
+       </apex:pageBlock>
+         <apex:outputpanel >
+               <apex:actionstatus id="myStatus">
+                   <apex:facet name="start">
+                       <div class="waitingSearchDiv" id="el_loading" style="background-color: #fbfbfb;
+                              height: 100%;opacity:0.65;width:100%;"> 
+                           <div class="waitingHolder" style="top: 74.2px; width: 91px;">
+                               <img class="waitingImage" src="/img/loading.gif" title="Please Wait..." />
+                               <span class="waitingDescription">Loading...</span>
+                           </div>
+                       </div>
+                   </apex:facet>
+               </apex:actionstatus>
+            </apex:outputpanel>
+        </apex:form>
+</apex:page>

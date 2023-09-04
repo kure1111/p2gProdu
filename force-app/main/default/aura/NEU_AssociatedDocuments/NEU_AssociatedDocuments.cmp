@@ -1,0 +1,75 @@
+<aura:component controller="NEU_AssociatedDocuments" implements="forceCommunity:availableForAllPageTypes,flexipage:availableForAllPageTypes,force:hasRecordId" access="global">
+    
+	<aura:attribute name="shipment" type="Shipment__c" default="{'sobjectType':'Shipment__c'}"/>
+    <aura:attribute name="recordId" type="String" />
+    <aura:attribute name="documents" type="Object"/>
+    <aura:attribute name="documents_columns" type="List"/>
+    <aura:handler name="init" value="{!this}" action="{!c.init}"/>
+    
+    <aura:attribute name="sortedBy" type="string" default="Name" />
+    <aura:attribute name="sortedDirection" type="string" default="asc" />
+    
+    <aura:attribute name="Document" type="String" />
+    
+    <div id="main">
+        <lightning:card title="Associated Documents" iconName="standard:document">
+            
+            <h3 class="slds-section-title--divider">Attach Documents</h3>
+            <div class="slds-form--stacked slds-p-around--medium slds-m-bottom--x-small">
+                <div class="slds-form-element">
+                    <lightning:fileUpload name="fileUploader" 
+                                          multiple="true"
+                                          recordId="{!v.recordId}" 
+                                          onuploadfinished="{!c.handleUploadFinished}" />
+                </div>
+            </div>
+            
+            <h3 class="slds-section-title--divider">Documents</h3>
+            <div class="slds-form--stacked slds-p-around--medium slds-m-bottom--x-small">
+                <div class="slds-form-element">
+                    
+                    <div class="mobile_interface">
+                        <aura:iteration items="{!v.documents}" var="doc">
+                            <table class="mobile_table">
+                                <tr>
+                                    <td class="td_button">
+                                        <form class="aline-form" onsubmit="{!c.showFile}">
+                                            <input type="hidden" value="{!doc.Id}" class="document-id"/>
+                                            <input type="hidden" value="{!doc.Type__c}" class="document-type"/>
+                                            <input type="hidden" value="{!doc.Document_URL__c}" class="document-url"/>
+                                            <lightning:button class="slds-button slds-button_small slds-button_neutral mobile_button view_button" label="View" iconName="utility:preview" iconPosition="left" type="submit"/>
+                                        </form>
+                                        <form class="aline-form" onsubmit="{!c.deleteFile}">
+                                            <input type="hidden" value="{!doc.Id}" class="document-id"/>
+                                            <input type="hidden" value="{!doc.Type__c}" class="document-type"/>
+                                            <input type="hidden" value="{!doc.Document_URL__c}" class="document-url"/>
+                                            <lightning:button class="slds-button slds-button_small slds-button_neutral mobile_button del_button" label="Delete" iconName="action:delete" iconPosition="left" type="submit"/>
+                                        </form>
+                                    </td>
+                                    <td>
+                                        <p class="li_td name_doc">{!doc.Name}</p>
+                                        <p class="li_td"><ui:outputDate value="{!doc.CreatedDate}"/> - {!doc.Document_Type__c}</p>
+                                    </td>
+                                </tr>
+                            </table>
+                        </aura:iteration>						
+                    </div>
+                    
+                    <div class="pc_interface">
+                        <lightning:datatable data="{!v.documents}" 
+                                             columns="{!v.documents_columns}" 
+                                             keyField="id" 
+                                             onrowaction="{!c.handleRowAction}" 
+                                             onrowselection="{!c.getSelectedName}"
+                                             hideCheckboxColumn="true" 
+                                             onsort="{!c.updateColumnSorting}" 
+                                             sortedBy="{!v.sortedBy}" 
+                                             sortedDirection="{!v.sortedDirection}"/>
+					</div>
+                </div>
+            </div>
+			<lightning:spinner variant="brand" size="large" aura:id="mySpinner" class="slds-hide" alternativeText="Loading..."/>            
+        </lightning:card>
+    </div>
+    
+</aura:component>

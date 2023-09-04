@@ -1,0 +1,2 @@
+<apex:page standardController="Customer_Quote__c" extensions="NEU_NewImportExport" action="{!redirect_new_importexport}">
+</apex:page>

@@ -1,0 +1,55 @@
+<apex:page standardController="Shipment__c" extensions="NEU_Standard_Duty_Calculator_Shipment"  action="{!calcular_tasas}">
+<apex:includeScript value="{!$Resource.neu_jquery}"/> 
+<apex:includeScript value="{!$Resource.jquery_1_10_2}"/> 
+<apex:includeScript value="{!$Resource.jquery_ui_1_10_3}"/>
+<apex:includeScript value="{!$Resource.neurored_jquery}"/> 
+<apex:stylesheet value="{!URLFOR($Resource.jquery_ui_1_10_3_css,'jquery-ui-1.10.3.min.css')}"/>
+    <script>
+    $(document).ready(function () {
+    	refrest();
+    });
+    
+    function cuadro_dialogo()
+    {
+	    if($("#errores").html()!='')
+	    {
+	    	$( "#hay_errores" ).dialog({
+			  dialogClass: "no-close",
+			  buttons: [
+			    {
+			      text: "OK",
+			      click: function() {
+			        volver();
+			      }
+			    }
+			  ]
+			});
+		}
+		else
+			volver();
+    }
+                
+    </script>
+    <apex:form id="form">
+	    <apex:actionFunction name="refrest" reRender="block0"  status="myStatus" oncomplete="cuadro_dialogo();"/>
+	    <apex:actionFunction name="volver"  action="{!volver}" status="myStatus" />
+	      <apex:outputpanel >
+	  
+	         <apex:actionstatus id="myStatus">
+	             <apex:facet name="start">
+	                 <div class="waitingSearchDiv" id="el_loading" style="background-color: #fbfbfb; height: 100%;opacity:0.65;width:100%; z-index: 1000;"> 
+	                     <div class="waitingHolder" style="top: 74.2px; width: 91px;">
+	                         <img class="waitingImage" src="/img/loading.gif" title="Please Wait..." />
+	                         <span class="waitingDescription">Loading...</span>
+	                     </div>
+	                 </div>
+	             </apex:facet>
+	         </apex:actionstatus>
+	      </apex:outputpanel>
+	       <apex:pageBlock id="block0" >
+			  <div id="hay_errores" title="Error List" style="display:none;">
+				  <p id="errores">{!errores}</p>
+			  </div>
+		  </apex:pageBlock>
+     </apex:form>
+</apex:page>

@@ -1,0 +1,20 @@
+<aura:component implements="forceCommunity:availableForAllPageTypes">
+    <ltng:require scripts="/sfsites/c/resource/jquery_3_3_1" afterScriptsLoaded="{!c.afterScriptsLoaded}"/>
+    <!--<div id="container" style="width: 100%; height: 200px; position:relative;">
+        <div id="bg1"></div>
+        <div id="bg2"></div>
+        <div id="bg3"></div>
+        <div id="bg4"></div>
+        <h4 id="main_message"><span>{</span>Import Export 3PL<span>}</span></h4>
+    </div>-->
+    <div id="main">
+        <div class="crossfade">
+            <figure></figure>
+            <figure></figure>
+            <figure></figure>
+            <figure></figure>
+            <figure></figure>
+            <h4 id="main_message"><span>{</span>Import Export 3PL<span>}</span></h4>
+        </div>
+	</div>
+</aura:component>

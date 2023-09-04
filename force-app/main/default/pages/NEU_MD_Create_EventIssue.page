@@ -1,0 +1,72 @@
+<apex:page docType="html-5.0"  controller="NEU_MD_Create_EventIssue" sidebar="false" lightningStylesheets="false" >
+    <apex:includeScript value="{!$Resource.jquery_1_10_2}"/> 
+    <apex:includeScript value="{!$Resource.jquery_ui_1_10_3}"/>
+    <apex:includeScript value="{!$Resource.neurored_jquery}"/> 
+    <apex:stylesheet value="{!URLFOR($Resource.jquery_ui_1_10_3_css,'jquery-ui-1.10.3.min.css')}"/>
+    <script>
+            $(document).ready(function () {
+
+
+				var element = document.getElementById('{!$Component.form.dateTimeEvent}');
+
+				if(element.value && !(element.value).includes('/')){
+					var arrayDateTime = (element.value).split('T');
+					var arrayDate = arrayDateTime[0].split('-');
+					var arrayTime = arrayDateTime[1].split(':');
+
+					var d = new Date(arrayDate[0], arrayDate[1], arrayDate[2], arrayTime[0], arrayTime[1], '00', '00');
+					d.setHours(d.getHours() + 6);
+
+					var stringDate = d.getMonth() + '/' + d.getDate() + '/' + d.getFullYear();
+					element.value = stringDate + formatTimeShow(d.getHours(), d.getMinutes());
+				}
+
+				function formatTimeShow(h_24, m) {
+					var h = h_24 % 12;
+					return ' ' + (h < 10 ? '0' : '') + h + ':' + m + ' ' + (h_24 < 12 ? 'AM' : 'PM');
+				}
+            });
+    </script>
+    <style>
+        tr.spaceUnder>td {
+            padding-bottom: 1em;
+            padding-left: 1em;
+        }
+
+        tr.spaceUnder>th {
+            padding-bottom: 1em;
+        }
+    </style>
+     <apex:form id="form">
+		<apex:pageMessages />
+		<table>
+			<tr class="spaceUnder">
+				<th>Tema:</th>
+				<td><apex:inputText value="{!event_issue.Name}" required="true"/></td>
+			</tr>
+			<tr class="spaceUnder">
+				<th>Date:</th>
+				<td><apex:inputField id="dateTimeEvent" type="datetime"  value="{!event_issue.Date__c}"/></td>
+			</tr>
+			<tr class="spaceUnder">
+				<th>User:</th>  
+				<td><apex:inputField value="{!event_issue.User__c}"/></td>
+			</tr>
+			<tr class="spaceUnder">
+				<th>Situation:</th>
+				<td><apex:inputText value="{!event_issue.Situation__c}"/></td>
+			</tr>
+			<tr class="spaceUnder">
+				<th>Topic:</th>
+                <td><apex:inputText value="{!event_issue.Topic__c}"/></td>
+			</tr>
+            <tr class="spaceUnder">
+				<th>Currency:</th>
+                <td><apex:inputField value="{!event_issue.CurrencyIsoCode}" required="true"/></td>
+			</tr>
+			
+		</table>
+		<apex:commandButton immediate="true" html-formnovalidate="formnovalidate"  style="margin-left: 60px;" value="Cancel" action="{!back}"/>
+        <apex:commandButton styleClass="slds-vf-button_brand"  value="Save" action="{!save}"/>
+	</apex:form>
+</apex:page>

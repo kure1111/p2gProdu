@@ -1,0 +1,51 @@
+<template>
+	<div class="slds-m-around_medium">
+		<!-- Modal/Popup Box LWC header here -->
+		<header class="slds-modal__header">
+			<h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">Alta de Clientes a SAP</h2>
+		</header>
+		<!-- Modal/Popup Box LWC body starts here -->
+		<div if:true={isUser}>
+
+			<div  if:true={isReady}   class="slds-notify_container slds-is-relative">
+				<div class="slds-notify slds-notify_toast slds-theme_success" role="status">
+					<span class="slds-assistive-text">success</span>
+					<span class="slds-icon_container slds-icon-utility-success slds-var-m-right_small slds-no-flex slds-align-top" title="Description of icon when needed">
+						<lightning-icon icon-name="standard:task2" alternative-text="success!" title="success"></lightning-icon>
+					</span>					
+					<div class="slds-notify__content">
+						<h2 class="slds-text-heading_small ">{altaResults}</h2>
+					</div>	
+				</div>
+			</div>
+
+			<div if:false={isReady} class="slds-notify_container slds-is-relative">
+				<div class="slds-notify slds-notify_toast slds-theme_warning" role="status">
+					<span class="slds-assistive-text">warning</span>
+					<span class="slds-icon_container slds-icon-utility-warning slds-var-m-right_small slds-no-flex slds-align-top" title="Description of icon when needed">
+						<lightning-icon icon-name="utility:warning" alternative-text="Warning!" title="Warning"></lightning-icon>
+					</span>					
+					<div class="slds-notify__content">
+						<h2 class="slds-text-heading_small ">Para poder  dar de alta el cliente es necesario validarlon.</h2>
+					</div>		
+				</div>
+			</div>
+		</div>			
+		<div if:false={isUser} class="slds-notify_container slds-is-relative">
+			<div class="slds-notify slds-notify_toast slds-theme_warning" role="status">
+				<span class="slds-assistive-text">warning</span>
+				<span class="slds-icon_container slds-icon-utility-warning slds-var-m-right_small slds-no-flex slds-align-top" title="Description of icon when needed">
+					<lightning-icon icon-name="utility:warning" alternative-text="Warning!" title="Warning"></lightning-icon>
+				</span>					
+				<div class="slds-notify__content">
+					<h2 class="slds-text-heading_small ">No Cuentas con los permisos para realizar esta acción.</h2>
+				</div>
+			</div>
+		</div>
+
+		<!-- Modal/Popup Box LWC footer starts here -->
+		<!-- <footer class="slds-modal__footer">
+			<button class="slds-button slds-button_neutral" onclick={closeModal} title="Cerrar">Cancel</button>
+		</footer> -->
+	</div>
+</template>

@@ -1,0 +1,2 @@
+<apex:page standardController="Shipment__c" extensions="NEU_Return_Import_Export_Quote" action="{!return_ie}">
+</apex:page>

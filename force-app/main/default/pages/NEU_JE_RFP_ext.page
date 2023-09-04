@@ -1,0 +1,863 @@
+<apex:page controller="NEU_JE_RFP_ext" standardStylesheets="false" sidebar="false" cache="false" rendered="{!request!=null}" showHeader="false">
+<apex:composition template="{!$Site.Template}">
+<apex:define name="body"> 
+<apex:includeScript value="{!$Resource.jquery_1_10_2}"/> 
+<apex:includeScript value="{!$Resource.jquery_ui_1_10_3}"/>
+<apex:includeScript value="{!$Resource.neurored_jquery}"/> 
+<apex:includeScript value="{!$Resource.jquery_flightboard_1_1_1}"/> 
+<apex:stylesheet value="{!URLFOR($Resource.jquery_ui_1_10_3_css,'jquery-ui-1.10.3.min.css')}"/>
+<style>
+.bPageBlock .ui-accordion-header .detailList .dataCol
+{
+    vertical-align:middle;
+    width:7%;
+    color:white;
+}
+.bPageBlock .ui-accordion-header.ui-state-hover .detailList .dataCol,.bPageBlock .ui-accordion-header.ui-state-hover .detailList .labelCol
+{
+    color:#026890;
+}
+.bPageBlock .ui-accordion-header.ui-state-focus .detailList .dataCol,.bPageBlock .ui-accordion-header.ui-state-focus .detailList .labelCol
+{
+    color:#026890;
+}
+.bPageBlock .ui-accordion-header.ui-state-active .detailList .dataCol,.bPageBlock .ui-accordion-header.ui-state-active .detailList .labelCol
+{
+    color:white;
+}
+.bPageBlock .ui-accordion-header .detailList .labelCol
+{
+    vertical-align:middle;
+    width:18%;
+    color:white;
+}
+</style>
+<script type="text/javascript">
+        var n$ = jQuery.noConflict();
+        n$(document).ready(function (){
+            updateInterface(false);
+            setvisited();
+            n$('#ranking').flightboard({maxLength:15,repeat:false,lettersImage:'{!$Resource.flightboard_png}',lettersSeq:' ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-'});
+            updatestatic();
+            updateauction();
+        });
+        function updateInterface()
+        {
+            if(n$(n$.sfId('{!$Component.form.block1.error}')).getString()!='')
+            {
+                alert(n$(n$.sfId('{!$Component.form.block1.error}')).getString());
+                if(n$(n$.sfId('{!$Component.form.block1.error}')).getString().indexOf('Valid Until')>0)
+                    n$('.valid_until').css('border','2px solid red');
+                if(n$(n$.sfId('{!$Component.form.block1.error}')).getString().indexOf('Production Time')>0)
+                    n$('.production_time').css('border','2px solid red');
+                    
+               if(n$(n$.sfId('{!$Component.form.block1.error}')).getString().indexOf('Sent')>0)//prueba si actualiza el error
+               {
+                    n$('.seleccionar_status').css('border','2px solid red');
+                    n$('.documentos_obligatorios').css('border','2px solid red');
+                    n$('.seleccionar_status').val('Draft');
+               }
+                n$(n$.sfId('{!$Component.form.block1.error}')).val('');
+            }
+            n$("#accordion").accordion({heightStyle:"content",active:false,collapsible:true});
+            n$("#accordion .ui-accordion-header input:text").on('click',function(){return false;});
+            n$("#accordion .ui-accordion-header").off('keydown');
+            n$("#accordion .ui-accordion-header input:text").on('focus',function(){
+                if(n$(this).getString()!='')
+                    return true;
+                var element=n$(this).attr('id');
+                n$('#accordion .ui-accordion-header input:text').each(function(i){
+                    if(n$(this).attr('id')==element)
+                    {
+                        n$('#accordion').accordion('option','active',i);
+                        return false;
+                    }
+                    });
+                return true;
+                });
+            n$('#accordion .ui-accordion-header input:text').each(function(i){
+                if(n$(this).getString()=='')
+                {
+                    n$('#accordion').accordion('option','active',i);
+                    return false;
+                }
+                });
+            updatestatic();
+        }
+        var oldranking;
+        function updatestatic()
+        {
+            n$(n$.sfId('{!$Component.form.block1.staticauction.statica.staticstatus}')).html(n$(n$.sfId('{!$Component.form.block1.dynamicstateauctiontext}')).val());
+            n$('#ranking').flightboard({messages:[n$(n$.sfId('{!$Component.form.block1.ranking}')).val()],maxLength:15,repeat:false,lettersImage:'{!$Resource.flightboard_png}',lettersSeq:' ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-'});
+            if(oldranking!=n$(n$.sfId('{!$Component.form.block1.ranking}')).val())
+            {
+                oldranking=n$(n$.sfId('{!$Component.form.block1.ranking}')).val();
+                n$('#ranking').flightboard('option','messages',[oldranking]);
+                n$('#ranking').flightboard('flip'); 
+            }
+        }
+        var nextrefreshauction=1000;
+        function updateauction()
+        {
+            var myTime=n$('#mytime').getInt();
+            if(myTime==0)
+            {
+                myTime=(new Date()).getTime();
+                n$('#mytime').val(myTime);
+            }
+            switch(n$(n$.sfId('{!$Component.form.block1.dynamicstateauction}')).getInt())
+            {
+                case 1:
+                    if(n$('#progressbar').hasClass('ui-progressbar'))
+                        n$('#progressbar').progressbar('destroy');
+                    var auctionTime=myTime+n$(n$.sfId('{!$Component.form.block1.startauction}')).getInt()-(new Date()).getTime();
+                    if(auctionTime>0)
+                    {
+                        n$(n$.sfId('{!$Component.form.block1.auction.as.startauction}')).html(timeleft(auctionTime));
+                        setTimeout(function(){updateauction();},1000);
+                        nextrefreshauction=1000;
+                        return;
+                    }
+                    setTimeout(function(){refreshauction();},nextrefreshauction);
+                    nextrefreshauction=5000;
+                    return;
+                case 2:
+                    nextrefreshauction=1000;
+                    var auctionTime=myTime+n$(n$.sfId('{!$Component.form.block1.closeauction}')).getInt()-(new Date()).getTime();
+                    if(auctionTime>0)
+                    {
+                        if(!n$('#progressbar').hasClass('ui-progressbar'))
+                            n$('#progressbar').progressbar({value:false});
+                        if(n$(n$.sfId('{!$Component.form.block1.startauction}')).getInt()!=0)
+                        {
+                            n$('#progressbar').progressbar('option','max',n$(n$.sfId('{!$Component.form.block1.closeauction}')).getInt()-n$(n$.sfId('{!$Component.form.block1.startauction}')).getInt());
+                            n$('#progressbar').progressbar('option','value',-n$(n$.sfId('{!$Component.form.block1.startauction}')).getInt()-myTime+(new Date()).getTime());
+                        }
+                        n$(n$.sfId('{!$Component.form.block1.auction.ac.closeauction}')).html(timeleft(auctionTime));
+                    }
+                    else if(n$('#progressbar').hasClass('ui-progressbar'))
+                        n$('#progressbar').progressbar('destroy');
+                    setTimeout(function(){updateauction();},1000);
+                    return;
+                default:
+                    if(n$('#progressbar').hasClass('ui-progressbar'))
+                        n$('#progressbar').progressbar('destroy');
+                    nextrefreshauction=1000;
+            }
+        }
+        function timeleft(milisec)
+        {
+            var secs=Math.floor(milisec/1000);
+            var res='';
+            var current=Math.floor(secs/31536000);//Years
+            secs-=current*31536000;
+            if(current>0)
+            {
+                res=current+'&nbsp;year';
+                if(current!=1) res+='s';
+            }
+            current=Math.floor(secs/2592000);//Months
+            secs-=current*2592000;
+            if(current>0)
+            {
+                if(res!='') res+=', ';
+                res=res+current+'&nbsp;month';
+                if(current!=1) res+='s';
+            }
+            current=Math.floor(secs/86400);//Days
+            secs-=current*86400;
+            if(current>0)
+            {
+                if(res!='') res+=', ';
+                res=res+current+'&nbsp;day';
+                if(current!=1) res+='s';
+            }
+            current=Math.floor(secs/3600);//Hours
+            secs-=current*3600;
+            if(current>0)
+            {
+                if(res!='') res+=', ';
+                res=res+current+'&nbsp;hour';
+                if(current!=1) res+='s';
+            }
+            current=Math.floor(secs/60);//Minutes
+            secs-=current*60;
+            if(current>0)
+            {
+                if(res!='') res+=', ';
+                res=res+current+'&nbsp;minute';
+                if(current!=1) res+='s';
+            }
+            secs=Math.floor(secs);//Seconds
+            if(secs>0)
+            {
+                if(res!='') res+=', ';
+                res=res+secs+'&nbsp;second';
+                if(secs!=1) res+='s';
+            }
+            return res;
+        }
+        
+        function upload_associated_documents()
+        {
+            window.open("{!$Site.BaseUrl}/apex/NEU_Associated_document_form_request?id="+n$(n$.sfId('{!$Component.form.block1.quoteid}')).getString(), "_blank", "top=500, left=500, width=810, height=340");
+            
+        }
+           function comprobar_campos_requeridos()
+        { 
+          if(n$('.volumen_packaging_length').val() != ''|| n$('.volumen_packaging_width').val() != ''||  n$('.volumen_packaging_height').val() != '')
+            {
+                n$('.volumen_packaging_length').css('border-left-color','red');
+                n$('.volumen_packaging_width').css('border-left-color','red');
+                n$('.volumen_packaging_height').css('border-left-color','red');
+                n$('.unidades_x_caja').css('border-left-color','red');
+            }
+            
+            if(n$('.volumen_packaging_length').val() == '' && n$('.volumen_packaging_width').val() == '' &&  n$('.volumen_packaging_height').val() == '' )
+            {
+                n$('.volumen_packaging_length').css('border-left-color','white');
+                n$('.volumen_packaging_width').css('border-left-color','white');
+                n$('.volumen_packaging_height').css('border-left-color','white');
+            }
+            
+            if(n$('.peso_packaging_weight').val() != '')
+            {
+                n$('.peso_items_supplier').css('border-left-color','red');
+                n$('.unidades_x_caja').css('border-left-color','red');
+            }
+            else
+            {
+                n$('.peso_items_supplier').css('border-left-color','white');
+            }     
+             
+             if( n$('.volumen_packaging_length').val() != ''|| n$('.volumen_packaging_width').val() != ''||  n$('.volumen_packaging_height').val() != '' ||   n$('.peso_items_supplier').val() !='')
+                 n$('.unidades_x_caja').css('border-left-color','red');
+              else
+                  n$('.unidades_x_caja').css('border-left-color','white');
+             
+        }
+           var doc_number;
+        function guardar_documento(type,numero_documento)
+        {
+            doc_number = numero_documento;
+            if(!n$(n$.sfId('{!$Component.form.block1.quoteid}')).getString())
+            {
+                crear_quote();
+                return;
+            }
+            lanzar_ventana();
+        }
+        
+        function lanzar_ventana()
+        {
+          updateInterface(false);
+          if(n$(n$.sfId('{!$Component.form.block1.error}')).getString() =='')
+             if(window.open("{!$Site.BaseUrl}/apex/NEU_Associated_10Documents_Request?id="+n$(n$.sfId('{!$Component.form.block1.quoteid}')).getString()+"&docu="+doc_number, "_blank", "top=500, left=500, width=465, height=280") == undefined)
+                alert('We could not open the document upload window.\nPlease, check the popup blocker or try again');
+            
+            
+        }
+        
+        function update_quote()
+        {
+                update_block1();
+        }
+        
+        function copydata(value)
+        {
+        	n$('#suppdata'+value+' .peso_items_supplier').val(n$('#suppdata'+(value-1)+' .peso_items_supplier').val());
+        	n$('#suppdata'+value+' .volumen_packaging_length').val(n$('#suppdata'+(value-1)+' .volumen_packaging_length').val());
+        	n$('#suppdata'+value+' .Packaging_Description').val(n$('#suppdata'+(value-1)+' .Packaging_Description').val());
+        	n$('#suppdata'+value+' .volumen_packaging_width').val(n$('#suppdata'+(value-1)+' .volumen_packaging_width').val());
+        	n$('#suppdata'+value+' .peso_packaging_weight').val(n$('#suppdata'+(value-1)+' .peso_packaging_weight').val());
+        	n$('#suppdata'+value+' .volumen_packaging_height').val(n$('#suppdata'+(value-1)+' .volumen_packaging_height').val());
+        	n$('#suppdata'+value+' .unidades_x_caja').val(n$('#suppdata'+(value-1)+' .unidades_x_caja').val());
+        }
+</script>
+<apex:form id="form" style="padding:5px;border:3px solid #a6c9e2;background-color:#fef9bd" forceSSL="true">
+<apex:actionFunction name="crear_quote" action="{!quote}" status="myStatus"  rerender="block1" oncomplete="lanzar_ventana();"/>
+<apex:actionFunction name="update_block1" status="myStatus"  rerender="block1" action="{!quote}" oncomplete="updateInterface(true);"/>
+<apex:actionFunction name="updateDocuments" status="myStatus"  rerender="block1" action="{!read_document}" oncomplete="updateInterface(true);"/>
+<apex:actionFunction name="setvisited" rerender="" action="{!setvisited}"/>
+<apex:actionFunction name="refreshauction" rerender="panelauction" oncomplete="updatestatic();updateauction();"/>
+<apex:actionFunction name="makequestions" action="{!makequestions}"/>
+<apex:actionFunction name="bid" status="myStatus" rerender="block1" action="{!quote}" oncomplete="updateInterface();"/>
+<apex:pageBlock id="block1" mode="maindetail">
+<apex:messages />
+<apex:inputHidden value="{!error}" id="error"/>
+<apex:inputHidden value="{!quoteid}" id="quoteid"/>
+<apex:pageBlockSection title="Auction" rendered="{!dynamicstateauction>0}" id="staticauction">
+       <apex:pageBlockSectionItem id="statica">
+           <apex:outputLabel value="Status" style="font-size:2em"/>
+           <apex:outputText value="{!dynamicstateauctiontext}" escape="false" style="font-size:2em" id="staticstatus"/>
+       </apex:pageBlockSectionItem>
+        <div id="ranking" style="font-size:2em;height:34px;width:375px"></div>
+</apex:pageBlockSection>
+<apex:actionRegion >
+<apex:outputPanel id="panelauction">
+<apex:pageBlockSection id="auction" rendered="{!dynamicstateauction>0}">
+        <apex:pageBlockSectionItem id="as" rendered="{!dynamicstateauction=1}">
+            <apex:outputLabel id="ast" value="Time to start" style="font-size:2em"/>
+            <apex:outputText id="startauction" value="{!startauctiontext}" escape="false" style="font-size:2em"/>
+        </apex:pageBlockSectionItem>
+        <apex:pageBlockSectionItem rendered="{!dynamicstateauction=1}">
+            <apex:outputLabel value="Start Time (GMT)" style="font-size:2em"/>
+            <apex:outputText value="{!starttimetext}" escape="false" style="font-size:2em"/>
+        </apex:pageBlockSectionItem>
+        <apex:pageBlockSectionItem id="ac" rendered="{!dynamicstateauction=2}">
+            <apex:outputLabel id="act" value="Time to close" style="font-size:2em"/>
+            <apex:outputText id="closeauction" value="{!closeauctiontext}" escape="false" style="font-size:2em"/>
+        </apex:pageBlockSectionItem>
+        <apex:pageBlockSectionItem rendered="{!dynamicstateauction=2}">
+            <apex:outputLabel value="End Time (GMT)" style="font-size:2em"/>
+            <apex:outputText value="{!endtimetext}" escape="false" style="font-size:2em"/>
+        </apex:pageBlockSectionItem>
+</apex:pageBlockSection>
+<apex:inputHidden id="startauction" value="{!startauction}"/>
+<apex:inputHidden id="closeauction" value="{!closeauction}"/>
+<apex:inputHidden id="dynamicstateauction" value="{!dynamicstateauction}"/>
+<apex:inputHidden id="dynamicstateauctiontext" value="{!dynamicstateauctiontext}"/>
+<apex:inputHidden id="ranking" value="{!ranking}"/>
+<input type="hidden" id="mytime"/>
+<apex:actionPoller rerender="panelauction" interval="60" enabled="{!dynamicstateauction=1}" oncomplete="updatestatic();"/>
+<apex:actionPoller rerender="panelauction" interval="5" enabled="{!dynamicstateauction=2}" oncomplete="updatestatic();"/>
+</apex:outputPanel>
+</apex:actionRegion>
+<div id="progressbar"></div>
+
+<apex:pageBlockButtons >
+    <apex:image value="{!$Resource.submit}" width="100" style="padding-left:2em;padding-right:2em;cursor:pointer" onclick="bid();return false;" title="Send your Bid"/>
+    <!-- <apex:outputLink value="{!$Site.BaseUrl}/_ui/core/chatter/groups/GroupProfilePage?g=0F9b00000000Mlh" target="_blank"><apex:image value="{!$Resource.communities}" width="100" style="padding-left:2em;padding-right:2em;cursor:pointer" title="Make your questions and follow this project"/></apex:outputLink>-->
+    <apex:outputLink value="{!request.LinkedIn_Group_URL__c}" target="_blank" rendered="{!request.LinkedIn_Group_URL__c!=null}"><apex:image value="{!$Resource.linkedingroups}" width="100" style="padding-left:2em;padding-right:2em;cursor:pointer" title="Linked-in group"/></apex:outputLink>
+    <apex:commandButton value="Upload Documents" status="myStatus" onclick="upload_associated_documents();" rendered="false" oncomplete="updateInterface(false);"/>
+</apex:pageBlockButtons>
+
+<apex:pageBlockSection title="{!IF(dynamicstateauction>0,'Quote','')}">
+    <apex:pageBlockSectionItem rendered="{!isopen}">
+        <apex:outputLabel value="Status" style="font-size:1.5em"/>
+        <apex:selectList value="{!quote.Supplier_Quote_Status__c}" size="1" styleclass="seleccionar_status">
+            <apex:selectOption itemValue="Draft" itemLabel="Draft"/>
+            <apex:selectOption itemValue="Sent Bid" itemLabel="Sent Bid" />
+            <apex:selectOption itemValue="Sent Final Bid" itemLabel="Sent Final Bid" />
+        </apex:selectList> 
+    </apex:pageBlockSectionItem>
+    <apex:pageBlockSectionItem rendered="{!!isopen}">
+        <apex:outputLabel value="Status" style="font-size:1.5em"/>
+        <apex:outputLabel value="{!quote.Supplier_Quote_Status__c}" style="font-size:1.5em"/>
+    </apex:pageBlockSectionItem>
+    <apex:pageBlockSectionItem >
+            <apex:outputLabel value="Total Amount" style="font-size:1.5em"/>
+            <apex:outputPanel ><div style="font-size:1.5em">
+                <apex:outputField value="{!quote.Total_Amount__c}" html-data="font-size:1.5em"/>
+            </div></apex:outputPanel>
+    </apex:pageBlockSectionItem>
+    <apex:pageBlockSectionItem rendered="{!dynamicstateauction>0}">
+        <apex:outputLabel value="Valid for Auction" style="font-size:1.5em"/>
+        <apex:outputPanel ><div style="font-size:1.5em">
+            <apex:outputField value="{!quote.Valid_for_Auction__c}"/>
+        </div></apex:outputPanel>
+    </apex:pageBlockSectionItem>
+    
+    <apex:outputLabel rendered="{!dynamicstateauction>0}" />
+    
+    
+    <apex:inputField value="{!request.Incoterm_Request__c}" rendered="{!quote.Incoterm__c == null}"/>
+    <apex:inputField value="{!quote.Incoterm__c}" rendered="{!quote.Incoterm__c != null && isopen == true}"/>
+    <apex:outputField value="{!quote.Incoterm__c}" rendered="{!quote.Incoterm__c != null && isopen == false}"/>
+    
+    <apex:outputField value="{!request.Date_Limit__c}" rendered="{!request.Date_Limit__c!=null}"/>
+    <apex:outputLabel rendered="{!request.Date_Limit__c==null}"/>
+    
+    <!--<apex:outputField value="{!request.Country_of_Load__c}"/>-->
+     <apex:inputField value="{!quote.Country_ofLoad__c}" rendered="{!isopen == true && dynamicstateauction != 1 && dynamicstateauction !=2}"/>
+    <apex:outputField value="{!quote.Country_ofLoad__c}" rendered="{!(isopen == false) ||  dynamicstateauction == 1 || dynamicstateauction ==2}"/>
+    
+    <apex:inputField value="{!quote.State_of_Load__c}" rendered="{!isopen == true && dynamicstateauction != 1 && dynamicstateauction !=2}"/>
+    <apex:outputField value="{!quote.State_of_Load__c}" rendered="{!(isopen == false) ||  dynamicstateauction == 1 || dynamicstateauction ==2}"/>
+ 
+    <apex:outputField value="{!request.Estimated_Delivery_Date__c}" rendered="{!request.Estimated_Delivery_Date__c!=null}"/>
+    <apex:outputLabel rendered="{!request.Estimated_Delivery_Date__c==null}"/>
+   <!--  <apex:outputField value="{!request.Port_Airport_of_Load__c}" />-->
+   
+   <!--  <apex:inputField value="{!request.Port_Airport_of_Load__c}" rendered="{!quote.Place_of_Delivery__c == null && quote.Country_ofLoad__c == null}" styleclass="re1"/>
+    <apex:inputField value="{!quote.Place_of_Delivery__c}" rendered="{!(quote.Place_of_Delivery__c != null &&  isopen == true )|| (quote.Country_ofLoad__c != null &&  isopen == true)}" styleclass="q1"/>
+    <apex:outputField value="{!quote.Place_of_Delivery__c}" rendered="{!quote.Place_of_Delivery__c != null && isopen == false}" styleclass="q1"/>-->
+    
+     <apex:inputField value="{!quote.Place_of_Delivery__c}" rendered="{!( isopen == true && dynamicstateauction != 1 &&  dynamicstateauction != 2)|| (isopen == true && dynamicstateauction != 1 &&  dynamicstateauction != 2)}"/>
+    <apex:outputField value="{!quote.Place_of_Delivery__c}" rendered="{!( isopen == false )|| (quote.Country_ofLoad__c != null && quote.State_of_Load__c != null && isopen == false) || dynamicstateauction == 1 || dynamicstateauction ==2}"/>
+    
+    <apex:inputField value="{!quote.Valid_Until__c}" rendered="{!isopen}" style="border-left: 2px solid red;"/>
+    <apex:outputField value="{!quote.Valid_Until__c}" rendered="{!!isopen}"/>
+    <apex:inputField value="{!quote.Collection_Conditions__c}" rendered="{!isopen}"/>
+    <apex:outputField value="{!quote.Collection_Conditions__c}" rendered="{!!isopen}"/>
+    
+    
+    
+    <apex:outputField value="{!request.Contract_Duration__c}" rendered="{!request.Contract_Duration__c!=null}"/>
+    <apex:inputField value="{!quote.MOQ__c}" rendered="{!isopen}" styleClass="minimum_order_quantity" style="  text-align: right;"/>
+    <apex:outputField value="{!quote.MOQ__c}" rendered="{!!isopen}" style="  text-align: right;"/>
+    <apex:outputField value="{!request.Max_Shipment__c}" rendered="{!request.Max_Shipment__c!=null}"/>
+    
+    
+    
+    
+    <apex:outputField value="{!request.Observations__c}" rendered="{!request.Observations__c!=null}"/>
+    
+</apex:pageBlockSection>
+
+
+    <apex:pageBlockSection title="Documents for Review" id="titulo_seccion_documentos" collapsible="false" rendered="{!show_document_extra == true}"><!--  -->
+        <apex:repeat value="{!associated_documents_extra}" var="ad">
+            <apex:pageBlockSectionItem >
+                <!-- <apex:pageBlockSectionItem >
+                    <apex:outputText value="Name :{!ad.Name}" style="margin-right: 10px;"></apex:outputText>
+                    <apex:outputText value="Document Type :{!ad.Document_Type__c}"></apex:outputText>
+                </apex:pageBlockSectionItem>-->
+                <apex:pageBlockSectionItem >
+                    <apex:outputText value="{!ad.Document_Type__c}" rendered="{!ad.Document_Type__c != null}"></apex:outputText>
+                    <apex:outputText value="Document" rendered="{!ad.Document_Type__c == null}"></apex:outputText>
+                </apex:pageBlockSectionItem>
+                <apex:pageBlockSectionItem >
+                    <apex:outputLink value="{!ad.Document_URL__c}" target="_blank" rendered="{!ad.Document_URL__c != '' && ad.Document_URL__c != null}" style="margin-right: 18px; font-size: 14px;">{!ad.Name}</apex:outputLink>
+                    <apex:outputLink value="{!ad.Manual_Document_URL__c}" target="_blank" rendered="{!ad.Manual_Document_URL__c != '' && ad.Manual_Document_URL__c != null}" style="margin-right: 18px; font-size: 14px;">{!ad.Name}</apex:outputLink>
+                </apex:pageBlockSectionItem>
+                
+            </apex:pageBlockSectionItem>
+        </apex:repeat>
+    </apex:pageBlockSection>
+
+
+<apex:repeat value="{!request}" var="item">
+    <apex:pageBlockSection title="Documents to Upload" id="titulo_seccion_documentos" rendered="{!show_associated_documents}">
+        <!--  <apex:inputField value="{!item.Supply_Project__r.Document_1_Required__c}" rendered="{!isopen}"/> rendered="{!!isopen}"-->
+        <apex:outputLabel value="*required" style="margin-left: 16%;color: red;"/>
+        <apex:outputLabel style=""/>
+        
+        <apex:pageBlockSectionItem rendered="{!item.Document_1_Type__c != null && item.Document_1_Required__c == true && isopen == true}">
+            <apex:outputField value="{!item.Document_1_Type__c} "><span style="color: red;">*</span></apex:outputField>
+            <apex:pageBlockSectionItem >
+                <apex:outputLink value="{!url1}" target="_blank" rendered="{!url1 != '' && url1 != null}" style="margin-right: 18px; font-size: 14px;">[View file]</apex:outputLink>
+                <input type="button" value="Select Document" onclick="guardar_documento('{!item.Document_1_Type__c}',1);" class="{!IF(url1 == '' || url1 == null, 'documentos_obligatorios','')}"/>
+            </apex:pageBlockSectionItem>
+         </apex:pageBlockSectionItem>
+         <apex:pageBlockSectionItem rendered="{!item.Document_1_Type__c != null && item.Document_1_Required__c == false && isopen == true}">
+            <apex:outputField value="{!item.Document_1_Type__c}"/>
+             <apex:pageBlockSectionItem >
+                <apex:outputLink value="{!url1}" target="_blank" rendered="{!url1 != '' && url1 != null}" style="margin-right: 18px; font-size: 14px;">[View file]</apex:outputLink>
+                <input type="button" value="Select Document" onclick="guardar_documento('{!item.Document_1_Type__c}',1);"/>
+            </apex:pageBlockSectionItem>
+         </apex:pageBlockSectionItem> 
+         <apex:pageBlockSectionItem rendered="{!item.Document_1_Type__c != null && item.Document_1_Required__c == true && isopen == false}">
+            <apex:outputField value="{!item.Document_1_Type__c} "><span style="color: red;">*</span></apex:outputField>
+            <apex:outputLink value="{!url1}" target="_blank" rendered="{!url1 != '' && url1 != null}" style="margin-right: 18px; font-size: 14px;">View file</apex:outputLink>
+         </apex:pageBlockSectionItem>
+         <apex:pageBlockSectionItem rendered="{!item.Document_1_Type__c != null && item.Document_1_Required__c == false && isopen == false}">
+            <apex:outputField value="{!item.Document_1_Type__c}"/>
+            <apex:outputLink value="{!url1}" target="_blank" rendered="{!url1 != '' && url1 != null}" style="margin-right: 18px; font-size: 14px;">View file</apex:outputLink>
+         </apex:pageBlockSectionItem>
+
+        
+         <apex:pageBlockSectionItem rendered="{!item.Document_2_Type__c != null && item.Document_2_Required__c == true && isopen == true}">
+            <apex:outputField value="{!item.Document_2_Type__c} "><span style="color: red;">*</span></apex:outputField>
+            <apex:pageBlockSectionItem >
+                <apex:outputLink value="{!url2}" target="_blank" rendered="{!url2 != '' && url2 != null}" style="margin-right: 18px; font-size: 14px;">[View file]</apex:outputLink>
+                <input type="button" value="Select Document" onclick="guardar_documento('{!item.Document_2_Type__c}',2);" class="{!IF(url2 == '' || url2 == null, 'documentos_obligatorios','')}"/>
+            </apex:pageBlockSectionItem>
+         </apex:pageBlockSectionItem>
+         <apex:pageBlockSectionItem rendered="{!item.Document_2_Type__c != null && item.Document_2_Required__c == false && isopen == true}">
+            <apex:outputField value="{!item.Document_2_Type__c}"/>
+             <apex:pageBlockSectionItem >
+                <apex:outputLink value="{!url2}" target="_blank" rendered="{!url2 != '' && url2 != null}" style="margin-right: 18px; font-size: 14px;">[View file]</apex:outputLink>
+                <input type="button" value="Select Document" onclick="guardar_documento('{!item.Document_2_Type__c}',2);"/>
+            </apex:pageBlockSectionItem>
+         </apex:pageBlockSectionItem> 
+         <apex:pageBlockSectionItem rendered="{!item.Document_2_Type__c != null && item.Document_2_Required__c == true && isopen == false}">
+            <apex:outputField value="{!item.Document_2_Type__c} "><span style="color: red;">*</span></apex:outputField>
+            <apex:outputLink value="{!url2}" target="_blank" rendered="{!url2 != '' && url2 != null}" style="margin-right: 18px; font-size: 14px;">View file</apex:outputLink>
+         </apex:pageBlockSectionItem>
+         <apex:pageBlockSectionItem rendered="{!item.Document_2_Type__c != null && item.Document_2_Required__c == false && isopen == false}">
+            <apex:outputField value="{!item.Document_2_Type__c}"/>
+            <apex:outputLink value="{!url2}" target="_blank" rendered="{!url2 != '' && url2 != null}" style="margin-right: 18px; font-size: 14px;">View file</apex:outputLink>
+         </apex:pageBlockSectionItem>
+          
+          
+         
+          <apex:pageBlockSectionItem rendered="{!item.Document_3_Type__c != null && item.Document_3_Required__c == true && isopen == true}">
+            <apex:outputField value="{!item.Document_3_Type__c} "><span style="color: red;">*</span></apex:outputField>
+            <apex:pageBlockSectionItem >
+                <apex:outputLink value="{!url3}" target="_blank" rendered="{!url3 != '' && url3 != null}" style="margin-right: 18px; font-size: 14px;">[View file]</apex:outputLink>
+                <input type="button" value="Select Document" onclick="guardar_documento('{!item.Document_3_Type__c}',3);" class="{!IF(url3 == '' || url3 == null, 'documentos_obligatorios','')}"/>
+            </apex:pageBlockSectionItem>
+         </apex:pageBlockSectionItem>
+         <apex:pageBlockSectionItem rendered="{!item.Document_3_Type__c != null && item.Document_3_Required__c == false && isopen == true}">
+            <apex:outputField value="{!item.Document_3_Type__c}"/>
+             <apex:pageBlockSectionItem >
+                <apex:outputLink value="{!url3}" target="_blank" rendered="{!url3 != '' && url3 != null}" style="margin-right: 18px; font-size: 14px;">[View file]</apex:outputLink>
+                <input type="button" value="Select Document" onclick="guardar_documento('{!item.Document_3_Type__c}',3);"/>
+            </apex:pageBlockSectionItem>
+         </apex:pageBlockSectionItem> 
+         <apex:pageBlockSectionItem rendered="{!item.Document_3_Type__c != null && item.Document_3_Required__c == true && isopen == false}">
+            <apex:outputField value="{!item.Document_3_Type__c} "><span style="color: red;">*</span></apex:outputField>
+            <apex:outputLink value="{!url3}" target="_blank" rendered="{!url3 != '' && url3 != null}" style="margin-right: 18px; font-size: 14px;">View file</apex:outputLink>
+         </apex:pageBlockSectionItem>
+         <apex:pageBlockSectionItem rendered="{!item.Document_3_Type__c != null && item.Document_3_Required__c == false && isopen == false}">
+            <apex:outputField value="{!item.Document_3_Type__c}"/>
+            <apex:outputLink value="{!url3}" target="_blank" rendered="{!url3 != '' && url3 != null}" style="margin-right: 18px; font-size: 14px;">View file</apex:outputLink>
+         </apex:pageBlockSectionItem> 
+          
+          
+           <apex:pageBlockSectionItem rendered="{!item.Document_4_Type__c != null && item.Document_4_Required__c == true && isopen == true}">
+            <apex:outputField value="{!item.Document_4_Type__c} "><span style="color: red;">*</span></apex:outputField>
+            <apex:pageBlockSectionItem >
+                <apex:outputLink value="{!url4}" target="_blank" rendered="{!url4 != '' && url4 != null}" style="margin-right: 18px; font-size: 14px;">[View file]</apex:outputLink>
+                <input type="button" value="Select Document" onclick="guardar_documento('{!item.Document_4_Type__c}',4);" class="{!IF(url4 == '' || url4 == null, 'documentos_obligatorios','')}"/>
+            </apex:pageBlockSectionItem>
+         </apex:pageBlockSectionItem>
+         <apex:pageBlockSectionItem rendered="{!item.Document_4_Type__c != null && item.Document_4_Required__c == false && isopen == true}">
+            <apex:outputField value="{!item.Document_4_Type__c}"/>
+             <apex:pageBlockSectionItem >
+                <apex:outputLink value="{!url4}" target="_blank" rendered="{!url4 != '' && url4 != null}" style="margin-right: 18px; font-size: 14px;">[View file]</apex:outputLink>
+                <input type="button" value="Select Document" onclick="guardar_documento('{!item.Document_4_Type__c}',4);"/>
+            </apex:pageBlockSectionItem>
+         </apex:pageBlockSectionItem> 
+         <apex:pageBlockSectionItem rendered="{!item.Document_4_Type__c != null && item.Document_4_Required__c == true && isopen == false}">
+            <apex:outputField value="{!item.Document_4_Type__c} "><span style="color: red;">*</span></apex:outputField>
+            <apex:outputLink value="{!url4}" target="_blank" rendered="{!url4 != '' && url4 != null}" style="margin-right: 18px; font-size: 14px;">View file</apex:outputLink>
+         </apex:pageBlockSectionItem>
+         <apex:pageBlockSectionItem rendered="{!item.Document_4_Type__c != null && item.Document_4_Required__c == false && isopen == false}">
+            <apex:outputField value="{!item.Document_4_Type__c}"/>
+            <apex:outputLink value="{!url4}" target="_blank" rendered="{!url4 != '' && url4 != null}" style="margin-right: 18px; font-size: 14px;">View file</apex:outputLink>
+         </apex:pageBlockSectionItem>
+          
+          
+           <apex:pageBlockSectionItem rendered="{!item.Document_5_Type__c != null && item.Document_5_Required__c == true && isopen == true}">
+            <apex:outputField value="{!item.Document_5_Type__c} "><span style="color: red;">*</span></apex:outputField>
+            <apex:pageBlockSectionItem >
+                <apex:outputLink value="{!url5}" target="_blank" rendered="{!url5 != '' && url5 != null}" style="margin-right: 18px; font-size: 14px;">[View file]</apex:outputLink>
+                <input type="button" value="Select Document" onclick="guardar_documento('{!item.Document_5_Type__c}',5);" class="{!IF(url5 == '' || url5 == null, 'documentos_obligatorios','')}"/>
+            </apex:pageBlockSectionItem>
+         </apex:pageBlockSectionItem>
+         <apex:pageBlockSectionItem rendered="{!item.Document_5_Type__c != null && item.Document_5_Required__c == false && isopen == true}">
+            <apex:outputField value="{!item.Document_5_Type__c}"/>
+             <apex:pageBlockSectionItem >
+                <apex:outputLink value="{!url5}" target="_blank" rendered="{!url5 != '' && url5 != null}" style="margin-right: 18px; font-size: 14px;">[View file]</apex:outputLink>
+                <input type="button" value="Select Document" onclick="guardar_documento('{!item.Document_5_Type__c}',5);"/>
+            </apex:pageBlockSectionItem>
+         </apex:pageBlockSectionItem> 
+         <apex:pageBlockSectionItem rendered="{!item.Document_5_Type__c != null && item.Document_5_Required__c == true && isopen == false}">
+            <apex:outputField value="{!item.Document_5_Type__c} "><span style="color: red;">*</span></apex:outputField>
+            <apex:outputLink value="{!url5}" target="_blank" rendered="{!url5 != '' && url5 != null}" style="margin-right: 18px; font-size: 14px;">View file</apex:outputLink>
+         </apex:pageBlockSectionItem>
+         <apex:pageBlockSectionItem rendered="{!item.Document_5_Type__c != null && item.Document_5_Required__c == false && isopen == false}">
+            <apex:outputField value="{!item.Document_5_Type__c}"/>
+            <apex:outputLink value="{!url5}" target="_blank" rendered="{!url5 != '' && url5 != null}" style="margin-right: 18px; font-size: 14px;">View file</apex:outputLink>
+         </apex:pageBlockSectionItem>
+         
+         
+         
+          <apex:pageBlockSectionItem rendered="{!item.Document_6_Type__c != null && item.Document_6_Required__c == true && isopen == true}">
+            <apex:outputField value="{!item.Document_6_Type__c} "><span style="color: red;">*</span></apex:outputField>
+            <apex:pageBlockSectionItem >
+                <apex:outputLink value="{!url6}" target="_blank" rendered="{!url6 != '' && url6 != null}" style="margin-right: 18px; font-size: 14px;">[View file]</apex:outputLink>
+                <input type="button" value="Select Document" onclick="guardar_documento('{!item.Document_6_Type__c}',6);" class="{!IF(url6 == '' || url6 == null, 'documentos_obligatorios','')}"/>
+            </apex:pageBlockSectionItem>
+         </apex:pageBlockSectionItem>
+         <apex:pageBlockSectionItem rendered="{!item.Document_6_Type__c != null && item.Document_6_Required__c == false && isopen == true}">
+            <apex:outputField value="{!item.Document_6_Type__c}"/>
+             <apex:pageBlockSectionItem >
+                <apex:outputLink value="{!url6}" target="_blank" rendered="{!url6 != '' && url6 != null}" style="margin-right: 18px; font-size: 14px;">[View file]</apex:outputLink>
+                <input type="button" value="Select Document" onclick="guardar_documento('{!item.Document_6_Type__c}',6);"/>
+            </apex:pageBlockSectionItem>
+         </apex:pageBlockSectionItem> 
+         <apex:pageBlockSectionItem rendered="{!item.Document_6_Type__c != null && item.Document_6_Required__c == true && isopen == false}">
+            <apex:outputField value="{!item.Document_6_Type__c} "><span style="color: red;">*</span></apex:outputField>
+            <apex:outputLink value="{!url6}" target="_blank" rendered="{!url6 != '' && url6 != null}" style="margin-right: 18px; font-size: 14px;">View file</apex:outputLink>
+         </apex:pageBlockSectionItem>
+         <apex:pageBlockSectionItem rendered="{!item.Document_6_Type__c != null && item.Document_6_Required__c == false && isopen == false}">
+            <apex:outputField value="{!item.Document_6_Type__c}"/>
+            <apex:outputLink value="{!url6}" target="_blank" rendered="{!url6 != '' && url6 != null}" style="margin-right: 18px; font-size: 14px;">View file</apex:outputLink>
+         </apex:pageBlockSectionItem>
+         
+         
+          <apex:pageBlockSectionItem rendered="{!item.Document_7_Type__c != null && item.Document_7_Required__c == true && isopen == true}">
+            <apex:outputField value="{!item.Document_7_Type__c} "><span style="color: red;">*</span></apex:outputField>
+            <apex:pageBlockSectionItem >
+                <apex:outputLink value="{!url7}" target="_blank" rendered="{!url7 != '' && url7 != null}" style="margin-right: 18px; font-size: 14px;">[View file]</apex:outputLink>
+                <input type="button" value="Select Document" onclick="guardar_documento('{!item.Document_7_Type__c}',7);" class="{!IF(url7 == '' || url7 == null, 'documentos_obligatorios','')}"/>
+            </apex:pageBlockSectionItem>
+         </apex:pageBlockSectionItem>
+         <apex:pageBlockSectionItem rendered="{!item.Document_7_Type__c != null && item.Document_7_Required__c == false && isopen == true}">
+            <apex:outputField value="{!item.Document_7_Type__c}"/>
+             <apex:pageBlockSectionItem >
+                <apex:outputLink value="{!url7}" target="_blank" rendered="{!url7 != '' && url7 != null}" style="margin-right: 18px; font-size: 14px;">[View file]</apex:outputLink>
+                <input type="button" value="Select Document" onclick="guardar_documento('{!item.Document_7_Type__c}',7);"/>
+            </apex:pageBlockSectionItem>
+         </apex:pageBlockSectionItem> 
+         <apex:pageBlockSectionItem rendered="{!item.Document_7_Type__c != null && item.Document_7_Required__c == true && isopen == false}">
+            <apex:outputField value="{!item.Document_7_Type__c} "><span style="color: red;">*</span></apex:outputField>
+            <apex:outputLink value="{!url7}" target="_blank" rendered="{!url7 != '' && url7 != null}" style="margin-right: 18px; font-size: 14px;">View file</apex:outputLink>
+         </apex:pageBlockSectionItem>
+         <apex:pageBlockSectionItem rendered="{!item.Document_7_Type__c != null && item.Document_7_Required__c == false && isopen == false}">
+            <apex:outputField value="{!item.Document_7_Type__c}"/>
+            <apex:outputLink value="{!url7}" target="_blank" rendered="{!url7 != '' && url7 != null}" style="margin-right: 18px; font-size: 14px;">View file</apex:outputLink>
+         </apex:pageBlockSectionItem>
+         
+         
+          <apex:pageBlockSectionItem rendered="{!item.Document_8_Type__c != null && item.Document_8_Required__c == true && isopen == true}">
+            <apex:outputField value="{!item.Document_8_Type__c} "><span style="color: red;">*</span></apex:outputField>
+            <apex:pageBlockSectionItem >
+                <apex:outputLink value="{!url8}" target="_blank" rendered="{!url8 != '' && url8 != null}" style="margin-right: 18px; font-size: 14px;">[View file]</apex:outputLink>
+                <input type="button" value="Select Document" onclick="guardar_documento('{!item.Document_8_Type__c}',8);" class="{!IF(url8 == '' || url8 == null, 'documentos_obligatorios','')}"/>
+            </apex:pageBlockSectionItem>
+         </apex:pageBlockSectionItem>
+         <apex:pageBlockSectionItem rendered="{!item.Document_8_Type__c != null && item.Document_8_Required__c == false && isopen == true}">
+            <apex:outputField value="{!item.Document_8_Type__c}"/>
+             <apex:pageBlockSectionItem >
+                <apex:outputLink value="{!url8}" target="_blank" rendered="{!url8 != '' && url8 != null}" style="margin-right: 18px; font-size: 14px;">[View file]</apex:outputLink>
+                <input type="button" value="Select Document" onclick="guardar_documento('{!item.Document_8_Type__c}',8);"/>
+            </apex:pageBlockSectionItem>
+         </apex:pageBlockSectionItem> 
+         <apex:pageBlockSectionItem rendered="{!item.Document_8_Type__c != null && item.Document_8_Required__c == true && isopen == false}">
+            <apex:outputField value="{!item.Document_8_Type__c} "><span style="color: red;">*</span></apex:outputField>
+            <apex:outputLink value="{!url8}" target="_blank" rendered="{!url8 != '' && url8 != null}" style="margin-right: 18px; font-size: 14px;">View file</apex:outputLink>
+         </apex:pageBlockSectionItem>
+         <apex:pageBlockSectionItem rendered="{!item.Document_8_Type__c != null && item.Document_1_Required__c == false && isopen == false}">
+            <apex:outputField value="{!item.Document_8_Type__c}"/>
+            <apex:outputLink value="{!url8}" target="_blank" rendered="{!url8 != '' && url8 != null}" style="margin-right: 18px; font-size: 14px;">View file</apex:outputLink>
+         </apex:pageBlockSectionItem>
+         
+         
+          <apex:pageBlockSectionItem rendered="{!item.Document_9_Type__c != null && item.Document_9_Required__c == true && isopen == true}">
+            <apex:outputField value="{!item.Document_9_Type__c} "><span style="color: red;">*</span></apex:outputField>
+            <apex:pageBlockSectionItem >
+                <apex:outputLink value="{!url9}" target="_blank" rendered="{!url9 != '' && url9 != null}" style="margin-right: 18px; font-size: 14px;">[View file]</apex:outputLink>
+                <input type="button" value="Select Document" onclick="guardar_documento('{!item.Document_9_Type__c}',9);" class="{!IF(url9 == '' || url9 == null, 'documentos_obligatorios','')}"/>
+            </apex:pageBlockSectionItem>
+         </apex:pageBlockSectionItem>
+         <apex:pageBlockSectionItem rendered="{!item.Document_9_Type__c != null && item.Document_9_Required__c == false && isopen == true}">
+            <apex:outputField value="{!item.Document_9_Type__c}"/>
+             <apex:pageBlockSectionItem >
+                <apex:outputLink value="{!url9}" target="_blank" rendered="{!url9 != '' && url9 != null}" style="margin-right: 18px; font-size: 14px;">[View file]</apex:outputLink>
+                <input type="button" value="Select Document" onclick="guardar_documento('{!item.Document_9_Type__c}',9);"/>
+            </apex:pageBlockSectionItem>
+         </apex:pageBlockSectionItem> 
+         <apex:pageBlockSectionItem rendered="{!item.Document_9_Type__c != null && item.Document_9_Required__c == true && isopen == false}">
+            <apex:outputField value="{!item.Document_9_Type__c} "><span style="color: red;">*</span></apex:outputField>
+            <apex:outputLink value="{!url9}" target="_blank" rendered="{!url9 != '' && url9 != null}" style="margin-right: 18px; font-size: 14px;">View file</apex:outputLink>
+         </apex:pageBlockSectionItem>
+         <apex:pageBlockSectionItem rendered="{!item.Document_9_Type__c != null && item.Document_9_Required__c == false && isopen == false}">
+            <apex:outputField value="{!item.Document_9_Type__c}"/>
+            <apex:outputLink value="{!url9}" target="_blank" rendered="{!url9 != '' && url9 != null}" style="margin-right: 18px; font-size: 14px;">View file</apex:outputLink>
+         </apex:pageBlockSectionItem>
+         
+         
+          <apex:pageBlockSectionItem rendered="{!item.Document_10_Type__c != null && item.Document_10_Required__c == true && isopen == true}">
+            <apex:outputField value="{!item.Document_10_Type__c} "><span style="color: red;">*</span></apex:outputField>
+            <apex:pageBlockSectionItem >
+                <apex:outputLink value="{!url10}" target="_blank" rendered="{!url10 != '' && url10 != null}" style="margin-right: 18px; font-size: 14px;">[View file]</apex:outputLink>
+                <input type="button" value="Select Document" onclick="guardar_documento('{!item.Document_10_Type__c}',10);" class="{!IF(url10 == '' || url10 == null, 'documentos_obligatorios','')}"/>
+            </apex:pageBlockSectionItem>
+         </apex:pageBlockSectionItem>
+         <apex:pageBlockSectionItem rendered="{!item.Document_10_Type__c != null && item.Document_10_Required__c == false && isopen == true}">
+            <apex:outputField value="{!item.Document_10_Type__c}"/>
+             <apex:pageBlockSectionItem >
+                <apex:outputLink value="{!url10}" target="_blank" rendered="{!url10 != '' && url10 != null}" style="margin-right: 18px; font-size: 14px;">[View file]</apex:outputLink>
+                <input type="button" value="Select Document" onclick="guardar_documento('{!item.Document_10_Type__c}',10);"/>
+            </apex:pageBlockSectionItem>
+         </apex:pageBlockSectionItem> 
+         <apex:pageBlockSectionItem rendered="{!item.Document_10_Type__c != null && item.Document_10_Required__c == true && isopen == false}">
+            <apex:outputField value="{!item.Document_10_Type__c} "><span style="color: red;">*</span></apex:outputField>
+            <apex:outputLink value="{!url10}" target="_blank" rendered="{!url10 != '' && url10 != null}" style="margin-right: 18px; font-size: 14px;">View file</apex:outputLink>
+         </apex:pageBlockSectionItem>
+         <apex:pageBlockSectionItem rendered="{!item.Document_10_Type__c != null && item.Document_10_Required__c == false && isopen == false}">
+            <apex:outputField value="{!item.Document_10_Type__c}"/>
+            <apex:outputLink value="{!url10}" target="_blank" rendered="{!url10 != '' && url10 != null}" style="margin-right: 18px; font-size: 14px;">View file</apex:outputLink>
+         </apex:pageBlockSectionItem>
+         
+    </apex:pageBlockSection>
+</apex:repeat>
+
+
+
+<apex:pageBlockSection title="Review these documents and accept them if you agree" collapsible="false" rendered="{!showdocuments}">
+    <apex:pageBlockSectionItem rendered="{!quote.Supplier_Request_RFP__r.CartonBox_Document__c!=null}">
+        <apex:outputLink value="{!quote.Supplier_Request_RFP__r.CartonBox_Document__c}" target="_blank">
+            Carton Box Suppliers
+        </apex:outputLink>
+        <apex:pageBlockSectionItem >
+            <apex:inputField value="{!quote.Carton_Box_Suppliers__c}" rendered="{!isopen}"/>
+            <apex:outputField value="{!quote.Carton_Box_Suppliers__c}" rendered="{!!isopen}"/>
+        </apex:pageBlockSectionItem>
+    </apex:pageBlockSectionItem>
+    <apex:pageBlockSectionItem rendered="{!quote.Supplier_Request_RFP__r.Poligag_Document__c!=null}">
+        <apex:outputLink value="{!quote.Supplier_Request_RFP__r.Poligag_Document__c}" target="_blank">
+            Poligag Suppliers
+        </apex:outputLink>
+        <apex:pageBlockSectionItem >
+            <apex:inputField value="{!quote.Poligag_Suppliers__c}" rendered="{!isopen}"/>
+            <apex:outputField value="{!quote.Poligag_Suppliers__c}" rendered="{!!isopen}"/>
+        </apex:pageBlockSectionItem>
+    </apex:pageBlockSectionItem>
+    <apex:pageBlockSectionItem rendered="{!quote.Supplier_Request_RFP__r.Labels_Document__c!=null}">
+        <apex:outputLink value="{!quote.Supplier_Request_RFP__r.Labels_Document__c}" target="_blank">
+            Labels Suppliers
+        </apex:outputLink>
+        <apex:pageBlockSectionItem >
+            <apex:inputField value="{!quote.Labels_Suppliers__c}" rendered="{!isopen}"/>
+            <apex:outputField value="{!quote.Labels_Suppliers__c}" rendered="{!!isopen}"/>
+        </apex:pageBlockSectionItem>
+    </apex:pageBlockSectionItem>
+    <apex:pageBlockSectionItem rendered="{!quote.Supplier_Request_RFP__r.Pallets_Document__c!=null}">
+        <apex:outputLink value="{!quote.Supplier_Request_RFP__r.Pallets_Document__c}" target="_blank">
+            Pallets Suppliers
+        </apex:outputLink>
+        <apex:pageBlockSectionItem >
+            <apex:inputField value="{!quote.Pallets_Suppliers__c}" rendered="{!isopen}"/>
+            <apex:outputField value="{!quote.Pallets_Suppliers__c}" rendered="{!!isopen}"/>
+        </apex:pageBlockSectionItem>
+    </apex:pageBlockSectionItem>
+</apex:pageBlockSection>
+<apex:pageBlockSection title="Items" collapsible="false"/>
+<div id="accordion" style="overflow-y:auto;max-height:{!IF(dynamicstateauction>0,790,950)}px;border:1px solid #a6c9e2">
+<apex:repeat value="{!itemstosuplay}" var="item">
+    <apex:pageBlockSection showHeader="false" columns="4">
+        <apex:pageBlockSectionItem labelStyle="text-align:left">
+            <apex:outputLabel value="{!item.line.Supplier_Request_Line__r.Item_Name__c}"/>
+            <apex:outputLabel />
+        </apex:pageBlockSectionItem>
+        
+        <apex:outputField label="Quantity{!IF(item.line.Supplier_Request_Line__r.Unit_of_measure_RFP__c != null, ' ('+item.line.Supplier_Request_Line__r.Unit_of_measure_RFP__c+')', IF(item.line.Supplier_Request_Line__r.Unit_of_measure__c!=null,' ('+item.line.Supplier_Request_Line__r.Unit_of_measure__c+')',''))}" value="{!item.line.Quantity__c}" rendered="{!item.line.Supplier_Request_Line__r.Partial_Quote__c == false || isopen == false}"/>
+        
+        <apex:inputField label="Quantity{!IF(item.line.Supplier_Request_Line__r.Unit_of_measure_RFP__c != null, ' ('+item.line.Supplier_Request_Line__r.Unit_of_measure_RFP__c+')',IF(item.line.Supplier_Request_Line__r.Unit_of_measure__c!=null,' ('+item.line.Supplier_Request_Line__r.Unit_of_measure__c+')',''))}" value="{!item.line.Quantity__c}" style="text-align: right;" html-placeholder="{!item.quantity_request_line}" rendered="{!item.line.Supplier_Request_Line__r.Partial_Quote__c == true && isopen == true && item.line.Supplier_Request_Line__r.Hide_Quantity__c == false}"/><!-- {!item.quantity_request_line} -->
+        
+        <apex:inputField label="Quantity{!IF(item.line.Supplier_Request_Line__r.Unit_of_measure_RFP__c != null, ' ('+item.line.Supplier_Request_Line__r.Unit_of_measure_RFP__c+')',IF(item.line.Supplier_Request_Line__r.Unit_of_measure__c!=null,' ('+item.line.Supplier_Request_Line__r.Unit_of_measure__c+')',''))}" value="{!item.line.Quantity__c}" style="text-align: right;"  rendered="{!item.line.Supplier_Request_Line__r.Partial_Quote__c == true && isopen == true && item.line.Supplier_Request_Line__r.Hide_Quantity__c == true}"/> 
+       
+        
+       <!--  <apex:outputField label="Target Price{!IF(quote.Incoterm__c!=null,' ('+quote.Incoterm__c+')','')}" value="{!item.line.Supplier_Request_Line__r.Target_Price__c}" rendered="{!item.line.Supplier_Request_Line__r.Target_Price__c!=null}"/>-->
+        <apex:outputField label="Target Price{!IF(quote.Incoterm__c!=null,' ('+quote.Incoterm__c+')','')}" value="{!item.line.Supplier_Request_Line__r.Target_Price__c}" rendered="{!item.line.Supplier_Request_Line__r.Show_Target_Price__c==true}"/>
+        
+        <apex:pageBlockSectionItem rendered="{!item.line.Supplier_Request_Line__r.Show_Target_Price__c!=true}">
+            <apex:outputLabel />
+            <apex:outputLabel />
+        </apex:pageBlockSectionItem>
+        <apex:pageBlockSectionItem rendered="{!isopen}">
+            <apex:outputLabel value="Your Best Unit Price{!IF(quote.Incoterm__c!=null,' ('+quote.Incoterm__c+')','')}"/>
+            <apex:pageBlockSectionItem >
+               <!--  <apex:outputLabel value="({!item.line.CurrencyIsoCode})"/>-->
+               <apex:outputLabel value="({!item.moneda_selected})"/>
+                <apex:inputField value="{!item.line.Price__c}" style="text-align: right; padding-right: 5px;"/>
+            </apex:pageBlockSectionItem>
+        </apex:pageBlockSectionItem>
+        <apex:outputField label="Your Best Unit Price{!IF(quote.Incoterm__c!=null,' ('+quote.Incoterm__c+')','')}" value="{!item.line.Price__c}" rendered="{!!isopen}"/>
+    </apex:pageBlockSection>
+    <div>
+        <apex:pageBlockSection title="Item Data" columns="3">
+            <apex:pageBlockSectionItem dataStyle="width:0;vertical-align:middle">
+                <apex:outputField value="{!item.line.Supplier_Request_Line__r.Photo__c}"/>
+            </apex:pageBlockSectionItem>
+            <apex:pageBlockSectionItem dataStyle="width:50%">
+                <apex:pageBlockSection columns="1">
+                    <apex:outputField value="{!item.line.Supplier_Request_Line__r.Family_Name__c}" rendered="{!item.line.Supplier_Request_Line__r.Family_Name__c!=null}"/>
+                    <apex:outputField value="{!item.line.Supplier_Request_Line__r.Subfamily_Name__c}" rendered="{!item.line.Supplier_Request_Line__r.Subfamily_Name__c!=null}"/>
+                    <apex:outputField value="{!item.line.Supplier_Request_Line__r.Item_Name__c}"/>
+                    <apex:outputField value="{!item.line.Supplier_Request_Line__r.Item_Code__c}" rendered="{!item.line.Supplier_Request_Line__r.Item_Code__c!=null}"/>
+                    <apex:outputField value="{!item.line.Supplier_Request_Line__r.HS_Code__c}" rendered="{!item.line.Supplier_Request_Line__r.HS_Code__c!=null}"/>
+                    <apex:outputField value="{!item.line.Supplier_Request_Line__r.Packaging_Description__c}" rendered="{!item.line.Supplier_Request_Line__r.Packaging_Description__c!=null}"/>
+                    <apex:outputField value="{!item.line.Supplier_Request_Line__r.Packaging_Weight_kg__c}" rendered="{!item.line.Supplier_Request_Line__r.Packaging_Weight_kg__c!=null}"/>
+                    <apex:outputField value="{!item.line.Supplier_Request_Line__r.Item_Units_Packaging__c}" rendered="{!item.line.Supplier_Request_Line__r.Item_Units_Packaging__c!=null}"/>
+                    <apex:outputField value="{!item.line.Supplier_Request_Line__r.Packaging_Gross_Weight_kg__c}" rendered="{!item.line.Supplier_Request_Line__r.Packaging_Gross_Weight_kg__c!=null}"/>
+                </apex:pageBlockSection>
+            </apex:pageBlockSectionItem>
+            <apex:pageBlockSectionItem dataStyle="width:50%">
+                <apex:pageBlockSection columns="1">
+                    <apex:outputField value="{!item.line.Supplier_Request_Line__r.Technical_Data__c}" rendered="{!item.line.Supplier_Request_Line__r.Technical_Data__c!=null}"/>
+                    <apex:outputField value="{!item.line.Supplier_Request_Line__r.Technical_description__c}" rendered="{!item.line.Supplier_Request_Line__r.Technical_description__c!=null}"/>
+                    <apex:outputField value="{!item.line.Supplier_Request_Line__r.Packaging_Image__c}" rendered="{!item.line.Supplier_Request_Line__r.Packaging_Image__c!=null}"/>
+                    <apex:outputField value="{!item.line.Supplier_Request_Line__r.Packaging_System__c}" rendered="{!item.line.Supplier_Request_Line__r.Packaging_System__c!=null}"/>
+                    <apex:outputField value="{!item.line.Supplier_Request_Line__r.Sizes_Image__c}" rendered="{!item.line.Supplier_Request_Line__r.Sizes_Image__c!=null}"/>
+                    <apex:outputField value="{!item.line.Supplier_Request_Line__r.Packaging_Length_cm__c}" rendered="{!item.line.Supplier_Request_Line__r.Packaging_Length_cm__c!=null}"/>
+                    <apex:outputField value="{!item.line.Supplier_Request_Line__r.Packaging_Width_cm__c}" rendered="{!item.line.Supplier_Request_Line__r.Packaging_Width_cm__c!=null}"/>
+                    <apex:outputField value="{!item.line.Supplier_Request_Line__r.Packaging_Height_cm__c}" rendered="{!item.line.Supplier_Request_Line__r.Packaging_Height_cm__c!=null}"/>
+                    <apex:outputField value="{!item.line.Supplier_Request_Line__r.Packaging_Volume_m3__c}" rendered="{!item.line.Supplier_Request_Line__r.Packaging_Volume_m3__c!=null}"/>
+                </apex:pageBlockSection>
+            </apex:pageBlockSectionItem>
+        </apex:pageBlockSection>
+        <div id="suppdata{!item.linenumber}" style="position:relative">
+       	<apex:commandLink onclick="copydata({!item.linenumber});return false;" style="position:absolute;left:16em;top:.5em" rendered="{!(isopen)&&(item.linenumber!=1)}">
+       		<apex:image value="{!$Resource.copydata}"/>
+       	</apex:commandLink>
+        <apex:pageBlockSection title="Supplier Packaging Data">
+            <apex:inputField value="{!item.line.Supplier_Item_Weight_kg__c}" rendered="{!isopen}" html-class="peso_items_supplier" onKeyUp="comprobar_campos_requeridos();"/>
+            <apex:outputField value="{!item.line.Supplier_Item_Weight_kg__c}" rendered="{!!isopen}"/>
+            <apex:inputField value="{!item.line.Packaging_Length_cm__c}" rendered="{!isopen}" html-class="volumen_packaging_length" onKeyUp="comprobar_campos_requeridos();"/>
+            <apex:outputField value="{!item.line.Packaging_Length_cm__c}" rendered="{!!isopen}"/>
+            <apex:inputField value="{!item.line.Packaging_Description__c}" rendered="{!isopen}" html-class="Packaging_Description"/>
+            <apex:outputField value="{!item.line.Packaging_Description__c}" rendered="{!!isopen}"/>
+            <apex:inputField value="{!item.line.Packaging_Width_cm__c}" rendered="{!isopen}" html-class="volumen_packaging_width"  onKeyUp="comprobar_campos_requeridos();"/>
+            <apex:outputField value="{!item.line.Packaging_Width_cm__c}" rendered="{!!isopen}"/>
+            <apex:inputField value="{!item.line.Packaging_Weight_kg__c}" rendered="{!isopen}" html-class="peso_packaging_weight" onKeyUp="comprobar_campos_requeridos();"/>
+            <apex:outputField value="{!item.line.Packaging_Weight_kg__c}" rendered="{!!isopen}"/>
+            <apex:inputField value="{!item.line.Packaging_Height_cm__c}" rendered="{!isopen}" html-class="volumen_packaging_height" onKeyUp="comprobar_campos_requeridos();"/>
+            <apex:outputField value="{!item.line.Packaging_Height_cm__c}" rendered="{!!isopen}"/>
+            <apex:inputField value="{!item.line.Item_Units_x_Packaging__c}" rendered="{!isopen}" html-class="unidades_x_caja" onKeyUp="comprobar_campos_requeridos();"/>
+            <apex:outputField value="{!item.line.Item_Units_x_Packaging__c}" rendered="{!!isopen}"/>
+            <apex:outputField value="{!item.line.Packaging_Volume_m3__c}" rendered="{!(item.line.Packaging_Volume_m3__c!=null)&&(item.line.Packaging_Volume_m3__c!=0)}"/>
+            <apex:outputLabel rendered="{!(item.line.Packaging_Volume_m3__c=null)||(item.line.Packaging_Volume_m3__c=0)}"/>
+            <apex:outputField value="{!item.line.Packaging_Gross_Weight_kg__c}" rendered="{!(item.line.Packaging_Gross_Weight_kg__c!=null)&&(item.line.Packaging_Gross_Weight_kg__c!=0)}"/>
+            <apex:outputLabel rendered="{!(item.line.Packaging_Gross_Weight_kg__c=null)||(item.line.Packaging_Gross_Weight_kg__c=0)}"/>
+            <apex:outputField value="{!item.line.Supplier_Total_Volume_m3__c}" rendered="{!(item.line.Supplier_Total_Volume_m3__c!=null)&&(item.line.Supplier_Total_Volume_m3__c!=0)}"/>
+            <apex:outputLabel rendered="{!(item.line.Supplier_Total_Volume_m3__c=null)||(item.line.Supplier_Total_Volume_m3__c=0)}"/>
+            <apex:outputField value="{!item.line.Packaging_Quantity__c}" rendered="{!(item.line.Packaging_Quantity__c!=null)&&(item.line.Packaging_Quantity__c!=0)}"/>
+            <apex:outputLabel rendered="{!(item.line.Packaging_Quantity__c=null)||(item.line.Packaging_Quantity__c=0)}"/>
+            <apex:outputLabel />
+            <apex:outputField value="{!item.line.Supplier_Total_Weight_kg__c}" rendered="{!(item.line.Supplier_Total_Weight_kg__c!=null)&&(item.line.Supplier_Total_Weight_kg__c!=0)}"/>
+            <apex:outputLabel rendered="{!(item.line.Supplier_Total_Weight_kg__c=null)||(item.line.Supplier_Total_Weight_kg__c=0)}"/>
+        </apex:pageBlockSection>
+        </div>
+        <apex:pageBlockSection title="Supplier Item Observations">
+            <apex:inputField value="{!item.line.Production_Time_Days__c}" rendered="{!isopen}" style="border-left: 2px solid red;" styleClass="production_time"/>
+            <apex:outputField value="{!item.line.Production_Time_Days__c}" rendered="{!!isopen}"/>
+            <apex:inputField value="{!item.line.Expense_Concept__c}" rendered="{!isopen}"/>
+            <apex:outputField value="{!item.line.Expense_Concept__c}" rendered="{!!isopen}"/>
+            <apex:inputField value="{!item.line.Observations__c}" rendered="{!isopen}"/>
+            <apex:outputField value="{!item.line.Observations__c}" rendered="{!!isopen}"/>
+            <apex:inputField value="{!item.line.Expense_Amount__c}" rendered="{!isopen}"/>
+            <apex:outputField value="{!item.line.Expense_Amount__c}" rendered="{!!isopen}"/>
+        </apex:pageBlockSection>
+        <apex:pageBlockSection title="Evaluation Criterias" rendered="{!item.evaluationcriterias!=null}">
+        <apex:repeat value="{!item.evaluationcriterias}" var="crit">
+            <apex:pageBlockSectionItem >
+                <apex:outputLabel value="{!crit.Name}"/>
+                <apex:pageBlockSectionItem >
+                    <apex:selectRadio value="{!crit.selected}" readonly="{!!isopen}" disabled="{!!isopen}">
+                        <apex:selectOptions value="{!crit.options}"/>
+                    </apex:selectRadio>
+                    <apex:outputLabel value="{!crit.Description}" rendered="{!crit.Description!=null}"/>
+                </apex:pageBlockSectionItem>
+            </apex:pageBlockSectionItem>
+        </apex:repeat>
+        </apex:pageBlockSection>
+    </div>
+</apex:repeat>
+</div>
+</apex:pageBlock>
+<apex:actionstatus id="myStatus">
+    <apex:facet name="start">
+        <div class="waitingSearchDiv" id="el_loading" style="background-color:#fbfbfb;height:100%;opacity:0.65;width:100%;"> 
+            <div class="waitingHolder" style="top:74.2px;width:91px;">
+                <img class="waitingImage" src="/img/loading.gif" title="Please Wait..." />
+                <span class="waitingDescription">Loading...</span>
+            </div>
+        </div>
+    </apex:facet>
+</apex:actionstatus>
+<div class="waitingSearchDiv" id="otherStatus" style="display:none;background-color:#fbfbfb;height:100%;opacity:0.65;width:100%;"> 
+    <div class="waitingHolder" style="top:74.2px;width:91px;">
+        <img class="waitingImage" src="/img/loading.gif" title="Please Wait..." />
+        <span class="waitingDescription">Loading...</span>
+    </div>
+</div>
+</apex:form>
+</apex:define>
+</apex:composition>
+</apex:page>

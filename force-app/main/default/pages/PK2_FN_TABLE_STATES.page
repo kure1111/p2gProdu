@@ -1,0 +1,39 @@
+<apex:page showHeader="false" sidebar="false" tabStyle="Account" controller="PK2_FN_TABLE_STATES">
+    <head>
+        <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+        <script>
+            setTimeout("location.reload(true);", 30000);
+        </script>
+    </head>
+    <body>
+        <apex:form > 
+             <apex:pageBlock title="FN - EMBARQUES POR PLAZA" mode="edit">
+                 </apex:pageBlock>  
+            <apex:pageBlock >
+                <apex:pageBlockTable value="{!lsStates}" var="Result">
+                    <apex:column value="{!Result.Mode__c}"/> 
+                    <apex:column headerValue="Order Number"><apex:commandLink action="/{!Result.Id}" value="{!Result.Name}"/></apex:column>
+                    <apex:column value="{!Result.Route__c}"/>
+                    <apex:column headerValue="Container Type">
+                        <apex:repeat value="{!Result.Import_Export_Items_Lines__r}" var="linea">
+                            <apex:outputText value="{!linea.Container_Type__r.Name}" />
+                        </apex:repeat>
+                    </apex:column>
+                    <apex:column value="{!Result.Account_for__r.Venta_Sap__c}" headerValue="Venta" />
+                    <apex:column headerValue="Customer" value="{!Result.Account_for__r.Name}"/>
+                    <apex:column style="{!IF(Result.Quotation_Status__c == 'Quote Declined','background:#FF0C00',
+                                        IF(Result.Quotation_Status__c == 'Shipped','background:#3EFF00',
+                                        IF(Result.Quotation_Status__c == 'Approved as Succesful' && Result.ETD__c == Hoy && Result.Awaiting_load_time__c !=null  && Result.Awaiting_load_time__c <= Hora 
+                                        ,'background:#FF0000','background:#FFC900')))}" headerValue="Order Status" value="{!Result.Quotation_Status__c}" />
+                    <apex:column headerValue="Executive" value="{!Result.CreatedBy.Name}"/>
+                    <apex:column headerValue="ETD / Hora Carrier" value="{!Result.ETD__c} {!IF(Result.Awaiting_load_time__c != null,' / ','')} {!Result.Awaiting_load_time__c}"/>
+                    <apex:column headerValue="Shipment" value="{!Result.Last_Shipment__c}"/>
+                    <apex:column headerValue="Planner" value="{!Result.Last_Shipment__r.Operation_Executive__c}"/>
+                    <apex:column value="{!Result.Last_Shipment__r.Shipment_Status_Plann__c}"/>
+                    <apex:column value="{!Result.Last_Shipment__r.VERIFY_PAK_CONTROL__c}"/>
+                    <apex:column value="{!Result.Last_Shipment__r.Pago_Contado_SAP__c}"/>
+                    </apex:pageBlockTable>
+            </apex:pageBlock>
+        </apex:form>   
+    </body>
+ </apex:page>

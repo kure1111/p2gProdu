@@ -1,0 +1,175 @@
+<apex:page controller="NEU_TarimasINT" id="page">
+<apex:includeScript value="{!$Resource.jquery_1_10_2}"/> 
+<apex:includeScript value="{!$Resource.neurored_jquery}"/> 
+<apex:includeScript value="{!URLFOR($Resource.jszip, 'jszip.js')}"/>
+<apex:includeScript value="{!URLFOR($Resource.jszip, 'jszip-load.js')}"/>
+<apex:includeScript value="{!URLFOR($Resource.jszip, 'jszip-deflate.js')}"/>
+<apex:includeScript value="{!URLFOR($Resource.jszip, 'jszip-inflate.js')}"/>
+<style>
+    .cerror
+    {
+        color:red;
+    }
+    .nerror td,td.nerror
+    {
+        background-color:red;
+    }
+</style>
+<script>
+$(document).ready(function(){
+    var datafile=$('#page\\:form\\:datafile').text().trim();
+    if(datafile)
+    {
+        var zip=null;
+        try{
+            zip=new JSZip(datafile,{base64:true});
+        }
+        catch(e){}
+        if(zip)
+        {
+            var sharedStrings=JSZipBase64.encode(extractFile(zip,'xl/sharedStrings.xml'));
+            var worksheet=extractFile(zip,'xl/worksheets/sheet1.xml');
+            if((sharedStrings.length>204800)||(sharedStrings.length+worksheet.length>6000000))
+            {
+                tooManyLines();
+                return;
+            }
+            $('#page\\:form\\:sharedStrings').val(sharedStrings);
+            $('#page\\:form\\:worksheet').val(worksheet);
+        }
+        processData();
+    }
+});
+function extractFile(zip,name)
+{
+    var file=zip.files[name];
+    if(file)
+        if(file.data)
+            return file.data;
+    return '';
+}
+function emptyPage()
+{
+    $('#page\\:form\\:sharedStrings').val('');
+    $('#page\\:form\\:worksheet').val('');
+}
+function carrier()
+{
+    $('#page\\:form\\:carrier').val($(".carrier_i").parent().parent().find("input[name*='_lkold']").val());
+    upload();
+}
+</script>
+    <apex:form enctype="multipart/form-data" id="form">
+    <apex:sectionHeader title="{!$ObjectType.Fee__c.labelplural}" subtitle="Tarimas Upload"/>
+<apex:actionFunction name="tooManyLines" action="{!tooManyLines}" status="myStatus"/>
+<apex:actionFunction name="processData" action="{!processData}" status="myStatus"/>
+<apex:actionFunction name="cleanPage" action="{!cleanPage}" status="myStatus"/>
+<apex:actionFunction name="upload" action="{!upload}" status="myStatus"/>
+    <apex:pageBlock id="retryblock1" mode="maindetail" rendered="{!(!firstDocument)&&(datafile=null)}">
+        <apex:pageBlockButtons location="top">
+            <apex:commandButton value="Retry Upload" onclick="emptyPage();" action="{!cleanPage}"/>
+            <apex:commandButton value="Save {!$ObjectType.Fee__c.labelplural}" action="{!saveLines}"/>
+        </apex:pageBlockButtons>
+    </apex:pageBlock>
+    <apex:pageBlock id="block1" mode="maindetail" rendered="{!firstDocument}">
+        <apex:pageBlockButtons location="top">
+            <input type="button" class="btn" value="Upload document" onclick="carrier()"/>
+        </apex:pageBlockButtons>
+        <apex:pageBlockSection title="{!$ObjectType.Fee__c.labelplural} - Excel (xlsx)" columns="1">
+            <apex:inputFile value="{!documento1}" filename="{!documento1Name}"/>
+        </apex:pageBlockSection>
+        <apex:pageBlockSection title="Default Values" columns="1">
+               <apex:pageBlockSection columns="2" showHeader="false">
+                <apex:inputField id="Account_for" value="{!filter.Account_for__c}" styleClass="carrier_i"/>
+                   <!-- <apex:inputField value="{!filter.Fee_Category__c}"/> -->
+                   <apex:selectList value="{!filter.Fee_Category__c}" multiselect="false" size="1" disabled="true">
+                        <apex:SelectOptions value="{!category}"/>
+                   </apex:selectList>
+                   <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="Currency"/>
+                    <apex:outputPanel layout="block" styleClass="requiredInput">
+                        <div class="requiredBlock"></div>
+                        <apex:selectList value="{!filterCurrencyISOCode}" multiselect="false" size="1">
+                            <apex:SelectOptions value="{!CurrencyISOCodeOptions}"/>
+                        </apex:selectList>
+                   </apex:outputPanel>
+                </apex:pageBlockSectionItem>
+                   <!-- <apex:inputField value="{!filter.Rate_Type__c}"/> -->
+               </apex:pageBlockSection>
+               <apex:pageBlockSection columns="2" showHeader="false">
+                   <apex:inputField value="{!filter.Carrier_Account__c}"/>
+                   <apex:inputField value="{!filter.Valid_From__c}"/>
+                   <apex:outputLabel />
+                   <apex:inputField value="{!filter.Valid_Until__c}"/>
+               </apex:pageBlockSection>
+               <apex:pageBlockSection columns="2" showHeader="false">
+                <apex:inputField value="{!filter.Route__r.Country_of_Load__c}"/>
+                <apex:inputField value="{!filter.Route__r.Country_of_Discharge__c}"/>
+                <apex:inputField value="{!filter.Route__r.State_of_Load__c}"/>
+                <apex:inputField value="{!filter.Route__r.State_of_Discharge__c}"/>
+                <apex:inputField value="{!filter.Route__r.Port_Airport_of_Load__c}"/>
+                <apex:inputField value="{!filter.Route__r.Port_Airport_of_Discharge__c}"/>
+               </apex:pageBlockSection>
+            </apex:pageBlockSection>
+        </apex:pageBlock>
+    <apex:pageMessages id="messages"/>
+    <apex:pageBlock id="block2" mode="maindetail" rendered="{!ratesDataNumber>0}">
+        <apex:pageBlockSection title="{!$ObjectType.Fee__c.labelplural} - Data" columns="1">
+            <apex:pageBlockSectionItem >
+                <apex:outputLabel value="Number of {!$ObjectType.Fee__c.labelplural}"/>
+                <apex:outputText value="{!ratesDataNumber}"/>
+            </apex:pageBlockSectionItem>
+        </apex:pageBlockSection>
+        <br/>
+        <table class="list" id="mytable" border="0" cellpadding="0" cellspacing="0">
+        <tr class="headerRow">
+            <th class="headerRow">Rate Name</th>
+            <th class="headerRow">Rate Type</th>            
+            <th class="headerRow">Carrier</th>
+            <th class="headerRow">Valid From</th>
+            <th class="headerRow">Valid To</th>
+            <th class="headerRow">Volume</th>
+            <th class="headerRow">Weight</th>
+            <th class="headerRow">State of Load</th>
+            <th class="headerRow">Location of Load</th>
+            <th class="headerRow">State of Discharge</th>
+            <th class="headerRow">Location of Discharge</th>
+            <th class="headerRow">Zone</th>
+            <th class="headerRow" style="{!IF(showColumn[11],'','display:none;')}">Buy Rate</th>
+            <th class="headerRow" style="{!IF(showColumn[12],'','display:none;')}">Sell Rate</th>
+            <th class="headerRow" style="{!IF(showColumn[11] && showColumn[12],'','display:none;')}">Margin 1</th>  
+            <th class="headerRow">SAP Service Type</th>                     
+        </tr>
+        <apex:repeat value="{!RatesData}" var="line">
+        <tr class="dataRow" onmouseover="if (window.hiOn){hiOn(this);}" onmouseout="if (window.hiOff){hiOff(this);}" onblur="if (window.hiOff){hiOff(this);}" onfocus="if (window.hiOn){hiOn(this);}">
+            <td class="dataCell{!IF(line.errors[columns[0]]>0,' nerror','')}">
+                <div style="display:inline-block">
+                    <apex:outputText value="{!line.values[columns[0]]}"/>
+                    <apex:outputLink value="{!URLFOR($Action.Fee__c.View,line.feeId)}" target="_blank" rendered="{!line.feeId!=null}" style="float:right"><apex:image value="/img/apexpages/setup/launch.jpg" height="15" width="15" style="padding-left:.5em;"/></apex:outputLink>
+                </div>
+            </td>
+            <td class="dataCell{!IF(line.errors[columns[10]]>0,' nerror','')}"><apex:outputText value="{!line.values[columns[10]]}"/></td>
+            <td class="dataCell{!IF(line.errors[columns[5]]>0,' nerror','')}"><apex:outputText value="{!line.values[columns[5]]}"/></td>            
+            <td class="dataCell{!IF(line.errors[columns[7]]>0,' nerror','')}" style="text-align:right;"><apex:outputText value="{!line.values[columns[7]]}"/></td>
+            <td class="dataCell{!IF(line.errors[columns[8]]>0,' nerror','')}" style="text-align:right;"><apex:outputText value="{!line.values[columns[8]]}"/></td>
+            <td class="dataCell{!IF(line.errors[columns[40]]>0,' nerror','')}"><apex:outputText value="{!line.values[columns[40]]}"/></td>
+            <td class="dataCell{!IF(line.errors[columns[35]]>0,' nerror','')}"><apex:outputText value="{!line.values[columns[35]]}"/></td>           
+            <td class="dataCell{!IF(line.errors[columns[18]]>0,' nerror','')}"><apex:outputText value="{!line.values[columns[18]]}"/></td>               
+            <td class="dataCell{!IF(line.errors[columns[2]]>0,' nerror','')}"><apex:outputText value="{!line.values[columns[2]]}"/></td>            
+            <td class="dataCell{!IF(line.errors[columns[19]]>0,' nerror','')}"><apex:outputText value="{!line.values[columns[19]]}"/></td>           
+            <td class="dataCell{!IF(line.errors[columns[4]]>0,' nerror','')}"><apex:outputText value="{!line.values[columns[4]]}"/></td>
+            <td class="dataCell{!IF(line.errors[columns[36]]>0,' nerror','')}"><apex:outputText value="{!line.values[columns[36]]}"/></td>                    
+            <td class="dataCell{!IF(line.errors[columns[11]]>0,' nerror','')}" style="{!IF(showColumn[11],'','display:none;')} text-align:right;"><apex:outputText value="{!line.values[columns[11]]}"/></td>
+            <td class="dataCell{!IF(line.errors[columns[12]]>0,' nerror','')}" style="{!IF(showColumn[12],'','display:none;')} text-align:right"><apex:outputText value="{!line.values[columns[12]]}"/></td>
+            <td class="dataCell" style="{!IF(showColumn[11] && showColumn[12],'','display:none;')} text-align:right;"><apex:outputText value="{!line.margin1}"/></td>
+        	<td class="dataCell{!IF(line.errors[columns[41]]>0,' nerror','')}"><apex:outputText value="{!line.values[columns[41]]}"/></td>
+        </tr>
+        </apex:repeat>
+        </table>
+    </apex:pageBlock>
+    <apex:outputLabel value="{!datafile}" id="datafile" style="display:none"/>
+    <apex:inputHidden value="{!sharedStrings}" id="sharedStrings"/>
+    <apex:inputHidden value="{!worksheet}" id="worksheet"/>
+    <apex:inputHidden value="{!carrier}" id="carrier"/>
+    </apex:form>
+</apex:page>

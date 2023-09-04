@@ -1,0 +1,739 @@
+<apex:page standardController="Shipment_Disbursement__c" extensions="NEU_Create_Disbursement_Service_Item" id="page">
+<apex:includeScript value="{!$Resource.jquery_1_11_1}"/>
+<apex:includeScript value="{!$Resource.jquery_ui_1_11_4}"/>
+<apex:includeScript value="{!$Resource.neurored_jquery}"/>
+<apex:stylesheet value="{!URLFOR($Resource.jquery_ui_1_11_4_css,'jquery-ui.min.css')}"/>
+<apex:stylesheet value="{!$Resource.NEU_Pagination_css}"/>
+<apex:form id="form">
+
+    <script type="text/javascript">
+    $(document).ready(function ()
+    {
+        setDecimalSep($($.sfId('{!$Component.form.decimalSep}')).val(),$($.sfId('{!$Component.form.thousandSep}')).val());
+        var size_list = $('.size_list_table').getFloat();
+        if(size_list == 0)
+        twistSection(document.getElementById('page:form:pageblock_disbursementlines:blockdisbursementlines').childNodes[0].childNodes[0]);
+        updateData();
+    });
+
+    function updateData()
+    {
+        updateBalance();
+        taxesLoad();
+        calcular_all_amount_disbursement_lines();
+        calcular_total_amounts();
+    }
+
+    function updateBalance()
+    {
+        var disbursementamount=$($.sfId('{!$Component.form.disbursementamount}')).getFloat();
+        $('input.boxallocate:checked').each(function()
+        {
+                disbursementamount-=$('input.amount',$(this).closest('tr')).getFloatSep().toFixed(2);
+        });
+        disbursementamount=disbursementamount.toFixed(2);
+
+        if(disbursementamount==0)
+        {
+            disbursementamount=0;
+            disbursementamount=disbursementamount.toFixed(2);
+        }
+
+        $('.outstandingbalance').setFloatSep(disbursementamount);
+        $($.sfId('{!$Component.form.OutstandingBalance}')).val(disbursementamount);
+    }
+
+    function del_oi(id)
+    {
+        document.getElementById('{!$Component.form.id_linea}').value = id;
+        delete_line();
+    }
+
+    function del_oi2(id)
+    {
+        document.getElementById('{!$Component.form.id_linea}').value = id;
+        quit_line_select();
+    }
+
+    function newallocated(element)
+    {
+        var balance=0;
+
+        if($(element).prop('checked'))
+            balance=$('input:hidden',$(element).closest('td')).getFloat();
+
+        var amount=$('input.amount',$(element).closest('tr'));
+        amount.setFloatSep(balance.toFixed(2));
+        amountchanged(amount);
+    }
+
+    function new_disbursement_line(check,f)
+    {
+        updateData();
+        var mytr=check.closest('tr');
+        var box=$('.amount_line_val_'+f);
+        amountchanged(box);
+        console.log(f);
+
+        if(check.is(':checked') == true)
+            new_disbursement_line2($('.amount_line_val_'+f).getFloatSep(),f);
+    }
+
+    function amountchanged(element)
+    {
+        var mytr=element.closest('tr');
+        var box=$('input.boxallocate',mytr);
+        var balance=$('input:hidden',box.closest('td')).getFloat();
+
+        if(box.prop('checked'))
+            balance-=element.getFloatSep();
+
+        balance=balance.toFixed(2);
+        var dob=$('.dob',mytr);
+        dob.html(formatFloatSep(balance));
+        $('input:hidden',dob.closest('td')).val(balance);
+        updateBalance();
+    }
+
+    function taxesLoad()
+    {
+        $('.amount_disbursement').each(function()
+        {
+            var id_linea=$(this).attr('id');
+            var vat_line = $('.line_vat_hidden_'+id_linea).val();
+            var vat_withholding_line = $('.line_vat_withholding_hidden_'+id_linea).val();
+            var vat_withholding_isr_line = $('.line_vat_withholding_isr_hidden_'+id_linea).val();
+
+            switch(vat_line)
+            {
+                case "Non Applicable":
+                    //alert("Non");
+                    $('.line_vat_full_'+id_linea).val(0);
+                    break;
+                case "0":
+                    // alert("0");
+                    $('.line_vat_full_'+id_linea).val(1);
+                    break;
+                case "4":
+                    // alert("4");
+                    $('.line_vat_full_'+id_linea).val(2);
+                    break;
+                case "11":
+                    // alert("11");
+                    if(vat_withholding_line=="" && vat_withholding_isr_line=="")
+                    {
+                        $('.line_vat_full_'+id_linea).val(3);
+                    }
+                    if(vat_withholding_line=="4" && vat_withholding_isr_line=="")
+                    {
+                        $('.line_vat_full_'+id_linea).val(4);
+                    }
+                    if(vat_withholding_line=="10.66" && vat_withholding_isr_line=="")
+                    {
+                        $('.line_vat_full_'+id_linea).val(5);
+                    }
+                    if(vat_withholding_line=="10.66" && vat_withholding_isr_line=="10")
+                    {
+                        $('.line_vat_full_'+id_linea).val(6);
+                    }
+                    break;
+                case "16":
+                    // alert("16");
+                    if(vat_withholding_line=="" && vat_withholding_isr_line=="")
+                    {
+                        $('.line_vat_full_'+id_linea).val(7);
+                    }
+                    if(vat_withholding_line=="4" && vat_withholding_isr_line=="")
+                    {
+                        $('.line_vat_full_'+id_linea).val(8);
+                    }
+                    if(vat_withholding_line=="10.66" && vat_withholding_isr_line=="")
+                    {
+                        $('.line_vat_full_'+id_linea).val(9);
+                    }
+                    if(vat_withholding_line=="10.66" && vat_withholding_isr_line=="10")
+                    {
+                        $('.line_vat_full_'+id_linea).val(10);
+                    }
+                    break;
+            }
+        });
+    }
+
+    function taxesChanged(el, id, id_linea)
+    {
+        //alert(el.text + " " + id);
+        switch(id) {
+            case 0:
+                // alert("0 - "+id_linea);
+                $('.line_vat_hidden_'+id_linea).val("Non Applicable");
+                $('.line_vat_withholding_hidden_'+id_linea).val("");
+                $('.line_vat_withholding_isr_hidden_'+id_linea).val("");
+                break;
+            case 1:
+                $('.line_vat_hidden_'+id_linea).val("0");
+                $('.line_vat_withholding_hidden_'+id_linea).val("");
+                $('.line_vat_withholding_isr_hidden_'+id_linea).val("");
+                break;
+            case 2:
+                $('.line_vat_hidden_'+id_linea).val("4");
+                $('.line_vat_withholding_hidden_'+id_linea).val("");
+                $('.line_vat_withholding_isr_hidden_'+id_linea).val("");
+                break;
+            case 3:
+                $('.line_vat_hidden_'+id_linea).val("11");
+                $('.line_vat_withholding_hidden_'+id_linea).val("");
+                $('.line_vat_withholding_isr_hidden_'+id_linea).val("");
+                break;
+            case 4:
+                $('.line_vat_hidden_'+id_linea).val("11");
+                $('.line_vat_withholding_hidden_'+id_linea).val("4");
+                $('.line_vat_withholding_isr_hidden_'+id_linea).val("");
+                break;
+            case 5:
+                $('.line_vat_hidden_'+id_linea).val("11");
+                $('.line_vat_withholding_hidden_'+id_linea).val("10.66");
+                $('.line_vat_withholding_isr_hidden_'+id_linea).val("");
+                break;
+            case 6:
+                $('.line_vat_hidden_'+id_linea).val("11");
+                $('.line_vat_withholding_hidden_'+id_linea).val("10.66");
+                $('.line_vat_withholding_isr_hidden_'+id_linea).val("10");
+                break;
+            case 7:
+                $('.line_vat_hidden_'+id_linea).val("16");
+                $('.line_vat_withholding_hidden_'+id_linea).val("");
+                $('.line_vat_withholding_isr_hidden_'+id_linea).val("");
+                break;
+            case 8:
+                $('.line_vat_hidden_'+id_linea).val("16");
+                $('.line_vat_withholding_hidden_'+id_linea).val("4");
+                $('.line_vat_withholding_isr_hidden_'+id_linea).val("");
+                break;
+            case 9:
+                $('.line_vat_hidden_'+id_linea).val("16");
+                $('.line_vat_withholding_hidden_'+id_linea).val("10.66");
+                $('.line_vat_withholding_isr_hidden_'+id_linea).val("");
+                break;
+            case 10:
+                $('.line_vat_hidden_'+id_linea).val("16");
+                $('.line_vat_withholding_hidden_'+id_linea).val("10.66");
+                $('.line_vat_withholding_isr_hidden_'+id_linea).val("10");
+                break;
+        }
+        calcular_total_amounts();
+    }
+
+    function calcular_total_amounts()
+    {
+        $('.amount_disbursement').each(function()
+        {
+            var id_linea=$(this).attr('id');
+            var vat_line = $('.line_vat_hidden_'+id_linea).getFloat();
+            var vat_withholding_line = $('.line_vat_withholding_hidden_'+id_linea).getFloat();
+            var vat_withholding_isr_line = $('.line_vat_withholding_isr_hidden_'+id_linea).getFloat();
+            var total_amount = $('.amount_'+id_linea).children().getFloatSep().toFixed(2);
+            var total_vat = 0;
+            if(vat_line != 0)
+            {
+                total_vat = ((total_amount*vat_line)/100);
+                total_vat = total_vat - ((total_amount*vat_withholding_line)/100) - ((total_amount*vat_withholding_isr_line)/100);
+                $('.vat_hidden_'+id_linea).val(total_vat);
+                $('.vat_disbursement_'+id_linea).children().setFloatSep(total_vat.toFixed(2));
+                var num = parseFloat(total_vat+parseFloat(total_amount));
+                $('.include_disbursement_'+id_linea).text(num.toFixed(2));
+            }
+            else
+            {
+                $('.vat_hidden_'+id_linea).val(total_vat);
+                $('.vat_disbursement_'+id_linea).children().setFloatSep(total_vat.toFixed(2));
+                $('.include_disbursement_'+id_linea).text(total_amount);
+            }
+
+        });
+        calcular_total_amount_excl_vat();
+    }
+
+    function calcular_total_amount_excl_vat()
+    {
+        var disbursementamount=0;
+        var disbursementamount_vat = 0;
+        $('.amount_disbursement').each(function()
+        {
+            disbursementamount+=($(this).children()).getFloatSep();
+        });
+
+        $('.vat_disbursement').each(function()
+        {
+            disbursementamount_vat+=($(this).children()).getFloatSep();
+        });
+
+        $('.disbursementamount2').setFloatSep(disbursementamount.toFixed(2));
+        $('.disbursementamount3').setFloatSep(disbursementamount_vat.toFixed(2));
+        $('.disbursementamount4').setFloatSep((disbursementamount_vat+disbursementamount).toFixed(2));
+    }
+
+
+
+
+    function calcular_all_amount_disbursement_lines()
+    {
+        $('.amount_disbursement').each(function()
+        {
+            var id_linea=$(this).attr('id');
+            var total_units = $('.units_'+id_linea).getFloatSep();
+            var precio_unit = $('.unit_price_'+id_linea).getFloatSep();
+            var vat_line = $('.line_vat_hidden_'+id_linea).getFloat();
+            var vat_withholding_line = $('.line_vat_withholding_hidden_'+id_linea).getFloat();
+            var vat_withholding_isr_line = $('.line_vat_withholding_isr_hidden_'+id_linea).getFloat();
+            var total_amount = (total_units*precio_unit).toFixed(2);
+            var total_vat = 0;
+
+            if(vat_line != 0)
+            {
+                total_vat = ((total_amount*vat_line)/100);
+                total_vat = total_vat - ((total_amount*vat_withholding_line)/100) - ((total_amount*vat_withholding_isr_line)/100);
+                $('.vat_hidden_'+id_linea).val(total_vat);
+                $('.vat_disbursement_'+id_linea).children().setFloatSep(total_vat.toFixed(2));
+                var num = parseFloat(total_vat+total_amount);
+                $('.include_disbursement_'+id_linea).children().setFloatSep(num.toFixed(2));
+            }
+            else
+            {
+                $('.vat_hidden_'+id_linea).val(total_vat);
+                $('.vat_disbursement_'+id_linea).children().setFloatSep(total_vat.toFixed(2));
+                $('.include_disbursement_'+id_linea).setFloatSep(total_amount);
+            }
+
+            $('.amount_hidden_'+id_linea).val(total_amount);
+            $('.amount_'+id_linea).children().setFloatSep(total_amount);
+        });
+
+        calcular_total_amount_excl_vat();
+    }
+
+    function calcular_amount_disbursement_lines(id_linea)
+    {
+        console.log(id_linea);
+        var total_units = $('.units_'+id_linea).getFloatSep();
+        var precio_unit = $('.unit_price_'+id_linea).getFloatSep();
+        var total_amount = (total_units*precio_unit).toFixed(2);
+        var vat_line = $('.line_vat_hidden_'+id_linea).getFloat();
+        var vat_withholding_line = $('.line_vat_withholding_hidden_'+id_linea).getFloat();
+        var vat_withholding_isr_line = $('.line_vat_withholding_isr_hidden_'+id_linea).getFloat();
+        $('.amount_'+id_linea).children().setFloatSep(total_amount);
+        $('.amount_hidden_'+id_linea).val(total_amount);
+        var total_vat = 0;
+
+        if(vat_line != 0)
+        {
+            total_vat = ((total_amount*vat_line)/100);
+            total_vat = total_vat - ((total_amount*vat_withholding_line)/100) - ((total_amount*vat_withholding_isr_line)/100);
+            $('.vat_hidden_'+id_linea).val(total_vat);
+            $('.vat_disbursement_'+id_linea).children().setFloatSep(total_vat.toFixed(2));
+            $('.include_disbursement_'+id_linea).children().setFloatSep((total_vat+total_amount).toFixed(2));
+        }
+        else
+        {
+            $('.vat_hidden_'+id_linea).val(total_vat);
+            $('.vat_disbursement_'+id_linea).children().setFloatSep(total_vat.toFixed(2));
+            $('.include_disbursement_'+id_linea).setFloatSep(total_amount);
+        }
+
+        calcular_total_amount_excl_vat();
+    }
+
+    function calcular_units_disbursement_lines(id_linea)
+    {
+        var total_amount = $('.amount_'+id_linea).children().getFloatSep();
+        var unit_price = $('.unit_price_'+id_linea).getFloatSep();
+        var unidades = total_amount/unit_price;
+        $('.units_'+id_linea).setFloatSep(unidades.toFixed(5));
+        var vat_line = $('.line_vat_hidden_'+id_linea).getFloat();
+        var vat_withholding_line = $('.line_vat_withholding_hidden_'+id_linea).getFloat();
+        var vat_withholding_isr_line = $('.line_vat_withholding_isr_hidden_'+id_linea).getFloat();
+        var total_vat = 0;
+
+        if(vat_line != 0)
+        {
+            total_vat = ((total_amount*vat_line)/100);
+            total_vat = total_vat - ((total_amount*vat_withholding_line)/100) - ((total_amount*vat_withholding_isr_line)/100);
+            $('.vat_hidden_'+id_linea).val(total_vat);
+            $('.vat_disbursement_'+id_linea).children().setFloatSep(total_vat.toFixed(2));
+            $('.include_disbursement_'+id_linea).children().setFloatSep((total_vat+total_amount).toFixed(2));
+        }
+        else
+        {
+            $('.vat_hidden_'+id_linea).val(total_vat);
+            $('.vat_disbursement_'+id_linea).children().setFloatSep(total_vat.toFixed(2));
+            $('.include_disbursement_'+id_linea).setFloatSep(total_amount);
+        }
+
+        $('.amount_hidden_'+id_linea).val(total_amount);
+        calcular_total_amount_excl_vat();
+    }
+
+    function check_positive()
+    {
+    	var sap_fields_validation = true;
+        
+       	$('.table_disbursement_lines .sap_group').each(function(){
+			if($(this).val() == null || $(this).val() == '')
+            {
+            	$(this).addClass("required_field");
+               	sap_fields_validation = false;
+            }
+            else
+            	$(this).removeClass("required_field");
+		});
+            
+		$('.table_disbursement_lines .sap_service_type').each(function(){
+			campo = $(this).parent().parent().find("input[name*='_lkid']").val();
+			if(campo == null || campo == '' || campo == '000000000000000')
+			{
+				$(this).addClass("required_field");
+				sap_fields_validation = false;
+			}
+			else
+				$(this).removeClass("required_field");	
+		});
+        	
+		if(sap_fields_validation)
+       	{
+	        if(document.getElementById('{!$Component.form.type_disbursement}').value == 'Credit Note')
+	        {
+	            var todos_negativos = true;
+	            var total_invoice_include_vat = $('.disbursementamount4').getFloatSep();
+	            if(total_invoice_include_vat > 0)
+	                todos_negativos = false;
+	
+	            if(todos_negativos == true)
+	                generate();
+	            else
+	                alert('You can´t include lines because Total (Incl. VAT) in the "Credit Note" Disbursement must be negative');
+	        }
+	        else
+	        {
+	            var todos_positivos = true;
+	            var total_invoice_include_vat = $('.disbursementamount4').getFloatSep();
+	            if(total_invoice_include_vat < 0)
+	                todos_positivos = false;
+	
+	            if(todos_positivos == true)
+	                generate();
+	            else
+	                alert('You can´t include these lines because Total (Incl. VAT) in the "Debit Note" Disbursement must be positive');
+	        }
+		}
+		else
+			alert('You have to fill the required fields.');
+    }
+
+    </script>
+    <style>
+        .panel_allocate .tertiaryPalette{background-color: #c4c5c5 !important;}
+        .block_allocate .bPageBlock{border-top: 3px solid #c4c5c5 !important;}
+        .ui-widget .ui-widget{    background: white;    border-color: grey;color: black;     height: 10px;    border-radius: 0px; width: 124px;     border-color: rgb(169, 169, 169); background: white url(/img/func_icons/util/selectArrow12.gif) no-repeat 15px 26px;    background-size: 38px;    background-position-y: 6px; background-position-x: 154px; width: 150px;}
+        .custom-combobox-toggle{    background: #e0e0e0 !important;     background: white !important;    border-left: 0px;     width: 0px !important;}
+        .ui-state-default .ui-icon{background: transparent url(/img/func_icons/util/selectArrow12.gif) no-repeat 15px 26px;    background-size: 38px;    background-position-x: 0px;    background-position-y: 2px;}
+        .custom-combobox {    position: relative;    display: inline-block;  }
+        .custom-combobox-toggle {    position: absolute;    top: 0;    bottom: 0;    margin-left: -1px;    padding: 0;         width: 0px !important;    height: 20px !important; }
+        .ui-state-default .ui-icon{    background-size: 0px;}
+        .ui-button-icon-only .ui-icon{    margin-left: -16px;}
+        .ui-state-default .ui-icon{background-image: #0078ae url(images/ui-icons_e0fdff_256x240.png);}
+        .custom-combobox-input {    margin: 0;    padding: 5px 10px;  }
+        #custom_style_footer{background: transparent url(/img/sprites/hover_sprite.png) no-repeat; display: block; position: absolute; width: 100%; height: 14px; bottom: -14px; left: 15px;}
+        .class_distinta_moneda{color:red;}
+        [id*=block_allocate] .bPageBlock{border-top: 3px solid #898e8c !important;}
+        .outputpanel_allocate .bPageBlock{border-top: 3px solid #898e8c !important;}
+        .required_field{border:2px solid #ff0000;}
+        .sap_group, .sap_service_type{border-left:2px solid #ff0000}
+    </style>
+
+    <apex:inputHidden value="{!decimalSep}" id="decimalSep"/>
+    <apex:inputHidden value="{!thousandSep}" id="thousandSep"/>
+
+    <apex:actionFunction name="new_disbursement_line2" action="{!new_disbursement_line}" status="myStatus" reRender="blockdisbursementlines" oncomplete="updateData();">
+        <apex:param name="one" assignTo="{!amount}" value="" />
+        <apex:param name="two" assignTo="{!id_linea}" value="" />
+    </apex:actionFunction>
+    <apex:actionFunction name="sorting" action="{!sorting}" status="myStatus" reRender="errors,blocklines,blocklinesS" oncomplete="updateData();">
+        <apex:param name="one" assignTo="{!compareField}" value="" />
+        <apex:param name="two" assignTo="{!listNumber}" value="" />
+    </apex:actionFunction>
+
+    <apex:inputHidden value="{!id_linea}" id="id_linea"/>
+    <apex:inputHidden value="{!record.Type__c}" id="type_disbursement"/>
+    <apex:actionFunction name="delete_line" action="{!delete_line_select}" status="myStatus" reRender="blockdisbursementlines" oncomplete="updateData();"/>
+    <apex:actionFunction name="quit_line_select" action="{!quit_line_select}" status="myStatus" reRender="blockdisbursementlines" oncomplete="updateData();"/>
+    <apex:actionFunction name="quit_line" action="{!quit_line_select}" status="myStatus" reRender="blockdisbursementlines" oncomplete="updateData();"/>
+    <apex:actionFunction name="new_line_disbursementline_empty" action="{!new_line_disbursementline_empty}" status="myStatus" reRender="blockdisbursementlines" oncomplete="updateData();"/>
+    <apex:sectionHeader subtitle="{!Shipment_Disbursement__c.Name}" title="Allocate Lines"/>
+
+
+    <apex:pageBlock mode="maindetail" title="{!$ObjectType.Shipment_Disbursement__c.label} Detail">
+        <apex:pageBlockButtons location="top">
+            <apex:commandButton status="myStatus" value="Return" action="{!cancel}"/>
+        </apex:pageBlockButtons>
+
+        <apex:pageBlockSection title="Information">
+            <apex:outputField value="{!Shipment_Disbursement__c.Name}"/>
+            <apex:outputField value="{!Shipment_Disbursement__c.CreatedById}"/>
+            <apex:outputField value="{!Shipment_Disbursement__c.Invoice_Date__c}"/>
+            <apex:outputField value="{!Shipment_Disbursement__c.LastModifiedById}"/>
+            <apex:outputField value="{!Shipment_Disbursement__c.Type__c}"/>
+            <apex:outputLabel />
+            <apex:outputField value="{!Shipment_Disbursement__c.Invoice_Ref__c}"/>
+            <apex:outputLabel />
+            <apex:outputField value="{!Shipment_Disbursement__c.Disbursment_Concept__c}"/>
+            <apex:outputLabel />
+            <apex:outputLabel value=" "/>
+            <apex:outputLabel value=" "/>
+            <apex:outputField value="{!Shipment_Disbursement__c.Account__c}"/>
+        </apex:pageBlockSection>
+
+        <apex:pageBlockSection title="Import-Export Order Data">
+            <apex:outputField value="{!Shipment_Disbursement__c.Import_Export_Quote_Order__c}"/>
+            <apex:outputField value="{!Shipment_Disbursement__c.Planned_ETD__c}"/>
+            <apex:outputField value="{!Shipment_Disbursement__c.Planned_ETA__c}"/>
+            <apex:outputField value="{!Shipment_Disbursement__c.Mode__c}"/>
+            <apex:outputLabel />
+            <apex:outputField value="{!Shipment_Disbursement__c.Nature_Merchandise__c}"/>
+            <apex:outputLabel />
+        </apex:pageBlockSection>
+
+        <apex:pageBlockSection title="Shipment Data" rendered="{!Lines_shipment_services.size != 0}">
+            <apex:outputField value="{!Shipment_Disbursement__c.Shipment__c}"/>
+            <apex:outputField value="{!Shipment_Disbursement__c.Nature_Merchandise__c}"/>
+            <apex:outputField value="{!Shipment_Disbursement__c.Shipment_Number__c}"/>
+            <apex:outputField value="{!Shipment_Disbursement__c.Containers__c}"/>
+            <apex:outputField value="{!Shipment_Disbursement__c.Shipment_Status__c}"/>
+            <apex:outputField value="{!Shipment_Disbursement__c.Planned_ETD__c}"/>
+            <apex:outputField value="{!Shipment_Disbursement__c.Mode__c}"/>
+            <apex:outputField value="{!Shipment_Disbursement__c.Planned_ETA__c}"/>
+        </apex:pageBlockSection>
+
+        <apex:pageBlockSection title="Invoice Data">
+            <apex:outputField value="{!Shipment_Disbursement__c.Invoice_Ref__c}"/>
+            <apex:outputField value="{!Shipment_Disbursement__c.Billing_Type__c}"/>
+            <!--<apex:outputField value="{!Shipment_Disbursement__c.Invoice_Amount_Exc__c}"/>-->
+            <apex:outputField value="{!Shipment_Disbursement__c.Invoice_Date__c}"/>
+            <!--<apex:outputField value="{!Shipment_Disbursement__c.VAT__c}"/>-->
+            <!--<apex:outputField value="{!Shipment_Disbursement__c.Invoice_Amount_Inc__c}"/>-->
+            <apex:outputField value="{!Shipment_Disbursement__c.Outstanding_Balance__c}"/>
+        </apex:pageBlockSection>
+
+    </apex:pageBlock>
+
+
+    <apex:pageBlock id="pageblock_disbursementlines">
+        <apex:actionFunction name="generate" status="myStatus" action="{!generate}" reRender="errors"/>
+        <apex:pageBlockButtons location="top">
+            <input type="button" class="btn" value="Save Disbursement"  onclick="check_positive();"/>
+            <apex:commandButton status="myStatus" value="Return" action="{!cancel}"/>
+            <div style="float:right;font-size:1.1em;padding-right:1em"><span class="labelCol">{!$ObjectType.Shipment_Disbursement__c.fields.Total_Incl_VAT__c.Label}:</span><span class="dataCol disbursementamount4">0</span></div>
+            <div style="float:right;font-size:1.1em;padding-right:1em"><span class="labelCol">{!$ObjectType.Shipment_Disbursement__c.fields.Total_VAT__c.Label}:</span><span class="dataCol disbursementamount3">0</span></div>
+            <div style="float:right;font-size:1.1em;padding-right:1em"><span class="labelCol">{!$ObjectType.Shipment_Disbursement__c.fields.Total_Excl_VAT__c.Label}:</span><span class="dataCol disbursementamount2">0</span></div>
+        </apex:pageBlockButtons>
+        <apex:pagemessages id="errors"/>
+
+        <apex:pageBlockSection title="{!$ObjectType.Disbursement_Line__c.labelPlural}" columns="1" id="blockdisbursementlines" >
+            <img src="/img/feeds/follow12.png" style="cursor: pointer;" onclick="new_line_disbursementline_empty();"/><span style="    margin-left: 6px; cursor: pointer;" onclick="new_line_disbursementline_empty();">New {!$ObjectType.Disbursement_Line__c.label}</span>
+            <apex:pageBlockTable value="{!Lines_disbursements}" var="line" rendered="{!Lines_disbursements.size!=0}" id="disbursement_lines" styleclass="table_disbursement_lines">
+                <apex:column >
+                    <apex:facet name="header"><div onclick="sorting('Name',2);" class="{!IF(compareFieldArray[0]='Name',compareClassArray[0],'compare')}">{!$ObjectType.Disbursement_Line__c.fields.Name.Label}</div></apex:facet>
+                    <c:customobject2 objid="{!line.line.Id}" objname="{!line.line.Name}" rendered="{!line.line.Id != null}"/>
+                    <apex:outputtext value="{!line.line.Name}" rendered="{!line.line.Id == null}"/>
+                </apex:column>
+
+                <apex:column >
+                    <apex:facet name="header"><div onclick="sorting('Concept__c',2);" class="{!IF(compareFieldArray[0]='Concept__c',compareClassArray[0],'compare')}">{!$ObjectType.Disbursement_Line__c.fields.Concept__c.Label}</div></apex:facet>
+                    <apex:inputField value="{!line.line.Concept__c}" style="        width: 20em;"/>
+                </apex:column>
+				
+				<apex:column >
+                	<apex:facet name="header"><div>{!$ObjectType.Disbursement_Line__c.fields.SAP_Service_Type__c.Label}</div></apex:facet>
+                   	<apex:inputField value="{!line.line.Group__c}" styleclass="sap_group"/>
+                   	<br/><br/>
+                   	<apex:inputField value="{!line.line.SAP_Service_Type__c}" styleclass="sap_service_type"/>
+               	</apex:column>
+				
+                <apex:column style="text-align: right;">
+                    <apex:facet name="header"><div onclick="sorting('Units__c',2);" class="{!IF(compareFieldArray[0]='Units__c',compareClassArray[0],'compare')}">{!$ObjectType.Disbursement_Line__c.fields.Units__c.Label}</div></apex:facet>
+                    <apex:inputField value="{!line.line.Units__c}" style="text-align: right; width: 8em;" styleclass="units_{!line.id_record}" html-neudata="{!line.id_record}" onkeyup="calcular_amount_disbursement_lines('{!line.id_record}');"/>
+                </apex:column>
+
+                <apex:column style="text-align: right;">
+                    <apex:facet name="header"><div onclick="sorting('Unit_Price__c',2);" class="{!IF(compareFieldArray[0]='Unit_Price__c',compareClassArray[0],'compare')}">{!$ObjectType.Disbursement_Line__c.fields.Unit_Price__c.Label}</div></apex:facet>
+                    <apex:inputField value="{!line.line.Unit_Price__c}" style="text-align: right; width: 8em;" styleclass="unit_price_{!line.id_record}" html-neudata="{!line.id_record}" onkeyup="calcular_amount_disbursement_lines('{!line.id_record}');"/>
+                </apex:column>
+
+                <apex:column style="    text-align: right;">
+                    <apex:facet name="header"><div onclick="sorting('Amount__c',2);" class="{!IF(compareFieldArray[0]='Amount__c',compareClassArray[0],'compare')}">{!$ObjectType.Disbursement_Line__c.fields.Amount__c.Label}</div></apex:facet>
+                    <div class="amount_{!line.id_record} amount_disbursement" style="    text-align: right;" id="{!line.id_record}">
+                        <apex:inputField value="{!line.line.Amount__c}" style="    text-align: right;     width: 8em;" onkeyup="calcular_units_disbursement_lines('{!line.id_record}');"/>
+                    </div>
+                    <apex:inputHidden value="{!line.line.Amount__c}" html-class="amount_hidden_{!line.id_record}"/>
+                </apex:column>
+
+                <apex:column style="text-align:right">
+                    <apex:facet name="header"><div style="text-align:center">{!$ObjectType.Disbursement_Line__c.fields.VAT__c.Label}</div></apex:facet>
+                    <apex:selectList onchange="taxesChanged(this.options[this.selectedIndex], this.selectedIndex, '{!line.id_record}');" html-class="line_vat_full_{!line.id_record}" size="1">
+                        <apex:selectoption itemLabel="Non Applicable" itemValue="0"></apex:selectoption>
+                        <apex:selectoption itemLabel="VAT 0%" itemValue="1"></apex:selectoption>
+                        <apex:selectoption itemLabel="VAT 4%" itemValue="2"></apex:selectoption>
+                        <apex:selectoption itemDisabled="true" itemLabel="VAT 11%" itemValue="3"></apex:selectoption>
+                        <apex:selectoption itemDisabled="true" itemLabel="VAT 11%, RET 4%" itemValue="4"></apex:selectoption>
+                        <apex:selectoption itemDisabled="true" itemLabel="VAT 11%, RET 10.66%" itemValue="5"></apex:selectoption>
+                        <apex:selectoption itemDisabled="true" itemLabel="VAT 11%, RET 10.66%, RET ISR 10%" itemValue="6"></apex:selectoption>
+                        <apex:selectoption itemLabel="VAT 16%" itemValue="7"></apex:selectoption>
+                        <apex:selectoption itemLabel="VAT 16%, RET 4%" itemValue="8"></apex:selectoption>
+                        <apex:selectoption itemLabel="VAT 16%, RET 10.66%" itemValue="9"></apex:selectoption>
+                        <apex:selectoption itemLabel="VAT 16%, RET 10.66%, RET ISR 10%" itemValue="10"></apex:selectoption>
+                    </apex:selectList>
+                    <apex:inputHidden value="{!line.line.VAT__c}" html-class="line_vat_hidden_{!line.id_record}"/>
+                    <apex:inputHidden value="{!line.line.VAT_Withholding__c}" html-class="line_vat_withholding_hidden_{!line.id_record}"/>
+                    <apex:inputHidden value="{!line.line.VAT_Withholding_ISR__c}" html-class="line_vat_withholding_isr_hidden_{!line.id_record}"/>
+                </apex:column>
+
+                <apex:column >
+                    <apex:facet name="header"><div onclick="sorting('Total_VAT__c',2);" class="{!IF(compareFieldArray[0]='Total_VAT__c',compareClassArray[0],'compare')}">{!$ObjectType.Disbursement_Line__c.fields.Total_VAT__c.Label}</div></apex:facet>
+                    <div class="vat_disbursement_{!line.id_record} vat_disbursement" style="    text-align: right;" id="{!line.id_record}">
+                        <apex:outputField value="{!line.line.Total_VAT__c}" />
+                    </div>
+                    <apex:inputHidden value="{!line.line.Total_VAT__c}" html-class="vat_hidden_{!line.id_record}"/>
+                </apex:column>
+
+                <apex:column >
+                    <apex:facet name="header"><div onclick="sorting('total_include_vatString',2);" class="{!IF(compareFieldArray[0]='total_include_vatString',compareClassArray[0],'compare')}">{!$ObjectType.Disbursement_Line__c.fields.Total_Incl_VAT__c.Label}</div></apex:facet>
+                    <div class=" include_disbursement" style="text-align: right;" id="{!line.id_record}">
+                        <apex:outputText value="{!line.total_include_vatString}" html-class="include_disbursement_{!line.id_record}"/>
+                    </div>
+                </apex:column>
+
+                <apex:column >
+                    <apex:image id="del_line" value="/img/permissions_deny16.gif" onclick="del_oi('{!line.line.Id}');" style="cursor:pointer; display:{!if(line.selected == true, '','none')}" />
+                    <apex:image id="del_line2" value="/img/permissions_deny16.gif" onclick="del_oi2('{!line.id_record}');" style="cursor:pointer; display:{!if(line.selected == true, 'none','')}" />
+                </apex:column>
+
+            </apex:pageBlockTable>
+            <apex:inputHidden value="{!contador_lineas_disbursement}" html-class="size_list_table"/>
+        </apex:pageBlockSection>
+    </apex:pageBlock>
+
+    <apex:outputpanel styleclass="outputpanel_allocate">
+        <apex:pageBlock html-class="block_allocate" id="block_allocate" >
+            <apex:pageBlockButtons location="top">
+                <div style="float:right;font-size:1.1em;padding-right:1em"><span class="labelCol">Outstanding Balance:</span><span class="dataCol outstandingbalance"></span></div>
+            </apex:pageBlockButtons>
+
+            <apex:pageBlockSection title="{!$ObjectType.Import_Export_Fee_Line__c.labelPlural}" columns="1" id="blocklines" rendered="{!Lines_ie_services.size != 0}">
+                <apex:pageBlockTable value="{!Lines_ie_services}" var="line">
+                    <apex:column >
+                        <apex:facet name="header"><div onclick="sorting('Import_Export_Service_Line__r.Name',0);" class="{!IF(compareFieldArray[0]='Import_Export_Service_Line__r.Name',compareClassArray[0],'compare')}">{!$ObjectType.Import_Export_Fee_Line__c.fields.Name.Label}</div></apex:facet>
+                        <c:customobject2 objid="{!line.line.Import_Export_Service_Line__r.Id}" objname="{!line.line.Import_Export_Service_Line__r.Name}"/>
+                    </apex:column>
+                    <apex:column >
+                        <apex:facet name="header"><div onclick="sorting('Import_Export_Service_Line__r.Service_Rate_Category__c',0);" class="{!IF(compareFieldArray[0]='Import_Export_Service_Line__r.Service_Rate_Category__c',compareClassArray[0],'compare')}">{!$ObjectType.Import_Export_Fee_Line__c.fields.Service_Rate_Category__c.Label}</div></apex:facet>
+                        <apex:outputField value="{!line.line.Import_Export_Service_Line__r.Service_Rate_Category__c}"/>
+                    </apex:column>
+                    <apex:column >
+                        <apex:facet name="header"><div onclick="sorting('Import_Export_Service_Line__r.Service_Rate_Name__r.Name',0);" class="{!IF(compareFieldArray[0]='Import_Export_Service_Line__r.Service_Rate_Name__r.Name',compareClassArray[0],'compare')}">{!$ObjectType.Import_Export_Fee_Line__c.fields.Service_Rate_Name__c.Label}</div></apex:facet>
+                        <apex:outputField value="{!line.line.Import_Export_Service_Line__r.Service_Rate_Name__r.Name}"/>
+                    </apex:column>
+                    <apex:column >
+                        <apex:facet name="header"><div onclick="sorting('Import_Export_Service_Line__r.Rate_Type__c',0);" class="{!IF(compareFieldArray[0]='Import_Export_Service_Line__r.Rate_Type__c',compareClassArray[0],'compare')}">{!$ObjectType.Import_Export_Fee_Line__c.fields.Rate_Type__c.Label}</div></apex:facet>
+                        <apex:outputField value="{!line.line.Import_Export_Service_Line__r.Rate_Type__c}"/>
+                    </apex:column>
+                    <apex:column style="text-align:right">
+                        <apex:facet name="header"><div style="text-align:center" onclick="sorting('Import_Export_Service_Line__r.Units__c',0);" class="{!IF(compareFieldArray[0]='Import_Export_Service_Line__r.Units__c',compareClassArray[0],'compare')}">{!$ObjectType.Import_Export_Fee_Line__c.fields.Units__c.Label}</div></apex:facet>
+                        <apex:outputField value="{!line.line.Import_Export_Service_Line__r.Units__c}"/>
+                    </apex:column>
+                    <apex:column style="text-align:right" styleclass="{!IF(line.line != null, 'main_line_ie', 'option_line')}">
+                        <apex:facet name="header"><div style="text-align:center" nonclick="sorting('line.Import_Export_Service_Line__r.Quote_Buy_Price__c',0);" class="{!IF(compareFieldArray[0]='Quote_Sell_Net_Price',compareClassArray[0],'compare')}">{!$ObjectType.Import_Export_Fee_Line__c.fields.Quote_Buy_Price__c.Label}</div></apex:facet>
+                        <apex:outputText value="{!line.Quote_Buy_Price_String}" rendered="{!line.line != null}"/>
+                    </apex:column>
+                    <apex:column style="text-align:right" styleclass="{!IF(line.line != null, 'main_line_ie', 'option_line')}">
+                        <apex:facet name="header"><div style="text-align:center" nonclick="sorting('line.Import_Export_Service_Line__r.Buy_Amount__c',0);" class="{!IF(compareFieldArray[0]='Buy_Amount',compareClassArray[0],'compare')}">{!$ObjectType.Import_Export_Fee_Line__c.fields.Buy_Amount__c.Label}</div></apex:facet>
+                        <apex:outputText value="{!line.Buy_Amount_String}" rendered="{!line.line != null}"/>
+                    </apex:column>
+                    <apex:column style="text-align:right" styleclass="{!IF(line.line != null, 'main_line_ie', 'option_line')}">
+                        <apex:facet name="header"><div style="text-align:center" nonclick="sorting('Outstanding_Balance',0);" class="{!IF(compareFieldArray[0]='Disbursement_Outstanding_Balance',compareClassArray[0],'compare')}">{!$ObjectType.Import_Export_Fee_Line__c.fields.Disbursement_Outstanding_Balance__c.Label}{!Disbursement_Currency_String}</div></apex:facet>
+                        <apex:outputText value="{!line.Disbursement_Outstanding_Balance_String}" styleClass="dob" rendered="{!line.line != null}"/>
+                        <apex:inputHidden value="{!line.Disbursement_Outstanding_Balance}"/>
+                    </apex:column>
+                    <apex:column style="text-align:right" styleclass="{!IF(line.line != null, 'main_line_ie', 'option_line')}">
+                        <apex:facet name="header"><div style="text-align:center" onclick="sorting('Amount__c',0);" class="{!IF(compareFieldArray[0]='Amount__c',compareClassArray[0],'compare')}">{!$ObjectType.Invoice_Item_Line__c.fields.Amount__c.Label}{!Disbursement_Currency_String}</div></apex:facet>
+                        <!--<apex:inputField value="{!line.line.Amount__c}" style="text-align:right;width:10em" styleClass="amount amount_line_val_{!line.line.Import_Export_Service_Line__c}" onkeyup="amountchanged($(this));" rendered="{!AND(line.line != null)}"/>-->
+                        <apex:outputText value="{!line.line.Amount__c}" style="text-align:right;width:10em" styleClass="amount amount_line_val_{!line.line.Import_Export_Service_Line__c}" rendered="{!AND(line.line != null)}"/>
+                    </apex:column>
+                    <apex:column style="text-align:center" styleclass="{!IF(line.line != null, 'main_line_ie', 'option_line')}">
+                        <apex:facet name="header"><div style="text-align:center" onclick="sorting('selected',0);" class="{!IF(compareFieldArray[0]='selected',compareClassArray[0],'compare')}">Allocate</div></apex:facet>
+                        <apex:inputCheckbox value="{!line.selected}" styleClass="boxallocate" onclick="new_disbursement_line($(this), '{!line.line.Import_Export_Service_Line__c}');" rendered="{false}"/>
+                        <apex:inputHidden value="{!line.Disbursement_Outstanding_Base}"/>
+                    </apex:column>
+                </apex:pageBlockTable>
+            </apex:pageBlockSection>
+
+            <apex:pageBlockSection title="{!$ObjectType.Shipment_Fee_Line__c.labelPlural}" columns="1" id="blocklinesS" rendered="{!Lines_shipment_services.size != 0}">
+                <apex:pageBlockTable value="{!Lines_shipment_services}" var="line">
+                    <apex:column >
+                        <apex:facet name="header"><div onclick="sorting('Shipment_Service_Line__r.Name',1);" class="{!IF(compareFieldArray[1]='Shipment_Service_Line__r.Name',compareClassArray[1],'compare')}">{!$ObjectType.Shipment_Service_Line_Disbursement__c.fields.Shipment_Service_Line__c.Label}</div></apex:facet>
+                        <c:customobject2 objid="{!line.line.Shipment_Service_Line__r.Id}" objname="{!line.line.Shipment_Service_Line__r.Name}"/>
+                    </apex:column>
+                    <apex:column >
+                        <apex:facet name="header"><div onclick="sorting('Shipment_Service_Line__r.Service_Rate_Category__c',1);" class="{!IF(compareFieldArray[1]='Shipment_Service_Line__r.Service_Rate_Category__c',compareClassArray[1],'compare')}">{!$ObjectType.Shipment_Fee_Line__c.fields.Service_Rate_Category__c.Label}</div></apex:facet>
+                        <apex:outputField value="{!line.line.Shipment_Service_Line__r.Service_Rate_Category__c}"/>
+                    </apex:column>
+                    <apex:column >
+                        <apex:facet name="header"><div onclick="sorting('Shipment_Service_Line__r.Service_Rate_Name__r.Name',1);" class="{!IF(compareFieldArray[1]='Shipment_Service_Line__r.Service_Rate_Name__r.Name',compareClassArray[1],'compare')}">{!$ObjectType.Shipment_Fee_Line__c.fields.Service_Rate_Name__c.Label}</div></apex:facet>
+                        <apex:outputField value="{!line.line.Shipment_Service_Line__r.Service_Rate_Name__r.Name}"/>
+                    </apex:column>
+                    <apex:column >
+                        <apex:facet name="header"><div onclick="sorting('Shipment_Service_Line__r.Rate_Type__c',1);" class="{!IF(compareFieldArray[1]='Shipment_Service_Line__r.Rate_Type__c',compareClassArray[1],'compare')}">{!$ObjectType.Shipment_Fee_Line__c.fields.Rate_Type__c.Label}</div></apex:facet>
+                        <apex:outputField value="{!line.line.Shipment_Service_Line__r.Rate_Type__c}"/>
+                    </apex:column>
+                    <apex:column style="text-align:right">
+                        <apex:facet name="header"><div style="text-align:center" onclick="sorting('Shipment_Service_Line__r.Units__c',1);" class="{!IF(compareFieldArray[1]='Shipment_Service_Line__r.Units__c',compareClassArray[1],'compare')}">{!$ObjectType.Shipment_Fee_Line__c.fields.Units__c.Label}</div></apex:facet>
+                        <apex:outputField value="{!line.line.Shipment_Service_Line__r.Units__c}"/>
+                    </apex:column>
+                    <apex:column style="text-align:right">
+                        <apex:facet name="header"><div style="text-align:center" onclick="sorting('Shipment_Service_Line__r.Shipment_Buy_Price__c',1);" class="{!IF(compareFieldArray[1]='Shipment_Service_Line__r.Shipment_Buy_Price__c',compareClassArray[1],'compare')}">{!$ObjectType.Shipment_Fee_Line__c.fields.Shipment_Buy_Price__c.Label}</div></apex:facet>
+                        <apex:outputText value="{!line.Shipment_Buy_Price_String}" rendered="{!line.line != null}"/>
+                    </apex:column>
+                    <apex:column style="text-align:right">
+                        <apex:facet name="header"><div style="text-align:center" onclick="sorting('Shipment_Service_Line__r.Std_Buy_Amount__c',1);" class="{!IF(compareFieldArray[1]='Shipment_Service_Line__r.Std_Buy_Amount__c',compareClassArray[1],'compare')}">{!$ObjectType.Shipment_Fee_Line__c.fields.Std_Buy_Amount__c.Label}</div></apex:facet>
+                        <apex:outputText value="{!line.Buy_Amount_String}" rendered="{!line.line != null}"/>
+                    </apex:column>
+                    <apex:column style="text-align:right">
+                        <apex:facet name="header"><div style="text-align:center" onclick="sorting('Shipment_Service_Line__r.Disbursement_Outstanding_Balance__c',1);" class="{!IF(compareFieldArray[1]='Shipment_Service_Line__r.Disbursement_Outstanding_Balance__c',compareClassArray[1],'compare')}">{!$ObjectType.Shipment_Fee_Line__c.fields.Outstanding_Balance__c.Label}{!Disbursement_Currency_String}</div></apex:facet>
+                        <apex:outputText value="{!line.Disbursement_Outstanding_Balance_String}" styleClass="dob" rendered="{!line.line != null}"/>
+                        <apex:inputHidden value="{!line.Disbursement_Outstanding_Balance}"/>
+                    </apex:column>
+                    <apex:column style="text-align:right">
+                        <apex:facet name="header"><div style="text-align:center" onclick="sorting('Allocated_Amount__c',1);" class="{!IF(compareFieldArray[1]='Allocated_Amount__c',compareClassArray[1],'compare')}">{!$ObjectType.Shipment_Service_Line_Disbursement__c.fields.Amount__c.Label}{!Disbursement_Currency_String}</div></apex:facet>
+                        <apex:inputField value="{!line.line.Amount__c}" style="text-align:right;width:10em" styleClass="allocatedamount amount_line_val_{!line.line.Shipment_Service_Line__c}" onkeyup="amountchanged($(this));"/>
+                    </apex:column>
+                    <apex:column style="text-align:center">
+                        <apex:facet name="header"><div style="text-align:center" onclick="sorting('selected',1);" class="{!IF(compareFieldArray[1]='selected',compareClassArray[1],'compare')}">Allocate</div></apex:facet>
+                        <apex:inputCheckbox value="{!line.selected}" styleClass="boxallocate" onclick="new_disbursement_line($(this), '{!line.line.Shipment_Service_Line__c}');"/>
+                        <apex:inputHidden value="{!line.Disbursement_Outstanding_Base}"/>
+                    </apex:column>
+                </apex:pageBlockTable>
+            </apex:pageBlockSection>
+        </apex:pageBlock>
+    </apex:outputpanel>
+
+    <apex:actionstatus id="myStatus">
+        <apex:facet name="start">
+            <div class="waitingSearchDiv" id="el_loading" style="background-color: #fbfbfb;
+height: 100%;opacity:0.65;width:100%;">
+                <div class="waitingHolder" style="top: 74.2px; width: 91px;">
+                    <img class="waitingImage" src="/img/loading.gif" title="Please Wait..."/>
+                    <span class="waitingDescription">Loading...</span>
+                </div>
+            </div>
+        </apex:facet>
+    </apex:actionstatus>
+    </apex:form>
+</apex:page>

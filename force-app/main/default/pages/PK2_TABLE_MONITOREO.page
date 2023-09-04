@@ -1,0 +1,53 @@
+<apex:page showHeader="false" sidebar="false" tabStyle="Account" controller="PK2_TABLE_MONITOREO">
+    <head>
+        <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+        <script>
+            setTimeout("location.reload(true);", 30000);
+        </script>
+    </head>
+    <body>
+        <apex:form > 
+             <apex:pageBlock title="FN - NATIONAL FREIGHTS MANAGEMENT" mode="edit">
+                 </apex:pageBlock>  
+            <apex:pageBlock >
+                <apex:pageBlockTable value="{!lsMonitoreo}" var="Result">
+                    <apex:column headerValue="Shipment"><apex:commandLink action="/{!Result.Last_Shipment__c}" value="{!Result.Last_Shipment__r.Name}"/></apex:column>
+                    <apex:column headerValue="Customer" value="{!Result.Account_for__r.Name}"/>
+                    <apex:column value="{!Result.Route__c}"/>
+                    <apex:column value="{!Result.Last_Shipment__r.National_Operator__r.Name}"/>
+                    <apex:column value="{!Result.Last_Shipment__r.Vehicle__r.Name}"/>
+                    <apex:column headerValue="Container Type">
+                        <apex:repeat value="{!Result.Import_Export_Items_Lines__r}" var="linea">
+                            <apex:outputText value="{!linea.Container_Type__r.Name}" />
+                        </apex:repeat>
+                    </apex:column>
+                    <apex:column value="{!Result.Last_Shipment__r.Special_Notes__c}"/>
+                    <apex:column value="{!Result.Last_Shipment__r.Shipment_Status_Mon__c}"/>
+                    <apex:column value="{!Result.Last_Shipment__r.Equip_Loaded__c}"/>
+                    <apex:column value="{!Result.Last_Shipment__r.Equip_Placed__c}"/>
+                    <apex:column value="{!Result.Last_Shipment__r.Departure_Time__c}"/>
+                    <apex:column value="{!Result.Last_Shipment__r.Equip_Reserved__c}"/>
+                    <apex:column value="{!Result.Last_Shipment__r.Equip_Solicited__c}"/>
+                    <apex:column value="{!Result.Last_Shipment__r.Equip_Unloaded__c}"/>
+                    <!--<apex:column value="{!Result.Mode__c}"/>
+                    <apex:column headerValue="Order Number"><apex:commandLink action="/{!Result.Id}" value="{!Result.Name}"/></apex:column>
+                    <apex:column value="{!Result.Route__c}"/>
+                    <apex:column headerValue="Container Type" value="{!Result.Container_Type__r.Name}"/>
+                    <apex:column headerValue="Customer" value="{!Result.Account_for__r.Name}"/>
+                    <apex:column headerValue="Verify Pak Control" value="{!Result.Last_Shipment__r.VERIFY_PAK_CONTROL__c}"/>
+                    <apex:column headerValue="Shipment" value="{!Result.Last_Shipment__r.Name}"/>
+                    <apex:column value="{!Result.Last_Shipment__r.Shipment_Status_Plann__c}"/>
+                    <apex:column value="{!Result.Last_Shipment__r.Shipment_Status_Mon__c}"/>
+                    <apex:column value="{!Result.Last_Shipment__r.Equip_Placed__c}"/>
+                    <apex:column value="{!Result.Last_Shipment__r.Equip_Loaded__c}"/>
+                    <apex:column value="{!Result.Last_Shipment__r.Departure_Time__c}"/>
+                    <apex:column value="{!Result.Last_Shipment__r.ATD__c}"/>
+                    <apex:column value="{!Result.Last_Shipment__r.Equip_Reserved__c}"/>
+                    <apex:column value="{!Result.Last_Shipment__r.Equip_Solicited__c}"/>
+                    <apex:column value="{!Result.Last_Shipment__r.Equip_Unloaded__c}"/>
+                    <apex:column value="{!Result.Last_Shipment__r.ATA__c}"/>-->
+            	</apex:pageBlockTable>
+            </apex:pageBlock>
+        </apex:form>   
+    </body>
+ </apex:page>

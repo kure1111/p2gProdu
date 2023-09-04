@@ -1,0 +1,14 @@
+<apex:page controller="PK2_GRAL_DAHBOARD" action="{!getHistoria}">
+    <apex:form >
+    	<apex:pageBlock >
+        	<apex:pageBlockTable value="{!lsQuoteCanelShConfirmed}" var="Q">
+                <apex:column value="{!Q.Parent.Name}" />
+                <apex:column value="{!Q.Field}" />
+                <apex:column value="{!Q.OldValue}" />
+                <apex:column value="{!Q.NewValue}" />
+                <apex:column value="{!Q.CreatedDate}"/>
+                <apex:column value="{!Q.CreatedById}"/>           
+            </apex:pageBlockTable>
+        </apex:pageBlock>
+    </apex:form>
+</apex:page>

@@ -1,0 +1,36 @@
+.colorSection{
+    background-color: #E1E0DF;
+    text-align: center;
+    border-top: 3px;
+}
+.slds-table{
+    margin-left: 30px;
+}
+.container{
+    text-align: center;
+}
+.slds-modal{
+    width: 600px !important;
+    height: 650px !important;
+    top: auto;
+    left: 30%;
+}
+.slds-table_striped{
+    margin-left: 0px !important;
+    width: 490px;
+}
+.button-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px; /* Ajusta el margen superior según sea necesario */
+}
+.bordeLadoIzquierdo{
+    border-left:1px solid #B0B0B9;
+}
+.bordeLadoDerecho{
+    border-right:1px solid #B0B0B9;
+}
+.bordeArriba{
+    border-top:1px solid #B0B0B9;
+}

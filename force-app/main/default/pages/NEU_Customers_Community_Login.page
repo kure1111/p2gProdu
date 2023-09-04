@@ -1,0 +1,443 @@
+<apex:page showHeader="false" controller="NEU_Customers_Community_Login" standardStylesheets="false" sidebar="false" language="{!lang}" action="{!select_language}">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+		<title>Neurored Drivers Community</title>
+
+        <script type='text/javascript'>
+        function noenter(ev)  {
+            if (window.event && window.event.keyCode == 13 || ev.which == 13) {
+                javascriptLogin();
+                return false;
+             } else {
+                  return true;
+             }
+         }
+     
+        </script>
+        
+        <style type="text/css">
+          @charset "utf-8";
+          	.welcome
+          	{
+          		text-align: center;
+			    border-top: 1px solid #575757;
+			    border-bottom: 1px solid #575757;
+			    padding: 10px 0 10px 0;
+			    margin: 10px 0 10px 0;
+          	}
+          	
+          	/*CAROUSEL*/
+	        .crossfade
+			{
+			   	width: 100%;
+			    height: 100%;
+			    position: relative;
+			}
+			
+			.crossfade > figure {
+			  animation: imageAnimation 30s linear infinite 0s;
+			  backface-visibility: hidden;
+			  background-size: cover;
+			  background-position: center center;
+			  color: transparent;
+			  height: 100%;
+			  left: 0px;
+			  opacity: 0;
+			  position: absolute;
+			  top: 0px;
+			  width: 100%;
+			  z-index: 0;
+			}
+			
+			.crossfade > figure:nth-child(1) { background-image: url('/resource/carousel_1'); }
+			
+			.crossfade > figure:nth-child(2) {
+			  animation-delay: 6s;
+			  background-image: url('/resource/carousel_2');
+			}
+			
+			.crossfade > figure:nth-child(3) {
+			  animation-delay: 12s;
+			  background-image: url('/resource/carousel_3');
+			}
+			
+			.crossfade > figure:nth-child(4) {
+			  animation-delay: 18s;
+			  background-image: url('/resource/carousel_4');
+			}
+			
+			.crossfade > figure:nth-child(5) {
+			  animation-delay: 24s;
+			  background-image: url('/resource/carousel_5');
+			}
+			
+			@keyframes 
+			imageAnimation {  0% {
+			 animation-timing-function: ease-in;
+			 opacity: 0;
+			}
+			 8% {
+			 animation-timing-function: ease-out;
+			 opacity: 1;
+			}
+			 17% {
+			 opacity: 1
+			}
+			 25% {
+			 opacity: 0
+			}
+			 100% {
+			 opacity: 0
+			}
+			} 
+          
+            /* INI RESET */
+            html, body, body div, span, object, iframe, h1, h2, h3, h4, h5, h6, p, em, images, small, strong, ol, ul, li, fieldset, form, label, table, td, font, video, input, select, article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section {
+                margin: 0;
+                padding: 0;
+                border: 0;
+                outline: 0;
+                font-size: 100%;
+                font-weight: inherit;
+                list-style-type: none;
+                -webkit-margin-before: 0;
+                -webkit-margin-after: 0;
+                -webkit-margin-start: 0;
+                -webkit-margin-end: 0;
+                -webkit-box-sizing: border-box;
+                -moz-box-sizing: border-box;
+                box-sizing: border-box;
+                -webkit-font-smoothing: antialiased;
+                -moz-osx-font-smoothing: grayscale;
+            }
+            article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section {
+                display: block;
+            }
+            /* FIN RESET */
+
+            /* INI COMUNES */
+            html {
+                width: 100%;
+                height: 100%;
+                background: #f0f0f0;
+                font-size: 100%;
+                font-family: 'Open Sans', sans-serif; 
+                -webkit-overflow-scrolling: touch;
+                -webkit-tap-highlight-color: transparent;
+                -webkit-text-size-adjust: 100%;
+                -ms-text-size-adjust: 100%;
+            }
+            body {
+                width: 100%;
+                height: 100%;
+                color: #575757;
+            }
+            a {
+                text-decoration: none;
+                outline: 0;
+                -webkit-box-sizing: border-box;
+                -moz-box-sizing: border-box;
+                box-sizing: border-box;
+            }
+            a img {
+                border: none;
+                outline: 0;
+            }
+            .logo-mb, .logo-mt {
+                max-width: 100%;
+                height: auto;
+            	margin: auto;
+            	margin-bottom: 60px !important;
+            }
+            strong {
+                font-weight: bold;
+            }
+            .limpiador, .limpia, .limpiar {
+                width: 100%;
+                clear: both;
+            }
+            /* FIN COMUNES */
+
+            /* INI HIGHLIGHTS */
+            ::selection {
+                color: #FFF;
+                background: #000;
+            }
+            ::-moz-selection {
+                color: #FFF;
+                background:#000;
+            }
+            ::-webkit-selection {
+                color: #FFF;
+                background:#000;
+            }
+            /* FIN HIGHLIGHTS */
+
+            /* INI FORMULARIO */
+            .blq {
+                width: 100%;
+            }
+            .blq input {
+                padding: 12px 16px;
+                margin: 9px 0px;
+                -webkit-box-sizing: border-box;
+                -moz-box-sizing: border-box;
+                box-sizing: border-box;
+                vertical-align: middle;
+                border-radius: 5px;
+                background: #ffffff;
+                font-family: 'Open Sans', sans-serif; 
+                font-size: 14px;
+                font-size: 0.875rem;
+                color: #575757;
+                width: 100%;
+            	
+            }
+            .invalid {
+                border: 1px solid #CC0000 !important;
+            }
+            .error{
+                width: 100%;
+                margin: 10px 0;
+                padding: 0;
+                font-size: 12px;
+                color: #CC0000;
+            }
+
+            /* ini formulario - quitar fondo amarillo autocompletar */
+            input:-webkit-autofill {
+                -webkit-box-shadow: 0 0 0 1000px white inset;
+            }
+            /* fin formulario - quitar fondo amarillo autocompletar */
+
+            /* ini formulario - placeholder */
+            ::-webkit-input-placeholder {
+                color: #575757;
+            }
+            :-moz-placeholder { /* Firefox 18- */
+                color: #575757;
+            }
+            ::-moz-placeholder {  /* Firefox 19+ */
+                color: #575757;
+            }
+            :-ms-input-placeholder {
+                color: #575757;
+            }
+            /* fin formulario - placeholder */
+            /* FIN FORMULARIO */
+
+            /* INI CONTENIDO */
+            .wrapper {
+                height: 100%;
+                min-height: 100%;
+                position: relative;
+            }
+            .contenido {        
+                width: 100%;
+                min-height: 100%;
+            }
+            .bloque {
+                width: 100%;
+            }
+            .box-form{
+                background: #f0f0f0; <!--#00367a;-->
+                width: 100%;
+                max-width: 350px;
+                margin: 0 auto;
+                padding: 25px;
+            }
+            .logo-mb{
+                display: block;
+                max-width: 100%;
+            }
+            .logo-dt{
+                display: none;
+                width: 100%;
+                max-width: 100%;
+            }
+            img.logo_bottom{
+            	width: 100%;
+            	height: 100%;
+            	margin: 20px 0px 0px 0px;
+            
+            }
+            .abajo{
+                width: 70%;
+            	heigth: 50px;
+            	text-align: center;
+            	display: inline-block;
+            
+            }
+            #contenedor-logos{
+            	margin-top: 20%;
+            	text-align: center;
+            }
+            h1{
+                width: 100%;
+                margin: 70px 0 50px 0;
+                padding: 6% 6% 6% 6%;
+                font-weight: 700;
+                font-size: 24px;
+                color: #222222;
+                -webkit-border-radius: 10px; 
+                border-radius: 10px; 
+                border: 1px solid #222222;
+                text-align: center;
+            }
+            
+      
+            .blq input.btn{
+                border-radius: 5px;
+			    position: relative;
+			    outline: none!important;
+			    text-decoration: none;
+			    color: #575757 !important;
+			    text-align: center;
+			    white-space: nowrap;
+			    vertical-align: middle;
+			    cursor: pointer;
+			    background: #fff30b !important;
+			    font-weight: 600;
+			    font-size: 16px;
+			    font-size: 1rem;
+			    line-height: 1;
+			    text-transform: uppercase;
+			    padding: 18px 24px;
+			    margin: 25px 0;
+			    border: 1px solid #bdb7b7;
+			    -webkit-transition: 0.3s ease;
+			    -moz-transition: 0.3s ease;
+			    -ms-transition: 0.3s ease;
+			    -o-transition: 0.3s ease;
+			    transition: 0.3s ease;
+			    -webkit-border-radius: 4px;
+			    -moz-border-radius: 4px;
+			    box-shadow: 0px 5px 0px 0px #cdc30a;
+             
+            }
+            .blq input.btn:hover{
+                background-color: #48E68B;
+            }
+            
+            .blq input.btn:active{
+            transform: translate(0px, 5px);
+            -webkit-transform: translate(0px, 5px);
+            box-shadow: 0px 1px 0px 0px;
+            
+            }
+            
+            
+            /* FIN CONTENIDO */
+
+
+            /* 480 =================================================== */
+            @media only screen and (min-width: 480px) {
+				
+            }
+
+            /* 768 =================================================== */
+            @media only screen and (min-width: 768px) {
+            	html {
+	                background: url({!URLFOR($Resource.carousel_3)}) no-repeat center #f0f0f0; 
+	                -webkit-background-size: cover;
+	                -moz-background-size: cover;
+	                -o-background-size: cover;
+	                background-size: cover; 
+            		opacity: 0.89;
+            	}
+                .bloque {
+                    position: absolute;
+                    width: 100%;
+                    height: 100%;
+                    min-height: 100%;
+                    left: 0;
+                    right: 0;
+                    margin-left: 10%;
+                    overflow: hidden;
+                    max-width: 700px;
+                }	
+                .logo-mb{
+                    display: none;
+            		margin: auto;
+                }
+                .logo-dt{
+                    display: block;
+           			margin:auto;
+                }	
+                h1{
+                    margin: 80px 0;
+                }	
+                .box-form{
+                    margin: 0;
+                    min-height: 2000px;
+                    overflow: visible;
+                    padding: 100px 35px 35px 35px;
+                }	
+            }
+
+            /* MAX ALTO 550 =================================================== */
+            @media screen and (min-width: 768px) and (max-height: 750px) { 
+                .box-form{
+                    padding: 35px;
+                }	
+                h1{
+                    margin: 40px 0;
+                }
+                .blq input.btn{
+                    margin: 40px 0 5px 0;
+                }
+                .bloque{
+                    height: 600px;
+                }
+            	
+            }
+
+            /* 960 =================================================== */
+            @media only screen and (min-width: 960px) {
+
+
+            }
+
+            /* 1400 =================================================== */
+            @media only screen and (min-width: 1400px) {
+
+            }       
+		}
+    	</style>
+    </head> 
+    <body>
+    	<div class="crossfade">
+            <figure></figure>
+            <figure></figure>
+            <figure></figure>
+            <figure></figure>
+            <figure></figure>
+            <div class="wrapper">
+				<div class="contenido">
+					<div class="bloque">
+						<div class="box-form">
+	                        <img src="{!URLFOR($Resource.logo_community)}" class="logo-mb"/>
+	                        <img src="{!URLFOR($Resource.logo_community)}" class="logo-dt"/>
+	                        <h2 class="welcome">Welcome to Customers Community</h2>
+	                        <apex:form id="loginForm" forceSSL="true">
+	                            <apex:actionFunction name="javascriptLogin" action="{!login}" />
+	                            <div class="blq">                               
+	                                <apex:inputText styleClass="email" id="email" value="{!username}" html-placeholder="User"/>                                                 
+	                            </div>
+	                            <div class="blq">
+	                                <apex:inputSecret styleClass="password" id="password" value="{!password}" onkeypress="return noenter(event);" html-placeholder="Password"/>
+	                                <span class="error">{!resultado}</span>
+	                            </div>
+	                            <div class="blq">
+	                                <apex:commandButton value="Login" styleClass="btn" action="{!login}" id="submitbutton"/>
+	                            </div>
+	                        </apex:form>
+	                    </div>
+					</div>
+				</div>
+			</div>
+        </div>
+    </body>
+</apex:page>

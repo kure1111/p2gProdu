@@ -1,0 +1,508 @@
+<apex:page controller="NEU_Generic_SendDocuments" action="{!load_documents}">
+    <apex:includeScript value="{!$Resource.neu_jquery}"/> 
+    <apex:includeScript value="{!$Resource.jquery_1_10_2}"/> 
+    <apex:includeScript value="{!$Resource.jquery_ui_1_10_3}"/>
+    <apex:includeScript value="{!$Resource.neurored_jquery}"/> 
+    <apex:stylesheet value="{!URLFOR($Resource.jquery_ui_1_10_3_css,'jquery-ui-1.10.3.min.css')}"/>
+<!-- <apex:stylesheet value="{!$Resource.Estilo_Send_document}"/>-->
+     <style>
+        .homeTab .tertiaryPalette, .individualPalette .homeBlock .tertiaryPalette, .layoutEdit .individualPalette .homeBlock .tertiaryPalette {background-color: #1797c0;}
+        .input_form {width:700px;}
+        .textarea_form {width:700px; height:200px; resize:none;}
+        #info_email:hover #capa_info_email {display:block;} 
+    </style>
+   
+     
+    <apex:form id="form">
+     <a href="{!$Site.BaseUrl}/{!id_object}" title="return to {!label_object}"><apex:sectionHeader title="{!label_object}" subtitle="Send Email {!label_object2}"/></a>
+     <apex:pageMessages id="messages"/>
+     <script>
+        
+        $(document).ready(function(){
+            var porcentage = 0
+              $(".tabla_documentos input:checkbox").each(function() {
+                    
+                    $(this).parent().parent().find('.clase_width').css('width',(parseInt($(this).attr("class"))/1048576)*100/5+'%');
+                    porcentage = parseFloat(parseInt($(this).attr("class"))/1048576*100/5);
+                    
+                    if(porcentage >= 100)
+                        $(this).parent().parent().find('.clase_width').css('width','100%');
+                    $(this).parent().parent().find('.espacio_mb').html((parseInt($(this).attr("class"))/1048576).toFixed(5)+' mb');
+                    if(parseFloat($(this).parent().parent().find('.espacio_mb').html()) > 5)
+                    {
+                         $(this).parent().parent().find('.clase_width').css('background-color','#FF0000');
+                         $(this).parent().parent().find('.clase_width').css('border','1px solid #FF0000');
+                         $(this).attr('disabled', true);
+                    }       
+            });
+            if($($.sfId('{!$Component.form.porc_ocupacion}')).val() < 100)
+              $(".totui_progress").css('width',$($.sfId('{!$Component.form.porc_ocupacion}')).val()+'%')
+           else
+           {
+              $(".totui_progress").css('width','100%');
+              $(".totui_progress").css('background-color','#FF0000');
+              $(".totui_progress").css('border','1px solid #FF0000');
+           }
+           // update();
+        }); 
+        function send_so()
+        {
+            var listado_usuarios = '';
+            $(".button_selected_user").each(function(){
+                listado_usuarios += $(this).attr('name') + ',';
+            });
+            if(listado_usuarios == '')
+                listado_usuarios = '[]';
+            document.getElementById('{!$Component.form.user_list}').value = listado_usuarios;
+        
+            var hay_documentos = false; 
+            $('.tabla_documentos input[type="checkbox"]:checked').each(function()
+            {
+                hay_documentos = true;
+            });
+            var hay_contactos = false;
+            
+             $('.tabla_clientes input[type="checkbox"]:checked').each(function()
+            {
+                hay_contactos = true;
+            });
+        
+            if(document.getElementsByClassName("emailusuario").length > 0)
+            {
+                hay_contactos = true;
+            }
+            if(listado_usuarios == '[]' && hay_contactos == false)
+            {
+                //var receiver_info = confirm("You must select some email receiver");
+                alert("You must select some receiver email");
+            }
+            else if(hay_documentos == false)
+             {
+                var document_info = confirm("You haven´t selected any document. Are you sure you want to send this email?");
+                if (document_info  == true)
+                    send_email();
+            }
+            else
+            {
+                var r = confirm("Are you sure you want to send this email?");
+               
+               if (r == true) 
+                    send_email();
+           }
+        }
+        function updateemailtemplate_subject_message()
+        {
+            
+            $($.sfId('{!$Component.form.subject_hidden}')).val($('.resultado_subject').val());
+            $($.sfId('{!$Component.form.message_hidden}')).val($('.resultado_message').val());
+            updateemailtemplate();
+            update_filtros();
+        }
+        $.fn.filter_user = (function(){
+            this.each(function(){
+                if($(this).hasClass('button_selected_user'))
+                {
+                    $(this).removeClass('button_selected');
+                    $(this).removeClass('button_selected_user');
+                }
+                else
+                {
+                    $(this).addClass('button_selected');
+                    $(this).addClass('button_selected_user');
+                }
+            });
+        });
+        function update_filtros2()
+        {
+            update_filtros();
+            
+        }
+        function quitar_usuario(id)
+        {
+            document.getElementById('{!$Component.form.id_usuario}').value = id;
+            remove_usuario();
+        }
+    </script>
+        <style>
+            .lista_usuarios
+            {
+                float:left;
+                margin:10px 0 10px 0 !important;
+                width:100%;
+            }
+            .filter_button{float:left; width:205px;}
+            .button_selected{background:#C0C0C0 !important;}
+            .lista_contactos{padding:0; margin:0;}
+            .lista_contactos li{list-style-type:none;}
+            span.lookupInput input {margin-left: 5px;}
+        </style>
+        
+
+        <apex:actionFunction name="send_email" action="{!send_email}" status="myStatus"/>
+        <apex:actionFunction name="update_filtros"  status="myStatus" reRender="filtros"/>
+        <apex:actionFunction name="remove_usuario" action="{!remove_usuario}" reRender="list_user" status="myStatus"/>
+
+        <apex:inputHidden value="{!id_usuario}" id="id_usuario"/>
+         
+        <apex:outputPanel id="datos_email" styleclass="panel_datos">
+            <apex:pageBlock title="Communication Details"><!--title="Shipment Order"-->
+                <apex:pageBlockButtons location="top">
+                    <input type="button" value="Send Email" class="btn" style="display:{!IF(bytesocupados < 10, '','none')}" onclick="send_so();"/>
+                    <apex:commandButton value="Return" action="{!return_shipment}"/>
+                </apex:pageBlockButtons>
+                
+        
+                <apex:pageBlockSection columns="1" title="To:"/>
+                <table style="width: 90%;">
+                    <tr>
+                        <td>   
+                            <!--<div style="width: 5%; display: inline-block;"><apex:outputText >To:</apex:outputText></div>-->
+                            <!--<div style="width: 90%; display: inline-block; margin-left: 5px;"><apex:outputText >(Please select them in the accounts section below.)</apex:outputText></div>-->
+                            <!--<apex:inputText value="{!defaultTo}" style="width: 90%;"/>-->
+                            
+                            <div style="width: 100%; display: inline-block;">
+                                <apex:pageBlockTable value="{!clientes_seleccionados}" var="acc" styleclass="tabla_clientes" >
+                                    <apex:column >
+                                        <apex:facet name="header">
+                                            <span>Name</span>
+                                        </apex:facet>
+                                        <a href="/{!acc.cuenta.Id}" target="_blank"><apex:outputText value="{!acc.cuenta.Name}"/></a>
+                                    </apex:column>
+                                    <apex:column >
+                                        <apex:facet name="header">
+                                            <span>Type</span>
+                                        </apex:facet>
+                                        <apex:outputText value="{!acc.typo_cuenta}"/>
+                                    </apex:column>
+                                    <apex:column >
+                                        <apex:facet name="header">
+                                            <span>Contacts</span>
+                                            </apex:facet>
+                                            <ul class="lista_contactos">
+                                            <apex:repeat value="{!acc.contactos}" var="c">
+                                                <li><apex:inputCheckbox value="{!c.selected}"/><span> <a href="/{!c.contact.Id}" target="_blank"><apex:outputText value="{!c.contact.Name}"/></a></span><span> ({!c.contact.Email})</span></li>
+                                            </apex:repeat>
+                                        </ul>
+                                    </apex:column>
+                                </apex:pageBlockTable>
+                            </div>  
+                        </td>
+                    </tr>
+                </table> 
+                
+                <apex:pageBlockSection columns="1" title="Cc:"/>
+                <table style="width: 90%;">
+                    <tr>
+                        <td>
+                            <!-- 
+                            <apex:outputLabel >Cc:</apex:outputLabel> 
+                            <p class="lista_usuarios" style="width: 95%; margin-left: 5px; float:right;">
+                                <apex:repeat value="{!usuarios}" var="u">
+                                    <input type="button" value="{!u.Name}" class="btn filter_button filter_button_user" name="{!u.Email}" onclick="$(this).filter_user();"/>
+                                </apex:repeat>
+                            </p>
+                            -->
+                            <apex:inputField value="{!buscador.User_Create_Import_ExportQuotesSearch__c}"/>
+                            <apex:CommandButton value="Add User" action="{!add_usuario}" reRender="list_user" status="myStatus"/>
+                            <!--<apex:inputText id="list_clientes_adicionales" value="{!defaultCc}" style="width: 100%; margin-top: 5px;" html-readonly="true" />-->   
+                            <apex:pageBlockTable id="list_user" value="{!users_cc}" var="ucc" style="width: 100%; margin-top: 5px;">
+                                <apex:column >
+                                    <apex:facet name="header">
+                                        <span>User Name</span>
+                                    </apex:facet>
+                                    <a href="/{!ucc.Id}" target="_blank"><apex:outputText value="{!ucc.Name}"/></a>
+                                </apex:column>
+                                <apex:column >
+                                    <apex:facet name="header">
+                                        <span>Email</span>
+                                    </apex:facet>
+                                    <apex:outputText value="{!ucc.Email}" styleClass="emailusuario"/>
+                                </apex:column>
+                                <apex:column >
+                                    <apex:facet name="header">
+                                        <span>Delete</span>
+                                    </apex:facet>
+                                    <apex:image id="del_account" value="/img/permissions_deny16.gif" onclick="quitar_usuario('{!ucc.Id}');" style="cursor:pointer;"/>
+                                </apex:column>
+                            </apex:pageBlockTable>                      
+                        </td>
+                    </tr>
+                    <!-- 
+                    <tr>
+                        <td> 
+                            <div style="width: 5%; display: inline-block;"><apex:outputText >Cc:</apex:outputText></div>
+                            <apex:inputText value="{!defaultCc}" style="width: 90%;"/>              
+                        </td>
+                    </tr>
+                    -->
+                </table>
+                
+                <apex:pageBlockSection columns="1" title="Bcc:"/>
+                <table style="width: 90%;">
+                    <tr>
+                        <td> 
+                            <!--<div style="width: 5%; display: inline-block;"><apex:outputText >Bcc:</apex:outputText></div>-->
+                            <apex:outputText >* Please enter the Bcc Addresses separated by ";" at the end of each one.</apex:outputText>
+                            <apex:inputText value="{!defaultBcc}" style="width:100%;"/>              
+                        </td>
+                    </tr>
+                </table> 
+                
+                <!--
+                <apex:pageBlockSection columns="1" title="Subject:"/>
+                <table style="width: 90%;">
+                    <tr>
+                        <td> 
+                            <apex:inputText value="{!subject}" style="width: 100%;"/>                           
+                        </td>
+                    </tr>
+                </table> 
+                -->
+            </apex:pageBlock>
+        </apex:outputPanel>         
+
+        <apex:outputPanel id="email_body">
+            <apex:pageBlock title="Email Body">  
+                <apex:pageBlockSection columns="1" title="Email Data" id="filtros">
+                    <apex:outputLabel value="Email Templates" style="float:left;"/>
+                    <p class="lista_usuarios">
+                        <apex:repeat value="{!templates}" var="t">
+                            <input type="button" value="{!t.Name}" class="btn" name="{!t.Id}" onclick="cargar_plantilla('{!t.Id}');"/>
+                        </apex:repeat>
+                    </p>
+                    <br/>      
+                    <apex:outputLabel >Subject</apex:outputLabel>
+                    <apex:inputText value="{!subject}" StyleClass="input_form resultado_subject"/>
+                    <br/>
+                    <apex:outputLabel >Body <!-- <span style="background-image: url('/img/func_icons/util/lookup20.gif'); background-position: left top; height: 20px; float: left; width: 20px; margin: 5px;" onclick="$('#contenedorWarehouse3').dialog({height: 498,width: 1000,modal: true,appendTo:'#positionWarehouse3'});"></span>-->
+                    </apex:outputLabel>
+                    <apex:inputTextarea value="{!texto_email}" StyleClass="textarea_form resultado_message" id="texto_email"/>
+                </apex:pageBlockSection>
+                
+                <apex:pageBlockSection columns="1" title="Associated Documents" id="filtros2" rendered="{!associated_documents.size > 0}">
+                    <!--  <apex:pageBlock title="Associated Documents">-->
+                            <div id="documentos">
+                                <apex:pageBlockTable value="{!associated_documents}" var="ad" styleclass="tabla_documentos" >
+                                    <apex:column headerValue="Select" >
+                                        <apex:inputCheckbox value="{!ad.selected}" onchange="changeSelected(this);" styleclass="{!ad.espacio}"  />
+                                    </apex:column>
+                                    <apex:column headerValue="Associated Document Name" value="{!ad.name}"/>
+                                    <apex:column headerValue="Document Type" value="{!ad.document_type}"/>
+                                    <apex:column headerValue="Document Reference" value="{!ad.document_reference}"/>
+                                    <apex:column headerValue="Document Description" value="{!ad.document_description}"/>
+                                    <apex:column >
+                                        <apex:facet name="header">
+                                            <span>Document URL</span>
+                                        </apex:facet>
+                                        <a href="{!ad.document_url}" target="_blank">Document</a>
+                                    </apex:column>
+                                    <apex:column headerValue="Document Size">
+                                        <div id="progress_bar" class="ui-progress-bar ui-container" style="position: relative; height: 35px; padding-right: 2px; background-color: #abb2bc; border-radius: 35px; -moz-border-radius: 35px; -webkit-border-radius: 35px; background: -webkit-gradient(linear, left bottom, left top, color-stop(0, #b6bcc6), color-stop(1, #9da5b0)); background: -moz-linear-gradient(#9da5b0 0%, #b6bcc6 100%); -webkit-box-shadow: inset 0px 1px 2px 0px rgba(0, 0, 0, 0.5), 0px 1px 0px 0px #FFF; -moz-box-shadow: inset 0px 1px 2px 0px rgba(0, 0, 0, 0.5), 0px 1px 0px 0px #FFF; box-shadow: inset 0px 1px 2px 0px rgba(0, 0, 0, 0.5), 0px 1px 0px 0px #FFF; width: 286px; margin: 10px; margin-left: 0px; border-radius: 5px; width: 238px; float: left; margin-left: 12px; height: 28px;">
+                                            <span class="ui-label" style="float: left; position: absolute; margin: 9px 94px 7px 64px; z-index: 101; width: 100%; color: rgba(0,0,0,0.6); text-shadow: rgba(255,255,255, 0.45) 0 1px 0px; white-space: nowrap; margin: 6px 94px 7px 40px; z-index: 100;">Document Size   <b class="espacio_mb"> {!ad.espacio} Mb</b></span>
+                                            <div class="ui-progress clase_width" style="position: relative; display: block;  overflow: hidden; height: 33px; -moz-border-radius: 35px; -webkit-border-radius: 35px; border-radius: 35px; -webkit-background-size: 44px 44px; background-color: #1797c0;  border: 1px solid #1797c0; -webkit-animation: animate-stripes 2s linear infinite; border-radius: 5px; -webkit-animation: animate-stripes 2s linear infinite; -moz-animation: progress-bar-stripes 2s linear infinite; -ms-animation: progress-bar-stripes 2s linear infinite; -o-animation: progress-bar-stripes 2s linear infinite; animation: progress-bar-stripes 2s linear infinite; background-size: 40px 40px; text-align: center; height: 26px; width:0%; width:{!ad.porespacio}; "><!--este rellena -->
+                                        </div>
+                                        </div>
+                                    </apex:column>
+                                </apex:pageBlockTable>
+                            </div>
+                    <!-- </apex:pageBlock>-->
+                
+                 </apex:pageBlockSection>
+                
+                
+            </apex:pageBlock>
+            
+            <!-- ---------- -->
+           
+             <!-- <apex:outputPanel id="documentos">
+                <apex:pageBlock title="Associated Documents">
+                    <div id="documentos">
+                    <apex:pageBlockTable value="{!associated_documents}" var="ad" styleclass="tabla_documentos" >
+                        <apex:column headerValue="Select" >
+                            <apex:inputCheckbox value="{!ad.selected}" onchange="changeSelected(this);" styleclass="{!ad.espacio}"  />
+                        </apex:column>
+                        <apex:column headerValue="Associated Document Name" value="{!ad.name}"/>
+                        <apex:column headerValue="Document Type" value="{!ad.document_type}"/>
+                        <apex:column headerValue="Document Reference" value="{!ad.document_reference}"/>
+                        <apex:column headerValue="Document Description" value="{!ad.document_description}"/>
+                        <apex:column >
+                            <apex:facet name="header">
+                                <span>Document URL</span>
+                            </apex:facet>
+                            <a href="{!ad.document_url}" target="_blank">Document</a>
+                        </apex:column>
+                        <apex:column headerValue="Document Size">
+                            <div id="progress_bar" class="ui-progress-bar ui-container" style="position: relative; height: 35px; padding-right: 2px; background-color: #abb2bc; border-radius: 35px; -moz-border-radius: 35px; -webkit-border-radius: 35px; background: -webkit-gradient(linear, left bottom, left top, color-stop(0, #b6bcc6), color-stop(1, #9da5b0)); background: -moz-linear-gradient(#9da5b0 0%, #b6bcc6 100%); -webkit-box-shadow: inset 0px 1px 2px 0px rgba(0, 0, 0, 0.5), 0px 1px 0px 0px #FFF; -moz-box-shadow: inset 0px 1px 2px 0px rgba(0, 0, 0, 0.5), 0px 1px 0px 0px #FFF; box-shadow: inset 0px 1px 2px 0px rgba(0, 0, 0, 0.5), 0px 1px 0px 0px #FFF; width: 286px; margin: 10px; margin-left: 0px; border-radius: 5px; width: 238px; float: left; margin-left: 12px; height: 28px;">
+                                <span class="ui-label" style="float: left; position: absolute; margin: 9px 94px 7px 64px; z-index: 101; width: 100%; color: rgba(0,0,0,0.6); text-shadow: rgba(255,255,255, 0.45) 0 1px 0px; white-space: nowrap; margin: 6px 94px 7px 40px; z-index: 100;">Document Size   <b class="espacio_mb"> {!ad.espacio} Mb</b></span>
+                                <div class="ui-progress clase_width" style="position: relative; display: block;  overflow: hidden; height: 33px; -moz-border-radius: 35px; -webkit-border-radius: 35px; border-radius: 35px; -webkit-background-size: 44px 44px; background-color: #1797c0;  border: 1px solid #1797c0; -webkit-animation: animate-stripes 2s linear infinite; border-radius: 5px; -webkit-animation: animate-stripes 2s linear infinite; -moz-animation: progress-bar-stripes 2s linear infinite; -ms-animation: progress-bar-stripes 2s linear infinite; -o-animation: progress-bar-stripes 2s linear infinite; animation: progress-bar-stripes 2s linear infinite; background-size: 40px 40px; text-align: center; height: 26px; width:0%; width:{!ad.porespacio}; "><!--este rellena -->
+                              <!--   </div>
+                            </div>
+                        </apex:column>
+                    </apex:pageBlockTable>
+                    </div>
+                </apex:pageBlock>
+            </apex:outputPanel>-->
+        
+            <!-- ------------- -->
+        </apex:outputPanel>
+        
+          <apex:outputPanel id="list_panel_actividades" styleclass="panel_actividades">
+            <apex:pageBlock title="Activities Associated to this Email">
+                <apex:pageBlockButtons location="bottom" id="botones">
+                     <input type="button" value="Send Email" class="btn" style="display:{!IF(bytesocupados < 10, '','none')}" onclick="send_so();"/>
+                </apex:pageBlockButtons>
+                <apex:pageBlockTable value="{!Due_Date_task}" var="s">
+                    <apex:column >
+                        <apex:facet name="header">
+                            <span>Assigned To</span>
+                        </apex:facet>
+                        <apex:selectList id="user_selector"  value="{!OwnerId_task}" size="1">
+                            <apex:selectOptions value="{!select_users}"/>
+                         </apex:selectList>
+                   </apex:column>
+                   
+                   <apex:column >
+                        <apex:facet name="header">
+                            <span>Subject</span>
+                        </apex:facet>
+                        <apex:inputText value="{!subject_task}" style="    width: 94%;"/>
+                   </apex:column>
+                   
+                   <apex:column >
+                        <apex:facet name="header">
+                            <span>Status</span>
+                        </apex:facet>
+                        <apex:selectList id="status_selector"  value="{!Status_task}" size="1">
+                            <apex:selectOptions value="{!select_status_task}"/>
+                         </apex:selectList>
+                   </apex:column>
+                   <apex:column >
+                        <apex:facet name="header">
+                            <span>Priority</span>
+                        </apex:facet>
+                        <apex:selectList id="priority_selector"  value="{!priority_task}" size="1">
+                            <apex:selectOption itemLabel="High" itemValue="High"/>
+                            <apex:selectOption itemLabel="Normal" itemValue="Normal" html-checked="checked"/>
+                            <apex:selectOption itemLabel="Low" itemValue="Low"/>
+                        </apex:selectList>
+                   </apex:column>
+                   <apex:column >
+                        <apex:facet name="header">
+                            <span>Due Date</span>
+                        </apex:facet>
+                        <apex:inputField value="{!Due_Date_task.Conversion_Rate_Date__c}"/>
+                   </apex:column>
+                     <apex:column >
+                        <apex:facet name="header">
+                            <span>Create Activity</span>
+                        </apex:facet>
+                        <apex:inputCheckbox value="{!create_task}"/>
+                   </apex:column>
+                </apex:pageBlockTable>
+            </apex:pageBlock>
+        </apex:outputPanel>
+        
+        <apex:outputpanel >
+           <apex:actionstatus id="myStatus">
+               <apex:facet name="start">
+                   <div class="waitingSearchDiv" id="el_loading" style="background-color: #fbfbfb;
+                          height: 100%;opacity:0.65;width:100%;"> 
+                       <div class="waitingHolder" style="top: 74.2px; width: 91px;">
+                           <img class="waitingImage" src="/img/loading.gif" title="Please Wait..." />
+                           <span class="waitingDescription">Loading...</span>
+                       </div>
+                   </div>
+               </apex:facet>
+           </apex:actionstatus>
+        </apex:outputpanel>
+        
+ <!-- ------------------------------------------------------------------------------------ -->     
+ <!-- ----- contact -->
+ <!-- <div id="positionWarehouse"></div>        
+        <div style="display:none; " id="contenedorWarehouse">
+            <apex:actionRegion >
+                <apex:pageBlock id="block5" >
+                <apex:facet name="header"><div class="pbTitle"><h2 class="mainTitle">Emails</h2></div></apex:facet>
+                    <apex:pageBlockButtons >
+                            <apex:commandButton value="Update" reRender="filtros" status="myStatus" onclick="updatecontact_to(); $('#contenedorWarehouse').dialog('close');" style="margin-left: 40px;"/>
+                        </apex:pageBlockButtons>
+                    <apex:outputPanel >
+                    <div style="overflow-y:auto; max-height: 99px;">
+                        <apex:pageBlockTable value="{!contactos}" var="co">
+                        <apex:column headerValue="Contact Name">
+                            <c:customobject2 objid="{!co.line.Id}" objname="{!co.line.Name}"/>
+                        </apex:column>
+                        <apex:column headerValue="Contact Email" value="{!co.line.Email}" />
+                        <apex:column headerValue="Select">
+                              <apex:inputCheckbox value="{!co.selected}"/>
+                        </apex:column>
+                        </apex:pageBlockTable>
+                     </div> 
+                    </apex:outputPanel>
+                </apex:pageBlock>
+            </apex:actionRegion>
+        </div> -->
+        
+         <!-- ----- user -->
+        <!--  <div id="positionWarehouse2"></div>        
+        <div style="display:none; " id="contenedorWarehouse2">
+            <apex:actionRegion >
+                <apex:pageBlock id="block6" >
+                <apex:facet name="header"><div class="pbTitle"><h2 class="mainTitle">Emails</h2></div></apex:facet>
+                    <apex:pageBlockButtons >
+                            <apex:commandButton value="Update" reRender="filtros"   status="myStatus"  onclick=" updatecontactuser_cc(); $('#contenedorWarehouse2').dialog('close');" style="margin-left: 40px;"/>
+                        </apex:pageBlockButtons>
+                    <apex:outputPanel >
+                    <div style="overflow-y:auto; max-height: 323px;">
+                        <apex:pageBlockTable value="{!contactos_user}" var="co" styleclass="height: 600px;">
+                        <apex:column headerValue="Contact Name">
+                            <c:customobject2 objid="{!co.line.Id}" objname="{!co.line.Name}"/>
+                        </apex:column>
+                        <apex:column headerValue="Contact Email" value="{!co.line.Email}" />
+                        <apex:column headerValue="Select">
+                              <apex:inputCheckbox value="{!co.selected}"/>
+                        </apex:column>
+                        </apex:pageBlockTable>
+                     </div> 
+                    </apex:outputPanel>
+                </apex:pageBlock>
+            </apex:actionRegion>
+        </div> -->
+        
+     <!-- ----- email_templates --> 
+        <!-- <div id="positionWarehouse3"></div>        
+        <div style="display:none; " id="contenedorWarehouse3">
+            <apex:actionRegion >
+                <apex:pageBlock id="block7" >
+                <apex:facet name="header"><div class="pbTitle"><h2 class="mainTitle">Emails Templates</h2></div></apex:facet>
+                    <apex:pageBlockButtons >
+                            <apex:commandButton value="Update" reRender="filtros"  status="myStatus" onclick="updateemailtemplate_subject_message(); $('#contenedorWarehouse3').dialog('close');" style="margin-left: 40px;"/>
+                        </apex:pageBlockButtons>
+                    <apex:outputPanel >
+                    <div style="overflow-y:auto; max-height: 323px;">
+                        <apex:pageBlockTable value="{!email_template}" var="co" styleclass="height: 600px;">
+                        <apex:column headerValue="Template Name">
+                            <apex:outputLink value="//{!co.line.Id}" id="theLink">{!co.line.Name}</apex:outputLink>
+                        </apex:column>
+                        <apex:column headerValue="Select">
+                              <apex:inputCheckbox value="{!co.selected}"/>
+                        </apex:column>
+                        </apex:pageBlockTable>
+                     </div> 
+                    </apex:outputPanel>
+                </apex:pageBlock>
+            </apex:actionRegion> 
+        </div> -->
+             
+        <apex:inputHidden value="{!user_list}" id="user_list"/>
+        
+        <apex:inputHidden value="{!porc_ocupacion}" id="porc_ocupacion"/>
+        <apex:inputHidden value="{!bytesocupados}" id="bytesocupados"/>
+        
+        
+        <apex:inputHidden value="{!to_hidden}" id="to_hidden"/>
+        <apex:inputHidden value="{!cc_hidden}" id="cc_hidden"/>
+        <apex:inputHidden value="{!subject_hidden}" id="subject_hidden"/>
+        <apex:inputHidden value="{!message_hidden}" id="message_hidden"/>
+    </apex:form>
+</apex:page>

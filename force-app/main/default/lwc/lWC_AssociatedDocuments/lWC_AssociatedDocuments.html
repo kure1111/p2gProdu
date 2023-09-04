@@ -1,0 +1,22 @@
+<template>
+    <lightning-tabset variant="vertical">        
+        <template for:each={documentsUpload} for:item="document">                       
+            <lightning-tab key={document} label={document.type} icon-name="standard:task2" if:true={document.isUpload}>
+                <lightning-card title={document.type}>
+                    <div if:false={document.isImage}>
+                        <iframe src={document.url}  style="width:100%; height:500px;"></iframe>
+                    </div>
+                    <div if:true={document.isImage} style="width: 100% !important; max-width: 70% !important;">
+                        <img src={document.url} alt={document.type} style="width:100%;">
+                    </div>                                        
+                </lightning-card>             
+            </lightning-tab>
+
+            <lightning-tab key={document} label={document.type} icon-name="standard:first_non_empty" style="width: 100%;" if:false={document.isUpload}>
+                <lightning-card title={document.type}>                    
+                    <c-l-w-c-_-upload-files recordid={recordId}  document-type={document.type}  onrecordsaved={refreshData} sp-id={spId}></c-l-w-c-_-upload-files>                                                                    
+                </lightning-card>             
+            </lightning-tab>
+        </template>                                    
+    </lightning-tabset>                                                                
+ </template>

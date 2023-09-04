@@ -1,0 +1,28 @@
+<apex:page StandardController="Shipment__c" extensions="NEU_GenerateWEDocSave" >
+    <apex:form id="form">
+        <apex:outputLink value="{!URLFOR($Action.Shipment__c.View,Shipment__c.Id)}" style="float: left; width: 331px;">
+            <apex:sectionHeader subtitle="{!Shipment__c.Name}" title="Generate {!$ObjectType.Shipment__c.labelPlural}"/>
+        </apex:outputLink>
+        <apex:pagemessages id="messages"/>
+        <apex:pageBlock id="block">
+            <apex:pageBlockButtons >
+                <apex:commandButton value="Create Associated Document" status="myStatus"  styleClass="crear" action="{!crear}"/>
+            </apex:pageBlockButtons>
+            <apex:outputPanel id="iframes">
+                <iframe scrolling="auto" id="EN" src="/apex/NEU_GenerateWEDoc?id={!Shipment__c.Id}" width= "100%" height="850px"/>
+            </apex:outputPanel>
+        </apex:pageBlock>
+        <apex:outputpanel >
+            <apex:actionstatus id="myStatus">
+                <apex:facet name="start">
+                    <div class="waitingSearchDiv" id="el_loading" style="background-color: #fbfbfb; height: 100%;opacity:0.65;width:100%;"> 
+                        <div class="waitingHolder" style="top: 74.2px; width: 91px;">
+                            <img class="waitingImage" src="/img/loading.gif" title="Please Wait..." />
+                            <span class="waitingDescription">Loading...</span>
+                        </div>
+                    </div>
+                </apex:facet>
+            </apex:actionstatus>
+        </apex:outputpanel>
+    </apex:form>
+</apex:page>

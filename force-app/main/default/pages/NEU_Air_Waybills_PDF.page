@@ -1,0 +1,6 @@
+<apex:page standardController="Air_Waybill__c"  extensions="NEU_Air_Waybills_PDF" standardStylesheets="false" sidebar="false" renderAs="pdf">
+    <apex:stylesheet value="{!$Resource.Style_Air_Waybill_PDF}"/>
+    <apex:form >
+        <apex:outputText value="{!string_awb}" escape="false"/>
+    </apex:form> 
+</apex:page>

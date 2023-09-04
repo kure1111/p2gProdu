@@ -1,0 +1,65 @@
+.THIS .pesoImg{
+	max-width: 30%;
+}
+.THIS .totalVolume
+{
+    font-size: medium;
+}
+.THIS .boxImage
+{
+    /*margin-left: 2%;*/
+    max-width: 60%;
+}
+.THIS .medidasCaja
+{
+    width: 62%;
+    float: left;
+    font-size: medium;  
+}
+.THIS .pesoCaja
+{
+    float: left;
+    font-size: large;
+    width: 30%;
+    text-align: center;
+}
+
+.THIS .pesoCajaMobile
+{
+    font-size: xx-large!important;
+    font-weight: bold!important;
+    font-family: 'Salesforce Sans',Arial,sans-serif;
+    font-size: 100%;
+    line-height: 1.375;
+    color: rgb(22, 50, 92);
+}
+
+.THIS .medidasCajaMobile
+{
+    width: 60%;
+    font-size: xx-large!important;
+    font-weight: bold!important;
+    font-family: 'Salesforce Sans',Arial,sans-serif;
+    font-size: 100%;
+    line-height: 1.375;
+    color: rgb(22, 50, 92);
+    margin-left: 20%;
+}
+
+.THIS .pesoImgMobile{
+    max-width:33%;
+}
+.THIS .boxImageMobile
+{
+
+}
+
+.THIS .slds-text-heading_medium
+{
+    font-size: xx-large!important;
+    font-weight: bold!important;
+    font-family: 'Salesforce Sans',Arial,sans-serif;
+    font-size: 100%;
+    line-height: 1.375;
+    color: rgb(22, 50, 92);
+}

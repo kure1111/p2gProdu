@@ -1,0 +1,90 @@
+<!--
+ - Created by jamarin on 18/01/2019.
+ -->
+
+<apex:page id="NEU_EventIssues" standardController="Event" extensions="NEU_EventIssues">
+    <style>
+    /* STYLE */
+
+        @page
+        {
+        font-family: Arial, Helvetica, sans-serif;
+
+        @bottom-center
+        {
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 11px;
+            content: counter(page) "/" counter(pages);
+        }
+        }
+        .main_table{
+            width:90%;
+        }
+        .main_table td, .main_table th
+        {
+        border:1px solid black;
+        font-family: Arial, Helvetica, sans-serif;
+        font-size:12px;
+        padding:5px;
+        }
+
+
+    </style>
+    
+    <apex:form >
+        <apex:pageBlock >
+            <!-- SANDBOX -->
+            <!--a href="{!URLFOR($Action.Event_Issues__c.New,null)}&00N1q000000hyXG_lkid={!Event.Id}&00N1q000000hyXG={!Event.Id}&retURL=%{!Event.Id}"
+               target="_blank" class="confirm_button" style="text-decoration: none;"><input type="button" class="btn"
+                                                                                            value="New Event Issues"/></a-->
+            <!-- PRO -->
+            <!--<a href="{!URLFOR($Action.Event_Issues__c.New,null)}&00N1v00000SDcGL_lkid={!Event.Id}&00N1v00000SDcGL={!Event.Id}&CF00Nf0000004MFNP_lkid={!Event.Id}&retURL=%{!Event.Id}"
+               target="_blank" class="confirm_button" style="text-decoration: none;"><input type="button" class="btn"
+                                                                                            value="New Event Issues"/></a>-->
+
+
+            <a href="/apex/NEU_MD_Create_EventIssue?id={!Event.Id}"
+               target="_self" class="confirm_button" style="text-decoration: none;"><input type="button" class="btn" value="New Event Issues"/></a>
+                   
+            <br/><br/>
+
+            <table class="main_table">
+                <tr>
+                    <th>
+                        Topic 
+                    </th>
+                    <th>
+                        Situation
+                    </th>
+                    <th>
+                        Responsable
+                    </th>
+                    <th>
+                        Date
+                    </th>
+                </tr>
+                <apex:repeat value="{!eventIssues}" var="ei">
+                    <tr>
+                        <td>
+                            <a href="#" onclick="window.open('/apex/NEU_MD_Create_EventIssue?id={!Event.Id}&idEvent_issue={!ei.Id}', '_self');">
+                                <apex:outputText >{!ei.Name}</apex:outputText>
+                            </a>
+                        </td>
+                        <td>
+                            <apex:outputText >{!ei.Situation__c}</apex:outputText>
+                        </td>
+                        <td>
+                            <apex:outputText >{!ei.User__r.Name}</apex:outputText>
+                        </td>
+                        <td>
+                        <apex:outputText value="{0, date, MMMMM' 'd', 'yyyy '  ' h:mm a}">
+                            <apex:param value="{!ei.Date__c}" />
+                        </apex:outputText>
+                        </td>
+                    </tr>
+                </apex:repeat>
+            </table>
+
+        </apex:pageBlock>
+    </apex:form>
+</apex:page>

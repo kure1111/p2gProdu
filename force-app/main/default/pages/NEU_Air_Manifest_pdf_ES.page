@@ -1,0 +1,8 @@
+<!--
+ - Created by aserrano on 14/12/2017.
+ -->
+
+<apex:page sideBar="false" showHeader="false" standardController="Air_Waybill__c" extensions="NEU_Air_Manifest_pdf_ES" renderAs="pdf" standardStylesheets="false" language="es_MX">
+    <apex:stylesheet value="{!$Resource.airManifest_style}"/>
+    <apex:outputText value="{!manifest}" escape="false"/>
+</apex:page>

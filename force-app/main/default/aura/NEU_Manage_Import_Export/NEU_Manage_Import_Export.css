@@ -1,0 +1,36 @@
+.THIS .slds-section-title--divider
+{
+    background:rgba(25, 124, 190, 0.05);
+}
+
+.THIS .footer-div
+{
+    float: left;
+	width: 33%;
+}
+
+.THIS .footer-button
+{
+    float: left;
+}
+
+.THIS .aline-form
+{
+    float: left;
+    padding: 2.5px;
+}
+
+@media screen and (max-width: 500px)
+{
+    .THIS .slds-notify, .THIS .slds-notify_toast
+    {
+        display: block;
+        min-width: 10px;
+    }
+    
+    .THIS .slds-text-heading_small
+    {
+        font-size: 13px;
+        text-align: center;
+    }
+}

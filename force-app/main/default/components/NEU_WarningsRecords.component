@@ -1,0 +1,33 @@
+<apex:component controller="NEU_WarningsRecords">
+	<apex:attribute name="object" description="object selected" type="String" required="required" assignTo="{!object_selected}"/>
+	<apex:attribute name="id_record" description="id record selected" type="String" required="required" assignTo="{!id_record_selected}"/>
+	<style>
+        .message_error
+        {
+            float: left;
+            margin: 0 0 10px 0;
+            padding: 10px 10px 10px 40px;
+            background: #ff0000;
+            border: 2px solid #AD0000;
+            color: #ffffff;
+            border-radius: 5px;
+            width: 627px;
+            text-transform: uppercase;
+            
+            background-image: url(/resource/warning_info);
+            background-size: 25px;
+            background-repeat: no-repeat;
+            background-position: 10px;
+            
+            webkit-box-shadow: 0px 0px 10px 0px rgba(50, 50, 50, 1);
+            -moz-box-shadow: 0px 0px 10px 0px rgba(50, 50, 50, 1);
+            box-shadow: 0px 0px 10px 0px rgba(50, 50, 50, 1);
+        }
+        .capa_errores{width: 684px; margin: 0 auto 0 auto;}
+    </style>
+    <div class="capa_errores">
+    	<apex:repeat value="{!messages}" var="m">            
+        	<p class="message_error">{!m}</p>
+       	</apex:repeat>
+    </div>
+</apex:component>

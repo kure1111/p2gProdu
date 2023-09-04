@@ -1,0 +1,64 @@
+<apex:page standardController="Shipment__c" extensions="NEU_AirTrackTrace" sidebar="false" showHeader="false">
+    <apex:includeScript value="{!$Resource.jquery_3_3_1}"/> 
+    <script type="text/javascript" src="https://maps.google.com/maps/api/js?key=AIzaSyAK8UqXuiT9IFTwkvhF-Nh1wS2JAdk6Fig"></script> 
+    <script>
+        $(document).ready(function(){
+            initialize_inicio();
+        });
+        
+        var map;
+        var markers = [];
+        
+        function initialize_inicio() 
+        {
+            var centro = new google.maps.LatLng(8.4324774,20.1243519);
+            var mapOptions = {
+                zoom: 2,
+                center: centro
+                };
+            map = new google.maps.Map(document.getElementById('map_canvas'), mapOptions);
+            geocoder = new google.maps.Geocoder();
+            
+            show_route();
+        }
+        
+        function show_route() 
+        {
+            var mizindex = 10;
+            var marker;
+
+            var infooptions = { maxWidth: 300 };
+            var infowindow = new google.maps.InfoWindow({ options: infooptions });
+            
+            var directions = document.getElementById('{!$Component.form.direcciones_recogidas}').value.split(';');
+            
+            //ROUTE
+            for(var i = 0; i < directions.length; i++)
+            {
+                var informacion_producto = directions[i].split('|');
+                
+                posicion = new google.maps.LatLng(informacion_producto[2], informacion_producto[3]);
+                    
+                marker = new google.maps.Marker({map: map, position: posicion});
+                marker.setIcon(informacion_producto[1]);
+                    
+                markers.push(marker);
+                
+                //stops.push({location: posicion, stopover:true});
+                
+                var content = informacion_producto[0];
+                
+                google.maps.event.addListener(marker,'click', (function(marker,content,infowindow){ 
+                    return function() {
+                        infowindow.setContent(content);
+                        infowindow.open(map,marker);
+                    };
+                })(marker,content,infowindow));
+            }
+        }
+    </script>
+    <apex:form id="form">
+        <apex:inputHidden value="{!direcciones_recogidas}" id="direcciones_recogidas" html-class="direcciones_recogidas"/>
+        <div id="map_canvas" style="width:100%; height: 800px;"></div>
+    </apex:form>
+</apex:page>

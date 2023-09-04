@@ -1,0 +1,6 @@
+<apex:page standardController="Shipment_Program__c" extensions="NEU_SPG_Track_Trace" sidebar="false" id="page" docType="html-5.0" showHeader="false">
+    <apex:form id="form">
+        <iframe  src="{!$Site.BaseUrl}/apex/NEU_Track_and_Trace_Shipment_Programs?id={!Shipment_Program__c.Id}" width= "98%" height="1200px" style="border: 0px; display:{!IF(Shipment_Program__c.Freight_Mode__c !='Road' && Shipment_Program__c.Freight_Mode__c !='Rail','','none')}"></iframe>
+        <iframe  src="{!$Site.BaseUrl}/apex/NEU_Shipment_Program_View_Route?id={!Shipment_Program__c.Id}" width= "99%" height="1200px" style="border: 0px; display:{!IF(Shipment_Program__c.Freight_Mode__c == 'Road' || Shipment_Program__c.Freight_Mode__c == 'Rail','','none')}"></iframe>
+    </apex:form>
+</apex:page>

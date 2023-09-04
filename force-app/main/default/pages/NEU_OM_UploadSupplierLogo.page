@@ -1,0 +1,54 @@
+<apex:page StandardController="Account" extensions="NEU_OM_UploadSupplierLogo" cache="false" expires="0" sidebar="false" showHeader="false">
+<apex:stylesheet value="{!$Resource.Estilo_UploadImages}"/>
+
+    <apex:variable var="aTheme" value="{!$User.UIThemeDisplayed}"/>
+    <apex:variable id="varLightning" var="varLightning" value="{!IF((aTheme='Theme1')||(aTheme='Theme2')||(aTheme='Theme3'),'false','true')}"/>
+    <apex:variable id="varLightningTop" var="varLightningTop" value="{!IF(varLightning='true','_self','_blank')}"/>
+    <apex:form enctype="multipart/form-data">
+        <script>
+            function regresar()
+            {
+                upload_documents();
+            }
+        </script>
+        <!--<table border="0" cellspacing="5" cellpadding="5" class="tabla_listado" style="width:635px;">
+            <tr>
+                <th colspan="4">Account Logo</th>
+            </tr>
+            <tr> 
+                <th class="nombre_documentos" style="width:300px;">Logo</th>
+                <td style="{!ocupadoslogo}"><apex:inputFile value="{!logo.Body}" filename="{!logo.Name}" style="width:220px;"/></td>
+            </tr>
+            <tr>
+                <td><span class="leyenda" style="background: #DFEDCD;"></span>
+                <span style="float: left;">Uploaded File</span>
+                <span  class="leyenda" style="background: white;"></span>
+                <span>Empty File</span></td>
+                <td class="td_button" align="center"><input type="button" value="UPLOAD DOCUMENTS" onclick="regresar();"/></td>
+            </tr>
+        </table>
+        <p class="resultado"><apex:outputText value="{!resultado}" escape="false"/></p>
+        <apex:actionFunction name="upload_documents" action="{!upload}"/>-->
+        <apex:pageBlock id="block1" mode="maindetail">
+        
+            <apex:pageBlockButtons >
+                <apex:commandButton value="Upload documents" action="{!upload}"/>
+                <apex:commandButton value="Return Account" status="myStatus" action="{!return_account}" rendered="{!varLightning}"/>
+            </apex:pageBlockButtons>
+            
+            <apex:pageBlockSection title="Account Logo" columns="1">
+                <apex:pageBlockSectionItem >
+                    <apex:pageBlockSectionItem >
+                        <apex:outputLink value="{!Account.Url_Factory_Logo__c}" target="_blank" rendered="{!Account.Url_Factory_Logo__c !=null}">
+                                Logo
+                        </apex:outputLink>
+                        <apex:outputLabel value="Logo" rendered="{!Account.Url_Factory_Logo__c == null}"/>
+                    </apex:pageBlockSectionItem>
+                    <apex:inputFile value="{!logo}" filename="{!logoName}"/>
+                </apex:pageBlockSectionItem>
+            </apex:pageBlockSection>
+            
+        </apex:pageBlock>
+        
+    </apex:form>
+</apex:page>

@@ -1,0 +1,193 @@
+<apex:page StandardController="Air_Waybill__c" extensions="NEU_Air_Waybills_save_PDF" >
+    <apex:includeScript value="{!$Resource.neu_jquery}"/> 
+    <apex:includeScript value="{!$Resource.jquery_1_10_2}"/> 
+    <apex:includeScript value="{!$Resource.jquery_ui_1_10_3}"/>
+    <apex:includeScript value="{!$Resource.neurored_jquery}"/> 
+    <apex:stylesheet value="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css"/>
+    <apex:stylesheet value="{!URLFOR($Resource.jquery_ui_1_10_3_css,'jquery-ui-1.10.3.min.css')}"/>
+    <script>
+    $(document).ready(function () {
+        fail();
+         });
+        function sacarcapa()
+        {           
+            var id_del_waybill = $($.sfId('{!$Component.form.id_waybill}')).val();
+            if ($($.sfId('{!$Component.form.id_waybill}')).val() == '')
+            {
+                $('#contenedormensaje').css("display", "block");
+                         $(function() {
+                $( "#contenedormensaje" ).dialog({
+                     height: 'auto',
+                     width: 'auto',
+                     modal: true,
+                      buttons: {
+                    "Accept": function() {
+                       $( this ).dialog( "close" );
+                       location.href='/{!Air_Waybill__c.Id}';
+                    },
+                    //location.href='/{!Air_Waybill__c.Id}';
+                    }
+                     });
+                });
+            }
+      }
+	</script>
+    <apex:form id="form">
+    	<apex:actionFunction name="fail" status="myStatus" reRender="linesSelector"  action="{!fail}" oncomplete="sacarcapa();"/>
+    	<apex:actionFunction name="updateFilters" action="{!updateFilters}" status="myStatus" reRender="radios"/>
+    	
+    	<apex:outputPanel id="linesSelector">
+         <div style="display:none;" id="contenedormensaje" title="Errors">
+                <p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>{!errores}</p>
+            </div>
+            <apex:inputHidden value="{!errores}" id="errores"/>
+            <apex:inputHidden value="{!id_waybill}" id="id_waybill"/>
+        </apex:outputPanel>
+    	
+        <apex:outputLink value="{!URLFOR($Action.Air_Waybill__c.View,Air_Waybill__c.id)}">
+           <apex:sectionHeader subtitle="{!Air_Waybill__c.Name}" title="Generate {!$ObjectType.Air_Waybill__c.labelPlural}"></apex:sectionHeader>
+        </apex:outputLink>
+        
+        <apex:pageBlock id="block" title="Air Waybill PDF customization">
+            <apex:pageBlockButtons >
+                <apex:commandButton value="Return to Waybill" status="myStatus"  styleClass="return" action="{!return_page}"/>
+                <apex:commandButton value="Refresh PDF" status="myStatus" action="{!refrescar_pdf}" rendered="{!(awb_type == 'house' && !record.Hide_House_Totals__c) || awb_type == 'master'}"/>
+                <apex:commandButton value="Clear Values" status="myStatus" action="{!clear_values}" rendered="{!(awb_type == 'house' && !record.Hide_House_Totals__c) || awb_type == 'master'}"/>
+                <apex:commandButton value="Create Associated Document" status="myStatus"  styleClass="crear" action="{!crear}"/>
+            </apex:pageBlockButtons>
+            <apex:pageBlockSection columns="2" title="House Waybill:" rendered="{!awb_type == 'house' && !record.Hide_House_Totals__c}">
+            	<apex:inputField value="{!record.Weight_Charge_House__c}"/>
+            	<apex:inputField value="{!record.Valuation_Charge_House__c}"/>
+            	<apex:inputField value="{!record.Tax_House__c}"/>
+            	<apex:inputField value="{!record.Total_Other_Charges_Due_Agent_House__c}"/>
+            	<apex:inputField value="{!record.Total_Other_Charges_Due_House__c}"/>
+            	<apex:inputField value="{!record.Other_Charges_House__c}"/>
+            </apex:pageBlockSection>
+            <apex:pageBlockSection columns="1" title="House Waybill Lines:" rendered="{!awb_type == 'house' && !record.Hide_House_Totals__c}">
+            	<apex:pageBlockTable value="{!lines_house}" var="l">
+					<apex:column >
+	                    <apex:facet name="header">
+                       		<div class="div_cabecera" style ="cursor: pointer;">
+                       			Waybill Line Name
+	                        </div>
+	                    </apex:facet>
+	                    <apex:outputField value="{!l.Name}"/>							
+					</apex:column>
+					<apex:column >
+	                    <apex:facet name="header">
+	                       	<div class="div_cabecera" style ="cursor: pointer;">
+	                       		Description
+	                        </div>
+	                    </apex:facet>
+	                    <apex:outputField value="{!l.Description__c}"/>							
+					</apex:column> 					            	
+					<apex:column >
+	                    <apex:facet name="header">
+	                       	<div class="div_cabecera" style ="cursor: pointer;">
+	                       		Rate/Charge House
+	                        </div>
+	                    </apex:facet>
+	                    <apex:inputField value="{!l.Rate_Charge_House__c}"/>							
+					</apex:column>
+					<apex:column >
+	                    <apex:facet name="header">
+	                       	<div class="div_cabecera" style ="cursor: pointer;">
+	                       		Chargeable Weight House
+	                        </div>
+	                    </apex:facet>
+	                    <apex:inputField value="{!l.Chargeable_Weight_House__c}"/>							
+					</apex:column>
+					<apex:column >
+	                    <apex:facet name="header">
+	                       	<div class="div_cabecera" style ="cursor: pointer;">
+	                       		Min Amount House
+	                        </div>
+	                    </apex:facet>
+	                    <apex:inputField value="{!l.Min_Amount_House__c}"/>							
+					</apex:column>	
+            	</apex:pageBlockTable>
+            </apex:pageBlockSection>
+            <apex:pageBlockSection columns="2" title="Master Waybill:" rendered="{!awb_type == 'master'}">
+            	<apex:inputField value="{!record.Weight_Charge_Master__c}"/>
+            	<apex:inputField value="{!record.Valuation_Charge_Master__c}"/>
+            	<apex:inputField value="{!record.Tax_Master__c}"/>
+            	<apex:inputField value="{!record.Total_Other_Charges_Due_Agent_Master__c}"/>
+            	<apex:inputField value="{!record.Total_Other_Charges_Due_Master__c}"/>
+            	<apex:inputField value="{!record.Other_Charges_Master__c}"/>
+            </apex:pageBlockSection>
+            <apex:pageBlockSection columns="1" title="Master Waybill Lines:" rendered="{!awb_type == 'master'}">
+            	<apex:pageBlockTable value="{!lines}" var="l">
+					<apex:column >
+	                    <apex:facet name="header">
+                       		<div class="div_cabecera" style ="cursor: pointer;">
+                       			Waybill Line Name
+	                        </div>
+	                    </apex:facet>
+	                    <apex:outputField value="{!l.Name}"/>							
+					</apex:column>
+					<apex:column >
+	                    <apex:facet name="header">
+	                       	<div class="div_cabecera" style ="cursor: pointer;">
+	                       		Description
+	                        </div>
+	                    </apex:facet>
+	                    <apex:outputField value="{!l.Description__c}"/>							
+					</apex:column> 					            	
+					<apex:column >
+	                    <apex:facet name="header">
+	                       	<div class="div_cabecera" style ="cursor: pointer;">
+	                       		Rate/Charge Master
+	                        </div>
+	                    </apex:facet>
+	                    <apex:inputField value="{!l.Rate_Charge_Master__c}"/>							
+					</apex:column>
+					<apex:column >
+	                    <apex:facet name="header">
+	                       	<div class="div_cabecera" style ="cursor: pointer;">
+	                       		Chargeable Weight Master
+	                        </div>
+	                    </apex:facet>
+	                    <apex:inputField value="{!l.Chargeable_Weight_Master__c}"/>							
+					</apex:column>
+					<apex:column >
+	                    <apex:facet name="header">
+	                       	<div class="div_cabecera" style ="cursor: pointer;">
+	                       		Min Amount Master
+	                        </div>
+	                    </apex:facet>
+	                    <apex:inputField value="{!l.Min_Amount_Master__c}"/>							
+					</apex:column>					            	 		     		
+            	</apex:pageBlockTable>
+            </apex:pageBlockSection>
+            <apex:pageBlockSection columns="2" title="CHINA SOUTHERN AIRLINES:" rendered="{!record.Airline_Code_Number__c == '784'}">
+            	<apex:outputLabel value="Format: Airline+Flight Number/Day" style="margin-left: 11%;"/>
+            	<apex:outputLabel value="Example: CZ378/02" style="margin-left: 11%;"/>
+            	<apex:inputField value="{!record.Alternative_Fligtht_1__c}"/>
+            	<apex:inputField value="{!record.Alternative_Fligtht_2__c}"/>
+            </apex:pageBlockSection>
+            <apex:outputPanel style="padding: 10px;">
+            	<hr/>
+            	<apex:inputCheckbox value="{!displayBackground}" onchange="updateFilters();"/>            
+        	    <span>Display AirWaybill Background</span>
+        	    <br/><br/>
+            </apex:outputPanel>
+            <apex:outputPanel id="radios">
+                <iframe scrolling="auto" id="EN" src="{!$Site.BaseUrl}/apex/NEU_Air_Waybills_PDF?id={!Air_Waybill__c.Id}&type={!awb_type}&background={!displayBackground}" width= "100%" height="850px"></iframe>
+            </apex:outputPanel>
+       </apex:pageBlock>
+        
+       <apex:outputpanel >
+               <apex:actionstatus id="myStatus">
+                   <apex:facet name="start">
+                       <div class="waitingSearchDiv" id="el_loading" style="background-color: #fbfbfb;
+                              height: 100%;opacity:0.65;width:100%;"> 
+                           <div class="waitingHolder" style="top: 74.2px; width: 91px;">
+                               <img class="waitingImage" src="/img/loading.gif" title="Please Wait..." />
+                               <span class="waitingDescription">Loading...</span>
+                           </div>
+                       </div>
+                   </apex:facet>
+               </apex:actionstatus>
+        </apex:outputpanel>
+    </apex:form>
+</apex:page>

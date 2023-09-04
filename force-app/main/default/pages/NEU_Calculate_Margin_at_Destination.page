@@ -1,0 +1,226 @@
+<apex:page id="page" standardController="Customer_Quote__c" extensions="NEU_Calculate_Margin_at_Destination" standardStylesheets="false">
+ 
+    <apex:includeScript value="{!$Resource.jquery_1_10_2}"/> 
+    <apex:includeScript value="{!$Resource.jquery_ui_1_10_3}"/>
+    <apex:includeScript value="{!$Resource.neurored_jquery}"/> 
+    <apex:stylesheet value="{!URLFOR($Resource.jquery_ui_1_10_3_css,'jquery-ui-1.10.3.min.css')}"/>
+        <script>
+            $(document).ready(function () {
+            setDecimalSep($('#page\\:form\\:decimalSep').val(),$('#page\\:form\\:thousandSep').val());
+             calcular_inicio();
+             });
+             
+             
+        function sort_data_quote(n)
+        {
+            var ordenacion = '';
+
+            if($('#orden_ad_quotes').val() == 'desc' || $('#orden_ad_quotes').val() == 'none')
+            {
+                ordenacion = n+'-asc';
+                $('#orden_ad_quotes').val('asc');
+            }
+            else
+            {
+                ordenacion = n+'-desc';
+                $('#orden_ad_quotes').val('desc');
+            }
+            
+            document.getElementById('{!$Component.form.orden_quotes}').value = ordenacion;
+            compare_data();
+        }
+        
+             
+             /*si lo que meto es el margen*/
+        (function($) {
+            $.fn.calcular_margen_precio= (function() {
+                this.each(function(){
+                 var items_selected =$(this).attr('neudata');
+                 var  margin = $(this).getFloatSep();
+                 if(margin == 100)
+                 {
+                     $('table.tabla_principal input[neudata="precio_margin'+items_selected+'"]').val('');
+                     $('table.tabla_principal span[neudata="total_amount_linea'+items_selected+'"]').html('');
+                     $(this).css('color','red');
+                 }
+                 else
+                 {
+                     var buy_price = $('table.tabla_principal input[neudata="buy_price'+items_selected+'"]').getFloat();
+                     var total_precio = (buy_price/(1-margin/100));
+                     total_precio = total_precio.toFixed(2);
+                    
+                     var buy_price_todos_los_decimales = $('table.tabla_principal input[neudata="precio_unit_destino'+items_selected+'"]').getFloat();
+                    
+                     var total_precio_todos_los_decimales = (buy_price_todos_los_decimales /(1-margin/100));
+                     total_precio_todos_los_decimales = total_precio_todos_los_decimales;
+                     
+                     $('table.tabla_principal input[neudata="precio_margin'+items_selected+'"]').setFloatSep(total_precio_todos_los_decimales.toFixed(2));
+                 
+                         
+                     if(total_precio != total_precio_todos_los_decimales)
+                         $(this).css('color','red');
+                     else
+                         $(this).css('color','black');
+                    
+                     var unidades = $('table.tabla_principal input[neudata2="unidades_total_sell_price'+items_selected+'"]').getFloat();
+                      $('table.tabla_principal span[neudata="total_amount_linea'+items_selected+'"]').setFloatSep(($('table.tabla_principal input[neudata="precio_margin'+items_selected+'"]').getFloatSep()*unidades).toFixed(2));// precio por unidades
+                     
+                 }
+             });
+             calcular_totales();
+           }); 
+        })(jQuery);
+        
+        /*si lo que meto es el sell price  margen =(1-(costo/precio))*100      markup = ((precio/costo)-1)*100*/
+          (function($) {
+            $.fn.calcular_margen_precio_margen= (function() {
+                this.each(function(){
+                 var items_selected =$(this).attr('neudata2');
+                 var buy_price = $('table.tabla_principal input[neudata="buy_price'+items_selected+'"]').getFloat();
+                 var buy_price_todos_los_decimales = $('table.tabla_principal input[neudata="precio_unit_destino'+items_selected+'"]').getFloat();
+                 var  sellprice = $(this).getFloatSep();
+                 if(sellprice != 0)
+                     $('table.tabla_principal input[neudata2="margin'+items_selected+'"]').setFloatSep(((1-(buy_price_todos_los_decimales /sellprice))*100).toFixed(2));
+                 else
+                     $('table.tabla_principal input[neudata2="margin'+items_selected+'"]').val('');
+                     
+                 var unidades = $('table.tabla_principal input[neudata2="unidades_total_sell_price'+items_selected+'"]').getFloat();
+                  $('table.tabla_principal span[neudata="total_amount_linea'+items_selected+'"]').setFloatSep(($('table.tabla_principal input[neudata="precio_margin'+items_selected+'"]').getFloatSep()*unidades).toFixed(2));// precio por unidades
+                 
+                 $('table.tabla_principal input[neudata2="margin'+items_selected+'"]').css('color','black');
+             });
+             calcular_totales();
+           });
+        })(jQuery);
+        
+        function calcular_inicio()
+       {
+                $('.margin_input').calcular_margen_precio();
+       }
+       function calcular_totales()
+       {
+           var total_precio = 0;
+           var total_sin_margen = 0;
+           var total_con_margen = 0;
+           var atributo_neudata;
+           $('table.tabla_principal .id_linea').each(function() 
+           {
+                   total_precio += $('table.tabla_principal span[neudata="total_amount_linea'+$(this).attr('neudata')+'"]').getFloatSep();
+                   var unidades = $('table.tabla_principal input[neudata2="unidades_total_sell_price'+$(this).attr('neudata')+'"]').getFloat();
+                   total_sin_margen += $('table.tabla_principal input[neudata="buy_price'+$(this).attr('neudata')+'"]').getFloat()*unidades;
+                   total_con_margen += $('table.tabla_principal input[neudata="precio_margin'+$(this).attr('neudata')+'"]').getFloatSep()*unidades;
+           });
+           $('.sum_destination_amount').setFloatSep(total_precio.toFixed(2));
+           $('.total_margin').html(formatFloatSep((100-(total_sin_margen.toFixed(2)*100/total_con_margen.toFixed(2))).toFixed(2)+' %'));
+       }
+                
+            function calcular_margen_general()
+            {
+                 $('.margin_input').setFloatSep($('.margen_general').getFloatSep().toFixed(2));
+                 $('.margin_input').calcular_margen_precio();
+                 $('.margen_general').val('');
+            }
+            
+       </script>
+   <apex:form id="form">
+   <apex:inputHidden value="{!decimalSep}" id="decimalSep"/>
+   <apex:inputHidden value="{!thousandSep}" id="thousandSep"/>
+         <a href="{!URLFOR(URLFOR($Action.Customer_Quote__c.View,Id))}" title="return to {!$ObjectType.Customer_Quote__c.label}"><apex:sectionHeader title="{!$ObjectType.Customer_Quote__c.label}" subtitle="{!Customer_Quote__c.Name}"/></a>
+        <apex:pagemessages id="errores"/>
+        <apex:actionFunction name="compare_data" action="{!go_compare}" reRender="block_table" status="myStatus"/> 
+        <apex:actionFunction name="actualizar_datos" reRender="tabla_lineas" status="myStatus" oncomplete="calcular_inicio();"/> 
+      
+          <apex:pageBlock id="block_table">
+           <ul style="float: right;  width: 386px;     list-style: none;">
+                  <li style="float: left; width: 175px;     font-weight: bold;">SUM Sell Destination Amount</li>
+                  <li style="float: left; width: 165px;     text-align: right;" ><span class="sum_destination_amount"></span></li>
+                  <li style="float: left; width: 175px;     font-weight: bold;">Total Margin</li>
+                  <li style="float: left; width: 165px;     text-align: right;"><span class="total_margin"></span></li>
+               </ul>
+            <apex:pageBlockButtons rendered="{!ShowImportExportItemLines}" location="top">
+                <apex:commandButton status="myStatus" value="Save" reRender="block_table, errores" action="{!save_margin}"/>
+            </apex:pageBlockButtons>
+            <apex:pageBlockTable value="{!Lines}" var="item"  rendered="{!ShowImportExportItemLines}" styleClass="tabla_principal" id="tabla_lineas">
+            
+              
+                <apex:column >
+                    <apex:facet name="header"><div style="text-align:center; cursor: pointer;" onclick="sort_data_quote('quote_line.Import_Export_Quote__r.Name');">Import-Export Quote</div></apex:facet>
+                    <c:customobject2 objid="{!item.quote_line.Import_Export_Quote__r.Id}" objname="{!item.quote_line.Import_Export_Quote__r.Name}"/>
+                </apex:column>
+                <apex:column >
+                    <apex:facet name="header"><div style="text-align:center; cursor: pointer;" onclick="sort_data_quote('quote_line.Name');">Line</div></apex:facet>
+                    <c:customobject2 objid="{!item.quote_line.Id}" objname="{!item.quote_line.Name}" html-neudata="{!item.quote_line.Id}" html-class="id_linea"/>
+                </apex:column>
+                 <apex:column style="text-align: right;">
+                        <apex:facet name="header"><div style="text-align:center; cursor: pointer;" onclick="sort_data_quote('quote_line.Delivery_Number__c');">Delivery<br/>Number</div></apex:facet>
+                        <apex:outputText value="{!item.quote_line.Delivery_Number__c}" style="text-align: right;" />
+                    </apex:column>
+                    <apex:column style="text-align: right;">
+                        <apex:facet name="header"><div style="text-align:center; cursor: pointer;" onclick="sort_data_quote('quote_line.Delivery_Date__c');">Delivery<br/>Date</div></apex:facet>
+                        <apex:outputField value="{!item.quote_line.Delivery_Date__c}" style="text-align: right;" />
+                </apex:column>
+                <apex:column >
+                    <apex:facet name="header"><div style="text-align:center; cursor: pointer;" onclick="sort_data_quote('quote_line.Item_Name__r.Name');">Item</div></apex:facet>
+                    <c:customobject2 objid="{!item.quote_line.Item_Name__r.Id}" objname="{!item.quote_line.Item_Name__r.Name}"/>
+                </apex:column>
+                <apex:column title="Item aditional info">
+                    <apex:facet name="header"><div style="text-align:center; cursor: pointer;" onclick="sort_data_quote('quote_line.Extension_Item_Name__c');">Extension Item Name</div></apex:facet>
+                    <apex:outputText rendered="{!item.quote_line!=null}" value="{!item.quote_line.Extension_Item_Name__c}"/>
+                </apex:column>
+                 <apex:column style="text-align:right">
+                    <apex:facet name="header"><div style="text-align:center; cursor: pointer;" onclick="sort_data_quote('quote_line.Units__c');">Units</div></apex:facet>
+                    <apex:outputField value="{!item.quote_line.Units__c}"/>
+                    <apex:inputhidden value="{!item.quote_line.Units__c}" html-neudata="{!item.Id}" html-neudata2="unidades_total_sell_price{!item.Id}" html-class="supplyinput" /> 
+                </apex:column>
+                <apex:column style="text-align:right">
+                    <apex:facet name="header"><div style="text-align:center; cursor: pointer;" onclick="sort_data_quote('unitoriginprice');">Unit Destination<br/> Price</div></apex:facet>
+                    <apex:outputField value="{!item.quote_line.Unit_Destination_Buy_Price__c}"/>
+                    <apex:inputHidden value="{!item.quote_line.Unit_Destination_Buy_Price__c}" html-neudata="buy_price{!item.Id}"/>
+                </apex:column>
+                <apex:column style="text-align:center">
+                    <apex:facet name="header"><div style="text-align:center;">Margin 
+                        <img src="/img/func_icons/util/checkmark16.gif" onclick="calcular_margen_general();" style="vertical-align: text-top; cursor: pointer;" title="Apply"/><br/>
+                        <input type="text" value="{!margin_general}" style="text-align: right; width: 61px; margin-top: 2px;" class="margen_general"/>
+                        </div>
+                     </apex:facet>
+                    <apex:inputField style="text-align:right;width:5em" value="{!item.quote_line.Margin_at_Destination__c}" onKeyUp="$(this).calcular_margen_precio();"  html-neudata="{!item.Id}" html-neudata2="margin{!item.Id}" styleClass="margin_input" /> 
+                </apex:column>
+                <apex:column style="text-align:right">
+                    <apex:facet name="header"><div style="text-align:center; cursor: pointer;" onclick="sort_data_quote('precio_margin');">Sell Price <br/></div></apex:facet>
+                    <apex:inputText value="{!item.precio_margin}" style="text-align: right;    margin-right: 2px;" size="5" onKeyUp="$(this).calcular_margen_precio_margen();" html-neudata2="{!item.Id}"  html-neudata="precio_margin{!item.Id}" styleClass="precio_margin_input" /> 
+                   <apex:outputText value="{!item.moneda_origen_linea}" />
+                   <apex:inputHidden value="{!item.unitoriginprice}" html-neudata="precio_unit_destino{!item.Id}"/>
+                </apex:column>
+                <apex:column style="text-align:right">
+                    <apex:facet name="header"><div style="text-align:center; cursor: pointer;" onclick="sort_data_quote('totalsellamount');">Total Sell <br/>Amount</div></apex:facet>
+                    <apex:outputText value="{!item.totalsellamount}" style="text-align:right;     margin-right: 2px;" html-neudata="total_amount_linea{!item.Id}"/>
+                    
+                    <apex:outputText value="{!item.moneda_origen_linea}" />
+                </apex:column>
+                <apex:column style="text-align:center">
+                    <apex:facet name="header"><div style="text-align:center">Cons</div></apex:facet>
+                    <c:checkbox value="{!item.quote_line.Consolidated__c}" checkedtitle="Consolidated" notcheckedtitle="Not consolidated"/>
+                </apex:column>
+            </apex:pageBlockTable>
+         </apex:pageBlock> 
+         
+        <input type="hidden" value="none" id="orden_ad_quotes"/>
+        <apex:inputHidden value="{!orden_quotes}" id="orden_quotes"/>
+        
+         
+         <apex:outputpanel >
+           <apex:actionstatus id="myStatus">
+               <apex:facet name="start">
+                   <div class="waitingSearchDiv" id="el_loading" style="background-color: #fbfbfb;
+                          height: 100%;opacity:0.65;width:100%;"> 
+                       <div class="waitingHolder" style="top: 74.2px; width: 91px;">
+                           <img class="waitingImage" src="/img/loading.gif" title="Please Wait..." />
+                           <span class="waitingDescription">Loading...</span>
+                       </div>
+                   </div>
+               </apex:facet>
+           </apex:actionstatus>
+        </apex:outputpanel>
+        
+   </apex:form>
+</apex:page>

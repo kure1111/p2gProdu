@@ -1,0 +1,66 @@
+<apex:page standardController="Account" extensions="NEU_OM_Allocate_Offers_Account" standardStylesheets="false">
+<apex:includeScript value="{!$Resource.neu_jquery}"/> 
+<apex:stylesheet value="{!$Resource.Estilo_Allocate_PriceList}"/>
+	<apex:form >
+		<script>
+			
+			$(document).ready(function(){
+				$('.chequeado').attr("src","{!$Resource.Check}");
+			
+				var id_familias='';
+			
+				$('.linea_bussiness_area').click(function(){
+				
+					id_familias = $(this).attr('id');
+					
+					$('.tabla_price_list').each(function(){
+						if($(this).attr('id') == id_familias)
+						{
+							$(this).css("display", "block");
+						}
+						else
+						{
+							$(this).css("display", "none");
+						}
+						
+					});
+					
+						$('.linea_bussiness_area').each(function(){
+						
+							if($(this).attr('id') == id_familias)
+								$(this).css("background", "#F1EDED");
+							else
+								$(this).css("background", "#CDCDCD");
+							
+						});
+				});
+				
+				$('.botoncrear').click(function(){
+					
+					var lista_check = '';
+						
+					$('.tabla_price_list input[type=checkbox]:checked').each(function(){
+						
+						lista_check += $(this).attr('id') + '&';
+						
+					});
+					document.getElementById('{!$Component.lista_check}').value = lista_check;
+					asignar_oferta();
+					
+				});
+	
+			});
+			
+		</script>
+		<span id="cabecera_titulo">Allocate E-Commerce Offers to Account</span>
+		<div id="fichas">
+				<ul class="lista_fichas">
+					<apex:outputText value="{!listado_businesarea}" escape="false"/>
+				</ul>
+			<apex:outputText value="{!resultado_offers}" escape="false"/>
+		</div>
+		<apex:inputHidden value="{!lista_check}" id="lista_check"/>
+		<apex:actionFunction name="asignar_oferta" action="{!asignar_oferta}"/>
+		<apex:outputText value="{!resultado}" escape="false"/>
+	</apex:form>
+</apex:page>

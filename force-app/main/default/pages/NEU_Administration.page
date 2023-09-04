@@ -1,0 +1,87 @@
+<apex:page >
+    <apex:form >
+    <apex:sectionHeader subtitle="Central Administration" title="{!$User.FirstName+' '+$User.LastName}"/>
+        <apex:pageBlock mode="maindetail">
+            
+            <apex:pageBlockSection title="Accounts" columns="2">
+                <apex:outputLink value="{!$Site.BaseUrl+'/'+URLFOR($ObjectType.Account)}">{!$ObjectType.Account.labelPlural}</apex:outputLink>
+                <apex:outputLink value="{!$Site.BaseUrl+'/'+URLFOR($ObjectType.Contact)}">{!$ObjectType.Contact.labelPlural}</apex:outputLink>
+            </apex:pageBlockSection>
+            
+            <apex:pageBlockSection title="Items" columns="2">
+                <apex:outputLink value="{!$Site.BaseUrl+'/'+URLFOR($ObjectType.Product_Family__c)}">{!$ObjectType.Product_Family__c.labelPlural}</apex:outputLink>
+                <apex:outputLink value="{!$Site.BaseUrl+'/'+URLFOR($ObjectType.Sourcing_Item__c)}">{!$ObjectType.Sourcing_Item__c.labelPlural}</apex:outputLink>
+                <apex:outputLink value="{!$Site.BaseUrl+'/'+URLFOR($ObjectType.Subfamily__c)}">{!$ObjectType.Subfamily__c.labelPlural}</apex:outputLink>
+                <apex:outputLink value="{!$Site.BaseUrl+'/'+URLFOR($ObjectType.Evaluation_Criteria__c)}">{!$ObjectType.Evaluation_Criteria__c.labelPlural}</apex:outputLink>
+                <apex:outputLink value="{!$Site.BaseUrl+'/'+URLFOR($ObjectType.Item_Historical_Data__c)}">{!$ObjectType.Item_Historical_Data__c.labelPlural}</apex:outputLink>
+            </apex:pageBlockSection>
+            
+            <apex:pageBlockSection title="Services Rates" columns="2">
+                <apex:outputLink value="{!$Site.BaseUrl+'/'+URLFOR($ObjectType.Fee__c)}">{!$ObjectType.Fee__c.labelPlural}</apex:outputLink>
+                <apex:outputLink value="{!$Site.BaseUrl+'/'+URLFOR($ObjectType.Supplier_Quote_Order_Fee_Line__c)}">{!$ObjectType.Supplier_Quote_Order_Fee_Line__c.labelPlural}</apex:outputLink>
+                <apex:outputLink value="{!$Site.BaseUrl+'/'+URLFOR($ObjectType.Import_Export_Fee_Line__c)}">{!$ObjectType.Import_Export_Fee_Line__c.labelPlural}</apex:outputLink>
+                <apex:outputLink value="{!$Site.BaseUrl+'/'+URLFOR($ObjectType.Shipment_Fee_Line__c)}">{!$ObjectType.Shipment_Fee_Line__c.labelPlural}</apex:outputLink>
+            </apex:pageBlockSection>
+            
+            <apex:pageBlockSection title="Transport" columns="2">
+                <apex:outputLink value="{!$Site.BaseUrl+'/'+URLFOR($ObjectType.Carrier_Line_Load_Point__c)}">{!$ObjectType.Carrier_Line_Load_Point__c.labelPlural}</apex:outputLink>
+                <apex:outputLink value="{!$Site.BaseUrl+'/'+URLFOR($ObjectType.Country__c)}">{!$ObjectType.Country__c.labelPlural}</apex:outputLink>
+                <apex:outputLink value="{!$Site.BaseUrl+'/'+URLFOR($ObjectType.Delivery_Zone__c)}">{!$ObjectType.Delivery_Zone__c.labelPlural}</apex:outputLink>
+                <apex:outputLink value="{!$Site.BaseUrl+'/'+URLFOR($ObjectType.Location__c)}">{!$ObjectType.Location__c.labelPlural}</apex:outputLink>
+                <apex:outputLink value="{!$Site.BaseUrl+'/'+URLFOR($ObjectType.Vessel_Flight__c)}">{!$ObjectType.Vessel_Flight__c.labelPlural}</apex:outputLink>
+                <apex:outputLink value="{!$Site.BaseUrl+'/'+URLFOR($ObjectType.State__c)}">{!$ObjectType.State__c.labelPlural}</apex:outputLink>
+                <apex:outputLink value="{!$Site.BaseUrl+'/'+URLFOR($ObjectType.Vehicle__c)}">{!$ObjectType.Vehicle__c.labelPlural}</apex:outputLink>
+            </apex:pageBlockSection>
+            
+            <apex:pageBlockSection title="Containers" columns="2">
+                <apex:outputLink value="{!$Site.BaseUrl+'/'+URLFOR($ObjectType.Container_Type__c)}">{!$ObjectType.Container_Type__c.labelPlural}</apex:outputLink>
+                <apex:outputLink value="{!$Site.BaseUrl+'/'+URLFOR($ObjectType.NEU_Factory__c)}">{!$ObjectType.NEU_Factory__c.labelPlural}</apex:outputLink>
+                <apex:outputLink value="{!$Site.BaseUrl+'/'+URLFOR($ObjectType.Pallet_Type__c)}">{!$ObjectType.Pallet_Type__c.labelPlural}</apex:outputLink>
+            </apex:pageBlockSection>
+        
+        
+            <apex:pageBlockSection title="Warehouses" columns="2">
+                <apex:outputLink value="{!$Site.BaseUrl+'/'+URLFOR($ObjectType.Warehouse__c)}">{!$ObjectType.Warehouse__c.labelPlural}</apex:outputLink>
+                <apex:outputLink value="{!$Site.BaseUrl+'/'+URLFOR($ObjectType.Warehouse_Storage_Bin__c)}">{!$ObjectType.Warehouse_Storage_Bin__c.labelPlural}</apex:outputLink>
+                <apex:outputLink value="{!$Site.BaseUrl+'/'+URLFOR($ObjectType.Inventory_Entry__c)}">{!$ObjectType.Inventory_Entry__c.labelPlural}</apex:outputLink>
+                <apex:outputLink value="{!$Site.BaseUrl+'/'+URLFOR($ObjectType.Inventory_Trace__c)}">{!$ObjectType.Inventory_Trace__c.labelPlural}</apex:outputLink>
+                
+            </apex:pageBlockSection>
+            
+            <apex:pageBlockSection title="Supply Project" columns="2">
+                <apex:outputLink value="{!$Site.BaseUrl+'/'+URLFOR($ObjectType.Supply_Project__c)}">{!$ObjectType.Supply_Project__c.labelPlural}</apex:outputLink>
+                <apex:outputLink value="{!$Site.BaseUrl+'/'+URLFOR($ObjectType.Supplier_Request_RFP__c)}">{!$ObjectType.Supplier_Request_RFP__c.labelPlural}</apex:outputLink>
+            </apex:pageBlockSection>
+         
+            <apex:pageBlockSection title="Supplier Quote / Order" columns="2">
+                <apex:outputLink value="{!$Site.BaseUrl+'/'+URLFOR($ObjectType.Supplier_Quote__c)}">{!$ObjectType.Supplier_Quote__c.labelPlural}</apex:outputLink>
+                <apex:outputLink value="{!$Site.BaseUrl+'/'+URLFOR($ObjectType.Supplier_Quote_Line__c)}">{!$ObjectType.Supplier_Quote_Line__c.labelPlural}</apex:outputLink>
+                <apex:outputLink value="{!$Site.BaseUrl+'/'+URLFOR($ObjectType.Supplier_Quote_Order_Fee_Line__c)}">{!$ObjectType.Supplier_Quote_Order_Fee_Line__c.labelPlural}</apex:outputLink>
+            </apex:pageBlockSection>
+        
+            <apex:pageBlockSection title="Import-Export Quote/Order" columns="2">
+                <apex:outputLink value="{!$Site.BaseUrl+'/'+URLFOR($ObjectType.Customer_Quote__c)}">{!$ObjectType.Customer_Quote__c.labelPlural}</apex:outputLink>
+                <apex:outputLink value="{!$Site.BaseUrl+'/'+URLFOR($ObjectType.Quote_Item_Line__c)}">{!$ObjectType.Quote_Item_Line__c.labelPlural}</apex:outputLink>
+                <apex:outputLink value="{!$Site.BaseUrl+'/'+URLFOR($ObjectType.Import_Export_Fee_Line__c)}">{!$ObjectType.Import_Export_Fee_Line__c.labelPlural}</apex:outputLink>
+            </apex:pageBlockSection>
+            
+            <apex:pageBlockSection title="Shipment" columns="2">
+                <apex:outputLink value="{!$Site.BaseUrl+'/'+URLFOR($ObjectType.Shipment_Program__c)}">{!$ObjectType.Shipment_Program__c.labelPlural}</apex:outputLink>
+                <apex:outputLink value="{!$Site.BaseUrl+'/'+URLFOR($ObjectType.Shipment_Line__c)}">{!$ObjectType.Shipment_Line__c.labelPlural}</apex:outputLink>
+                <apex:outputLink value="{!$Site.BaseUrl+'/'+URLFOR($ObjectType.Shipment__c)}">{!$ObjectType.Shipment__c.labelPlural}</apex:outputLink>
+                <apex:outputLink value="{!$Site.BaseUrl+'/'+URLFOR($ObjectType.Shipment_Fee_Line__c)}">{!$ObjectType.Shipment_Fee_Line__c.labelPlural}</apex:outputLink>
+            </apex:pageBlockSection>
+        
+            <apex:pageBlockSection title="Others" columns="2">
+                <apex:outputLink value="{!URLFOR($Page.NEU_First_Steps)}">First Steps</apex:outputLink>
+                <!-- <apex:outputLink value="{!URLFOR($Page.NEU_OM_Shipments_Consolidation)}">Shipment Consolidation</apex:outputLink>
+                <apex:outputLink value="{!URLFOR($Page.NEU_JE_Consolidation)}">Trade Consolidation</apex:outputLink>
+                <apex:outputLink value="{!URLFOR($Page.NEU_OM_Pick_and_Ship)}">Pick &amp; Ship</apex:outputLink>-->
+                <apex:outputLink value="{!URLFOR($Action.Log__c.List,$ObjectType.Log__c)}">{!$ObjectType.Log__c.labelPlural}</apex:outputLink> 
+                <apex:outputLink value="NEU_AWB_Requests_Report">AWB Requests Report</apex:outputLink>
+                <apex:outputLink value="{!$Site.BaseUrl+'/'+URLFOR($ObjectType.CSL_Credentials__c)}">{!$ObjectType.CSL_Credentials__c.labelPlural}</apex:outputLink>
+            </apex:pageBlockSection>
+        
+        </apex:pageBlock>
+    </apex:form>
+</apex:page>

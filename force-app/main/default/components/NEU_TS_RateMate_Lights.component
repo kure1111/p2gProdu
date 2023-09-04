@@ -1,0 +1,330 @@
+<apex:component controller="NEU_TS_WS_RateMate">
+	
+	<apex:includeScript value="{!$Resource.neu_jquery}"/> 
+	<apex:includeScript value="{!$Resource.jquery_1_10_2}"/> 
+	<apex:includeScript value="{!$Resource.jquery_ui_1_10_3}"/>
+	<apex:includeScript value="{!$Resource.neurored_jquery}"/>  
+	<script src="/soap/ajax/42.0/connection.js" type="text/javascript"></script>
+	<script src="/soap/ajax/42.0/apex.js" type="text/javascript"></script>
+	<apex:stylesheet value="{!URLFOR($Resource.jquery_ui_1_10_3_css,'jquery-ui-1.10.3.min.css')}"/>
+	
+	<apex:attribute name="country_o" description="Origin Country" type="String" required="required" assignTo="{!country_origin}"/>
+	<apex:attribute name="state_o" description="Origin State" type="String" required="required" assignTo="{!state_origin}"/>
+	<apex:attribute name="location_o" description="Origin Location" type="String" required="required" assignTo="{!location_origin}"/>
+	
+	<apex:attribute name="country_d" description="Destination Country" type="String" required="required" assignTo="{!country_destination}"/>
+	<apex:attribute name="state_d" description="Destination State" type="String" required="required" assignTo="{!state_destination}"/>
+	<apex:attribute name="location_d" description="Destination Location" type="String" required="required" assignTo="{!location_destination}"/>
+	
+	<apex:attribute name="type" description="Type" type="String" required="required" assignTo="{!type_imp_exp}"/>
+	
+	<script>
+		$(window).load(function(){
+			//call_rate_info();
+		});
+		
+		function open_truckstop(){
+			$('#contenedortruckstop').dialog({height: 650,width: 1200,modal: true,appendTo:'#positiontruckstop'});
+			$('#positiontruckstop .ui-button-text').html('X');
+		}
+		
+		function search_negotiation(){
+			search_negotiation();
+		}
+		
+		function search_rates(){
+			search_rates();
+		}
+		
+		
+	</script>
+	
+	<style>
+		#positiontruckstop .ui-widget .ui-widget{
+			border: 1px solid #77d5f7;
+			background: #0078ae url(images/ui-bg_glass_45_0078ae_1x400.png) 50% 50% repeat-x;
+			font-weight: normal;
+			color: #fff;
+			width: 28px;
+			height: 20px;
+			border-radius: 5px;
+			background: white;
+		}
+		#positiontruckstop .ui-button-text{
+			margin: 0px;
+			color: black;
+			padding: 0px;
+			text-indent: 0;
+		}
+		
+		.ui-autocomplete-loading {
+		    background: white url("/img/loading.gif") right center no-repeat;
+		  }
+	</style>
+	<apex:actionRegion rendered="{!type_imp_exp == 'Road Freights'}">
+		<script>
+			call_rate_info();
+		</script>
+	</apex:actionRegion>
+	<apex:outputpanel id="panel">
+		<apex:actionFunction name="call_rate_info" action="{!call_rate_info}" rerender="panel" status="myStatus"/>
+		<apex:actionFunction name="search_negotiation" action="{!search_with_filters}" rerender="panel" status="myStatus"/>
+		<apex:actionFunction name="search_rates" action="{!search_rates}" rerender="panel" oncomplete="open_truckstop();" status="myStatus"/>
+		
+		
+		<apex:outputPanel rendered="{!historical_rate_result.lst_error.size > 0}">
+			<div class="message errorM3" role="alert">
+				<img alt="ERROR" class="msgIcon" src="/s.gif" title="ERROR"/>
+				<h4 style="margin: 4px;display: inline-block;vertical-align: top;">Error:</h4>
+				<apex:repeat value="{!historical_rate_result.lst_error}" var="error">
+					<span style="margin: 4px;display: inline-block;vertical-align: top;"><apex:outputText value="{!error.message}"/></span>
+				</apex:repeat>
+			</div>
+		</apex:outputPanel>
+		<apex:outputpanel style="display:flex;" id="filters">
+			<div style="max-width: 40%;padding: 10px 4px;flex: 1;padding: 10px 4px;border: 2px solid #eee;border-radius: 5px;background-color:#fdfdfd;margin:5px;">
+				<table Id="tabla_filtros" style="display: inline-block;vertical-align: top;">
+					<tr>
+						<td colspan="4">
+							<h2 style="text-align:center;width: 100%;display: block;margin-bottom: 15px;font-size: 14px;">Filters</h2>
+						</td>
+					</tr>
+					<tr>
+						<th>{!$ObjectType.Customer_Quote__c.fields.Country_ofLoad__c.Label}</th>
+						<td><apex:inputField id="rate_mate_origin_country" value="{!filter.imp_exp.Country_ofLoad__c}" html-class="country_of_load_filter"/></td>
+						<th>{!$ObjectType.Customer_Quote__c.fields.Country_ofDischarge__c.Label}</th>
+						<td><apex:inputField id="rate_mate_destination_country" value="{!filter.imp_exp.Country_ofDischarge__c}" html-class="country_of_discharge_filter"/></td>
+					</tr>
+					<tr>
+						<th>{!$ObjectType.Customer_Quote__c.fields.State_of_Load__c.Label}</th>
+						<td><apex:inputField id="rate_mate_origin_state" value="{!filter.imp_exp.State_of_Load__c}" html-class="state_of_load_filter"/></td>
+						<th>{!$ObjectType.Customer_Quote__c.fields.State_of_Discharge__c.Label}</th>
+						<td><apex:inputField id="rate_mate_destination_state" value="{!filter.imp_exp.State_of_Discharge__c}" html-class="state_of_discharge_filter"/></td>
+					</tr>
+					<tr>
+						<th>{!$ObjectType.Customer_Quote__c.fields.Site_of_Load__c.Label}</th>
+						<td><apex:inputField id="rate_mate_origin_location" value="{!filter.imp_exp.Site_of_Load__c}" onchange="search_address_origin();" html-class="site_of_load_filter"/></td>
+						<th>{!$ObjectType.Customer_Quote__c.fields.Site_of_Discharge__c.Label}</th>
+						<td><apex:inputField id="rate_mate_destination_location" value="{!filter.imp_exp.Site_of_Discharge__c}" onchange="search_address_destination();" html-class="site_of_discharge_filter"/></td>
+					</tr>
+					<tr>
+						<th></th>
+						<td>
+							<apex:outputPanel id="s_load">
+								<apex:actionFunction name="search_address_origin" action="{!searchCityOriginTruckstop}" rerender="s_load" status="myStatus"/>
+								<apex:selectList id="search_Origin_City" value="{!filter.Site_of_Load}" multiselect="false" size="1">
+									<apex:selectOptions value="{!lst_location_origin}"/>
+								</apex:selectList>
+							</apex:outputPanel>
+						</td>
+						<th></th>
+						<td>
+							<apex:outputPanel id="s_discharge">
+								<apex:actionFunction name="search_address_destination" action="{!searchCityDestinationTruckstop}" rerender="s_discharge" status="myStatus"/>
+								<apex:selectList id="search_Destination_City" value="{!filter.Site_of_Discharge}" multiselect="false" size="1">
+									<apex:selectOptions value="{!lst_location_destination}"/>
+								</apex:selectList>
+							</apex:outputPanel>
+							<!-- <apex:inputText id="search_Destination_City" value="{!filter.Site_of_Discharge}" html-class="site_of_discharge_filter"/> -->
+						</td>
+					</tr>
+				</table>
+			</div>
+			
+			<div style="max-width: 30%;padding: 10px 4px; flex: 1;padding: 10px 4px;border: 2px solid #eee;border-radius: 5px; background-color:#fdfdfd; margin:5px;">
+				<div>
+					<table style="width:100%;">
+						<tr>
+							<td colspan="3">
+								<h2 style="text-align:center;width: 100%;display: block;margin-bottom: 15px;font-size: 14px;">Truckstop</h2>
+							</td>
+						</tr>
+						<tr>
+							<td><button type="button" style="width: 100%;" onclick="search_negotiation();return false;">Trucks Availability</button></td>
+							<td>
+								<apex:selectList id="chooseColor" value="{!radius}" size="1" style="width: 100%;">
+									<apex:selectOption itemValue="StateToState" itemLabel="State to State"/>
+									<apex:selectOption itemValue="Within100Miles" itemLabel="Within 100 Miles"/>
+									<apex:selectOption itemValue="Within150Miles" itemLabel="Within 150 Miles"/>
+								</apex:selectList> 
+							</td>
+							<td><button type="button" style="width: 100%;" onclick="search_rates();return false;">Historical Rates</button></td>
+						</tr>
+						<tr>
+							<td colspan="3">
+								<table id="tabla_negotiation_strength" class="list result_list" cellspacing="0" cellpadding="0" border="0" style="text-align: center;">
+									<tr class="headerRow">
+										<th class="headerRow" colspan="3" style="width: 100%;"><span style="display:block; width:392px;text-align: center;">Truck Supply and Demand</span></th>
+									</tr>
+									<tr class="dataRow">
+										<td style="width: 25%;"><apex:outputText value="{!filter.Site_of_Load}"/></td>
+										<td style="width: 50%;"></td>
+										<td style="width: 25%;"><apex:outputText value="{!filter.Site_of_Discharge}"/></td>
+									</tr>
+									<apex:repeat value="{!negotiation_strength_result.lst_origin_destination_pair}" var="origin_destination_pair">
+										<apex:actionRegion rendered="{!origin_destination_pair.Info != 'Negotiation Strength'}">
+											<tr  class="dataRow">
+												<td style="width: 25%;"><apex:outputText value="{!origin_destination_pair.Origin}"/></td>
+												<td style="width: 50%;"><apex:outputText value="{!origin_destination_pair.Info}"/></td>
+												<td style="width: 25%;"><apex:outputText value="{!origin_destination_pair.Destination}"/></td>
+											</tr>
+										</apex:actionRegion>
+									</apex:repeat>
+									<tr  class="dataRow">
+										<apex:repeat value="{!negotiation_strength_result.lst_origin_destination_pair}" var="origin_destination_pair">
+											<apex:actionRegion rendered="{!origin_destination_pair.Info == 'Negotiation Strength'}">
+												<td style="width: 25%;">
+													<apex:actionRegion rendered="{!origin_destination_pair.Origin == 'verybad'}">
+														<apex:image value="/img/samples/light_red.gif" alt="Bad" />
+														<p style="margin-top: 2px;font-weight: bold;">Very Bad</p>
+													</apex:actionRegion>
+													<apex:actionRegion rendered="{!origin_destination_pair.Origin == 'bad'}">
+														<apex:image value="/img/samples/light_red.gif" alt="Bad" />
+														<p style="margin-top: 2px;font-weight: bold;">Bad</p>
+													</apex:actionRegion>
+													<apex:actionRegion rendered="{!origin_destination_pair.Origin == 'soso'}">
+														<apex:image value="/img/samples/light_yellow.gif" alt="SoSo" />
+														<p style="margin-top: 2px;font-weight: bold;">So-So</p>
+													</apex:actionRegion>
+													<apex:actionRegion rendered="{!origin_destination_pair.Origin == 'good'}">
+														<apex:image value="/img/samples/light_green.gif" alt="Very Good" />
+														<p style="margin-top: 2px;font-weight: bold;">Good</p>
+													</apex:actionRegion>
+													<apex:actionRegion rendered="{!origin_destination_pair.Origin == 'verygood'}">
+														<apex:image value="/img/samples/light_green.gif" alt="Very Good" />
+														<p style="margin-top: 2px;font-weight: bold;">Very Good</p>
+													</apex:actionRegion>
+												</td>
+												<td style="width: 50%;">Broker Negotiation Strength</td>
+												<td style="width: 25%;">
+													<apex:actionRegion rendered="{!origin_destination_pair.Destination == 'verybad'}">
+														<apex:image value="/img/samples/light_red.gif" alt="Bad" />
+														<p style="margin-top: 2px;font-weight: bold;">Very Bad</p>
+													</apex:actionRegion>
+													<apex:actionRegion rendered="{!origin_destination_pair.Destination == 'bad'}">
+														<apex:image value="/img/samples/light_red.gif" alt="Bad" />
+														<p style="margin-top: 2px;font-weight: bold;">Bad</p>
+													</apex:actionRegion>
+													<apex:actionRegion rendered="{!origin_destination_pair.Destination == 'soso'}">
+														<apex:image value="/img/samples/light_yellow.gif" alt="SoSo" />
+														<p style="margin-top: 2px;font-weight: bold;">So-So</p>
+													</apex:actionRegion>
+													<apex:actionRegion rendered="{!origin_destination_pair.Destination == 'good'}">
+														<apex:image value="/img/samples/light_green.gif" alt="Very Good" />
+														<p style="margin-top: 2px;font-weight: bold;">Good</p>
+													</apex:actionRegion>
+													<apex:actionRegion rendered="{!origin_destination_pair.Destination == 'verygood'}">
+														<apex:image value="/img/samples/light_green.gif" alt="Very Good" />
+														<p style="margin-top: 2px;font-weight: bold;">Very Good</p>
+													</apex:actionRegion>
+												</td>
+											</apex:actionRegion>
+										</apex:repeat>
+									</tr>
+								</table>
+							</td>
+						</tr>
+					</table>
+				</div>
+			</div>
+		</apex:outputPanel>
+		
+		
+		<!-- Componente Truckstop Integration -->
+		<div id="positiontruckstop"></div>
+		<div style="display:none; " id="contenedortruckstop" title="Rates {!label_radius}">
+			<div id="rate-mate-tables-information">
+				<apex:pageBlock title="Historical Rates">
+					<apex:pageBlockTable value="{!historical_rate_result.lst_historical_rate}" var="historical_rate" rendered="{!historical_rate_result.lst_historical_rate.size > 0}">
+						<apex:column value="{!historical_rate.AverageFuelCostPerMile}" headerValue="Avg. Fuel Cost per Mile"/>
+						<apex:column value="{!historical_rate.AverageMiles}" headerValue="Avg. Miles"/>
+						<apex:column value="{!historical_rate.AverageRateToShipper}" headerValue="Avg. Rate to Shipper"/>
+						<apex:column value="{!historical_rate.AverageRateToTrucker}" headerValue="Avg. Rate to Trucker"/>
+						<apex:column headerValue="Avg. Total Rate">
+							<apex:outputText value="{0,number,0.00}" >
+								<apex:param value="{!historical_rate.AverageTotalRate}" />
+							</apex:outputText>
+						</apex:column>
+						<apex:column headerValue="Avg. Total Rate + Margin">
+							<apex:outputText value="{0,number,0.00}" >
+								<apex:param value="{!historical_rate.AverageTotalRateMargin}" />
+							</apex:outputText>
+						</apex:column>
+						<apex:column value="{!historical_rate.DesiredMargin}" headerValue="Desired Margin"/>
+						<apex:column value="{!historical_rate.Month}" headerValue="Month"/>
+						<apex:column value="{!historical_rate.Year}" headerValue="Year"/>
+					</apex:pageBlockTable>
+				</apex:pageBlock>
+				
+				<apex:pageBlock title="Rate Index">
+					<apex:pageBlockSection title="Paid" columns="1" rendered="{!rate_index_result.lst_paid_rate.size > 0}">
+						<apex:outputPanel >
+							<apex:pageBlockTable value="{!rate_index_result.lst_paid_rate}" var="rate">
+								<apex:column value="{!rate.AverageMiles}" headerValue="Avg. Miles"/>
+								<apex:column value="{!rate.AverageRateToShipper}" headerValue="Avg. Rate to Shipper"/>
+								<apex:column value="{!rate.AverageRateToTrucker}" headerValue="Avg. Rate to Trucker"/>
+								<apex:column headerValue="Avg. Total Rate">
+									<apex:outputText value="{0,number,0.00}" >
+										<apex:param value="{!rate.AverageTotalRate}" />
+									</apex:outputText>
+								</apex:column>
+								<apex:column headerValue="Avg. Total Rate + Margin">
+									<apex:outputText value="{0,number,0.00}" >
+										<apex:param value="{!rate.AverageTotalRateMargin}" />
+									</apex:outputText>
+								</apex:column>
+								<apex:column value="{!rate.DesiredMargin}" headerValue="Desired Margin"/>
+								<apex:column value="{!rate.Days}" headerValue="Days"/>
+								<apex:column value="{!rate.NumberOfReports}" headerValue="NumberOfReports"/>
+							</apex:pageBlockTable>
+						</apex:outputPanel>
+					</apex:pageBlockSection>
+					<apex:pageBlockSection title="Paid Shipper" columns="1" rendered="{!rate_index_result.lst_paid_shipper_rate.size > 0}">
+						<apex:outputPanel >
+							<apex:pageBlockTable value="{!rate_index_result.lst_paid_shipper_rate}" var="rate">
+								<apex:column value="{!rate.AverageMiles}" headerValue="Avg. Miles"/>
+								<apex:column value="{!rate.AverageRateToShipper}" headerValue="Avg. Rate to Shipper"/>
+								<apex:column value="{!rate.AverageRateToTrucker}" headerValue="Avg. Rate to Trucker"/>
+								<apex:column headerValue="Avg. Total Rate">
+									<apex:outputText value="{0,number,0.00}" >
+										<apex:param value="{!rate.AverageTotalRate}" />
+									</apex:outputText>
+								</apex:column>
+								<apex:column headerValue="Avg. Total Rate + Margin">
+									<apex:outputText value="{0,number,0.00}" >
+										<apex:param value="{!rate.AverageTotalRateMargin}" />
+									</apex:outputText>
+								</apex:column>
+								<apex:column value="{!rate.DesiredMargin}" headerValue="Desired Margin"/>
+								<apex:column value="{!rate.Days}" headerValue="Days"/>
+								<apex:column value="{!rate.NumberOfReports}" headerValue="NumberOfReports"/>
+							</apex:pageBlockTable>
+						</apex:outputPanel>
+					</apex:pageBlockSection>
+					<apex:pageBlockSection title="Posted" columns="1" rendered="{!rate_index_result.lst_posted_rate.size > 0}">
+						<apex:outputPanel >
+							<apex:pageBlockTable value="{!rate_index_result.lst_posted_rate}" var="rate">
+								<apex:column value="{!rate.AverageMiles}" headerValue="Avg. Miles"/>
+								<apex:column value="{!rate.AverageRateToShipper}" headerValue="Avg. Rate to Shipper"/>
+								<apex:column value="{!rate.AverageRateToTrucker}" headerValue="Avg. Rate to Trucker"/>
+								<apex:column headerValue="Avg. Total Rate">
+									<apex:outputText value="{0,number,0.00}" >
+										<apex:param value="{!rate.AverageTotalRate}" />
+									</apex:outputText>
+								</apex:column>
+								<apex:column headerValue="Avg. Total Rate + Margin">
+									<apex:outputText value="{0,number,0.00}" >
+										<apex:param value="{!rate.AverageTotalRateMargin}" />
+									</apex:outputText>
+								</apex:column>
+								<apex:column value="{!rate.DesiredMargin}" headerValue="Desired Margin"/>
+								<apex:column value="{!rate.Days}" headerValue="Days"/>
+								<apex:column value="{!rate.NumberOfReports}" headerValue="NumberOfReports"/>
+							</apex:pageBlockTable>
+						</apex:outputPanel>
+					</apex:pageBlockSection>
+				</apex:pageBlock>
+			</div>
+		</div>
+	</apex:outputpanel>
+</apex:component>

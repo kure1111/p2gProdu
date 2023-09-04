@@ -1,0 +1,15 @@
+<apex:page standardController="Transport_Packaging_Data__c" extensions="NEU_OM_GenerateTDI" standardStylesheets="false" renderAs="pdf" action="{!update_shipment}">
+	<head>
+	  <style>
+	    @page {
+	      margin-top: 10.0mm;
+		  margin-left: 0.0mm;
+		  margin-right: 0.0mm;
+		  margin-bottom: 10.0mm;
+	    }
+	  </style> 
+	</head>
+	<apex:form >		
+		<apex:outputText value="{!informe_tdi}" escape="false"/>
+	</apex:form>
+</apex:page>

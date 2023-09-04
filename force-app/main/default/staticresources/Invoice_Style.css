@@ -1,0 +1,242 @@
+/*Invoice*/
+
+@page
+{
+	background:#fdfdfc;
+}
+
+body
+{
+	background:#fdfdfc;
+}
+
+#container
+{
+	width: 700px; 
+	margin: 40px auto 40px auto;
+}
+
+#top, #bot
+{
+	float:left;
+	width:700px;
+}
+
+#KAELIS_logo
+{
+	float:left;
+	height: 90px;
+}
+
+#kaelis_address_data
+{
+	float:right;
+	border-left:2px solid #e7daea;
+	color:#908e8e;
+	font-size: 12px;
+	font-family:  Arial, Helvetica, sans-serif;
+	width:240px;
+	padding-left:15px;
+}
+
+#kaelis_address_data span
+{
+	float: left;
+	display: block;
+	width: 237px;
+	margin-top: 5px;
+}
+
+ .client_information
+{
+            float: left;
+            width: 700px;
+}
+        
+.title_client_information
+{
+                font-size: 15px;
+                font-weight: bold;
+}
+
+.title
+{
+	font-size: 12px;
+	font-family:  Arial, Helvetica, sans-serif;
+	color:#642279;
+	font-weight: normal;
+	margin: 0 0 10px 0;
+}
+
+#mid
+{
+	float:left;
+	width:700px;
+}
+
+#mid h1
+{
+	color:#642279;
+	float:left;
+	width:700px;
+	font-size: 30px;
+	font-weight: normal;
+	margin: 0;
+	font-family:  Arial, Helvetica, sans-serif;
+	border-bottom:2px solid #eadfed;
+	padding: 0 0 5px 0;
+}
+
+#mid_left
+{
+	float:left;
+	width:340px;
+	margin: 15px 0 15px 0;
+}
+
+.customer_data
+{
+	color:#908e8e;
+	font-size: 12px;
+	font-family:  Arial, Helvetica, sans-serif;
+	list-style-type: none;
+	padding: 0;
+	margin: 0;
+}
+
+.customer_data li
+{
+	margin: 0 0 5px 0;
+}
+
+.customer_data_title
+{
+	color:#642279;
+	font-size: 12px;
+	font-family:  Arial, Helvetica, sans-serif;
+}
+
+#mid_right
+{
+	float:right;
+	width:340px;
+	margin: 15px 0 15px 0;
+}
+
+.invoice_data
+{
+	color:#908e8e;
+	font-size: 12px;
+	font-family:  Arial, Helvetica, sans-serif;
+	list-style-type: none;
+	padding: 0;
+	margin: 0;
+	float: right;
+}
+
+.invoice_data li
+{
+	margin: 0 0 5px 0;
+}
+
+.invoice_data_title
+{
+	color:#642279;
+	font-size: 12px;
+	font-family:  Arial, Helvetica, sans-serif;
+}
+
+#mid hr
+{
+	border: 1px solid #eadfed;
+	float: left;
+	width: 700px;
+	margin:0;
+}
+
+#table_invoice
+{
+	width: 700px;
+	margin: 10px 0 20px 0;
+	float: left;
+}
+
+#table_invoice th
+{
+	color: #642279;
+	font-size: 12px;
+	font-family:  Arial, Helvetica, sans-serif;
+	text-align: left;
+	padding-left: 0;
+	border-bottom: 2px solid #eadfed;
+	font-weight:normal;
+}
+
+#table_invoice td
+{
+	color: #908e8e;
+	font-size: 12px;
+	font-family:  Arial, Helvetica, sans-serif;
+	background: #f3ecf4;
+}
+
+#table_invoice .photo_item
+{
+	height: 70px;
+	max-width: 100px;
+}
+
+#table_invoice .td_total
+{
+	background: none;
+	color: #642279;
+	font-weight: normal;
+}
+
+#bot_left
+{
+	float:left;
+	width:340px;
+}
+
+.bank_data
+{
+	color:#908e8e;
+	font-size: 12px;
+	font-family:  Arial, Helvetica, sans-serif;
+	list-style-type: none;
+	padding: 0;
+	margin: 0;
+}
+
+.bank_data li
+{
+	margin: 0 0 5px 0;
+}
+
+.bank_data_title
+{
+	color:#642279;
+	font-size: 12px;
+	font-family:  Arial, Helvetica, sans-serif;
+}
+
+#bot_left hr, #bot_right hr
+{
+	border: 1px solid #eadfed;
+}
+
+#bot_right
+{
+	float:right;
+	width:340px;
+}
+
+.observations
+{
+	color:#908e8e;
+	font-size: 12px;
+	font-family:  Arial, Helvetica, sans-serif;
+	margin: 0;
+	text-align: justify;
+}

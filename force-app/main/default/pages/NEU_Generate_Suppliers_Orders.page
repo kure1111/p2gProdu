@@ -1,0 +1,3 @@
+<apex:page standardController="Customer_Quote__c" extensions="NEU_Generate_Supplier_Orders" action="{!generate}">
+	<apex:pagemessages />
+</apex:page>

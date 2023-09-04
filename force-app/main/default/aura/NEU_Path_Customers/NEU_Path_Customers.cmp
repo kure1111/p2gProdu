@@ -1,0 +1,73 @@
+<aura:component >
+    
+    <aura:attribute name="status" type="String"/>
+    <aura:attribute name="numCargoLines" type="Integer"/>
+    
+    <div class="slds-path">
+        <div class="slds-grid slds-path__track">
+            <div class="slds-grid slds-path__scroller-container">
+                <div class="slds-path__scroller" role="application">
+                    <div class="slds-path__scroller_inner">
+                        
+                        <ul class="slds-path__nav" role="listbox" aria-orientation="horizontal">
+
+							<aura:renderIf isTrue="{!and(v.status == 'CUSTOMER CREATED', v.numCargoLines == 0)}">
+                                <c:NEU_Path_Customers_Step eType="cargo"   active="true"  completed="false" current="true"  stepName="Add Cargo Lines"/>
+                                <c:NEU_Path_Customers_Step eType="send"    active="false" completed="false" current="false" stepName="Send to P2G"/>
+                                <c:NEU_Path_Customers_Step eType="inform"  active="false" completed="false" current="false" stepName="Wait P2G Response"/>
+                                <c:NEU_Path_Customers_Step eType="inform"  active="false" completed="false" current="false" stepName="Review and Finalize"/>    
+                            </aura:renderIf> 
+                            
+							<aura:renderIf isTrue="{!and(v.status == 'CUSTOMER CREATED', v.numCargoLines > 0)}">
+                                <c:NEU_Path_Customers_Step eType="cargo"   active="true"  completed="true"  current="false" stepName="Add Cargo Lines"/>
+                                <c:NEU_Path_Customers_Step eType="send"    active="true"  completed="false" current="true"  stepName="Send to P2G"/>
+                                <c:NEU_Path_Customers_Step eType="inform"  active="false" completed="false" current="false" stepName="Wait P2G Response"/>
+                                <c:NEU_Path_Customers_Step eType="inform"  active="false" completed="false" current="false" stepName="Review and Finalize"/>                                    
+                            </aura:renderIf>
+                            
+							<aura:renderIf isTrue="{!v.status == 'SENT TO PAK2GO'}">
+                                <c:NEU_Path_Customers_Step eType="cargo"   active="false" completed="true"  current="false" stepName="Add Cargo Lines"/>
+                                <c:NEU_Path_Customers_Step eType="send"    active="false" completed="true"  current="false" stepName="Send to P2G"/>
+                                <c:NEU_Path_Customers_Step eType="inform"  active="false" completed="false" current="true"  stepName="Wait P2G Response"/>
+                                <c:NEU_Path_Customers_Step eType="inform"  active="false" completed="false" current="false" stepName="Review and Finalize"/>                                    
+                            </aura:renderIf> 
+
+							<aura:renderIf isTrue="{!v.status == 'COMPLETED BY PAK2GO'}">
+                                <c:NEU_Path_Customers_Step eType="cargo"   active="false" completed="true"  current="false" stepName="Add Cargo Lines"/>
+                                <c:NEU_Path_Customers_Step eType="send"    active="false" completed="true"  current="false" stepName="Send to P2G"/>
+                                <c:NEU_Path_Customers_Step eType="inform"  active="false" completed="true"  current="false" stepName="Wait P2G Response"/>
+                                <c:NEU_Path_Customers_Step eType="confirm" active="true"  completed="false" current="true"  stepName="Confirm"/>
+                                <c:NEU_Path_Customers_Step eType="reject"  active="true"  completed="false" current="true"  stepName="Reject" rejection="true"/>
+                            </aura:renderIf> 
+
+							<aura:renderIf isTrue="{!v.status == 'CONFIRMED'}">
+                                <c:NEU_Path_Customers_Step eType="cargo"   active="false" completed="true" current="false" stepName="Add Cargo Lines"/>
+                                <c:NEU_Path_Customers_Step eType="send"    active="false" completed="true" current="false" stepName="Send to P2G"/>
+                                <c:NEU_Path_Customers_Step eType="inform"  active="false" completed="true" current="false" stepName="Wait P2G Response"/>
+                                <c:NEU_Path_Customers_Step eType="inform"  active="false" completed="true" current="true"  stepName="Confirmed"/>                                    
+                            </aura:renderIf>   
+
+							<aura:renderIf isTrue="{!v.status == 'REJECTED'}">
+                                <c:NEU_Path_Customers_Step eType="cargo"   active="false" completed="true" current="false" stepName="Add Cargo Lines"/>
+                                <c:NEU_Path_Customers_Step eType="send"    active="false" completed="true" current="false" stepName="Send to P2G"/>
+                                <c:NEU_Path_Customers_Step eType="inform"  active="false" completed="true" current="false" stepName="Wait P2G Response"/>
+                                <c:NEU_Path_Customers_Step eType="inform"  active="false" completed="true" current="true"  stepName="Rejected"/>                                    
+                            </aura:renderIf> 
+               
+                        </ul>
+                        
+                        <div class="slds-path__scroll-controls">
+                            <button class="slds-button slds-button_icon slds-button_icon-border-filled" title="Scroll left" tabindex="-1">
+                                <span class="slds-assistive-text">Scroll left</span>
+                            </button>
+                            <button class="slds-button slds-button_icon slds-button_icon-border-filled" title="Scroll right" tabindex="-1">
+                                <span class="slds-assistive-text">Scroll right</span>
+                            </button>
+                        </div>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>	
+</aura:component>

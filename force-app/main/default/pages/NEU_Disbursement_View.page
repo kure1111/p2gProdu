@@ -1,0 +1,549 @@
+<apex:page controller="NEU_Disbursement_View" sidebar="false">
+    <apex:includeScript value="{!$Resource.jquery_1_10_2}"/>
+    <apex:variable var="aTheme" value="{!$User.UIThemeDisplayed}"/>
+    <apex:variable id="varLightning" var="varLightning" value="{!IF((aTheme='Theme1')||(aTheme='Theme2')||(aTheme='Theme3'),'false','true')}"/>
+    <apex:variable id="varLightningTop" var="varLightningTop" value="{!IF(varLightning='true','_self','_blank')}"/>
+    <apex:includeScript value="{!$Resource.neu_jquery}"/>  
+      <script>
+        
+        var pagina_Instalacion;
+        
+        function buscar_Disbursements()
+        {
+            var listado_status = '';
+            var listado_service = '';
+            var listado_freight = '';
+            
+            $(".button_selected_sta").each(function(){
+                listado_status += $(this).attr('name') + ',';
+            });
+            if(listado_status == '')
+                listado_status = '[]';
+            document.getElementById('{!$Component.form.sta_list}').value = listado_status;
+            
+            $(".button_selected_serv").each(function(){
+                listado_service += $(this).attr('name') + ',';
+            });
+            if(listado_service == '')
+                listado_service = '[]';
+            document.getElementById('{!$Component.form.serv_list}').value = listado_service;
+            
+             $(".button_selected_freight").each(function(){
+                listado_freight += $(this).attr('name') + ',';
+            });
+            if(listado_freight == '')
+                listado_freight = '[]';
+            document.getElementById('{!$Component.form.freight_list}').value = listado_freight;
+
+            search_Disbursements();
+        }
+        
+        $.fn.filter_sta = (function(){
+            this.each(function(){
+                if($(this).hasClass('button_selected_sta'))
+                {
+                    $(this).removeClass('button_selected');
+                    $(this).removeClass('button_selected_sta');
+                }
+                else
+                {
+                    $(this).addClass('button_selected');
+                    $(this).addClass('button_selected_sta');
+                }
+            });
+        });
+        
+        
+        $.fn.filter_serv = (function(){
+            this.each(function(){
+                if($(this).hasClass('button_selected_serv'))
+                {
+                    $(this).removeClass('button_selected');
+                    $(this).removeClass('button_selected_serv');
+                }
+                else
+                {
+                    $(this).addClass('button_selected');
+                    $(this).addClass('button_selected_serv');
+                }
+            });
+        });
+        
+        
+        $.fn.filter_freight = (function(){
+            this.each(function(){
+                if($(this).hasClass('button_selected_freight'))
+                {
+                    $(this).removeClass('button_selected');
+                    $(this).removeClass('button_selected_freight');
+                }
+                else
+                {
+                    $(this).addClass('button_selected');
+                    $(this).addClass('button_selected_freight');
+                }
+            });
+        });
+        
+        function get_message(n)
+        {
+            var position;
+            position = $(".campo_products_"+n).position();
+            $(".alert_message_"+n).css("left",position.left + 20 - 470);
+            $(".todas_las_lineas_alert").css("display","none");
+            $(".alert_message_"+n).css("display","block");
+            $(".alert_message_"+n).css("top",position.top - 3);
+            
+            
+            $('.nombres_all_documents').each(function()
+            {
+                var nombre_documento_espaciado = $(this).html();
+                nombre_documento_espaciado = nombre_documento_espaciado.replace(/\_/g, ' ');
+                $(this).html(nombre_documento_espaciado);
+            });
+        }
+        
+       function close_message(n)
+        {
+            $(".alert_message_"+n).css("display","none");
+        }
+        
+        function ordenacion_paginas(s)
+        {
+            pagina_Instalacion = s;
+            document.getElementById('{!$Component.form.step_Instalacion}').value = s;
+            $('.boton_para_paginar_Instalacion').removeClass('button_selected_Instalacion');
+            $('.boton_para_paginar_Instalacion'+s).addClass('button_selected_Instalacion');
+            anterior_siguiente();
+        }
+        
+        function repintar_paginas()
+        {
+            $('.boton_paginacion_Instalacion').removeClass('button_selected_Instalacion');
+            $('.boton_para_paginar_Instalacion'+pagina_Instalacion).addClass('button_selected_Instalacion');
+        }
+        
+         function sort_data_table_disbursements(n)
+        {
+            document.getElementById('{!$Component.form.orden_disburment }').value = n;
+            if(document.getElementById('{!$Component.form.orden_disburment }').value == $('#orderField').val()) 
+            {
+                if($('#orderValue').val()!='asc')
+                    $('#orderValue').val('asc');
+                else
+                    $('#orderValue').val('desc');
+  
+            }
+            else
+            {
+                $('#orderField').val(n);
+                $('#orderValue').val('desc');
+            }
+            
+            document.getElementById('{!$Component.form.modo_orden_disburment}').value = $('#orderValue').val();
+            ordenar_tabla_disbursements();
+        } 
+        
+        function mostrar_ordenacion_disbursement()
+        {
+            var n = document.getElementById('{!$Component.form.orden_disburment}').value;
+            $('.flecha_ordenacion_disbursement').css('display','none');
+            var clase_ordenacion  = n.replace('.','');
+            clase_ordenacion = clase_ordenacion.replace('.','');
+            $('.'+clase_ordenacion).css('display','block');
+            if($('#orderValue').val()=='asc')
+                $('.flecha_ordenacion_disbursement').css('background-position-y','-15px');
+            else
+                $('.flecha_ordenacion_disbursement').css('background-position-y','0px');
+        }
+        
+      </script>
+      
+      <style>
+        .button_selected{background:#C0C0C0 !important;}
+        .filter_button1{width:250px;}
+        .filter_button2{width:205px;}
+        .filter_button3{width:205px;}
+        .actions_table{border:none; width:100%;}
+        .actions_table th
+        {
+            background: #f2f3f3;
+            border:1px solid #e0e3e5;
+            border-bottom:2px solid #cccccc;
+            color: #000;
+            font-size: .9em;
+            font-weight: bold;
+            padding: 5px 2px 4px 5px;
+        }
+        .actions_table td
+        {
+            border:1px solid #e0e3e5;
+            background:#ffffff;
+        }
+        .bloque_total{margin:0;}
+        
+        .actions_table
+        {
+            background: #f8f8f8;
+            border-right: 1px solid #e0e3e5;
+            border-left: 1px solid #e0e3e5;
+            border-top: 3px solid #0e9894;
+            border-bottom: 1px solid #e0e3e5;
+            border-radius: 5px;
+        }
+        .actions_table th
+        {
+            background: #f2f3f3;
+            border:1px solid #e0e3e5;
+            border-bottom:2px solid #cccccc;
+            color: #000;
+            font-size: .9em;
+            font-weight: bold;
+            padding: 5px 2px 4px 5px;
+        }
+        .actions_table td
+        {
+            background: #ffffff;
+            padding: 5px 0 0 0;
+        }
+        .boton_paginacion_Instalacion{width: 21px;}
+        .button_selected_Instalacion{background:#C0C0C0 !important;}
+        .botonera_paginacion_table{    float: right; width: 100%;    list-style: none; width: 80%;    padding-top: 0px;    margin-top: 0px;}
+        .botonera_paginacion_table li{    float: left;    padding-left: 0px;    margin-left: 0px;}
+         #alert_message{display:none; padding: 3px 6px 5px; margin-top: -12px; margin-right: 0; margin-bottom: 0; margin-left: -11px; background: transparent url(/img/sprites/hover_sprite.png) 15px -22px no-repeat; text-align:left; width: 301px;     width: 300px; background-size: 300px;     background-size: 400px;     width: 400px; width: 435px;     background-size: 431px;}
+        #custom_style_left{/*background: transparent url(/img/alohaSkin/hover_arrow.png) -1px 3px no-repeat;*/background: transparent url({!$Resource.hover_arrow}) -1px 3px no-repeat; /*background: transparent url(/img/alohaSkin/hover_arrow.png) -40px 3px no-repeat;*/ width: 370px; padding-left: 15px; border: 0; margin: 0; border-top: none !important;     width: 393px;     width: 295px; width: 308px;     background-position-x: 303px;     width: 418px;     background-position-x: 431px;    width: 437px;     padding-top: 6px;}
+        #custom_style_header{border-top: 3px solid #0e9894; margin: 0; border-radius: 4px; padding:6px 10px; color: rgb(51, 52, 53); font-family: Arial, Helvetica, sans-serif; font-size: 14px; font-weight: bold;     width: 351px;     width: 277px; width: 270px;     width: 400px;}
+        #custom_style_body{font-family: Arial, Helvetica, sans-serif; font-size: 12px; font-weight: bold; /*height: 200px;*/ height: 125px; overflow-y: scroll;     overflow-y: hidden;     margin-top: -9px; margin-left: 0px;     overflow-y: scroll;    overflow-x: hidden;}
+        .cierre{float: right; display: block; cursor: pointer; background: #0e9894; color: #ffffff; padding: 3px; border-radius: 3px; cursor:pointer;     }
+        .table_bocadillo{ width: 316px;     width: 342px;     width: 300px; width: 250px;     width: 400px; width: 385px;}
+        .table_bocadillo td{     font-weight: normal !important;     padding-left: 5px;}
+        .table_bocadillo th{        font-weight: bold !important;}
+        .boton_freight_rates_management{text-decoration: none;}
+        .boton_freight_rates_management:hover {text-decoration: none;}
+        #custom_style_footer{background: transparent url(/img/sprites/hover_sprite.png) no-repeat; display: block; position: absolute; /*width: 100%;*/    width: 298px; height: 14px; bottom: -14px; left: 15px;     width: 298px;     background-size: 300px;     width: 437px;    background-size: 431px;}
+        .capa_fija
+        {
+            height: 169px;
+            overflow-y: scroll; 
+        }
+        html{background-color:#ffffff !important;}
+        
+        .p_extra_filter{width:300px;}
+        .confirm_button, .confirm_button:hover, .confirm_button:visited, .confirm_button:active{text-decoration:none;}
+        .panel_disbursement .tertiaryPalette{background-color: #0e9894 !important;}
+        .listado_documentos{    list-style: none; padding-left: 0px;     margin-top: 0px;}
+        .listado_documentos li{     margin-top: 10px; }
+        .span_th {margin-top: 10px;    background: #f2f3f3;    border: 1px solid #e0e3e5;    color: #000;    font-size: .9em;    font-weight: bold;    float: left;    width: 99%;    padding: 4px 0px 4px 3px;    margin-bottom: 5px;}
+        .panel_disbursement .bPageBlock{border-top: 3px solid #0e9894 !important;}
+    </style> 
+    
+    <apex:form id="form">   
+        <apex:pageMessages />
+        
+        <apex:actionFunction name="anterior_siguiente" action="{!anterior_siguiente}" reRender="ship_dis_list" status="myStatus" oncomplete="repintar_paginas();"/>
+        <apex:inputHidden value="{!step_Instalacion}" id="step_Instalacion"/>
+        
+        <apex:inputHidden value="{!sta_list}" id="sta_list"/>
+        <apex:inputHidden value="{!serv_list}" id="serv_list"/>
+        <apex:inputHidden value="{!freight_list}" id="freight_list"/>
+        <apex:actionFunction name="search_Disbursements" action="{!search_Disbursements}" reRender="ship_dis_list" status="myStatus"/>
+        <apex:inputHidden value="{!orden_disburment}" id="orden_disburment"/>
+        <apex:inputHidden value="{!modo_orden_disburment}" id="modo_orden_disburment"/>
+        <input type="hidden" id="orderField" value="CreatedDate"/>
+        <input type="hidden" id="orderValue" value="desc"/>
+        <apex:actionFunction name="ordenar_tabla_disbursements" action="{!go_compare_disbursement}" reRender="Shipment_Disbursements" status="myStatus" oncomplete="mostrar_ordenacion_disbursement();"/>
+        
+        <!-- -------------------------- -->
+         <apex:outputPanel id="panel_filtros" styleclass="panel_disbursement">
+            <apex:pageBlock id="bloque_filtros">
+               <apex:pageBlockButtons location="top">
+                    <strong><a href="{!$Site.BaseUrl}/{!$ObjectType.Shipment_Disbursement__c.keyPrefix}/o" class="confirm_button" target="_blank"><input type="button" class="btn" value="All {!$ObjectType.Shipment_Disbursement__c.labelPlural} Views "/></a></strong>
+                    
+                    <strong><a href="{!URLFOR($Action.Shipment_Disbursement__c.new,$ObjectType.Shipment_Disbursement__c)}" class="confirm_button" style="{!If(varLightning ==  'true','display:none','')}"><input type="button" class="btn" value="New Shipment Disbursement"/></a></strong>
+                    <strong><a href="{!$Site.BaseUrl}/one/one.app?#/sObject/{!$ObjectType.Shipment_Disbursement__c.keyPrefix}/new" target="_top" class="confirm_button" style="{!If(varLightning == 'true','','display:none')}"><input type="button" class="btn" value="New Shipment Disbursement"/></a></strong>
+                </apex:pageBlockButtons>
+                <apex:pageBlockSection title="Filters" columns="1">
+                    <apex:outputPanel id="filtros">
+                        <apex:pageBlock id="block_1">
+                            <apex:pageBlockButtons location="bottom">
+                                <input type="button" value="Search" class="btn" onclick="buscar_Disbursements();"/>
+                            </apex:pageBlockButtons>
+                            <table border="0" cellspacing="5" cellpadding="5" class="actions_table">
+                                <tr>
+                                    <th >{!$ObjectType.Customer_Quote__c.fields.Quotation_Status__c.Label}</th>
+                                    <th>Service Mode</th>
+                                    <th >Parties Involved</th>
+                                    <!-- <th>Route and Vessel</th>-->
+                                    <!--<th>Users</th> rowspan="2"-->
+                                </tr>
+                                <tr>
+                                    <td style="vertical-align:top !important; text-align:center;     width: 510px;" rowspan="3"><apex:outputText value="{!shipment_status}" escape="false"/></td>
+                                    
+                                    <td style="vertical-align:top !important; text-align:center;     width: 410px;">
+                                        <apex:outputText value="{!service_mode}" escape="false"/>
+                                    </td>
+                                    <td rowspan="3" style="padding-left: 20px;">  
+                                        <p class="p_extra_filter"><apex:outputLabel value="{!$ObjectType.Shipment_Disbursement__c.fields.Account__c.Label}"/><br/><apex:inputfield value="{!new_filter_disbursement.Account__c}" required="false"/></p>
+                                        
+                                        <p class="p_extra_filter"><apex:outputLabel value="{!$ObjectType.Shipment_Disbursement__c.fields.Planned_ETD__c.Label}"/><br/>
+                                            <apex:selectList value="{!ETD_operator_selected}" multiselect="false" size="1">
+                                                <apex:selectOptions value="{!ETD_operator_list}"/>
+                                            </apex:selectList>
+                                            &nbsp;&nbsp;
+                                            <apex:inputfield value="{!new_filter_disbursement.Planned_ETD_filter__c}"/>
+                                        </p>
+                                        <p class="p_extra_filter"><apex:outputLabel value="{!$ObjectType.Shipment_Disbursement__c.fields.Planned_ETA__c.Label}"/><br/>
+                                            <apex:selectList value="{!ETA_operator_selected}" multiselect="false" size="1">
+                                                <apex:selectOptions value="{!ETA_operator_list}"/>
+                                            </apex:selectList>
+                                            &nbsp;&nbsp;
+                                            <apex:inputfield value="{!new_filter_disbursement.Planned_ETA_filter__c}"/>
+                                        </p>
+                                        
+                                    </td>
+                                </tr> 
+                                <tr>
+                                    <th>Freight Mode</th>
+                                </tr>
+                                <tr>
+                                    <td style="vertical-align:top !important; text-align:center;"><apex:outputText value="{!freight_mode}" escape="false"/></td>
+                                </tr>
+                            </table>
+                        </apex:pageBlock>
+                    </apex:outputPanel>
+                </apex:pageBlockSection>
+            </apex:pageBlock>
+        </apex:outputPanel>
+        
+        
+        <!-- --------------------------- -->
+            
+        <apex:outputPanel id="ship_dis_list" styleclass="panel_disbursement">   
+            <apex:pageBlock title="DISBURSEMENTS" id="Shipment_Disbursements">
+                <apex:pageblockbuttons location="bottom">
+                    <apex:commandbutton value="Save Changes" action="{!save_changes}" status="myStatus"/>
+                    
+                </apex:pageblockbuttons>
+                <apex:pageblockbuttons location="top">
+                    <apex:commandbutton value="Save Changes" action="{!save_changes}" status="myStatus"/>
+                    <ul class="botonera_paginacion_table" ><!-- style="display:none;" -->
+                        <apex:repeat value="{!listado_paginas_Instalacion}" var="s">
+                           <li><input type="button" value="{!s}" class="boton_paginacion_Instalacion btn boton_para_paginar_Instalacion{!s} {!if(s == 1,'button_selected_Instalacion','')}" onclick="ordenacion_paginas('{!s}');"/></li>
+                         </apex:repeat>
+                        <li style="vertical-align: middle;    width: 154px;    margin-top: 5px;     margin-left: 14px;">TOTAL RECORDS:&nbsp;&nbsp;<strong><apex:outputText value="{!total_registros_string}"/></strong></li>
+                    </ul>
+                </apex:pageblockbuttons>
+                <apex:pageBlockSection title="Shipment Disbursements" columns="1">
+                    <apex:pageBlockTable value="{!shipments_Disbursements}" var="sdu">
+                    
+                        <apex:column >
+                            <apex:facet name="header">
+                                 <div  style ="cursor: pointer;" onclick="sort_data_table_disbursements('CreatedDate');"> {!$ObjectType.Shipment_Disbursement__c.fields.Name.Label}
+                                     <span style="       width: 10px;    height: 11px;    float: right;    margin: 0 5px;    vertical-align: 0px;    background: transparent url(/img/alohaSkin/sortArrows_sprite.png);    background-size: 16px;    background-repeat: no-repeat;    background-position: center 2px;" class="flecha_ordenacion_disbursement CreatedDate"/>
+                                 </div>
+                             </apex:facet>
+                             <c:customobject2 objid="{!sdu.Shipment_Disbursement.Id}" objname="{!sdu.Shipment_Disbursement.Name}"/>
+                        </apex:column>
+                        
+                        <apex:column >
+                            <apex:facet name="header">
+                                 <div  style ="cursor: pointer;" onclick="sort_data_table_disbursements('Shipments_Program_Number__c');"> {!$ObjectType.Shipment_Disbursement__c.fields.Shipments_Program_Number__c.Label}
+                                     <span style="       width: 10px;    height: 11px;    float: right;    margin: 0 5px;    vertical-align: 0px;    background: transparent url(/img/alohaSkin/sortArrows_sprite.png);    background-size: 16px;    background-repeat: no-repeat;    background-position: center 2px; display:none;" class="flecha_ordenacion_disbursement Shipments_Program_Number__c"/>
+                                 </div>
+                             </apex:facet>
+                             <apex:outputtext value="{!sdu.Shipment_Disbursement.Shipments_Program_Number__c}" />
+                        </apex:column>
+                        
+                        <apex:column >
+                            <apex:facet name="header">
+                                 <div  style ="cursor: pointer;" onclick="sort_data_table_disbursements('Shipment_Number__c');"> {!$ObjectType.Shipment_Disbursement__c.fields.Shipment_Number__c.Label} / {!$ObjectType.Shipment_Disbursement__c.fields.Import_Export_Order_Number__c.Label}
+                                     <span style="       width: 10px;    height: 11px;    float: right;    margin: 0 5px;    vertical-align: 0px;    background: transparent url(/img/alohaSkin/sortArrows_sprite.png);    background-size: 16px;    background-repeat: no-repeat;    background-position: center 2px; display:none;" class="flecha_ordenacion_disbursement Shipment_Number__c"/>
+                                 </div>
+                             </apex:facet>
+                             <apex:outputtext value="{!sdu.Shipment_Disbursement.Shipment_Number__c}" rendered="{!sdu.Shipment_Disbursement.Shipment__c != null}"/>
+                             <apex:outputtext value="{!sdu.Shipment_Disbursement.Import_Export_Order_Number__c}" rendered="{!sdu.Shipment_Disbursement.Shipment__c == null}"/>
+                        </apex:column>
+                        
+                        <!-- <apex:column >
+                            <apex:facet name="header">
+                                 <div  style ="cursor: pointer;" onclick="sort_data_table_disbursements('Shipment_Status__c');"> {!$ObjectType.Shipment_Disbursement__c.fields.Shipment_Status__c.Label}
+                                     <span style="       width: 10px;    height: 11px;    float: right;    margin: 0 5px;    vertical-align: 0px;    background: transparent url(/img/alohaSkin/sortArrows_sprite.png);    background-size: 16px;    background-repeat: no-repeat;    background-position: center 2px; display:none;" class="flecha_ordenacion_disbursement Shipment_Status__c"/>
+                                 </div>
+                             </apex:facet>
+                             <apex:outputField value="{!sdu.Shipment_Disbursement.Shipment_Status__c}" />
+                        </apex:column>-->
+                        
+                        <apex:column >
+                            <apex:facet name="header">
+                                 <div  style ="cursor: pointer;" onclick="sort_data_table_disbursements('Containers__c');"> {!$ObjectType.Shipment_Disbursement__c.fields.Containers__c.Label}
+                                     <span style="       width: 10px;    height: 11px;    float: right;    margin: 0 5px;    vertical-align: 0px;    background: transparent url(/img/alohaSkin/sortArrows_sprite.png);    background-size: 16px;    background-repeat: no-repeat;    background-position: center 2px; display:none;" class="flecha_ordenacion_disbursement Containers__c"/>
+                                 </div>
+                             </apex:facet>
+                             <apex:outputField value="{!sdu.Shipment_Disbursement.Containers__c}" />
+                        </apex:column>
+                        
+                        <apex:column >
+                            <apex:facet name="header">
+                                 <div  style ="cursor: pointer;" onclick="sort_data_table_disbursements('Mode__c');"> {!$ObjectType.Shipment_Disbursement__c.fields.Mode__c.Label}
+                                     <span style="       width: 10px;    height: 11px;    float: right;    margin: 0 5px;    vertical-align: 0px;    background: transparent url(/img/alohaSkin/sortArrows_sprite.png);    background-size: 16px;    background-repeat: no-repeat;    background-position: center 2px; display:none;" class="flecha_ordenacion_disbursement Mode__c"/>
+                                 </div>
+                             </apex:facet>
+                             <apex:outputField value="{!sdu.Shipment_Disbursement.Mode__c}" />
+                        </apex:column>
+                        
+                         <apex:column >
+                            <apex:facet name="header">
+                                 <div  style ="cursor: pointer;" onclick="sort_data_table_disbursements('Planned_ETD_filter_formula__c');"> {!$ObjectType.Shipment_Disbursement__c.fields.Planned_ETD__c.Label}
+                                     <span style="       width: 10px;    height: 11px;    float: right;    margin: 0 5px;    vertical-align: 0px;    background: transparent url(/img/alohaSkin/sortArrows_sprite.png);    background-size: 16px;    background-repeat: no-repeat;    background-position: center 2px; display:none;" class="flecha_ordenacion_disbursement Planned_ETD_filter_formula__c"/>
+                                 </div>
+                             </apex:facet>
+                             <apex:outputField value="{!sdu.Shipment_Disbursement.Planned_ETD__c}" />
+                        </apex:column>
+                        
+                        <apex:column >
+                            <apex:facet name="header">
+                                 <div  style ="cursor: pointer;" onclick="sort_data_table_disbursements('Planned_ETA_filter_formula__c');"> {!$ObjectType.Shipment_Disbursement__c.fields.Planned_ETA__c.Label}
+                                     <span style="       width: 10px;    height: 11px;    float: right;    margin: 0 5px;    vertical-align: 0px;    background: transparent url(/img/alohaSkin/sortArrows_sprite.png);    background-size: 16px;    background-repeat: no-repeat;    background-position: center 2px; display:none;" class="flecha_ordenacion_disbursement Planned_ETA_filter_formula__c"/>
+                                 </div>
+                             </apex:facet>
+                             <apex:outputField value="{!sdu.Shipment_Disbursement.Planned_ETA__c}" />
+                        </apex:column>
+                        
+                        <!-- <apex:column >
+                            <apex:facet name="header">
+                                 <div  style ="cursor: pointer;" onclick="sort_data_table_disbursements('Nature_Merchandise__c');"> {!$ObjectType.Shipment_Disbursement__c.fields.Nature_Merchandise__c.Label}
+                                     <span style="       width: 10px;    height: 11px;    float: right;    margin: 0 5px;    vertical-align: 0px;    background: transparent url(/img/alohaSkin/sortArrows_sprite.png);    background-size: 16px;    background-repeat: no-repeat;    background-position: center 2px; display:none;" class="flecha_ordenacion_disbursement Nature_Merchandise__c"/>
+                                 </div>
+                             </apex:facet>
+                             <apex:outputField value="{!sdu.Shipment_Disbursement.Nature_Merchandise__c}" />
+                        </apex:column>-->
+                        
+                         <apex:column >
+                            <apex:facet name="header">
+                                 <div  style ="cursor: pointer;" onclick="sort_data_table_disbursements('Supplier_Account_Name__c');"> {!$ObjectType.Shipment_Disbursement__c.fields.Account__c.Label}
+                                     <span style="       width: 10px;    height: 11px;    float: right;    margin: 0 5px;    vertical-align: 0px;    background: transparent url(/img/alohaSkin/sortArrows_sprite.png);    background-size: 16px;    background-repeat: no-repeat;    background-position: center 2px; display:none;" class="flecha_ordenacion_disbursement Supplier_Account_Name__c"/>
+                                 </div>
+                             </apex:facet>
+                             <apex:outputlink value="{!$Site.BaseUrl}/{!sdu.Shipment_Disbursement.Account__c}">{!sdu.Shipment_Disbursement.Account__r.Name}</apex:outputlink>
+                        </apex:column>
+                        
+                        <apex:column >
+                            <apex:facet name="header">
+                                 <div  style ="cursor: pointer;" onclick="sort_data_table_disbursements('Invoice_Ref__c');"> {!$ObjectType.Shipment_Disbursement__c.fields.Invoice_Ref__c.Label}
+                                     <span style="       width: 10px;    height: 11px;    float: right;    margin: 0 5px;    vertical-align: 0px;    background: transparent url(/img/alohaSkin/sortArrows_sprite.png);    background-size: 16px;    background-repeat: no-repeat;    background-position: center 2px; display:none;" class="flecha_ordenacion_disbursement Invoice_Ref__c"/>
+                                 </div>
+                             </apex:facet>
+                             <apex:inputField value="{!sdu.Shipment_Disbursement.Invoice_Ref__c}" />
+                        </apex:column>
+                        
+                        <apex:column >
+                            <apex:facet name="header">
+                                 <div  style ="cursor: pointer;" onclick="sort_data_table_disbursements('Invoice_Amount_Exc__c');"> {!$ObjectType.Shipment_Disbursement__c.fields.Invoice_Amount_Exc__c.Label}
+                                     <span style="       width: 10px;    height: 11px;    float: right;    margin: 0 5px;    vertical-align: 0px;    background: transparent url(/img/alohaSkin/sortArrows_sprite.png);    background-size: 16px;    background-repeat: no-repeat;    background-position: center 2px;  display:none;" class="flecha_ordenacion_disbursement Invoice_Amount_Exc__c"/>
+                                 </div>
+                             </apex:facet>
+                             <apex:inputField value="{!sdu.Shipment_Disbursement.Invoice_Amount_Exc__c}" style="text-align: right;     width: 80px;    float: right;"/>
+                        </apex:column>
+                        
+                        <apex:column >
+                            <apex:facet name="header">
+                                 <div  style ="cursor: pointer;" onclick="sort_data_table_disbursements('VAT__c');"> {!$ObjectType.Shipment_Disbursement__c.fields.VAT__c.Label}
+                                     <span style="       width: 10px;    height: 11px;    float: right;    margin: 0 5px;    vertical-align: 0px;    background: transparent url(/img/alohaSkin/sortArrows_sprite.png);    background-size: 16px;    background-repeat: no-repeat;    background-position: center 2px; display:none;" class="flecha_ordenacion_disbursement VAT__c"/>
+                                 </div>
+                             </apex:facet>
+                             <apex:inputField value="{!sdu.Shipment_Disbursement.VAT__c}" style="text-align: right;     width: 75px;    float: right;"/>
+                        </apex:column>
+                        
+                         <apex:column >
+                            <apex:facet name="header">
+                                 <div  style ="cursor: pointer;" onclick="sort_data_table_disbursements('Invoice_Date__c');"> {!$ObjectType.Shipment_Disbursement__c.fields.Invoice_Date__c.Label}
+                                     <span style="       width: 10px;    height: 11px;    float: right;    margin: 0 5px;    vertical-align: 0px;    background: transparent url(/img/alohaSkin/sortArrows_sprite.png);    background-size: 16px;    background-repeat: no-repeat;    background-position: center 2px; display:none;" class="flecha_ordenacion_disbursement Invoice_Date__c"/>
+                                 </div>
+                             </apex:facet>
+                             <apex:inputField value="{!sdu.Shipment_Disbursement.Invoice_Date__c}" />
+                        </apex:column>
+                        
+                         <apex:column style="text-align: center;">
+                            <apex:facet name="header">
+                                <div style="text-align: center;">Actual Documents
+                                </div>
+                            </apex:facet>
+                                                        <!-- <span class="campo_products_{!sdu.Shipment_Disbursement.Id}" onclick="get_message('{!sdu.Shipment_Disbursement.Id}');" style="    background: transparent url(/img/func_icons/util/lookup20.gif) no-repeat 0 0;    width: 18px;    height: 17px;     margin-right: 5px;   float: left; display:{!if(sdu.associated_document != null && sdu.associated_document.size > 0  , '', 'none')}"></span>-->
+                            
+                            
+                            
+                            <img class="campo_products_{!sdu.Shipment_Disbursement.Id}" onclick="get_message('{!sdu.Shipment_Disbursement.Id}');" src="/img/icon/contracts32.png" style="text-align: center;    cursor: pointer;display:{!if(sdu.associated_document != null && sdu.associated_document.size > 0  , '', 'none')}"/>
+                            <!-- 
+                            
+                             <ul class="listado_documentos"> 
+                                 <apex:repeat value="{!sdu.associated_document}" var="doc">
+                                     <li>
+                                        <a href="{!doc.Document_URL__c}" class="confirm_button" target="_blank">
+                                            <img src="/img/icon/contracts16.png" />
+                                        </a>
+                                        <strong><apex:outputlink value="{!$Site.BaseUrl}/{!doc.Id}" target="_blank">{!doc.Name}</apex:outputlink></strong>
+                                        <br/>
+                                        <apex:outputtext value="{!doc.Document_Type__c}"/>
+                                    </li>
+                                 </apex:repeat>
+                                </ul> -->
+                                    
+                                    
+                                <div id="alert_message" style="display:none;" class="mruHoverDetail alert_message_{!sdu.Shipment_Disbursement.Id} todas_las_lineas_alert" >
+                                 <div id="custom_style_left" class="bPageBlock brandSecondaryBrd secondaryPalette custom_style_left2">
+                                      <div id="custom_style_header" class="pbHeader brandSecondaryBrd">Actual Documents<span class="cierre" onclick="close_message('{!sdu.Shipment_Disbursement.Id}');">X</span></div>
+                                      <div id="custom_style_body" class="pbBody">
+                                          <table class="table_bocadillo">
+                                                <tr>
+                                                     <th style="    width: 26px;"></th>
+                                                  <th>{!$ObjectType.Associated_Document__c.fields.Name.Label}</th>
+                                                  <th>{!$ObjectType.Associated_Document__c.fields.Document_Type__c.Label}</th>
+                                              </tr>
+                                              <apex:repeat value="{!sdu.associated_document}" var="doc">
+                                                <tr>
+                                                  <td>
+                                                    <a href="{!doc.Document_URL__c}" class="confirm_button" target="_blank">
+                                                        <img src="/img/icon/contracts16.png" />
+                                                    </a>
+                                                </td>
+                                                <td><strong><apex:outputlink value="{!$Site.BaseUrl}/{!doc.Id}" target="_blank"><span class="{!sdu.Shipment_Disbursement.Id}_nombre_doc nombres_all_documents">{!doc.Name}</span></apex:outputlink></strong></td>
+                                                <td><apex:outputtext value="{!doc.Document_Type__c}"/></td>
+                                                </tr>
+                                              </apex:repeat>
+                                           </table>
+                                      </div>
+                                      <div id="custom_style_footer" class="pbFooter secondaryPalette"><div class="bg"></div></div>
+                                   </div>
+                               </div>                   
+                         </apex:column>
+                         
+                        <apex:column >
+                            <apex:facet name="header">
+                                 <div>Upload
+                                     <span style="       width: 10px;    height: 11px;    float: right;    margin: 0 5px;    vertical-align: 0px;    background: transparent url(/img/alohaSkin/sortArrows_sprite.png);    background-size: 16px;    background-repeat: no-repeat;    background-position: center 2px; display:none;"/>
+                                 </div>
+                             </apex:facet>
+                              <strong><a href="{!$Site.BaseUrl}/apex/NEU_MD_Associated_Documents?id={!sdu.Shipment_Disbursement.Id}&disb_tab=true" class="confirm_button" title="Upload Document"> <img  src="{!URLFOR($Resource.documento_subido)}" style="    width: 32px;"/><!-- <input type="button" class="btn" value="Upload Documents"/>--></a></strong><!-- target="_blank"-->
+                        </apex:column>   
+                        
+                    </apex:pageBlockTable>
+                </apex:pageBlockSection>
+            </apex:pageBlock>
+        </apex:outputPanel>
+        
+        <apex:outputpanel >
+           <apex:actionstatus id="myStatus">
+               <apex:facet name="start">
+                   <div class="waitingSearchDiv" id="el_loading" style="background-color: #fbfbfb;
+                          height: 100%;opacity:0.65;width:100%;"> 
+                       <div class="waitingHolder" style="top: 74.2px; width: 91px;">
+                           <img class="waitingImage" src="/img/loading.gif" title="Please Wait..." />
+                           <span class="waitingDescription">Loading...</span>
+                       </div>
+                   </div>
+               </apex:facet>
+           </apex:actionstatus>
+        </apex:outputpanel>
+        
+     </apex:form>   
+</apex:page>

@@ -1,0 +1,71 @@
+body
+{
+	font-family:'Arial Unicode MS';
+	font-size:6pt;
+}
+#contenedor
+{
+	font-size:12px;
+}
+.table_lines
+{
+	font-size: 6pt;
+}
+.table_lines th
+{
+	background:#009ccc;
+    color:white;
+    text-align:center;
+}
+.table_lines td
+{
+	background:#eaeaea;
+	text-align: center;
+}
+@page
+{
+	size: A4;
+	margin-top: 1cm;
+	margin-left: 1cm;
+	margin-right: 1cm;
+	margin-bottom: 1cm;
+    @bottom-right
+    {
+      content: "Page " counter(page) " of " counter(pages);
+      font-weight: lighter;
+      font-size:9pt;
+    }
+    size: landscape;
+}
+
+.logo_bcline{
+	width: 100px;
+}
+
+.text_service{
+	padding: 3%;
+	font-size:10px;
+}
+
+.alert-filters
+{
+	width: 684px;
+    margin: 0 auto 0 auto;
+}
+
+.message_limit
+{
+	float: left;
+    margin: 0 0 10px 0;
+    padding: 10px 10px 10px 40px;
+    background: #FFFFCC;
+    border: 2px solid #AD0000;
+    color: #000;
+    border-radius: 5px;
+    width: 627px;
+    text-transform: uppercase;
+    background-size: 25px;
+    background-repeat: no-repeat;
+    background-position: 10px;
+}
+

@@ -1,0 +1,25 @@
+<apex:page extensions="NEU_Upload_Capacity_Plan" standardController="Company_Plan__c">
+	<apex:form enctype="multipart/form-data">
+		<apex:sectionHeader title="Company Plan" subtitle="{!Company_Plan__c.Name}"/>
+		<apex:pageBlock id="block2" mode="maindetail">
+			  <apex:pageBlockSection title="Company Plan Detail" columns="2">
+			      <apex:outputField value="{!Company_Plan__c.Name}"/>
+			      <apex:outputLabel />
+			      <apex:outputField value="{!Company_Plan__c.Valid_From__c}"/>
+			      <apex:outputLabel />
+			      <apex:outputField value="{!Company_Plan__c.Valid_To__c}"/>
+			      <apex:outputLabel />
+			      <apex:outputField value="{!Company_Plan__c.Active__c}"/>
+			  </apex:pageBlockSection>
+			</apex:pageBlock>
+			<apex:pageBlock id="block1" mode="maindetail">
+			<apex:pageBlockButtons location="bottom">
+			    <apex:commandButton value="Upload document" action="{!upload}"/>
+			</apex:pageBlockButtons>
+			<apex:pageBlockSection title="Capacity Tool - Excel (xlsx)" columns="1">
+				<apex:inputFile value="{!documento1}" filename="{!documento1Name}"/>
+			</apex:pageBlockSection>
+		</apex:pageBlock>
+	<apex:pageMessages />
+	</apex:form>
+</apex:page>

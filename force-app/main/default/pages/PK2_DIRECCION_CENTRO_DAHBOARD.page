@@ -1,0 +1,67 @@
+<apex:page showHeader="false" tabStyle="Account">
+    
+    <apex:slds />
+<head>
+  <base target="_top">
+  </base>
+</head> 
+<body class="slds-scope">
+
+    <apex:pageBlock title="ZONA CENTRO" mode="edit">
+        <apex:pageBlockSection title="Status Quotes" columns="3" >
+            <analytics:reportChart reportId="00O0Y000007wkoE" size="tiny"/>
+            <analytics:reportChart reportId="00O0Y000007wkoJ" size="tiny"/>
+            <analytics:reportChart reportId="00O0Y000007wkoO" size="tiny"/>
+            <analytics:reportChart reportId="00O1v0000085tTW" size="tiny"/>            
+            <analytics:reportChart reportId="00O0Y000007wdaN" size="tiny"/>
+            <analytics:reportChart reportId="00O0Y000007wdaS" size="tiny"/>
+        </apex:pageblocksection>
+        <apex:pageBlockSection title="MEXICO" columns="3" >
+            <analytics:reportChart reportId="00O0Y000007wnfJ" size="tiny"/>
+            <analytics:reportChart reportId="00O0Y000007wngH" size="tiny"/>
+            <analytics:reportChart reportId="00O0Y000007wnfT" size="tiny"/>
+            <analytics:reportChart reportId="00O0Y000007wngM" size="tiny"/>
+            <analytics:reportChart reportId="00O0Y000007wngl" size="tiny"/>
+            <analytics:reportChart reportId="00O0Y000007wngb" size="tiny"/>
+            <analytics:reportChart reportId="00O0Y000007wxUV" size="tiny"/>
+            <analytics:reportChart reportId="00O0Y000007wxUf" size="tiny"/>
+            <analytics:reportChart reportId="00O0Y000007wxUk" size="tiny"/>
+        </apex:pageblocksection>
+        <apex:pageBlockSection title="PUEBLA" columns="3" >
+            <analytics:reportChart reportId="00O0Y000007wnd8" size="tiny"/>
+            <analytics:reportChart reportId="00O0Y000007wndI" size="tiny"/>
+            <analytics:reportChart reportId="00O0Y000007wndN" size="tiny"/>
+            <analytics:reportChart reportId="00O0Y000007wndS" size="tiny"/>
+            <analytics:reportChart reportId="00O0Y000007wxVJ" size="tiny"/>
+            <analytics:reportChart reportId="00O0Y000007wxVT" size="tiny"/>
+            <analytics:reportChart reportId="00O0Y000007wndm" size="tiny"/>
+            <analytics:reportChart reportId="00O0Y000007wndh" size="tiny"/>
+            <analytics:reportChart reportId="00O0Y000007wxVO" size="tiny"/>
+            <analytics:reportChart reportId="00O0Y000007wnd3" size="tiny"/>
+
+         </apex:pageblocksection>
+         <apex:pageBlockSection title="VERACRUZ" columns="3" >
+            <analytics:reportChart reportId="00O1v000007Ny2K" size="tiny"/>
+            <analytics:reportChart reportId="00O0Y000007wxVs" size="tiny"/>
+            <analytics:reportChart reportId="00O0Y000007wxVx" size="tiny"/>
+            <analytics:reportChart reportId="00O0Y000007wxWC" size="tiny"/>
+            <analytics:reportChart reportId="00O1v000007bDTi" size="tiny"/>
+            <analytics:reportChart reportId="00O1v000007bDTn" size="tiny"/>
+            <analytics:reportChart reportId="00O1v000007bDTs" size="tiny"/>
+            <analytics:reportChart reportId="00O1v000007bDSz" size="tiny"/>
+            <analytics:reportChart reportId="00O0Y000007wngv" size="tiny"/>
+         </apex:pageblocksection>
+         <apex:pageBlockSection title="TOLUCA" columns="3" >
+            <analytics:reportChart reportId="00O0Y000007wngq" size="tiny"/>
+            <analytics:reportChart reportId="00O0Y000007wnh5" size="tiny"/>
+            <analytics:reportChart reportId="00O0Y000007wnhA" size="tiny"/>
+            <analytics:reportChart reportId="00O0Y000007wxUp" size="tiny"/>
+            <analytics:reportChart reportId="00O0Y000007wxUz" size="tiny"/>
+            <analytics:reportChart reportId="00O0Y000007wnhF" size="tiny"/>
+            <analytics:reportChart reportId="00O0Y000007wnhK" size="tiny"/>
+            <analytics:reportChart reportId="00O0Y000007wxUu" size="tiny"/>
+            <analytics:reportChart reportId="00O1v000007rnN2" size="tiny"/>
+         </apex:pageblocksection>
+     </apex:pageBlock>
+</body>
+ </apex:page>

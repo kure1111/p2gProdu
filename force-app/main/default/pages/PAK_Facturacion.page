@@ -1,0 +1,104 @@
+<apex:page showHeader="false" sidebar="false" tabStyle="Shipment__c" readOnly="true" controller="PAK_Facturacion" lightningStylesheets="true">
+    <head>
+        <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+        <script>
+            setTimeout("location.reload(true);", 180000);
+        </script>
+    </head>
+    <body>
+        <apex:form > 
+             <apex:pageBlock title="Acuse Facturación" id="block1">
+                 <apex:pageBlockSection id="sectionFi" collapsible="true" title="FI ({!lstFi.size})" columns="1">
+                    <apex:pageBlockTable value="{!lstFI}" var="Result">
+                        <apex:column headerValue="Shipment">
+                            <apex:outputLink value="/{!Result.Last_Shipment__r.Id}">{!Result.Last_Shipment__r.Name}</apex:outputLink>
+                        </apex:column>
+                        <apex:column headerValue="Cliente" value="{!Result.Last_Shipment__r.Account_for__r.Name}"></apex:column>
+                        <apex:column headerValue="Venta" value="{!Result.Last_Shipment__r.Total_Services_Sell_Amount__c}"></apex:column>   
+                        <apex:column headerValue="Vendedor" value="{!Result.CreatedBy.Name}"></apex:column>         
+                        <apex:column headerValue="Pricing" value="{!Result.Pricing_Executive__r.Name}"></apex:column>  
+                        <apex:column headerValue="Facturación" value="{!Result.Last_Shipment__r.Email_Cobranza_11__c}"></apex:column>                         
+                    </apex:pageBlockTable>
+                 </apex:pageBlockSection>
+
+                 <apex:pageBlockSection id="sectionPto" collapsible="true" title="PTO ({!lstPto.size})" columns="1">
+                    <apex:pageBlockTable value="{!lstPto}" var="Result">
+                        <apex:column headerValue="Shipment">
+                            <apex:commandLink action="/{!Result.Last_Shipment__c}" value="{!Result.Last_Shipment__r.Name}"/>
+                        </apex:column>
+                        <apex:column headerValue="Cliente" value="{!Result.Last_Shipment__r.Account_for__r.Name}"></apex:column>
+                        <apex:column headerValue="Venta" value="{!Result.Last_Shipment__r.Total_Services_Sell_Amount__c}"></apex:column>    
+                        <apex:column headerValue="Vendedor" value="{!Result.CreatedBy.Name}"></apex:column>         
+                        <apex:column headerValue="Pricing" value="{!Result.Pricing_Executive__r.Name}"></apex:column>  
+                        <apex:column headerValue="Facturación" value="{!Result.Last_Shipment__r.Email_Cobranza_11__c}"></apex:column>                         
+                    </apex:pageBlockTable>
+                 </apex:pageBlockSection>
+
+                 <apex:pageBlockSection id="sectionA" collapsible="true" title="A ({!lstA.size})" columns="1">
+                    <apex:pageBlockTable value="{!lstA}" var="Result">
+                        <apex:column headerValue="Shipment">
+                            <apex:commandLink action="/{!Result.Last_Shipment__c}" value="{!Result.Last_Shipment__r.Name}"/>
+                        </apex:column>
+                        <apex:column headerValue="Cliente" value="{!Result.Last_Shipment__r.Account_for__r.Name}"></apex:column>
+                        <apex:column headerValue="Venta" value="{!Result.Last_Shipment__r.Total_Services_Sell_Amount__c}"></apex:column>   
+                        <apex:column headerValue="Vendedor" value="{!Result.CreatedBy.Name}"></apex:column>         
+                        <apex:column headerValue="Pricing" value="{!Result.Pricing_Executive__r.Name}"></apex:column>  
+                        <apex:column headerValue="Facturación" value="{!Result.Last_Shipment__r.Email_Cobranza_11__c}"></apex:column>                         
+                  </apex:pageBlockTable>
+                 </apex:pageBlockSection>
+                
+                 <apex:pageBlockSection id="sectionRImpo" collapsible="true" title="R Impo ({!lstRImpo.size})" columns="1">
+                    <apex:pageBlockTable value="{!lstRImpo}" var="Result">
+                        <apex:column headerValue="Shipment">
+                            <apex:commandLink action="/{!Result.Last_Shipment__c}" value="{!Result.Last_Shipment__r.Name}"/>
+                        </apex:column>
+                        <apex:column headerValue="Cliente" value="{!Result.Last_Shipment__r.Account_for__r.Name}"></apex:column>
+                        <apex:column headerValue="Venta" value="{!Result.Last_Shipment__r.Total_Services_Sell_Amount__c}"></apex:column>  
+                        <apex:column headerValue="Vendedor" value="{!Result.CreatedBy.Name}"></apex:column>         
+                        <apex:column headerValue="Pricing" value="{!Result.Pricing_Executive__r.Name}"></apex:column>  
+                        <apex:column headerValue="Facturación" value="{!Result.Last_Shipment__r.Email_Cobranza_11__c}"></apex:column>                         
+                  </apex:pageBlockTable>
+                 </apex:pageBlockSection>
+
+                 <apex:pageBlockSection id="sectionRExpo" collapsible="true" title="R Expo ({!lstRExpo.size})" columns="1">
+                    <apex:pageBlockTable value="{!lstRExpo}" var="Result">
+                        <apex:column headerValue="Shipment">
+                            <apex:commandLink action="/{!Result.Last_Shipment__c}" value="{!Result.Last_Shipment__r.Name}"/>
+                        </apex:column>
+                        <apex:column headerValue="Cliente" value="{!Result.Last_Shipment__r.Account_for__r.Name}"></apex:column>
+                        <apex:column headerValue="Venta" value="{!Result.Last_Shipment__r.Total_Services_Sell_Amount__c}"></apex:column>  
+                        <apex:column headerValue="Vendedor" value="{!Result.CreatedBy.Name}"></apex:column>         
+                        <apex:column headerValue="Pricing" value="{!Result.Pricing_Executive__r.Name}"></apex:column>  
+                        <apex:column headerValue="Facturación" value="{!Result.Last_Shipment__r.Email_Cobranza_11__c}"></apex:column>                         
+                  </apex:pageBlockTable>
+                 </apex:pageBlockSection>
+
+                 <apex:pageBlockSection id="sectionMImpo" collapsible="true" title="M Impo ({!lstMImpo.size})" columns="1">
+                    <apex:pageBlockTable value="{!lstMImpo}" var="Result">
+                        <apex:column headerValue="Shipment">
+                            <apex:commandLink action="/{!Result.Last_Shipment__c}" value="{!Result.Last_Shipment__r.Name}"/>
+                        </apex:column>
+                        <apex:column headerValue="Cliente" value="{!Result.Last_Shipment__r.Account_for__r.Name}"></apex:column>
+                        <apex:column headerValue="Venta" value="{!Result.Last_Shipment__r.Total_Services_Sell_Amount__c}"></apex:column>    
+                        <apex:column headerValue="Vendedor" value="{!Result.CreatedBy.Name}"></apex:column>         
+                        <apex:column headerValue="Pricing" value="{!Result.Pricing_Executive__r.Name}"></apex:column>  
+                        <apex:column headerValue="Facturación" value="{!Result.Last_Shipment__r.Email_Cobranza_11__c}"></apex:column>                         
+                  </apex:pageBlockTable>
+                 </apex:pageBlockSection>
+
+                 <apex:pageBlockSection id="sectionMExpo" collapsible="true" title="M Expo ({!lstMExpo.size})" columns="1">
+                    <apex:pageBlockTable value="{!lstMExpo}" var="Result">
+                        <apex:column headerValue="Shipment">
+                            <apex:commandLink action="/{!Result.Last_Shipment__c}" value="{!Result.Last_Shipment__r.Name}"/>
+                        </apex:column>
+                        <apex:column headerValue="Cliente" value="{!Result.Last_Shipment__r.Account_for__r.Name}"></apex:column>
+                        <apex:column headerValue="Venta" value="{!Result.Last_Shipment__r.Total_Services_Sell_Amount__c}"></apex:column>    
+                        <apex:column headerValue="Vendedor" value="{!Result.CreatedBy.Name}"></apex:column>         
+                        <apex:column headerValue="Pricing" value="{!Result.Pricing_Executive__r.Name}"></apex:column>  
+                        <apex:column headerValue="Facturación" value="{!Result.Last_Shipment__r.Email_Cobranza_11__c}"></apex:column>                         
+                  </apex:pageBlockTable>
+                 </apex:pageBlockSection>
+             </apex:pageBlock>
+        </apex:form>   
+    </body>
+ </apex:page>

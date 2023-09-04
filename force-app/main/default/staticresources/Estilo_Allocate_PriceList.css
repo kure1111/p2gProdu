@@ -1,0 +1,240 @@
+/* ALLOCATE ITEMS*/
+
+body
+{
+	font-family: Arial, Helvetica, sans-serif;
+	font-size:11px;
+}
+
+.tabla_price_list
+{
+	float: left;
+	margin: 10px 0px 0 0;
+	background: #F7F7F7;
+    border: 1px solid #CDCDCD;
+    border-radius: 10px 10px 10px 10px;
+	background: #F7F7F7;
+	background: -webkit-gradient(linear, 0 0, 0 bottom, from(#F7F7F7), to(#E0E0E0));
+	background: -webkit-linear-gradient(#F7F7F7, #E0E0E0);
+	background: -moz-linear-gradient(#F7F7F7, #E0E0E0);
+	background: -ms-linear-gradient(#F7F7F7, #E0E0E0);
+	background: -o-linear-gradient(#F7F7F7, #E0E0E0);
+	background: linear-gradient(#F7F7F7, #E0E0E0);
+	-webkit-box-shadow: 0 0 5px rgba(0, 0, 0, 0.25);
+	-moz-box-shadow: 0 0 5px rgba(0, 0, 0, 0.25);
+	box-shadow: 0 0 5px rgba(0, 0, 0, 0.25);
+	width: 100%;
+}
+
+#cabecera_titulo
+{
+	float: left;
+	width: 100%;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 20px;
+	margin: 10px 10px 10px 491px;
+}
+
+#fichas
+{
+	float: left;
+	width: 90%;
+}
+
+.lista_fichas
+{
+	float: left;
+	list-style: none;
+	min-width: 304px;
+	border: 2px solid #CDCDCD;
+	background: none;
+	background: white;
+	border-radius: 5px 5px 0px 0px;
+	height: 100%;
+	padding-left: 0px;
+	background: #F1EDED;
+	margin-bottom: 0px;
+	border-bottom: 0px;
+}
+
+.lista_fichas li
+{
+	float: left;
+	height: 32px;
+	text-align: center;
+	vertical-align: middle;
+	width: 110px;
+	background: #CDCDCD;
+	margin: 4px;
+	padding-top: 8px;
+	cursor: pointer;
+	margin-bottom: 0px !important;
+}
+
+.lista_fichas li a
+{	
+	text-decoration: none;
+	color: black;
+	cursor: pointer;
+	padding: 3px 5px 5px 5px;
+	font-family: Arial, Helvetica, sans-serif;
+	float: left;
+	font-size: 12px;
+	height: 27px;
+	padding-top: 7px;
+	padding-left: 18px;
+
+}
+
+.lista_fichas li a:hover
+{
+	text-decoration: none;
+	color: black;
+	cursor: pointer;
+}
+
+#tablas
+{
+	float: left;
+	background: #F1EDED;
+	width: 1233px;
+	border: 2px solid #CDCDCD;
+}
+
+
+.tabla_price_list th
+{
+	font-family: Arial, Helvetica, sans-serif;
+	font-size:11px;
+	color:#4F5051;
+    border: 1px solid #CDCDCD;
+    border-radius: 5px 5px 5px 5px;
+	vertical-align: middle;
+	text-align: center;
+	width: 276px;
+	font-weight:normal;
+	background: #5E71B6;
+	background: -webkit-gradient(linear, 0 0, 0 bottom, from(#FFFFFF), to(#5E71B6));
+	background: -webkit-linear-gradient(#FFFFFF, #5E71B6);
+	background: -moz-linear-gradient(#FFFFFF, #5E71B6);
+	background: -ms-linear-gradient(#FFFFFF, #5E71B6);
+	background: -o-linear-gradient(#FFFFFF, #5E71B6);
+	background: linear-gradient(#FFFFFF, #5E71B6);
+	-pie-background: linear-gradient(#FFFFFF, #5E71B6);
+	-webkit-box-shadow: 0 0 5px rgba(0, 0, 0, 0.25);
+	-moz-box-shadow: 0 0 5px rgba(0, 0, 0, 0.25);
+	box-shadow: 0 0 5px rgba(0, 0, 0, 0.25);
+	font-weight: bold;
+}
+
+.tabla_price_list td
+{
+	font-family: Arial, Helvetica, sans-serif;
+	font-size:11px;
+	color:#4F5051;
+	background: #FFFFFF;
+    border: 1px solid #CDCDCD;
+    border-radius: 5px 5px 5px 5px;
+	vertical-align: middle;
+	-webkit-box-shadow: 0 0 5px rgba(0, 0, 0, 0.25);
+	-moz-box-shadow: 0 0 5px rgba(0, 0, 0, 0.25);
+	box-shadow: 0 0 5px rgba(0, 0, 0, 0.25);
+}
+
+.tabla_price_list input
+{
+	font-family: Arial, Helvetica, sans-serif;
+	font-size:11px;
+}
+
+#titulo_descuento
+{
+	float: left;
+	margin: 9px 5px 5px 5px;
+	font-size: 11px;
+	font-weight: bold;
+}
+
+#id_descuento
+{
+	float: left;
+	margin: 5px 5px 0px 5px;
+	width: 41px;
+}
+
+.price_list
+{
+	float: right;
+	text-align: right;
+}
+
+.boton_calcular
+{
+	background: #FFFFFF;
+	background: -webkit-gradient(linear, 0 0, 0 bottom, from(#F7F7F7), to(#DCE0EC));
+	background: -webkit-linear-gradient(#FFFFFF, #DCE0EC);
+	background: -moz-linear-gradient(#FFFFFF, #DCE0EC);
+	background: -ms-linear-gradient(#FFFFFF, #DCE0EC);
+	background: -o-linear-gradient(#FFFFFF, #DCE0EC);
+	background: linear-gradient(#FFFFFF, #DCE0EC);
+	-pie-background: linear-gradient(#FFFFFF, #DCE0EC);
+	border: 1px solid #475965;
+	border-radius: 5px 5px 5px 5px;
+	box-shadow: 0 0 5px rgba(0, 0, 0, 0.25);
+	float: left;
+	margin: 5px 0 5px 5px;
+	padding: 2px;
+	font-family: Century Gothic, Arial !important;
+	font-size: 11px !important;
+	color: #283742 !important;
+	text-decoration: none;
+	cursor: pointer;
+	width: 57px;
+}
+
+.botoncrear
+{
+	background: #FFFFFF;
+	background: -webkit-gradient(linear, 0 0, 0 bottom, from(#F7F7F7), to(#DCE0EC));
+	background: -webkit-linear-gradient(#FFFFFF, #DCE0EC);
+	background: -moz-linear-gradient(#FFFFFF, #DCE0EC);
+	background: -ms-linear-gradient(#FFFFFF, #DCE0EC);
+	background: -o-linear-gradient(#FFFFFF, #DCE0EC);
+	background: linear-gradient(#FFFFFF, #DCE0EC);
+	-pie-background: linear-gradient(#FFFFFF, #DCE0EC);
+	border: 1px solid #475965;
+	border-radius: 5px 5px 5px 5px;
+	box-shadow: 0 0 5px rgba(0, 0, 0, 0.25);
+	float: left;
+	margin: 5px 0 5px 5px;
+	padding: 4px 4px 4px 4px;
+	font-family: Century Gothic, Arial !important;
+	font-size: 11px !important;
+	color: #283742 !important;
+	text-decoration: none;
+	cursor: pointer;
+	width: 180px;
+}
+
+.boton_crear
+{
+	background: #FFFFFF;
+	background: -webkit-gradient(linear, 0 0, 0 bottom, from(#F7F7F7), to(#DCE0EC));
+	background: -webkit-linear-gradient(#FFFFFF, #DCE0EC);
+	background: -moz-linear-gradient(#FFFFFF, #DCE0EC);
+	background: -ms-linear-gradient(#FFFFFF, #DCE0EC);
+	background: -o-linear-gradient(#FFFFFF, #DCE0EC);
+	background: linear-gradient(#FFFFFF, #DCE0EC);
+	-pie-background: linear-gradient(#FFFFFF, #DCE0EC);
+	border: 1px solid #475965;
+	border-radius: 5px 5px 5px 5px;
+	box-shadow: 0 0 5px rgba(0, 0, 0, 0.25);
+	float: left;
+	margin: 5px 0 5px 5px;
+	padding: 4px 4px 4px 4px;
+	font-family: Century Gothic, Arial !important;
+	font-size: 11px !important;
+	color: #283742 !important;
+	text-decoration: none;
+	cursor: pointer;
+}

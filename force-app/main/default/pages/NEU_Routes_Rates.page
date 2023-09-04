@@ -1,0 +1,366 @@
+<apex:page controller="NEU_Routes_Rates" sidebar="false">
+    <apex:includeScript value="{!$Resource.neu_jquery}"/>  
+      <script>
+        
+        
+        function buscar()
+        {
+            var listado_categorias = '';
+            
+            $(".button_selected_category").each(function(){
+                listado_categorias += $(this).attr('name') + ',';
+            });
+            if(listado_categorias == '')
+                listado_categorias = '[]';
+            document.getElementById('{!$Component.form.rate_category_list}').value = listado_categorias;
+            
+            search();
+        } 
+        
+        $.fn.filter_category = (function(){
+            this.each(function(){
+                if($(this).hasClass('button_selected_category'))
+                {
+                    $(this).removeClass('button_selected');
+                    $(this).removeClass('button_selected_category');
+                }
+                else
+                {
+                    $(this).addClass('button_selected');
+                    $(this).addClass('button_selected_category');
+                }
+            });
+        });
+        
+        
+        function sort_data_table(n)
+        {
+            document.getElementById('{!$Component.form.orden_route }').value = n;
+            if(document.getElementById('{!$Component.form.orden_route }').value == $('#orderField').val()) 
+            {
+                if($('#orderValue').val()!='asc')
+                    $('#orderValue').val('asc');
+                else
+                    $('#orderValue').val('desc');
+  
+            }
+            else
+            {
+                $('#orderField').val(n);
+                $('#orderValue').val('desc');
+            }
+            
+            document.getElementById('{!$Component.form.modo_orden_route}').value = $('#orderValue').val();
+            ordenar_tabla();
+        } 
+        
+        function mostrar_ordenacion()
+        {
+            var n = document.getElementById('{!$Component.form.orden_route}').value;
+            $('.flecha_ordenacion').css('display','none');
+            var clase_ordenacion  = n.replace(/\./g, '');
+            clase_ordenacion = clase_ordenacion.replace('.','');
+            $('.'+clase_ordenacion).css('display','block');
+            if($('#orderValue').val()=='asc')
+                $('.flecha_ordenacion').css('background-position-y','-15px');
+            else
+                $('.flecha_ordenacion').css('background-position-y','0px');
+        }
+        
+      </script>
+      
+      <style>
+        .button_selected{background:#C0C0C0 !important;}
+        .filter_button1{width:250px;}
+        .filter_button2{width:205px;}
+        .filter_button3{width:205px;}
+        .actions_table{border:none; width:100%;}
+        .actions_table th
+        {
+            background: #f2f3f3;
+            border:1px solid #e0e3e5;
+            border-bottom:2px solid #cccccc;
+            color: #000;
+            font-size: .9em;
+            font-weight: bold;
+            padding: 5px 2px 4px 5px;
+        }
+        .actions_table td
+        {
+            border:1px solid #e0e3e5;
+            background:#ffffff;
+        }
+        .bloque_total{margin:0;}
+        
+        .boton_paginacion_Instalacion{width: 21px;}
+        .button_selected_Instalacion{background:#C0C0C0 !important;}
+        .botonera_paginacion_table{    float: right; width: 100%;    list-style: none; width: 80%;    padding-top: 0px;    margin-top: 0px;}
+        .botonera_paginacion_table li{    float: left;    padding-left: 0px;    margin-left: 0px;}
+         #alert_message{display:none; padding: 3px 6px 5px; margin-top: -12px; margin-right: 0; margin-bottom: 0; margin-left: -11px; background: transparent url(/img/sprites/hover_sprite.png) 15px -22px no-repeat; text-align:left; width: 301px;     width: 300px; background-size: 300px;     background-size: 400px;     width: 400px; width: 435px;     background-size: 431px;}
+        #custom_style_left{/*background: transparent url(/img/alohaSkin/hover_arrow.png) -1px 3px no-repeat;*/background: transparent url({!$Resource.hover_arrow}) -1px 3px no-repeat; /*background: transparent url(/img/alohaSkin/hover_arrow.png) -40px 3px no-repeat;*/ width: 370px; padding-left: 15px; border: 0; margin: 0; border-top: none !important;     width: 393px;     width: 295px; width: 308px;     background-position-x: 303px;     width: 418px;     background-position-x: 431px;    width: 437px;     padding-top: 6px;}
+        #custom_style_header{border-top: 3px solid #0e9894; margin: 0; border-radius: 4px; padding:6px 10px; color: rgb(51, 52, 53); font-family: Arial, Helvetica, sans-serif; font-size: 14px; font-weight: bold;     width: 351px;     width: 277px; width: 270px;     width: 400px;}
+        #custom_style_body{font-family: Arial, Helvetica, sans-serif; font-size: 12px; font-weight: bold; /*height: 200px;*/ height: 125px; overflow-y: scroll;     overflow-y: hidden;     margin-top: -9px; margin-left: 0px;     overflow-y: scroll;    overflow-x: hidden;}
+        .cierre{float: right; display: block; cursor: pointer; background: #0e9894; color: #ffffff; padding: 3px; border-radius: 3px; cursor:pointer;     }
+        .table_bocadillo{ width: 316px;     width: 342px;     width: 300px; width: 250px;     width: 400px; width: 385px;}
+        .table_bocadillo td{     font-weight: normal !important;     padding-left: 5px;}
+        .table_bocadillo th{        font-weight: bold !important;}
+        .boton_freight_rates_management{text-decoration: none;}
+        .boton_freight_rates_management:hover {text-decoration: none;}
+        #custom_style_footer{background: transparent url(/img/sprites/hover_sprite.png) no-repeat; display: block; position: absolute; /*width: 100%;*/    width: 298px; height: 14px; bottom: -14px; left: 15px;     width: 298px;     background-size: 300px;     width: 437px;    background-size: 431px;}
+        .capa_fija
+        {
+            height: 169px;
+            overflow-y: scroll; 
+        }
+        html{background-color:#ffffff !important;}
+        .p_extra_filter{width:300px;}
+        .confirm_button, .confirm_button:hover, .confirm_button:visited, .confirm_button:active{text-decoration:none;}
+        .listado_documentos{    list-style: none; padding-left: 0px;     margin-top: 0px;}
+        .listado_documentos li{     margin-top: 10px; }
+        .span_th {margin-top: 10px;    background: #f2f3f3;    border: 1px solid #e0e3e5;    color: #000;    font-size: .9em;    font-weight: bold;    float: left;    width: 99%;    padding: 4px 0px 4px 3px;    margin-bottom: 5px;}
+    </style> 
+    
+    <apex:form id="form">   
+        <apex:pageMessages />
+        
+        <apex:inputHidden value="{!rate_category_list}" id="rate_category_list"/>
+        
+        <apex:actionFunction name="search" action="{!search_routes}" reRender="route_rate_list" status="myStatus"/>
+        
+        <apex:inputHidden value="{!orden_route}" id="orden_route"/>
+        <apex:inputHidden value="{!modo_orden_route}" id="modo_orden_route"/>
+        <input type="hidden" id="orderField" value="CreatedDate"/>
+        <input type="hidden" id="orderValue" value="desc"/>
+        <apex:actionFunction name="ordenar_tabla" action="{!go_compare}" reRender="Routes_Rates" status="myStatus" oncomplete="mostrar_ordenacion();"/>
+        
+        <!-- -------------------------- -->
+        <apex:outputPanel id="panel_filtros" >
+            <apex:pageBlock id="bloque_filtros">
+               <apex:pageBlockButtons location="top">
+                    <strong><a href="{!$Site.BaseUrl}/{!$ObjectType.Carrier_Line_Load_Point__c.keyPrefix}/o" class="confirm_button" target="_blank"><input type="button" class="btn" value="All {!$ObjectType.Carrier_Line_Load_Point__c.labelPlural} Views "/></a></strong>
+                </apex:pageBlockButtons>
+                <apex:pageBlockSection title="Filters" columns="1">
+                    <apex:outputPanel id="filtros">
+                        <apex:pageBlock id="block_1">
+                            <apex:pageBlockButtons location="bottom">
+                                <input type="button" value="Search" class="btn" onclick="buscar();"/>
+                            </apex:pageBlockButtons>
+                            <table border="0" cellspacing="5" cellpadding="5" class="actions_table">
+                                <tr>
+                                    <th>Load</th>
+                                    <th>Discharge</th>
+                                    <th>{!$ObjectType.Fee__c.fields.Fee_Category__c.Label}</th>
+                                    <th>Parties Involved</th>
+                                </tr>
+                                <tr>
+                                    <td style="vertical-align:top !important;   width: 310px;">
+                                        <p class="p_extra_filter" style="    margin-top: 0px;">
+                                            <apex:outputLabel value="{!$ObjectType.Carrier_Line_Load_Point__c.fields.Country_of_Load__c.Label}"/><br/>
+                                            <apex:inputField value="{!new_filter_route.Country_of_Load__c}"/>
+                                        </p>
+                                        
+                                        <p class="p_extra_filter">
+                                            <apex:outputLabel value="{!$ObjectType.Carrier_Line_Load_Point__c.fields.State_of_Load__c.Label}"/><br/>
+                                            <apex:inputField value="{!new_filter_route.State_of_Load__c}"/>
+                                        </p>
+                                        
+                                        <p class="p_extra_filter">
+                                            <apex:outputLabel value="{!$ObjectType.Carrier_Line_Load_Point__c.fields.Port_Airport_of_Load__c.Label}"/><br/>
+                                            <apex:inputField value="{!new_filter_route.Port_Airport_of_Load__c}"/>
+                                        </p>
+                                    </td>
+                                    
+                                    <td style="vertical-align:top !important;   width: 310px;">
+                                        <p class="p_extra_filter" style="    margin-top: 0px;">
+                                            <apex:outputLabel value="{!$ObjectType.Carrier_Line_Load_Point__c.fields.Country_of_Discharge__c.Label}"/><br/>
+                                            <apex:inputField value="{!new_filter_route.Country_of_Discharge__c}"/>
+                                        </p>
+                                        
+                                        <p class="p_extra_filter">
+                                            <apex:outputLabel value="{!$ObjectType.Carrier_Line_Load_Point__c.fields.State_of_Discharge__c.Label}"/><br/>
+                                            <apex:inputField value="{!new_filter_route.State_of_Discharge__c}"/>
+                                        </p>
+                                        
+                                        <p class="p_extra_filter">
+                                            <apex:outputLabel value="{!$ObjectType.Carrier_Line_Load_Point__c.fields.Port_Airport_of_Discharge__c.Label}"/><br/>
+                                            <apex:inputField value="{!new_filter_route.Port_Airport_of_Discharge__c}"/>
+                                        </p>
+                                    </td>
+        
+                                    <td style="vertical-align:top !important;    width: 310px;     text-align: center;"> 
+                                            <apex:outputText value="{!rate_category_buttons}" escape="false"/>
+                                    </td>
+                                    
+                                    <td style="vertical-align:top !important;    width: 310px;">
+                                          <p class="p_extra_filter" style="    margin-top: 0px;">
+                                            <apex:outputLabel value="{!$ObjectType.Fee__c.fields.Carrier_Account__c.Label}"/><br/>
+                                            <apex:inputfield value="{!new_filter_fee.Carrier_Account__c}" required="false"/>
+                                        </p>
+                                        <p class="p_extra_filter">
+                                            <apex:outputLabel value="{!$ObjectType.Fee__c.fields.Account_for__c.Label}"/><br/>
+                                            <apex:inputfield value="{!new_filter_fee.Account_for__c}" required="false"/>
+                                        </p>
+                                        
+                                        <p class="p_extra_filter"><apex:outputLabel value="{!$ObjectType.Fee__c.fields.Valid_Until__c.Label}"/><br/>
+                                            <apex:selectList value="{!Valid_Until_selected}" multiselect="false" size="1">
+                                                <apex:selectOptions value="{!Valid_Until_list}"/>
+                                            </apex:selectList>
+                                            &nbsp;&nbsp;
+                                            <apex:inputfield value="{!new_filter_fee.Valid_Until__c}"/>
+                                        </p>
+                                    </td>
+                                </tr> 
+                                
+                            </table>
+                        </apex:pageBlock>
+                    </apex:outputPanel>
+                </apex:pageBlockSection>
+            </apex:pageBlock>
+        </apex:outputPanel>
+        
+        
+        <!-- --------------------------- -->
+            
+        <apex:outputPanel id="route_rate_list" >   
+            <apex:pageBlock title="ROUTES & RATES" id="Routes_Rates">
+                <apex:pageBlockSection title="Routes & Rates" columns="1">
+                    <apex:pageBlockTable value="{!list_route}" var="sdu">
+                    
+                        <apex:column >
+                            <apex:facet name="header">
+                                 <div  style ="cursor: pointer;" onclick="sort_data_table('ruta.CreatedDate');"> {!$ObjectType.Carrier_Line_Load_Point__c.fields.Name.Label}
+                                     <span style="       width: 10px;    height: 11px;    float: right;    margin: 0 5px;    vertical-align: 0px;    background: transparent url(/img/alohaSkin/sortArrows_sprite.png);    background-size: 16px;    background-repeat: no-repeat;    background-position: center 2px;" class="flecha_ordenacion rutaCreatedDate"/>
+                                 </div>
+                             </apex:facet>
+                             <c:customobject2 objid="{!sdu.ruta.Id}" objname="{!sdu.ruta.Name}"/>
+                        </apex:column>
+                        
+                        <!--<apex:column >
+                            <apex:facet name="header">
+                                  <div> Legs
+                                     <span style="       width: 10px;    height: 11px;    float: right;    margin: 0 5px;    vertical-align: 0px;    background: transparent url(/img/alohaSkin/sortArrows_sprite.png);    background-size: 16px;    background-repeat: no-repeat;    background-position: center 2px; display:none;" class="flecha_ordenacion numero_tramos"/>
+                                 </div>
+                             </apex:facet>
+                                <apex:outputfield value="{!new_fee_active.Active__c}" rendered="{!sdu.numero_tramos == 2}" /> 
+                                <apex:outputfield value="{!new_fee_desactive.Active__c}" rendered="{!sdu.numero_tramos == 0}" /> 
+                        </apex:column>-->
+                        
+                        <apex:column >
+                            <apex:facet name="header">
+                                 <div  style ="cursor: pointer;" onclick="sort_data_table('ruta.Country_of_Load__r.Name');"> {!$ObjectType.Carrier_Line_Load_Point__c.fields.Country_of_Load__c.Label}
+                                     <span style="       width: 10px;    height: 11px;    float: right;    margin: 0 5px;    vertical-align: 0px;    background: transparent url(/img/alohaSkin/sortArrows_sprite.png);    background-size: 16px;    background-repeat: no-repeat;    background-position: center 2px; display:none;" class="flecha_ordenacion rutaCountry_of_Load__rName"/>
+                                 </div>
+                             </apex:facet>
+                             <apex:outputlink value="{!$Site.BaseUrl}/{!sdu.ruta.Country_of_Load__c}">{!sdu.ruta.Country_of_Load__r.Name}</apex:outputlink>
+                        </apex:column>
+                        
+                        <apex:column >
+                            <apex:facet name="header">
+                                 <div  style ="cursor: pointer;" onclick="sort_data_table('ruta.State_of_Load__r.Name');"> {!$ObjectType.Carrier_Line_Load_Point__c.fields.State_of_Load__c.Label}
+                                     <span style="       width: 10px;    height: 11px;    float: right;    margin: 0 5px;    vertical-align: 0px;    background: transparent url(/img/alohaSkin/sortArrows_sprite.png);    background-size: 16px;    background-repeat: no-repeat;    background-position: center 2px; display:none;" class="flecha_ordenacion rutaState_of_Load__rName"/>
+                                 </div>
+                             </apex:facet>
+                             <apex:outputlink value="{!$Site.BaseUrl}/{!sdu.ruta.State_of_Load__c}">{!sdu.ruta.State_of_Load__r.Name}</apex:outputlink>
+                        </apex:column>
+                        
+                        <apex:column >
+                            <apex:facet name="header">
+                                 <div  style ="cursor: pointer;" onclick="sort_data_table('ruta.Port_Airport_of_Load__r.Name');"> {!$ObjectType.Carrier_Line_Load_Point__c.fields.Port_Airport_of_Load__c.Label}
+                                     <span style="       width: 10px;    height: 11px;    float: right;    margin: 0 5px;    vertical-align: 0px;    background: transparent url(/img/alohaSkin/sortArrows_sprite.png);    background-size: 16px;    background-repeat: no-repeat;    background-position: center 2px; display:none;" class="flecha_ordenacion rutaPort_Airport_of_Load__rName"/>
+                                 </div>
+                             </apex:facet>
+                             <apex:outputlink value="{!$Site.BaseUrl}/{!sdu.ruta.Port_Airport_of_Load__c}">{!sdu.ruta.Port_Airport_of_Load__r.Name}</apex:outputlink>
+                        </apex:column>   
+                        
+                          
+                         <!-- <apex:column >
+                            <apex:facet name="header">
+                                 <div  style ="cursor: pointer;" onclick="sort_data_table('ruta.First_Leg_Route__r.Port_Airport_of_Discharge__r.Name');"> {!$ObjectType.Customer_Quote__c.fields.Transhipment_Port__c.Label}
+                                     <span style="       width: 10px;    height: 11px;    float: right;    margin: 0 5px;    vertical-align: 0px;    background: transparent url(/img/alohaSkin/sortArrows_sprite.png);    background-size: 16px;    background-repeat: no-repeat;    background-position: center 2px; display:none;" class="flecha_ordenacion rutaFirst_Leg_Route__rPort_Airport_of_Discharge__rName"/>
+                                 </div>
+                             </apex:facet>
+                             <apex:outputlink value="{!$Site.BaseUrl}/{!sdu.ruta.First_Leg_Route__r.Port_Airport_of_Discharge__c}">{!sdu.ruta.First_Leg_Route__r.Port_Airport_of_Discharge__r.Name}</apex:outputlink>
+                        </apex:column>  -->
+                        
+                        
+                        <apex:column >
+                            <apex:facet name="header">
+                                 <div  style ="cursor: pointer;" onclick="sort_data_table('ruta.Country_of_Discharge__r.Name');"> {!$ObjectType.Carrier_Line_Load_Point__c.fields.Country_of_Discharge__c.Label}
+                                     <span style="       width: 10px;    height: 11px;    float: right;    margin: 0 5px;    vertical-align: 0px;    background: transparent url(/img/alohaSkin/sortArrows_sprite.png);    background-size: 16px;    background-repeat: no-repeat;    background-position: center 2px; display:none;" class="flecha_ordenacion rutaCountry_of_Discharge__rName"/>
+                                 </div>
+                             </apex:facet>
+                             <apex:outputlink value="{!$Site.BaseUrl}/{!sdu.ruta.Country_of_Discharge__c}">{!sdu.ruta.Country_of_Discharge__r.Name}</apex:outputlink>
+                        </apex:column>
+                        
+                        <apex:column >
+                            <apex:facet name="header">
+                                 <div  style ="cursor: pointer;" onclick="sort_data_table('ruta.State_of_Discharge__r.Name');"> {!$ObjectType.Carrier_Line_Load_Point__c.fields.State_of_Discharge__c.Label}
+                                     <span style="       width: 10px;    height: 11px;    float: right;    margin: 0 5px;    vertical-align: 0px;    background: transparent url(/img/alohaSkin/sortArrows_sprite.png);    background-size: 16px;    background-repeat: no-repeat;    background-position: center 2px; display:none;" class="flecha_ordenacion rutaState_of_Discharge__rName"/>
+                                 </div>
+                             </apex:facet>
+                             <apex:outputlink value="{!$Site.BaseUrl}/{!sdu.ruta.State_of_Discharge__c}">{!sdu.ruta.State_of_Discharge__r.Name}</apex:outputlink>
+                        </apex:column>
+                        
+                        <apex:column >
+                            <apex:facet name="header">
+                                 <div  style ="cursor: pointer;" onclick="sort_data_table('ruta.Port_Airport_of_Discharge__r.Name');"> {!$ObjectType.Carrier_Line_Load_Point__c.fields.Port_Airport_of_Discharge__c.Label}
+                                     <span style="       width: 10px;    height: 11px;    float: right;    margin: 0 5px;    vertical-align: 0px;    background: transparent url(/img/alohaSkin/sortArrows_sprite.png);    background-size: 16px;    background-repeat: no-repeat;    background-position: center 2px; display:none;" class="flecha_ordenacion rutaPort_Airport_of_Discharge__rName"/>
+                                 </div>
+                             </apex:facet>
+                             <apex:outputlink value="{!$Site.BaseUrl}/{!sdu.ruta.Port_Airport_of_Discharge__c}">{!sdu.ruta.Port_Airport_of_Discharge__r.Name}</apex:outputlink>
+                        </apex:column>
+                        
+                        <apex:column >
+                            <apex:facet name="header">
+                                 <div> {!$ObjectType.Fee__c.fields.Fee_Category__c.Label}
+                                     <span style="       width: 10px;    height: 11px;    float: right;    margin: 0 5px;    vertical-align: 0px;    background: transparent url(/img/alohaSkin/sortArrows_sprite.png);    background-size: 16px;    background-repeat: no-repeat;    background-position: center 2px; display:none;" class="flecha_ordenacion Fee_Category__c"/>
+                                 </div>
+                             </apex:facet>
+                                <apex:outputtext value="{!sdu.all_rate_category}" /> 
+                        </apex:column>
+                        
+                        <apex:column >
+                            <apex:facet name="header">
+                                 <div> {!$ObjectType.Fee__c.fields.Carrier_Account__c.Label}
+                                     <span style="       width: 10px;    height: 11px;    float: right;    margin: 0 5px;    vertical-align: 0px;    background: transparent url(/img/alohaSkin/sortArrows_sprite.png);    background-size: 16px;    background-repeat: no-repeat;    background-position: center 2px; display:none;" class="flecha_ordenacion Carrier_Account__c"/>
+                                 </div>
+                             </apex:facet>
+                             <apex:repeat value="{!sdu.Listado_carriers}" var="ca">
+                                <apex:outputlink value="{!$Site.BaseUrl}/{!ca.Id}">{!ca.Name}</apex:outputlink> <span style="display:{!If(ca.Name != null && ca.Name !='' && ca.el_ultimo == false,'','none')}">, &nbsp;</span><!-- <apex:outputtext value=", &nbsp;" rendered="{!ca.Name != null && ca.Name !=''}"/>-->
+                             </apex:repeat>
+                         </apex:column>    
+                         
+                        
+                        <apex:column >
+                            <apex:facet name="header">
+                                 <div> {!$ObjectType.Fee__c.fields.Account_for__c.Label}
+                                     <span style="       width: 10px;    height: 11px;    float: right;    margin: 0 5px;    vertical-align: 0px;    background: transparent url(/img/alohaSkin/sortArrows_sprite.png);    background-size: 16px;    background-repeat: no-repeat;    background-position: center 2px; display:none;" class="flecha_ordenacion Account_for__c"/>
+                                 </div>
+                             </apex:facet>
+                             <apex:repeat value="{!sdu.Listado_account_for}" var="af">
+                                <apex:outputlink value="{!$Site.BaseUrl}/{!af.Id}">{!af.Name}</apex:outputlink> <span style="display:{!If(af.Name != null && af.Name !='' && af.el_ultimo == false,'','none')}">, &nbsp;</span><!-- <apex:outputtext value=", &nbsp;" rendered="{!ca.Name != null && ca.Name !=''}"/>-->
+                                <apex:inputhidden value="{!af.el_ultimo}"/>
+                             </apex:repeat>
+                         </apex:column>     
+                        
+                    </apex:pageBlockTable>
+                </apex:pageBlockSection>
+            </apex:pageBlock>
+        </apex:outputPanel>
+        
+        <apex:outputpanel >
+           <apex:actionstatus id="myStatus">
+               <apex:facet name="start">
+                   <div class="waitingSearchDiv" id="el_loading" style="background-color: #fbfbfb;
+                          height: 100%;opacity:0.65;width:100%;"> 
+                       <div class="waitingHolder" style="top: 74.2px; width: 91px;">
+                           <img class="waitingImage" src="/img/loading.gif" title="Please Wait..." />
+                           <span class="waitingDescription">Loading...</span>
+                       </div>
+                   </div>
+               </apex:facet>
+           </apex:actionstatus>
+        </apex:outputpanel>
+        
+     </apex:form>   
+</apex:page>

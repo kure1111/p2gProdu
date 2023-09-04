@@ -1,0 +1,348 @@
+<apex:page standardController="Supplier_Quote__c" extensions="NEU_OM_SupQuOr_FeeLinesPriceListDiscount" sidebar="false">
+<apex:includeScript value="{!$Resource.neu_jquery}"/> 
+<apex:includeScript value="{!$Resource.jquery_1_10_2}"/> 
+<apex:includeScript value="{!$Resource.jquery_ui_1_10_3}"/>
+<apex:includeScript value="{!$Resource.neurored_jquery}"/> 
+<apex:stylesheet value="{!URLFOR($Resource.jquery_ui_1_10_3_css,'jquery-ui-1.10.3.min.css')}"/>
+<script>
+    $(document).ready(function () {
+        $($.sfId('{!$Component.form.radio}')).buttonset();
+    });
+
+
+        function sacarcapa()
+        {
+            if ($($.sfId('{!$Component.form.block0.chekeados}')).val() == 'false')
+            {
+                $('#contenedormensaje').css("display", "block");
+                         $(function() {
+                $( "#contenedormensaje" ).dialog({
+                     height: 200,
+                     width: 280,
+                     modal: true,
+                      buttons: {
+                    "Accept": function() {
+                       $( this ).dialog( "close" );
+                    },
+                   
+                    }
+                     });
+                });
+            }
+            
+            $($.sfId('{!$Component.form.block0.chekeados}')).val(false);
+      }
+      
+        function del_oi(id)
+        {
+            document.getElementById('{!$Component.form.id_oi}').value = id;
+            delete_oi();
+        }
+        
+     /*   function posibilidades()
+        {
+            var  contador = 0;
+            var availableTags = document.getElementById('{!$Component.form.lista_routes}').value.split('_&_');
+            var array_filter  = new Array(); 
+            var variable_a_buscar = $( ".nombre_route" ).val();
+            if(variable_a_buscar != '' && variable_a_buscar != null)
+            {
+                var logintud_a_buscar =variable_a_buscar.length;
+                var valor_de_cadena;
+                var contador_encuentros;
+                
+                $.each(availableTags, function (ind, elem) { 
+                  valor_de_cadena = elem.substring(0, logintud_a_buscar);
+                  console.log(valor_de_cadena);
+                  if(valor_de_cadena.toUpperCase()  == variable_a_buscar.toUpperCase() )
+                  {
+                    array_filter.push(elem);
+                    contador_encuentros ++;
+                  }
+                  if(contador_encuentros == 4)
+                    return false;
+                }); 
+                
+                console.log(array_filter);
+                $( ".nombre_route" ).autocomplete({
+                  minLength:0,
+                 // source: array_filter
+                 
+                 //con filtro de tres
+                   source: function(request, response) {
+                        var results = $.ui.autocomplete.filter(array_filter, request.term);
+                
+                        response(results.slice(0, 4));
+                    }//,
+                  //  select: function( event, ui ) { contador = 1; updateItemName(ui.item.value);}
+                    
+                    //los que empiecen solo, no los que contengan no le puedo incorporar el slice
+                /*    source: function( request, response ) {
+                      var matcher = new RegExp( "^" + $.ui.autocomplete.escapeRegex( request.term ), "i" );
+                      
+                      response( $.grep( availableTags, function( item ){
+                          return matcher.test( item );
+                      }) );
+                  }*/
+             /*     
+                });
+            }
+        }*/
+        
+      
+      function comp_porcentaje(s)
+      {
+     
+        if($($.sfId('{!$Component.form.block1.table2}')+' input:checkbox[name="'+s.name+'"]').parent().parent().find('.rate_type').html()=='% Other Fee Concept')
+        {
+            if($($.sfId('{!$Component.form.block1.table2}')+' input:checkbox[name="'+s.name+'"]').is(':checked'))
+            {
+                if($($.sfId('{!$Component.form.block1.table2}')+' input:checkbox[name="'+s.name+'"]').parent().parent().find('.price').getFloat() >0 && $($.sfId('{!$Component.form.block1.table2}')+' input:checkbox[name="'+s.name+'"]').parent().parent().find('.buyprice').val()> -1)
+                {
+                    $($.sfId('{!$Component.form.block1.table2}')+' input:checkbox[name="'+s.name+'"]').parent().parent().find('.price').css('border','');
+                    $($.sfId('{!$Component.form.block1.table2}')+' input:checkbox[name="'+s.name+'"]').parent().parent().find('.buyprice').css('border','');
+                }
+                else
+                {
+                    $($.sfId('{!$Component.form.block1.table2}')+' input:checkbox[name="'+s.name+'"]').parent().parent().find('.price').css('border','1px solid red');
+                    $($.sfId('{!$Component.form.block1.table2}')+' input:checkbox[name="'+s.name+'"]').parent().parent().find('.buyprice').css('border','1px solid red');
+                    $("#checkbox").attr('checked', false); 
+                    $($.sfId('{!$Component.form.block1.table2}')+' input:checkbox[name="'+s.name+'"]').attr('checked', false);
+                }
+            }
+        }       
+      }
+        
+</script>
+<style>
+    #tabla_filtros th
+    {
+        font-family: Arial,Helvetica,sans-serif;
+        font-size: .9em;
+    }
+    
+     #tabla_filtros td
+     {
+        width: 100px;
+     }
+</style> 
+    <apex:form id="form">
+    <apex:actionFunction name="save_route"  status="myStatus" reRender="linesSelector"  action="{!update_route}" />
+    <apex:actionFunction name="refresh_all_lines"  status="myStatus" reRender="linesSelector"  action="{!all_accounts_filter}" />
+        <div style="display:none;" id="contenedormensaje" title="You haven't selected any Fee">
+            <p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>You haven't selected any Fee to create Quote Service Lines.</p>
+        </div>
+    <apex:sectionHeader title="Create Supplier Quote/Order Service Lines "/>
+    <span style="    position: relative;     top: -36px;       left: 515px;  font-size: 17px;">
+        <a href="/{!Supplier_Quote__c.Id}" onblur="LookupHoverDetail.getHover(neu_getId(this)).hide();" onfocus="LookupHoverDetail.getHover(neu_getId(this),'/{!Supplier_Quote__c.Id}/m?isAjaxRequest=1').show();" onmouseout="LookupHoverDetail.getHover(neu_getId(this)).hide();" onmouseover="LookupHoverDetail.getHover(neu_getId(this),'/{!Supplier_Quote__c.Id}/m?isAjaxRequest=1').show();"  id="new_id_1">{!Supplier_Quote__c.Name}</a><!--target="_blank"-->
+    </span>
+    <!-- <apex:pageMessages id="pagemessages"/>-->
+    <apex:outputPanel id="radios">
+        <apex:selectRadio id="radio" value="{!newcategory}" onchange="changeradios();">
+            <apex:selectOptions value="{!newcategories}"/>
+        </apex:selectRadio> 
+    </apex:outputPanel>
+   <apex:actionFunction name="changeradios"  status="myStatus" reRender="linesSelector">
+  </apex:actionFunction>
+    <div>
+        <apex:outputPanel id="linesSelector">
+        <apex:pageMessages id="pagemessages"/>
+        <apex:inputHidden value="{!recordtype}" id="recordtype"/>
+        <apex:inputHidden value="{!lista_routes}" id="lista_routes"/>
+            <apex:pageBlock id="block0" title="Actual Supplier Quote/Order Service Lines">
+           
+            <apex:inputHidden value="{!chekeados}" id="chekeados"/>
+                <apex:pageBlockTable id="table" value="{!sup_quote_order_feeLines}" var="fee">
+                    <apex:column headerValue="Rate Name" value="{!fee.Fee_Name__r.Name}"/>
+                    <!--<apex:column headerValue="Extension Fee Name" value="{!fee.Extension_Fee_Name__c}"/> -->
+                     <apex:column headerValue="Valid Until" value="{!fee.Fee_Name__r.Valid_Until__c}"/>
+                     <apex:column headerValue="Account for" value="{!fee.Fee_Name__r.Account_for__c}" />
+                     <apex:column headerValue="Carrier" value="{!fee.Fee_Name__r.Carrier_Account__c}" rendered="{!recordtype == 'Local Transport'}"/>
+                    <apex:column headerValue="Delivery Zone" value="{!fee.Fee_Name__r.Delivery_Zone__c}"  rendered="{!recordtype == 'Local Transport'}"/>
+                    <apex:column headerValue="Port / Airport" value="{!fee.Fee_Name__r.Port_Airport__c}"  rendered="{!recordtype == 'Local Transport'}"/>
+                     
+                    <apex:column headerValue="Carrier" value="{!fee.Fee_Name__r.Carrier_Account__r.Name}" rendered="{!recordtype == 'Sea/Ground Freight'}"/>
+                    <apex:column headerValue="TT Days" value="{!fee.Fee_Name__r.TT_Days__c}" rendered="{!recordtype == 'Sea/Ground Freight'}"/>
+                     
+                   <!-- <apex:column headerValue="Currency" value="{!fee.CurrencyIsoCode}"/>-->
+                    <apex:column headerValue="Rate Type" value="{!fee.Rate_Type__c}"  />
+                    <apex:column headerValue="Sell Rate" value="{!fee.Fee_Rate__c}"  style="text-align:right" rendered="{!fee.Fee_Name__r.Fee__c==null}"/>
+                    <apex:column headerValue="Sell Rate" value="{!fee.Fee_Name__r.Fee__c}"  style="text-align:right" rendered="{!fee.Fee_Name__r.Fee__c!=null}"/>
+                    <apex:column headerValue="Total Volume (m3)" value="{!Supplier_Quote__c.Total_Volume_m3_2__c}"  style="text-align:right"/>
+                    <apex:column headerValue="Total Weight (Kg)" value="{!Supplier_Quote__c.Total_Weight_Kg2__c}"  style="text-align:right"/>
+                    <apex:column headerValue="Container Type" value="{!fee.Fee_Name__r.Container_Type__c}"/> 
+                    <apex:column headerValue="Pallet Type" value="{!fee.Fee_Name__r.Pallet_Type__c}"/> 
+                    <apex:column headerValue="Units" value="{!fee.Units__c}"  style="text-align:right"/>
+                    <apex:column headerValue="Sell Price" value="{!fee.Supplier_Quote_Order_Sell_Price__c}"  style="text-align:right"/>
+                    <apex:column headerValue="% Discount" value="{!fee.Discount__c}"  style="text-align:right"/>
+                    <apex:column headerValue="Sell Amount" value="{!fee.Sell_Amount__c}"  style="text-align:right"/>
+                    <apex:column headerValue="Buy Price" value="{!fee.Supplier_Quote_Order_Buy_Price__c}"  style="text-align:right"/>
+                    <apex:column headerValue="Buy Amount" value="{!fee.Supplier_Quote_Order_Buy_Amount__c}"  style="text-align:right"/>
+                    <apex:column headerValue="Delete" style="text-align: center;">
+                        <apex:image id="del_oi" value="/img/permissions_deny16.gif" onclick="del_oi('{!fee.Id}');" style="cursor:pointer;" />
+                    </apex:column>
+                </apex:pageBlockTable>
+            </apex:pageBlock>
+            <apex:pageBlock id="block1" title="New Supplier Quote/Order Service Lines">
+                   <!-- <apex:pageBlockButtons location="top">
+                        <!-- 
+                             <apex:inputText style="width: 280px; margin-right: 10px; float: right; text-align: left; padding: 2px; border-left: 3px solid red;" StyleClass="nombre_route" value="{!nombre_route}" onKeyUp="posibilidades();"/>
+                       <!--  <apex:commandButton value="Save Route" status="myStatus" reRender="linesSelector"  action="{!update_route}"/><!-- action="{!crearlineaquoteitem}" oncomplete="sacarcapa();" -->
+                        
+                <!-- </apex:pageBlockButtons>-->
+                <apex:pageBlockTable id="table2" value="{!Fee_List_Price}" var="lineanueva">
+                      <apex:column headerValue="Rate Name" value="{!lineanueva.line.Name}" styleClass="id_item"/>
+                    <!-- <apex:column headerValue="Extension Fee Name">  
+                        <apex:inputText style="width: 138px; text-align: left;" StyleClass="extensionname" value="{!lineanueva.extensionfeename}"/>
+                    </apex:column>-->
+                    <apex:column headerValue="Valid Until" value="{!lineanueva.line.Valid_Until__c}" styleClass="id_item"/>
+                    <apex:column headerValue="Account for" value="{!lineanueva.line.Account_for__c}" />
+                    <apex:column headerValue="Carrier"  value="{!lineanueva.line.Carrier_Account__c}" rendered="{!recordtype == 'Local Transport'}"/> 
+         
+                    <apex:column headerValue="Delivery Zone" value="{!lineanueva.line.Delivery_Zone__c}"  rendered="{!recordtype == 'Local Transport'}"/>
+                    <apex:column headerValue="Port / Airport" value="{!lineanueva.line.Port_Airport__c}"  rendered="{!recordtype == 'Local Transport'}"/>
+
+                    
+           
+                    <apex:column headerValue="Carrier"  value="{!lineanueva.line.Carrier_Account__r.Name}" rendered="{!recordtype == 'Sea/Ground Freight'}"/>  
+                    <apex:column headerValue="TT Days"  value="{!lineanueva.line.TT_Days__c}" rendered="{!recordtype == 'Sea/Ground Freight' }"/> 
+                     
+                    <apex:column headerValue="Currency" >
+                        <apex:selectList id="Currency_selector"  label="Currency" value="{!lineanueva.currency_user}" size="1">
+                            <apex:selectOptions value="{!lineanueva.currencys}"/>
+                         </apex:selectList>
+                    </apex:column>
+                    <apex:column headerValue="Rate Type">
+                        <apex:outputText StyleClass="rate_type" value="{!lineanueva.line.Rate_Type__c}"/>
+                    </apex:column>
+                    <apex:column headerValue="Sell Rate" value="{!lineanueva.line.Fee_Rate__c}"  style="text-align:right" rendered="{!lineanueva.line.Fee__c==null}"/>
+                    <apex:column headerValue="Sell Rate" value="{!lineanueva.line.Fee__c}"  style="text-align:right" rendered="{!lineanueva.line.Fee__c!=null}"/>
+                    <apex:column headerValue="Total Volume (m3)" value="{!Supplier_Quote__c.Total_Volume_m3_2__c}"  style="text-align:right"/>
+                    <apex:column headerValue="Total Weight (Kg)" value="{!Supplier_Quote__c.Total_Weight_Kg2__c}"  style="text-align:right"/>
+                    <apex:column headerValue="Container Type" value="{!lineanueva.line.Container_Type__c}"/>  
+                    <apex:column headerValue="Pallet Type" value="{!lineanueva.line.Pallet_Type__c}"/>  
+                    <apex:column headerValue="Units"  style="text-align:center">
+                        <!--<apex:inputText style="width: 70px; text-align: right;" StyleClass="units" value="{!lineanueva.units}"/>-->
+                        <apex:inputfield style="width: 70px; text-align: right;" StyleClass="units" value="{!lineanueva.sqo_fee_line.Units__c}"/>
+                    </apex:column>
+                    <apex:column headerValue="Sell Price"  style="text-align:center">
+                            <!--<apex:inputText style="width: 75px; text-align: right;" StyleClass="price" value="{!lineanueva.sellprice}"/>-->
+                            <apex:inputfield style="width: 75px; text-align: right;" StyleClass="price" value="{!lineanueva.sqo_fee_line.Supplier_Quote_Order_Sell_Price__c}"/>
+                    </apex:column>
+                    <apex:column headerValue="% Discount"  style="text-align:center">
+                           <!-- <apex:inputText style="width: 75px; text-align: right;" StyleClass="discount"  value="{!lineanueva.discount}"/>-->
+                           <apex:inputfield style="width: 75px; text-align: right;" StyleClass="discount"  value="{!lineanueva.sqo_fee_line.Discount__c}"/>
+                    </apex:column>
+                    <!--<apex:column headerValue="Sell Amount"   style="text-align:right"/>-->
+                    <apex:column headerValue="Buy Price"  style="text-align:center">
+                            <!--<apex:inputText style="width: 75px; text-align: right;" StyleClass="buyprice" value="{!lineanueva.buyprice}"/>-->
+                            <apex:inputfield style="width: 75px; text-align: right;" StyleClass="buyprice" value="{!lineanueva.sqo_fee_line.Supplier_Quote_Order_Buy_Price__c}"/>
+                    </apex:column>
+                   <!-- <apex:column headerValue="Buy Amount"   style="text-align:right"/>-->
+                    <apex:column headerValue="Create" style="text-align: center;">
+                            <apex:inputCheckbox StyleClass="inputcheck" value="{!lineanueva.selected}" onchange="comp_porcentaje(this);"/>
+                             
+                    </apex:column>
+                    
+                </apex:pageBlockTable>
+                <apex:pageBlockButtons location="bottom">
+                    <apex:commandButton value="CREATE SUPPLIER QUOTE/ORDER SERVICE LINES" status="myStatus"  styleClass="calculate" reRender="linesSelector, pagemessages"  action="{!crearlineaquoteitem}" oncomplete="sacarcapa();" />
+                    <apex:commandButton value="RETURN TO SUPPLIER QUOTE/ORDER" status="myStatus" action="{!return_supplier_quote}"/>
+                </apex:pageBlockButtons>
+                  <apex:pageBlockButtons location="top">
+                        <apex:commandButton value="CREATE SUPPLIER QUOTE/ORDER SERVICE LINES" status="myStatus"  styleClass="calculate" reRender="linesSelector, pagemessages"  action="{!crearlineaquoteitem}" oncomplete="sacarcapa();" />
+                        <apex:commandButton value="RETURN TO SUPPLIER QUOTE/ORDER" status="myStatus" action="{!return_supplier_quote}"/>
+                        <table style="float: right; width: 50%;" Id="tabla_filtros">
+                         <tr>
+                            <th style="display:{!IF(recordtype == 'Sea/Ground Freight' || recordtype == 'Local Transport' || recordtype ==null , '', 'none')}">Route</th>
+                            <th style="display:{!IF(recordtype != 'Sea/Ground Freight' && recordtype != 'Local Transport' && recordtype !=null , '', 'none')}"></th>
+                            <td style="display:{!IF(recordtype == 'Sea/Ground Freight' || recordtype == 'Local Transport' || recordtype ==null , '', 'none')}">
+                                <apex:inputField value="{!supplier_quote_filter_filter.Route__c}"/>
+                            </td>
+                            <td style="display:{!IF(recordtype != 'Sea/Ground Freight' && recordtype != 'Local Transport' && recordtype !=null , '', 'none')}"></td>
+                            <td colspan="2" style="text-align: right;"><input type="button" value="Refresh Filters" onclick="save_route();" class="btn" style="padding-left: 16px; padding-right: 16px;   margin-right: 24px; margin-right:{!IF(recordtype != 'Sea/Ground Freight' && recordtype != 'Local Transport' && recordtype !=null , '30px', '24px')}"/></td>
+                        </tr>
+                         <tr>
+                            <th>Buyer Account</th>
+                            <td><apex:inputField value="{!supplier_quote_filter_filter.Customer__c}" required="false"/></td>
+                            <td colspan="2" style="text-align: right;"><input type="button" value="All Accounts" onclick="refresh_all_lines();" class="btn" style="padding-left: 20px; padding-right: 20px;   margin-right: 24px; margin-right:{!IF(recordtype != 'Sea/Ground Freight' && recordtype != 'Local Transport' && recordtype !=null , '30px', '24px')}"/></td>
+                            
+                        </tr>
+                       <!-- <tr style="display:{!IF(recordtype == 'Local Transport'|| recordtype ==null , '', 'none')}">
+                            <th>Country of Load</th>
+                            <td>
+                                <apex:inputField value="{!record.Country_ofLoad__c}" />
+                            </td>
+                            
+                            <th>Country of Discharge</th>
+                            <td>
+                                <apex:inputField value="{!record.Country_ofDischarge__c}" />
+                            </td>
+                        </tr>       
+                        <tr style="display:{!IF(recordtype == 'Local Transport'|| recordtype ==null , '', 'none')}">
+                            
+                            <th>Port / Airport of Load</th>
+                            <td>
+                                <apex:inputField value="{!record.Place_of_Delivery__c}" />
+                            </td>
+                            <th>Port / Airport of Discharge</th>
+                            <td>
+                                <apex:inputField value="{!record.Place_of_Receipt__c}" />
+                            </td>
+                        </tr>-->
+                        <tr style="display:{!IF(recordtype == 'Local Transport' || recordtype ==null, '', 'none')}">
+                            <th>Pickup / Delivery Zone</th>
+                            <td>
+                                <apex:inputField value="{!supplier_quote_filter_filter.Delivery_Zone__c}" />
+                            </td>
+                           <!-- <th>Pickup / Delivery Account</th>
+                            <td>
+                                <apex:inputField value="{!record.Delivery_Account__c}" />
+                            </td>-->
+                            
+                            <th></th>
+                            <td></td>
+                            
+                        </tr>
+                        
+                         <tr>
+                            <th>Purchase Incoterm</th>
+                            <td>
+                                <apex:inputField value="{!record.Incoterm__c}" style="width: 174px; height: 20px;"/>
+                            </td>
+                            <th>Sales Incoterm</th>
+                            <td style="text-align: right;   width: 70px;  padding-right: 30px;">
+                                <apex:outputField value="{!supplier_quote_filter_filter.Supply_Project__r.Sales_Incoterm__c}" style="width: 174px; height: 20px;  " />
+                            </td>
+                        </tr>
+                        
+                        
+                    </table>
+                </apex:pageBlockButtons>
+            </apex:pageBlock>
+        </apex:outputPanel>
+    </div>
+    <apex:outputpanel >
+           <apex:actionstatus id="myStatus">
+               <apex:facet name="start">
+                   <div class="waitingSearchDiv" id="el_loading" style="background-color: #fbfbfb;
+                          height: 100%;opacity:0.65;width:100%;"> 
+                       <div class="waitingHolder" style="top: 74.2px; width: 91px;">
+                           <img class="waitingImage" src="/img/loading.gif" title="Please Wait..." />
+                           <span class="waitingDescription">Loading...</span>
+                       </div>
+                   </div>
+               </apex:facet>
+           </apex:actionstatus>
+        </apex:outputpanel>
+         <div class="waitingSearchDiv" id="otherStatus" style="display:none;background-color:#fbfbfb;height:100%;opacity:0.65;width:100%;"> 
+            <div class="waitingHolder" style="top:74.2px;width:91px;">
+                <img class="waitingImage" src="/img/loading.gif" title="Please Wait..." />
+                <span class="waitingDescription">Loading...</span>
+            </div>
+        </div>
+        
+        <apex:actionFunction name="delete_oi" action="{!delete_fee_select}" status="myStatus" reRender="linesSelector"/>
+        <apex:inputHidden value="{!id_oi}" id="id_oi"/>
+    </apex:form>
+</apex:page>

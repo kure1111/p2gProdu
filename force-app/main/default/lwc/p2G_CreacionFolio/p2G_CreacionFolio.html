@@ -1,0 +1,1003 @@
+<template>
+  <div class="slds-grid slds-grid_align-center">
+      <div class="slds-col">
+          <br>
+        <H1> Seleccione el servicio deseado:</H1>
+          <br>
+      </div>
+  </div> 
+  <div class="slds-grid slds-grid_align-center slds-gutters">
+      <div class="slds-col" style="width:90px;">
+          <lightning-button variant="brand"
+              label="A-AEREO"
+              title="A-AEREO"
+              onclick={openModal}
+              style="--sds-c-button-line-height:1;" stretch></lightning-button>
+      </div>
+      <div class="slds-col" style="width:120px;">
+          <lightning-button variant="brand"
+              label="WH-ALMACENAJE"
+              title="WH-ALMACENAJE"
+              onclick={openModal}
+              style="--sds-c-button-line-height:1;" stretch></lightning-button>
+      </div>
+      <div class="slds-col" style="width:110px;">
+          <lightning-button variant="brand" 
+          label="T-CONSOLIDADO" 
+          title="T-CONSOLIDADO"  
+          onclick={openModal}
+          style="--sds-c-button-line-height:1;" stretch></lightning-button>
+      </div>
+  </div>
+  <div><br></div> 
+  <div class="slds-grid slds-grid_align-center slds-gutters">
+      <div class="slds-col" style="width:90px;">
+          <lightning-button variant="brand" 
+          label="FN-FLETE NACIONAL" 
+          title="FN-FLETE NACIONAL"  
+          onclick={OpenF_NACIONAL}
+          style="--sds-c-button-line-height:1;" stretch></lightning-button>
+      </div>
+      <div class="slds-col" style="width:120px;">
+          <lightning-button variant="brand" 
+          label="FI-FLETE INTERNACIONAL" 
+          title="FI-FLETE INTERNACIONAL"  
+          onclick={openModal}
+          style="--sds-c-button-line-height:1;" stretch></lightning-button>
+      </div>
+      <div class="slds-col" style="width:110px;">
+          <lightning-button variant="brand" 
+          label="M-MARITIMO" 
+          title="M-MARITIMO"  
+          onclick={openModal}
+          style="--sds-c-button-line-height:1;" stretch></lightning-button>
+      </div>
+  </div>
+  <div><br></div> 
+  <div class="slds-grid slds-grid_align-center slds-gutters">
+      <div class="slds-col" style="width:90px;">
+          <lightning-button variant="brand" 
+          label="PTO-PUERTOS" 
+          title="PTO-PUERTOS"  
+          onclick={openModal}
+          style="--sds-c-button-line-height:1;" stretch></lightning-button>
+      </div>
+      <div class="slds-col" style="width:120px;">
+          <lightning-button variant="brand" 
+          label="EX-SEGUROS" 
+          title="EX-SEGUROS"  
+          onclick={openModal}
+          style="--sds-c-button-line-height:1;" stretch></lightning-button>
+      </div>
+      <div class="slds-col" style="width:110px;">
+          <lightning-button variant="brand" 
+          label="W-GLOBAL MARITIMO" 
+          title="W-GLOBAL MARITIMO"  
+          onclick={openModal}
+          style="--sds-c-button-line-height:1;" stretch></lightning-button>
+      </div>
+  </div>
+  <div><br></div> 
+  <div class="slds-grid slds-grid_align-center slds-gutters">
+      <div class="slds-col" style="width:90px;">
+          <lightning-button variant="brand" 
+          label="R-GLOBAL ROUTING" 
+          title="R-GLOBAL ROUTING"  
+          onclick={openModal}
+          style="--sds-c-button-line-height:1;" stretch></lightning-button>
+      </div>
+      <div class="slds-col" style="width:120px;">
+          <lightning-button variant="brand" 
+          label="AW-GLOBAL AEREO" 
+          title="AW-GLOBAL AEREO"  
+          onclick={openModal}
+          style="--sds-c-button-line-height:1;" stretch></lightning-button>
+      </div>
+      <div class="slds-col" style="width:110px;">
+          <lightning-button variant="brand" 
+          label="CE-COMERCIO EXTERIOR" 
+          title="CE-COMERCIO EXTERIOR"  
+          onclick={openModal}
+          style="--sds-c-button-line-height:1;" stretch></lightning-button>
+      </div>
+  </div>
+  <div><br></div> 
+  <div class="slds-grid slds-grid_align-center slds-gutters">
+      <div class="slds-col">
+          <lightning-button variant="brand" 
+          label="CARGA MASIVA"
+          title="CARGA MASIVA"  
+          onclick={openCargaMasiva}
+          style="font-size: 25 px;"></lightning-button>
+      </div>
+  </div>
+  <!--comiensa modal pop FN-->
+  <template if:true={isF_NACIONAL}>
+      <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+          <div class="slds-modal__container">
+              <header class="slds-modal__header">
+                  <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close" onclick={closeF_NACIONAL}>
+                      <lightning-icon icon-name="utility:close"
+                          alternative-text="close"
+                          variant="inverse"
+                          size="small" ></lightning-icon>
+                      <span class="slds-assistive-text">Close</span>
+                  </button>
+                  <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">Crear Folio FN-FLETE NACIONAL</h2>
+              </header>
+              <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                <div class="slds-grid slds-wrap slds-gutters slds-grid_align-center">
+                  <div class="slds-col slds-size_1-of-1 colorSection">
+                    <h1>Commercial info</h1>
+                  </div>
+                  <div class="slds-col slds-size_1-of-1"><br></div> 
+                  <div class="slds-col slds-size_6-of-12">
+                    <div onkeyup={searchKeyAccount}>
+                      <lightning-input id="AccountFor" label="Account For:" placeholder="Buscar Account for" 
+                          required="" value={searchValueAccount} type="search"></lightning-input>
+                    </div>
+                    <table if:true={showSideAccount} class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_striped">
+                        <thead>
+                           <tr class="slds-line-height_reset">
+                              <th class="" scope="col">
+                                 <div class="slds-truncate" title="First Name">Name</div>
+                              </th>
+                              <th class="" scope="col">
+                                 <div class="slds-truncate" title="First Name">Customer Id</div>
+                              </th>
+                           </tr>
+                        </thead>
+                        <tbody>
+                           <template for:each={sideRecordsAccount} for:item="con">
+                              <tr class="slds-hint-parent" data-id={con.Id} key={con.Id} onclick={SideSelectAccount}> 
+                                 <td>
+                                    <div class="slds-truncate">{con.Name}</div>
+                                 </td>
+                                 <td>
+                                  <div class="slds-truncate">{con.Customer_Id__c}</div>
+                                </td>
+                              </tr>
+                           </template>
+                        </tbody>
+                      </table>
+                  </div>
+                  <div class="slds-col slds-size_2-of-12">
+                    <label class="slds-form-element__label" for="text-input-id-51">
+                    <abbr class="slds-required" title="required">*</abbr>Comercio Exterior:</label>
+                      <div class="slds-form-element__control">
+                        <lightning-radio-group disabled name="Comercio" options={options} value={value} type="radio"></lightning-radio-group>
+                      </div>
+                  </div>
+                  <div class="slds-col slds-size_2-of-12">
+                      <lightning-input id="NumberFolios" label="Folios a crear" placeholder="numero:" 
+                          required="" value={numfolios} onchange={numFoliosCrear} type="number"></lightning-input>
+                  </div>
+                  <div class="slds-col slds-size_2-of-12">
+                    <div class="slds-form-element">
+                      <label class="slds-form-element__label" for="text-input-id-51">
+                      <abbr class="slds-required" title="required">*</abbr>Team:</label>
+                      <div class="slds-form-element__control">
+                        <div class="slds-select_container">
+                          <select class="slds-select" id="Team" onchange={registroTeam} required="">
+                            <option value="P2G">P2G</option>
+                            <option value="WCA">WCA</option>
+                          </select>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="slds-grid slds-wrap slds-gutters slds-grid_align-left">
+                  <div class="slds-col slds-size_1-of-1 colorSection">
+                    <h1>Sap Service Type</h1>
+                  </div>
+                  <div class="slds-col slds-size_1-of-1"><br></div> 
+                  <div class="slds-col slds-size_6-of-12">
+                    <div onkeyup={searchKeyAccount2}>
+                      <lightning-input id="sapServiceType" label="Sap service Type:" placeholder="Buscar Sap service Type" 
+                          required="" value={searchSST} type="search"></lightning-input>
+                    </div>
+                    <table if:true={showSST} class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_striped">
+                        <thead>
+                           <tr class="slds-line-height_reset">
+                              <th class="" scope="col">
+                                 <div class="slds-truncate" title="First Name">Name</div>
+                              </th>
+                           </tr>
+                        </thead>
+                        <tbody>
+                           <template for:each={recordSST} for:item="con">
+                              <tr class="slds-hint-parent" data-id={con.Id} key={con.Id} onclick={SideSelectSST}> 
+                                 <td>
+                                    <div class="slds-truncate">{con.Name}</div>
+                                 </td>
+                              </tr>
+                           </template>
+                        </tbody>
+                      </table>
+                  </div>
+                </div>
+                  <div class="slds-col slds-size_1-of-1"><br></div> 
+                    <div class="slds-grid slds-wrap slds-gutters slds-grid slds-grid_align-left">
+                      <div class="slds-col slds-size_1-of-1 colorSection">
+                        <h1>Quote References & Status</h1>
+                      </div>
+                      <div class="slds-col slds-size_1-of-1"><br></div> 
+                      <div class="slds-col slds-size_6-of-12">
+                        <div class="slds-form-element">
+                          <label class="slds-form-element__label" for="text-input-id-51">Customer Reference:</label>
+                          <div class="slds-form-element__control">
+                            <input type="text" id="CustomerReference" onchange={registroCustomer} placeholder="Introduzca Customer Reference" required="" class="slds-input" />
+                          </div>
+                        </div>
+                      </div>
+                      <div class="slds-col slds-size_6-of-12">
+                      <div onkeyup={searchKeyCustomer}>
+                        <lightning-input id="CustomerFor" label="Customer Reference Form:" placeholder="Buscar Import-Export Quotes/Orders" 
+                            value={searchValueCustomer} type="search"></lightning-input>
+                      </div>
+                      <table if:true={showSideCustomer} class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_striped">
+                          <thead>
+                             <tr class="slds-line-height_reset">
+                                <th class="" scope="col">
+                                   <div class="slds-truncate" title="First Name">Folio Import-Export</div>
+                                </th>
+                             </tr>
+                          </thead>
+                          <tbody>
+                             <template for:each={sideRecordsCustomer} for:item="con">
+                                <tr class="slds-hint-parent" data-id={con.Id} key={con.Id} onclick={SideSelectCustomer}> 
+                                   <td>
+                                      <div class="slds-truncate">{con.Name}</div>
+                                   </td>
+                                </tr>
+                             </template>
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                    <div class="slds-col slds-size_1-of-1"><br></div> 
+                    <div class="slds-grid slds-wrap slds-gutters slds-grid_align-center">
+                      <div class="slds-col slds-size_1-of-1 colorSection">
+                        <h1>Route & Schedule Data</h1>
+                      </div>
+                      <div class="slds-col slds-size_1-of-1"><br></div> 
+                      <div class="slds-col slds-size_6-of-12">
+                          <div onkeyup={searchKeyLoad}>
+                            <lightning-input id="SiteofLoad" label="Site of Load:" placeholder="Buscar Site of Load" 
+                                required="" value={searchValueLoad} type="search"></lightning-input>
+                          </div>
+                          <table if:true={showSideLoad} class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_striped">
+                              <thead>
+                                 <tr class="slds-line-height_reset">
+                                    <th class="" scope="col">
+                                       <div class="slds-truncate" title="First Name">Name</div>
+                                    </th>
+                                    <th class="" scope="col">
+                                       <div class="slds-truncate" title="Last Name">Country Name</div>
+                                    </th>
+                                 </tr>
+                              </thead>
+                              <tbody>
+                                 <template for:each={sideRecordsLoad} for:item="con">
+                                    <tr class="slds-hint-parent" data-id={con.Id} key={con.Id} onclick={SideSelectLoad}> 
+                                       <td>
+                                          <div class="slds-truncate">{con.Name}</div>
+                                       </td>
+                                       <td>
+                                          <div class="slds-truncate">{con.Country_Name__c}</div>
+                                       </td>
+                                    </tr>
+                                 </template>
+                              </tbody>
+                            </table>
+                        </div>
+                      <div class="slds-col slds-size_6-of-12">
+                        <div onkeyup={searchKeyDischarge}>
+                          <lightning-input id="SiteofDischarge" label="Site of Discharge:" placeholder="Buscar Site of Discharge" 
+                              required="" value={searchValueDischarge} type="search"></lightning-input>
+                        </div>
+                        <table if:true={showSideDischarge} class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_striped">
+                            <thead>
+                               <tr class="slds-line-height_reset">
+                                  <th class="" scope="col">
+                                     <div class="slds-truncate" title="First Name">Name</div>
+                                  </th>
+                                  <th class="" scope="col">
+                                     <div class="slds-truncate" title="Last Name">Country Name</div>
+                                  </th>
+                               </tr>
+                            </thead>
+                            <tbody>
+                               <template for:each={sideRecordsDischarge} for:item="con">
+                                  <tr class="slds-hint-parent" data-id={con.Id} key={con.Id} onclick={SideSelectDischarge}> 
+                                     <td>
+                                        <div class="slds-truncate">{con.Name}</div>
+                                     </td>
+                                     <td>
+                                        <div class="slds-truncate">{con.Country_Name__c}</div>
+                                     </td>
+                                  </tr>
+                               </template>
+                            </tbody>
+                          </table>
+                      </div>
+                      <div class="slds-col slds-size_1-of-1"><br></div> 
+                      <div class="slds-col slds-size_6-of-12">
+                            <lightning-input type="date" id="ETD" required="" label="ETD:"
+                            onchange={registroETD} value={ETD}></lightning-input>
+                      </div>
+                      <div class="slds-col slds-size_6-of-12">
+                            <lightning-input type="date" id="ETA" required="" label="ETA:"
+                            onchange={registroETA} value={ETA}></lightning-input>
+                        </div>
+                        <div class="slds-col slds-size_1-of-1"><br></div> 
+                        <div class="slds-col slds-size_6-of-12">
+                          <lightning-input type="time" id="LoadTime" label="Awaiting load time"
+                          onchange={registroloadtime} value={loadtime}></lightning-input>
+                        </div>
+                        <div class="slds-col slds-size_6-of-12">
+                          <lightning-input type="time" name="UnloadTime" label="Awaiting unload time"
+                          onchange={registrounloadtime} value={unloadtime}></lightning-input>
+                          </div>
+                      </div>
+                      <div class="slds-col slds-size_1-of-1"><br></div> 
+                      <div class="slds-grid slds-wrap slds-gutters">
+                        <div class="slds-col slds-size_6-of-12">
+                          <div onkeyup={searchKeyContainerType}>
+                            <lightning-input id="ContainerType" label="Container Type:" placeholder="Buscar container type"
+                              value={searchValueContainerType} type="search"></lightning-input>
+                          </div>
+                          <table if:true={showSideContainerType}
+                            class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_striped">
+                            <thead>
+                              <tr class="slds-line-height_reset">
+                                <th class="" scope="col">
+                                  <div class="slds-truncate">Container Type</div>
+                                </th>
+                                <th class="" scope="col">
+                                  <div class="slds-truncate">Cargo Weight (Kg)</div>
+                                </th>
+                                <th class="" scope="col">
+                                  <div class="slds-truncate">Cargo Volume (m3)</div>
+                                </th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <template for:each={sideRecordsContainerType} for:item="con">
+                                <tr class="slds-hint-parent" data-id={con.Id} key={con.Id} onclick={SideSelectContainerType}>
+                                  <td>
+                                    <div class="slds-truncate">{con.Name}</div>
+                                  </td>
+                                  <td>
+                                    <div class="slds-truncate">{con.Cargo_Weight_Kg__c}</div>
+                                  </td>
+                                  <td>
+                                    <div class="slds-truncate">{con.Cargo_Volume_m3__c}</div>
+                                  </td>
+                                </tr>
+                              </template>
+                            </tbody>
+                          </table>
+                        </div>
+            
+                        <div class="slds-col slds-size_6-of-12">
+                          <div onkeyup={searchKeyClaveUnidadPeso}>
+                            <lightning-input id="ClaveUnidadPeso" label="Clave de unidad de Peso:" placeholder="Pallet"
+                              value={searchValueClaveUnidadPeso} type="search" oncommit={handleCleanClaveUnidadPeso}></lightning-input>
+                          </div>
+                          <table if:true={showSideClaveUnidadPeso}
+                            class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_striped">
+                            <thead>
+                              <tr class="slds-line-height_reset">
+                                <th class="" scope="col">
+                                  <div class="slds-truncate">Clave Sat</div>
+                                </th>
+                                <th class="" scope="col">
+                                  <div class="slds-truncate">Nombre</div>
+                                </th>
+            
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <template for:each={sideRecordsClaveUnidadPeso} for:item="con">
+                                <tr class="slds-hint-parent" data-id={con.Id} key={con.Id} onclick={SideSelectClaveUnidadPeso}>
+                                  <td>
+                                    <div class="slds-truncate">{con.Clave_SAT__c}</div>
+                                  </td>
+                                  <td>
+                                    <div class="slds-truncate">{con.Name}</div>
+                                  </td>
+                                </tr>
+                              </template>
+                            </tbody>
+                          </table>
+                        </div>
+                      </div>
+                      <div class="slds-col slds-size_1-of-1"><br></div> 
+                      <div class="slds-grid slds-wrap slds-gutters slds-grid_align-center">
+                        <div class="slds-col slds-size_1-of-1 colorSection">
+                          <h1>Cargo Lines</h1>
+                        </div>
+                        <div class="slds-col slds-size_1-of-1"><br></div> 
+                      <div class="slds-col slds-size_6-of-12">
+                      <div onkeyup={searchKeyClaveServicio}>
+                        <lightning-input id="ClaveServicio" label="Clave de Servicio:" placeholder="Buscar clave en el SAT" 
+                            value={searchValueClaveServicio} type="search"></lightning-input>
+                      </div>
+                      <table if:true={showSideClaveServicio} class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_striped">
+                          <thead>
+                             <tr class="slds-line-height_reset">
+                                <th class="" scope="col">
+                                   <div class="slds-truncate" title="First Name">Clave de Servicio</div>
+                                </th>
+                                <th class="" scope="col">
+                                   <div class="slds-truncate" title="First Name">Nombre</div>
+                                </th>
+                             </tr>
+                          </thead>
+                          <tbody>
+                             <template for:each={sideRecordsClaveServicio} for:item="con">
+                                <tr class="slds-hint-parent" data-id={con.Id} key={con.Id} onclick={SideSelectClaveServicio}> 
+                                   <td>
+                                      <div class="slds-truncate">{con.Clave_SAT__c}</div>
+                                   </td>
+                                   <td>
+                                    <div class="slds-truncate">{con.Name}</div>
+                                 </td>
+                                </tr>
+                             </template>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div class="slds-col slds-size_6-of-12">
+                        <lightning-textarea label="Descripción de producto (pak2go):" placeholder="Describir el producto "
+                        onchange={registroDescripcionProducto}></lightning-textarea>
+                      </div>
+                      <div class="slds-col slds-size_1-of-1"><br></div> 
+                      <div class="slds-col slds-size_6-of-12">
+                        <div onkeyup={searchKeyMaterialPeligroso}>
+                          <lightning-input id="MaterialPeligroso" label="Material Peligroso:" placeholder="Buscar material peligroso" 
+                              value={searchValueMaterialPeligroso} type="search"></lightning-input>
+                        </div>
+                        <table if:true={showSideMaterialPeligroso} class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_striped">
+                          <thead>
+                            <tr class="slds-line-height_reset">
+                               <th class="" scope="col">
+                                  <div class="slds-truncate" title="First Name">Clave de Servicio</div>
+                               </th>
+                               <th class="" scope="col">
+                                  <div class="slds-truncate" title="First Name">Nombre</div>
+                               </th>
+                            </tr>
+                         </thead>
+                         <tbody>
+                            <template for:each={sideRecordsMaterialPeligroso} for:item="con">
+                               <tr class="slds-hint-parent" data-id={con.Id} key={con.Id} onclick={SideSelectMaterialPeligroso}> 
+                                  <td>
+                                     <div class="slds-truncate">{con.Clave_SAT__c}</div>
+                                  </td>
+                                  <td>
+                                   <div class="slds-truncate">{con.Name}</div>
+                                </td>
+                               </tr>
+                            </template>
+                         </tbody>
+                          </table>
+                        </div>
+                      <div class="slds-col slds-size_6-of-12">
+                        <div onkeyup={searchKeyEmbalaje}>
+                          <lightning-input id="Embalaje" label="Embalaje:" placeholder="Buscar embalaje en el SAT" 
+                              value={searchValueEmbalaje} type="search"></lightning-input>
+                        </div>
+                        <table if:true={showSideEmbalaje} class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_striped">
+                            <thead>
+                               <tr class="slds-line-height_reset">
+                                <th class="" scope="col">
+                                  <div class="slds-truncate" title="First Name">Clave de Servicio</div>
+                               </th>
+                               <th class="" scope="col">
+                                  <div class="slds-truncate" title="First Name">Nombre</div>
+                               </th>
+                            </tr>
+                         </thead>
+                         <tbody>
+                            <template for:each={sideRecordsEmbalaje} for:item="con">
+                               <tr class="slds-hint-parent" data-id={con.Id} key={con.Id} onclick={SideSelectEmbalaje}> 
+                                  <td>
+                                     <div class="slds-truncate">{con.Clave_SAT__c}</div>
+                                  </td>
+                                  <td>
+                                   <div class="slds-truncate">{con.Name}</div>
+                                </td>
+                               </tr>
+                               </template>
+                            </tbody>
+                          </table>
+                        </div>
+                        <div class="slds-col slds-size_1-of-1"><br></div> 
+                      <div class="slds-col slds-size_1-of-12">
+                        <lightning-input id="Units" label="Units:"
+                        onchange={registroUnits} type="number"></lightning-input>
+                    </div>
+                    <div class="slds-col slds-size_2-of-12">
+                        <lightning-input id="PesoBruto" label="Peso Bruto (KG):"
+                        onchange={registroPesoBruto} type="number" step="0.01"></lightning-input>
+                    </div>
+                    <div class="slds-col slds-size_2-of-12">
+                        <lightning-input id="PesoNeto" label="Peso Neto (KG):"
+                        onchange={registroPesoNeto} type="number" step="0.01"></lightning-input>
+                    </div>
+                    <div class="slds-col slds-size_1-of-12">
+                      <div class="slds-form-element">
+                        <label class="slds-form-element__label" for="text-input-id-51">Currency:</label>
+                        <div class="slds-form-element__control">
+                          <div class="slds-select_container">
+                            <select class="slds-select" id="Currency" onchange={registroCurrency}>
+                              <option value="MXN">MXN</option>
+                              <option value="EUR">EUR</option>
+                              <option value="USD">USD</option>
+                            </select>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="slds-col slds-size_2-of-12">
+                        <lightning-input id="TotalShippingVolume" label="Total Shipping Volume (m3):" 
+                            onchange={registroTotalShippingVolume} type="number" step="0.01"></lightning-input>
+                    </div>
+                    </div>
+                      </div>
+              <footer class="slds-modal__footer">
+                  <button class="slds-button slds-button_neutral" onclick={closeF_NACIONAL} title="Cancel">Cancel</button>
+                  <button class="slds-button slds-button_brand" onclick={GeF_NACIONAL} title="Generar Folio">Generar Folio</button>
+                  <template if:true={isGeneFolio}>
+                    <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+                      <div class="slds-modal__container slds-container">
+                          <header class="slds-modal__header">
+                              <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close" onclick={closeResumen}>
+                                  <lightning-icon icon-name="utility:close"
+                                      alternative-text="close"
+                                      variant="inverse"
+                                      size="small" ></lightning-icon>
+                                  <span class="slds-assistive-text">Close</span>
+                              </button>
+                              <h2 class="slds-text-heading_medium slds-hyphenate">Folio creado con éxito</h2>
+                          </header>
+                          <div class="slds-modal__content slds-p-around_medium">
+                            <div class="slds-grid slds-wrap slds-gutters" style="text-align: left;">
+                              <div class="slds-col slds-size_1-of-1 colorSection">
+                                <h1>Información del folio</h1>
+                              </div>
+                              <div class="slds-col slds-size_1-of-1"><br></div> 
+                              <div class="slds-col slds-size_6-of-12">
+                                <div>Account For:</div>
+                                <lightning-badge label={searchValueAccount}></lightning-badge>
+                              </div>
+                              <div class="slds-col slds-size_3-of-12">
+                                <div>Comercio Exterior:</div>
+                                <lightning-badge label={wrapperFolio.comercioExterior}></lightning-badge>
+                              </div>
+                              <div class="slds-col slds-size_1-of-12">
+                                <div>Team:</div>
+                                <lightning-badge label={wrapperFolio.team}></lightning-badge>
+                              </div>
+                              <div class="slds-col slds-size_2-of-12">
+                                <div>Freight Mode:</div>
+                                <lightning-badge label={wrapperFolio.freighMode}></lightning-badge>
+                              </div>
+                              <div class="slds-col slds-size_1-of-1"><br></div> 
+                              <div class="slds-col slds-size_3-of-12">
+                                <div>Service Mode:</div>
+                                <lightning-badge label={wrapperFolio.serviceMode}></lightning-badge>
+                              </div>
+                              <div class="slds-col slds-size_3-of-12">
+                                <div>Service Type:</div>
+                                <lightning-badge label={wrapperFolio.servicetype}></lightning-badge>
+                              </div>
+                              <div class="slds-col slds-size_3-of-12">
+                                <div>Quotation Status:</div>
+                                <lightning-badge label={wrapperFolio.quotationStatus}></lightning-badge>
+                              </div>
+                              <div class="slds-col slds-size_3-of-12">
+                                <div>Container Type:</div>
+                                <lightning-badge label={searchValueContainerType}></lightning-badge>
+                              </div>
+                              <div class="slds-col slds-size_1-of-1"><br></div> 
+                              <div class="slds-col slds-size_4-of-12">
+                                <div>Customer Reference:</div>
+                                <lightning-badge label={wrapperFolio.reference}></lightning-badge>
+                              </div>
+                              <div class="slds-col slds-size_4-of-12">
+                                <div>Customer Reference Form:</div>
+                                <lightning-badge label={searchValueCustomer}></lightning-badge>
+                              </div>
+                              <div class="slds-col slds-size_1-of-1"><br></div> 
+                              <div class="slds-col slds-size_4-of-12">
+                                <div>Site of Load:</div>
+                                <lightning-badge label={searchValueLoad}></lightning-badge>
+                              </div>
+                              <div class="slds-col slds-size_4-of-12">
+                                <div>Site of Discharge:</div>
+                                <lightning-badge label={searchValueDischarge}></lightning-badge>
+                              </div>
+                              <div class="slds-col slds-size_1-of-1"><br></div> 
+                              <div class="slds-col slds-size_4-of-12">
+                                <div>ETD:</div>
+                                <lightning-badge label={wrapperFolio.ETD}></lightning-badge>
+                              </div>
+                              <div class="slds-col slds-size_4-of-12">
+                                <div>ETA:</div>
+                                <lightning-badge label={wrapperFolio.ETA}></lightning-badge>
+                            </div>
+                            <div class="slds-col slds-size_1-of-1"><br></div> 
+                              <div class="slds-col slds-size_4-of-12">
+                                <div>load time:</div>
+                                <lightning-badge label={wrapperFolio.Awaitingloadtime}></lightning-badge>
+                              </div>
+                              <div class="slds-col slds-size_4-of-12">
+                                <div>unload time:</div>
+                                <lightning-badge label={wrapperFolio.Awaitingunloadtime}></lightning-badge>
+                              </div>
+                              <div class="slds-col slds-size_1-of-1"><br></div> 
+                                <div class="slds-col slds-size_1-of-1 colorSection">
+                                  <h1>Información del service line</h1>
+                                </div>
+                                <div class="slds-col slds-size_3-of-12">
+                                  <div>Service Line:</div>
+                                  <lightning-badge label={listServiceLine.Name}></lightning-badge>
+                                </div>
+                                <div class="slds-col slds-size_3-of-12">
+                                  <div>Rate Name:</div>
+                                  <lightning-badge label={rateName}></lightning-badge>
+                                </div>
+                                <div class="slds-col slds-size_3-of-12">
+                                  <div>Rate Category:</div>
+                                  <lightning-badge label={listServiceLine.Service_Rate_Category__c}></lightning-badge>
+                                </div>
+                                <div class="slds-col slds-size_3-of-12">
+                                  <div>Route:</div>
+                                  <lightning-badge label={listServiceLine.route__c}></lightning-badge>
+                                </div>
+                                <template if:true={esTarifario}>
+                                <div class="slds-col slds-size_2-of-12">
+                                  <lightning-input type="Number" label="Quote Sell Price:" formatter="currency" value={quoteSellPrice} disabled></lightning-input>
+                                </div>
+                                  <div class="slds-col slds-size_2-of-12">
+                                  <lightning-input type="Number" label="Sell Rate:" formatter="currency" value={listServiceLine.Sell_Rate__c} disabled></lightning-input>
+                                </div>
+                                </template>
+                                <template if:false={esTarifario}>
+                                  <div class="slds-col slds-size_2-of-12">
+                                    <lightning-input type="Number" label="Quote Sell Price:" formatter="currency" value={quoteSellPrice} disabled></lightning-input>
+                                  </div>
+                                  <div class="slds-col slds-size_2-of-12">
+                                  <lightning-input type="Number" label="Sell Rate:" formatter="currency" value={quoteSellPrice} disabled></lightning-input>
+                                </div>
+                                </template>
+                                <div class="slds-col slds-size_2-of-12">
+                                  <div>Tarifario:</div>
+                                  <lightning-input type="checkbox" checked={listServiceLine.Tarifario__c} disabled></lightning-input>
+                                </div>
+                                <div class="slds-col slds-size_3-of-12">
+                                  <div>Units:</div>
+                                  <lightning-badge label={listServiceLine.Units__c}></lightning-badge>
+                                </div>
+                                <div class="slds-col slds-size_3-of-12">
+                                  <div>Divisa:</div>
+                                  <lightning-badge label={listServiceLine.CurrencyIsoCode}></lightning-badge>
+                                </div>
+                                <template if:true={ItemPrice}>
+                                   <div class="slds-col slds-size_4-of-12">
+                                      <lightning-input id="Precio" label="Agregar Precio:" value={precio} placeholder={quoteSellPrice} 
+                                      onchange={RegistrItemPrice} type="number" step="0.01"></lightning-input>
+                                  </div>
+                                      <div class="slds-col slds-size_3-of-12 slds-align-bottom">
+                                      <lightning-button variant="brand"
+                                      label='Agregar o Actualizar Precio'
+                                      title='Agregar o Actualizar Precio'
+                                      onclick={AgregarItemPrice} stretch></lightning-button>
+                                  </div>
+                                </template>
+                          <div class="slds-col slds-size_1-of-1"><br></div> 
+                            <div class="slds-col slds-size_1-of-1 colorSection">
+                              <h1>Información del cargo line</h1>
+                            </div>
+                            <div class="slds-col slds-size_1-of-1"><br></div>
+                            <table aria-multiselectable="true" class="slds-table slds-table_bordered slds-table_fixed-layout slds-table_resizable-cols" role="grid">
+                              <thead>
+                                <tr class="slds-line-height_reset">
+                                <th class="" scope="col">
+                              <div class="slds-truncate" title="Clave de Servicio">Clave de Servicio</div>
+                              </th>
+                              <th class="" scope="col">
+                              <div class="slds-truncate" title="Descripción producto">Descripción producto</div>
+                              </th>
+                              <th class="" scope="col">
+                              <div class="slds-truncate" title="Item Name">Item Name</div>
+                              </th>
+                              <th class="" scope="col">
+                              <div class="slds-truncate" title="Container Type">Container Type</div>
+                              </th>
+                            <th class="" scope="col">
+                              <div class="slds-truncate" title="Units">Units</div>
+                            </th>
+                            <th class="" scope="col">
+                            <div class="slds-truncate" title="Peso Bruto">Peso Bruto</div>
+                          </th>
+                          <th class="" scope="col">
+                            <div class="slds-truncate" title="Peso Neto">Peso Neto</div>
+                          </th>
+                          <th class="" scope="col">
+                          <div class="slds-truncate" title="Currency">Currency</div>
+                        </th>
+                        <th class="" scope="col">
+                          <div class="slds-truncate" title="Total Shipping Volume (m3)">Total Shipping Volume (m3)</div>
+                        </th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                              <template lwc:if={listCargoLine.data}>
+                                      <!-- p key={contact.Id}>{contact.Container_Type__r.Name}</p-->
+                              <template for:each={listCargoLine.data} for:item="con">
+                              <tr class="slds-hint-parent" data-id={con.Id} key={con.Id}>
+                              <td>
+                                <div class="slds-truncate" title={con.Clave_de_Servicio__r.Name}>{con.Clave_de_Servicio__r.Name}</div>
+                                </td>
+                                <td>
+                                  <div class="slds-truncate" title={con.CE_Descripcion_de_Producto_PAK__c}>{con.CE_Descripcion_de_Producto_PAK__c}</div>
+                                  </td>
+                                  <td>
+                                    <div class="slds-truncate" title={con.Extension_Item_Name__c}>{con.Extension_Item_Name__c}</div>
+                                  </td>
+                                  <td>
+                                    <div class="slds-truncate" title={con.Container_Type__r.Name}>{con.Container_Type__r.Name}</div>
+                                  </td>
+                                  <td>
+                                    <div class="slds-truncate" title={con.Units__c}>{con.Units__c}</div>
+                                  </td>
+                                  <td>
+                                    <div class="slds-truncate" title={con.Total_Shipping_Weight_Kgs__c}>{con.Total_Shipping_Weight_Kgs__c}</div>
+                                  </td>
+                                  <td>
+                                    <div class="slds-truncate" title={con.Peso_Neto__c}>{con.Peso_Neto__c}</div>
+                                  </td>
+                                  <td>
+                                    <div class="slds-truncate" title={con.CurrencyIsoCode}>{con.CurrencyIsoCode}</div>
+                                  </td>
+                                  <td>
+                                    <div class="slds-truncate" title={con.Total_Shipping_Volume_m3__c}>{con.Total_Shipping_Volume_m3__c}</div>
+                                  </td>
+                                  </tr>
+                              </template>
+                              </template>
+                              <template lwc:elseif={listCargoLine.error}>
+                                  <p >{listCargoLine.error}</p>
+                              </template>
+                              </tbody>
+                              </table>
+                                <div class="slds-col slds-size_1-of-1"><br></div>
+                                    <div class="slds-col slds-size_6-of-12 slds-grid_align-center">
+                                    <lightning-button variant="brand"
+                                    label='Agregar Cargo Line'
+                                    title='Agregar una Cargo Line'
+                                    onclick={abrirCargoLine} stretch></lightning-button>
+                                </div>
+                            <div class="slds-col slds-size_1-of-1"><br></div> 
+                            <div class="slds-col slds-size_1-of-1 colorSection">
+                              <h1>Listado de folios</h1>
+                            </div>
+                            <div class="slds-col slds-size_1-of-1"><br></div> 
+                        <div class="slds-col slds-size_3-of-12" >
+                          <div>Numero de folios creados:</div>
+                          <lightning-badge label={nfolios}></lightning-badge>
+                          </div>
+                          <div class="slds-col slds-size_3-of-12" >
+                            <div>Folios Creados:</div>
+                              <template for:each={IdFolios} for:item="con">
+                                  <lightning-button variant="brand" data-id={con.Id} key={con.Id}
+                                  label={con.Name}
+                                  title={con.Name}
+                                  onclick={abrirFolio}
+                                  style="--sds-c-button-line-height:1;" stretch></lightning-button>
+                              </template>
+                        </div>
+                        <template if:true={customerId}>
+                        <div class="slds-col slds-size_6-of-12" >
+                          <div>Los folios que se crearon son para un prospecto</div>
+                          </div>
+                        </template>
+                              </div>
+                          </div>
+                          <footer class="slds-modal__footer">
+                              <button class="slds-button slds-button_neutral" onclick={closeResumen} title="Finalizar">Finalizar</button>
+                          </footer>
+                      </div>
+                  </section>
+                  <div class="slds-backdrop slds-backdrop_open"></div>
+                  </template>
+                  
+                  <template if:true={isCargoLine}>
+                    <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+                        <div class="slds-modal__container slds-container">
+                            <header class="slds-modal__header">
+                                <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close" onclick={Regresar}>
+                                    <lightning-icon icon-name="utility:close"
+                                        alternative-text="close"
+                                        variant="inverse"
+                                        size="small" ></lightning-icon>
+                                    <span class="slds-assistive-text">Close</span>
+                                </button>
+                                <h2 class="slds-text-heading_medium slds-hyphenate">Crear cargo line</h2>
+                            </header>
+                            <div class="slds-modal__content slds-p-around_medium">
+                                <div class="slds-grid slds-wrap slds-gutters slds-grid_align-center"  style="text-align: left;">
+                                  <div class="slds-col slds-size_1-of-1"><br></div> 
+                                  <div class="slds-col slds-size_6-of-12">
+                                  <div onkeyup={searchKeyClaveServicio}>
+                                    <lightning-input label="Clave de Servicio:" placeholder="Buscar clave en el SAT" 
+                                        value={searchValueClaveServicio} type="search"></lightning-input>
+                                  </div>
+                                  <table if:true={showSideClaveServicio} class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_striped">
+                                      <thead>
+                                        <tr class="slds-line-height_reset">
+                                            <th class="" scope="col">
+                                              <div class="slds-truncate" title="First Name">Clave de Servicio</div>
+                                            </th>
+                                            <th class="" scope="col">
+                                              <div class="slds-truncate" title="First Name">Nombre</div>
+                                            </th>
+                                        </tr>
+                                      </thead>
+                                      <tbody>
+                                        <template for:each={sideRecordsClaveServicio} for:item="con">
+                                            <tr class="slds-hint-parent" data-id={con.Id} key={con.Id} onclick={SideSelectClaveServicio}> 
+                                              <td>
+                                                  <div class="slds-truncate">{con.Clave_SAT__c}</div>
+                                              </td>
+                                              <td>
+                                                <div class="slds-truncate">{con.Name}</div>
+                                            </td>
+                                            </tr>
+                                        </template>
+                                      </tbody>
+                                    </table>
+                                  </div>
+            <div class="slds-col slds-size_6-of-12">
+              <lightning-textarea label="Descripción de producto (pak2go):" placeholder="Describir el producto "
+              onchange={registroDescripcionProducto}></lightning-textarea>
+            </div>
+            <div class="slds-col slds-size_1-of-1"><br></div> 
+            <div class="slds-col slds-size_6-of-12">
+              <div onkeyup={searchKeyMaterialPeligroso}>
+                <lightning-input label="Material Peligroso:" placeholder="Buscar material peligroso" 
+                    value={searchValueMaterialPeligroso} type="search"></lightning-input>
+              </div>
+              <table if:true={showSideMaterialPeligroso} class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_striped">
+                <thead>
+                  <tr class="slds-line-height_reset">
+                     <th class="" scope="col">
+                        <div class="slds-truncate" title="First Name">Clave de Servicio</div>
+                     </th>
+                     <th class="" scope="col">
+                        <div class="slds-truncate" title="First Name">Nombre</div>
+                     </th>
+                  </tr>
+               </thead>
+               <tbody>
+                  <template for:each={sideRecordsMaterialPeligroso} for:item="con">
+                     <tr class="slds-hint-parent" data-id={con.Id} key={con.Id} onclick={SideSelectMaterialPeligroso}> 
+                        <td>
+                           <div class="slds-truncate">{con.Clave_SAT__c}</div>
+                        </td>
+                        <td>
+                         <div class="slds-truncate">{con.Name}</div>
+                      </td>
+                     </tr>
+                  </template>
+               </tbody>
+                </table>
+              </div>
+            <div class="slds-col slds-size_6-of-12">
+              <div onkeyup={searchKeyEmbalaje}>
+                <lightning-input label="Embalaje:" placeholder="Buscar embalaje en el SAT" 
+                    value={searchValueEmbalaje} type="search"></lightning-input>
+              </div>
+              <table if:true={showSideEmbalaje} class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_striped">
+                  <thead>
+                     <tr class="slds-line-height_reset">
+                      <th class="" scope="col">
+                        <div class="slds-truncate" title="First Name">Clave de Servicio</div>
+                     </th>
+                     <th class="" scope="col">
+                        <div class="slds-truncate" title="First Name">Nombre</div>
+                     </th>
+                  </tr>
+               </thead>
+               <tbody>
+                  <template for:each={sideRecordsEmbalaje} for:item="con">
+                     <tr class="slds-hint-parent" data-id={con.Id} key={con.Id} onclick={SideSelectEmbalaje}> 
+                        <td>
+                           <div class="slds-truncate">{con.Clave_SAT__c}</div>
+                        </td>
+                        <td>
+                         <div class="slds-truncate">{con.Name}</div>
+                      </td>
+                     </tr>
+                     </template>
+                  </tbody>
+                </table>
+              </div>
+              <div class="slds-col slds-size_1-of-1"><br></div> 
+             <div class="slds-col slds-size_2-of-12">
+              <lightning-input label="Units:"
+              onchange={registroUnits} type="number"></lightning-input>
+          </div>
+          <div class="slds-col slds-size_2-of-12">
+              <lightning-input label="Peso Bruto (KG):"
+              onchange={registroPesoBruto} type="number" step="0.01"></lightning-input>
+          </div>
+          <div class="slds-col slds-size_2-of-12">
+              <lightning-input label="Peso Neto (KG):"
+              onchange={registroPesoNeto} type="number" step="0.01"></lightning-input>
+          </div>
+          <div class="slds-col slds-size_2-of-12">
+            <div class="slds-form-element">
+              <label class="slds-form-element__label" for="text-input-id-51">Currency:</label>
+              <div class="slds-form-element__control">
+                <div class="slds-select_container">
+                  <select class="slds-select" onchange={registroCurrency}>
+                    <option value="MXN">MXN</option>
+                    <option value="EUR">EUR</option>
+                    <option value="USD">USD</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="slds-col slds-size_3-of-12">
+              <lightning-input label="Total Shipping Volume (m3):" 
+                  onchange={registroTotalShippingVolume} type="number" step="0.01"></lightning-input>
+          </div>
+          </div>
+                            </div>
+                            <footer class="slds-modal__footer">
+                                <button class="slds-button slds-button_brand" onclick={agregarCargoLine} title="Agregar Cargo Line">Agregar</button>
+                                <button class="slds-button slds-button_neutral" onclick={Regresar} title="Regresar">Regresar</button>
+                            </footer>
+                        </div>
+                    </section>
+                    <div class="slds-backdrop slds-backdrop_open"></div>
+                </template>
+              </footer>
+          </div>
+      </section>
+      <div class="slds-backdrop slds-backdrop_open"></div>
+  </template> 
+  <template if:true={carga}>
+    <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+      <div class="slds-modal__container container">
+          <div class="slds-modal__content slds-p-around_medium">
+            <lightning-card title="Subir archivo CSV" style="text-align: center;">
+                <lightning-input type="file" label="Buscar o arrastrar archivo CSV" accept=".csv" onchange={handleFileChange} style="font-size: 25 px;"></lightning-input>
+                <template if:true={showUploadButton}>
+                  <div><br>Archivo cargado nombre: "{fileName}"</div>
+                  <div><br></div>
+                    <lightning-button variant="brand" label="Crear Folios" onclick={handleUploadClick}></lightning-button>
+                </template>
+                <template if:false={showUploadButton}>
+                  <div><br>Note: Please use the standard template to upload FI-FLETE NACIONAL. 
+                    <!-- pruduc https://pak2gologistics.file.force.com/sfc/servlet.shepherd/document/download/0694T00000Jdg6tQAB?operationContext=S1
+                      uat https://pak2gologistics--uat.sandbox.file.force.com/sfc/dist/version/download/?oid=00D0R000000MBcG&ids=068DV0000023QMdYAM&d=%2Fa%2FDV000000Cp2m%2FCtcev1jUJb_4IpwPysmOT6nrPNjq2Ct33MwJFcfGCvU&operationContext=DELIVERY&viewId=05HDV000000CnMZ2A0&dpt=-->
+                    <lightning-formatted-url value="https://pak2gologistics.file.force.com/sfc/servlet.shepherd/document/download/0694T00000Jdg6tQAB?operationContext=S1" label=" Click here " target="_blank"></lightning-formatted-url>
+                     to download the template.</div>
+                </template>
+            </lightning-card>
+          </div>
+          <footer class="slds-modal__footer">
+              <button class="slds-button slds-button_neutral" onclick={closeF_NACIONAL} title="Cancel">Cancel</button>
+          </footer>
+      </div>
+  </section>
+  </template>
+</template>

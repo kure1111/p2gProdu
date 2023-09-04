@@ -1,0 +1,2 @@
+<apex:page standardController="Vessel_Flight__c" extensions="NEU_Update_Vessel" action="{!updatevessel}">
+</apex:page>

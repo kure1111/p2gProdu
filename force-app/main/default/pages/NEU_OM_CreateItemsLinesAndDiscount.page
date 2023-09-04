@@ -1,0 +1,192 @@
+<apex:page standardController="Customer_Quote__c" extensions="NEU_OM_CreateItemsLinesAndDiscount">
+<apex:includeScript value="{!$Resource.jquery_1_10_2}"/> 
+<apex:includeScript value="{!$Resource.jquery_ui_1_10_3}"/>
+<apex:includeScript value="{!$Resource.neurored_jquery}"/> 
+<apex:stylesheet value="{!URLFOR($Resource.jquery_ui_1_10_3_css,'jquery-ui-1.10.3.min.css')}"/>
+<script>
+        $(document).ready(function () {
+            cambiarfamilia();
+            setDecimalSep($($.sfId('{!$Component.form.decimalSep}')).val(),$($.sfId('{!$Component.form.thousandSep}')).val());
+        });
+        
+        function cambiarfamilia()
+        {
+            $($.sfId('{!$Component.form.radio}')).buttonset();
+            $($.sfId('{!$Component.form.radio}')+" td").css('display','inline-block');
+        }
+        function del_oi(id)
+        {
+            document.getElementById('{!$Component.form.id_oi}').value = id;
+            delete_oi();
+        }
+        function changediscount(neudata)
+        {
+            var price=$('input[neudata=\'lp_'+neudata+'\']').val();
+            if(price)
+                price=$('input[neudata=\'lp_'+neudata+'\']').getFloat();
+            else
+                price=$('input[neudata=\'ip_'+neudata+'\']').getFloat();
+            $('input[neudata=\'p_'+neudata+'\']').setFloatSep((price*(1-($('input[neudata=\'d_'+neudata+'\']').getFloatSep()/100))).toFixed(2));
+        }
+        function changeprice(neudata)
+        {
+            var price=$('input[neudata=\'lp_'+neudata+'\']').val();
+            if(price)
+                price=$('input[neudata=\'lp_'+neudata+'\']').getFloat();
+            else
+                price=$('input[neudata=\'ip_'+neudata+'\']').getFloat();
+            price=((1-($('input[neudata=\'p_'+neudata+'\']').getFloatSep()/price))*100).toFixed(2);
+            if(price!='0.00')
+                $('input[neudata=\'d_'+neudata+'\']').setFloatSep(price);
+            else
+                $('input[neudata=\'d_'+neudata+'\']').val('');
+        }
+</script>
+    <apex:form id="form">
+    <apex:inputHidden value="{!decimalSep}" id="decimalSep"/>
+    <apex:inputHidden value="{!thousandSep}" id="thousandSep"/>
+        <apex:actionFunction name="delete_oi" action="{!delete_item_line_select}" status="myStatus" reRender="linesSelector"/>
+        <apex:inputHidden value="{!id_oi}" id="id_oi"/>
+<apex:outputLink value="{!URLFOR($Action.Customer_Quote__c.View,Customer_Quote__c.Id)}">
+   <apex:sectionHeader subtitle="{!Customer_Quote__c.Name}" title="Create {!$ObjectType.Quote_Item_Line__c.labelPlural}">
+   </apex:sectionHeader>
+</apex:outputLink>
+    <apex:outputPanel id="radios">
+        <apex:selectRadio id="radio" value="{!newcategory}" onchange="changeradios();">
+            <apex:selectOptions value="{!newcategories}"/>
+        </apex:selectRadio>
+    </apex:outputPanel>
+   <apex:actionFunction name="changeradios"  status="myStatus" reRender="linesSelector">
+  </apex:actionFunction>
+  <apex:actionFunction name="updatelists" action="{!categories}" status="myStatus" reRender="linesSelector, block2, radios" oncomplete="cambiarfamilia();">
+  </apex:actionFunction>
+ <apex:pageBlock id="block2" title="Filter By">
+    <apex:pageBlockTable id="table" value="{!Customer_Quote__c}" var="pricelist">
+        <apex:column headerValue="Account Price Lists" >
+            <apex:inputField value="{!record.Account_for_Price_List__c}" rendered="{!editPriceList && (record.Catalog_Price_List__c=null || record.Account_for_Price_List__c!=null)}" onchange="updatelists()"/>
+            <apex:outputField value="{!record.Account_for_Price_List__c}" rendered="{!!editPriceList && (record.Catalog_Price_List__c=null || record.Account_for_Price_List__c!=null)}"/>
+        </apex:column>
+        <apex:column headerValue="Account Business Areas Price Lists">
+        <apex:selectList id="pricelist" value="{!TempPrice_List}" size="1" onchange="updatelists();" rendered="{!editPriceList && record.Account_for_Price_List__c=null}">
+            <apex:selectOptions value="{!pricelists}"/>
+        </apex:selectList>
+        <apex:outputField value="{!record.Catalog_Price_List__c}" rendered="{!!editPriceList && record.Account_for_Price_List__c=null}"/>
+        </apex:column>
+    </apex:pageBlockTable>
+</apex:pageBlock>
+    <div>
+        <apex:outputPanel id="linesSelector">
+            <apex:pageMessages />
+            <apex:pageBlock id="block0" title="Actual {!$ObjectType.Quote_Item_Line__c.labelPlural}">
+                <apex:pageBlockTable id="table" value="{!quoteItemLines}" var="item">
+                    <apex:column headerValue="Item Name">
+                         <c:customobject2 objid="{!item.Item_Name__r.Id}" objname="{!item.Item_Name__r.Name}" atarget="_blank"/>
+                    </apex:column>
+                    <apex:column value="{!item.Extension_Item_Name__c}"/>
+                    <apex:column headerValue="Subfamily">
+                         <c:customobject2 objid="{!item.Subfamily__r.Id}" objname="{!item.Subfamily__r.Name}" atarget="_blank"/>
+                    </apex:column>
+                    <apex:column value="{!item.Unit_of_measure__c}"/>
+                    <apex:column value="{!item.Item_Price__c}"  style="text-align:right">
+                        <apex:facet name="header"><div style="text-align:center;">Item Price</div></apex:facet>
+                    </apex:column>
+                    <apex:column style="text-align:right">
+                        <apex:facet name="header"><div style="text-align:center;">List Price</div></apex:facet>
+                        <apex:outputField value="{!item.List_Price__c}" rendered="{!(item.List_Price__c!=null)&&(item.List_Price__c!=0)}"/>
+                    </apex:column>
+                    <apex:column value="{!item.Discount__c}" style="text-align:right">
+                        <apex:facet name="header"><div style="text-align:center;">Discount</div></apex:facet>
+                    </apex:column>
+                    <apex:column value="{!item.Price__c}"  style="text-align:right">
+                        <apex:facet name="header"><div style="text-align:center;">Price</div></apex:facet>
+                    </apex:column>
+                    <apex:column value="{!item.Units__c}"  style="text-align:right">
+                        <apex:facet name="header"><div style="text-align:center;">Item Units</div></apex:facet>
+                    </apex:column>
+                    <apex:column value="{!item.Amount__c}"  style="text-align:right">
+                        <apex:facet name="header"><div style="text-align:center;">Amount</div></apex:facet>
+                    </apex:column>
+                    <apex:column value="{!item.Total_Shipping_Weight_Kgs__c}" style="text-align:right;" >
+                        <apex:facet name="header"><div style="text-align:center;">Total Shipping Weight (Kgs)</div></apex:facet>
+                    </apex:column>
+                    <apex:column value="{!item.Total_Shipping_Volume_m3__c}" style="text-align:right;" >
+                        <apex:facet name="header"><div style="text-align:center;">Total Shipping Volume (m3)</div></apex:facet>
+                    </apex:column>
+                     <apex:column headerValue="Delete" style="text-align:center;">
+                        <apex:image id="del_oi" value="/img/permissions_deny16.gif" onclick="del_oi('{!item.Id}');" style="cursor:pointer;" />
+                    </apex:column>
+                    
+                </apex:pageBlockTable>
+            </apex:pageBlock>
+            <apex:pageBlock id="block1" title="New {!$ObjectType.Quote_Item_Line__c.labelPlural}">
+                  <apex:pageBlockButtons >
+                        <apex:commandButton value="Create {!$ObjectType.Quote_Item_Line__c.labelPlural}" status="myStatus"  styleClass="calculate" reRender="linesSelector,block2,radios"  action="{!crearlineaquoteitem}" oncomplete="cambiarfamilia();"/>
+                        <apex:commandButton value="Return to {!$ObjectType.Customer_Quote__c.label}" status="myStatus" action="{!return_quote}"/>
+                </apex:pageBlockButtons>
+                <apex:pageBlockTable id="table2" value="{!Item_List_Price}" var="lineanueva">
+                    <apex:column headerValue="Item Name">
+                         <c:customobject2 objid="{!lineanueva.quote_line.Item_Name__r.Id}" objname="{!lineanueva.quote_line.Item_Name__r.Name}" atarget="_blank"/>
+                    </apex:column>
+                    <apex:column headerValue="Extension Item Name">
+                        <apex:inputField value="{!lineanueva.quote_line.Extension_Item_Name__c}"/>
+                    </apex:column>
+                    <apex:column headerValue="Subfamily">
+                         <c:customobject2 objid="{!lineanueva.quote_line.Subfamily__r.Id}" objname="{!lineanueva.quote_line.Subfamily__r.Name}" atarget="_blank"/>
+                    </apex:column>
+                    <apex:column value="{!lineanueva.quote_line.Item_Name__r.Unit_of_measure__c}"/>
+                    <apex:column style="text-align:right">
+                        <apex:facet name="header"><div style="text-align:center">Item Price</div></apex:facet>
+                        <apex:outputField value="{!lineanueva.quote_line.Item_Name__r.Item_Price__c}"/>
+                        <apex:inputHidden value="{!lineanueva.quote_line.Item_Name__r.Item_Price__c}" html-neudata="ip_{!lineanueva.quote_line.Item_List_Price__r.Id}_{!lineanueva.quote_line.Item_Name__r.Id}"/>
+                    </apex:column>
+                    <apex:column style="text-align:right">
+                        <apex:facet name="header"><div style="text-align:center;">List Price</div></apex:facet>
+                        <apex:outputField rendered="{!lineanueva.quote_line.Item_List_Price__c!=null}" value="{!lineanueva.quote_line.Item_List_Price__r.List_Price__c}"/>
+                        <apex:inputHidden rendered="{!lineanueva.quote_line.Item_List_Price__c!=null}" value="{!lineanueva.quote_line.Item_List_Price__r.List_Price__c}" html-neudata="lp_{!lineanueva.quote_line.Item_List_Price__r.Id}_{!lineanueva.quote_line.Item_Name__r.Id}"/>
+                    </apex:column>
+                    <apex:column style="text-align:center">
+                        <apex:facet name="header"><div style="text-align:center;">Discount</div></apex:facet>
+                        <apex:inputField style="text-align:right;width:5em" value="{!lineanueva.quote_line.Discount__c}" html-neudata="d_{!lineanueva.quote_line.Item_List_Price__r.Id}_{!lineanueva.quote_line.Item_Name__r.Id}" onkeyup="changediscount('{!lineanueva.quote_line.Item_List_Price__r.Id}_{!lineanueva.quote_line.Item_Name__r.Id}');"/>
+                    </apex:column>
+                    <apex:column style="text-align:center">
+                        <apex:facet name="header"><div style="text-align:center;">Price</div></apex:facet>
+                        <apex:inputField style="text-align:right;width:7em;" value="{!lineanueva.quote_line.Price__c}" html-neudata="p_{!lineanueva.quote_line.Item_List_Price__r.Id}_{!lineanueva.quote_line.Item_Name__r.Id}" onkeyup="changeprice('{!lineanueva.quote_line.Item_List_Price__r.Id}_{!lineanueva.quote_line.Item_Name__r.Id}');"/>
+                    </apex:column>
+                    <apex:column style="text-align:center">
+                        <apex:facet name="header"><div style="text-align:center;">Item Units</div></apex:facet>
+                        <apex:inputfield style="text-align: right;width:7em;" value="{!lineanueva.quote_line.Units__c}" />
+                    </apex:column>
+                    <apex:column style="text-align:right"  >
+                        <apex:facet name="header"><div style="text-align:center;">Item Weight (Kgs)</div></apex:facet>
+                        <apex:outputField value="{!lineanueva.quote_line.Item_Name__r.Weight_Kgs__c}"/>
+                    </apex:column>
+                    <apex:column style="text-align:center">
+                        <apex:facet name="header"><div style="text-align:center;">Total Shipping Weight (Kgs)</div></apex:facet>
+                        <apex:inputfield style="text-align:right;width:9em;" value="{!lineanueva.quote_line.Total_Shipping_Weight_Kgs__c}"/>
+                    </apex:column>
+                    <apex:column style="text-align:center">
+                        <apex:facet name="header"><div style="text-align:center;">Total Shipping Volume (m3)</div></apex:facet>
+                           <apex:inputField style="text-align:right;width:9em;" value="{!lineanueva.quote_line.Total_Shipping_Volume_m3__c}"/>
+                    </apex:column>
+                    <apex:column headerValue="Create" style="text-align:center">
+                            <apex:inputCheckbox value="{!lineanueva.selected}"/>
+                    </apex:column>
+                </apex:pageBlockTable>
+            </apex:pageBlock>
+        </apex:outputPanel>
+    </div>
+    <apex:outputpanel >
+       <apex:actionstatus id="myStatus">
+           <apex:facet name="start">
+               <div class="waitingSearchDiv" id="el_loading" style="background-color: #fbfbfb;
+                      height: 100%;opacity:0.65;width:100%;"> 
+                   <div class="waitingHolder" style="top: 74.2px; width: 91px;">
+                       <img class="waitingImage" src="/img/loading.gif" title="Please Wait..." />
+                       <span class="waitingDescription">Loading...</span>
+                   </div>
+               </div>
+           </apex:facet>
+       </apex:actionstatus>
+    </apex:outputpanel>
+    </apex:form>
+</apex:page>

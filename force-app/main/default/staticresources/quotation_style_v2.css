@@ -1,0 +1,322 @@
+
+@page 
+{
+	margin-top: 5.5cm;
+	margin-left: 0.0cm;
+	margin-right: 0.0cm;
+	margin-bottom: 7cm;
+	  	
+  	@top-center {
+           content: element(header);
+   	}
+   	@bottom-center 
+	{
+		font-family: Arial, Helvetica, sans-serif;
+		font-size: 11px;
+        border-bottom:5px solid;
+		border-bottom-color:#ffe12d;
+        width:100%;
+	}
+   
+   @bottom-left{
+         content: element(footer);
+   }
+}
+
+body
+{
+	font-family: Arial, Helvetica, sans-serif;
+	font-size:12px;
+	margin:0;
+}
+
+.pagenumber:after {
+    content: counter(page);
+}
+.pagecount:after {
+    content: counter(pages);
+}
+
+.botom_footer
+{
+	width:550px;
+    left:150px;
+    position: relative;
+	margin-top: -5px!important;  
+   	font-weight:bold;  
+}
+
+.pagina
+{
+	float:left;
+	width:820px;
+	height:500px;
+}
+
+.header_image
+{
+	width:100%;
+}
+
+.container
+{
+	width:770px;
+	margin:0px 0px 0px 20px;
+	float:left;
+}
+
+.header
+{
+	position: running(header);
+	width:770px;
+	margin-bottom:10px;
+}
+
+.header_left
+{
+	float:left;
+	width:390px;
+}
+
+.header_right
+{
+	float:right;
+	width:350px;
+}
+
+.vigencia
+{
+	background:#ffe12d;
+	border:1px solid #bfbfbf;
+	margin-top:0;
+	font-size:12px;
+}
+
+.table_tarifas{
+	float:left;
+	height: auto;	
+	margin-top: 15px;
+}
+
+.table_data
+{
+	width:100%;
+}
+
+.table_data td{font-size:12px;}
+
+.table_data th{font-size:12px; width: 80px;}
+
+.table_data .folio 
+{
+	color: #ffff00;
+	background: #595959;
+}
+
+.table_data_right{float:right;}
+.table_data h3{float:right;}
+
+.middle
+{
+	float:left;
+	margin-bottom: 5px;
+}
+
+.presentation
+{
+	float:left;
+	text-align:center;
+	width:770px;
+	margin-bottom:0;
+	font-size:12px;
+}
+
+.freight_mode
+{
+	float:left;
+	font-weight:bold;
+	background:#ffff00;
+	width:500px;
+	text-align:center;
+	margin: 10px 135px 10px 135px;
+}
+
+.route_info
+{
+	float:left;
+	width:770px;
+	text-align:center;
+	font-style: italic;
+	font-size:15px;
+	margin:0 0 5px 0;
+}
+
+.observations
+{
+	background:#ffff00;
+	border:1px solid #000000;
+	float:left;
+	/*padding:5px;*/
+}
+
+.table_tarifas
+{
+	width:770px;
+	float:left;
+	border:1px solid #A9A9A9;
+
+}
+
+.table_tarifas th
+{
+	background: #f7eb3e;
+	border-bottom:1px solid #A9A9A9;
+	border-right:1px solid #A9A9A9;
+	text-align:center;
+	text-transform: uppercase;
+	/*padding: 10px;*/
+}
+
+.table_tarifas th:last-child
+{
+	border-right:0px;
+}
+
+.table_tarifas td
+{
+	border-right:1px solid #A9A9A9;
+	padding: 5px;
+}
+
+.table_tarifas td:last-child
+{
+	border-right:0px;
+}
+
+.table_tarifas .td_blank
+{
+	border:none !important;
+	background:#ffffff;
+}
+
+.table_tarifas tr
+{
+	height: 20px;
+}
+
+.bottom
+{
+	float:left;
+	margin-top:15px;
+}
+
+.bottom_pq
+{
+	height:270px !important;
+}
+
+.title_notes
+{
+	font-size:14px;
+	margin-left: 20px;
+	/*border-bottom: 1px solid #bfbfbf;*/
+}
+
+.bottom_separator
+{
+	/*border:1px solid #bfbfbf;*/
+}
+.quotation_map
+{
+	float:right;
+	margin-top:20px;
+}
+
+.notas_text
+{
+	float:left;
+	width:770px;
+	font-size:12px;
+}
+
+.footer
+{
+	width:100%;
+	text-align:center;
+	font-size: 12px;
+	position: running(footer);	
+}
+
+.footer_left label
+{
+   font-weight: bold;
+}
+
+.warning_notes
+{
+	color: #ff0000;
+	font-size: 12px;
+	margin-left:5px;
+}
+
+.freight_mode_title{
+    text-align: center;
+    font-weight: normal;
+	margin-top: 0px;
+}
+
+.main_title{
+	text-align: center;
+	margin-bottom: 2px;
+}
+
+.header_right .date{
+	float:right;
+}
+
+.table_data label{
+	text-transform: uppercase;
+    font-weight: bold;
+    margin-right: 5px;
+}
+.text_notes{
+	margin-left:20px;
+}
+.img_footer{
+	top:-20px;
+	margin-top: -50px;
+	left:575px;
+	position:relative;
+}
+
+.footer_left
+{
+	width: 250px;
+	position:relative;
+	left:0px;
+    text-align:left;
+    margin-left:25px;
+}
+
+.close_line{
+	height: 5px;
+    width: 100%;
+    background-color: #ffe12d;
+}
+
+.address
+{
+	margin:0;
+}
+
+.companyName
+{
+	margin:-5px!important;
+}
+
+.npage_footer
+{
+    margin-left:300px;
+    width: 200px;
+    margin-top:5px;
+}

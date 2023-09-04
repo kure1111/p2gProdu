@@ -1,0 +1,39 @@
+<apex:page standardController="Customer_Quote__c" sidebar="false" showHeader="false">
+  <head>
+      <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+      <script>
+          //setTimeout("location.reload(true);", 3000);
+      </script>
+      <style>
+        .message_error
+        {
+            float: left;
+            margin: 0 0 10px 0;
+            padding: 10px 10px 10px 180px;
+            background: #ff0000;
+            border: 2px solid #AD0000;
+            color: #ffff00;
+            border-radius: 5px;
+            width: 627px;
+            text-transform: uppercase;
+            
+            background-image: url(/resource/1492448329000/NEUEBUSCM__warning_info);
+            background-size: 45px;
+            background-repeat: no-repeat;
+            background-position: 10px;
+            
+            webkit-box-shadow: 0px 0px 10px 0px rgba(50, 50, 50, 1);
+            -moz-box-shadow: 0px 0px 10px 0px rgba(50, 50, 50, 1);
+            box-shadow: 0px 0px 10px 0px rgba(50, 50, 50, 1);
+        }
+        .capa_errores{width: 684px; margin: 0 auto 0 auto;}
+    </style>
+  </head>
+  <body>
+      <apex:form >
+        <div class="capa_errores">            
+            <p class="message_error"> VENDELE SEGURO Y REDONDEA SIEMPRE TU VENTA!! </p>
+        </div>
+     </apex:form>
+  </body>
+</apex:page>

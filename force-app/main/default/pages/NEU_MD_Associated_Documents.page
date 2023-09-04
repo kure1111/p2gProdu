@@ -1,0 +1,550 @@
+<apex:page controller="NEU_MD_Associated_Documents" sidebar="false" lightningStylesheets="false"><!--showHeader="false"-->
+    <apex:includeScript value="{!$Resource.jquery_1_10_2}"/>
+    <apex:stylesheet value="{!URLFOR($Resource.AssociatedDocumentsIcons, 'NEU_MD_Associated_Documents.css')}" />
+    <script>
+        var array_files = {};
+        var array_files_names = {};
+        var array_files_other = [];
+        var contador_de_archivos = 0;
+        var contador = 0;
+        var contador_id = 0;
+        var nombre_completo_date = '';
+        var nombre;
+        var ext;
+        var nombre_todos_los_documentos;
+        var d = new Date();
+        var dia;
+        var mes;
+        var ano;
+        var hora;
+        var minuto;
+        var segundo;
+
+        function guardar()
+        {
+            //poner aviso en rojo
+            var documentos = document.getElementById('{!$Component.form.block1.secciones.seccionurl.document_url}').value;
+            var manual = document.getElementById('{!$Component.form.block1.secciones.secciondocumento.document_adjunto}').value;//----re visar esto
+
+            if((documentos != null && documentos != '') && (manual == null || manual == ''))
+            {
+                savedocument();
+            }
+
+            if((manual != null && manual != '') && (documentos == null || documentos == ''))
+                savedocument();
+
+            if((documentos != null && documentos != '') && (manual != null && manual != ''))
+            {
+                $('.error1').html('You can upload a Document or an URL but not both');
+                $('.error1').css("display", "block");
+                $('.documento_adjunto').attr("class", "error");
+                $('.documento_url').attr("class", "error");
+            }
+
+            if(documentos == '' && manual == '')
+            {
+                $('.error1').html('You must select a Document or an URL');
+                $('.error1').css("display", "block");
+                $('.documento_adjunto').attr("class", "error");
+                $('.documento_url').attr("class", "error");
+            }
+
+        }
+
+         $(document).ready(function(){
+
+
+             $('#phHeaderLogoImage').attr("src",function() {
+                var href='https://neuebuscm-developer-edition.eu2.force.com/servlet/servlet.ImageServer?id=015b0000000AeRa&oid=00Db0000000cLrt&lastMod=1386235275000';
+                return href;
+            });
+            $('#phHeaderLogoImage').css('width','256px');
+            //$('.lista_documentos li').css("background", "url({!URLFOR($Resource.AssociatedDocumentsIcons,'order.png')})");
+            $('.boton_del').css('display','none');
+        });
+
+        function new_document(id_document)
+        {
+            if(id_document == 'document1')
+            {
+                $('.document1').css("display", "none");
+                $('.document2').css("display", "block");
+                $('.2document2').css("display", "block");
+                $('tr td[neudata="2document2"]').css("display", "");
+            }
+
+            if(id_document == 'document2')
+            {
+                $('.document2').css("display", "none");
+                $('.document3').css("display", "block");
+                $('.3document3').css("display", "block");
+                $('tr td[neudata="3document3"]').css("display", "");
+            }
+
+            if(id_document == 'document3')
+            {
+                $('.document3').css("display", "none");
+                $('.document4').css("display", "block");
+                $('.4document4').css("display", "block");
+                $('tr td[neudata="4document4"]').css("display", "");
+            }
+
+            if(id_document == 'document4')
+            {
+                $('.document4').css("display", "none");
+                $('.5document5').css("display", "block");
+                $('tr td[neudata="5document5"]').css("display", "");
+            }
+        }
+
+        function fichero_upload(id_tipo, clase_document, myFile, tipo_con_espacios)
+        {
+             $('.'+id_tipo+'_'+clase_document).css("margin-top", "12px");
+             $('.'+id_tipo).css("background", "#CFEEF8 url({!URLFOR($Resource.documento_subido)})");
+             $('.'+id_tipo).css("background-size", "122px");
+             $('.'+id_tipo).css("background-repeat", "no-repeat");
+             $('.'+id_tipo).css("background-position", "center 175px");
+             $('.'+id_tipo).css("margin-bottom", "12px");//---este no lo pone
+             //$('.'+id_tipo).css("background-color", "#CFEEF8 !important");
+             $('.'+id_tipo+'_'+clase_document).css("display", "block");
+             $('.'+id_tipo+'_'+clase_document+'_88').css("margin-bottom", "0px");
+
+
+             //Habilitamos los botones las subir un documento
+             document.getElementById(id_tipo).disabled = false;
+             var tipo_del = 'del_'+id_tipo;
+             document.getElementById(tipo_del).disabled = false;
+             document.getElementById(tipo_del).style.display = "inline";
+             document.getElementById('button_save_all').disabled = false;
+             document.getElementById('button_save_all2').disabled = false;
+
+             //Añadimos el fichero al array de elementos subidos
+             var file = myFile.files[0];
+             array_files[tipo_con_espacios] = file;
+
+             var filename = file.name;
+             $('.'+id_tipo+'_'+clase_document+'_22').html(filename);
+
+
+                if (file  && file) {
+
+                 var sizeByte =file.size;
+                 var siezekiloByte = parseInt(sizeByte / 1024);
+                 if(siezekiloByte > 10000 ){
+                     alert('The document size exceeds the limit. The Limit is 10Mb');
+                     $('.documento_adjunto_custom_'+id_tipo+'_'+clase_document).val('');
+                    $('.'+id_tipo+'_'+clase_document).css("display", "none");
+
+                    $('.'+id_tipo).css("background", "white url(https://cdn2.iconfinder.com/data/icons/social-media-8/512/note3.png)");
+                     $('.'+id_tipo).css("background-size", "122px");
+                     $('.'+id_tipo).css("background-repeat", "no-repeat");
+                     $('.'+id_tipo).css("background-position", "center 168px");
+                      $('.'+id_tipo+'_'+clase_document+'_88').css("margin-bottom", "41px");
+                 }
+                   /* var reader = new FileReader();
+                    reader.onload = function (e) {
+                        var img = new Image;
+                        img.onload = function() {
+                            if(img.width != 450 || img.height != 300)
+                            {
+                                alert("Las medidas de la imágen son incorrectas ("+img.width+"x"+img.height+"), deben ser 450x300");
+                                $('.documento_adjunto_custom_'+id_tipo+'_'+clase_document).val('');
+                                $('.'+id_tipo+'_'+clase_document).css("display", "none");
+
+                                $('.'+id_tipo).css("background", "white url(https://cdn2.iconfinder.com/data/icons/social-media-8/512/note3.png)");
+                                 $('.'+id_tipo).css("background-size", "122px");
+                                 $('.'+id_tipo).css("background-repeat", "no-repeat");
+                                 $('.'+id_tipo).css("background-position", "center 168px");
+                                  $('.'+id_tipo+'_'+clase_document+'_88').css("margin-bottom", "41px");
+
+                            }
+                        };
+                        img.src = reader.result;
+                    };
+                    reader.readAsDataURL(file); */
+                }
+
+        }
+
+        function fichero_upload_other_max_size(id_tipo, clase_document, myFile, tipo_con_espacios)
+        {
+             var file = myFile.files[0];
+             var filename = file.name;
+             if (file  && file) {
+
+                 var sizeByte =file.size;
+                 var siezekiloByte = parseInt(sizeByte / 1024);
+                 if(siezekiloByte > 10000 ){
+                     alert('The document size exceeds the limit. The Limit is 10Mb');
+                     $('.documento_adjunto_custom_other_'+id_tipo+'_'+clase_document).val('');
+                 }
+                 else{
+                     //Habilitamos los botones las subir un documento
+                     document.getElementById('button_save_all').disabled = false;
+                     document.getElementById('button_save_all2').disabled = false;
+                     var tipo_del = 'del_'+clase_document;
+                     document.getElementById(tipo_del).disabled = false;
+                     document.getElementById(tipo_del).style.display = "inline";
+                     //Añadimos el fichero al array de elementos subidos
+                     array_files_other.push(file);
+                 }
+             }
+        }
+
+        function savedocument_tipo(tipo)
+        {
+            //Subida del fichero a AMAZON
+            send_request_amazon(array_files[tipo],tipo);
+            //ASIGNAMOS VARIABLES
+            $('.tipo_documento_id').val(tipo);
+            $('.documentos_subir').val(nombre_completo_date);
+            $('.documentos_subir_name').val(JSON.stringify(array_files_names));
+            //VACIAMOS EL NOMBRE
+            nombre_completo_date='';
+            savedocument();
+        }
+
+        function save_all_documents()
+        {
+            for (x in array_files) {
+                //Subida del fichero a AMAZON
+                send_request_amazon(array_files[x],x);
+            }
+            for (x in array_files_other) {
+                //Subida del fichero a AMAZON
+                send_request_amazon(array_files_other[x],'Other');
+            }
+            $('.documentos_subir_name').val(JSON.stringify(array_files_names));
+            savealldocument();
+            //ASIGNAMOS VARIABLES
+            $('.documentos_subir').val(nombre_completo_date);
+            //VACIAMOS EL NOMBRE
+            nombre_completo_date='';
+        }
+
+        function deletedocument_tipo(tipo,id_tipo,clase_document){
+            delete array_files[tipo];
+
+             //Volvemos al estado inicial
+             $('.documento_adjunto_custom_'+id_tipo+'_'+clase_document).val('');
+             $('.'+id_tipo+'_'+clase_document+'_22').html('');
+             document.getElementById(id_tipo).disabled = true;
+             var tipo_del = 'del_'+id_tipo;
+             document.getElementById(tipo_del).disabled = true;
+             $('#del_'+id_tipo).css('display','none');
+             $('.'+id_tipo+'_'+clase_document).css("display", "none");
+             $('.'+id_tipo).css("background", "white url(https://cdn2.iconfinder.com/data/icons/social-media-8/512/note3.png)");
+             $('.'+id_tipo).css("background-size", "122px");
+             $('.'+id_tipo).css("background-repeat", "no-repeat");
+             $('.'+id_tipo).css("background-position", "center 168px");
+             $('.'+id_tipo+'_'+clase_document+'_88').css("margin-bottom", "41px");
+             if(Object.keys(array_files).length <= 0){
+                 document.getElementById('button_save_all').disabled = true;
+                 document.getElementById('button_save_all2').disabled = true;
+             }
+        }
+
+        function deletedocument_tipo_other(tipo,id_tipo,clase_document){
+            var valor = clase_document.replace("document","")-1;
+            delete array_files_other[valor];
+            $('.documento_adjunto_custom_other_'+id_tipo+'_'+clase_document).val('');
+            var tipo_del = 'del_'+clase_document;
+            document.getElementById(tipo_del).disabled = true;
+            document.getElementById(tipo_del).style.display = "none";
+            if(Object.keys(array_files_other).length <= 0){
+               document.getElementById('button_save_all').disabled = true;
+               document.getElementById('button_save_all2').disabled = true;
+            }
+        }
+
+
+
+        function send_request_amazon(file,tipo)
+        {
+            var file = file;
+            var tipo_obj = $( '#tipo_objeto' ).val();
+            var directorio='';
+
+            switch(tipo_obj) {
+              case 'Customer_Quote__c':
+                directorio='Quote/';
+                break;
+              case 'Shipment__c':
+                directorio='Shipments/';
+                break;
+              case 'Account':
+                directorio='Accounts/';
+                break;
+            }
+            var fd = new FormData();
+            var archivo = file.name;
+            archivo = archivo.replace(/[-!$%^&*()_+|~=`\\#{}\[\]:";'<>?,\ /]/g, '');
+            nombre = archivo.substring(0,archivo.lastIndexOf("."));
+            nombre = nombre.split('.').join('');
+            ext = archivo.substring(archivo.lastIndexOf(".") +1);
+
+             dia = d.getDate();
+             mes = d.getMonth()+1;
+             ano = d.getFullYear();
+             hora = d.getHours();
+             minuto = d.getMinutes();
+             segundo = d.getSeconds();
+
+            nombre_todos_los_documentos = nombre+'_'+dia+''+mes+''+ano+''+hora+''+minuto+''+segundo+'.'+ext+'_&_';
+            nombre_completo_date += nombre_todos_los_documentos;
+
+            array_files_names[tipo]='https://associateddocs.s3.amazonaws.com/'+directorio+nombre+'_'+dia+''+mes+''+ano+''+hora+''+minuto+''+segundo+'.'+ext;
+
+            var key = directorio+nombre+'_'+dia+''+mes+''+ano+''+hora+''+minuto+''+segundo+'.'+ext;
+            var AWSAccessKeyId = $( '.hidden_AWSAccessKeyId' ).val();
+            var policy = $( '.hidden_policy' ).val();
+            var signature = $( '.hidden_signature' ).val();
+
+
+            fd.append('key',key);
+            fd.append('acl', 'public-read');
+            fd.append('AWSAccessKeyId', AWSAccessKeyId);
+            fd.append('policy', policy)
+            fd.append('signature',signature);
+
+            fd.append("file",file);
+
+            var objXMLHttp=null;
+            if(window.XMLHttpRequest)
+                objXMLHttp = new XMLHttpRequest()
+            else if (window.ActiveXObject)
+                objXMLHttp = new ActiveXObject("Microsoft.XMLHttp")
+
+            var xhr = objXMLHttp;
+
+            xhr.addEventListener("load", uploadComplete, false);
+            xhr.addEventListener("error", uploadFailed, false);
+            xhr.addEventListener("abort", uploadCanceled, false);
+
+            xhr.open('POST', 'https://associateddocs.s3.amazonaws.com/', true);
+            xhr.send(fd);
+        }
+
+
+        function uploadComplete(evt)
+        {
+
+        }
+
+        function uploadFailed(evt)
+        {
+            alert("ERROR");
+        }
+
+        function uploadCanceled(evt)
+        {
+            alert("ERROR");
+        }
+
+
+
+        function cancelar()
+        {
+             var loc = document.location.href;
+
+            //fees
+            var parametro = false;
+           /* if(loc.indexOf('external=true')>0)
+            {
+               parametro= true;
+
+            }*/
+            var estoy_en_el_externo = $('.site_ext').val();
+
+            if($('.tipo_url').html() != null && $('.tipo_url').html() != '')
+                parametro= true;
+
+           if(estoy_en_el_externo == 'false')
+           {
+               if(parametro == true)
+               {
+                 if(loc.indexOf('disb_tab=true') >= 0)
+                 {
+                    window.top.location.href =$('.tipo_url').html()+'/apex/{!namespace}NEU_Disbursement_View';
+                 }
+                 else
+                 {
+                    window.top.location.href =$('.tipo_url').html()+'/'+$('.id_cabecera').val();
+                 }
+               }
+               else
+               {
+                    if(loc.indexOf('disb_tab=true') >= 0)
+                    {
+                        window.top.location.href =$('.url_cabecera').val()+'/apex/{!namespace}NEU_Disbursement_View';
+                    }
+                    else
+                    {
+                        window.top.location.href =$('.url_cabecera').val()+'/'+$('.id_cabecera').val();
+                    }
+               }
+           }
+           else
+              window.top.location.href =$('.tipo_url').val()+'/NEU_Trace?id='+$('.id_cabecera').val();
+        }
+
+    </script>
+    <style>
+        .btnBlue{
+           /* background-color: rgba(27, 82, 151, 1) !important;
+            border-color: rgba(27, 82, 151, 1) !important;
+            color: white !important;*/
+        }
+        .lista_documentos{list-style: none;    float: left;    width: 99%; padding-left: 0px;}
+        .lista_documentos li{    display:inline-block;   border: 1px solid gainsboro;    border-radius: 5px;       margin-bottom: 12px; /*margin-bottom: 17px;*/ border-top: 0px;     width: 255px;     background: url(https://cdn2.iconfinder.com/data/icons/social-media-8/512/note3.png);        background-size: 122px;    background-repeat: no-repeat;    background-position: center 168px;     background-color: white;}
+        .fichero_subido_li{width: 50%;float: left;}
+        .fichero_blockchain_li{width: 46%;float: right; margin-right: 14px;}
+        .img_blockchain{float:right; height: 29px;}
+        .titulo_li{    background: #f2f3f3;    border: 1px solid #e0e3e5;    border-bottom: 2px solid #cccccc;    color: #000;       font-size: 1em;   font-weight: bold;    padding: 5px 2px 4px 5px;    border-radius: 5px 5px 0px 0px;    margin-top: 0px;     text-align: center;}
+        .reference_li{}
+        .description_li{}
+        .description_input{    margin-left: 5px;    width: 234px;    border-radius: 5px;    padding: 4px;    resize: none;    height: 43px;     margin-bottom: 41px;}
+        .reference_input{    margin-left: 5px;    width: 233px;    border-radius: 5px;    padding: 4px;}
+        .capa_contenedor{float: left;    margin-bottom: 10px;}
+        .boton_upload{    float: left;    margin: 5px 5px 5px 67px !important;    width: 123px;}
+        .boton_del{float: right;    margin: 5px !important;background-image: url(https://cdn4.iconfinder.com/data/icons/colicon/24/close_delete-512.png) !important;background-repeat: no-repeat !important;background-size: contain !important;background-position: center !important;padding:4px!important;color:transparent!important;}
+        .nombre_documento{font-size: 1em;    font-weight: bold;    margin: 0px 0px 0px 7px;}
+        .imagen_subida{float: left;    width: 32px;    margin-left: 12px;}
+        .documento_adjunto_custom{margin: 5px;    height: 120px;      opacity: 0;  cursor: pointer;    width: 242px;    background: transparent url(/img/feeds/follow_sprite.png) no-repeat 0 0;}
+        .homeTab .tertiaryPalette, .individualPalette .homeBlock .tertiaryPalette, .layoutEdit .individualPalette .homeBlock .tertiaryPalette {    background-color: #1797c0;}
+        body .bPageBlock, body #bodyCell .bResource .secondaryPalette, body .secondaryPalette.bPageBlock, body .individualPalette .secondaryPalette.bPageBlock, body .bodyDiv .genericTable, body .genericPageBlockTable, body .bodyDiv .bSubBlock, body .bComponentBlock .bPageBlock, body .bMyDashboard .bPageBlock, body.rlHoverFrame .bPageBlock, body.subjectSelectionPopup div.choicesBox, body.lookupTab .secondaryPalette.bPageBlock, body.popupTab .secondaryPalette.bPageBlock, body.UserTagStatsPage .secondaryPalette.bPageBlock{float: left;     width: 99%;}
+    </style>
+    <apex:form id="form">
+        <apex:actionFunction name="savealldocument" status="myStatus" action="{!Upload_Documents}" />
+        <apex:actionFunction name="savedocument" status="myStatus" action="{!Upload_Document}"/>
+        <apex:actionFunction name="cancel_document" action="{!cancel_document}"/>
+        <apex:inputhidden value="{!tipo_documento_id}" html-class="tipo_documento_id"/>
+        <apex:inputhidden value="{!documentos_subir}" html-class="documentos_subir"/>
+        <apex:inputhidden value="{!documentos_subir_name}" html-class="documentos_subir_name"/>
+        <apex:outputtext value="{!$Site.BaseUrl}" html-class="tipo_url" style="display:none;"/>
+        <apex:image value="/img/icon/contracts32.png" style="float: left; margin: 8px;"/>
+        <span style="margin-top: 9px; margin-bottom: 0; color: #000; font-size: 2em; font-family: Arial,Helvetica,sans-serif; font-weight: normal; float:left;">Associated Document</span>
+        <!-- <img src="{!URLFOR($Resource.documento_subido)}"/>-->
+
+        <!-- lista de documentos dinamica -->
+        <apex:pageBlock id="detalle_shipment" html-class="detalle_shipment" rendered="{!shipment_reference != null}">
+            <apex:pageBlockSection columns="2" title="Shipment Reference" id="subject_body" rendered="{!shipment_reference != null}">
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel >Customer Reference </apex:outputLabel>
+                    <apex:outputField value="{!shipment_reference.Account_Shipment_Reference__c}"/>
+                </apex:pageBlockSectionItem>
+
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel >Supplier/Shipper Account (Origin)</apex:outputLabel>
+                    <apex:outputtext value="{!shipment_reference.Supplier_Account__r.Name}"/>
+                </apex:pageBlockSectionItem>
+
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel >Number</apex:outputLabel>
+                    <apex:outputField value="{!shipment_reference.Number__c}"/>
+                </apex:pageBlockSectionItem>
+
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel >Nature Merchandise</apex:outputLabel>
+                    <apex:outputField value="{!shipment_reference.Nature_Merchandise__c}"/>
+                </apex:pageBlockSectionItem>
+
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel >Container Type </apex:outputLabel>
+                    <apex:outputtext value="{!shipment_reference.Container_Type__r.Name}"/>
+                </apex:pageBlockSectionItem>
+
+
+
+            </apex:pageBlockSection>
+        </apex:pageBlock>
+
+        <apex:pageBlock id="block1" html-class="bloque_1">
+            <apex:inputHidden value="{!id_cabecera}" id="id_cabecera" html-class="id_cabecera"/>
+            <apex:inputHidden value="{!url_base}" id="url_cabecera" html-class="url_cabecera"/>
+            <apex:pageMessages id="pagemessages"/>
+            <apex:pageBlockButtons location="top">
+                <input type="button"  value="Upload All Documents" class="button_save btn btnBlue" onclick="save_all_documents();" style="display:{!display_buttons1}" disabled="true" id="button_save_all"/>
+                <input type="button" value="Return" class=" btn btnBlue" onclick="cancelar();" style="display:{!display_buttons1}"/>
+                <input type="button" value="Continue" class=" btn btnBlue" onclick="cancelar();" style="display:{!display_buttons2}"/>
+                <div class="pbError error1" id="errorDiv_ep" style="display:none;"></div>
+            </apex:pageBlockButtons>
+            <div class="capa_contenedor">
+                <ul class="lista_documentos">
+                    <apex:repeat value="{!List_personal_documents}" var="documents">
+                        <li class="{!documents.Document_Type_Id}" style="{!if(documents.ya_hay_uno_del_mismo_tipo == true,'margin-bottom: 9px;','')}">
+                            <p class="titulo_li"><apex:outputText value="{!documents.Document_Type}"/></p>
+                            <p class="reference_li"><apex:inputText value="{!documents.Document_Reference}" styleclass="reference_input" html-placeholder="Reference" /></p>
+                            <p class="description_li"> <apex:inputTextarea value="{!documents.Document_Description}" styleclass="description_input {!documents.Document_Type_Id}_{!documents.clase_documento}_88" html-placeholder="Description" html-maxlength="255" /></p>
+                            <p class="fichero_subido_li {!documents.Document_Type_Id}_{!documents.clase_documento}" style="display:{!if(documents.ya_hay_uno_del_mismo_tipo == true, ';    margin-top: -29px;', 'none;')}"><apex:image value="{!URLFOR($Resource.fichero_subido_correctamente)}" html-class="imagen_subida " title="{!if(documents.ya_hay_uno_del_mismo_tipo == true, 'This type of file has already been loaded', '')}"/><span class="nombre_documento {!documents.Document_Type_Id}_{!documents.clase_documento}_22"></span></p>
+                            <apex:inputFile contentType="{!documents.documento_asociadoCT}" value="{!documents.documento_asociado}" filename="{!documents.documento_asociadoName}"  styleClass="documento_adjunto_custom  documento_adjunto_custom_{!documents.Document_Type_Id}_{!documents.clase_documento}" onchange="fichero_upload('{!documents.Document_Type_Id}','{!documents.clase_documento}',this, '{!documents.Document_Type}');"/>
+                            <div>
+                                <input type="button" value="Upload" onclick="savedocument_tipo('{!documents.Document_Type}');" class="btn boton_upload " id="{!documents.Document_Type_Id}" disabled="true"/>
+                                <input type="button" value="Delete" onclick="deletedocument_tipo('{!documents.Document_Type}','{!documents.Document_Type_Id}','{!documents.clase_documento}');" class="btn boton_del" id="del_{!documents.Document_Type_Id}" disabled="true"/>
+                            </div>
+                        </li>
+                    </apex:repeat>
+                </ul>
+            </div>
+        </apex:pageBlock>
+
+        <!-- lista de documentos others -->
+        <apex:pageBlock id="block2"  title="Other Documents">
+            <apex:pageBlockButtons location="bottom">
+                <input type="button" value="Upload All Documents" class="button_save btn" onclick="save_all_documents();" style="display:{!display_buttons1} btnBlue" disabled="true" id="button_save_all2"/>
+                <input type="button" value="Return" class=" btn btnBlue" onclick="cancelar();" style="display:{!display_buttons1} btnBlue"/>
+                <input type="button" value="Continue" class="btn btnBlue" onclick="cancelar();" style="display:{!display_buttons2} btnBlue"/>
+                <div class="pbError error1" id="errorDiv_ep" style="display:none;"></div>
+            </apex:pageBlockButtons>
+            <apex:pageBlockTable value="{!List_others_documents}" var="doc">
+                <apex:column style="display:{!if(doc.clase_documento2 == '1document1','','none')}" html-neudata="{!doc.clase_documento2}">
+                    <apex:facet name="header"> </apex:facet>
+                    <apex:image value="" style="        min-width: 15px;     cursor: pointer;    display: block;    background: transparent url(/img/feeds/follow_sprite.png) no-repeat 0 0;    height: 18px;    padding-left: 6px;    float: left;    margin-left: 10px; display:{!if(doc.clase_documento == 'document1','block','none')}" styleclass="{!doc.clase_documento}" onclick="new_document('{!doc.clase_documento}')"/>
+                </apex:column>
+                <apex:column style="display:{!if(doc.clase_documento2 == '1document1','','none')}" html-neudata="{!doc.clase_documento2}">
+                    <apex:facet name="header">Document Type</apex:facet>
+                    <apex:outputText value="{!doc.Document_Type}"/>
+                </apex:column>
+                <apex:column style="display:{!if(doc.clase_documento2 == '1document1','','none')}" html-neudata="{!doc.clase_documento2}">
+                    <apex:facet name="header">Document Description</apex:facet>
+                    <apex:inputTextarea value="{!doc.Document_Description}"/>
+                </apex:column>
+                <apex:column style="display:{!if(doc.clase_documento2 == '1document1','','none')}" html-neudata="{!doc.clase_documento2}">
+                    <apex:facet name="header">Document Reference</apex:facet>
+                    <apex:inputtext value="{!doc.Document_Reference}"/>
+                </apex:column>
+                <apex:column style="display:{!if(doc.clase_documento2 == '1document1','','none')}" html-neudata="{!doc.clase_documento2}">
+                    <apex:facet name="header">Document</apex:facet>
+                    <apex:inputFile contentType="{!doc.documento_asociadoCT}" value="{!doc.documento_asociado}" filename="{!doc.documento_asociadoName}"  styleClass="documento_adjunto documento_adjunto_custom_other_{!doc.Document_Type_Id}_{!doc.clase_documento}" id="document_adjunto" onchange="fichero_upload_other_max_size('{!doc.Document_Type_Id}','{!doc.clase_documento}',this, '{!doc.Document_Type}');"/>
+                    <input type="button" value="Delete" onclick="deletedocument_tipo_other('{!doc.Document_Type}','{!doc.Document_Type_Id}','{!doc.clase_documento}');" class="btn boton_del btnBlue" id="del_{!doc.clase_documento}" disabled="true"/>
+                </apex:column>
+
+            </apex:pageBlockTable>
+        </apex:pageBlock>
+        <apex:inputHidden value="{!estoy_en_site}" html-class="site_ext"/>
+        <apex:outputpanel >
+            <apex:actionstatus id="myStatus">
+                <apex:facet name="start">
+                    <div class="waitingSearchDiv" id="el_loading" style="background-color: #fbfbfb; height: 100%;opacity:0.65;width:100%; z-index: 1000;">
+                        <div class="waitingHolder" style="top: 74.2px; width: 91px;">
+                            <img class="waitingImage" src="/img/loading.gif" title="Please Wait..." />
+                            <span class="waitingDescription">Loading...</span>
+                        </div>
+                    </div>
+                </apex:facet>
+            </apex:actionstatus>
+        </apex:outputpanel>
+        <apex:inputHidden value="{!estoy_en_site}" html-class="estoy_en_site"/>
+    </apex:form>
+
+    <apex:pageBlock id="block2" html-class="bloque_2" html-style="display: none;">
+        <input type="hidden"  name="key2" value="{!document_photoName}" class="hidden_key"/>
+        <input type="hidden" name="AWSAccessKeyId2" value="{!key}"  class="hidden_AWSAccessKeyId"/>
+        <input type="hidden"  name="policy2" value="{!policy_hidden}"  class="hidden_policy"/>
+        <input type="hidden"  name="signature2" value="{!signedPolicy}"  class="hidden_signature"/>
+        <input type="hidden"  name="acl2" value="public-read" />
+        <input type="hidden"   value="{!errores}" class="input_errores"/>
+        <input type="hidden"  value="{!tipo_objeto}" id="tipo_objeto"/>
+    </apex:pageBlock>
+</apex:page>

@@ -1,0 +1,14 @@
+.THIS.main {
+    background-color:white
+}
+
+.THIS #titulo{
+    font-size: 16px !important;
+    font-weight: bold !important;
+    text-align: center;
+}
+
+.THIS #titulo2{
+    font-size: 14px !important;
+    text-align: center;
+}

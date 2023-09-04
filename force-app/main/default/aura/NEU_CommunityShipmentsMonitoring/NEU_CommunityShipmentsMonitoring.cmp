@@ -1,0 +1,190 @@
+<aura:component controller="NEU_CommunityShipmentsMonitoring" implements="forceCommunity:availableForAllPageTypes,flexipage:availableForAllPageTypes" access="global">
+    
+	<aura:attribute name="shipments" type="Object"/>
+    <aura:attribute name="shipmentsSeaImpo" type="Object"/>
+    <aura:attribute name="shipmentsSeaExpo" type="Object"/>
+
+    <aura:handler name="init" value="{!this}" action="{!c.init}"/>
+    
+    <div id="main">
+        <lightning:tabset selectedTabId="one" class="slds-tabs_large">
+            <lightning:tab label="Road" id="one" iconName="custom:custom98">
+        <lightning:card title="Shipments Monitoring">
+            
+            <div class="mobile_interface">
+                <aura:iteration items="{!v.shipments}" var="ship">
+                    <table class="mobile_table">
+                        <tr>
+                            <td>
+                                <p class="li_td name_ship"><ui:outputURL value="{!$Site.BaseUrl+'/customers/s/shipment/'+ship.shipment.Id}" label="{!ship.shipment.Name}" target="_blank"/></p>
+                                <p class="li_td">{!ship.shipment.Route__r.Name}</p>
+                                <p class="li_td status_ship"><strong>{!ship.shipment.Shipment_Status_Mon__c}</strong></p>
+                                <p class="li_td">Equip. Placed: <ui:outputDateTime value="{!ship.shipment.Equip_Placed__c}"/></p>
+                                <p class="li_td">Equip. Unloaded: <ui:outputDateTime value="{!ship.shipment.Equip_Unloaded__c}"/></p>
+                            </td>
+                        </tr>
+                    </table>
+                </aura:iteration>						
+            </div>
+            
+            <div class="pc_interface">
+                <table class="slds-table slds-table--bordered slds-table--striped slds-table--cell-buffer slds-table--fixed-layout">
+                    <thead>
+                        <tr class="slds-text-heading--label">
+                            <th scope="col"><div class="slds-truncate" title="Shipment Number">Shipment Number</div></th>
+                            <th scope="col"><div class="slds-truncate" title="Operator">Operator</div></th>
+                            <th scope="col"><div class="slds-truncate" title="Vehicle">Vehicle</div></th>
+                            <th scope="col" ><div class="slds-truncate" title="Special Notes">Special Notes</div></th>
+                            <th scope="col" ><div class="slds-truncate" title="Status">Status</div></th>
+                            <th scope="col" ><div class="slds-truncate" title="Equip. Placed">Equip. Placed</div></th>
+                            <th scope="col" ><div class="slds-truncate" title="Equip. Unloaded">Equip. Unloaded</div></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <aura:iteration items="{!v.shipments}" var="ship">
+                            <tr>
+                                <td>
+                                    <div class="slds-truncate">
+                                        <ui:outputURL value="{!$Site.BaseUrl+'/customers/s/shipment/'+ship.shipment.Id}" label="{!ship.shipment.Name}" target="_blank"/>
+                                        <br/>
+                                        <ui:outputText value="{!ship.shipment.Route__r.Name}"/>
+                                        <br/>
+                                        <ui:outputText value="{!ship.container_types}"/>
+                                    </div>
+                                </td>
+                                <td><div class="slds-truncate" title="{!ship.shipment.Account_Shipment_Reference__c}">{!ship.shipment.Account_Shipment_Reference__c}</div></td>
+                                <td><div class="slds-truncate" title="{!ship.shipment.Operator_Name__c}">{!ship.shipment.Operator_Name__c}</div></td>
+                                <td><div class="slds-truncate" title="{!ship.shipment.Vehicle__r.Name}">{!ship.shipment.Vehicle__r.Name}</div></td>
+                                <td><div class="slds-truncate" title="{!ship.shipment.Special_Notes__c}"><ui:outputText value="{!ship.shipment.Special_Notes__c}"/></div></td>
+                                <td><div class="slds-truncate" title="{!ship.shipment.Shipment_Status_Mon__c}"><strong>{!ship.shipment.Shipment_Status_Mon__c}</strong></div></td>
+                                <td><div class="slds-truncate" title="{!ship.shipment.Equip_Placed__c}"><ui:outputDateTime value="{!ship.shipment.Equip_Placed__c}"/></div></td>
+                                <td><div class="slds-truncate" title="{!ship.shipment.Equip_Unloaded__c}"><ui:outputDateTime value="{!ship.shipment.Equip_Unloaded__c}"/></div></td>
+                            </tr>
+                        </aura:iteration>
+                    </tbody>
+                </table>
+            </div>
+            
+        </lightning:card>
+
+
+        </lightning:tab>
+        <lightning:tab label="Sea Imports" id="two" iconName="custom:custom54">
+            <lightning:card title="Shipments Monitoring" >
+
+                <div class="mobile_interface">
+                    <aura:iteration items="{!v.shipmentsSesImpo}" var="ship">
+                        <table class="mobile_table">
+                            <tr>
+                                <td>
+                                    <p class="li_td name_ship"><ui:outputURL value="{!$Site.BaseUrl+'/customers/s/shipment/'+ship.shipment.Id}" label="{!ship.shipment.Name}" target="_blank"/></p>
+                                    <p class="li_td">{!ship.shipment.Route__r.Name}</p>
+                                    <p class="li_td status_ship"><strong>{!ship.shipment.Shipment_Status_Mon__c}</strong></p>
+                                    <p class="li_td">MBL: {!ship.shipment.MBL_Number__c}"/></p>
+                                    <p class="li_td">Sea Booking Number: {!ship.shipment.Sea_Booking_Number__c}</p>
+                                </td>
+                            </tr>
+                        </table>
+                    </aura:iteration>
+                </div>
+
+                <div class="pc_interface">
+                    <table class="slds-table slds-table--bordered slds-table--striped slds-table--cell-buffer slds-table--fixed-layout">
+                        <thead>
+                        <tr class="slds-text-heading--label">
+                            <th scope="col" width="20%"><div class="slds-truncate" title="Shipment Number">Shipment Number</div></th>
+                            <th scope="col" width="12%"><div class="slds-truncate" title="Route">Route</div></th>
+                            <th scope="col" width="10%"><div class="slds-truncate" title="Shipper">Shipper</div></th>
+                            <th scope="col" width="12%"><div class="slds-truncate" title="MBL">MBL</div></th>
+                            <th scope="col" width="12%"><div class="slds-truncate" title="Status">Status</div></th>
+                            <th scope="col" width="12%"><div class="slds-truncate" title="Sea Booking Number">Sea Booking Number</div></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <aura:iteration items="{!v.shipmentsSeaImpo}" var="ship">
+                            <tr>
+                                <td>
+                                    <div class="slds-truncate">
+                                        <ui:outputURL value="{!$Site.BaseUrl+'/customers/s/shipment/'+ship.shipment.Id}" label="{!ship.shipment.Name}" target="_blank"/>
+                                        <br/>
+                                        <ui:outputText value="{!ship.container_types}"/>
+                                    </div>
+                                </td>
+                                <td><div class="slds-truncate" title="{!ship.shipment.Route__r.Name}">{!ship.shipment.Route__r.Name}</div></td>
+                                <td><div class="slds-truncate" title="{!ship.shipment.Supplier_Account__r.Name}"><ui:outputText value="{!ship.shipment.Supplier_Account__r.Name}"/></div></td>
+                                <td><div class="slds-truncate" title="{!ship.shipment.MBL_Number__c}"><strong>{!ship.shipment.MBL_Number__c}</strong></div></td>
+                                <td><div class="slds-truncate" title="{!ship.shipment.Ocean_Shipment_Status__c}"><ui:outputText value="{!ship.shipment.Ocean_Shipment_Status__c}"/></div></td>
+                                <td><div class="slds-truncate" title="{!ship.shipment.Sea_Booking_Number__c}"><ui:outputText value="{!ship.shipment.Sea_Booking_Number__c}"/></div></td>
+                            </tr>
+                        </aura:iteration>
+                        </tbody>
+                    </table>
+                </div>
+
+            </lightning:card>
+
+
+        </lightning:tab>
+
+        <lightning:tab label="Sea Exports" id="three" iconName="custom:custom54">
+            <lightning:card title="Shipments Monitoring" >
+
+                <div class="mobile_interface">
+                    <aura:iteration items="{!v.shipmentsSeaExpo}" var="ship">
+                        <table class="mobile_table">
+                            <tr>
+                                <td>
+                                    <p class="li_td name_ship"><ui:outputURL value="{!$Site.BaseUrl+'/customers/s/shipment/'+ship.shipment.Id}" label="{!ship.shipment.Name}" target="_blank"/></p>
+                                    <p class="li_td">{!ship.shipment.Route__r.Name}</p>
+                                    <p class="li_td status_ship"><strong>{!ship.shipment.Shipment_Status_Mon__c}</strong></p>
+                                    <p class="li_td">MBL: {!ship.shipment.MBL_Number__c}"/></p>
+                                    <p class="li_td">Sea Booking Number: {!ship.shipment.Sea_Booking_Number__c}</p>
+                                </td>
+                            </tr>
+                        </table>
+                    </aura:iteration>
+                </div>
+
+                <div class="pc_interface">
+                    <table class="slds-table slds-table--bordered slds-table--striped slds-table--cell-buffer slds-table--fixed-layout">
+                        <thead>
+                        <tr class="slds-text-heading--label">
+                            <th scope="col" width="20%"><div class="slds-truncate" title="Shipment Number">Shipment Number</div></th>
+                            <th scope="col" width="12%"><div class="slds-truncate" title="Route">Route</div></th>
+                            <th scope="col" width="10%"><div class="slds-truncate" title="Shipper">Shipper</div></th>
+                            <th scope="col" width="12%"><div class="slds-truncate" title="MBL">MBL</div></th>
+                            <th scope="col" width="12%"><div class="slds-truncate" title="Status">Status</div></th>
+                            <th scope="col" width="12%"><div class="slds-truncate" title="Sea Booking Number">Sea Booking Number</div></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <aura:iteration items="{!v.shipmentsSeaExpo}" var="ship">
+                            <tr>
+                                <td>
+                                    <div class="slds-truncate">
+                                        <ui:outputURL value="{!$Site.BaseUrl+'/customers/s/shipment/'+ship.shipment.Id}" label="{!ship.shipment.Name}" target="_blank"/>
+                                        <br/>
+                                        <ui:outputText value="{!ship.container_types}"/>
+                                    </div>
+                                </td>
+                                <td><div class="slds-truncate" title="{!ship.shipment.Route__r.Name}">{!ship.shipment.Route__r.Name}</div></td>
+                                <td><div class="slds-truncate" title="{!ship.shipment.Supplier_Account__r.Name}"><ui:outputText value="{!ship.shipment.Supplier_Account__r.Name}"/></div></td>
+                                <td><div class="slds-truncate" title="{!ship.shipment.MBL_Number__c}"><strong>{!ship.shipment.MBL_Number__c}</strong></div></td>
+                                <td><div class="slds-truncate" title="{!ship.shipment.Ocean_Shipment_Status__c}"><ui:outputText value="{!ship.shipment.Ocean_Shipment_Status__c}"/></div></td>
+                                <td><div class="slds-truncate" title="{!ship.shipment.Sea_Booking_Number__c}"><ui:outputText value="{!ship.shipment.Sea_Booking_Number__c}"/></div></td>
+                            </tr>
+                        </aura:iteration>
+                        </tbody>
+                    </table>
+                </div>
+
+            </lightning:card>
+
+
+        </lightning:tab>
+
+        </lightning:tabset>
+
+    </div>
+	    
+</aura:component>

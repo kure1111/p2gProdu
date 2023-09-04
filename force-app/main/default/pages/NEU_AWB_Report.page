@@ -1,0 +1,114 @@
+<apex:page controller="NEU_AWB_Report" >
+	<style>
+		.homeTab .tertiaryPalette, .individualPalette .homeBlock .tertiaryPalette, .layoutEdit .individualPalette .homeBlock .tertiaryPalette 
+		{
+			background-color: #8e9dbe;
+			border-color: #8e9dbe;
+		}
+	</style>
+	<apex:form id="form">
+		<apex:pageMessages id="pagemessages"/>
+		<apex:pageBlock id="block1" title="Air Waybill Report">
+			<apex:pageBlockButtons >
+		    	<apex:commandButton value="Search" status="myStatus" action="{!search_AWB}" reRender="block1,pagemessages"/>
+			</apex:pageBlockButtons>
+			<apex:pageBlockSection columns="2">
+				<apex:facet name="header">
+					<apex:outputpanel >
+						<apex:outputlabel value="Filters"/>
+					</apex:outputpanel>
+				</apex:facet>
+				<apex:pageBlockSectionItem >
+					<apex:outputLabel value="Month"/>
+					<apex:outputPanel layout="block" styleClass="requiredInput">
+						<div class="requiredBlock"></div>
+						<apex:inputText value="{!month}"/>
+					</apex:outputPanel>
+				</apex:pageBlockSectionItem>
+				<apex:pageBlockSectionItem >
+					<apex:outputLabel value="Year"/>
+					<apex:outputPanel layout="block" styleClass="requiredInput">
+						<div class="requiredBlock"></div>
+						<apex:inputText value="{!year}"/>
+					</apex:outputPanel>
+				</apex:pageBlockSectionItem>
+				<apex:pageBlockSectionItem >
+					<apex:outputLabel value="Carrier"/>
+					<apex:outputPanel layout="block" styleClass="requiredInput">
+						<div class="requiredBlock"></div>
+						<apex:inputField value="{!filter.Carrier_Account__c}"/>
+					</apex:outputPanel>
+				</apex:pageBlockSectionItem>
+			</apex:pageBlockSection>
+			<apex:pageBlockSection columns="2">
+				<apex:facet name="header">
+					<apex:outputpanel >
+						<apex:outputlabel value="Totals"/>
+					</apex:outputpanel>
+				</apex:facet>
+				<apex:pageBlockSectionItem >
+					<apex:outputLabel value="Sent"/>
+					<apex:outputPanel >
+						<apex:outputLabel value="{!totalsent}"/>
+					</apex:outputPanel>
+				</apex:pageBlockSectionItem>
+				<apex:pageBlockSectionItem >
+					<apex:outputLabel value="Success"/>
+					<apex:outputPanel >
+						<apex:outputLabel value="{!totalsuccess}"/>
+					</apex:outputPanel>
+				</apex:pageBlockSectionItem>
+				<apex:pageBlockSectionItem >
+					<apex:outputLabel value="Error"/>
+					<apex:outputPanel >
+						<apex:outputLabel value="{!totalerror}"/>
+					</apex:outputPanel>
+				</apex:pageBlockSectionItem>
+				<apex:pageBlockSectionItem >
+					<apex:outputLabel value="Total"/>
+					<apex:outputPanel >
+						<apex:outputLabel value="{!total}"/>
+					</apex:outputPanel>
+				</apex:pageBlockSectionItem>
+			</apex:pageBlockSection>
+			<apex:pageBlockSection columns="1" id="responsePanel">
+				<apex:facet name="header">
+					<apex:outputpanel >
+						<apex:outputlabel value="Result"/>
+					</apex:outputpanel>
+				</apex:facet>
+				<apex:pageBlockTable value="{!results}" var="line">
+					<apex:column headerValue="Waybill" rendered="{!line.Name != 'No results'}">
+						<apex:outputLink target="_blank" value="{!URLFOR($Action.Air_Waybill__c.View,line.Id)}">
+							<span>{!line.Name}</span>
+						</apex:outputLink>
+					</apex:column>
+					<apex:column headerValue="Waybill" rendered="{!line.Name == 'No results'}">
+						<apex:outputlabel value="{!line.Name}"/>
+					</apex:column>
+					<apex:column headerValue="Carrier" value="{!line.Carrier_Account__c}" rendered="{!line.Name != 'No results'}"/>
+					<apex:column headerValue="Sent" value="{!line.Direct_Shipment__c}" rendered="{!line.Name != 'No results'}"/>
+					<apex:column headerValue="Success" value="{!line.Display_House_Number_on_PDF__c}" rendered="{!line.Name != 'No results'}"/>
+					<apex:column headerValue="Errors" value="{!line.Hide_House_Totals__c}" rendered="{!line.Name != 'No results'}"/>
+					<apex:column headerValue="Type" value="{!line.Accounting_Information__c}" rendered="{!line.Name != 'No results'}"/>
+					<apex:column headerValue="Created Date" value="{!line.Other_Charges_House__c}" rendered="{!line.Name != 'No results'}"/>
+					<apex:column headerValue="Created By" value="{!line.Handling_Information__c}" rendered="{!line.Name != 'No results'}"/>
+					<apex:column headerValue="Sent Date" value="{!line.Shipper_Alternative_Address__c}" rendered="{!line.Name != 'No results'}"/>
+					<apex:column headerValue="Sent By" value="{!line.Consignee_Alternative_Address__c}" rendered="{!line.Name != 'No results'}"/>
+				</apex:pageBlockTable>
+			</apex:pageBlockSection>
+		</apex:pageBlock>
+		<apex:outputpanel >
+           <apex:actionstatus id="myStatus">
+               <apex:facet name="start">
+                   <div class="waitingSearchDiv" id="el_loading" style="background-color: #fbfbfb; height: 100%;opacity:0.65;width:100%;"> 
+                       <div class="waitingHolder" style="top: 74.2px; width: 91px;">
+                           <img class="waitingImage" src="/img/loading.gif" title="Please Wait..." />
+                           <span class="waitingDescription">Loading...</span>
+                       </div>
+                   </div>
+               </apex:facet>
+           </apex:actionstatus>
+        </apex:outputpanel>
+	</apex:form>         
+</apex:page>

@@ -1,0 +1,19 @@
+  .homeTab .tertiaryPalette, .individualPalette .homeBlock .tertiaryPalette, .layoutEdit .individualPalette .homeBlock .tertiaryPalette
+  {
+  background-color: #1797c0;
+  }
+  
+   .input_form 
+   {
+	width:700px;
+   }
+   
+    .textarea_form 
+	{
+		width:700px; height:200px; resize:none;
+	}
+	
+    .info_email:hover .capa_info_email 
+	{
+		display:block;
+	} 

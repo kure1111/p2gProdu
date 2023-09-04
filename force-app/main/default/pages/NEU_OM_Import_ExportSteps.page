@@ -1,0 +1,74 @@
+<apex:page StandardController="Customer_Quote__c" extensions="NEU_OM_Import_ExportSteps">
+    <apex:form >
+    <style>
+         .container
+        {
+            width:100%;
+            display:table;
+            height:100px;
+            padding:0;
+            background-color:#ffffff !important;
+        }
+        .middle
+        {
+            text-align:center;
+            padding:0;
+            display:table-cell;
+            vertical-align:middle;
+        }
+        .li_step
+        {
+            padding: 8px 2px 8px 2px;
+            color: white;
+            font-family: Arial;
+            font-size: 12px;
+            border-radius: 10px;
+            webkit-box-shadow: 0px 0px 10px 0px rgba(50, 50, 50, 1);
+            -moz-box-shadow: 0px 0px 10px 0px rgba(50, 50, 50, 1);
+            box-shadow: 0px 0px 7px 0px rgba(50, 50, 50, 1);
+            margin: 4px 0 0 6px;
+            width: 98px;
+            text-align: center;
+            height: 28px;
+            text-decoration:none;
+            display:inline-block;
+            vertical-align:top;
+        }
+        .li_step:hover
+        {
+            text-decoration:none;
+            color: white;
+        }
+        .secondline
+        {
+            display:inline-block;
+            padding:0;
+            margin:0;
+        }
+        .step_active{background-color: #007bff; border: 1px solid #004896;}
+        .step_inactive{background-color: #9c9c9c; border: 1px solid #636363;}
+        .step_notify, .step_notify:hover{background: #f5f500; color: black; border: 1px solid black;}
+        html,body{background-color:#ffffff !important;}
+    </style>
+    
+        <div class="container">
+            <div class="middle">
+                <a href="{!urlCreateItemsLines}" target="_top" class="li_step {!step_1}">1. Create Cargo Lines</a>
+                <!-- <a href="{!$Site.BaseUrl}/apex/NEU_Supplier_Delivery_Schedule?id={!Customer_Quote__c.Id}" target="_top" class="li_step {!step_2}">2. Delivery Schedule</a> -->
+                <a href="{!$Site.BaseUrl}/apex/NEU_New_Service_Rate_Internal?import_export={!Customer_Quote__c.Id}" target="_top" class="li_step {!step_9}">2. Freight Rates Management</a>
+                <a href="{!urlCQLPriceList}" target="_top" class="li_step {!step_3}">3. Create Quote Service Lines</a>
+                <!-- <a href="{!$Site.BaseUrl}/apex/NEU_OM_Start_Clearance?id={!Customer_Quote__c.Id}" target="_top" class="li_step {!step_4}">5. Customs Clearance</a> -->
+                <!-- <a href="{!$Site.BaseUrl}/apex/NEU_Aditional_Discounts?id={!Customer_Quote__c.Id}" target="_top" class="li_step {!step_10}" >6. Aditional Discounts</a> -->
+                <a href="{!$Site.BaseUrl}/apex/NEU_Import_Export_Quote_save_pdf?id={!Customer_Quote__c.Id}" target="_top" class="li_step {!step_5}" >4. Generate Quote</a>
+                <div class="secondline">
+                    <a href="{!$Site.BaseUrl}/apex/NEU_MD_Associated_Documents?id={!Customer_Quote__c.Id}" target="_top" class="li_step {!step_6}">5. Associate Documents</a>
+                    <!--<a href="{!$Site.BaseUrl}/apex/NEU_MD_SendDocuments?object_select=import_export_quote&object_id={!Customer_Quote__c.Id}" target="_top" class="li_step {!step_7}"  >9. Send Email</a>-->
+                    <a href="{!$Site.BaseUrl}/apex/NEU_MD_SendDocuments?id={!Customer_Quote__c.Id}" target="_top" class="li_step {!step_7}"  >6. Send Email</a>
+                    <a href="{! IF(AND(step_1=='step_inactive', step_8=='step_active'), ($Site.BaseUrl + '/' + url_generate_shipment),
+                            IF( step_1=='step_active', 'javascript:alert(\"It is impossible to create a Shipment from an Import Export Order without Cargo Lines.\")',($Site.BaseUrl + '/' + shipmentID))) }" target="_top" class="li_step {!step_8}" style="display:{!if(Customer_Quote__c.RecordType.Name == 'Import-Export Order' && url_generate_shipment != '','','none')}">7. Generate Shipment</a>
+                    <a href="{!$Site.BaseUrl}/apex/NEU_Import_Export_NotifyCommunity?id={!Customer_Quote__c.Id}" target="_top" class="li_step step_notify" style="{!if(showNotifyCommunity,'','display: none;')}">Notify to Customer</a>
+                </div>
+            </div>
+        </div>  
+    </apex:form>
+</apex:page>

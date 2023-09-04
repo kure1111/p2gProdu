@@ -1,0 +1,4 @@
+<apex:page StandardController="Air_Waybill__c"  extensions="NEU_AWB_Label_House_PDF" standardStylesheets="false" renderas="pdf">
+    <apex:stylesheet value="{!$Resource.NEU_Style_AWB_Label_House_PDF}"/>
+    <apex:outputText value="{!string_pdf}" escape="false"/>
+</apex:page>

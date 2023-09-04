@@ -1,0 +1,6 @@
+<apex:page standardController="Scheduler_Shipment_Services_Lines__c" extensions="RefreshSchedulerReport" action="{!refresh}">
+	<apex:form >
+		<apex:pageMessages />
+		<!--apex:outputText value="{!resultado}" escape="false"/-->
+	</apex:form>
+</apex:page>

@@ -1,0 +1,28 @@
+<apex:page standardController="Sourcing_Item__c" extensions="NEU_MD_StockGraphic">
+     <style>
+        html{background-color:#ffffff !important;}
+    </style>
+    <apex:chart height="400" width="100%" data="{!datos_grafico}">
+        <apex:legend position="bottom"/>
+        <apex:axis type="Numeric" position="right" fields="Units,AVG,AVG_with_Safety_Stock,AVG_without_Safety_Stock,AVG_Units_x_Order,Max_Units_x_Order" grid="false" minimum="0"/>
+        <apex:axis type="Category" position="bottom" fields="Periods"/>
+        <apex:barSeries orientation="vertical" axis="right" xField="Periods" yField="Units,Reorder_Level">
+            <apex:chartTips height="25" width="180"/>
+        </apex:barSeries>
+        <apex:lineSeries title="AVG" axis="right" xField="Periods" yField="AVG" markerType="circle" markerSize="4">
+            <apex:chartTips height="25" width="180"/>
+        </apex:lineSeries>
+        <apex:lineSeries title="AVG + Safety Stock" axis="right" xField="Periods" yField="AVG_with_Safety_Stock" markerType="cross" markerSize="4" strokeColor="#e27001" markerFill="#e27001">
+            <apex:chartTips height="25" width="180"/>
+        </apex:lineSeries>
+        <apex:lineSeries title="AVG - Safety Stock" axis="right" xField="Periods" yField="AVG_without_Safety_Stock" markerType="cross" markerSize="4" strokeColor="#e27001" markerFill="#e27001">
+            <apex:chartTips height="25" width="180"/>
+        </apex:lineSeries>
+        <apex:lineSeries title="AVG Units / Order" axis="right" xField="Periods" yField="AVG_Units_x_Order" markerType="cross" markerSize="4">
+            <apex:chartTips height="25" width="180"/>
+        </apex:lineSeries>
+        <apex:lineSeries title="Max Unit / Order" axis="right" xField="Periods" yField="Max_Units_x_Order" markerType="cross" markerSize="4">
+            <apex:chartTips height="25" width="180"/>
+        </apex:lineSeries>
+    </apex:chart>
+</apex:page>

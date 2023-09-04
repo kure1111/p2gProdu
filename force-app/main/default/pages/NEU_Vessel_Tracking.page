@@ -1,0 +1,133 @@
+<apex:page standardController="Vessel_Flight__c" sidebar="false">
+<apex:includeScript value="{!$Resource.jquery_1_10_2}"/>
+<apex:includeScript value="{!$Resource.neurored_jquery}"/>  
+<apex:includeScript value="{!$Resource.jquery_ui_1_10_3}"/>
+<script type="text/javascript" src="https://maps.google.com/maps/api/js?key=AIzaSyAK8UqXuiT9IFTwkvhF-Nh1wS2JAdk6Fig"></script>
+<apex:stylesheet value="{!URLFOR($Resource.jquery_ui_1_10_4_css,'jquery-ui-1.10.4.custom.min.css')}"/>
+    <script>
+        var n$ = jQuery.noConflict();
+        var map;
+        var markers = [];
+        var geocoder;
+       n$(document).ready(function(){
+            redimensionar();
+            var mundo= new google.maps.LatLng(37.0625,-95.677068); 
+            var mapOptions = {
+                zoom: 4,
+                center: mundo
+                };
+            map = new google.maps.Map(document.getElementById('map_canvas'), mapOptions);
+            geocoder = new google.maps.Geocoder();
+            updatemap();
+        });
+        function showmarker(selected)
+        {
+              for (var i = 0; i < markers.length; i++)
+              {
+                   if(selected == markers[i].idmarker)
+                   {
+                       google.maps.event.trigger(markers[i],'click');
+                       markers[i].setAnimation(google.maps.Animation.BOUNCE);
+                       var marca=markers[i];
+                       setTimeout(function () { marca.setAnimation(null);}, 3000);
+                       break;
+                   }
+              }
+        }
+        function forgetmarkers()
+        {
+            for(var i=0;i<markers.length;i++)
+                markers[i].setMap(null);
+            markers=[];
+        }
+        function showvessel()
+        {
+            var latitude=n$(n$.sfId('{!$Component.form.block0.vessellatitude}')).getFloat();
+            var longitude=n$(n$.sfId('{!$Component.form.block0.vessellongitude}')).getFloat();
+            if((latitude!=0.0)||(longitude!=0.0))
+            {
+                 var myLatlng = new google.maps.LatLng(latitude,longitude);
+                 map.setCenter(myLatlng);
+                 var icon;
+                 var image;
+                 if(!n$(n$.sfId('{!$Component.form.block0.vesselspeed}')).getString())
+                 {
+                    icon="{!URLFOR($Resource.ImagesTrackAndTrace,'last.png')}";
+                    image={url:icon,anchor: new google.maps.Point(12,12)};
+                 }
+                 else if(n$(n$.sfId('{!$Component.form.block0.vesselspeed}')).getFloat()!=0.0)
+                 {
+                    icon="{!URLFOR($Resource.ImagesTrackAndTrace,'imagen_flecha0.png')}".replace('imagen_flecha0.png','imagen_flecha'+Math.floor(((n$(n$.sfId('{!$Component.form.block0.vesselcourse}')).getFloat()+11.25)%360)/22.5)+'.png');
+                    image={url:icon,anchor: new google.maps.Point(12,12)};
+                 }
+                 else
+                 {
+                    icon="{!URLFOR($Resource.ImagesTrackAndTrace,'ancla.png')}";
+                    image={url:icon,anchor: new google.maps.Point(16,16)};
+                 }
+                 var marker = new google.maps.Marker({
+                    map: map,
+                    position: myLatlng,
+                    animation: google.maps.Animation.DROP,
+                    icon: image
+                 });
+                 markers.push(marker);
+                 var infowindow = new google.maps.InfoWindow({
+                        content: '<b>'+n$(n$.sfId('{!$Component.form.block0.vesselinformation}')).getString().replace(/\n/g,'<br /><b>').replace(/: /g,':</b> ')
+                  });
+                 google.maps.event.addListener(marker, 'click', function() {
+                    infowindow.open(marker.get('map'), marker);
+                  });
+            }
+        }
+        var activities=[];
+        var cactivity;
+        var cletter;
+        var activitylocation;
+        function updatemap()
+        {
+            forgetmarkers();
+            showvessel();
+        }
+        function redimensionar() {
+            var width=n$(window).width()-45;
+           n$('#information').css('width',width+'px');
+           n$('#vesselinfo').css('width',(width*.3)+'px');
+           n$('#vesselmap').css('width',(width*.7)+'px');
+        }
+    </script>
+<body onresize="redimensionar()">
+<apex:form id="form" >
+  <div style="width:100%;" id="information">
+           <div style="width:30%;display:table-cell;padding:5px" id="vesselinfo">
+                <apex:pageBlock id="pageblock1" mode="maindetail">
+                    <apex:pageBlockSection title="Vessel Detail" columns="1">
+                            <apex:outputField value="{!Vessel_Flight__c.Carrier_Account__c}"/>
+                            <apex:outputField value="{!Vessel_Flight__c.Name}"/>
+                            <apex:outputField value="{!Vessel_Flight__c.IMO__c}"/>
+                            <apex:outputField value="{!Vessel_Flight__c.MMSI__c}"/>
+                    </apex:pageBlockSection>
+                    <apex:pageBlockSection title="Last Position Information" columns="1">
+                            <apex:outputField value="{!Vessel_Flight__c.Vessel_Latitude__c}"/>
+                            <apex:outputField value="{!Vessel_Flight__c.Vessel_Longitude__c}"/>
+                            <apex:outputField value="{!Vessel_Flight__c.Last_Update__c}"/>
+                            <apex:outputField value="{!Vessel_Flight__c.Vessel_Information__c}"/>
+                    </apex:pageBlockSection>
+                </apex:pageBlock>
+           </div>
+           <div style="width:70%;display:table-cell;padding:5px" id="vesselmap">
+                <apex:pageBlock id="block0" mode="maindetail">
+                    <apex:pageBlockSection title="MAP" >
+                    </apex:pageBlockSection>  
+                <div id="map_canvas" style="width:100%; height: 400px;"></div>
+                <apex:inputHidden value="{!Vessel_Flight__c.Vessel_Information__c}" id="vesselinformation"/>
+                <apex:inputHidden value="{!Vessel_Flight__c.Vessel_Latitude__c}" id="vessellatitude"/>
+                <apex:inputHidden value="{!Vessel_Flight__c.Vessel_Longitude__c}" id="vessellongitude"/>
+                <apex:inputHidden value="{!Vessel_Flight__c.Vessel_Speed__c}" id="vesselspeed"/>
+                <apex:inputHidden value="{!Vessel_Flight__c.Vessel_Course__c}" id="vesselcourse"/>
+            </apex:pageBlock>
+    </div>
+  </div>
+</apex:form>
+</body>
+</apex:page>

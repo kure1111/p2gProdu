@@ -1,0 +1,52 @@
+<apex:page StandardController="Sourcing_Item__c" extensions="NEU_OM_UploadImageItem" cache="false" expires="0" sidebar="false" showHeader="false">
+    <apex:variable var="aTheme" value="{!$User.UIThemeDisplayed}"/>
+    <apex:variable id="varLightning" var="varLightning" value="{!IF((aTheme='Theme1')||(aTheme='Theme2')||(aTheme='Theme3'),'false','true')}"/>
+    <apex:variable id="varLightningTop" var="varLightningTop" value="{!IF(varLightning='true','_self','_blank')}"/>
+    <apex:form enctype="multipart/form-data">
+        <apex:pageBlock id="block1" mode="maindetail">
+            <apex:pageBlockButtons >
+                <apex:commandButton value="Upload documents" action="{!upload}"/>
+                <apex:commandButton value="Return Item" status="myStatus" action="{!return_item}" rendered="{!varLightning}"/>
+            </apex:pageBlockButtons>
+            <apex:pageBlockSection title="Item Images" columns="1">
+            <apex:pageBlockSectionItem >
+            <apex:pageBlockSectionItem >
+                <apex:outputLink value="{!record.Url_Photo_1__c}" target="_blank" rendered="{!record.Url_Photo_1__c!=null}">
+                        Photo 1
+                </apex:outputLink>
+                <apex:outputLabel value="Photo 1" rendered="{!record.Url_Photo_1__c==null}"/>
+            </apex:pageBlockSectionItem>
+            <apex:inputFile value="{!photo1}" filename="{!photo1Name}"/>
+            </apex:pageBlockSectionItem>
+            <apex:pageBlockSectionItem >
+            <apex:pageBlockSectionItem >
+                <apex:outputLink value="{!record.Url_Technical_Data__c}" target="_blank" rendered="{!record.Url_Technical_Data__c!=null}">
+                        Technical Data
+                </apex:outputLink>
+                <apex:outputLabel value="Technical Data" rendered="{!record.Url_Technical_Data__c==null}"/>
+            </apex:pageBlockSectionItem>
+                <apex:inputFile value="{!Technical_Data}" filename="{!Technical_DataName}"/>
+            </apex:pageBlockSectionItem>
+            <apex:pageBlockSectionItem > 
+            <apex:pageBlockSectionItem >
+                <apex:outputLink value="{!record.URL_Packaging_Image__c}" target="_blank" rendered="{!record.URL_Packaging_Image__c!=null}">
+                        Packaging Image
+                </apex:outputLink>
+                <apex:outputLabel value="Packaging Image" rendered="{!record.URL_Packaging_Image__c==null}"/>
+            </apex:pageBlockSectionItem>
+                <apex:inputFile value="{!Packaging_Image}" filename="{!Packaging_ImageName}"/>
+            </apex:pageBlockSectionItem>
+            <apex:pageBlockSectionItem >
+            <apex:pageBlockSectionItem >
+                <apex:outputLink value="{!record.Url_Sizes__c}" target="_blank" rendered="{!record.Url_Sizes__c!=null}">
+                        Sizes
+                </apex:outputLink>
+                <apex:outputLabel value="Sizes" rendered="{!record.Url_Sizes__c==null}"/>
+            </apex:pageBlockSectionItem>
+                <apex:inputFile value="{!Sizes}" filename="{!SizesName}"/>
+            </apex:pageBlockSectionItem>
+            </apex:pageBlockSection>
+        </apex:pageBlock>
+    <apex:pageMessages />
+    </apex:form>
+</apex:page>

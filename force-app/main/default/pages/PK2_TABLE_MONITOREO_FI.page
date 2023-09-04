@@ -1,0 +1,31 @@
+<apex:page showHeader="false" sidebar="false" tabStyle="Account" readOnly="true" controller="PK2_TABLE_MONITOREO_FI">
+    <head>
+        <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+        <script>
+            setTimeout("location.reload(true);", 30000);
+        </script>
+    </head>
+    <body>
+        <apex:form > 
+             <apex:pageBlock title="FI - INTERNATIONAL FREIGHTS MANAGEMENT" mode="edit">
+                 </apex:pageBlock>  
+            <apex:pageBlock >
+                <apex:pageBlockTable value="{!lsMonitoreoFI}" var="Result">
+                    <apex:column headerValue="Shipment"><apex:commandLink action="/{!Result.Last_Shipment__c}" value="{!Result.Last_Shipment__r.Name}"/></apex:column>
+                    <apex:column headerValue="Customer" value="{!Result.Account_for__r.Name}"/>
+                    <apex:column value="{!Result.Route__c}"/>
+                    <apex:column headerValue="Container Type">
+                        <apex:repeat value="{!Result.Import_Export_Items_Lines__r}" var="linea">
+                            <apex:outputText value="{!linea.Container_Type__r.Name}" />
+                        </apex:repeat>
+                    </apex:column>
+                    <apex:column value="{!Result.Last_Shipment__r.Special_Notes__c}"/>
+                    <apex:column value="{!Result.Last_Shipment__r.Shipment_Status_Mon__c}"/>
+                    <apex:column value="{!Result.Last_Shipment__r.Operation_Executive__r.Name}"/>
+                    <apex:column value="{!Result.Last_Shipment__r.Equip_Placed__c}"/>
+                    <apex:column value="{!Result.Last_Shipment__r.Equip_Unloaded__c}"/>
+            	</apex:pageBlockTable>
+            </apex:pageBlock>
+        </apex:form>   
+    </body>
+ </apex:page>

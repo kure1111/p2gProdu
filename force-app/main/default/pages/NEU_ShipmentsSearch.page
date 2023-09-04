@@ -1,0 +1,846 @@
+<!-- <apex:page standardController="Shipment__c" extensions="NEU_ShipmentsSearch" action="{!carga_filtros}">-->
+<apex:page controller="NEU_ShipmentsSearch" action="{!carga_filtros}">
+    <apex:includeScript value="{!$Resource.jquery_1_10_2}"/>
+    <apex:variable var="aTheme" value="{!$User.UIThemeDisplayed}"/>
+    <apex:variable id="varLightning" var="varLightning" value="{!IF((aTheme='Theme1')||(aTheme='Theme2')||(aTheme='Theme3'),'false','true')}"/>
+    <apex:variable id="varLightningTop" var="varLightningTop" value="{!IF(varLightning='true','_self','_blank')}"/>
+    <script>
+        function buscar_shipments()
+        {
+            var listado_status = '';
+            var listado_service = '';
+            
+            $(".button_selected_sta").each(function(){
+                listado_status += $(this).attr('name') + ',';
+            });
+            if(listado_status == '')
+                listado_status = '[]';
+            document.getElementById('{!$Component.form.sta_list}').value = listado_status;
+            
+            $(".button_selected_serv").each(function(){
+                listado_service += $(this).attr('name') + ',';
+            });
+            if(listado_service == '')
+                listado_service = '[]';
+            document.getElementById('{!$Component.form.serv_list}').value = listado_service;
+
+            search_shipments();
+        }
+        
+        function sort_data_table_orders(n)
+        {
+            document.getElementById('{!$Component.form.orden_ship_filtro_orders}').value = n;
+            if(document.getElementById('{!$Component.form.orden_ship_filtro_orders}').value == $('#orderField3').val()) 
+            {
+                if($('#orderValue3').val()!='asc')
+                    $('#orderValue3').val('asc');
+                else
+                    $('#orderValue3').val('desc');
+  
+            }
+            else
+            {
+                $('#orderField3').val(n);
+                $('#orderValue3').val('desc');
+            }
+            
+            document.getElementById('{!$Component.form.orden_ship_filtro_orders_modo}').value = $('#orderValue3').val();
+            ordenar_tabla_filtro_orders();  
+        }
+        
+         function repintar_paginas_order()
+        {
+            $('.boton_paginacion_Order').removeClass('button_selected_Order');
+            $('.boton_para_paginar_Order'+pagina_Order).addClass('button_selected_Order');
+            mostrar_ordenacion_ship_orders();
+        }
+        
+         function repintar_paginas_request()
+        {
+            $('.boton_paginacion_Request').removeClass('button_selected_request');
+            $('.boton_para_paginar_Request'+pagina_Request).addClass('button_selected_request');
+            mostrar_ordenacion_ship_request();
+        }
+        
+         function repintar_paginas_Instalacion()
+        {
+            $('.boton_paginacion_Instalacion').removeClass('button_selected_Instalacion');
+            $('.boton_para_paginar_Instalacion'+pagina_Instalacion).addClass('button_selected_Instalacion');
+            mostrar_ordenacion_ship_quotes();
+        }
+        
+         function ordenacion_paginas_Orders(s)
+        {
+            pagina_Order = s;
+            document.getElementById('{!$Component.form.step_order}').value = s;
+            $('.boton_para_paginar_Order').removeClass('button_selected_Order');
+            $('.boton_para_paginar_Order'+s).addClass('button_selected_Order');
+            anterior_siguiente_Order();
+        }
+        
+        function ordenacion_paginas_request(s)
+        {
+            pagina_Request = s;
+            document.getElementById('{!$Component.form.step_request}').value = s;
+            $('.boton_para_paginar_Order').removeClass('button_selected_request');
+            $('.boton_para_paginar_Order'+s).addClass('button_selected_request');
+            anterior_siguiente_request();
+        }
+        
+        function ordenacion_paginas_Instalacion(s)
+        {
+            pagina_Instalacion = s;
+            document.getElementById('{!$Component.form.step_Instalacion}').value = s;
+            $('.boton_para_paginar_Instalacion').removeClass('button_selected_Instalacion');
+            $('.boton_para_paginar_Instalacion'+s).addClass('button_selected_Instalacion');
+            anterior_siguiente_Instalacion();
+        }
+        
+         function mostrar_ordenacion_ship_orders()
+        {
+            var n = document.getElementById('{!$Component.form.orden_ship_filtro_orders}').value;
+            $('.ship_table_order').css('display','none');
+            var clase_ordenacion  = n.replace('.','');
+            clase_ordenacion = clase_ordenacion.replace('.','');
+            $('.'+clase_ordenacion+'_order').css('display','block');
+            if($('#orderValue3').val()=='asc')
+                $('.ship_table_order').css('background-position-y','-15px');
+            else
+                $('.ship_table_order').css('background-position-y','0px');
+        }
+        
+         function mostrar_ordenacion_ship_quotes()
+        {
+            var n = document.getElementById('{!$Component.form.orden_ship_filtro_quotes}').value;
+            $('.ship_table_quotes').css('display','none');
+            var clase_ordenacion  = n.replace('.','');
+            clase_ordenacion = clase_ordenacion.replace('.','');
+            $('.'+clase_ordenacion+'_quote').css('display','block');
+            if($('#orderValue2').val()=='asc')
+                $('.ship_table_quotes').css('background-position-y','-15px');
+            else
+                $('.ship_table_quotes').css('background-position-y','0px');
+        }
+        
+         function sort_data_table_request(n)
+        {
+            document.getElementById('{!$Component.form.orden_ship_filtro_request }').value = n;
+            if(document.getElementById('{!$Component.form.orden_ship_filtro_request }').value == $('#orderField1').val()) 
+            {
+                if($('#orderValue1').val()!='asc')
+                    $('#orderValue1').val('asc');
+                else
+                    $('#orderValue1').val('desc');
+  
+            }
+            else
+            {
+                $('#orderField1').val(n);
+                $('#orderValue1').val('desc');
+            }
+            
+            document.getElementById('{!$Component.form.orden_ship_filtro_request_modo }').value = $('#orderValue1').val();
+            ordenar_tabla_filtro_request();  
+        }
+        
+        function sort_data_table_quotes(n)
+        {
+            document.getElementById('{!$Component.form.orden_ship_filtro_quotes}').value = n;
+            if(document.getElementById('{!$Component.form.orden_ship_filtro_quotes}').value == $('#orderField2').val()) 
+            {
+                if($('#orderValue2').val()!='asc')
+                    $('#orderValue2').val('asc');
+                else
+                    $('#orderValue2').val('desc');
+  
+            }
+            else
+            {
+                $('#orderField2').val(n);
+                $('#orderValue2').val('desc');
+            }
+            
+            document.getElementById('{!$Component.form.orden_ship_filtro_quotes_modo}').value = $('#orderValue2').val();
+            ordenar_tabla_filtro_quotes();  
+        }
+        
+         function mostrar_ordenacion_ship_request()
+        {
+            var n = document.getElementById('{!$Component.form.orden_ship_filtro_request}').value;
+            $('.ship_table_requests').css('display','none');
+            var clase_ordenacion  = n.replace('.','');
+            clase_ordenacion = clase_ordenacion.replace('.','');
+            $('.'+clase_ordenacion+'_request').css('display','block');
+            if($('#orderValue1').val()=='asc')
+                $('.ship_table_requests').css('background-position-y','-15px');
+            else
+                $('.ship_table_requests').css('background-position-y','0px');
+        }
+        
+        $.fn.filter_sta = (function(){
+            this.each(function(){
+                if($(this).hasClass('button_selected_sta'))
+                {
+                    $(this).removeClass('button_selected');
+                    $(this).removeClass('button_selected_sta');
+                }
+                else
+                {
+                    $(this).addClass('button_selected');
+                    $(this).addClass('button_selected_sta');
+                }
+            });
+        });
+        
+        $.fn.filter_serv = (function(){
+            this.each(function(){
+                if($(this).hasClass('button_selected_serv'))
+                {
+                    $(this).removeClass('button_selected');
+                    $(this).removeClass('button_selected_serv');
+                }
+                else
+                {
+                    $(this).addClass('button_selected');
+                    $(this).addClass('button_selected_serv');
+                }
+            });
+        });
+    </script>
+    <style>
+        .button_selected{background:#C0C0C0 !important;}
+        .filter_button1{width:250px;}
+        .filter_button2{width:205px;}
+        .actions_table{border:none; width:100%;}
+        .actions_table th
+        {
+            background: #f2f3f3;
+            border:1px solid #e0e3e5;
+            border-bottom:2px solid #cccccc;
+            color: #000;
+            font-size: .9em;
+            font-weight: bold;
+            padding: 5px 2px 4px 5px;
+        }
+        .button_selected_Instalacion{background:#C0C0C0 !important;}
+        .button_selected_request{background:#C0C0C0 !important;}
+        .confirm_button, .confirm_button:hover, .confirm_button:visited, .confirm_button:active{text-decoration:none;}
+        .button_selected_Order{background:#C0C0C0 !important;}
+        .botonera_paginacion_table{    float: right; width: 100%;    list-style: none;}
+        .botonera_paginacion_table li{    float: left;    padding-left: 0px;    margin-left: 0px;}
+        .actions_table td
+        {
+            border:1px solid #e0e3e5;
+            background:#ffffff;
+        }
+        .bloque_total{margin:0;}
+        .p_extra_filter{width:300px;}
+        .confirm_button, .confirm_button:hover, .confirm_button:visited, .confirm_button:active{text-decoration:none;}
+        .panel_shipwaves .tertiaryPalette{background-color: #0e9894 !important;}
+        .span_th {margin-top: 10px;    background: #f2f3f3;    border: 1px solid #e0e3e5;    color: #000;    font-size: .9em;    font-weight: bold;    float: left;    width: 99%;    padding: 4px 0px 4px 3px;    margin-bottom: 5px;}
+        .panel_shipwaves .bPageBlock{border-top: 3px solid #0e9894 !important;}
+    </style> 
+    <apex:form id="form">
+          <!-- ordenacion insertados order  -->
+        <input type="hidden" id="orderField3" value="Name"/>
+        <input type="hidden" id="orderValue3" value="asc"/>
+        <apex:inputHidden value="{!orden_ship_filtro_orders}" id="orden_ship_filtro_orders"/>
+        <apex:inputHidden value="{!orden_ship_filtro_orders_modo}" id="orden_ship_filtro_orders_modo"/> 
+        <apex:actionFunction name="ordenar_tabla_filtro_orders" reRender="list_shipments_3" action="{!go_compare_ship_order}" status="myStatus" oncomplete="mostrar_ordenacion_ship_orders();"/>
+        
+        <input type="hidden" id="orderField2" value="Name"/>
+        <input type="hidden" id="orderValue2" value="asc"/>
+        <apex:inputHidden value="{!orden_ship_filtro_quotes }" id="orden_ship_filtro_quotes"/>
+        <apex:inputHidden value="{!orden_ship_filtro_quotes_modo}" id="orden_ship_filtro_quotes_modo"/> 
+        <apex:actionFunction name="ordenar_tabla_filtro_quotes" reRender="list_shipments_2" action="{!go_compare_ship_quote}" status="myStatus" oncomplete="mostrar_ordenacion_ship_quotes();"/>
+        
+        <input type="hidden" id="orderField1" value="Name"/>
+        <input type="hidden" id="orderValue1" value="asc"/> 
+        <apex:inputHidden value="{!orden_ship_filtro_request}" id="orden_ship_filtro_request"/>
+        <apex:inputHidden value="{!orden_ship_filtro_request_modo}" id="orden_ship_filtro_request_modo"/> 
+        <apex:actionFunction name="ordenar_tabla_filtro_request" reRender="list_shipments_1" action="{!go_compare_ship_request}" status="myStatus" oncomplete="mostrar_ordenacion_ship_request();"/>
+        
+        <apex:actionFunction name="anterior_siguiente_Instalacion" action="{!anterior_siguiente_Instalacion}" reRender="list_shipments_2" status="myStatus" oncomplete="repintar_paginas_Instalacion();"/>
+        <apex:actionFunction name="anterior_siguiente_request" action="{!anterior_siguiente_request}" reRender="list_shipments_1" status="myStatus" oncomplete="repintar_paginas_request();"/>
+        <apex:actionFunction name="anterior_siguiente_Order" action="{!anterior_siguiente_order}" reRender="list_shipments_3" status="myStatus" oncomplete="repintar_paginas_order();"/>
+        
+        <apex:outputPanel id="panel_filtros" styleclass="panel_shipwaves">
+            <apex:pageBlock id="bloque_filtros">
+                <!--<apex:outputLink value="{!URLFOR($Action.NEUEBUSCM__Shipment__c.List,$ObjectType.NEUEBUSCM__Shipment__c)}" styleClass="btn">{!$ObjectType.Shipment__c.labelPlural}</apex:outputLink>
+                --><apex:pageBlockButtons location="top">
+                    <!--{!$Site.BaseUrl}-->
+                    <strong><a href="{!$Site.BaseUrl}/{!$ObjectType.Shipment__c.keyPrefix}/o" class="confirm_button" target="_blank"><input type="button" class="btn" value="All {!$ObjectType.Shipment__c.labelPlural} Views "/></a></strong>
+                    <!--<strong><a href="{!URLFOR($Action.Shipment__c.new,$ObjectType.Shipment__c)}&RecordType={!id_record_type_orders}" class="confirm_button" ><input type="button" class="btn" value="New Shipment"/></a></strong>-->
+                    <!--
+                    <strong><a href="{!URLFOR($Action.Shipment__c.new,$ObjectType.Shipment__c)}&RecordType={!id_record_type_orders}" class="confirm_button" style="{!If(varLightning ==  'true','display:none','')}"><input type="button" class="btn" value="New Shipment"/></a></strong>
+                    <strong><a href="{!$Site.BaseUrl}/one/one.app?#/sObject/{!$ObjectType.Shipment__c.keyPrefix}/new" class="confirm_button" style="{!If(varLightning == 'true','','display:none')}"  target="_top"><input type="button" class="btn" value="New Shipment"/></a></strong>
+                    -->
+                    
+                    <strong><a href="NEU_Pickup_Planning" class="confirm_button" ><input type="button" class="btn" value="Pickup Planning"/></a></strong>
+                    <!--a0U/e?retURL=%2Fa0U%2Fo--><!--target="_blank"-->
+                    <!-- quitar luego el boton de new de aqui -->
+                </apex:pageBlockButtons>
+                <apex:pageBlockSection title="Filters" columns="1">
+                
+                    <apex:outputPanel id="filtros">
+                        <apex:pageBlock id="block_1">
+                            <apex:pageBlockButtons location="bottom">
+                                <input type="button" value="Search" class="btn" onclick="buscar_shipments();"/>
+                            </apex:pageBlockButtons>
+                            <table border="0" cellspacing="5" cellpadding="5" class="actions_table">
+                                <tr>
+                                    <th>Shipment Status</th>
+                                    <th>Freight Mode, Service Mode and Service Type</th>
+                                    <th>Parties Involved</th>
+                                    <th>Route and Vessel</th>
+                                    <!--<th>Users</th>-->
+                                </tr>
+                                <tr>
+                                	<td style="vertical-align:top !important; text-align:center;">
+                                		<apex:outputText value="{!shipment_status}" escape="false"/><br/>
+                                        <div style="    margin-top: 86px;     min-width: 495px;">
+                                            <span class="span_th" style="text-align: left;     width: 99.5%;">Created Date</span>
+                                            <apex:outputLabel value="Created From" style="    margin-right: 10px;" /><apex:inputfield value="{!record.Storage_Date_From__c}" required="false"/> 
+                                            <apex:outputLabel value="Created To"  style="    margin-right: 10px;     margin-left: 20px;"/><apex:inputfield value="{!record.Storage_Date_To__c}" required="false"/>
+                                        </div>
+                                    </td>
+                                    <td style="vertical-align:top !important; text-align:center;">
+                                        <!--<apex:outputText value="{!service_mode}" escape="false"/>-->
+                                        <p class="p_extra_filter"><apex:outputLabel value="Freight Mode" style="float: left; margin-left: 87px;"/><br/><apex:inputfield value="{!record.Freight_Mode__c}" style="        width: 125px;"/></p>
+                                        <p class="p_extra_filter"><apex:outputLabel value="Service Mode" style="float: left; margin-left: 87px;"/><br/>
+                                        <apex:inputfield value="{!record.Service_Mode__c}" style="        width: 125px;"/></p>
+                                        <p class="p_extra_filter"><apex:outputLabel value="Service Type" style="float: left; margin-left: 87px;"/><br/>
+                                        <apex:inputfield value="{!record.Service_Type__c}" style="        width: 125px;"/>
+                                        </p>
+                                    </td>
+                                    <td>
+                                        <p class="p_extra_filter"><apex:outputLabel value="Account for (Customer)"/><br/><apex:inputfield value="{!record.Account_for__c}" required="false"/></p>
+                                        <p class="p_extra_filter"><apex:outputLabel value="Supplier/Shipper Account (Origin)"/><br/><apex:inputfield value="{!record.Supplier_Account__c}"/></p>
+                                        <p class="p_extra_filter"><apex:outputLabel value="Consignee Account (Destination)"/><br/><apex:inputfield value="{!record.Consignee__c}"/></p>
+                                        <span class="span_th">Users</span>
+                                        <p class="p_extra_filter"><apex:outputLabel value="Created By"/><br/><apex:inputfield value="{!record_filter.User_Create_ShipmentSearch__c}"/></p>
+                                        <p class="p_extra_filter"><apex:outputLabel value="Last Modified By"/><br/><apex:inputfield value="{!record_filter.User_Modify_ShipmentSearch__c}"/></p>
+                                    </td>
+                                    <td>
+                                        <p class="p_extra_filter"><apex:outputLabel value="Route"/><br/><apex:inputfield value="{!record.Route__c}"/></p>
+                                        <p class="p_extra_filter"><apex:outputLabel value="Vessel"/><br/><apex:inputfield value="{!record.Truck_Vessel_Flight__c}"/></p>
+                                        <p class="p_extra_filter"><apex:outputLabel value="Carrier"/><br/><apex:inputfield value="{!record.Carrier__c}"/></p>
+                                        <p class="p_extra_filter">
+                                            <apex:outputLabel value="Planned ETD"/>
+                                            <br/>
+                                            <apex:selectList value="{!ETD_operator_selected}" multiselect="false" size="1">
+                                                <apex:selectOptions value="{!ETD_operator_list}"/>
+                                            </apex:selectList>
+                                            &nbsp;&nbsp;
+                                            <apex:inputfield value="{!record.ETD_from_Point_of_Load__c}"/>
+                                        </p>
+                                        <p class="p_extra_filter">
+                                            <apex:outputLabel value="Planned ETA"/>
+                                            <br/>
+                                            <apex:selectList value="{!ETA_operator_selected}" multiselect="false" size="1">
+                                                <apex:selectOptions value="{!ETA_operator_list}"/>
+                                            </apex:selectList>
+                                            &nbsp;&nbsp;
+                                            <apex:inputfield value="{!record.ETA_Point_of_Discharge__c}"/>
+                                        </p>
+                                    </td>
+                                  <!--  <td>
+                                        <p class="p_extra_filter"><apex:outputLabel value="Created By"/><br/><apex:inputfield value="{!record_filter.User_Create_ShipmentSearch__c}"/></p>
+                                        <p class="p_extra_filter"><apex:outputLabel value="Last Modified By"/><br/><apex:inputfield value="{!record_filter.User_Modify_ShipmentSearch__c}"/></p>
+                                    </td>-->
+                                </tr>
+                            </table>
+                        </apex:pageBlock>
+                    </apex:outputPanel>
+                </apex:pageBlockSection>
+            </apex:pageBlock>
+        </apex:outputPanel>
+        <apex:outputPanel id="list_shipments_1" styleclass="panel_shipwaves" ><!--rendered="{!shipments_requests.size > 0}"-->
+            <apex:pageBlock title="Shipments Requests" html-style="display:{!IF(shipments_requests.size > 0,'','none')}">
+                <apex:pageBlockButtons location="top">
+                    <strong><a href="{!$Site.BaseUrl}/{!$ObjectType.Shipment__c.keyPrefix}/e?retURL=%2Fapex%2FNEU_ShipmentsSearch&RecordType={!id_record_type_requests}&ent=01I24000001ZLm1{!params}" class="confirm_button" ><input type="button" class="btn" value="New Shipment Request"/></a></strong><!--target="_blank"-->
+                    <!-- ---cambiar esta url -->
+                    <ul class="botonera_paginacion_table">
+                         <apex:repeat value="{!listado_paginas_Request}" var="s">
+                            <li><input type="button" value="{!s}" class="boton_paginacion_Request btn boton_para_paginar_Request{!s} {!if(s == 1,'button_selected_request','')}" onclick="ordenacion_paginas_request('{!s}');"/></li>
+                         </apex:repeat>
+                         <li style="vertical-align: middle;    width: 244px;    margin-top: 5px;     margin-left: 14px;">TOTAL SHIPMENTS REQUESTS:&nbsp;&nbsp;<strong><apex:outputText value="{!total_request}"/></strong></li>
+                    </ul>
+                    
+                </apex:pageBlockButtons>
+                <apex:pageBlockTable value="{!shipments_requests}" var="s">
+                    <apex:column >
+                        <apex:facet name="header">
+                            <div  style ="cursor: pointer;" onclick="sort_data_table_request('shipment.Name');">Shipment Number
+                                 <span style="       width: 10px;    height: 11px;    float: right;    margin: 0 5px;    vertical-align: 0px;    background: transparent url(/img/alohaSkin/sortArrows_sprite.png);    background-size: 16px;    background-repeat: no-repeat;    background-position: center 2px;" class="ship_table_requests shipmentName_request"/>
+                            </div>
+                        </apex:facet>
+                        
+                        <strong><a href="{!$Site.BaseUrl}/{!s.shipment.Id}" target="_blank"><apex:outputText value="{!s.shipment.Name}"/></a></strong>
+                        <br/>
+                        <apex:outputtext value="{!s.shipment.Account_Shipment_Reference__c}"/>
+                    </apex:column>
+                    <apex:column >
+                        <apex:facet name="header">
+                            <div  style ="cursor: pointer;" onclick="sort_data_table_request('shipment.Shipment_Status__c');">Shipment Status
+                                 <span style="       width: 10px;    height: 11px;    float: right;    margin: 0 5px;    vertical-align: 0px;    background: transparent url(/img/alohaSkin/sortArrows_sprite.png);    background-size: 16px;    background-repeat: no-repeat;    background-position: center 2px; display:none;" class="ship_table_requests shipmentShipment_Status__c_request"/>
+                            </div>
+                        </apex:facet>
+                        
+                        <strong><apex:outputtext value="{!s.shipment.Shipment_Status__c}"/></strong>
+                        <br/>
+                        <apex:outputtext value="{!s.shipment.OI_Status__c}"/>
+                    </apex:column>
+                    
+                    <apex:column >
+                        <apex:facet name="header">
+                            <div  style ="cursor: pointer;" onclick="sort_data_table_request('shipment.Status_Observations__c');">Status Observations
+                                 <span style="       width: 10px;    height: 11px;    float: right;    margin: 0 5px;    vertical-align: 0px;    background: transparent url(/img/alohaSkin/sortArrows_sprite.png);    background-size: 16px;    background-repeat: no-repeat;    background-position: center 2px; display:none;" class="ship_table_requests shipmentStatus_Observations__c_request"/>
+                            </div>
+                        </apex:facet>
+                        <apex:outputtext value="{!s.shipment.Status_Observations__c}"/>
+                    </apex:column>
+                    
+                    <apex:column >
+                    
+                        <apex:facet name="header">
+                            <div  style ="cursor: pointer;" onclick="sort_data_table_request('shipment.Account_for__r.Name');">Account for (Customer)
+                                 <span style="       width: 10px;    height: 11px;    float: right;    margin: 0 5px;    vertical-align: 0px;    background: transparent url(/img/alohaSkin/sortArrows_sprite.png);    background-size: 16px;    background-repeat: no-repeat;    background-position: center 2px; display:none;" class="ship_table_requests shipmentAccount_for__rName_request"/>
+                            </div>
+                        </apex:facet>
+                        
+                        <strong><a href="{!$Site.BaseUrl}/{!s.shipment.Account_for__c}" target="_blank"><apex:outputText value="{!s.shipment.Account_for__r.Name}"/></a></strong>
+                        <br/>
+                        <a href="{!$Site.BaseUrl}/{!s.shipment.Contact__c}" target="_blank"><apex:outputText value="{!s.shipment.Contact__r.Name}"/></a>
+                    </apex:column>
+                    <apex:column >
+                        
+                        <apex:facet name="header">
+                            <div  style ="cursor: pointer;" onclick="sort_data_table_request('shipment.Container_Type__r.Name');">Containers
+                                 <span style="       width: 10px;    height: 11px;    float: right;    margin: 0 5px;    vertical-align: 0px;    background: transparent url(/img/alohaSkin/sortArrows_sprite.png);    background-size: 16px;    background-repeat: no-repeat;    background-position: center 2px; display:none;" class="ship_table_requests shipmentContainer_Type__rName_request"/>
+                            </div>
+                        </apex:facet>
+                        
+                        <strong><apex:outputtext value="{!s.shipment.N_Containers__c}"/>&nbsp;x&nbsp;<apex:outputtext value="{!s.shipment.Container_Type__r.Name}"/></strong>
+                    </apex:column>
+                    <apex:column >
+                        
+                        <apex:facet name="header">
+                            <div  style ="cursor: pointer;" onclick="sort_data_table_request('shipment.Freight_Mode__c');">Mode
+                                 <span style="       width: 10px;    height: 11px;    float: right;    margin: 0 5px;    vertical-align: 0px;    background: transparent url(/img/alohaSkin/sortArrows_sprite.png);    background-size: 16px;    background-repeat: no-repeat;    background-position: center 2px; display:none;" class="ship_table_requests shipmentFreight_Mode__c_request"/>
+                            </div>
+                        </apex:facet>
+                        
+                        <strong><apex:outputtext value="{!s.shipment.Freight_Mode__c}"/></strong>
+                        <br/>
+                        <apex:outputtext value="{!s.shipment.Service_Mode__c}"/>
+                    </apex:column>
+                    <!--<apex:column style="    text-align: right;">
+                        <apex:facet name="header">
+                            <span>Service Amount</span>
+                        </apex:facet>
+                        <strong><apex:outputfield value="{!s.shipment.Total_Services_Sell_Amount__c}"/></strong>
+                    </apex:column>-->
+                    <apex:column >
+                        
+                        <apex:facet name="header">
+                            <div  style ="cursor: pointer;" onclick="sort_data_table_request('shipment.ETD_from_Point_of_Load__c');">Planned ETD
+                                 <span style="       width: 10px;    height: 11px;    float: right;    margin: 0 5px;    vertical-align: 0px;    background: transparent url(/img/alohaSkin/sortArrows_sprite.png);    background-size: 16px;    background-repeat: no-repeat;    background-position: center 2px; display:none;" class="ship_table_requests shipmentETD_from_Point_of_Load__c_request"/>
+                            </div>
+                        </apex:facet>
+                        
+                        <strong>
+                            <!-- <apex:outputText value="{0, date, EE MMM dd','  yyyy}">
+                                <apex:param value="{!s.shipment.ETD_from_Point_of_Load__c}" /> 
+                            </apex:outputText>-->
+                            <apex:outputfield value="{!s.shipment.ETD_from_Point_of_Load__c}"/>
+                        </strong>
+                        <br/>
+                        <apex:outputText value="{!s.shipment.Site_of_Load__r.Name}"/>,&nbsp;&nbsp;<apex:outputText value="{!s.shipment.State_of_Load__r.Name}"/>,&nbsp;&nbsp;<apex:outputText value="{!s.shipment.Country_of_Load__r.Name}"/>
+                    </apex:column>
+
+                    <apex:column >                        
+                        <apex:facet name="header">
+                            <div  style ="cursor: pointer;" onclick="sort_data_table_request('shipment.ETA_Point_of_Discharge__c');">Planned ETA
+                                 <span style="       width: 10px;    height: 11px;    float: right;    margin: 0 5px;    vertical-align: 0px;    background: transparent url(/img/alohaSkin/sortArrows_sprite.png);    background-size: 16px;    background-repeat: no-repeat;    background-position: center 2px; display:none;" class="ship_table_requests shipmentETA_Point_of_Discharge__c_request"/>
+                            </div>
+                        </apex:facet>
+                        
+                        <strong>
+                           <!--  <apex:outputText value="{0, date, EE MMM dd','  yyyy}">
+                                <apex:param value="{!s.shipment.ETA_Point_of_Discharge__c}" /> 
+                            </apex:outputText>-->
+                            <apex:outputfield value="{!s.shipment.ETA_Point_of_Discharge__c}"/>
+                        </strong>
+                        <br/>
+                        <apex:outputText value="{!s.shipment.Site_of_Discharge__r.Name}"/>,&nbsp;&nbsp;<apex:outputText value="{!s.shipment.State_of_Discharge__r.Name}"/>,&nbsp;&nbsp;<apex:outputText value="{!s.shipment.Country_of_Discharge__r.Name}"/>
+                    </apex:column>
+                    <apex:column style="    text-align: right;">
+                    
+                        <apex:facet name="header">
+                            <div  style ="cursor: pointer;" onclick="sort_data_table_request('shipment.Nature_Merchandise__c');">Nature Merchandise
+                                 <span style="       width: 10px;    height: 11px;    float: right;    margin: 0 5px;    vertical-align: 0px;    background: transparent url(/img/alohaSkin/sortArrows_sprite.png);    background-size: 16px;    background-repeat: no-repeat;    background-position: center 2px; display:none;" class="ship_table_requests shipmentNature_Merchandise__c_request"/>
+                            </div>
+                        </apex:facet>
+                        
+                        <strong><apex:outputtext value="{!s.shipment.Nature_Merchandise__c}"/></strong>
+                        <br/>
+                        <!-- <apex:outputText value="{0, number, ###,###,###,##0.00} Units"><apex:param value="{!s.shipment.Total_Units_Shipped__c}"/></apex:outputText>-->
+                        <apex:outputfield value="{!s.shipment.Total_Units_Shipped__c}"/><span  style="    margin-left: 10px;">Units</span>
+                    </apex:column>
+       
+                </apex:pageBlockTable>
+            </apex:pageBlock>
+        </apex:outputPanel>
+        <apex:outputPanel id="list_shipments_2" styleclass="panel_shipwaves" > <!--rendered="{!shipments_quotes.size > 0}"-->
+            <apex:pageBlock title="Shipments Quotes" html-style="display:{!IF(shipments_quotes.size > 0,'','none')}">
+                <apex:pageBlockButtons location="top">
+                    <ul class="botonera_paginacion_table">
+                        
+                         <apex:repeat value="{!listado_paginas_Quotes}" var="s">
+                         <li><input type="button" value="{!s}" class="boton_paginacion_Instalacion btn boton_para_paginar_Instalacion{!s} {!if(s == 1,'button_selected_Instalacion','')}" onclick="ordenacion_paginas_Instalacion('{!s}');"/></li>
+                            </apex:repeat>
+                         <li style="vertical-align: middle;    width: 224px;    margin-top: 5px;     margin-left: 14px;">TOTAL SHIPMENTS QUOTES:&nbsp;&nbsp;<strong><apex:outputText value="{!total_quotes}"/></strong></li>
+                    </ul>
+                 </apex:pageBlockButtons>
+                <apex:pageBlockTable value="{!shipments_quotes}" var="s">
+                    <apex:column >
+                        <apex:facet name="header">
+                            <span>Action</span>
+                        </apex:facet>
+                        <strong><a href="{!$Site.BaseUrl}/apex/NEU_ConfirmShipmentQuote?id={!s.shipment.Id}" target="_blank" class="confirm_button"><input type="button" class="btn" value="Confirm Quote"/></a></strong>
+                        <!-- ----- ver si existe esa pag -->
+                    </apex:column>
+                    <apex:column >
+                        <apex:facet name="header">
+                            <div  style ="cursor: pointer;" onclick="sort_data_table_quotes('shipment.Name');">Shipment Number
+                                 <span style="       width: 10px;    height: 11px;    float: right;    margin: 0 5px;    vertical-align: 0px;    background: transparent url(/img/alohaSkin/sortArrows_sprite.png);    background-size: 16px;    background-repeat: no-repeat;    background-position: center 2px;" class="ship_table_quotes shipmentName_quote"/>
+                            </div>
+                        </apex:facet>
+                        <strong><a href="{!$Site.BaseUrl}/{!s.shipment.Id}" target="_blank"><apex:outputText value="{!s.shipment.Name}"/></a></strong>
+                        <br/>
+                        <apex:outputtext value="{!s.shipment.Account_Shipment_Reference__c}"/>
+                    </apex:column>
+                    <apex:column >
+                                            
+                        <apex:facet name="header">
+                            <div  style ="cursor: pointer;" onclick="sort_data_table_quotes('shipment.Shipment_Status__c');">Shipment Status
+                                 <span style="       width: 10px;    height: 11px;    float: right;    margin: 0 5px;    vertical-align: 0px;    background: transparent url(/img/alohaSkin/sortArrows_sprite.png);    background-size: 16px;    background-repeat: no-repeat;    background-position: center 2px; display:none;" class="ship_table_quotes shipmentShipment_Status__c_quote"/>
+                            </div>
+                        </apex:facet>
+                        
+                        <strong><apex:outputtext value="{!s.shipment.Shipment_Status__c}"/></strong>
+                        <br/>
+                       <apex:outputtext value="{!s.shipment.OI_Status__c}"/>
+                    </apex:column>
+                    <apex:column >
+                                            
+                        <apex:facet name="header">
+                            <div  style ="cursor: pointer;" onclick="sort_data_table_quotes('shipment.Status_Observations__c');">Status Observations
+                                 <span style="       width: 10px;    height: 11px;    float: right;    margin: 0 5px;    vertical-align: 0px;    background: transparent url(/img/alohaSkin/sortArrows_sprite.png);    background-size: 16px;    background-repeat: no-repeat;    background-position: center 2px; display:none;" class="ship_table_quotes shipmentStatus_Observations__c_quote"/>
+                            </div>
+                        </apex:facet>
+                        <apex:outputtext value="{!s.shipment.Status_Observations__c}"/>
+                    </apex:column>
+                    <apex:column >
+                        
+                         <apex:facet name="header">
+                            <div  style ="cursor: pointer;" onclick="sort_data_table_quotes('shipment.Account_for__r.Name');">Account for (Customer)
+                                 <span style="       width: 10px;    height: 11px;    float: right;    margin: 0 5px;    vertical-align: 0px;    background: transparent url(/img/alohaSkin/sortArrows_sprite.png);    background-size: 16px;    background-repeat: no-repeat;    background-position: center 2px; display:none;" class="ship_table_quotes shipmentAccount_for__rName_quote"/>
+                            </div>
+                        </apex:facet>
+                        
+                        
+                        <strong><a href="{!$Site.BaseUrl}/{!s.shipment.Account_for__c}" target="_blank"><apex:outputText value="{!s.shipment.Account_for__r.Name}"/></a></strong>
+                        <br/>
+                        <a href="{!$Site.BaseUrl}/{!s.shipment.Contact__c}" target="_blank"><apex:outputText value="{!s.shipment.Contact__r.Name}"/></a>
+                    </apex:column>
+                    <apex:column >
+                        
+                        <apex:facet name="header">
+                            <div  style ="cursor: pointer;" onclick="sort_data_table_quotes('shipment.Container_Type__r.Name');">Containers
+                                 <span style="       width: 10px;    height: 11px;    float: right;    margin: 0 5px;    vertical-align: 0px;    background: transparent url(/img/alohaSkin/sortArrows_sprite.png);    background-size: 16px;    background-repeat: no-repeat;    background-position: center 2px; display:none;" class="ship_table_quotes shipmentContainer_Type__rName_quote"/>
+                            </div>
+                        </apex:facet>
+                        
+                        <strong><apex:outputtext value="{!s.shipment.N_Containers__c}"/>&nbsp;x&nbsp;<apex:outputtext value="{!s.shipment.Container_Type__r.Name}"/></strong>
+                    </apex:column>
+                    <apex:column >
+
+                        <apex:facet name="header">
+                            <div  style ="cursor: pointer;" onclick="sort_data_table_quotes('shipment.Freight_Mode__c');">Mode
+                                 <span style="       width: 10px;    height: 11px;    float: right;    margin: 0 5px;    vertical-align: 0px;    background: transparent url(/img/alohaSkin/sortArrows_sprite.png);    background-size: 16px;    background-repeat: no-repeat;    background-position: center 2px; display:none;" class="ship_table_quotes shipmentFreight_Mode__c_quote"/>
+                            </div>
+                        </apex:facet>
+                        
+                        <strong><apex:outputtext value="{!s.shipment.Freight_Mode__c}"/></strong>
+                        <br/>
+                        <apex:outputtext value="{!s.shipment.Service_Mode__c}"/>
+                    </apex:column>
+                    <apex:column style="    text-align: right;">
+                        
+                        <apex:facet name="header">
+                            <div  style ="cursor: pointer;" onclick="sort_data_table_quotes('shipment.Total_Services_Sell_Amount__c');">Service Amount
+                                 <span style="       width: 10px;    height: 11px;    float: right;    margin: 0 5px;    vertical-align: 0px;    background: transparent url(/img/alohaSkin/sortArrows_sprite.png);    background-size: 16px;    background-repeat: no-repeat;    background-position: center 2px; display:none;" class="ship_table_quotes shipmentTotal_Services_Sell_Amount__c_quote"/>
+                            </div>
+                        </apex:facet>
+                        
+                        <strong><apex:outputfield value="{!s.shipment.Total_Services_Sell_Amount__c}"/></strong>
+                    </apex:column>
+                    
+                    <apex:column >
+                        
+                        <apex:facet name="header">
+                            <div  style ="cursor: pointer;" onclick="sort_data_table_quotes('shipment.ETD_from_Point_of_Load__c');">Planned ETD
+                                 <span style="       width: 10px;    height: 11px;    float: right;    margin: 0 5px;    vertical-align: 0px;    background: transparent url(/img/alohaSkin/sortArrows_sprite.png);    background-size: 16px;    background-repeat: no-repeat;    background-position: center 2px; display:none;" class="ship_table_quotes shipmentETD_from_Point_of_Load__c_quote"/>
+                            </div>
+                        </apex:facet>
+                        <strong>
+                            <!-- <apex:outputText value="{0, date, EE MMM dd','  yyyy}">
+                                <apex:param value="{!s.shipment.ETD_from_Point_of_Load__c}" /> 
+                            </apex:outputText>-->
+                            <apex:outputfield value="{!s.shipment.ETD_from_Point_of_Load__c}" /> 
+                        </strong>
+                        <br/>
+                        <apex:outputText value="{!s.shipment.Site_of_Load__r.Name}"/>,&nbsp;&nbsp;<apex:outputText value="{!s.shipment.State_of_Load__r.Name}"/>,&nbsp;&nbsp;<apex:outputText value="{!s.shipment.Country_of_Load__r.Name}"/>
+                    </apex:column>
+                    
+                    <apex:column > 
+                    
+                        <apex:facet name="header">
+                            <div  style ="cursor: pointer;" onclick="sort_data_table_quotes('shipment.ETA_Point_of_Discharge__c');">Planned ETA
+                                 <span style="       width: 10px;    height: 11px;    float: right;    margin: 0 5px;    vertical-align: 0px;    background: transparent url(/img/alohaSkin/sortArrows_sprite.png);    background-size: 16px;    background-repeat: no-repeat;    background-position: center 2px; display:none;" class="ship_table_quotes shipmentETA_Point_of_Discharge__c_quote"/>
+                            </div>
+                        </apex:facet>
+                        
+                        <strong>
+                            <!-- <apex:outputText value="{0, date, EE MMM dd','  yyyy}">
+                                <apex:param value="{!s.shipment.ETA_Point_of_Discharge__c}" /> 
+                            </apex:outputText>-->
+                            <apex:outputfield value="{!s.shipment.ETA_Point_of_Discharge__c}" /> 
+                        </strong>
+                        <br/>
+                        <apex:outputText value="{!s.shipment.Site_of_Discharge__r.Name}"/>,&nbsp;&nbsp;<apex:outputText value="{!s.shipment.State_of_Discharge__r.Name}"/>,&nbsp;&nbsp;<apex:outputText value="{!s.shipment.Country_of_Discharge__r.Name}"/>
+                    </apex:column>
+                    <apex:column style="    text-align: right;">
+                        
+                         <apex:facet name="header">
+                            <div  style ="cursor: pointer;" onclick="sort_data_table_quotes('shipment.Nature_Merchandise__c');">Nature Merchandise
+                                 <span style="       width: 10px;    height: 11px;    float: right;    margin: 0 5px;    vertical-align: 0px;    background: transparent url(/img/alohaSkin/sortArrows_sprite.png);    background-size: 16px;    background-repeat: no-repeat;    background-position: center 2px; display:none;" class="ship_table_quotes shipmentNature_Merchandise__c_quote"/>
+                            </div>
+                        </apex:facet>
+                        
+                        <strong><apex:outputtext value="{!s.shipment.Nature_Merchandise__c}"/></strong>
+                        <br/>
+                        <!-- <apex:outputText value="{0, number, ###,###,###,##0.00} Units"><apex:param value="{!s.shipment.Total_Units_Shipped__c}"/></apex:outputText>-->
+                        <apex:outputfield value="{!s.shipment.Total_Units_Shipped__c}"/><span  style="    margin-left: 10px;">Units</span>
+                    </apex:column>
+                    
+                </apex:pageBlockTable>
+            </apex:pageBlock>
+        </apex:outputPanel>
+        <apex:outputPanel id="list_shipments_3" styleclass="panel_shipwaves">
+            <apex:pageBlock title="Shipments Orders">
+            <apex:pageBlockButtons location="top">
+                   
+                    <!--a0U/e?retURL=%2Fa0U%2Fo {!URLFOR($Action.NEUEBUSCM__Shipment__c.List,$ObjectType.NEUEBUSCM__Shipment__c)}
+                   {!$Site.BaseUrl}/a0U/e?retURL=apex/NEU_ShipmentsSearch&ent=01I24000001ZLm1{!params} -->
+                    <ul class="botonera_paginacion_table">
+                         <apex:repeat value="{!listado_paginas_Orders }" var="s">
+                         <li><input type="button" value="{!s}" class="boton_paginacion_Order btn boton_para_paginar_Order{!s} {!if(s == 1,'button_selected_Order','')}" onclick="ordenacion_paginas_Orders('{!s}');"/></li>
+                            </apex:repeat>
+                         <li style="vertical-align: middle;    width: 244px;    margin-top: 5px;     margin-left: 14px;">TOTAL SHIPMENTS ORDERS:&nbsp;&nbsp;<strong><apex:outputText value="{!total_orders}"/></strong></li>
+                    </ul>
+                </apex:pageBlockButtons>
+                <apex:pageBlockTable value="{!shipments_orders}" var="s">
+                    <apex:column >
+                        <apex:facet name="header">
+                            <span>Tracking</span>
+                        </apex:facet>
+                        <strong><a href="{!url_tracking_externa}{!s.shipment.Id}" target="_blank" class="confirm_button">
+                        <!--<table style="    color: #333;    margin: 1px;    padding: 2px 3px;    border: 1px solid #b5b5b5;    border-bottom-color: #7f7f7f;    background: #e8e8e9 url('/img/alohaSkin/btn_sprite.png') repeat-x right top;    font-weight: bold;    font-size: .9em;    -moz-border-radius: 3px;    -webkit-border-radius: 3px;    border-radius: 3px; text-align: center;    padding: 0px;     color: #333;         min-width: 85px;">
+                        <tr>
+                        <td style="    padding: 1px 1px 1px 1px;     color: #333;">Tracking <br/>
+                        {!if(s.shipment.Number__c != null , s.shipment.Number__c, '')}</td>
+                        </tr>
+                        </table>-->
+                        <span style="   color: #333; border: 1px solid #b5b5b5;float: left;background: #e8e8e9 url('/img/alohaSkin/btn_sprite.png') repeat-x right top; font-weight: bold;    font-size: .9em;     -moz-border-radius: 3px;    -webkit-border-radius: 3px;    border-radius: 3px;    text-align: center;    padding: 0px;    color: #333;    min-width: 85px;       padding: 2px;">Tracking <br/>                        {!if(s.shipment.Number__c != null && s.shipment.Freight_Mode__c == 'Sea' , s.shipment.Number__c, if(s.shipment.Truck_Vessel_Flight__c !=null && s.shipment.Truck_Vessel_Flight__r.IMO__c != null && s.shipment.Truck_Vessel_Flight__r.IMO__c !='' && s.shipment.Freight_Mode__c == 'Sea', s.shipment.Truck_Vessel_Flight__r.Name,if(s.shipment.Freight_Mode__c == 'Air' && s.shipment.MAWB_Number__c !=null,s.shipment.MAWB_Number__c,If(s.shipment.Freight_Mode__c == 'Air' && s.shipment.Flight_Number__c !=null,s.shipment.Flight_Number__c,''))))}</span>
+                        <!--<span style="    width: 95px;"> Tracking <br/>{!if(s.shipment.Number__c != null , s.shipment.Number__c, '')} </span>--></a></strong>
+                    </apex:column>
+                    <apex:column >
+                        <apex:facet name="header">
+                            <div  style ="cursor: pointer;" onclick="sort_data_table_orders('shipment.Name');">Shipment Number
+                                 <span style="       width: 10px;    height: 11px;    float: right;    margin: 0 5px;    vertical-align: 0px;    background: transparent url(/img/alohaSkin/sortArrows_sprite.png);    background-size: 16px;    background-repeat: no-repeat;    background-position: center 2px;" class="ship_table_order shipmentName_order"/>
+                            </div>
+                        </apex:facet>
+                        <strong><a href="{!$Site.BaseUrl}/{!s.shipment.Id}" target="_blank"><apex:outputText value="{!s.shipment.Name}"/></a></strong>
+                        <br/>
+                        <apex:outputtext value="{!s.shipment.Account_Shipment_Reference__c}"/>
+                    </apex:column>
+                    <apex:column >
+                        <apex:facet name="header">
+                            <div  style ="cursor: pointer;" onclick="sort_data_table_orders('shipment.Shipment_Status__c');">Shipment Status
+                                 <span style="       width: 10px;    height: 11px;    float: right;    margin: 0 5px;    vertical-align: 0px;    background: transparent url(/img/alohaSkin/sortArrows_sprite.png);    background-size: 16px;    background-repeat: no-repeat;    background-position: center 2px; display:none;" class="ship_table_order shipmentShipment_Status__c_order"/>
+                            </div>
+                        </apex:facet>
+                        
+                        <strong><apex:outputtext value="{!s.shipment.Shipment_Status__c}"/></strong>
+                        <br/>
+                        <apex:outputtext value="{!s.shipment.OI_Status__c}"/>
+                    </apex:column>
+                     <apex:column >
+                        <apex:facet name="header">
+                            <div  style ="cursor: pointer;" onclick="sort_data_table_orders('shipment.Status_Observations__c');">Status Observations
+                                 <span style="       width: 10px;    height: 11px;    float: right;    margin: 0 5px;    vertical-align: 0px;    background: transparent url(/img/alohaSkin/sortArrows_sprite.png);    background-size: 16px;    background-repeat: no-repeat;    background-position: center 2px; display:none;" class="ship_table_order shipmentStatus_Observations__c_order"/>
+                            </div>
+                        </apex:facet>
+                        <apex:outputtext value="{!s.shipment.Status_Observations__c}"/>
+                    </apex:column>
+                    <apex:column >
+                        <apex:facet name="header">
+                            <div  style ="cursor: pointer;" onclick="sort_data_table_orders('shipment.Account_for__r.Name');">Account for (Buyer)
+                                 <span style="       width: 10px;    height: 11px;    float: right;    margin: 0 5px;    vertical-align: 0px;    background: transparent url(/img/alohaSkin/sortArrows_sprite.png);    background-size: 16px;    background-repeat: no-repeat;    background-position: center 2px; display:none;" class="ship_table_order shipmentAccount_for__rName_order"/>
+                            </div>
+                        </apex:facet>
+                        
+                        <strong><a href="{!$Site.BaseUrl}/{!s.shipment.Account_for__c}" target="_blank"><apex:outputText value="{!s.shipment.Account_for__r.Name}"/></a></strong>
+                        <br/>
+                        <a href="{!$Site.BaseUrl}/{!s.shipment.Contact__c}" target="_blank"><apex:outputText value="{!s.shipment.Contact__r.Name}"/></a>
+                    </apex:column>
+                    <apex:column >
+                    
+                          <apex:facet name="header">
+                            <div  style ="cursor: pointer;" onclick="sort_data_table_orders('shipment.Container_Type__r.Name');">Containers
+                                 <span style="       width: 10px;    height: 11px;    float: right;    margin: 0 5px;    vertical-align: 0px;    background: transparent url(/img/alohaSkin/sortArrows_sprite.png);    background-size: 16px;    background-repeat: no-repeat;    background-position: center 2px; display:none;" class="ship_table_order shipmentContainer_Type__rName_order"/>
+                            </div>
+                        </apex:facet>
+                        
+                        <strong><apex:outputtext value="{!s.shipment.N_Containers__c}"/>&nbsp;x&nbsp;<apex:outputtext value="{!s.shipment.Container_Type__r.Name}"/></strong>
+                    </apex:column>
+                    
+                    <apex:column >
+                        <apex:facet name="header">
+                            <div  style ="cursor: pointer;" onclick="sort_data_table_orders('shipment.Freight_Mode__c');">Mode
+                                 <span style="       width: 10px;    height: 11px;    float: right;    margin: 0 5px;    vertical-align: 0px;    background: transparent url(/img/alohaSkin/sortArrows_sprite.png);    background-size: 16px;    background-repeat: no-repeat;    background-position: center 2px; display:none;" class="ship_table_order shipmentFreight_Mode__c_order"/>
+                            </div>
+                        </apex:facet>
+                        
+                        <strong><apex:outputtext value="{!s.shipment.Freight_Mode__c}"/></strong>
+                        <br/>
+                        <apex:outputtext value="{!s.shipment.Service_Mode__c}"/>
+                    </apex:column>
+                    
+                    <apex:column style="    text-align: right;">
+                     
+                        <apex:facet name="header">
+                            <div  style ="cursor: pointer;" onclick="sort_data_table_orders('shipment.Total_Services_Sell_Amount__c');">Service Amount
+                                 <span style="       width: 10px;    height: 11px;    float: right;    margin: 0 5px;    vertical-align: 0px;    background: transparent url(/img/alohaSkin/sortArrows_sprite.png);    background-size: 16px;    background-repeat: no-repeat;    background-position: center 2px; display:none;" class="ship_table_order shipmentTotal_Services_Sell_Amount__c_order"/>
+                            </div>
+                        </apex:facet>
+                        
+                        <strong><apex:outputfield value="{!s.shipment.Total_Services_Sell_Amount__c}"/></strong>
+                    </apex:column>
+                    <!--<apex:column >
+                        <apex:facet name="header">
+                            <span>Supplier/Shipper Account (Origin)</span>
+                        </apex:facet>
+                        <strong><a href="{!$Site.BaseUrl}/{!s.shipment.Supplier_Account__c}" target="_blank"><apex:outputText value="{!s.shipment.Supplier_Account__r.Name}"/></a></strong>
+                        <br/>
+                        <apex:outputtext value="{!s.shipment.Origin_Address__c}"/>
+                    </apex:column>-->
+                    <apex:column >
+
+                        <apex:facet name="header">
+                            <div  style ="cursor: pointer;" onclick="sort_data_table_orders('shipment.ETD_from_Point_of_Load__c');">Planned ETD
+                                 <span style="       width: 10px;    height: 11px;    float: right;    margin: 0 5px;    vertical-align: 0px;    background: transparent url(/img/alohaSkin/sortArrows_sprite.png);    background-size: 16px;    background-repeat: no-repeat;    background-position: center 2px; display:none;" class="ship_table_order shipmentETD_from_Point_of_Load__c_order"/>
+                            </div>
+                        </apex:facet>
+                        
+                        <strong>
+                            <!-- <apex:outputText value="{0, date, EE MMM dd','  yyyy}">
+                                <apex:param value="{!s.shipment.ETD_from_Point_of_Load__c}" /> 
+                            </apex:outputText>-->
+                            <apex:outputfield value="{!s.shipment.ETD_from_Point_of_Load__c}"/>
+                        </strong>
+                        <br/>
+                        <apex:outputText value="{!s.shipment.Site_of_Load__r.Name}"/>,&nbsp;&nbsp;<apex:outputText value="{!s.shipment.State_of_Load__r.Name}"/>,&nbsp;&nbsp;<apex:outputText value="{!s.shipment.Country_of_Load__r.Name}"/>
+                    </apex:column>
+                    <!--<apex:column >
+                        <apex:facet name="header">
+                            <span>Consignee Account (Destination)</span>
+                        </apex:facet>
+                        <strong><a href="{!$Site.BaseUrl}/{!s.shipment.Consignee__c}" target="_blank"><apex:outputText value="{!s.shipment.Consignee__r.Name}"/></a></strong>
+                        <br/>
+                        <apex:outputtext value="{!s.shipment.Destination_Address__c}"/>
+                    </apex:column>-->
+                    <apex:column >
+                    
+                        <apex:facet name="header">
+                            <div  style ="cursor: pointer;" onclick="sort_data_table_orders('shipment.ETA_Point_of_Discharge__c');">Planned ETA
+                                 <span style="       width: 10px;    height: 11px;    float: right;    margin: 0 5px;    vertical-align: 0px;    background: transparent url(/img/alohaSkin/sortArrows_sprite.png);    background-size: 16px;    background-repeat: no-repeat;    background-position: center 2px; display:none;" class="ship_table_order shipmentETA_Point_of_Discharge__c_order"/>
+                            </div>
+                        </apex:facet>
+                        
+                        <strong>
+                           <!--  <apex:outputText value="{0, date, EE MMM dd','  yyyy}">
+                                <apex:param value="{!s.shipment.ETA_Point_of_Discharge__c}" /> 
+                            </apex:outputText>-->
+                            <apex:outputfield value="{!s.shipment.ETA_Point_of_Discharge__c}"/>
+                        </strong>
+                        <br/>
+                        <apex:outputText value="{!s.shipment.Site_of_Discharge__r.Name}"/>,&nbsp;&nbsp;<apex:outputText value="{!s.shipment.State_of_Discharge__r.Name}"/>,&nbsp;&nbsp;<apex:outputText value="{!s.shipment.Country_of_Discharge__r.Name}"/>
+                    </apex:column>
+                    <apex:column style="    text-align: right;">
+                        
+                        <apex:facet name="header">
+                            <div  style ="cursor: pointer;" onclick="sort_data_table_orders('shipment.Nature_Merchandise__c');">Nature Merchandise
+                                 <span style="       width: 10px;    height: 11px;    float: right;    margin: 0 5px;    vertical-align: 0px;    background: transparent url(/img/alohaSkin/sortArrows_sprite.png);    background-size: 16px;    background-repeat: no-repeat;    background-position: center 2px; display:none;" class="ship_table_order shipmentNature_Merchandise__c_order"/>
+                            </div>
+                        </apex:facet>
+                        
+                        <strong><apex:outputtext value="{!s.shipment.Nature_Merchandise__c}"/></strong>
+                        <br/>
+                        <!-- <apex:outputText value="{0, number, ###,###,###,##0.00} Units"><apex:param value="{!s.shipment.Total_Units_Shipped__c}"/></apex:outputText>-->
+                        <apex:outputfield value="{!s.shipment.Total_Units_Shipped__c}"/><span  style="    margin-left: 10px;">Units</span>
+                    </apex:column>
+                    <!--<apex:column >
+                        <apex:facet name="header">
+                            <span>Total Weight and Volume</span>
+                        </apex:facet>
+                        <strong><apex:outputText value="{0, number, ###,###,###,##0.00} (Kg)"><apex:param value="{!s.shipment.Total_Weight_Kg__c}"/></apex:outputText></strong>
+                        <br/>
+                        <apex:outputText value="{0, number, ###,###,###,##0.00} (m3)"><apex:param value="{!s.shipment.Total_Volume_m3__c}"/></apex:outputText>
+                    </apex:column>
+                    <apex:column >
+                        <apex:facet name="header">
+                            <span>Associated Documents</span>
+                        </apex:facet>
+                        <apex:repeat value="{!s.documents}" var="d">
+                            <a href="{!$Site.BaseUrl}{!d.Document_URL__c}" target="_blank">{!d.Name}</a><br/>
+                        </apex:repeat>
+                    </apex:column>-->
+                </apex:pageBlockTable>
+            </apex:pageBlock>
+        </apex:outputPanel>
+        <apex:outputpanel >
+           <apex:actionstatus id="myStatus">
+               <apex:facet name="start">
+                   <div class="waitingSearchDiv" id="el_loading" style="background-color: #fbfbfb;
+                          height: 100%;opacity:0.65;width:100%;"> 
+                       <div class="waitingHolder" style="top: 74.2px; width: 91px;">
+                           <img class="waitingImage" src="/img/loading.gif" title="Please Wait..." />
+                           <span class="waitingDescription">Loading...</span>
+                       </div>
+                   </div>
+               </apex:facet>
+           </apex:actionstatus>
+        </apex:outputpanel>
+        <!--<apex:actionFunction name="search_shipments" action="{!search_shipments}" reRender=" list_shipments_3" status="myStatus"/>list_shipments_1, list_shipments_2,-->
+        <apex:actionFunction name="search_shipments" action="{!search_shipments}" reRender="list_shipments_1, list_shipments_2, list_shipments_3" status="myStatus"/>
+        <apex:inputHidden value="{!sta_list}" id="sta_list"/>
+        <apex:inputHidden value="{!step_Instalacion}" id="step_Instalacion"/>
+        <apex:inputHidden value="{!step_request}" id="step_request"/>
+        <apex:inputHidden value="{!step_order}" id="step_order"/>
+        <apex:inputHidden value="{!serv_list}" id="serv_list"/>
+    </apex:form>
+</apex:page>

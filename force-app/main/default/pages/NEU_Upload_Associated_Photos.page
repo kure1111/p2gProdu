@@ -1,0 +1,303 @@
+<apex:page controller="NEU_Upload_Associated_Photos" sidebar="false" >
+    <apex:includeScript value="{!$Resource.jquery_1_10_2}"/> 
+    <apex:includeScript value="{!$Resource.jquery_ui_1_10_3}"/>
+    <apex:includeScript value="{!$Resource.neurored_jquery}"/> 
+    <script>
+        var array_files;
+        var contador_de_archivos = 0;
+        var nombre_completo_date = '';
+        function fichero_upload(myFile)
+        {
+        	$('#name_zone').html('');
+        	$('#name_zone').append('<span class="title_name_documents">Photos to Upload</span>	<table  class="table_documents_upload list"><tr class="headerRow"><th class="headerRow">Document Name</th><th class="headerRow">Document Type</th><th class="headerRow">Document Size</th>	<th class="headerRow"></th></tr></table>');
+            if(myFile.files.length > 0)
+            	$('#name_zone').css('display','');
+            else
+            	$('#name_zone').css('display','none');
+            array_files = myFile.files;
+            var nombres_documentos_input = '';
+            var nombre_todos_los_documentos = '';
+            $('.correct_message').css('display','none');
+            for(var i=0; i< myFile.files.length; i++) 
+            {
+            	var nombre_sin_extension = myFile.files[i].name.replace('.','_');
+            	nombres_documentos_input +="<tr class='dataRow odd'>";
+            	nombres_documentos_input +="<td style='text-align: left;    padding-left: 21px;' class='dataCell'>";
+            
+            	nombres_documentos_input +="<img src='{!URLFOR($Resource.Upload_Photo_Title)}' class='image_document_to_upload'/>"+myFile.files[i].name+"";
+                nombres_documentos_input +="</td>";
+                nombres_documentos_input +="<td class='dataCell'>";
+                nombres_documentos_input +=myFile.files[i].type;
+                nombres_documentos_input +="</td>";
+                nombres_documentos_input +="<td class='dataCell'>";
+                nombres_documentos_input +=(myFile.files[i].size/1000)+" kb";
+                nombres_documentos_input +="</td>";
+                nombre_sin_extension = nombre_sin_extension.replace(/\ /g, '');
+                nombre_sin_extension = nombre_sin_extension.replace(/\-/g, '');
+  			    nombre_sin_extension = nombre_sin_extension.replace(/\(/g, '');
+  			    nombre_sin_extension = nombre_sin_extension.replace(/\)/g, '');
+                nombres_documentos_input +="<td class='dataCell inputs_names_documents input_name_document_"+nombre_sin_extension+"'>";
+                
+                nombres_documentos_input +='			<div id="progress_bar" class="ui-progress-bar ui-container" style="position: relative; height: 35px; padding-right: 2px; background-color: #abb2bc; border-radius: 35px; -moz-border-radius: 35px; -webkit-border-radius: 35px; background: -webkit-gradient(linear, left bottom, left top, color-stop(0, #b6bcc6), color-stop(1, #9da5b0)); background: -moz-linear-gradient(#9da5b0 0%, #b6bcc6 100%); -webkit-box-shadow: inset 0px 1px 2px 0px rgba(0, 0, 0, 0.5), 0px 1px 0px 0px #FFF; -moz-box-shadow: inset 0px 1px 2px 0px rgba(0, 0, 0, 0.5), 0px 1px 0px 0px #FFF; box-shadow: inset 0px 1px 2px 0px rgba(0, 0, 0, 0.5), 0px 1px 0px 0px #FFF;  margin: 10px; margin-left: 0px; border-radius: 5px;  float: right; margin-left: 12px; height: 28px;     margin-top: 0px;  margin-bottom: 0px;     width: 60%;  min-width: 168px;  max-width: 255px;">';
+                nombres_documentos_input +='				<span class="ui-label" style="    width: 155px;    position: absolute;    left: 15%;   top: 6px; z-index: 66; ">Document Upload   <b class="espacio_mb clase_width_porcent_'+nombre_sin_extension+'"> 0 %</b></span>';
+                nombres_documentos_input +='                <div class="ui-progress clase_width clase_width_'+nombre_sin_extension+'" style="position: relative; display: block;  overflow: hidden; height: 33px; -moz-border-radius: 35px; -webkit-border-radius: 35px; border-radius: 35px; -webkit-background-size: 44px 44px; background-color: #1797c0;  border: 1px solid #1797c0; -webkit-animation: animate-stripes 2s linear infinite; border-radius: 5px; -webkit-animation: animate-stripes 2s linear infinite; -moz-animation: progress-bar-stripes 2s linear infinite; -ms-animation: progress-bar-stripes 2s linear infinite; -o-animation: progress-bar-stripes 2s linear infinite; animation: progress-bar-stripes 2s linear infinite; background-size: 40px 40px; text-align: center; height: 26px; width:0%;  ">';
+                nombres_documentos_input +='                </div>';
+                nombres_documentos_input +='            </div>';
+                nombres_documentos_input +="</td>";
+                nombres_documentos_input +="</tr>";
+                nombre_todos_los_documentos += myFile.files[i].name+'_&_';
+                
+            }
+            
+            $(".table_documents_upload").append(nombres_documentos_input);
+            $(".names_all_documents").val(nombre_todos_los_documentos);
+        }
+        
+        function upload_all_documents()
+        {
+        	$('#otherStatus').css('display','block');	
+            $( ".AWSAccessKeyId" ).val($( ".hidden_AWSAccessKeyId" ).val());
+            $( ".policy" ).val($( ".hidden_policy" ).val());
+            $( ".signature" ).val($( ".hidden_signature" ).val());
+            if(array_files != null)
+            {
+                for(var i=0; i< array_files.length; i++) 
+                {
+                    $( ".key" ).val(array_files[i].name);
+                    send_request_amazon(array_files[i]);
+                    
+                    contador_de_archivos = 0;
+                    break;
+                }
+            }
+        }
+        
+        function next_document()
+        {
+        	if(array_files != null)
+        	{
+        		if(contador_de_archivos != array_files.length-1)
+        		{
+        			contador_de_archivos ++;
+        			send_request_amazon(array_files[contador_de_archivos]);
+        		}
+        		else
+        		{
+        			contador_de_archivos = 0; 
+        			$('#otherStatus').css('display','none');
+        			$('.correct_message').css('display','block');
+        			
+        			$('.names_all_documents_date').val(nombre_completo_date);
+        			nombre_completo_date = '';
+        			save_fields();
+        		} 
+        	}
+        }
+        
+        function send_request_amazon(file)
+        {
+           
+            var file = file;
+            var fd = new FormData();
+            
+        	var d = new Date();
+    		var n = d.getTime();
+        	var nombre_documentos_complet = $('.id_org').val()+$('.id_shipment_shipment_program').val()+n+'_'+file.name+'_&_';
+        	nombre_completo_date += nombre_documentos_complet;
+ 
+        	
+            var key =  $('.id_org').val()+$('.id_shipment_shipment_program').val()+n+'_'+file.name;
+            var AWSAccessKeyId = $( '.AWSAccessKeyId' ).val();
+            var policy = $( '.policy' ).val();
+            var signature = $( '.signature' ).val();
+  
+            fd.append('key', key);
+            fd.append('acl', 'public-read');    
+            fd.append('AWSAccessKeyId', AWSAccessKeyId);
+            fd.append('policy', policy)
+            fd.append('signature',signature);
+            
+            fd.append("file",file);
+            
+            var objXMLHttp=null
+            if(window.XMLHttpRequest)
+            {
+            	objXMLHttp = new XMLHttpRequest()
+            }
+            else if (window.ActiveXObject)
+            {
+            	objXMLHttp = new ActiveXObject("Microsoft.XMLHttp")
+            }
+            
+            var xhr = objXMLHttp;
+         
+            xhr.upload.addEventListener("progress", uploadProgress, false);
+            xhr.addEventListener("load", uploadComplete, false);
+            xhr.addEventListener("error", uploadFailed, false);
+            xhr.addEventListener("abort", uploadCanceled, false);
+             
+            xhr.open('POST', 'https://s3-us-west-2.amazonaws.com/neurored-s3', true);
+            xhr.send(fd);
+        }
+        
+        function uploadProgress(evt) 
+        {
+            if (evt.lengthComputable) 
+            {
+              var percentComplete = Math.round(evt.loaded * 100 / evt.total);
+              var nombre_sin_extension = array_files[contador_de_archivos].name.replace('.','_');
+              nombre_sin_extension = nombre_sin_extension.replace(/\ /g, '');
+              nombre_sin_extension = nombre_sin_extension.replace(/\-/g, '');
+  			  nombre_sin_extension = nombre_sin_extension.replace(/\(/g, '');
+  			  nombre_sin_extension = nombre_sin_extension.replace(/\)/g, '');
+              $('.clase_width_porcent_'+nombre_sin_extension).html(percentComplete.toString() + '%');
+              var porcentage = percentComplete.toString() + '%';
+              $('.clase_width_'+nombre_sin_extension).css('width',porcentage);
+              
+            }
+            else 
+            {
+             var nombre_sin_extension = array_files[contador_de_archivos].name.replace('.','_');
+             nombre_sin_extension = nombre_sin_extension.replace(/\ /g, '');
+             nombre_sin_extension = nombre_sin_extension.replace(/\-/g, '');
+  			 nombre_sin_extension = nombre_sin_extension.replace(/\(/g, '');
+  			 nombre_sin_extension = nombre_sin_extension.replace(/\)/g, '');
+             document.getElementById('progressNumber').innerHTML = 'unable to compute';
+             $('.input_name_document_'+nombre_sin_extension).append('<img class="estado_documento" src="/img/msg_icons/error16.png"/>');
+            }
+        }
+        
+        function uploadComplete(evt) 
+        {
+            /* This event is raised when the server send back a response */
+            var nombre_sin_extension = array_files[contador_de_archivos].name.replace('.','_');
+            nombre_sin_extension = nombre_sin_extension.replace(/\ /g, '');
+            nombre_sin_extension = nombre_sin_extension.replace(/\-/g, '');
+  			nombre_sin_extension = nombre_sin_extension.replace(/\(/g, '');
+  			nombre_sin_extension = nombre_sin_extension.replace(/\)/g, '');
+           	if(evt.target.responseText == null || evt.target.responseText == '')
+            	$('.input_name_document_'+nombre_sin_extension).append('<img class="estado_documento" src="/img/msg_icons/confirm16.png"/>');
+			else
+				$('.input_name_document_'+nombre_sin_extension).append('<img class="estado_documento" src="/img/msg_icons/error16.png"/>');
+            next_document();
+        }
+        
+        function uploadFailed(evt) 
+        {
+            alert("There was an error attempting to upload the file." + evt);
+            var nombre_sin_extension = array_files[contador_de_archivos].name.replace('.','_');
+            nombre_sin_extension = nombre_sin_extension.replace(/\ /g, '');
+            nombre_sin_extension = nombre_sin_extension.replace(/\-/g, '');
+  			nombre_sin_extension = nombre_sin_extension.replace(/\(/g, '');
+  			nombre_sin_extension = nombre_sin_extension.replace(/\)/g, '');
+            $('.input_name_document_'+nombre_sin_extension).append('<img class="estado_documento" src="/img/msg_icons/error16.png"/>');
+        }
+        
+        function uploadCanceled(evt)
+        {
+            alert("The upload has been canceled by the user or the browser dropped the connection.");
+            var nombre_sin_extension = array_files[contador_de_archivos].name.replace('.','_');
+            nombre_sin_extension = nombre_sin_extension.replace(/\ /g, '');
+            nombre_sin_extension = nombre_sin_extension.replace(/\-/g, '');
+  			nombre_sin_extension = nombre_sin_extension.replace(/\(/g, '');
+  			nombre_sin_extension = nombre_sin_extension.replace(/\)/g, '');
+            $('.input_name_document_'+nombre_sin_extension).append('<img class="estado_documento" src="/img/msg_icons/error16.png"/>');
+        }
+
+    </script>
+    
+    <style>
+        #drop_zone{border: 2px dashed #BBB;    -moz-border-radius: 5px;    -webkit-border-radius: 5px;    border-radius: 5px;       height: 153px;   text-align: center;    font: 20pt bold;    color: #BBB;    border-image: initial;     width: 100%;   float: left;}
+        .image_document{ width: 131px;    position: absolute;    top: 99px;    opacity: 0.6;     left: 42px;} 
+        .input_file{width: 100%; height: 139px;    position: absolute;    top: 88px;   left: 29px;    background: transparent;    border: 0px;    cursor: pointer;    opacity: 0;}
+        #name_zone{    width: 100%;   float: right;    font-size: 12px;     border: 2px solid #BBB;    -moz-border-radius: 5px;    -webkit-border-radius: 5px;    border-radius: 5px;     min-height: 144px;    min-width: 280px; text-align: center;     margin-bottom: 10px; margin-top: 30px;}
+        .inputs_names_documents{    margin-left: 10px; font-size: 14px;}
+        .image_document_to_upload{    margin-right: 10px;}
+        .title_name_documents{text-align: center;    font: 19pt bold;    color: #BBB;     color: gray;}
+        .correct_message{    background-color: #ffc; border-style: solid; border-width: 1px; color: #000;     margin-top: 10px;   margin-bottom: 10px;   padding: 5px;  border-color: #39f; height: 33px; width: 100%; float: left;}
+        .img_message{width: 24px;    height: 24px}
+        .message_text{}
+        
+        .estado_documento{margin-left: 10px;    float: right;    margin-top: 6px;}
+        .homeTab .listViewport .subNav .linkBar, .homeTab .mComponent .cHeader, .homeTab .genericTable, .homeTab .bSubBlock, .homeTab .bPageBlock {    min-height: 172px; float: left; width: 100%; height: 100%;}
+    </style>
+    
+    <apex:form >
+    	<apex:image value="/img/icon/camera32.png" style="float: left; margin: 8px;"/><!--  -->
+        <span style="margin-top: 9px; margin-bottom: 0; color: #000; font-size: 2em; font-family: Arial,Helvetica,sans-serif; font-weight: normal; float:left;">Associated Photos</span>
+        <span style="    position: relative; top: 15px; left: 40px; font-size: 17px;">
+        <a href="/{!id_object}" onblur="LookupHoverDetail.getHover(neu_getId(this)).hide();" onfocus="LookupHoverDetail.getHover(neu_getId(this),'/{!id_object}/m?isAjaxRequest=1').show();" onmouseout="LookupHoverDetail.getHover(neu_getId(this)).hide();" onmouseover="LookupHoverDetail.getHover(neu_getId(this),'/{!id_object}/m?isAjaxRequest=1').show();"  id="new_id_1">{!name_object}</a></span>
+        <apex:actionFunction action="{!save_associated_photo}" rerender="pagemessages" name="save_fields"/> 
+        
+        <apex:actionFunction name="save" rerender="block2, pagemessages" oncomplete="upload_all_documents();"/>
+        <apex:actionFunction action="{!return_to_object}" name="return_to_object" />
+        <apex:inputhidden value="{!documents_names}" html-class="names_all_documents" />
+        <apex:inputhidden value="{!documents_names_dates}" html-class="names_all_documents_date" />
+        <apex:inputhidden value="{!document_photo}" html-class="body_document1" />
+        <apex:inputhidden value="{!document_photoName}" html-class="Name_document1" />
+        <apex:inputhidden value="{!id_org}" html-class="id_org" />
+        <apex:inputhidden value="{!id_shipment_shipment_program}" html-class="id_shipment_shipment_program" />
+        <div id="progressNumber"></div>
+    </apex:form>
+    
+    <form id="form" method="post" action="https://s3-us-west-2.amazonaws.com/{!Bucket_Name}" enctype="multipart/form-data">   
+    	
+        <apex:outputpanel >
+        	 <div style="text-align: center;     margin-top: 14px; margin-bottom: 7px;">
+                <input class="btn" type="button" value="Upload Photos" onclick="save();"/>
+                <input class="btn upload_document" type="submit" value="Upload Document" style="display:none;"/>
+                <input class="btn" type="button" value="Return" onclick="return_to_object();" />
+            </div>
+            <apex:pageBlock id="block1" html-class="bloque_1" html-style="min-height: 172px;"> 
+                <div id="drop_zone">
+                    <span style="margin-left: 65px;     padding-top: 48px;    display: block;">Drag and Drop Photos or Click into this outlined area to upload</span>
+                    <input type="file" size="50" name="file" value="{!document_photoName}" class="input_file" multiple="true" onchange="fichero_upload(this)"/>
+                    <img src="{!URLFOR($Resource.Upload_Photo)}" class="image_document" />
+                </div>
+                <div class="correct_message" style="display:none;">
+            		<img alt="INFO" src="/img/msg_icons/info24.png" title="INFO" class="img_message"/>
+            		<span class="message_text">Documents Uploaded Correctly</span>
+            	</div>
+                <div id="name_zone" style="display:none;">
+                	<span class="title_name_documents">Photos to Upload</span>
+                	<table  class="table_documents_upload list">
+                		<tr class="headerRow">
+                			<th class="headerRow">Document Name</th>
+                			<th class="headerRow">Document Type</th>
+                			<th class="headerRow">Document Size</th>
+                			<th class="headerRow"></th>
+                		</tr>
+                	</table>
+                </div>
+            </apex:pageBlock>
+            
+            
+           
+        </apex:outputpanel>
+        
+        <apex:pageBlock id="block2" html-class="bloque_2" html-style="display: none;"> 
+            <input type="hidden"  name="key2" value="{!document_photoName}" class="hidden_key"/> 
+            <input type="hidden" name="AWSAccessKeyId2" value="{!key}"  class="hidden_AWSAccessKeyId"/> 
+            <input type="hidden"  name="policy2" value="{!policy_hidden}"  class="hidden_policy"/> 
+            <input type="hidden"  name="signature2" value="{!signedPolicy}"  class="hidden_signature"/>
+            <input type="hidden"  name="acl2" value="public-read" />
+            <input type="hidden"   value="{!errores}" class="input_errores"/>
+         </apex:pageBlock>
+         <!-- <apex:pageMessages id="pagemessages"/>-->
+         <div class="waitingSearchDiv" id="otherStatus" style="display:none;background-color:#fbfbfb;height:100%;opacity:0.65;width:100%;"> 
+                <div class="waitingHolder" style="top:74.2px;width:91px;">
+                    <img class="waitingImage" src="/img/loading.gif" title="Please Wait..." />
+                    <span class="waitingDescription">Loading...</span>
+                </div>
+         </div>
+    </form>
+    
+    <form id="form2" method="post" action="https://s3-us-west-2.amazonaws.com/{!Bucket_Name}" enctype="multipart/form-data">
+        <input type="hidden"  name="key" value="" class="key"/> 
+        <input type="hidden" name="AWSAccessKeyId" value="" class="AWSAccessKeyId"/> 
+        <input type="hidden"  name="policy" value="" class="policy"/> 
+        <input type="hidden"  name="signature" value="" class="signature"/>
+        <input type="hidden"  name="acl" value="public-read" />
+   </form>
+    
+</apex:page>

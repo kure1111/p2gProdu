@@ -1,0 +1,13 @@
+<apex:page controller="NEU_First_Steps">
+
+    <apex:form >
+        <apex:pagemessages />
+       <apex:pageblock mode="maindetail">
+            <apex:pageBlockSection title="Countries, States & Locations" columns="2">
+                <apex:commandbutton value="Insert countries" action="{!insert_countries}"/>
+                <apex:commandbutton value="Insert states" action="{!insert_states}"/>
+                <apex:commandbutton value="Insert locations" action="{!insert_locations}"/>
+            </apex:pageBlockSection>
+        </apex:pageblock>
+    </apex:form>
+</apex:page>

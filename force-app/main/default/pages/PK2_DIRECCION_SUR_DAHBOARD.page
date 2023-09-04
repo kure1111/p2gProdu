@@ -1,0 +1,38 @@
+<apex:page showHeader="false" tabStyle="Account">
+<head>
+  <base target="_top">
+  </base>
+</head> 
+    <apex:pageBlock title="ZONA SURESTE" mode="edit">
+        <apex:pageBlockSection title="Status Quotes" columns="3" >
+            <analytics:reportChart reportId="00O0Y000007wkoT" size="tiny"/>
+            <analytics:reportChart reportId="00O0Y000007wkoY" size="tiny"/>
+            <analytics:reportChart reportId="00O0Y000007wkod" size="tiny"/>
+            <analytics:reportChart reportId="00O0Y000007wkoi" size="tiny"/>
+            <analytics:reportChart reportId="00O0Y000007wdbB" size="tiny"/>
+            <analytics:reportChart reportId="00O0Y000007wdbQ" size="tiny"/>
+        </apex:pageblocksection>
+        <apex:pageBlockSection title="MEXICO SUR" columns="3" >
+            <analytics:reportChart reportId="00O0Y000007wncK" size="tiny"/>
+            <analytics:reportChart reportId="00O0Y000007wncj" size="tiny"/>
+            <analytics:reportChart reportId="00O0Y000007wncU" size="tiny"/>
+            <analytics:reportChart reportId="00O0Y000007wndw" size="tiny"/>
+            <analytics:reportChart reportId="00O0Y000007wnd3" size="tiny"/>
+            <analytics:reportChart reportId="00O0Y000007wncy" size="tiny"/>
+            <analytics:reportChart reportId="00O0Y000007wxV4" size="tiny"/>
+            <analytics:reportChart reportId="00O0Y000007wxV9" size="tiny"/>
+            <analytics:reportChart reportId="00O0Y000007wxVE" size="tiny"/>
+        </apex:pageblocksection> 
+        <apex:pageBlockSection title="PUEBLA" columns="3" >
+            <analytics:reportChart reportId="00O0Y000007wnd8" size="tiny"/>
+            <analytics:reportChart reportId="00O0Y000007wndN" size="tiny"/>
+            <analytics:reportChart reportId="00O0Y000007wndI" size="tiny"/>
+            <analytics:reportChart reportId="00O0Y000007wndS" size="tiny"/>
+            <analytics:reportChart reportId="00O0Y000007wndh" size="tiny"/>
+            <analytics:reportChart reportId="00O0Y000007wndm" size="tiny"/>  
+            <analytics:reportChart reportId="00O0Y000007wxVJ" size="tiny"/>
+            <analytics:reportChart reportId="00O0Y000007wxVO" size="tiny"/>
+            <analytics:reportChart reportId="00O0Y000007wxVT" size="tiny"/>
+        </apex:pageblocksection>   
+        </apex:pageBlock>
+ </apex:page>

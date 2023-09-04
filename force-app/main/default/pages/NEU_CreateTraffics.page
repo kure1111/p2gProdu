@@ -1,0 +1,3 @@
+<apex:page controller="NEU_CreateTraffics" action="{!create_traffic}">
+	<apex:outputtext value="{!resultado}"/>
+</apex:page>

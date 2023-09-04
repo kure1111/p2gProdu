@@ -1,0 +1,27 @@
+<apex:page controller="PK2_GRAL_DAHBOARD" >
+    <head>
+        <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+        <script>
+            setTimeout("location.reload(true);", 30000);
+        </script>
+    </head>
+    <body>
+        <apex:form >
+            <apex:pageBlock title="Create Disbursements">
+                <apex:pageBlockTable value="{!CrearDisbursements}" var="Result">
+                    <apex:column headerValue="Shipment"> 
+                        <apex:commandLink action="/{!Result.Id}" value="{!Result.Name}" />
+                    </apex:column>
+                    <apex:column headerClass="Sucursal" value="{!Result.Operation_Executive__r.Workplace__c}" />
+                    <apex:column headerValue="Vendedor" value="{!Result.Account_for__r.Owner.Name}"/>
+                    <apex:column headerValue="Planner" value="{!Result.Operation_Executive__r.Name}" />
+                    <apex:column value="{!Result.OrdenVenta__c}" />
+                    <apex:column value="{!Result.SolicitudCompra__c}" />
+                    <!--<apex:column headerValue="Action">
+                        <apex:commandLink value="Crear Disbursement" target="_parent" action="/apex/NEU_NewDisbursementButton?shipment_id={!Result.Id}"/>
+                    </apex:column>-->
+                </apex:pageBlockTable>
+            </apex:pageBlock>
+        </apex:form>
+    </body>
+</apex:page>

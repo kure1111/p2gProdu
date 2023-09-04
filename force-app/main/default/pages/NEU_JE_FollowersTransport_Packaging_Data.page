@@ -1,0 +1,176 @@
+<apex:page extensions="NEU_JE_FollowersTransport_Packaging_Data" standardController="Transport_Packaging_Data__c">
+<apex:includeScript value="{!$Resource.jquery_1_10_2}"/> 
+<apex:includeScript value="{!$Resource.jquery_ui_1_10_3}"/>
+<apex:includeScript value="{!$Resource.neurored_jquery}"/> 
+<apex:stylesheet value="{!URLFOR($Resource.jquery_ui_1_10_3_css,'jquery-ui-1.10.3.min.css')}"/>
+<apex:includeScript value="{!URLFOR($Resource.jquery_vfFloatingHeaders)}"/>
+    <style>
+        .tableContainer
+        {
+            height:290px; 
+            width: 100%;
+            overflow: auto;
+        }       
+        .floatingStyle 
+        { 
+            position:relative; 
+        } 
+        
+      .pbSubsection.detailList .dataCol .detailList.tableContainer .floatingHeaderTable .rich-table-thead 
+        {
+            border-bottom: solid 1px #C0C0C0;
+            position: absolute;
+            top: 136px;
+        }
+        .limit_exceded{background:#ff0000 !important; color:#ffffff !important;}
+        .limit_exceded a{color:#ffffff !important;}
+    </style>
+    <script>
+      $(document).ready(function() {
+            $('.floatingHeaderTable').vfFloatingHeaders();
+                colocar();
+      });
+        function clickIcon(idtoshow)
+        {
+                $('.linea_modificada').val(idtoshow);
+                updateLines();
+        }
+        function clickIcondel(idtoshow)
+        {
+                $('.linea_modificada').val(idtoshow);
+                delLines();
+        }
+        function redireccionar()
+        {
+                colocar();
+                $('#otherStatus').show();
+                top.location.href='/{!Transport_Packaging_Data__c.Id}';
+         }
+         function colocar()
+         {
+            $('.rich-table-thead').css("border-bottom", "solid 1px #C0C0C0");
+            $('.rich-table-thead').css("position", "absolute");
+            $('.rich-table-thead').css("top", "111px");
+            $('.rich-table-thead').css("background", "white");
+         }
+    </script>
+    <apex:pageMessages id="messages"/>
+    <div style="text-align: center; margin: 0 auto; background-color:#ffffff !important;">
+        <apex:form style="text-align: left;">
+        <div>   
+            <apex:image value="/img/icon/custom51_100/gears32.png" style="float: left; margin: 8px;"/>
+            <span style="margin-top: 9px; margin-bottom: 0; color: #000; font-size: 2em; font-family: Arial,Helvetica,sans-serif; font-weight: normal; float:left;">SCM Followers Intelligence</span>
+        </div>
+        <apex:actionFunction name="updateLines" status="myStatus" reRender="block1, messages" action="{!nuevalinea}" oncomplete="colocar();">
+        </apex:actionFunction>
+        <apex:actionFunction name="delLines" status="myStatus" reRender="block1, messages" action="{!quitarlinea}" oncomplete="colocar();">
+         </apex:actionFunction>
+            <apex:pageBlock >   
+            
+                <apex:pageBlockSection id="block1" >
+                    <apex:pageBlockSectionItem >
+                        <apex:outputPanel styleClass="tableContainer" layout="block" style=" overflow-y: none; overflow-y: hidden;" >
+                    <apex:pageBlockSection title="Transport Packaging Data Followers" >
+                            </apex:pageBlockSection>
+                        <apex:outputPanel styleClass="tableContainer" layout="block" style=" overflow-y: scroll;">
+                            <apex:pageBlockTable value="{!follower}" var="f" styleclass="floatingHeaderTable" style="margin: 14px 0px 0px 0px;" >
+                                <apex:column rendered="{!f.selected=false}" style="width: 10px;" styleclass="{!IF(f.max_subcripciones_superado, 'limit_exceded', '')}">
+                                        <apex:image value="{!f.line.FullPhotoUrl}" style="width: 29px;"/>
+                                    </apex:column>
+                                    <apex:column rendered="{!f.selected=false}" styleclass="{!IF(f.max_subcripciones_superado, 'limit_exceded', '')}">
+                                        <c:customobject2 objid="{!f.line.Id}" objname="{!f.line.Name}"/>
+                                    </apex:column>
+                                    <apex:column rendered="{!f.selected=false}" styleclass="{!IF(f.max_subcripciones_superado, 'limit_exceded', '')}">
+                                        <apex:outputText value="{!f.line.UserRole.Name}" escape="false" />
+                                    </apex:column>
+                                    <apex:column rendered="{!f.selected=false}" style="text-align: center; width: 22px;" styleclass="{!IF(f.max_subcripciones_superado, 'limit_exceded', '')}">
+                                        <apex:image onclick="clickIcondel('{!f.line.Id}');" value="{!$Resource.menos}" />
+                                    </apex:column>
+                                    
+                                    <apex:column rendered="{!f.selected=true}" style="background: #FCF9DF; width: 10px;" styleclass="{!IF(f.max_subcripciones_superado, 'limit_exceded', '')}">
+                                        <apex:image value="{!f.line.FullPhotoUrl}" style="width: 29px;"/>
+                                    </apex:column>
+                                    <apex:column rendered="{!f.selected=true}" style="background: #FCF9DF;" styleclass="{!IF(f.max_subcripciones_superado, 'limit_exceded', '')}">
+                                        <c:customobject2 objid="{!f.line.Id}" objname="{!f.line.Name}"/>
+                                    </apex:column>
+                                    <apex:column rendered="{!f.selected=true}" style="background: #FCF9DF;" styleclass="{!IF(f.max_subcripciones_superado, 'limit_exceded', '')}">
+                                        <apex:outputText value="{!f.line.UserRole.Name}" escape="false" />
+                                    </apex:column>
+                                    <apex:column rendered="{!f.selected=true}" style="text-align: center; width: 22px; background: #FCF9DF;" styleclass="{!IF(f.max_subcripciones_superado, 'limit_exceded', '')}">
+                                        <apex:image onclick="clickIcondel('{!f.line.Id}');" value="{!$Resource.menos}" />
+                                    </apex:column>
+                                    
+                            </apex:pageBlockTable>
+                        </apex:outputPanel>
+                        </apex:outputPanel>
+                    </apex:pageBlockSectionItem>
+                    
+                    <apex:pageBlockSectionItem >
+                    <apex:outputPanel styleClass="tableContainer" layout="block" style=" overflow-y: none; overflow-y: hidden;" >
+                    <apex:pageBlockSection title="USERS" >
+                            </apex:pageBlockSection>
+                    <apex:outputPanel styleClass="tableContainer" layout="block" style=" overflow-y: scroll;">
+                        <apex:pageBlockTable value="{!followersin}" var="f" styleclass="floatingHeaderTable" style="margin: 14px 0px 0px 0px;">
+                                <apex:column style="width: 10px;" rendered="{!f.selected=false}" styleclass="{!IF(f.max_subcripciones_superado, 'limit_exceded', '')}">
+                                    <apex:image value="{!f.line.FullPhotoUrl}" style="width: 29px;"/>
+                                </apex:column>
+                                <apex:column rendered="{!f.selected=false}" styleclass="{!IF(f.max_subcripciones_superado, 'limit_exceded', '')}">
+                                    <c:customobject2 objid="{!f.line.Id}" objname="{!f.line.Name}"/>
+                                </apex:column>
+                                <apex:column rendered="{!f.selected=false}" styleclass="{!IF(f.max_subcripciones_superado, 'limit_exceded', '')}">
+                                    <apex:outputText value="{!f.line.UserRole.Name}" escape="false" />
+                                </apex:column>
+                                <apex:column style="text-align: center;" rendered="{!f.selected=false}" styleclass="{!IF(f.max_subcripciones_superado, 'limit_exceded', '')}">
+                                    <apex:image onclick="clickIcon('{!f.line.Id}');" value="{!$Resource.mas}"/>
+                                </apex:column>
+                                <apex:column rendered="{!f.selected=true}" style="background: #FCF9DF; width: 10px;" styleclass="{!IF(f.max_subcripciones_superado, 'limit_exceded', '')}">
+                                    <apex:image value="{!f.line.FullPhotoUrl}" style="width: 29px;"/>
+                                </apex:column>
+                                <apex:column rendered="{!f.selected=true}" style="background: #FCF9DF;" styleclass="{!IF(f.max_subcripciones_superado, 'limit_exceded', '')}">
+                                    <c:customobject2 objid="{!f.line.Id}" objname="{!f.line.Name}"/>
+                                </apex:column>
+                                <apex:column rendered="{!f.selected=true}" style="background: #FCF9DF;" styleclass="{!IF(f.max_subcripciones_superado, 'limit_exceded', '')}">
+                                    <apex:outputText value="{!f.line.UserRole.Name}" escape="false" />
+                                </apex:column>
+                                <apex:column rendered="{!f.selected=true}" style="text-align: center; width: 22px; background: #FCF9DF;" styleclass="{!IF(f.max_subcripciones_superado, 'limit_exceded', '')}">
+                                    <apex:image onclick="clickIcon('{!f.line.Id}');" value="{!$Resource.mas}" />
+                                </apex:column>
+                                    
+                            </apex:pageBlockTable>
+                            </apex:outputPanel>
+                            </apex:outputPanel>
+                    </apex:pageBlockSectionItem>
+                </apex:pageBlockSection>
+                <!--<apex:pageBlockButtons >
+                    <apex:commandButton value="Save" action="{!save}" reRender="block1" status="myStatus"  oncomplete="redireccionar();"/>
+                    <apex:commandButton value="Cancel" reRender="block1" status="myStatus" action="{!cancel}" oncomplete="colocar();"/>
+                    <div style="float: right; margin: 8px 25px 0px 0px;"> 
+                        <span style="float: left; margin: -2px 10px 0px 10px;">Internal Users</span> <span style="border: 1px solid #4F5051; float: left; width: 10px; height: 10px; background: white; vertical-align: middle;"></span>
+                        <span style="float: left; margin: -2px 10px 0px 10px;">External Users</span> <span style="border: 1px solid #4F5051; float: left; width: 10px; height: 10px; background: #F8F2C0; vertical-align: middle;"></span>
+                    </div>
+                </apex:pageBlockButtons>-->
+        
+            </apex:pageBlock>
+            <apex:inputText value="{!idlinea}" styleClass="linea_modificada" style="display:none;"/>
+                <apex:outputpanel >
+           <apex:actionstatus id="myStatus">
+               <apex:facet name="start">
+                   <div class="waitingSearchDiv" id="el_loading" style="background-color: #fbfbfb;
+                          height: 100%;opacity:0.65;width:100%;"> 
+                       <div class="waitingHolder" style="top: 74.2px; width: 91px;">
+                           <img class="waitingImage" src="/img/loading.gif" title="Please Wait..." />
+                           <span class="waitingDescription">Loading...</span>
+                       </div>
+                   </div>
+               </apex:facet>
+           </apex:actionstatus>
+        </apex:outputpanel>
+        <div class="waitingSearchDiv" id="otherStatus" style="display:none;background-color:#fbfbfb;height:100%;opacity:0.65;width:100%;"> 
+                <div class="waitingHolder" style="top:74.2px;width:91px;">
+                    <img class="waitingImage" src="/img/loading.gif" title="Please Wait..." />
+                    <span class="waitingDescription">Loading...</span>
+                </div>
+        </div>
+        </apex:form>
+    </div>
+</apex:page>

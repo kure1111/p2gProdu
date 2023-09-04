@@ -1,0 +1,76 @@
+<apex:page standardController="Price_List__c" extensions="NEU_OM_Allocate_Account_toPriceList" >
+<apex:includeScript value="{!$Resource.neu_jquery}"/> 
+<apex:includeScript value="{!$Resource.jquery_1_10_2}"/> 
+<apex:includeScript value="{!$Resource.jquery_ui_1_10_3}"/>
+<apex:includeScript value="{!$Resource.neurored_jquery}"/> 
+<apex:stylesheet value="{!URLFOR($Resource.jquery_ui_1_10_3_css,'jquery-ui-1.10.3.min.css')}"/>
+<script>
+    $(document).ready(function () {
+            
+            $($.sfId('{!$Component.form.radio}')).buttonset();
+        });
+        
+        function del_oi(id)
+        {
+            document.getElementById('{!$Component.form.id_oi}').value = id;
+            delete_oi();
+        }
+        
+</script>
+    <apex:form id="form">
+        <apex:outputLink value="{!URLFOR($Action.Price_List__c.View,Price_List__c.Id)}">
+           <apex:sectionHeader subtitle="{!Price_List__c.Name}" title="Allocate Accounts to {!$ObjectType.Price_List__c.label}">
+           </apex:sectionHeader>
+        </apex:outputLink>   
+        <apex:outputPanel id="radios">
+            <apex:selectRadio id="radio" value="{!newcategory}" onchange="changeradios();">
+                <apex:selectOptions value="{!newcategories}"/>
+            </apex:selectRadio>
+        </apex:outputPanel>
+        
+        <apex:actionFunction name="changeradios"  status="myStatus" reRender="linesSelector">
+        </apex:actionFunction>
+        
+        <apex:outputPanel id="linesSelector">
+            <apex:pageBlock id="block0" title="Accounts">
+                <apex:pageBlockTable id="table" value="{!listado_cuentas}" var="su">
+                    <apex:column headerValue="Account">
+                        <c:customobject2 objid="{!su.line.Id}" objname="{!su.line.Name}"/>
+                    </apex:column>
+                    <apex:column headerValue="Account Record Type" value="{!su.line.Record_Type_Name__c}"  style="text-align:left"/>
+                    <apex:column headerValue="Business Area" value="{!su.line.Business_Area__c}"  style="text-align:left" />
+                    <apex:column headerValue="Action" style="text-align: center;">
+                        <apex:inputCheckbox StyleClass="inputcheck" value="{!su.selected}"  rendered="{!su.insertado == false}"/>
+                        <apex:image id="del_oi" value="/img/permissions_deny16.gif" onclick="del_oi('{!su.line.Id}');" style="cursor:pointer;"  rendered="{!su.insertado == true}"/>
+                    </apex:column>
+                </apex:pageBlockTable>
+                
+                <apex:pageBlockButtons >
+                        <apex:commandButton value="Allocate Account to Catalog Price List" status="myStatus"  styleClass="calculate" reRender="linesSelector"  action="{!asignar_price_list}"/>
+                        <apex:commandButton value="Return to Catalog Price List" status="myStatus" action="{!return_project}"/>
+                </apex:pageBlockButtons>
+            </apex:pageBlock>
+           </apex:outputPanel>
+           <apex:outputpanel >
+               <apex:actionstatus id="myStatus">
+                   <apex:facet name="start">
+                       <div class="waitingSearchDiv" id="el_loading" style="background-color: #fbfbfb;
+                              height: 100%;opacity:0.65;width:100%;"> 
+                           <div class="waitingHolder" style="top: 74.2px; width: 91px;">
+                               <img class="waitingImage" src="/img/loading.gif" title="Please Wait..." />
+                               <span class="waitingDescription">Loading...</span>
+                           </div>
+                       </div>
+                   </apex:facet>
+               </apex:actionstatus>
+            </apex:outputpanel>
+             <div class="waitingSearchDiv" id="otherStatus" style="display:none;background-color:#fbfbfb;height:100%;opacity:0.65;width:100%;"> 
+                <div class="waitingHolder" style="top:74.2px;width:91px;">
+                    <img class="waitingImage" src="/img/loading.gif" title="Please Wait..." />
+                    <span class="waitingDescription">Loading...</span>
+                </div>
+            </div>
+            <apex:actionFunction name="delete_oi" action="{!delete_supplier_select}" status="myStatus" reRender="linesSelector"/>
+            <apex:inputHidden value="{!id_oi}" id="id_oi"/>
+        </apex:form>
+    </apex:page>

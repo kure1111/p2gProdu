@@ -1,0 +1,8 @@
+<apex:page standardController="Customer_Quote__c"  extensions="NEU_Customer_Order_Confirmation_pdf" standardStylesheets="false" renderAs="pdf">
+<apex:stylesheet value="{!$Resource.Invoice_Style_Ka}"/>
+    <apex:form >
+        <div id="contenedor">
+            <apex:outputText value="{!invoice}" escape="false"/>
+        </div>
+    </apex:form> 
+</apex:page>

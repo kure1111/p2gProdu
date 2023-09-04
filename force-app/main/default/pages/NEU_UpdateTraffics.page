@@ -1,0 +1,5 @@
+<apex:page controller="NEU_UpdateTraffics" action="{!update_traffics}">
+	<apex:form >
+		<apex:outputtext value="{!resultado}"/>
+	</apex:form>
+</apex:page>

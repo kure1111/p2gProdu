@@ -1,0 +1,26 @@
+<aura:component implements="force:lightningQuickActionWithoutHeader,force:hasRecordId">
+
+    <aura:html tag="style">
+        .slds-modal__container{
+        height : auto;
+        width: 70%;
+        max-width: 70rem;
+        }
+        .modal-body{
+        height : 600px !important;
+        max-height: 600px !important;
+        }
+        
+        .customFooter{
+        display: inline !important;
+        }
+	</aura:html> 
+
+    <aura:attribute name="recordId" type="String" />
+    <aura:attribute name="parentRecord" type="Object"/>
+	<aura:attribute name="simpleRecord" type="Object"/>
+	<aura:attribute name="error" type="String"/>
+
+    <aura:handler name="init" value="{! this }" action="{! c.doInit }" />
+
+</aura:component>

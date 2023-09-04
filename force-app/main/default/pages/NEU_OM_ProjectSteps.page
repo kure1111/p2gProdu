@@ -1,0 +1,72 @@
+<apex:page StandardController="Supply_Project__c" extensions="NEU_OM_ProjectSteps">
+<apex:includeScript value="{!$Resource.neu_jquery}"/> 
+    <apex:form >
+    <script>
+            $(document).ready(function() {
+                $('.tblank').click( function() {
+                    if({!todorelleno} == true) 
+                        window.open('/apex/ChatterGroup?id={!Supply_Project__c.Id}','_blank');
+                    else 
+                        alert("Auction Setup missing fields");
+                });
+            });
+    </script>  
+    <style>
+         .container
+        {
+            width: 100%;
+            float: left;
+        }
+        .lista_steps
+        {
+            padding: 0;
+            margin: 10px auto 0 auto;
+            width: 888px;
+        }
+        .li_step
+        {
+            float: left;
+            /*padding: 10px;*/
+            padding: 10px 2px 10px 2px;
+            color: white;
+            font-family: Arial;
+            font-size: 12px;
+            border-radius: 10px;
+            webkit-box-shadow: 0px 0px 10px 0px rgba(50, 50, 50, 1);
+            -moz-box-shadow: 0px 0px 10px 0px rgba(50, 50, 50, 1);
+            box-shadow: 0px 0px 7px 0px rgba(50, 50, 50, 1);
+            margin: 0 0 0 7px;
+            cursor: pointer;
+            width: 98px;
+            text-align: center;
+            height: 28px;
+            list-style-type: none;
+            margin-top: 6px;
+
+        }
+        .li_step a, .li_step a:hover
+        {
+            color: white;
+            font-family: Arial;
+            font-size: 12px;
+            text-decoration:none;
+        }
+        .step_active{background-color: #007bff; border: 1px solid #004896;}
+        .step_inactive{background-color: #9c9c9c; border: 1px solid #636363;}
+        html{background-color:#ffffff !important;}
+    </style>
+
+        <div id="container">
+            <ul class="lista_steps" >
+                <a href="{!$Site.BaseUrl}/apex/NEU_OM_UploadItems?id={!Supply_Project__c.Id}" target="_parent"><li class="li_step {!step_1}">1. Upload Items</li></a>
+                <a href="{!$Site.BaseUrl}/apex/NEU_MD_Associated_Documents?id={!Supply_Project__c.Id}" target="_parent"><li class="li_step {!step_2}">2. Upload Documents</li></a>
+                <a href="{!$Site.BaseUrl}/apex/NEU_OM_Upload_Suppliers_to_Invite?id={!Supply_Project__c.Id}" target="_parent"><li class="li_step {!step_3}">3. Upload Suppliers</li></a>
+                <a href="{!$Site.BaseUrl}/apex/NEU_OM_Send_Requests?id={!Supply_Project__c.Id}" target="_parent"><li class="li_step {!step_4}">4. Send Requests</li></a>
+                <li class="li_step {!step_5}" style="    cursor: default;">5. Offers Received</li>
+                <a href="{!$Site.BaseUrl}/apex/NEU_MD_PriceComparison?id={!Supply_Project__c.Id}" target="_parent"><li class="li_step {!step_6}">6. Price Comparison</li></a>
+                <li class="li_step {!step_7}"  style="    cursor: default;">7. Select Quote</li>
+                <li class="li_step {!step_8}"  style="    cursor: default;">8. Create Order</li>
+            </ul> 
+        </div>     
+    </apex:form>
+</apex:page>

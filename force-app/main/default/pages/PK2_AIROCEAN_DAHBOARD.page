@@ -1,0 +1,15 @@
+<apex:page lightningStylesheets="false">
+<head>
+  <base target="_top">
+  </base>
+</head> 
+    <apex:pageBlock title="DASHBOARD" mode="edit">
+        <apex:pageBlockSection title="" columns="3" >
+            <analytics:reportChart reportId="00O0Y000007wOsN" size="tiny"/>  
+            <analytics:reportChart reportId="00O0Y000007wWzW" size="tiny"/> 
+            <analytics:reportChart reportId="00O0Y000007wWzg" size="tiny"/>
+            <analytics:reportChart reportId="00O0Y000007wPHX" size="tiny"/>
+            <analytics:reportChart reportId="00O0Y000007wPHS" size="tiny"/>
+         </apex:pageblocksection>
+    </apex:pageBlock>
+ </apex:page>

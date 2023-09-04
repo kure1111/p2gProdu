@@ -1,0 +1,23 @@
+<apex:page showHeader="false" tabStyle="Account">
+<head>
+  <base target="_top">
+  </base>
+</head> 
+    <apex:pageBlock title="SERVICIO A CLIENTES" mode="edit">
+        <apex:pageBlockSection title="SC INTERNACIONAL" columns="3" >
+            <analytics:reportChart reportId="00O0Y000007wkcI" size="tiny"/>
+            <analytics:reportChart reportId="00O0Y000007wlF0" size="tiny"/>
+            <analytics:reportChart reportId="00O0Y000007wlFj" size="tiny"/>
+        </apex:pageblocksection>
+        <apex:pageBlockSection title="SC PAQUETERIA" columns="3" >
+            <analytics:reportChart reportId="00O0Y000007wkcm" size="tiny"/>
+            <analytics:reportChart reportId="00O0Y000007wlF5" size="tiny"/>
+            <analytics:reportChart reportId="00O0Y000007wlFt" size="tiny"/>  
+        </apex:pageblocksection>
+        <apex:pageBlockSection title="SC FLETES NACIONALES" columns="3" >
+            <analytics:reportChart reportId="00O0Y000007wkdG" size="tiny"/>
+            <analytics:reportChart reportId="00O0Y000007wlFP" size="tiny"/>
+            <analytics:reportChart reportId="00O0Y000007wlFo" size="tiny"/>  
+        </apex:pageblocksection>  
+     </apex:pageBlock>
+ </apex:page>

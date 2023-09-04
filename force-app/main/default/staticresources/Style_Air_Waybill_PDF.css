@@ -1,0 +1,22 @@
+/*Air Waybill*/
+
+@page { 
+	size: 216mm 279mm;
+	margin-top: 0.0cm; 
+	margin-left: 0.0cm; 
+	margin-right: 0.0cm; 
+	margin-bottom: 0.0cm;
+}
+
+#contenedor
+{
+	font-family: "Franklin Gothic Medium", "Franklin Gothic", "ITC Franklin Gothic", Arial, sans-serif;
+	font-size: 11px;
+}
+
+.referencia
+{
+	font-family: "Franklin Gothic Medium", "Franklin Gothic", "ITC Franklin Gothic", Arial, sans-serif;
+	font-size: 12px;
+	font-weight: bold;
+}

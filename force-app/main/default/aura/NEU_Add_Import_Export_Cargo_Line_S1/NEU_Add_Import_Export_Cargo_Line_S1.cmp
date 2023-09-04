@@ -1,0 +1,61 @@
+<aura:component >
+	
+    <aura:attribute name="shipment_type" type="String"/>
+    <aura:attribute name="cargo_line" type="Quote_Item_Line__c" default="{ 'sobjectType' : 'Quote_Item_Line__c'}"/>
+    <aura:attribute name="item" type="Sourcing_Item__c" default="{ 'sobjectType' : 'Sourcing_Item__c'}"/>
+    <aura:attribute name="conType" type="String" default=""/>
+    
+	<form class="slds-form--stacked">
+        
+		<lightning:layout >
+            <lightning:layoutItem padding="around-small" size="6">
+           		<label class="slds-form-element__label slds-no-flex" for="20:0" data-aura-rendered-by="24:0">
+            		<span class="" data-aura-rendered-by="28:0">Import-Export Cargo Line</span>
+            	</label>
+            	<ui:outputText aura:id="cargo_line_Name" value="{!v.cargo_line.Name}" />               
+            </lightning:layoutItem>
+        </lightning:layout>   		
+
+       	<lightning:layout >        
+            <lightning:layoutItem padding="around-small" size="9">
+                <ui:inputText aura:id="item_Name" value="{!v.item.Name}" required="true" label="Description of Goods"/>              
+            </lightning:layoutItem>
+        </lightning:layout>            
+            
+        <lightning:layout >              
+            <lightning:layoutItem padding="around-small" size="9">
+                <ui:inputText aura:id="cargo_line_Extension_Item_Name" required="true" value="{!v.cargo_line.Extension_Item_Name__c}" label="Description of Packaging"/>                
+            </lightning:layoutItem>            
+		</lightning:layout>
+        
+        <!-- CONTAINER TYPE -->
+        <!-- Este campo se muestra mediante un force:inputField ya que hasta el momento no existe una mejor alternativa. En el momento que la haya habría que reemplazarlo. -->
+        <!--
+        <aura:renderIf isTrue="{!v.shipment_type == 'Containerised'}">
+            <lightning:layout >
+                <lightning:layoutItem padding="around-small" size="6">
+                    <label class="slds-form-element__label slds-no-flex" for="20:0" data-aura-rendered-by="24:0">
+                        <span class="" data-aura-rendered-by="28:0">Container Type:</span>
+                    </label>                
+                    <force:inputField aura:id="containerType" value="{!v.cargo_line.Container_Type__c}"/>
+                </lightning:layoutItem>             
+            </lightning:layout>            
+         </aura:renderIf>
+        -->
+        <aura:renderIf isTrue="{!v.shipment_type == 'Containerised'}">
+            <lightning:layout >
+                <lightning:layoutItem padding="around-small" size="4">            
+                    <lightning:select aura:id="conType" class="blank espaciado" name="conType" label="Container Type" value="{!v.conType}">
+                        <option value="a0K0Y0000037DhcUAE">20'DC</option>
+                        <option value="a0K0Y0000037DhwUAE">40'DC</option>
+                        <option value="a0K0Y000000gUvUUAU">40'HC</option>
+                        <option value="a0K0Y0000037DiGUAU">20'OT</option>
+                        <option value="a0K0Y0000037DiLUAU">40'OT</option>       
+                    </lightning:select>
+                </lightning:layoutItem>             
+            </lightning:layout>                       
+        </aura:renderIf>        
+        
+	</form>
+    
+</aura:component>

@@ -1,0 +1,170 @@
+<apex:page StandardController="Shipment__c" extensions="NEU_ConfirmShipmentQuote">
+    <apex:form id="form">
+        <apex:outputPanel id="shipment">
+            <apex:pageBlock title="Shipment" mode="maindetail">
+                <apex:pageBlockButtons >
+                    <apex:commandButton value="Confirm Quote" action="{!confirm_quote}"/>
+                </apex:pageBlockButtons>
+                <apex:pageBlockSection title="Shipment References & Status">
+                    <apex:pageBlockSectionItem >
+                        <apex:outputLabel value="Shipment Number"/>
+                        <apex:outputLink value="/{!Shipment__c.Id}" target="_blank">{!Shipment__c.Name}</apex:outputLink>
+                    </apex:pageBlockSectionItem>
+                </apex:pageBlockSection>
+                <apex:pageBlockSection title="Cargo & Packaging Summary">
+                    <apex:pageBlockSectionItem >
+                        <apex:outputLabel value="Freight Mode"/>
+                        <apex:outputText value="{!Shipment__c.Freight_Mode__c}"/>
+                    </apex:pageBlockSectionItem>
+                    <apex:pageBlockSectionItem >
+                        <apex:outputText value=""/>
+                    </apex:pageBlockSectionItem>
+                    <apex:pageBlockSectionItem >
+                        <apex:outputLabel value="Service Mode"/>
+                        <apex:outputText value="{!Shipment__c.Service_Mode__c}"/>
+                    </apex:pageBlockSectionItem>
+                    <apex:pageBlockSectionItem >
+                        <apex:outputText value=""/>
+                    </apex:pageBlockSectionItem>
+                    <apex:pageBlockSectionItem >
+                        <apex:outputLabel value="Service Type"/>
+                        <apex:outputText value="{!Shipment__c.Service_Type__c}"/>
+                    </apex:pageBlockSectionItem>
+                    <apex:pageBlockSectionItem >
+                        <apex:outputText value=""/>
+                    </apex:pageBlockSectionItem>
+                    <apex:pageBlockSectionItem >
+                        <apex:outputLabel value="Container Size"/>
+                        <apex:outputField value="{!Shipment__c.Container_Size__c}"/>
+                    </apex:pageBlockSectionItem>
+                    <apex:pageBlockSectionItem >
+                        <apex:outputText value=""/>
+                    </apex:pageBlockSectionItem>
+                    <apex:pageBlockSectionItem >
+                        <apex:outputLabel value="Container Count"/>
+                        <apex:outputField value="{!Shipment__c.N_Containers__c}"/>
+                    </apex:pageBlockSectionItem>
+                </apex:pageBlockSection>
+                <apex:pageBlockSection title="Transport Data">
+                    <apex:pageBlockSectionItem >
+                        <apex:outputLabel value="Move Type"/>
+                        <apex:outputText value="{!Shipment__c.Move_Type__c}"/>
+                    </apex:pageBlockSectionItem>
+                </apex:pageBlockSection>
+                <apex:pageBlockSection title="Route & Vessel Data">
+                    <apex:pageBlockSectionItem >
+                        <apex:outputLabel value="Route"/>
+                        <apex:outputLink value="/{!Shipment__c.Route__c}" target="_blank">{!Shipment__c.Route__r.Name}</apex:outputLink>
+                    </apex:pageBlockSectionItem>
+                    <apex:pageBlockSectionItem >
+                        <apex:outputText value=""/>
+                    </apex:pageBlockSectionItem>
+                    <apex:pageBlockSectionItem >
+                        <apex:outputLabel value="Planned ETD"/>
+                        <apex:outputField value="{!Shipment__c.ETD_from_Point_of_Load__c}"/>
+                    </apex:pageBlockSectionItem>
+                    <apex:pageBlockSectionItem >
+                        <apex:outputLabel value="Planned ETA"/>
+                        <apex:outputField value="{!Shipment__c.ETA_Point_of_Discharge__c}"/>
+                    </apex:pageBlockSectionItem>
+                </apex:pageBlockSection>
+                <apex:pageBlockSection title="Shipment Services Summary">
+                    <apex:pageBlockSectionItem >
+                        <apex:outputLabel value="Total Services Sell Amount"/>
+                        <apex:outputField value="{!Shipment__c.Total_Services_Sell_Amount__c}"/>
+                    </apex:pageBlockSectionItem>
+                </apex:pageBlockSection>
+            </apex:pageBlock>
+        </apex:outputPanel>
+        <apex:outputPanel id="list_shipment_service_lines" styleclass="panel_shipwaves">
+            <apex:pageBlock title="Shipment Service Lines">
+                <apex:pageBlockTable value="{!shipment_service_lines}" var="s">
+                    <!--<apex:column >
+                        <apex:facet name="header">
+                            <span>Shipment Number</span>
+                        </apex:facet>
+                        <apex:outputLink value="/{!s.Service_Rate_Name__c}" target="_blank">{!s.Service_Rate_Name__r.Name}</apex:outputLink>
+                    </apex:column>
+                    <apex:column >
+                        <apex:facet name="header">
+                            <span>Route</span>
+                        </apex:facet>
+                        <apex:outputLink value="/{!s.Service_Rate_Name__r.Route__c}" target="_blank">{!s.Service_Rate_Name__r.Route__r.Name}</apex:outputLink>
+                    </apex:column>
+                    <apex:column >
+                        <apex:facet name="header">
+                            <span>Carrier Account</span>
+                        </apex:facet>
+                        <apex:outputLink value="/{!s.Service_Rate_Name__r.Carrier_Account__c}" target="_blank">{!s.Service_Rate_Name__r.Carrier_Account__r.Name}</apex:outputLink>
+                    </apex:column>
+                    <apex:column >
+                        <apex:facet name="header">
+                            <span>Rate Type</span>
+                        </apex:facet>
+                        <apex:outputText value="{!s.Rate_Type__c}"/>
+                    </apex:column>
+                    <apex:column >
+                        <apex:facet name="header">
+                            <span>Units</span>
+                        </apex:facet>
+                        <apex:outputText value="{!s.Units__c}"/>
+                    </apex:column>
+                    <apex:column >
+                        <apex:facet name="header">
+                            <span>Shipment Sell Net Price</span>
+                        </apex:facet>
+                        <apex:outputField value="{!s.Shipment_Sell_Net_Price__c}"/>
+                    </apex:column>
+                    <apex:column >
+                        <apex:facet name="header">
+                            <span>Sell Amount</span>
+                        </apex:facet>
+                        <apex:outputField value="{!s.Sell_Amount__c}"/>
+                    </apex:column>-->
+                    <apex:column >
+                        <apex:facet name="header">
+                            <span>Service Line</span>
+                        </apex:facet>
+                        <apex:outputLink value="/{!s.Id}" target="_blank">{!s.Name}</apex:outputLink>
+                    </apex:column>
+                     <apex:column >
+                        <apex:facet name="header">
+                            <span>Service Rate Name</span>
+                        </apex:facet>
+                        <apex:outputLink value="/{!s.Service_Rate_Name__c}" target="_blank">{!s.Service_Rate_Name__r.Name}</apex:outputLink>
+                    </apex:column>
+                     <apex:column >
+                        <apex:facet name="header">
+                            <span>Service Rate Category</span>
+                        </apex:facet>
+                        <apex:outputText value="{!s.Service_Rate_Category__c}"/>
+                    </apex:column>
+                    <apex:column >
+                        <apex:facet name="header">
+                            <span>Rate Type</span>
+                        </apex:facet>
+                        <apex:outputText value="{!s.Rate_Type__c}"/>
+                    </apex:column>
+                    <apex:column >
+                        <apex:facet name="header">
+                            <span>Container Type</span>
+                        </apex:facet>
+                        <apex:outputLink value="/{!s.Service_Rate_Name__r.Container_Type__c}" target="_blank">{!s.Service_Rate_Name__r.Container_Type__r.Name}</apex:outputLink>
+                    </apex:column>
+                    <apex:column >
+                        <apex:facet name="header">
+                            <span>Units</span>
+                        </apex:facet>
+                        <apex:outputText value="{!s.Units__c}"/>
+                    </apex:column>
+                    <apex:column >
+                        <apex:facet name="header">
+                            <span>Sell Amount</span>
+                        </apex:facet>
+                        <apex:outputField value="{!s.Sell_Amount__c}"/>
+                    </apex:column>
+                </apex:pageBlockTable>
+            </apex:pageBlock>
+        </apex:outputPanel>
+    </apex:form>
+</apex:page>

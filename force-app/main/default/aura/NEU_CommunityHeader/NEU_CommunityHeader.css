@@ -1,0 +1,9 @@
+.THIS #header_top
+{
+    background-image:url(/customers/resource/logo_community);
+    width:100%;
+    height:60px; 
+    background-color:#FFF30B;
+    background-repeat:no-repeat;
+    background-position:left;
+}

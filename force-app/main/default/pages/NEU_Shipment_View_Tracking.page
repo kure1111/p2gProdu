@@ -1,0 +1,603 @@
+<apex:page id="page" StandardController="Shipment__c" extensions="NEU_Shipment_View_Tracking" action="{!getTracking}" lightningStylesheets="false">
+    <script type="text/javascript">
+        var __sfdcSessionId = '{!GETSESSIONID()}';
+    </script>
+    <apex:includeScript value="{!$Resource.neu_jquery}"/> 
+    <apex:includeScript value="{!$Resource.jquery_1_10_2}"/> 
+    <apex:includeScript value="{!$Resource.jquery_ui_1_10_3}"/>
+    <apex:includeScript value="{!$Resource.neurored_jquery}"/>  
+    <script src="/soap/ajax/42.0/connection.js" type="text/javascript"></script>
+    <script src="/soap/ajax/42.0/apex.js" type="text/javascript"></script>
+    <apex:stylesheet value="{!URLFOR($Resource.jquery_ui_1_10_3_css,'jquery-ui-1.10.3.min.css')}"/>
+    
+    <style>
+        .btnBlue{
+           /* background-color: rgba(27, 82, 151, 1) !important;
+            border-color: rgba(27, 82, 151, 1) !important;
+            color: white !important;*/
+        }
+        body .bDetailBlock.bPageBlock .pbBody .dataCol, body .bDetailBlock.bPageBlock .pbBody .labelCol, body .bDetailBlock.bPageBlock .detailList .empty{
+            border-bottom: 1px solid #ececec;
+        }
+        
+        body .bDetailBlock.bPageBlock .pbBody .pbSubheader.brandTertiaryBgr{
+            z-index: 1;
+            position: relative;
+            height: 50px; 
+            background-color: white;
+        }
+        
+        .ui-autocomplete-loading {
+            background: white url("/img/loading.gif") right center no-repeat;
+        }
+        
+        /*.opportunityTab .pageTitleIcon, .individualPalette .opportunityBlock .pageTitleIcon{
+            background-position: initial;
+            background-image: url('https://media.glassdoor.com/sqll/484559/truckstop-com-squarelogo-1466712708736.png');
+            background-size: 35px;
+        }*/
+    </style>
+    <apex:form id="form" >
+        <script>
+            var source_map_origin_address = [''];
+            var source_map_destination_address = [''];
+            var source_map_stop_address = [''];  
+            var parsed_data_origin;
+            var parsed_data_destination;
+            var parsed_data_stop;
+            
+            var typingTimer;                //timer identifier
+            var doneTypingInterval = 1000;  //time in ms, 5 second for example
+            
+            //user is "finished typing," do something
+            function search_origin_address_truckstop () {
+                var element = $('[id$=search_Origin_Address]');
+                element.addClass('ui-autocomplete-loading').prop("readonly", true);
+                var x = sforce.apex.execute(
+                    'NEU_Shipment_View_Tracking', 
+                    'getAddressTruckstop', 
+                    {
+                        address : element.val(),
+                        shipmentID : $('[id$=shipment_id]').val(),
+                        point : 'Origin'
+                    }
+                );
+                
+                console.log('Origen: ' + x);
+                
+                if(x[0] != 'error'){
+                    parsed_data_origin = JSON.parse(x);
+                    source_map_origin_address= [parsed_data_origin.data.address + ', ' + parsed_data_origin.data.city + ', ' + parsed_data_origin.data.state + ', ' + parsed_data_origin.data.country];
+                }else{
+                    source_map_origin_address= [];
+                }
+                
+                
+                element.removeClass('ui-autocomplete-loading').prop("readonly", false);
+                element.autocomplete( "search", element.val() );
+            }
+            
+            function search_destination_address_truckstop () {
+                var element = $('[id$=search_Destination_Address]');
+                
+                element.addClass('ui-autocomplete-loading').prop("readonly", true);
+                var x = sforce.apex.execute(
+                    'NEU_Shipment_View_Tracking', 
+                    'getAddressTruckstop', 
+                    {
+                        address : element.val(),
+                        shipmentID : $('[id$=shipment_id]').val(),
+                        point : 'Destination'
+                    }
+                );
+                
+                console.log('Destino: ' + x);
+                
+                if(x[0] != 'error'){
+                    parsed_data_destination = JSON.parse(x);
+                    source_map_destination_address= [parsed_data_destination.data.address + ', ' + parsed_data_destination.data.city + ', ' + parsed_data_destination.data.state + ', ' + parsed_data_destination.data.country];
+                }else{
+                    source_map_destination_address= [];
+                }
+                
+                element.removeClass('ui-autocomplete-loading').prop("readonly", false);
+                element.autocomplete( "search", element.val() );
+            }
+            
+            function search_stop_address_truckstop () {
+                var element = $('[id$=search_Stop_Address]');
+                
+                element.addClass('ui-autocomplete-loading').prop("readonly", true);
+                var x = sforce.apex.execute(
+                    'NEU_Shipment_View_Tracking', 
+                    'getAddressStopTruckstop', 
+                    {
+                        address : element.val(),
+                        countryID : $('[id$=stop_country_id_lkid]').val(),
+                        stateID : $('[id$=stop_state_id_lkid]').val(),
+                        locationID : $('[id$=stop_location_id_lkid]').val(),
+                        point : 'Stop'
+                    }
+                );
+                
+                console.log('Stop: ' + x);
+                
+                if(x[0] != 'error'){
+                    parsed_data_stop = JSON.parse(x);
+                    source_map_stop_address= [parsed_data_stop.data.address + ', ' + parsed_data_stop.data.city + ', ' + parsed_data_stop.data.state + ', ' + parsed_data_stop.data.country];
+                }else{
+                    source_map_stop_address= [];
+                }
+                
+                element.removeClass('ui-autocomplete-loading').prop("readonly", false);
+                element.autocomplete( "search", element.val() );
+            }
+            
+            function search_address(point) {
+                clearTimeout(typingTimer);
+                if($('[id$=search_Origin_Address]').val() == '' && point == 'Origin'){
+                    source_map_origin_address= [];
+                    $("[id*='origin_Country_Code']").val('');
+                    $("[id*='origin_State_Code']").val('');
+                    $("[id*='origin_City']").val('');
+                    $("[id*='origin_Postal_Code']").val('');
+                    $("[id*='origin_Address']").val('');
+                    $('[id$=search_Origin_Address]').val('');
+                    checkChanges();
+                }else if ($('[id$=search_Origin_Address]').val() && point == 'Origin'){
+                    typingTimer = setTimeout(search_origin_address_truckstop, doneTypingInterval);
+                }
+                
+                if($('[id$=search_Destination_Address]').val() == '' && point == 'Destination'){
+                    source_map_origin_address= [];
+                    $("[id*='destination_Country_Code']").val('');
+                    $("[id*='destination_State_Code']").val('');
+                    $("[id*='destination_City']").val('');
+                    $("[id*='destination_Postal_Code']").val('');
+                    $("[id*='destination_Address']").val('');
+                    $('[id$=search_Destination_Address]').val('');
+                    checkChanges();
+                }else if($('[id$=search_Destination_Address]').val() && point == 'Destination') {
+                    typingTimer = setTimeout(search_destination_address_truckstop, doneTypingInterval);
+                }
+                
+                if($('[id$=search_Stop_Address]').val() == ''){
+                    source_map_origin_address= [];
+                    $("[id*='stop_Country_Code']").val('');
+                    $("[id*='stop_State_Code']").val('');
+                    $("[id*='stop_City']").val('');
+                    $("[id*='stop_Postal_Code']").val('');
+                    $("[id*='stop_Address']").val('');
+                    $('[id$=search_Stop_Address]').val('');
+                }else if($('[id$=search_Stop_Address]').val() && point == 'Stop') {
+                    typingTimer = setTimeout(search_stop_address_truckstop, doneTypingInterval);
+                }
+            }
+            
+            function toggle_form_stop(){
+                $('.editable-stop').each(function() {
+                    if($(this).css('display') == 'none'){
+                        $(this).show();
+                    }else{
+                        $(this).hide();
+                    }
+                });
+                
+                if($('.editable-stop-fields').css('display') != 'none'){
+                    $('.editable-stop-fields').css({ "display": "block"});
+                }
+            }
+            
+            function reload_iframe_truckstop(){
+                $('[id$=truckstop_iframe]').prop('src', $('[id$=truckstop_iframe]').prop('src'));
+                
+                setTimeout(reload_iframe_truckstop, 300000);
+            }
+            
+            $(document).on('ready', function(){
+                setTimeout(reload_iframe_truckstop, 300000); //Se llamará cada 5 segundos y se refrescarán los datos de dicha tabla que se cargan mediante la función LOAD de JQuery.
+            });
+            
+            $( function() {
+                $('[id$=search_Origin_Address]').autocomplete({
+                    minLength: 0,
+                    source: function (request, response) {
+                        response(source_map_origin_address);
+                    },
+                    select: function( event, ui ) {
+                        $("[id*='origin_Country_Code']").val(parsed_data_origin.data.country);
+                        $("[id*='origin_State_Code']").val(parsed_data_origin.data.state);
+                        $("[id*='origin_City']").val(parsed_data_origin.data.city);
+                        $("[id*='origin_Postal_Code']").val(parsed_data_origin.data.zip);
+                        $("[id*='origin_Address']").val(parsed_data_origin.data.address);
+                        $('[id$=search_Origin_Address]').val(parsed_data_origin.data.address);
+                        checkChanges();
+                        return false;
+                    }
+                }).focus(function(){
+                    if($(this).val() != ''){
+                        if(source_map_origin_address[0] == ''){
+                            search_origin_address_truckstop();
+                        }else{
+                            $(this).autocomplete( "search", $(this).val() );
+                        }
+                    }
+                });
+                
+                $('[id$=search_Destination_Address]').autocomplete({
+                    minLength: 0,
+                    source: function (request, response) {
+                        response(source_map_destination_address);
+                    },
+                    select: function( event, ui ) {
+                        $("[id*='destination_Country_Code']").val(parsed_data_destination.data.country);
+                        $("[id*='destination_State_Code']").val(parsed_data_destination.data.state);
+                        $("[id*='destination_City']").val(parsed_data_destination.data.city);
+                        $("[id*='destination_Postal_Code']").val(parsed_data_destination.data.zip);
+                        $("[id*='destination_Address']").val(parsed_data_destination.data.address);
+                        $('[id$=search_Destination_Address]').val(parsed_data_destination.data.address);
+                        checkChanges();
+                        return false;
+                    }
+                }).focus(function(){
+                    if($(this).val() != ''){
+                        if(source_map_destination_address[0] == ''){
+                            search_destination_address_truckstop();
+                        }else{
+                            $(this).autocomplete( "search", $(this).val() );
+                        }
+                    }
+                });
+                
+                $('[id$=btn-new-note]').click(function(){
+                    $('.editable-note').toggle();
+                    $('.editable-note-fields').css({ "display": "block"});
+                    return false;
+                });
+                
+                $('[id$=btn-cancel-note]').click(function(){
+                    $('.editable-note').toggle();
+                    return false;
+                });
+                
+            });
+        </script>
+        <apex:actionFunction name="checkChanges" action="{!check_differences_with_truckstop}" reRender="form"/>
+        
+        <apex:inputHidden value="{!shipment.Id}" id="shipment_id"/>
+        
+        <apex:inputHidden id="origin_Country_Code" value="{!shipment_track.Truckstop_Origin_Country_Code__c}"/>
+        <apex:inputHidden id="origin_State_Code" value="{!shipment_track.Truckstop_Origin_State_Code__c}"/>
+        <apex:inputHidden id="origin_City" value="{!shipment_track.Truckstop_Origin_City__c}"/>
+        <apex:inputHidden id="origin_Postal_Code" value="{!shipment_track.Truckstop_Origin_Postal_Code__c}" />
+        <apex:inputHidden id="origin_Address" value="{!shipment_track.Truckstop_Origin_Address__c}"/>
+        <apex:inputHidden id="destination_Country_Code" value="{!shipment_track.Truckstop_Destination_Country_Code__c}"/>
+        <apex:inputHidden id="destination_State_Code" value="{!shipment_track.Truckstop_Destination_State_Code__c}"/>
+        <apex:inputHidden id="destination_City" value="{!shipment_track.Truckstop_Destination_City__c}"/>
+        <apex:inputHidden id="destination_Postal_Code" value="{!shipment_track.Truckstop_Destination_Postal_Code__c}" />
+        <apex:inputHidden id="destination_Address" value="{!shipment_track.Truckstop_Destination_Address__c}"/>
+        
+
+        
+        <apex:sectionHeader title="{!$ObjectType.Shipment_Track__c.labelplural}" subtitle="Truckstop Tracking"/>
+        <span style="position: relative; top: -36px; left: 250px; font-size: 17px;">
+            <a href="{!$Site.BaseUrl}/{!shipment.Id}" onblur="LookupHoverDetail.getHover(neu_getId(this)).hide();" onfocus="LookupHoverDetail.getHover(neu_getId(this),'{!$Site.BaseUrl}/{!shipment.Id}/m?isAjaxRequest=1').show();" onmouseout="LookupHoverDetail.getHover(neu_getId(this)).hide();" onmouseover="LookupHoverDetail.getHover(neu_getId(this),'{!$Site.BaseUrl}/{!shipment.Id}/m?isAjaxRequest=1').show();" target="_blank" id="new_id_1">{!shipment.Name}</a>
+        </span>
+        
+        <apex:pageBlock id="block1" mode="maindetail">
+            <apex:pageBlockButtons location="top">
+                <apex:outputPanel id="shipment_track_buttons">
+                    <apex:commandButton action="{!resubmitTracking}" value="Resubmit Tracking" status="myStatus" styleClass="slds-vf-button_brand" reRender="form, form_map" oncomplete="reload_iframe_truckstop();" rendered="{!complete_data==true && shipment_track.Id != null && (shipment_track.Current_Status__c == 'Declined' || shipment_track.Current_Status__c == 'Cancelled' || shipment_track.Current_Status__c == 'NoResponse' || (differences_route == true || differences_operator == true))}"/>
+                    <apex:commandButton action="{!cancelTracking}" value="Cancel Track" status="myStatus" styleClass="slds-vf-button_brand" reRender="form, form_map"  oncomplete="reload_iframe_truckstop();" rendered="{!shipment_track.Id != null && shipment_track.Current_Status__c == 'Requested'}"/>
+                    <apex:commandButton action="{!createTracking}" value="Create Track" status="myStatus" styleClass="slds-vf-button_brand" reRender="form, form_map"  oncomplete="reload_iframe_truckstop();" rendered="{!complete_data==true && shipment_track.Id == null}"/>
+                </apex:outputPanel>
+            </apex:pageBlockButtons> 
+            <apex:pageMessages id="warning"/>
+            <apex:pageBlockSection title="Shipment Tracking Information" columns="2">
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="Shipment"/>
+                    <apex:outputLink value="/{!shipment.Id}" target="_blank">{!shipment.Name}</apex:outputLink>
+                </apex:pageBlockSectionItem>
+                <apex:pageBlockSectionItem />
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="Tracking Number"/>
+                    <apex:outputText value="{!shipment_track.Name}" />
+                </apex:pageBlockSectionItem>
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="Status"/>
+                    <apex:outputText value="{!shipment_track.Current_Status__c}" />
+                </apex:pageBlockSectionItem>
+                <apex:pageBlockSectionItem />
+                <apex:pageBlockSectionItem />
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="{!$ObjectType.Shipment__c.fields.ETD_from_Point_of_Load__c.Label}"/>
+                    <apex:outputField value="{!shipment.ETD_from_Point_of_Load__c}"/>
+                </apex:pageBlockSectionItem>
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="{!$ObjectType.Shipment__c.fields.ETA_Point_of_Discharge__c.Label}"/>
+                    <apex:outputField value="{!shipment.ETA_Point_of_Discharge__c}"/>
+                </apex:pageBlockSectionItem>
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="{!$ObjectType.Shipment__c.fields.ETD_Time_from_Point_of_Load__c.Label}"/>
+                    <apex:outputField value="{!shipment.ETD_Time_from_Point_of_Load__c}"/>
+                </apex:pageBlockSectionItem>
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="{!$ObjectType.Shipment__c.fields.ETA_Time_Point_of_Discharge__c.Label}"/>
+                    <apex:outputField value="{!shipment.ETA_Time_Point_of_Discharge__c}"/>
+                </apex:pageBlockSectionItem>
+                <apex:pageBlockSectionItem />
+                <apex:pageBlockSectionItem />
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="{!$ObjectType.Shipment__c.fields.Country_of_Load__c.Label}"/>
+                    <apex:outputField value="{!shipment.Country_of_Load__c}"/>
+                </apex:pageBlockSectionItem>
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="{!$ObjectType.Shipment__c.fields.Country_of_Discharge__c.Label}"/>
+                    <apex:outputField value="{!shipment.Country_of_Discharge__c}"/>
+                </apex:pageBlockSectionItem>
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="{!$ObjectType.Shipment__c.fields.State_of_Load__c.Label}"/>
+                    <apex:outputField value="{!shipment.State_of_Load__c}" id="state_of_load"/>
+                </apex:pageBlockSectionItem>
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="{!$ObjectType.Shipment__c.fields.State_of_Discharge__c.Label}"/>
+                    <apex:outputField value="{!shipment.State_of_Discharge__c}" id="state_of_discharge"/>
+                </apex:pageBlockSectionItem>
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="{!$ObjectType.Shipment__c.fields.Site_of_Load__c.Label}"/>
+                    <apex:outputField value="{!shipment.Site_of_Load__c}" id="site_of_load"/>
+                </apex:pageBlockSectionItem>
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="{!$ObjectType.Shipment__c.fields.Site_of_Discharge__c.Label}"/>
+                    <apex:outputField value="{!shipment.Site_of_Discharge__c}" id="site_of_discharge"/>
+                </apex:pageBlockSectionItem>
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="{!$ObjectType.Shipment__c.fields.Origin_Address_Shipment__c.Label}" />
+                    <apex:outputPanel >
+                        <apex:inputTextarea id="search_Origin_Address" value="{!searchOriginAddress}" onkeyup="search_address('Origin');" styleClass="ui-autocomplete-input" style="width:98%;"/>
+                        <!-- <apex:outputText value="{!searchOriginAddress}" rendered="{!shipment_track.Id != null && (shipment_track.Current_Status__c == 'Declined' || shipment_track.Current_Status__c == 'Cancelled' || shipment_track.Current_Status__c == 'NoResponse' || (differences_route == true || differences_operator == true))}"/> -->
+                    </apex:outputPanel>
+                </apex:pageBlockSectionItem>
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="{!$ObjectType.Shipment__c.fields.Delivery_Address_Shipment__c.Label}" />
+                    <apex:outputPanel >
+                        <apex:inputTextarea id="search_Destination_Address" value="{!searchDestinationAddress}" onkeyup="search_address('Destination');" styleClass="ui-autocomplete-input" style="width:98%;"/>
+                        <!-- <apex:outputText value="{!searchDestinationAddress}" rendered="{!shipment_track.Id != null && (shipment_track.Current_Status__c == 'Declined' || shipment_track.Current_Status__c == 'Cancelled' || shipment_track.Current_Status__c == 'NoResponse' || (differences_route == true || differences_operator == true))}"/> -->
+                    </apex:outputPanel>
+                </apex:pageBlockSectionItem>
+                
+                <apex:pageBlockSectionItem />
+                <apex:pageBlockSectionItem />
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="{!$ObjectType.Shipment__c.fields.National_Operator__c.Label}"/>
+                    <apex:outputField value="{!shipment.National_Operator__c}"/>
+                </apex:pageBlockSectionItem>
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="{!$ObjectType.Shipment__c.fields.Vehicle__c.Label}"/>
+                    <apex:outputField value="{!shipment.Vehicle__c}"/>
+                </apex:pageBlockSectionItem>
+            </apex:pageBlockSection>
+            
+            <apex:actionFunction name="editStop" action="{!editStop}" status="myStatus" reRender="form" oncomplete="toggle_form_stop();"><apex:param value="" assignTo="{!shipment_stop.Id}" name="stop_id" /></apex:actionFunction>
+            <apex:actionFunction name="deleteStop" action="{!deleteStop}" status="myStatus" reRender="form"><apex:param value="" assignTo="{!shipment_stop.Id}" name="stop_id" /></apex:actionFunction>
+            <apex:pageBlockSection title="Stops" columns="1">
+                <apex:outputPanel id="form_stop" style="margin-top: -40px;display: block;position: relative;z-index: 1;text-align: center;">
+                
+                    <input class="btn editable-stop btnBlue" id="btn-new-stop" type="button" value="New Stop" onclick="toggle_form_stop();"/>
+                    <apex:commandButton styleClass="slds-vf-button_brand" id="btn-save-stop" action="{!saveStop}" value="Save" style="display:none;" status="myStatus" reRender="form"/>
+                    <apex:commandButton styleClass="slds-vf-button_brand" id="btn-cancel-stop" action="{!cleanStop}" value="Cancel" style="display:none;" status="myStatus" reRender="form"/>
+                    <!-- <input class="btn editable-stop" id="btn-cancel-stop" type="button" value="Cancel" style="display:none;"  onclick="toggle_form_stop();"/> -->
+                    
+                    <script>
+                        $( function() {
+                            $('[id$=search_Stop_Address]').autocomplete({
+                                minLength: 0,
+                                source: function (request, response) {
+                                    response(source_map_stop_address);
+                                },
+                                select: function( event, ui ) {
+                                    $("[id*='stop_Country_Code']").val(parsed_data_stop.data.country);
+                                    $("[id*='stop_State_Code']").val(parsed_data_stop.data.state);
+                                    $("[id*='stop_City']").val(parsed_data_stop.data.city);
+                                    $("[id*='stop_Postal_Code']").val(parsed_data_stop.data.zip);
+                                    $("[id*='stop_Address']").val(parsed_data_stop.data.address);
+                                    $('[id$=search_Stop_Address]').val(parsed_data_stop.data.address);
+                                    return false;
+                                }
+                            }).focus(function(){
+                                if($(this).val() != ''){
+                                    if(source_map_stop_address[0] == ''){
+                                        search_stop_address_truckstop();
+                                    }else{
+                                        $(this).autocomplete( "search", $(this).val() );
+                                    }
+                                }
+                            });
+                        });
+                    </script>
+                    
+                    <apex:outputPanel styleClass="editable-stop editable-stop-fields" style="display:none;text-align: left;margin-bottom: 20px;margin-top: 7px;">
+                        <apex:inputHidden id="stop_Country_Code" value="{!shipment_stop.Truckstop_Country_Code__c}"/>
+                        <apex:inputHidden id="stop_State_Code" value="{!shipment_stop.Truckstop_State_Code__c}"/>
+                        <apex:inputHidden id="stop_City" value="{!shipment_stop.Truckstop_City__c}"/>
+                        <apex:inputHidden id="stop_Postal_Code" value="{!shipment_stop.Truckstop_Postal_Code__c}" />
+                        <apex:inputHidden id="stop_Address" value="{!shipment_stop.Truckstop_Address__c}"/>
+                        <apex:pageBlockSection showHeader="false" columns="2">
+                            <apex:pageBlockSectionItem >
+                                <apex:outputLabel value="{!$ObjectType.Shipment_Stop__c.fields.Name.Label}"/>
+                                <apex:inputField value="{!shipment_stop.Name}"/>
+                            </apex:pageBlockSectionItem>
+                            <apex:pageBlockSectionItem >
+                                <apex:outputLabel value="{!$ObjectType.Shipment_Stop__c.fields.Estimated_Time_of_Arrival__c.Label}"/>
+                                <apex:inputField value="{!shipment_stop.Estimated_Time_of_Arrival__c}"/>
+                            </apex:pageBlockSectionItem>
+                            <apex:pageBlockSectionItem >
+                                <apex:outputLabel value="{!$ObjectType.Shipment_Stop__c.fields.Country__c.Label}"/>
+                                <apex:inputField id="stop_country_id" value="{!shipment_stop.Country__c}"/>
+                            </apex:pageBlockSectionItem>
+                            <apex:pageBlockSectionItem >
+                                <apex:outputLabel value="{!$ObjectType.Shipment_Stop__c.fields.State__c.Label}"/>
+                                <apex:inputField id="stop_state_id" value="{!shipment_stop.State__c}"/>
+                            </apex:pageBlockSectionItem>
+                            <apex:pageBlockSectionItem >
+                                <apex:outputLabel value="{!$ObjectType.Shipment_Stop__c.fields.Location__c.Label}"/>
+                                <apex:inputField id="stop_location_id" value="{!shipment_stop.Location__c}"/>
+                            </apex:pageBlockSectionItem>
+                            <apex:pageBlockSectionItem >
+                                <apex:outputLabel value="{!$ObjectType.Shipment_Stop__c.fields.Address__c.Label}"/>
+                                <apex:inputTextarea id="search_Stop_Address" value="{!searchStopAddress}" onkeyup="search_address('Stop');" styleClass="ui-autocomplete-input" style="width:98%;"/>
+                            </apex:pageBlockSectionItem>
+                        </apex:pageBlockSection>
+                    </apex:outputPanel>
+                </apex:outputPanel>
+                
+                <apex:pageBlockTable id="lst_shipment_stop" value="{!lst_shipment_stop}" var="stop" style="margin-top:20px;" rendered="{!lst_shipment_stop.size > 0}">
+                    <apex:column headerValue="Actions">
+                        <apex:outputLink onclick="editStop('{!stop.Id}');return false;" style="margin-left:5px;">Edit</apex:outputLink>
+                        <apex:outputLink onclick="if(confirm('Are you sure you want to delete the record?')){deleteStop('{!stop.Id}');}return false;" style="margin-left:5px;">Del</apex:outputLink>
+                    </apex:column>
+                    <apex:column value="{!stop.Name}" headerValue="{!$ObjectType.Shipment_Stop__c.fields.Name.Label}"/>
+                    <apex:column value="{!stop.Truckstop_Address__c}" headerValue="{!$ObjectType.Shipment_Stop__c.fields.Address__c.Label}"/>
+                    <apex:column value="{!stop.Location__c}" headerValue="{!$ObjectType.Shipment_Stop__c.fields.Location__c.Label}"/>
+                    <apex:column value="{!stop.State__c}" headerValue="{!$ObjectType.Shipment_Stop__c.fields.State__c.Label}"/>
+                    <apex:column value="{!stop.Country__c}" headerValue="{!$ObjectType.Shipment_Stop__c.fields.Country__c.Label}"/>
+                    <apex:column value="{!stop.Estimated_Time_of_Arrival__c}" headerValue="{!$ObjectType.Shipment_Stop__c.fields.Estimated_Time_of_Arrival__c.Label}"/>
+                </apex:pageBlockTable>
+            </apex:pageBlockSection>
+            
+            <apex:pageBlockSection title="Events" columns="1" rendered="{!shipment_track.Id != null}">
+                <apex:outputPanel style="margin-top: -40px;display: block;position: relative;z-index: 1;text-align: center;" rendered="{!shipment_track.Id != null && shipment_track.Current_Status__c != 'Cancelled' && shipment_track.Current_Status__c != 'Declined' && shipment_track.Current_Status__c != 'NoResponse'}">
+                    <input class="btn editable-note" id="btn-new-note" type="button" value="New Note" />
+                    <apex:commandButton styleClass="slds-vf-button_brand" id="btn-save-note" action="{!saveNote}" value="Save" status="myStatus" style="display:none;" rerender="form, form_map"/>
+                    <input class="btn editable-note" id="btn-cancel-note" type="button" value="Cancel" style="display:none;"/>
+                    
+                    <apex:outputPanel styleClass="editable-note editable-note-fields" style="display:none;text-align: left;margin-bottom: 20px;margin-top: 7px;">
+                        <apex:pageBlockSectionItem >
+                            <apex:outputLabel value="Note" style="width: 10%;display: inline-block; color: #4a4a56;text-align: right; text-align: right; font-size: 91%; font-weight: bold;"/>
+                            <apex:inputTextarea value="{!new_note}" style="width: 88%;  border-radius: 3px; border-style: groove;margin-left: 1%;vertical-align: top;"/>
+                        </apex:pageBlockSectionItem>
+                    </apex:outputPanel>
+                </apex:outputPanel>
+                
+                <apex:pageBlockTable value="{!lst_notes}" var="note" style="margin-top:20px;" rendered="{!lst_notes.size > 0}">
+                    <apex:column value="{!note.category_note}" headerValue="Event"/>
+                    <apex:column value="{!note.check_calls}" headerValue="Check Call"/>
+                    <apex:column value="{!note.message}" headerValue="Message"/>
+                    <apex:column value="{!note.format_date_time}" headerValue="Date"/>
+                    <apex:column value="{!note.user}" headerValue="User"/>
+                </apex:pageBlockTable>
+            </apex:pageBlockSection>
+        </apex:pageBlock>
+    </apex:form>
+    
+    <apex:form id="form_file" >
+        <script>
+            $( function() {
+                $('[id$=btn-new-document]').click(function(){
+                    $('.editable-document').toggle();
+                    $('.editable-document-fields').css({ "display": "block"});
+                    return false;
+                });
+                
+                $('[id$=btn-cancel-document]').click(function(){
+                    $('.editable-document').toggle();
+                    return false;
+                });
+            });
+        </script>
+        <apex:pageBlock id="block2" mode="maindetail">
+            <apex:pageBlockSection title="Documents" columns="1" rendered="{!shipment_track.Id != null}">
+                <apex:outputPanel style="margin-top: -40px;display: block;position: relative;z-index: 1;text-align: center;" rendered="{!shipment_track.Id != null && shipment_track.Current_Status__c != 'Cancelled' && shipment_track.Current_Status__c != 'Declined' && shipment_track.Current_Status__c != 'NoResponse'}">
+                    <input class="btn editable-document" id="btn-new-document" type="button" value="New Document" />
+                    <apex:commandButton styleClass="slds-vf-button_brand" id="btn-save-document" action="{!uploadDocument}" value="Upload" style="display:none;"/>
+                    <input class="btn editable-document" id="btn-cancel-document" type="button" value="Cancel" style="display:none;"/>
+                    
+                    <apex:outputPanel styleClass="editable-document editable-document-fields" style="display:none;text-align: left;margin-bottom: 20px;margin-top: 7px;">
+                        <apex:pageBlockSection showHeader="false" columns="2">
+                            <apex:pageBlockSectionItem >
+                                <apex:actionRegion >
+                                    <apex:outputLabel value="Document"/>
+                                    <apex:inputFile value="{!new_document_body}" filename="{!new_document_name}"/>
+                                </apex:actionRegion>
+                            </apex:pageBlockSectionItem>
+                            <apex:pageBlockSectionItem >
+                                <apex:outputLabel value="Type Document"/>
+                                <apex:selectList value="{!new_document_type}" multiselect="false" size="1">
+                                    <apex:selectOptions value="{!ftypes}"/>
+                                </apex:selectList>
+                            </apex:pageBlockSectionItem>
+                        </apex:pageBlockSection>
+                    </apex:outputPanel>
+                </apex:outputPanel>
+                
+                <apex:pageBlockTable id="lst_documents" value="{!lst_documents}" var="document" style="margin-top:20px;" rendered="{!lst_documents.size > 0}">
+                    <apex:column headerValue="Actions">
+                        <apex:outputLink value="{!document.url}" target="_blank" rendered="{!document.url != null}" style="margin-left:5px;">View</apex:outputLink>
+                        <apex:commandLink action="{!saveDocument}" value="Save" rendered="{!document.url == null}" style="margin-left:5px;">
+                            <apex:param name="documentId" value="{!document.documentId}" />
+                            <apex:param name="filename" value="{!document.fileName}" />
+                            <apex:param name="type_document" value="{!document.type_Z}" />
+                        </apex:commandLink>
+                        <apex:commandLink action="{!deleteDocument}" value="Del" style="margin-left:5px;">
+                            <apex:param name="documentId" value="{!document.documentId}" />
+                        </apex:commandLink>
+                    </apex:column>
+                    <apex:column value="{!document.check_calls}" headerValue="Check Call"/>
+                    <apex:column value="{!document.fileName}" headerValue="Name"/>
+                    <apex:column value="{!document.type_Z}" headerValue="Type"/>
+                    <apex:column value="{!document.format_date_time}" headerValue="Date"/>
+                </apex:pageBlockTable>
+            </apex:pageBlockSection>
+        </apex:pageBlock>
+    </apex:form>
+    <apex:form id="form_map" >
+        <script>
+            $( function() {
+                $('[id$=btn-share]').click(function(){
+                    $('.editable-share').toggle();
+                    $('.editable-share-fields').css({ "display": "block"});
+                    return false;
+                });
+                
+                $('[id$=btn-cancel-share]').click(function(){
+                    $('.editable-share').toggle();
+                    return false;
+                });
+                
+            });
+        </script>
+        <apex:pageBlock id="block3" mode="maindetail">
+            <apex:pageBlockSection title="Map" columns="1" rendered="{!shipment_track.Id != null}">
+                <!-- <apex:outputPanel style="margin-top: -40px;display: block;position: relative;z-index: 1;text-align: center;" rendered="{!shipment_track.Id != null}">
+                    <input class="btn editable-share" id="btn-share" type="button" value="Share with" />
+                    <apex:commandButton styleClass="editable-share" id="btn-save-share" action="{!sendTo}" value="Save" status="myStatus" style="display:none;" rerender="form, form_map"/>
+                    <input class="btn editable-share" id="btn-cancel-share" type="button" value="Cancel" style="display:none;"/>
+                    
+                    <apex:outputPanel styleClass="editable-share editable-share-fields" style="text-align: left; padding-bottom: 20px; margin-top: 7px; display: none;background: white;z-index: 3;position: relative;">
+                        <apex:pageBlockSectionItem >
+                            <apex:outputLabel value="Email" style="width: 10%;display: inline-block; color: #4a4a56;text-align: right; text-align: right; font-size: 91%; font-weight: bold;"/>
+                            <apex:inputText value="{!share_with_email}" style="width: 88%;  border-radius: 3px; border-style: groove;margin-left: 1%;vertical-align: top;"/>
+                        </apex:pageBlockSectionItem>
+                    </apex:outputPanel>
+                </apex:outputPanel> -->
+            
+                <apex:pageBlockSectionItem >
+                    <iframe id="truckstop_iframe" src="{!shipment_track.Public_Sharing_URL__c}"  width="99%" height="1000px" style="margin-top: -64px;border: none;z-index: 0;position: relative;"></iframe>
+                </apex:pageBlockSectionItem>
+            </apex:pageBlockSection>
+        </apex:pageBlock>
+        
+        <apex:outputpanel >
+            <apex:actionstatus id="myStatus">
+                <apex:facet name="start">
+                    <div class="waitingSearchDiv" id="el_loading" style="background-color: #fbfbfb;height: 100%;opacity:0.65;width:100%;"> 
+                        <div class="waitingHolder" style="top: 74.2px; width: 91px;">
+                            <img class="waitingImage" src="/img/loading.gif" title="Please Wait..." />
+                            <span class="waitingDescription">Loading...</span>
+                        </div>
+                    </div>
+                </apex:facet>
+            </apex:actionstatus>
+        </apex:outputpanel>
+    </apex:form>
+</apex:page>

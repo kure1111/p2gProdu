@@ -1,0 +1,9 @@
+<apex:page Controller="NEU_Freight_Rates_Emails_pdf" standardStylesheets="false" renderAs="pdf">
+     <apex:stylesheet value="{!$Resource.Style_PriceList}"/>
+    <apex:form >
+        <div id="contenedor">
+            <apex:pagemessages id="errors"/>
+            <apex:outputText value="{!contenedor_pdf}" escape="false"/>
+        </div>
+    </apex:form> 
+</apex:page>

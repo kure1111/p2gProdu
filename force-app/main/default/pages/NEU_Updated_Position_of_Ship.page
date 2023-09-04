@@ -1,0 +1,36 @@
+<apex:page standardController="Shipment__c" extensions="NEU_Updated_Position_of_Ship" sidebar="false">
+    <apex:includeScript value="{!$Resource.jquery_1_10_2}"/>
+    <apex:includeScript value="/canvas/sdk/js/publisher.js"/>
+    <script> 
+            function refreshFeed() { 
+                Sfdc.canvas.publisher.publish({name : 'publisher.refresh', payload : {feed:true}}); 
+            }
+    </script>
+    <style>
+        html{background-color:#ffffff !important;}
+    </style>
+      
+    <apex:form id="form">
+            <apex:actionFunction name="crear" status="myStatus" action="{!create_feed}" oncomplete="refreshFeed();"/>
+             <apex:outputPanel id="panel_envio">
+                  <apex:inputTextarea value="{!contenido_del_chat}" style="       width: 490px;   margin: 0px;    height: 66px;  resize: none;"  />
+                       <div style="    padding: 9px;    height: 30px;    line-height: 30px;    background: #f5f6f6;    border: 1px solid #c7ccce;    border-top: none;    -moz-border-radius: 3px;    border-radius: 3px;    border-top-left-radius: 0;    border-top-right-radius: 0;">
+                           <input type="button" value="Share" class="zen-btn zen-highlightBtn" onclick="crear();" style=" float: right;    cursor: pointer;   font-family: Arial;    font-size: 1.08em;    background-color: #8ab529;    border: 1px solid #6c8049;    background-image: -ms-linear-gradient(top,#8AB529 0,#87AC31 100%);    background-image: -moz-linear-gradient(top,#8AB529 0,#87AC31 100%);    background-image: -webkit-linear-gradient(top,#8AB529 0,#87AC31 100%);    background-image: linear-gradient(top,#8AB529 0,#87AC31 100%);    display: inline-block;    padding-top: 0;    padding-bottom: 1px;    padding-left: 10px;    padding-right: 10px;    height: 30px;    color: #fff;    -moz-border-radius: 3px;    border-radius: 2px;    -moz-box-shadow: 0 1px 2px 0 #adadad;    -webkit-box-shadow: 0 1px 2px 0 #adadad;    box-shadow: 0 1px 2px 0 #adadad;    margin: 0;"/>
+                       </div>
+                </apex:outputPanel>
+             
+                 <apex:outputpanel >
+                   <apex:actionstatus id="myStatus">
+                       <apex:facet name="start">
+                           <div class="waitingSearchDiv" id="el_loading" style="background-color: #fbfbfb;
+                                  height: 100%;opacity:0.65;width:100%;"> 
+                               <div class="waitingHolder" style="top: 74.2px; width: 91px;">
+                                   <img class="waitingImage" src="/img/loading.gif" title="Please Wait..." />
+                                   <span class="waitingDescription">Loading...</span>
+                               </div>
+                           </div>
+                       </apex:facet>
+                   </apex:actionstatus>
+                </apex:outputpanel>
+    </apex:form>
+</apex:page>

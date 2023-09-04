@@ -1,0 +1,61 @@
+<apex:page StandardController="Customer_Quote__c" extensions="NEU_DO_save_pdf" >
+    <apex:includeScript value="{!$Resource.neu_jquery}"/>
+    <apex:includeScript value="{!$Resource.jquery_1_10_2}"/>
+    <apex:includeScript value="{!$Resource.jquery_ui_1_10_3}"/>
+    <apex:includeScript value="{!$Resource.neurored_jquery}"/>
+    <apex:stylesheet value="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css"/>
+    <script>
+
+    </script>
+    <style>
+    	.requiredField {border-left-width: 4px;border-left-color: red;padding-left: 2px;}
+    </style>
+    <apex:form id="form">
+        <apex:outputLink value="{!URLFOR($Action.Customer_Quote__c.View,Customer_Quote__c.id)}">
+           <apex:sectionHeader subtitle="{!Customer_Quote__c.Name}" title="Generate DO {!$ObjectType.Customer_Quote__c.label}"></apex:sectionHeader>
+        </apex:outputLink>
+        <apex:PageMessages id="errors"/>
+        <apex:actionFunction name="refresh_pdf" action="{!generar_pdf}" status="myStatus" reRender="block"/>
+        <apex:pageBlock id="block" rendered="{!enabled == true}">
+            <apex:pageBlockButtons >
+                <apex:commandButton value="Return" status="myStatus"  styleClass="return" action="{!return_page}"/>
+                <apex:commandButton value="Create Associated Document" status="myStatus"  styleClass="crear" action="{!crear}"/>
+            </apex:pageBlockButtons>
+            <apex:pageBlockSection title="Fields" columns="2" id="subfamiliesblock">
+
+	            <apex:inputField value="{!new_ie.Account_for__c}" label="RELEASE TO COMPANY (Account for)" onchange="refresh_pdf();"/>
+
+	            <apex:inputField value="{!new_ie.Consignee__c}" label="SHIPMENT PICKUP" required="false" onchange="refresh_pdf();"/>
+
+	            <apex:inputField value="{!new_ie.Contact__c}" label="CONTACT 1" required="false" onchange="refresh_pdf();"/>
+
+	            <apex:inputField value="{!new_ie.Consignee_Contact__c}" label="CONTACT 1" required="false" onchange="refresh_pdf();"/>
+
+	            <apex:inputField html-class="requiredField" value="{!new_ie.DO_Release_Date__c}" label="RELEASE DATE" onchange="refresh_pdf();"/>
+
+	      		<apex:inputField html-class="requiredField" value="{!new_ie.DO_Release_Valid_To__c}" label="RELEASE VALID TO" onchange="refresh_pdf();"/>
+
+	            <apex:inputField html-maxlength="77" style="height: 70px;" value="{!new_ie.DO_Remarks__c}" label="REMARKS FOR GOODS" required="false" onchange="refresh_pdf();"/>
+
+	            <apex:inputField html-maxlength="180" style="height: 70px;" value="{!new_ie.DO_Remarks_Shipment_Pickup__c}" label="REMARKS FOR SHIPMENT PICK UP" required="false" onchange="refresh_pdf();"/>
+
+            </apex:pageBlockSection>
+            <apex:outputPanel id="radios">
+                <iframe  scrolling="auto" id="EN" src="{!$Site.BaseUrl}/apex/NEU_DO_pdf?{!url_pdf}" width= "100%" height="850px"></iframe>
+            </apex:outputPanel>
+       </apex:pageBlock>
+       <apex:outputpanel >
+               <apex:actionstatus id="myStatus">
+                   <apex:facet name="start">
+                       <div class="waitingSearchDiv" id="el_loading" style="background-color: #fbfbfb;
+                              height: 100%;opacity:0.65;width:100%;">
+                           <div class="waitingHolder" style="top: 74.2px; width: 91px;">
+                               <img class="waitingImage" src="/img/loading.gif" title="Please Wait..." />
+                               <span class="waitingDescription">Loading...</span>
+                           </div>
+                       </div>
+                   </apex:facet>
+               </apex:actionstatus>
+        </apex:outputpanel>
+    </apex:form>
+</apex:page>

@@ -1,0 +1,284 @@
+<template>
+    <div class=".slds-modal" if:true={showAdvertencia}>
+        <lightning-modal-header label="Shipment esta cerrado, ¿Procederá a reabrirlo?"></lightning-modal-header>
+        <lightning-modal-footer>
+            <div class="button-container">
+                <lightning-button label="OK" onclick={handleOkay}></lightning-button>
+            </div>
+        </lightning-modal-footer>
+    </div>
+    
+    <div if:false={showAdvertencia}>
+        <div class="container">
+            <div class="slds-grid slds-grid_vertical">
+                <div class="slds-col">
+                    <br>
+                    <h1 class="slds-text-heading_medium slds-hyphenate">Modificar Líneas de servicio</h1>
+                    <h3>Shipment </h3>
+                    <hr/><br>
+                </div>
+                <div class="slds-col">
+                    <h4 class="slds-text-heading_medium slds-hyphenate">Shipment Service Line</h4>
+                    <br>
+                </div>
+            </div>
+            <div class="slds-grid slds-gutters">
+        <div class="slds-col slds-scrollable_x">
+                    <table class="slds-table slds-table_bordered" style="font-size: 10px; width:95%">
+                      <thead>
+                        <tr class="slds-line-height_reset">
+                            <th></th><th></th><th></th>
+                            <th class="bordeLadoIzquierdo bordeArriba"></th>
+                            <th class="bordeArriba">
+                                <div class="slds-truncate" >SELL PROCESS PARA FACTURACION</div></th>
+                            <th class="bordeLadoDerecho bordeArriba"></th>
+                            <th class="bordeLadoIzquierdo bordeArriba"></th>
+                            <th class="bordeArriba">
+                                <div class="slds-truncate" >BUY PROCESS PARA ORDEN DE COMPRA</div></th>
+                            <th class="bordeLadoDerecho bordeArriba"></th>
+                            <th></th><th></th><th></th>
+                        </tr>
+                        <tr class="slds-line-height_reset">
+                            <th class="" scope="col">
+                            <div class="slds-truncate" style="width: 45px;">Nombre</div>
+                            </th>
+                            <th class="" scope="col">
+                            <div class="slds-truncate">Rate name</div>
+                            </th>
+                            <th class="" scope="col">
+                            <div class="slds-truncate">Route</div>
+                            </th>
+                            <th class="bordeLadoIzquierdo" scope="col">
+                            <div class="slds-truncate">Account</div>
+                            </th>
+                            <th class="" scope="col">
+                            <div class="slds-truncate">SAP Service Type Sell</div>
+                            </th>
+                            <th class="bordeLadoDerecho" scope="col">
+                            <div class="slds-truncate">Sell Price</div>
+                            </th>
+                            <th class="bordeLadoIzquierdo" scope="col">
+                            <div class="slds-truncate">Carrier</div>
+                            </th>
+                            <th class="" scope="col">
+                            <div class="slds-truncate">SAP Service Type Buy</div>
+                            </th>
+                            <th class="bordeLadoDerecho" scope="col">
+                            <div class="slds-truncate">Buy Price</div>
+                            </th>
+                            <th class="" scope="col">
+                            <div class="slds-truncate">Tarifario</div>
+                            </th>
+                            <th class="" scope="col">
+                            <div class="slds-truncate">Container Type</div>
+                            </th>
+                            <th class="" scope="col">
+                            <div class="slds-truncate">A Modificar</div>
+                            </th>
+                        </tr>
+                    </thead>
+                <tbody>
+                <template lwc:if={listServiceLine.data} for:each={listServiceLine.data} for:item="con">
+                                 <tr class="slds-hint-parent" data-id={con.Id} key={con.Id}> 
+                                    <td>
+                                       <div class="slds-truncate" style="width: 45px;">{con.Name}</div>
+                                    </td>
+                                    <td>
+                                     <div class="slds-truncate">{con.ServiceRateName}</div>
+                                    </td>
+                                    <td>
+                                        <div class="slds-truncate">{con.ShipmentRouteName}</div>
+                                    </td>
+                                    <td>
+                                        <!--template if:false={con.Tarifario}>
+                                            <div class="slds-truncate" style="width: 140px;"><lightning-input onchange={registroSapServiceType} type="search"
+                                            value={con.Account}></lightning-input></div>
+                                        </template -->
+                                            <div class="slds-truncate" style="width: 140px;">{con.Account}</div>
+                                    </td>
+                                    <td>
+                                        <template if:false={con.Tarifario}>
+                                            <div class="slds-truncate" style="width: 160px;">
+                                                    <div onkeyup={searchKeySsts}>
+                                                    <lightning-input type="search" value={con.SapServiceType} placeholder={con.SapServiceType}></lightning-input>
+                                                    </div>
+                                                    <template if:true={con.listSsts}>
+                                                        <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+                                                            <div class="slds-modal__container">
+                                                                <header class="slds-modal__header">
+                                                                    <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close" onclick={closelistSsts}>
+                                                                        <lightning-icon icon-name="utility:close" alternative-text="close" size="small" ></lightning-icon>
+                                                                        <span class="slds-assistive-text">Close</span>
+                                                                    </button>
+                                                                    <h2 class="slds-text-heading_medium slds-hyphenate">SAP Service Type Sell:</h2>
+                                                                    <div onkeyup={searchKeySsts}>
+                                                                        <lightning-input type="search" placeholder={con.SapServiceType}></lightning-input>
+                                                                    </div>
+                                                                </header>
+                                                                <div class="slds-modal__content slds-p-around_medium"> 
+                                                                <table if:true={showSideSsts}  class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_striped">
+                                                                    <thead>
+                                                                    <tr class="slds-line-height_reset">
+                                                                        <th class="" scope="col">
+                                                                            <div class="slds-truncate" title="First Name">Name</div>
+                                                                        </th>
+                                                                    </tr>
+                                                                    </thead>
+                                                                    <tbody>
+                                                                    <template for:each={sideRecordsSsts} for:item="con">
+                                                                        <tr class="slds-hint-parent" data-id={con.Id} key={con.Id} onclick={SideSelectSsts}> 
+                                                                            <td>
+                                                                                <div class="slds-truncate">{con.Name}</div>
+                                                                            </td>
+                                                                        </tr>
+                                                                    </template>
+                                                                    </tbody>
+                                                                </table>
+                                                                </div>
+                                                            </div>
+                                                        </section>
+                                                    </template>
+                                            </div>
+                                        </template>
+                                        <template if:true={con.Tarifario}>
+                                        <div class="slds-truncate" style="width: 140px;">{con.SapServiceType}</div>
+                                        </template>
+                                    </td>
+                                    <td>
+                                        <div class="slds-truncate" style="width: 60px;"><lightning-input onchange={ShipmentSellPrice} type="number" step="0.01" 
+                                            value={con.ShipmentSellPrice}></lightning-input></div>
+                                    </td>
+                                    <td>
+                                        <template if:false={con.Tarifario}>
+                                        <div class="slds-truncate" style="width: 160px;">
+                                                <div onkeyup={searchKeyCarrier}>
+                                                <lightning-input type="search" value={con.CarrierName} placeholder={con.CarrierName} oncommit={clearCarrier}></lightning-input>
+                                                </div>
+                                                <template if:true={con.listCarrier}>
+                                                    <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+                                                    <div class="slds-modal__container">
+                                                        <header class="slds-modal__header">
+                                                            <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close" onclick={closelistCarrier}>
+                                                                <lightning-icon icon-name="utility:close" alternative-text="close" size="small" ></lightning-icon>
+                                                                <span class="slds-assistive-text">Close</span>
+                                                            </button>
+                                                            <h2 class="slds-text-heading_medium slds-hyphenate">SAP Service Type Buy:</h2>
+                                                            <div onkeyup={searchKeyCarrier}>
+                                                                <lightning-input type="search" value={con.CarrierName} placeholder={con.CarrierName} oncommit={clearCarrier}></lightning-input>
+                                                            </div>                
+                                                        </header>
+                                                        <div class="slds-modal__content slds-p-around_medium"> 
+                                                            <table if:true={showSideCarrier} class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_striped">
+                                                                <thead>
+                                                                <tr class="slds-line-height_reset">
+                                                                    <th class="" scope="col">
+                                                                        <div class="slds-truncate" title="First Name">Name</div>
+                                                                    </th>
+                                                                    <th class="" scope="col">
+                                                                        <div class="slds-truncate" title="First Name">Customer Id</div>
+                                                                    </th>
+                                                                </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                <template for:each={sideRecordsCarrier} for:item="con">
+                                                                    <tr class="slds-hint-parent" data-id={con.Id} key={con.Id} onclick={SideSelectCarrier}> 
+                                                                        <td>
+                                                                            <div class="slds-truncate">{con.Name}</div>
+                                                                        </td>
+                                                                        <td>
+                                                                        <div class="slds-truncate">{con.Customer_Id__c}</div>
+                                                                        </td>
+                                                                    </tr>
+                                                                </template>
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                </section>
+                                                </template>
+                                        </div>
+                                        </template>
+                                        <template if:true={con.Tarifario}>
+                                            <div class="slds-truncate" style="width: 140px;">{con.CarrierName}</div>
+                                        </template>
+                                    </td>
+                                    <td>
+                                        <template if:false={con.Tarifario}>
+                                            <div class="slds-truncate" style="width: 160px;">
+                                                    <div onkeyup={searchKeySstb}>
+                                                    <lightning-input type="search" value={con.SapServiceTypeBuy} placeholder={con.SapServiceTypeBuy} oncommit={clearSstb}>
+                                                    </lightning-input>
+                                                    </div>
+                                                    <template if:true={con.listSstb}>
+                                                        <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+                                                            <div class="slds-modal__container">
+                                                                <header class="slds-modal__header">
+                                                                    <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close" onclick={closelistSstb}>
+                                                                        <lightning-icon icon-name="utility:close" alternative-text="close" size="small" ></lightning-icon>
+                                                                        <span class="slds-assistive-text">Close</span>
+                                                                    </button>
+                                                                    <h2 class="slds-text-heading_medium slds-hyphenate">SAP Service Type Buy:</h2>
+                                                                    <div onkeyup={searchKeySstb}>
+                                                                        <lightning-input type="search" value={con.SapServiceTypeBuy} placeholder={con.SapServiceTypeBuy} oncommit={clearSstb}></lightning-input>
+                                                                    </div>
+                                                                </header>
+                                                                <div class="slds-modal__content slds-p-around_medium"> 
+                                                                    <table if:true={showSideSstb} class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_striped">
+                                                                        <thead>
+                                                                        <tr class="slds-line-height_reset">
+                                                                            <th class="" scope="col">
+                                                                                <div class="slds-truncate" title="First Name">Name</div>
+                                                                            </th>
+                                                                        </tr>
+                                                                        </thead>
+                                                                        <tbody>
+                                                                        <template for:each={sideRecordsSstb} for:item="con">
+                                                                            <tr class="slds-hint-parent" data-id={con.Id} key={con.Id} onclick={SideSelectSstb}> 
+                                                                                <td>
+                                                                                    <div class="slds-truncate">{con.Name}</div>
+                                                                                </td>
+                                                                            </tr>
+                                                                        </template>
+                                                                        </tbody>
+                                                                    </table>
+                                                                </div>
+                                                            </div>
+                                                        </section>
+                                                    </template>
+                                            </div>
+                                        </template>
+                                        <template if:true={con.Tarifario}>
+                                            <div class="slds-truncate">{con.SapServiceTypeBuy}</div>
+                                        </template>
+                                    </td>
+                                    <td>
+                                        <div class="slds-truncate" style="width: 60px;"><lightning-input onchange={ShipmentBuyPric} type="number" step="0.01" 
+                                            value={con.ShipmentBuyPrice}></lightning-input></div>
+                                    </td>
+                                    <td>
+                                        <div class="slds-truncate"><lightning-input type="checkbox" 
+                                            checked={con.Tarifario} disabled></lightning-input></div>
+                                    </td>
+                                    <td>
+                                        <div class="slds-truncate">{con.ContainerType}</div>
+                                    </td>
+                                    <td>
+                                        <div class="slds-truncate">
+                                            <lightning-input type="checkbox" checked={con.seModifica} onchange={Change}></lightning-input>
+                                        </div>
+                                    </td>
+                                 </tr>
+                              </template>
+                           </tbody>
+                        </table>
+                        <br>
+                    </div>
+                </div>
+        </div>
+        <footer class="slds-modal__footer">
+            <br>
+            <lightning-button variant="neutral" label="Cerrar" onclick={close}></lightning-button>
+            <lightning-button variant="Brand" label="Actualizar" onclick={updateLines}></lightning-button>
+        </footer>
+    </div>
+</template>

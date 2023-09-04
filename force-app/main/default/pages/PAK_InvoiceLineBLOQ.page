@@ -1,0 +1,16 @@
+<apex:page standardController="Invoice__c">
+    <apex:form >
+    	<apex:pageBlock title="Invoice Lines">
+        	<apex:pageBlockTable value="{!Invoice__c.Invoice_Lines__r}" var="ls">
+            	<apex:column value="{!ls.Name}"  />
+                <apex:column value="{!ls.Concept__c}"  />
+                <apex:column value="{!ls.Units__c}"  />
+                <apex:column value="{!ls.Unit_Price__c}"  />
+                <apex:column value="{!ls.Amount__c}"  />
+                <apex:column value="{!ls.VAT__c}"  />
+                <apex:column value="{!ls.Total_VAT__c}"  />
+                <apex:column value="{!ls.Total_Incl_VAT__c}"  />
+            </apex:pageBlockTable>
+        </apex:pageBlock>
+    </apex:form>
+</apex:page>

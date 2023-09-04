@@ -1,0 +1,127 @@
+<apex:page standardController="Shipment__c" extensions="NEU_SeaTrackTrace" sidebar="false" showHeader="false">
+	<style>
+		.list.thnormal tr.headerRow th.headerRow
+	    {
+	        white-space:normal;
+	    }
+	    .sep
+	    {
+	        width:20px;
+	    }
+	    #AppBodyHeader .phHeader td.left img:first-child{     width: 137px;}
+	    .tdmil
+	    {
+	        vertical-align:top;
+	        position:relative;
+	        min-width: 5.5em;
+	    }
+	    .tdmil img
+	    {
+	        position:absolute;
+	        left:-20px;
+	        top:25px;
+	    }
+	    .tdmil .datestring
+	    {
+	        position:absolute;
+	        left:-2.7em;
+	        top:0px;
+	        padding:2px;
+	        border:3px #30caff solid;
+	    }
+	    .tdmilm
+	    {
+	        text-align:center;
+	    }
+	    .tdstatus
+	    {
+	        text-align:center;
+	    }
+	    .tdtrade
+	    {
+	        text-align:center;
+	        vertical-align:baseline;
+	    }
+	    .tdtrade.textleft
+	    {
+	        text-align:left;
+	    }
+	    .tdtrade.textright
+	    {
+	        text-align:right;
+	    }
+	    .line1
+	    {
+	        background-color:#d9f5ff;
+	        text-align:center;
+	    }
+	    .line2
+	    {
+	        background-color:#b4ebff;
+	        text-align:center;
+	    }
+	    .line3
+	    {
+	        background-color:#ced6d9;
+	        text-align:center;
+	    }
+	    .line4
+	    {
+	        background-color:#d9f5ff;
+	        text-align:center;
+	    }
+	    #graph td
+	    {
+	        border:1px solid white;
+	    }
+	    #graph td.nobl
+	    {
+	        border-left:0;
+	    }
+	    #graph td.nobr
+	    {
+	        border-right:0;
+	    }
+	</style>
+	<table id="graph" style="width:100%;border-spacing:0;padding-left:20px;padding-right:20px">
+        <tr>
+            <td class="sep">&nbsp;</td>
+             <apex:repeat value="{!processstatus}" var="processstatu" id="processstatus">
+                <td class="tdtrade{!processstatu.classpngstatus}" colspan="{!processstatu.colspanstatus}"><apex:image url="{!URLFOR($Resource.TrackTrace,processstatu.pngstatus)}"/></td>
+             </apex:repeat>
+            <td class="sep">&nbsp;</td>
+        </tr>
+        <tr style="height:2em">
+            <td class="sep">&nbsp;</td>
+             <apex:repeat value="{!processstatus}" var="processstatu" id="processlocation">
+                <td class="{!processstatu.classlocation}" colspan="{!processstatu.colspanstatus}"><apex:outputLabel value="{!processstatu.stringlocation}"/></td>
+             </apex:repeat>
+            <td class="sep">&nbsp;</td>
+        </tr>
+        <tr style="height:2em">
+            <td class="sep">&nbsp;</td>
+             <apex:repeat value="{!processstatus}" var="processstatu" id="processstring">
+                <td class="tdstatus {!processstatu.classstatus}" colspan="{!processstatu.colspanstatus}"><apex:outputLabel value="{!processstatu.stringstatus}"/></td>
+             </apex:repeat>
+            <td class="sep">&nbsp;</td>
+        </tr>
+        <tr style="height:20em;position:relative">
+            <td class="sep">&nbsp;</td>
+             <apex:repeat value="{!milestones}" var="milestone" id="milestones">
+                 <td class="tdmil" colspan="{!milestone.steps}" style="width:{!(((milestone.dayEvent+milestone.dayEventDelay)*100)/totaldays)}%">
+                    <apex:outputLabel value="{!milestone.dateString}" styleClass="datestring" rendered="{!milestone.dateString!=null}"/>
+                    <apex:image url="{!URLFOR($Resource.TrackTrace,'stat'+TEXT(milestone.png)+'.png')}" rendered="{!milestone.png!=0}"/>
+                    <apex:image url="{!URLFOR($Resource.TrackTrace,'today.png')}" style="z-index:10;left:{!((todaydays-milestone.dayFirst)*100)/(milestone.dayCount)}%" rendered="{!((todaydays>milestone.dayFirst)&&(todaydays<=milestone.dayLast))}"/>
+                    <table class="graphinfo" style="width:100%;height:300px;padding-top:24px;{!IF(milestone.png!=14,'','display:none')}" cellpadding="0" cellspacing="0" title="Days:{!milestone.dayEvent+milestone.dayEventDelay}<br/>Previous process:{!milestone.dayFirst} days">
+                        <tr><td style="height:{!300-(((milestone.dayLast+milestone.dayEventNoDelay)*300)/totaldays)}px;border-width:0"></td></tr>
+                        <tr><td style="height:{!((milestone.dayEventNoDelay*300)/totaldays)}px;background-color:green;border-width:0"></td></tr>
+                        <tr><td style="height:{!((milestone.dayEventDelay*300)/totaldays)}px;background-color:red;border-width:0"></td></tr>
+                        <tr><td style="height:{!((milestone.dayEvent*300)/totaldays)}px;background-color:#30caff;border-width:0"></td></tr>
+                        <tr><td style="height:{!((milestone.dayFirst*300)/totaldays)}px;background-color:#ced6d9;border-width:0"></td></tr>
+                    </table>
+                 </td>
+             </apex:repeat>
+        </tr>
+	</table>
+
+</apex:page>

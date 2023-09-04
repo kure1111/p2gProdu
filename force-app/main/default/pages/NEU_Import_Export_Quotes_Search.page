@@ -1,0 +1,712 @@
+<apex:page controller="NEU_Import_Export_Quotes_Search" action="{!carga_filtros}" sidebar="false">
+    <apex:includeScript value="{!$Resource.jquery_1_10_2}"/>
+    <apex:variable var="aTheme" value="{!$User.UIThemeDisplayed}"/>
+    <apex:variable id="varLightning" var="varLightning" value="{!IF((aTheme='Theme1')||(aTheme='Theme2')||(aTheme='Theme3'),'false','true')}"/>
+    <apex:variable id="varLightningTop" var="varLightningTop" value="{!IF(varLightning='true','_self','_blank')}"/>
+    <script>
+        function buscar_imp_exp()
+        {
+            var listado_status = '';
+            var listado_service = '';
+            
+            $(".button_selected_sta").each(function(){
+                listado_status += $(this).attr('name') + ',';
+            });
+            if(listado_status == '')
+                listado_status = '[]';
+            document.getElementById('{!$Component.form.sta_list}').value = listado_status;
+            
+            $(".button_selected_serv").each(function(){
+                listado_service += $(this).attr('name') + ',';
+            });
+            if(listado_service == '')
+                listado_service = '[]';
+            document.getElementById('{!$Component.form.serv_list}').value = listado_service;
+
+            search_import_export_quote_order();
+        }
+        
+        function sort_data_table_quotes(n)
+        {
+            document.getElementById('{!$Component.form.orden_filtro_quotes}').value = n;
+            if(document.getElementById('{!$Component.form.orden_filtro_quotes}').value == $('#orderField1').val()) 
+            {
+                if($('#orderValue1').val()!='asc')
+                    $('#orderValue1').val('asc');
+                else
+                    $('#orderValue1').val('desc');
+  
+            }
+            else
+            {
+                $('#orderField1').val(n);
+                $('#orderValue1').val('desc');
+            }
+            
+            document.getElementById('{!$Component.form.orden_filtro_quotes_modo}').value = $('#orderValue1').val();
+            ordenar_tabla_filtro_quotes();  
+        }
+        
+        function mostrar_ordenacion_quotes()
+        {
+             var n = document.getElementById('{!$Component.form.orden_filtro_quotes}').value;
+            $('.imp_table_quotes').css('display','none');
+            var clase_ordenacion  = n.replace('.','');
+            clase_ordenacion = clase_ordenacion.replace('.','');
+            $('.'+clase_ordenacion+'_quote').css('display','block');
+            if($('#orderValue1').val()=='asc')
+                $('.imp_table_quotes').css('background-position-y','-15px');
+            else
+                $('.imp_table_quotes').css('background-position-y','0px');
+        }
+        
+        function sort_data_table_orders(n)
+        {
+            document.getElementById('{!$Component.form.orden_filtro_order}').value = n;
+            if(document.getElementById('{!$Component.form.orden_filtro_order}').value == $('#orderField2').val()) 
+            {
+                if($('#orderValue2').val()!='asc')
+                    $('#orderValue2').val('asc');
+                else
+                    $('#orderValue2').val('desc');
+  
+            }
+            else
+            {
+                $('#orderField2').val(n);
+                $('#orderValue2').val('desc');
+            }
+            
+            document.getElementById('{!$Component.form.orden_filtro_order_modo}').value = $('#orderValue2').val();
+            ordenar_tabla_filtro_orders();  
+        }
+        
+         function ordenacion_paginas_Orders(s)
+        {
+            pagina_Order = s;
+            document.getElementById('{!$Component.form.step_order}').value = s;
+            $('.boton_para_paginar_Order').removeClass('button_selected_Order');
+            $('.boton_para_paginar_Order'+s).addClass('button_selected_Order');
+            anterior_siguiente_Order();
+        }
+        
+        function ordenacion_paginas_Instalacion(s)
+        {
+            pagina_Instalacion = s;
+            document.getElementById('{!$Component.form.step_Instalacion}').value = s;
+            $('.boton_para_paginar_Instalacion').removeClass('button_selected_Instalacion');
+            $('.boton_para_paginar_Instalacion'+s).addClass('button_selected_Instalacion');
+            anterior_siguiente_Instalacion();
+        }
+        
+         function update_quote(id)
+        {
+            document.getElementById('{!$Component.form.id_quote}').value = id;
+            update_quote_now();
+        }
+        
+         function update_quote2(id)
+        {
+            document.getElementById('{!$Component.form.id_quote}').value = id;
+            update_quote_now2();
+        }
+        
+         function repintar_paginas_order()
+        {
+            $('.boton_paginacion_Order').removeClass('button_selected_Order');
+            $('.boton_para_paginar_Order'+pagina_Order).addClass('button_selected_Order');
+            mostrar_ordenacion_orders();
+        }
+        
+         function repintar_paginas_Instalacion()
+        {
+            $('.boton_paginacion_Instalacion').removeClass('button_selected_Instalacion');
+            $('.boton_para_paginar_Instalacion'+pagina_Instalacion).addClass('button_selected_Instalacion');
+            mostrar_ordenacion_quotes();
+        }
+        
+        function change_status_orders()
+        {
+            var ids_orders = '';
+            $($('.all_checkbox_orders:checked')).each(function()
+            {
+                
+                ids_orders +=  $(this).attr('id') +',';
+                
+            });
+            document.getElementById('{!$Component.form.ids_ie_orders}').value = ids_orders;
+            update_status_order();
+        }
+        
+        function change_status_quotes()
+        {
+            var ids_quotes = '';
+            $($('.all_checkbox_quotes:checked')).each(function()
+            {
+                ids_quotes += $(this).attr('id') +',';
+            });
+            document.getElementById('{!$Component.form.ids_ie_quotes}').value = ids_quotes;
+            update_status_quote();
+        }
+        
+        function mostrar_ordenacion_orders()
+        {
+            var n = document.getElementById('{!$Component.form.orden_filtro_order }').value;
+            $('.imp_table_orders').css('display','none');
+            var clase_ordenacion  = n.replace('.','');
+            clase_ordenacion = clase_ordenacion.replace('.','');
+            $('.'+clase_ordenacion+'_order').css('display','block');
+            if($('#orderValue2').val()=='asc')
+                $('.imp_table_orders').css('background-position-y','-15px');
+            else
+                $('.imp_table_orders').css('background-position-y','0px');
+        }
+        
+        function update_quote(id)
+        {
+            document.getElementById('{!$Component.form.id_quote}').value = id;
+            update_quote_now();
+        }
+        
+        $.fn.filter_sta = (function(){
+            this.each(function(){
+                if($(this).hasClass('button_selected_sta'))
+                {
+                    $(this).removeClass('button_selected');
+                    $(this).removeClass('button_selected_sta');
+                }
+                else
+                {
+                    $(this).addClass('button_selected');
+                    $(this).addClass('button_selected_sta');
+                }
+            });
+        });
+        
+        $.fn.filter_serv = (function(){
+            this.each(function(){
+                if($(this).hasClass('button_selected_serv'))
+                {
+                    $(this).removeClass('button_selected');
+                    $(this).removeClass('button_selected_serv');
+                }
+                else
+                {
+                    $(this).addClass('button_selected');
+                    $(this).addClass('button_selected_serv');
+                }
+            });
+        });
+    </script>
+    <style>
+        .button_selected{background:#C0C0C0 !important;}
+        .filter_button1{width:250px;}
+        .filter_button2{width:205px;}
+        .actions_table{border:none; width:100%;}
+        .actions_table th
+        {
+            background: #f2f3f3;
+            border:1px solid #e0e3e5;
+            border-bottom:2px solid #cccccc;
+            color: #000;
+            font-size: .9em;
+            font-weight: bold;
+            padding: 5px 2px 4px 5px;
+        }
+        .actions_table td
+        {
+            border:1px solid #e0e3e5;
+            background:#ffffff;
+        }
+        .bloque_total{margin:0;}
+        .p_extra_filter{width:300px;}
+        .button_selected_Instalacion{background:#C0C0C0 !important;}
+        .confirm_button, .confirm_button:hover, .confirm_button:visited, .confirm_button:active{text-decoration:none;}
+        .button_selected_Order{background:#C0C0C0 !important;}
+        .botonera_paginacion_table{    float: right; width: 100%;    list-style: none;}
+        .botonera_paginacion_table li{    float: left;    padding-left: 0px;    margin-left: 0px;}
+        .panel_neu .tertiaryPalette{background-color: #0e9894 !important;}
+        .span_th {margin-top: 10px;    background: #f2f3f3;    border: 1px solid #e0e3e5;    color: #000;    font-size: .9em;    font-weight: bold;    float: left;    width: 99%;    padding: 4px 0px 4px 3px;    margin-bottom: 5px;}
+        .panel_neu .bPageBlock{border-top: 3px solid #0e9894 !important;}
+    </style> 
+    <apex:form id="form">
+    <!-- ordenacion  -->
+        <input type="hidden" id="orderField1" value="Name"/>
+        <input type="hidden" id="orderValue1" value="asc"/>
+        <apex:inputHidden value="{!orden_filtro_quotes}" id="orden_filtro_quotes"/>
+        <apex:inputHidden value="{!orden_filtro_quotes_modo}" id="orden_filtro_quotes_modo"/> 
+        <apex:actionFunction name="ordenar_tabla_filtro_quotes" reRender="list_import_export_1" action="{!go_compare_quote}" status="myStatus" oncomplete="mostrar_ordenacion_quotes();"/>
+        
+        <input type="hidden" id="orderField2" value="Name"/>
+        <input type="hidden" id="orderValue2" value="asc"/>
+        <apex:inputHidden value="{!orden_filtro_order}" id="orden_filtro_order"/>
+        <apex:inputHidden value="{!orden_filtro_order_modo}" id="orden_filtro_order_modo"/> 
+        <apex:actionFunction name="ordenar_tabla_filtro_orders" reRender="list_import_export_2" action="{!go_compare_orders}" status="myStatus" oncomplete="mostrar_ordenacion_orders();"/>
+        
+        <apex:actionFunction name="anterior_siguiente_Instalacion" action="{!anterior_siguiente_Instalacion}" reRender="list_import_export_1" status="myStatus" oncomplete="repintar_paginas_Instalacion();"/>
+        <apex:actionFunction name="anterior_siguiente_Order" action="{!anterior_siguiente_order}" reRender="list_import_export_2" status="myStatus" oncomplete="repintar_paginas_order();"/>
+        
+        <apex:actionFunction name="update_status_order" action="{!update_status_order}" reRender="list_import_export_2" status="myStatus" />
+        <apex:actionFunction name="update_status_quote" action="{!update_status_quote}" reRender="list_import_export_1" status="myStatus" />
+        
+        <apex:inputHidden value="{!id_quote}" id="id_quote"/>
+        <apex:actionFunction name="update_quote_now"  status="myStatus" reRender="list_import_export_1, list_import_export_2"  action="{!update_quote_now}" oncomplete="buscar_imp_exp();"/>
+        <apex:actionFunction name="update_quote_now2"  status="myStatus" reRender="list_import_export_1, list_import_export_2"  action="{!update_quote_now2}" oncomplete="buscar_imp_exp();"/>
+        
+        <apex:actionFunction name="update_quote_now"  status="myStatus" reRender="list_import_export_1, list_import_export_2"  action="{!update_quote_now}" oncomplete="buscar_imp_exp();"/>
+        <apex:outputPanel id="panel_filtros" styleclass="panel_neu">
+            <apex:pageBlock id="bloque_filtros">
+                <apex:pageBlockButtons location="top">
+                    <!--{!$Site.BaseUrl}-->
+                    <strong><a href="{!$Site.BaseUrl}/{!$ObjectType.Customer_Quote__c.keyPrefix}/o" class="confirm_button" target="_blank"><input type="button" class="btn" value="All {!$ObjectType.Customer_Quote__c.labelPlural} Views "/></a></strong>
+
+                    <strong><a href="{!URLFOR($Action.Customer_Quote__c.new,$ObjectType.Customer_Quote__c)}&RecordType={!id_record_type_order}" class="confirm_button" style="{!If(varLightning ==  'true','display:none','')}"><input type="button" class="btn" value="New Import-Export Quotes/Orders"/></a></strong>
+                    <strong><a href="{!$Site.BaseUrl}/one/one.app?#/sObject/{!$ObjectType.Customer_Quote__c.keyPrefix}/new" target="_top" class="confirm_button" style="{!If(varLightning == 'true','','display:none')}"><input type="button" class="btn" value="New Import-Export Quotes/Orders"/></a></strong>
+                    
+                   <!-- <strong><a href="NEU_UploadCustomers" class="confirm_button" ><input type="button" class="btn" value="Outbound Data Upload"/></a></strong>
+                    <strong><a href="NEU_UploadLotsInbound" class="confirm_button" ><input type="button" class="btn" value="Inbound Data Upload"/></a></strong>-->
+                    <!-- quitar luego el boton de new de aqui -->
+                </apex:pageBlockButtons>
+                
+                <apex:pageBlockSection title="Filters" columns="1">
+                    <apex:outputPanel id="filtros">
+                        <apex:pageBlock id="block_1">
+                            <apex:pageBlockButtons location="bottom">
+                                <input type="button" value="Search" class="btn" onclick="buscar_imp_exp();"/>
+                            </apex:pageBlockButtons>
+                            <table border="0" cellspacing="5" cellpadding="5" class="actions_table">
+                                <tr>
+                                    <th>{!$ObjectType.Customer_Quote__c.fields.Quotation_Status__c.Label}</th>
+                                    <th>Freight Mode, Service Mode and Service Type</th>
+                                    <th>Parties Involved</th>
+                                    <th>Route and Vessel</th>
+                                </tr>
+                                <tr>
+                                    <td style="vertical-align:top !important; text-align:center;">
+                                        <apex:outputText value="{!ie_status}" escape="false"/><br/>
+                                        <div style="    margin-top: 86px;     min-width: 495px;">
+                                            <span class="span_th" style="text-align: left;     width: 99.5%;">Created Date</span>
+                                            <apex:outputLabel value="{!$ObjectType.Customer_Quote__c.fields.Created_From__c.Label}" style="    margin-right: 10px;" /><apex:inputfield value="{!record.Created_From__c}" required="false"/> 
+                                            <apex:outputLabel value="{!$ObjectType.Customer_Quote__c.fields.Created_To__c.Label}"  style="    margin-right: 10px;     margin-left: 20px;"/><apex:inputfield value="{!record.Created_To__c}" required="false"/>
+                                        </div>
+                                    </td>
+                                    <td style="vertical-align:top !important; text-align:center;"> 
+                                        <p class="p_extra_filter"><apex:outputLabel value="Freight Mode" style="float: left; margin-left: 87px;"/><br/><apex:inputfield value="{!record.Freight_Mode__c}" style="        width: 125px;"/></p>
+                                        <p class="p_extra_filter"><apex:outputLabel value="Service Mode" style="float: left; margin-left: 87px;"/><br/>
+                                        <apex:inputfield value="{!record.Service_Mode__c}" style="        width: 125px;"/></p>
+                                        <p class="p_extra_filter"><apex:outputLabel value="Service Type" style="float: left; margin-left: 87px;"/><br/>
+                                        <apex:inputfield value="{!record.Service_Type__c}" style="        width: 125px;"/>
+                                        </p>
+                                    </td>
+                                    <td>
+                                        <p class="p_extra_filter"><apex:outputLabel value="Account for (Customer)"/><br/><apex:inputfield value="{!record.Account_for__c}" required="false"/></p>
+                                        <p class="p_extra_filter"><apex:outputLabel value="Supplier/Shipper Account (Origin)"/><br/><apex:inputfield value="{!record.Supplier_Account__c}"/></p>
+                                        <p class="p_extra_filter"><apex:outputLabel value="Consignee Account (Destination)"/><br/><apex:inputfield value="{!record.Consignee__c}"/></p>
+                                        <span class="span_th">Users</span>
+                                        <p class="p_extra_filter"><apex:outputLabel value="Created By"/><br/><apex:inputfield value="{!record.User_Create_Import_ExportQuotesSearch__c}"/></p>
+                                        <p class="p_extra_filter"><apex:outputLabel value="Last Modified By"/><br/><apex:inputfield value="{!record.User_Modify_Import_ExportQuotesSearch__c}"/></p>
+                                    </td>
+                                    <td>
+                                        <p class="p_extra_filter"><apex:outputLabel value="Route"/><br/><apex:inputfield value="{!record.Route__c}"/></p>
+                                        <p class="p_extra_filter"><apex:outputLabel value="Vessel"/><br/><apex:inputfield value="{!record.Vessel_Flight__c}"/></p>
+                                    </td>
+                                </tr>
+                            </table>
+                        </apex:pageBlock>
+                    </apex:outputPanel>
+                </apex:pageBlockSection>
+            </apex:pageBlock>
+        </apex:outputPanel>
+         
+       <apex:outputPanel id="list_import_export_1" styleclass="panel_neu" > 
+            
+            <apex:pageBlock title="Import-Export Quotes" html-style="display:{!IF(ie_quotes != null && ie_quotes.size != 0,'','none')}" id="table_quotes"> 
+            
+                
+                <apex:pageBlockButtons location="top">
+                    <div>
+                            <apex:outputlabel value="New Status for Selected Lines" style="    margin-right: 16px;    font-weight: bold;"/>
+                            <apex:inputField value="{!filter_status_quote.Quotation_Status__c}" label="New Status for Selected Lines" html-class="check_quotes"/>
+                            <input type="button" value="Save Status" class="btn" onclick="change_status_quotes();"/>
+                    </div>
+                    <ul class="botonera_paginacion_table">
+                        
+                         <apex:repeat value="{!listado_paginas_Quotes}" var="s">
+                         <li><input type="button" value="{!s}" class="boton_paginacion_Instalacion btn boton_para_paginar_Instalacion{!s} {!if(s == 1,'button_selected_Instalacion','')}" onclick="ordenacion_paginas_Instalacion('{!s}');"/></li>
+                            </apex:repeat>
+                         <li style="vertical-align: middle;    width: 154px;    margin-top: 5px;     margin-left: 14px;">TOTAL QUOTES:&nbsp;&nbsp;<strong><apex:outputText value="{!total_quotes}"/></strong></li>
+                    </ul>
+                </apex:pageBlockButtons>
+                
+                <apex:pageBlockButtons location="bottom">
+
+                    <ul class="botonera_paginacion_table">
+                         <apex:repeat value="{!listado_paginas_Quotes}" var="s">
+                         <li><input type="button" value="{!s}" class="boton_paginacion_Instalacion btn boton_para_paginar_Instalacion{!s} {!if(s == 1,'button_selected_Instalacion','')}" onclick="ordenacion_paginas_Instalacion('{!s}');"/></li>
+                            </apex:repeat>
+                         <li style="vertical-align: middle;    width: 154px;    margin-top: 5px;     margin-left: 14px;">TOTAL QUOTES:&nbsp;&nbsp;<strong><apex:outputText value="{!total_quotes}"/></strong></li>
+                    </ul>
+                </apex:pageBlockButtons>
+                
+                <apex:pageBlockTable value="{!ie_quotes}" var="s">
+                     <apex:column style="       min-width: 50px;">
+                        <apex:facet name="header">
+                            <span>Action</span>
+                        </apex:facet>
+                        <input type="checkbox" class="all_checkbox_quotes" id="{!s.import_export.Id}"/>
+                        
+                     </apex:column>
+                     
+                    <apex:column >
+                    
+                        <apex:facet name="header">
+                            <div  style ="cursor: pointer;" onclick="sort_data_table_quotes('import_export.Name');">{!$ObjectType.Customer_Quote__c.fields.Name.Label}
+                                 <span style="       width: 10px;    height: 11px;    float: right;    margin: 0 5px;    vertical-align: 0px;    background: transparent url(/img/alohaSkin/sortArrows_sprite.png);    background-size: 16px;    background-repeat: no-repeat;    background-position: center 2px;" class="imp_table_quotes import_exportName_quote"/>
+                            </div>
+                        </apex:facet>
+                        
+                        <strong><a href="{!$Site.BaseUrl}/{!s.import_export.Id}" target="_blank"><apex:outputText value="{!s.import_export.Name}"/></a></strong>
+                        <br/>
+                        <apex:outputField value="{!s.import_export.CreatedBy.Name}"/>
+                    </apex:column>
+                    
+                    <apex:column >
+                       
+                         <apex:facet name="header">
+                            <div  style ="cursor: pointer;" onclick="sort_data_table_quotes('import_export.Quotation_Status__c');">{!$ObjectType.Customer_Quote__c.fields.Quotation_Status__c.Label}
+                                 <span style="       width: 10px;    height: 11px;    float: right;    margin: 0 5px;    vertical-align: 0px;    background: transparent url(/img/alohaSkin/sortArrows_sprite.png);    background-size: 16px;    background-repeat: no-repeat;    background-position: center 2px; display:none;" class="imp_table_quotes import_exportQuotation_Status__c_quote"/>
+                            </div>
+                        </apex:facet>
+                        <strong><apex:outputtext value="{!s.import_export.Quotation_Status__c}"/></strong>
+                        <br/>
+                        <apex:outputtext value="{!s.import_export.Status_Observations__c}"/>
+                    </apex:column>
+                    
+                    <apex:column >
+                    
+                         <apex:facet name="header">
+                            <div  style ="cursor: pointer;" onclick="sort_data_table_quotes('import_export.Account_for__c');">{!$ObjectType.Customer_Quote__c.fields.Account_for__c.Label}
+                                 <span style="       width: 10px;    height: 11px;    float: right;    margin: 0 5px;    vertical-align: 0px;    background: transparent url(/img/alohaSkin/sortArrows_sprite.png);    background-size: 16px;    background-repeat: no-repeat;    background-position: center 2px; display:none;" class="imp_table_quotes import_exportAccount_for__c_quote"/>
+                            </div>
+                        </apex:facet>
+                        
+                        <strong><a href="{!$Site.BaseUrl}/{!s.import_export.Account_for__c}" target="_blank"><apex:outputText value="{!s.import_export.Account_for__r.Name}"/></a></strong>
+                        <br/>
+                        <a href="{!$Site.BaseUrl}/{!s.import_export.Contact__c}" target="_blank"><apex:outputText value="{!s.import_export.Contact__r.Name}"/></a>
+                    </apex:column>
+                    
+                    
+                    <!--<apex:column >
+                    
+                         <apex:facet name="header">
+                            <div  style ="cursor: pointer;" onclick="sort_data_table_quotes('import_export.Supplier_Account__c');">{!$ObjectType.Customer_Quote__c.fields.Supplier_Account__c.Label}
+                                 <span style="       width: 10px;    height: 11px;    float: right;    margin: 0 5px;    vertical-align: 0px;    background: transparent url(/img/alohaSkin/sortArrows_sprite.png);    background-size: 16px;    background-repeat: no-repeat;    background-position: center 2px; display:none;" class="imp_table_quotes import_exportSupplier_Account__rName_quote"/>
+                            </div>
+                        </apex:facet>
+                        
+                        <a href="{!$Site.BaseUrl}/{!s.import_export.Supplier_Account__c}" target="_blank"><apex:outputText value="{!s.import_export.Supplier_Account__r.Name}"/></a>
+                    </apex:column>-->
+                    
+                    <apex:column >
+                    
+                        <apex:facet name="header">
+                            <div  style ="cursor: pointer;" onclick="sort_data_table_quotes('import_export.Freight_Mode__c');">{!$ObjectType.Customer_Quote__c.fields.Freight_Mode__c.Label}
+                                 <span style="       width: 10px;    height: 11px;    float: right;    margin: 0 5px;    vertical-align: 0px;    background: transparent url(/img/alohaSkin/sortArrows_sprite.png);    background-size: 16px;    background-repeat: no-repeat;    background-position: center 2px; display:none;" class="imp_table_quotes import_exportFreight_Mode__c_quote"/>
+                            </div>
+                        </apex:facet>
+                        
+                        <strong><apex:outputtext value="{!s.import_export.Freight_Mode__c}"/></strong>
+                        <br/>
+                        <apex:outputtext value="{!s.import_export.Service_Mode__c}"/>
+                    </apex:column>
+                    
+                    <apex:column style="    text-align: right;">
+                        
+                        <apex:facet name="header">
+                            <div  style ="cursor: pointer;" onclick="sort_data_table_quotes('import_export.Nature_Merchandise__c');">{!$ObjectType.Customer_Quote__c.fields.Nature_Merchandise__c.Label}
+                                 <span style="       width: 10px;    height: 11px;    float: right;    margin: 0 5px;    vertical-align: 0px;    background: transparent url(/img/alohaSkin/sortArrows_sprite.png);    background-size: 16px;    background-repeat: no-repeat;    background-position: center 2px; display:none;" class="imp_table_quotes import_exportNature_Merchandise__c_quote"/>
+                            </div>
+                         </apex:facet> 
+                        
+                        <strong><apex:outputtext value="{!s.import_export.Nature_Merchandise__c}"/></strong>
+                        <br/>
+                        <apex:outputfield value="{!s.import_export.Total_Items_Units__c}"/><span  style="    margin-left: 10px;">Units</span>
+                    </apex:column>
+                    
+                    <!--<apex:column style="    text-align: right;">
+                        
+                        <apex:facet name="header">
+                            <div  style ="cursor: pointer;" onclick="sort_data_table_quotes('import_export.Total_Services_Std_Buy_Amount__c');">{!$ObjectType.Customer_Quote__c.fields.Total_Services_Std_Buy_Amount__c.Label}
+                                 <span style="       width: 10px;    height: 11px;    float: right;    margin: 0 5px;    vertical-align: 0px;    background: transparent url(/img/alohaSkin/sortArrows_sprite.png);    background-size: 16px;    background-repeat: no-repeat;    background-position: center 2px; display:none;" class="imp_table_quotes import_exportTotal_Services_Std_Buy_Amount__c_quote"/>
+                            </div>
+                         </apex:facet>   
+                        <apex:outputfield value="{!s.import_export.Total_Services_Std_Buy_Amount__c}"/>
+                    </apex:column>-->
+                    
+                    <!--<apex:column style="    text-align: right;">
+                        
+                        <apex:facet name="header">
+                            <div  style ="cursor: pointer;" onclick="sort_data_table_quotes('import_export.SUM_Sell_Origin_Amount__c');">{!$ObjectType.Customer_Quote__c.fields.SUM_Sell_Origin_Amount__c.Label}
+                                 <span style="       width: 10px;    height: 11px;    float: right;    margin: 0 5px;    vertical-align: 0px;    background: transparent url(/img/alohaSkin/sortArrows_sprite.png);    background-size: 16px;    background-repeat: no-repeat;    background-position: center 2px; display:none;" class="imp_table_quotes import_exportSUM_Sell_Origin_Amount__c_quote"/>
+                            </div>
+                         </apex:facet>   
+                        <apex:outputfield value="{!s.import_export.SUM_Sell_Origin_Amount__c}"/>
+                    </apex:column>-->
+                    
+                     <apex:column style="    text-align: right;">
+                        <apex:facet name="header">
+                            
+                        </apex:facet>
+                        
+                        <apex:facet name="header">
+                            <div  style ="cursor: pointer;" onclick="sort_data_table_quotes('import_export.Total_Volume_m3_2__c');"><span style="    text-align: right; float: right;">{!$ObjectType.Customer_Quote__c.fields.Total_Weight_Kg2__c.Label} <br/> {!$ObjectType.Customer_Quote__c.fields.Total_Volume_m3_2__c.Label} </span>
+                                 <span style="       width: 10px;    height: 11px;    float: right;    margin: 0 5px;    vertical-align: 0px;    background: transparent url(/img/alohaSkin/sortArrows_sprite.png);    background-size: 16px;    background-repeat: no-repeat;    background-position: center 2px; display:none;" class="imp_table_quotes import_exportTotal_Volume_m3_2__c_quote"/>
+                            </div>
+                         </apex:facet> 
+                         
+                        <apex:outputField value="{!s.import_export.Total_Weight_Kg2__c}"/><span  style="    margin-left: 10px;">Kg</span>
+                        <br/>
+                        <apex:outputfield value="{!s.import_export.Total_Volume_m3_2__c}"/><span  style="    margin-left: 10px;">m³</span>
+                    </apex:column>
+                    
+                    <apex:column style="    text-align: right;">
+                        
+                        <apex:facet name="header">
+                            <div  style ="cursor: pointer;" onclick="sort_data_table_quotes('import_export.Total_Services_Sell_Amount__c');">{!$ObjectType.Customer_Quote__c.fields.Total_Services_Sell_Amount__c.Label}
+                                 <span style="       width: 10px;    height: 11px;    float: right;    margin: 0 5px;    vertical-align: 0px;    background: transparent url(/img/alohaSkin/sortArrows_sprite.png);    background-size: 16px;    background-repeat: no-repeat;    background-position: center 2px; display:none;" class="imp_table_quotes import_exportTotal_Services_Sell_Amount__c_quote"/>
+                            </div>
+                         </apex:facet>   
+                        <apex:outputfield value="{!s.import_export.Total_Services_Sell_Amount__c}"/>
+                    </apex:column>
+                    
+                     <apex:column style="       text-align: left;">
+                        
+                         <apex:facet name="header">
+                            <div  style ="cursor: pointer;" onclick="sort_data_table_quotes('import_export.Site_of_Load__r.Name');">{!$ObjectType.Customer_Quote__c.fields.Site_of_Load__c.Label}
+                                 <span style="       width: 10px;    height: 11px;    float: right;    margin: 0 5px;    vertical-align: 0px;    background: transparent url(/img/alohaSkin/sortArrows_sprite.png);    background-size: 16px;    background-repeat: no-repeat;    background-position: center 2px; display:none;" class="imp_table_quotes import_exportSite_of_Load__rName_quote"/>
+                            </div>
+                         </apex:facet>   
+                         
+                        <apex:outputfield value="{!s.import_export.Site_of_Load__c}"/>
+                    </apex:column>
+                    
+                    <apex:column style="        text-align: left;">
+                        
+                        <apex:facet name="header">
+                            <div  style ="cursor: pointer;" onclick="sort_data_table_quotes('import_export.Site_of_Discharge__r.Name');">{!$ObjectType.Customer_Quote__c.fields.Site_of_Discharge__c.Label}
+                                 <span style="       width: 10px;    height: 11px;    float: right;    margin: 0 5px;    vertical-align: 0px;    background: transparent url(/img/alohaSkin/sortArrows_sprite.png);    background-size: 16px;    background-repeat: no-repeat;    background-position: center 2px; display:none;" class="imp_table_quotes import_exportSite_of_Discharge__rName_quote"/>
+                            </div>
+                         </apex:facet> 
+                         
+                        <apex:outputfield value="{!s.import_export.Site_of_Discharge__c}"/>
+                    </apex:column>
+                    
+  
+                    <apex:column style="min-width: 130px;     text-align: center;">
+                        <input type="button" class="btn" value="Approve" onclick="update_quote('{!s.import_export.Id}');" style="width: 53px;"/>
+                        <input type="button" class="btn" value="Decline" onclick="update_quote2('{!s.import_export.Id}');" style="    width: 60px;"/>
+                    </apex:column>
+                    
+                    
+                </apex:pageBlockTable>
+            </apex:pageBlock>
+        </apex:outputPanel>
+        <apex:outputPanel id="list_import_export_2" styleclass="panel_neu" >
+            
+            <apex:pageBlock title="Import-Export Orders"  html-style="display:{!IF(ie_orders != null && ie_orders.size != 0,'','none')}"><!--  -->
+            
+                <apex:pageBlockButtons location="top">
+                    <div>
+                        <apex:outputlabel value="New Status for Selected Lines" style="    margin-right: 16px;    font-weight: bold;"/>
+                        <apex:inputField value="{!filter_status_order.Quotation_Status__c}" label="New Status for Selected Lines" html-class="check_orders"/>
+                        <input type="button" value="Save Status" class="btn" onclick="change_status_orders();"/>
+                    </div>
+                    <ul class="botonera_paginacion_table">
+                         <apex:repeat value="{!listado_paginas_Orders }" var="s">
+                         <li><input type="button" value="{!s}" class="boton_paginacion_Order btn boton_para_paginar_Order{!s} {!if(s == 1,'button_selected_Order','')}" onclick="ordenacion_paginas_Orders('{!s}');"/></li>
+                            </apex:repeat>
+                         <li style="vertical-align: middle;    width: 154px;    margin-top: 5px;     margin-left: 14px;">TOTAL ORDERS:&nbsp;&nbsp;<strong><apex:outputText value="{!total_orders}"/></strong></li>
+                    </ul>
+                </apex:pageBlockButtons>
+                
+                <apex:pageBlockButtons location="bottom">
+     
+                    <ul class="botonera_paginacion_table">
+                         <apex:repeat value="{!listado_paginas_Orders }" var="s">
+                         <li><input type="button" value="{!s}" class="boton_paginacion_Order btn boton_para_paginar_Order{!s} {!if(s == 1,'button_selected_Order','')}" onclick="ordenacion_paginas_Orders('{!s}');"/></li>
+                            </apex:repeat>
+                         <li style="vertical-align: middle;    width: 154px;    margin-top: 5px;     margin-left: 14px;">TOTAL ORDERS:&nbsp;&nbsp;<strong><apex:outputText value="{!total_orders}"/></strong></li>
+                    </ul>
+                </apex:pageBlockButtons>
+                
+                <apex:pageBlockTable value="{!ie_orders}" var="s">
+                    <apex:column >
+                        <apex:facet name="header">Action</apex:facet>
+                        <input type="checkbox" class="all_checkbox_orders" id="{!s.import_export.Id}"/>
+                    </apex:column>
+                    <apex:column >
+                          <apex:facet name="header">
+                            <div  style ="cursor: pointer;" onclick="sort_data_table_orders('import_export.Name');">{!$ObjectType.Customer_Quote__c.fields.Name.Label}
+                                 <span style="       width: 10px;    height: 11px;    float: right;    margin: 0 5px;    vertical-align: 0px;    background: transparent url(/img/alohaSkin/sortArrows_sprite.png);    background-size: 16px;    background-repeat: no-repeat;    background-position: center 2px;" class="imp_table_orders import_exportName_order"/>
+                            </div>
+                        </apex:facet>
+                        <strong><a href="{!$Site.BaseUrl}/{!s.import_export.Id}" target="_blank"><apex:outputText value="{!s.import_export.Name}"/></a></strong>
+                        <br/>
+                        <apex:outputField value="{!s.import_export.LastModifiedBy.Name}"/>
+                    </apex:column>
+                    
+                    <apex:column >
+                        
+                          <apex:facet name="header">
+                            <div  style ="cursor: pointer;" onclick="sort_data_table_orders('import_export.Quotation_Status__c');">{!$ObjectType.Customer_Quote__c.fields.Quotation_Status__c.Label}
+                                 <span style="       width: 10px;    height: 11px;    float: right;    margin: 0 5px;    vertical-align: 0px;    background: transparent url(/img/alohaSkin/sortArrows_sprite.png);    background-size: 16px;    background-repeat: no-repeat;    background-position: center 2px; display:none;" class="imp_table_orders import_exportQuotation_Status__c_order"/>
+                            </div>
+                        </apex:facet>
+                        <strong><apex:outputtext value="{!s.import_export.Quotation_Status__c}"/></strong>
+                        <br/>
+                        <apex:outputtext value="{!s.import_export.Status_Observations__c}"/>
+                    </apex:column>
+                    
+                    <apex:column >
+                    
+                        <apex:facet name="header">
+                            <div  style ="cursor: pointer;" onclick="sort_data_table_orders('import_export.Account_for__r.Name');">{!$ObjectType.Customer_Quote__c.fields.Account_for__c.Label}
+                                 <span style="       width: 10px;    height: 11px;    float: right;    margin: 0 5px;    vertical-align: 0px;    background: transparent url(/img/alohaSkin/sortArrows_sprite.png);    background-size: 16px;    background-repeat: no-repeat;    background-position: center 2px; display:none;" class="imp_table_orders import_exportAccount_for__rName_order"/>
+                            </div>
+                        </apex:facet>
+                        
+                        <strong><a href="{!$Site.BaseUrl}/{!s.import_export.Account_for__c}" target="_blank"><apex:outputText value="{!s.import_export.Account_for__r.Name}"/></a></strong>
+                        <br/>
+                        <a href="{!$Site.BaseUrl}/{!s.import_export.Contact__c}" target="_blank"><apex:outputText value="{!s.import_export.Contact__r.Name}"/></a>
+                    </apex:column>
+                    
+                    <!--<apex:column >
+                        <apex:facet name="header">
+                            <div  style ="cursor: pointer;" onclick="sort_data_table_orders('import_export.Supplier_Account__r.Name');">{!$ObjectType.Customer_Quote__c.fields.Supplier_Account__c.Label}
+                                 <span style="       width: 10px;    height: 11px;    float: right;    margin: 0 5px;    vertical-align: 0px;    background: transparent url(/img/alohaSkin/sortArrows_sprite.png);    background-size: 16px;    background-repeat: no-repeat;    background-position: center 2px; display:none;" class="imp_table_orders import_exportSupplier_Account__rName_order"/>
+                            </div>
+                        </apex:facet>
+                        
+                        <a href="{!$Site.BaseUrl}/{!s.import_export.Supplier_Account__c}" target="_blank"><apex:outputText value="{!s.import_export.Supplier_Account__r.Name}"/></a>
+                    </apex:column>-->
+                    
+                    <apex:column >
+                    
+                         <apex:facet name="header">
+                            <div  style ="cursor: pointer;" onclick="sort_data_table_orders('import_export.Freight_Mode__c');">{!$ObjectType.Customer_Quote__c.fields.Freight_Mode__c.Label}
+                                 <span style="       width: 10px;    height: 11px;    float: right;    margin: 0 5px;    vertical-align: 0px;    background: transparent url(/img/alohaSkin/sortArrows_sprite.png);    background-size: 16px;    background-repeat: no-repeat;    background-position: center 2px; display:none;" class="imp_table_orders import_exportFreight_Mode__c_order"/>
+                            </div>
+                        </apex:facet>
+                        
+                        <strong><apex:outputtext value="{!s.import_export.Freight_Mode__c}"/></strong>
+                        <br/>
+                        <apex:outputtext value="{!s.import_export.Service_Mode__c}"/>
+                    </apex:column>
+                    
+                    <apex:column style="    text-align: right;">
+                        
+                         <apex:facet name="header">
+                            <div  style ="cursor: pointer;" onclick="sort_data_table_orders('import_export.Nature_Merchandise__c');">{!$ObjectType.Customer_Quote__c.fields.Nature_Merchandise__c.Label}
+                                 <span style="       width: 10px;    height: 11px;    float: right;    margin: 0 5px;    vertical-align: 0px;    background: transparent url(/img/alohaSkin/sortArrows_sprite.png);    background-size: 16px;    background-repeat: no-repeat;    background-position: center 2px; display:none;" class="imp_table_orders import_exportNature_Merchandise__c_order"/>
+                            </div>
+                         </apex:facet> 
+                        
+                        <strong><apex:outputtext value="{!s.import_export.Nature_Merchandise__c}"/></strong>
+                        <br/>
+                        <apex:outputfield value="{!s.import_export.Total_Items_Units__c}"/><span  style="    margin-left: 10px;">Units</span>
+                    </apex:column>
+                    
+                    <!--<apex:column style="    text-align: right;">
+                        
+                        <apex:facet name="header">
+                            <div  style ="cursor: pointer;" onclick="sort_data_table_orders('import_export.Total_Services_Std_Buy_Amount__c');">{!$ObjectType.Customer_Quote__c.fields.Total_Services_Std_Buy_Amount__c.Label}
+                                 <span style="       width: 10px;    height: 11px;    float: right;    margin: 0 5px;    vertical-align: 0px;    background: transparent url(/img/alohaSkin/sortArrows_sprite.png);    background-size: 16px;    background-repeat: no-repeat;    background-position: center 2px; display:none;" class="imp_table_orders import_exportTotal_Services_Std_Buy_Amount__c_order"/>
+                            </div>
+                         </apex:facet>   
+                         
+                        <apex:outputfield value="{!s.import_export.Total_Services_Std_Buy_Amount__c}"/>
+                    </apex:column>-->
+                    
+                    <!--<apex:column style="    text-align: right;">
+                        
+                        <apex:facet name="header">
+                            <div  style ="cursor: pointer;" onclick="sort_data_table_orders('import_export.SUM_Sell_Origin_Amount__c');">{!$ObjectType.Customer_Quote__c.fields.SUM_Sell_Origin_Amount__c.Label}
+                                 <span style="       width: 10px;    height: 11px;    float: right;    margin: 0 5px;    vertical-align: 0px;    background: transparent url(/img/alohaSkin/sortArrows_sprite.png);    background-size: 16px;    background-repeat: no-repeat;    background-position: center 2px; display:none;" class="imp_table_orders import_exportSUM_Sell_Origin_Amount__c_order"/>
+                            </div>
+                         </apex:facet>   
+                         
+                        <apex:outputfield value="{!s.import_export.SUM_Sell_Origin_Amount__c}"/>
+                    </apex:column>-->
+                    
+                    <apex:column style="    text-align: right;">
+                    
+                        <apex:facet name="header">
+                            <div  style ="cursor: pointer;" onclick="sort_data_table_orders('import_export.Total_Volume_m3_2__c');"><span style="    text-align: right; float: right;">{!$ObjectType.Customer_Quote__c.fields.Total_Weight_Kg2__c.Label} <br/> {!$ObjectType.Customer_Quote__c.fields.Total_Volume_m3_2__c.Label} </span>
+                                 <span style="       width: 10px;    height: 11px;    float: right;    margin: 0 5px;    vertical-align: 0px;    background: transparent url(/img/alohaSkin/sortArrows_sprite.png);    background-size: 16px;    background-repeat: no-repeat;    background-position: center 2px; display:none;" class="imp_table_orders import_exportTotal_Volume_m3_2__c_order"/>
+                            </div>
+                         </apex:facet> 
+                         
+                        
+                        <apex:outputField value="{!s.import_export.Total_Weight_Kg2__c}"/><span  style="    margin-left: 10px;">Kg</span>
+                        <br/>
+                        <apex:outputfield value="{!s.import_export.Total_Volume_m3_2__c}"/><span  style="    margin-left: 10px;">m³</span>
+                    </apex:column>
+                    
+                    <apex:column style="    text-align: right;">
+                        
+                        <apex:facet name="header">
+                            <div  style ="cursor: pointer;" onclick="sort_data_table_orders('import_export.Total_Services_Sell_Amount__c');">{!$ObjectType.Customer_Quote__c.fields.Total_Services_Sell_Amount__c.Label}
+                                 <span style="       width: 10px;    height: 11px;    float: right;    margin: 0 5px;    vertical-align: 0px;    background: transparent url(/img/alohaSkin/sortArrows_sprite.png);    background-size: 16px;    background-repeat: no-repeat;    background-position: center 2px; display:none;" class="imp_table_orders import_exportTotal_Services_Sell_Amount__c_order"/>
+                            </div>
+                         </apex:facet>   
+                         
+                        <apex:outputfield value="{!s.import_export.Total_Services_Sell_Amount__c}"/>
+                    </apex:column>
+                    
+                    <apex:column style="        text-align: left;">
+                        <apex:facet name="header">
+                            <div  style ="cursor: pointer;" onclick="sort_data_table_orders('import_export.Site_of_Load__r.Name');">{!$ObjectType.Customer_Quote__c.fields.Site_of_Load__c.Label}
+                                 <span style="       width: 10px;    height: 11px;    float: right;    margin: 0 5px;    vertical-align: 0px;    background: transparent url(/img/alohaSkin/sortArrows_sprite.png);    background-size: 16px;    background-repeat: no-repeat;    background-position: center 2px; display:none;" class="imp_table_orders import_exportSite_of_Load__rName_order"/>
+                            </div>
+                         </apex:facet> 
+                         
+                        <apex:outputfield value="{!s.import_export.Site_of_Load__c}"/>
+                    </apex:column>
+                    
+                    <apex:column style="        text-align: left;">
+                    
+                         <apex:facet name="header">
+                            <div  style ="cursor: pointer;" onclick="sort_data_table_orders('import_export.Site_of_Discharge__r.Name');">{!$ObjectType.Customer_Quote__c.fields.Site_of_Discharge__c.Label}
+                                 <span style="       width: 10px;    height: 11px;    float: right;    margin: 0 5px;    vertical-align: 0px;    background: transparent url(/img/alohaSkin/sortArrows_sprite.png);    background-size: 16px;    background-repeat: no-repeat;    background-position: center 2px; display:none;" class="imp_table_orders import_exportSite_of_Discharge__rName_order"/>
+                            </div>
+                         </apex:facet> 
+                         
+                        <apex:outputfield value="{!s.import_export.Site_of_Discharge__c}"/>
+                    </apex:column>                    
+                </apex:pageBlockTable>
+            </apex:pageBlock>
+        </apex:outputPanel>
+        
+        <apex:outputpanel >
+           <apex:actionstatus id="myStatus">
+               <apex:facet name="start">
+                   <div class="waitingSearchDiv" id="el_loading" style="background-color: #fbfbfb;
+                          height: 100%;opacity:0.65;width:100%;"> 
+                       <div class="waitingHolder" style="top: 74.2px; width: 91px;">
+                           <img class="waitingImage" src="/img/loading.gif" title="Please Wait..." />
+                           <span class="waitingDescription">Loading...</span>
+                       </div>
+                   </div>
+               </apex:facet>
+           </apex:actionstatus>
+        </apex:outputpanel>
+        
+        <apex:actionFunction name="search_import_export_quote_order" action="{!search_import_export_quote_order}" reRender="list_import_export_1, list_import_export_2" status="myStatus"/>
+        <apex:inputHidden value="{!sta_list}" id="sta_list"/>
+        <apex:inputHidden value="{!step_Instalacion}" id="step_Instalacion"/>
+        <apex:inputHidden value="{!step_order}" id="step_order"/>
+        <apex:inputHidden value="{!ids_ie_orders}" id="ids_ie_orders"/>
+        <apex:inputHidden value="{!ids_ie_quotes}" id="ids_ie_quotes"/>
+        <apex:inputHidden value="{!serv_list}" id="serv_list"/>
+    </apex:form>
+</apex:page>

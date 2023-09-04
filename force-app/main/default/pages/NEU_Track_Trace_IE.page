@@ -1,0 +1,142 @@
+<apex:page standardController="Customer_Quote__c" extensions="NEU_Track_Trace_IE" sidebar="false">
+    <apex:includeScript value="{!$Resource.neu_jquery}"/> 
+    <apex:includeScript value="{!$Resource.jquery_1_10_2}"/> 
+    <apex:includeScript value="{!$Resource.jquery_ui_1_10_3}"/>
+    <apex:includeScript value="{!$Resource.neurored_jquery}"/> 
+    <apex:stylesheet value="{!URLFOR($Resource.jquery_ui_1_10_3_css,'jquery-ui-1.10.3.min.css')}"/>
+    <script>
+        var oldTwistSection;
+        function myTwistSection(mydata)
+        {
+            oldTwistSection(mydata);
+            var ifr=$('.roadroutefr',$(mydata).parent().parent());
+            if(ifr.length>0)
+                if(ifr[0].contentWindow)
+                    if(ifr[0].contentWindow.resizeMap)
+                        ifr[0].contentWindow.resizeMap();
+        }
+        var click_link= false;
+        var contenedor = '';
+        $(document).ready(function () {
+        
+
+           //window.parent.$('#head_01Bb0000007amkN_ep').css('display','block'); 
+                $(('.secciones_shipment')).each(function() 
+                {
+                    var id_shipment = $(this).attr('neudata');
+                    var etd = $(this).attr('neudata2');
+                    var eta = $(this).attr('neudata3');
+                    var freight_mode = $(this).attr('neudata4');
+                    var mode ='';
+                    if(freight_mode == 'Sea')
+                        mode = '/img/icon/custom51_100/ship32.png';
+                    else if(freight_mode == 'Air')
+                        mode = '/img/icon/plane32.png';
+                    else if(freight_mode == 'Road')
+                        mode = '/img/icon/custom51_100/truck32.png';
+                    else if(freight_mode == 'Rail')
+                        mode ='/img/icon/train32.png';
+                    
+                    if(contenedor == '' || contenedor.indexOf(id_shipment) == -1) 
+                    {
+                        $(this).find('.tertiaryPalette').append('<span class="fechas_shipment" style="margin-left: 45px;">Planned ETD</span><span class="fechas_shipment" style="margin-left: 10px;">'+etd+'</span><span class="fechas_shipment" style="margin-left: 45px;">Planned ETA</span><span class="fechas_shipment" style="margin-left: 10px;">'+eta+'</span>                                              <a href="{!$Site.BaseUrl}/'+id_shipment+'" class="btn btn_'+id_shipment+'" style="text-decoration: none; float: right;     color: #333;    margin: 1px;    padding: 2px 3px;    border: 1px solid #b5b5b5;    border-bottom-color: #7f7f7f;    background: #e8e8e9 url("/img/alohaSkin/btn_sprite.png") repeat-x right top;    font-weight: bold;    font-size: .9em;    -moz-border-radius: 3px;    -webkit-border-radius: 3px;    border-radius: 3px;" target="_blank" onclick="click_link2();" >Go to Shipment</a>      <img title="'+freight_mode+'" src="'+mode+'" style="    float: right;    margin-right: 30px;    width: 25px;    height: 25px;"/> ');
+                    }
+                    contenedor +=$(this).attr('neudata');
+                });
+                
+                $('.capa_out_'+$('.ultimo_shipment').val()).css('display','none');
+            oldTwistSection=twistSection;
+            twistSection=myTwistSection;
+            
+        }); 
+        
+        function click_link2()
+        {
+            click_link = true;
+        }
+        
+        function close_all(id_ship)
+        {
+            if(click_link == false)
+            {
+                var id_ship_param = id_ship.attr('id');
+                id_ship_param = id_ship_param.trim();
+                $(('.secciones_shipment')).each(function() 
+                 {
+                     var id_ship_for = $(this).attr('id');
+                     id_ship_for = id_ship_for.trim(); 
+                    
+                     if(id_ship_param != id_ship_for && $(this).children().children().hasClass("hideListButton") == true)   
+                     { 
+                        twistSection(document.getElementById(""+id_ship_for).getElementsByTagName('img')[0]);
+                        
+                     }
+                     if(id_ship_param == id_ship_for)
+                     {
+                        $('.capa_out_'+$(this).attr('neudata')).css('display','none');
+                     }
+                     else
+                        $('.capa_out_'+$(this).attr('neudata')).css('display','block');
+                 });
+
+             }
+            click_link = false;
+        }
+    </script>
+    <style>
+        .fechas_shipment{}
+
+    </style>
+    <apex:form id="form">
+        <apex:pageMessages id="pagemessages"/>
+        <apex:pageBlock id="block1" rendered="{!listado_shipment.size != 0}">
+            <apex:inputhidden value="{!ultimo_shipment}" html-class="ultimo_shipment"/>
+            <apex:repeat value="{!listado_shipment}" var="ship">
+                <apex:pageBlockSection title="{!ship.ship.Name}           {!IF(ship.ship.Route__c != null, '('+ship.ship.Route__r.Name+')', '')}   " html-neudata2="{!ship.etd}" html-neudata3="{!ship.eta}" html-neudata="{!ship.ship.Id}" html-neudata4="{!ship.ship.Freight_Mode__c}" columns="1" html-class="secciones_shipment {!ship.ship.Id}" id="section1" onclick="close_all($(this));" >
+
+                     <div class="capa_in_{!ship.ship.id}">
+                        <span style="    margin-left: 20px; font-weight: bold;">Warehouse : </span><a href="{!$Site.BaseUrl}/{!ship.ship.Site_of_Discharge__c}" >{!ship.ship.Site_of_Discharge__r.Name}</a>
+                        <span style="    margin-left: 20px; font-weight: bold;">{!$ObjectType.Shipment__c.fields.Storage_Date_From__c.Label} : </span><span>{!ship.Storage_Date_From}</span>
+                        <span style="    margin-left: 20px; font-weight: bold;">{!$ObjectType.Shipment__c.fields.Storage_Date_To__c.Label} :</span><span>{!ship.Storage_Date_To}</span>
+                        <span style="    margin-left: 20px; font-weight: bold;">{!$ObjectType.Shipment__c.fields.Storage_days__c.Label} : </span><span>{!ship.ship.Storage_days__c}</span> 
+                      </div>
+                      <script>
+                          if($('.ultimo_shipment').val() != null && $('.ultimo_shipment').val() != '')
+                          {
+                            var clase = $('.ultimo_shipment').val();
+                            var clase_ahora = '{!ship.ship.Id}';
+                            if(clase != clase_ahora)
+                                twistSection(document.getElementById("{!$Component.section1}").childNodes[0].childNodes[0]);
+    
+                          }
+                          else
+                            twistSection(document.getElementById("{!$Component.section1}").childNodes[0].childNodes[0]); 
+                      </script>
+
+                      <iframe  src="{!$Site.BaseUrl}/apex/NEU_SP_Track_Trace?id={!ship.ship.Id}" width= "100%" height="1250px" style="border: 0px; "></iframe>
+                </apex:pageBlockSection>
+                <div class="capa_out_{!ship.ship.id}">
+                    <apex:outputlabel value="Warehouse : " style="    margin-left: 20px; font-weight: bold;"/><apex:outputLink value="{!$Site.BaseUrl}/{!ship.ship.Site_of_Discharge__c}" >{!ship.ship.Site_of_Discharge__r.Name}</apex:outputLink>
+                    <apex:outputlabel value="{!$ObjectType.Shipment__c.fields.Storage_Date_From__c.Label} : " style="    margin-left: 20px; font-weight: bold;"/><apex:outputField value="{!ship.ship.Storage_Date_From__c}"/>
+                    <apex:outputlabel value="{!$ObjectType.Shipment__c.fields.Storage_Date_To__c.Label} : " style="    margin-left: 20px; font-weight: bold;"/><apex:outputField value="{!ship.ship.Storage_Date_To__c}"/>
+                    <apex:outputlabel value="{!$ObjectType.Shipment__c.fields.Storage_days__c.Label} : " style="    margin-left: 20px; font-weight: bold;"/><apex:outputField value="{!ship.ship.Storage_days__c}"/>
+                </div>
+            </apex:repeat>
+        </apex:pageBlock>
+        
+        <apex:outputpanel >
+               <apex:actionstatus id="myStatus">
+                   <apex:facet name="start">
+                       <div class="waitingSearchDiv" id="el_loading" style="background-color: #fbfbfb;
+                              height: 100%;opacity:0.65;width:100%;"> 
+                           <div class="waitingHolder" style="top: 74.2px; width: 91px;">
+                               <img class="waitingImage" src="/img/loading.gif" title="Please Wait..." />
+                               <span class="waitingDescription">Loading...</span>
+                           </div>
+                       </div>
+                   </apex:facet>
+               </apex:actionstatus>
+         </apex:outputpanel>
+         
+    </apex:form>
+</apex:page>

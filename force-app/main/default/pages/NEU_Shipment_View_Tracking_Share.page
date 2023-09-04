@@ -1,0 +1,11 @@
+<apex:page id="page" StandardController="Shipment__c" extensions="NEU_Shipment_View_Tracking">
+
+    <apex:outputPanel layout="block" style="height:50px;background-color: white;z-index: 1;position: relative;">
+        <apex:sectionHeader title="{!$ObjectType.Shipment_Track__c.labelplural}" subtitle="Truckstop Tracking"/>
+    </apex:outputPanel>
+    
+    <apex:outputPanel layout="block">
+        <iframe id="truckstop_iframe" src="https://loadtracking-int.truckstop.com/SharedTrack/{!shipment_track.Name}" width="1200px" height="1000px" style="border: none;margin-top: -50px;z-index: 0;position: relative;"></iframe>
+    </apex:outputPanel>
+
+</apex:page>

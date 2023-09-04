@@ -1,0 +1,120 @@
+<apex:page controller="NEU_Custom_Settings_Administration" action="{!getallcustomssetting}">
+	<apex:includeScript value="{!$Resource.jquery_1_10_2}"/> 
+	<script>
+	</script>
+	<apex:form id="form">
+		<apex:sectionHeader title="Custom Setting Administration"/>
+		<apex:pageMessages id="message"/>
+		<apex:outputpanel >
+			<apex:pageBlock mode="maindetail">
+				 <apex:pageBlock id="block_buttons" mode="maindetail">
+					<apex:pageBlockButtons location="top">
+						<apex:commandButton status="myStatus" value="Save" reRender="customer_order,community,import_export,shipment,shipment_conso,supplier_request,trade_consolidation,self_registration" action="{!save}"/>
+						<apex:commandButton status="myStatus" value="Cancel" reRender="customer_order,community,import_export,shipment,shipment_conso,supplier_request,trade_consolidation,self_registration" action="{!getallcustomssetting}"/>
+					</apex:pageBlockButtons>
+				</apex:pageBlock>
+				
+				<apex:pageBlock mode="maindetail" id="customer_order">
+					 <apex:repeat value="{!lista_customer_order}" var="co" >
+						<div style=" display:table-cell;   width: 900px;">
+		        			<apex:pageBlockSection title="{!$ObjectType.CSH_Shopping_Cart__c.labelPlural}:" columns="3">	
+		        				<apex:inputField value="{!co.Shopping_Cart_Type_Authorized__c}"/>
+		        				<apex:inputField value="{!co.Items_Selection__c}" />
+		        				<apex:inputField value="{!co.E_Commerce_Offers_Selection__c}"/>
+							</apex:pageBlockSection>
+						</div>
+			    	</apex:repeat>
+			    </apex:pageBlock>
+		    
+		    	<apex:pageBlock mode="maindetail" id="community">
+					 <apex:repeat value="{!lista_community}" var="co" >
+						<div style=" display:table-cell;   width: 900px;">
+		        			<apex:pageBlockSection title="{!$ObjectType.CSH_Community__c.labelPlural}:" columns="1">	
+		        				<apex:inputField value="{!co.Community_Id__c}"/>
+							</apex:pageBlockSection>
+						</div>
+			    	</apex:repeat>
+			    </apex:pageBlock>
+			    
+			    <apex:pageBlock mode="maindetail" id="import_export">
+					 <apex:repeat value="{!lista_Import_Export}" var="co">
+						<div style=" display:table-cell;   width: 900px;">
+		        			<apex:pageBlockSection title="{!$ObjectType.CSH_Import_Export__c.labelPlural}:" columns="1">	
+		        				<apex:inputField value="{!co.Use_Price_List_and_Dicounts__c}"/>
+							</apex:pageBlockSection>
+						</div>
+			    	</apex:repeat>
+			    </apex:pageBlock>
+			    
+			    
+			     <apex:pageBlock mode="maindetail" id="shipment">
+					 <apex:repeat value="{!lista_Shipment}" var="co" >
+						<div style=" display:table-cell;   width: 900px;">
+		        			<apex:pageBlockSection title="{!$ObjectType.CSH_Shipment__c.labelPlural}:" columns="2">	
+		        				<apex:inputField value="{!co.Default_Freight_Mode__c}"/>
+		        				<apex:inputField value="{!co.Default_Supply_Project_Customer_Buyer__c}"/>
+							</apex:pageBlockSection>
+						</div>
+			    	</apex:repeat>
+			    </apex:pageBlock>
+			    
+			     <apex:pageBlock mode="maindetail" id="shipment_conso">
+					 <apex:repeat value="{!lista_Shipment_Consolidation}" var="co" >
+						<div style=" display:table-cell;   width: 900px;">
+		        			<apex:pageBlockSection title="{!$ObjectType.CSH_Shipment_Consolidation__c.labelPlural}:" columns="1">	
+		        				<apex:inputField value="{!co.Show_Only_I_E_Lines_without_SO_Line__c}"/>
+							</apex:pageBlockSection>
+						</div>
+			    	</apex:repeat>
+			    </apex:pageBlock>
+			    
+			     <apex:pageBlock mode="maindetail" id="supplier_request">
+					 <apex:repeat value="{!lista_Supplier_Request}" var="co" >
+						<div style=" display:table-cell;   width: 900px;">
+		        			<apex:pageBlockSection title="{!$ObjectType.CSH_Supplier_Request__c.labelPlural}:" columns="3">	
+		        				<apex:inputField value="{!co.Default_Community_URL__c}"/>
+		        				<apex:inputField value="{!co.Default_External_URL__c}"/>
+		        				<apex:inputField value="{!co.Use_External_Url__c}"/>
+							</apex:pageBlockSection>
+						</div>
+			    	</apex:repeat>
+			    </apex:pageBlock>
+			    
+			     <apex:pageBlock mode="maindetail" id="trade_consolidation">
+					 <apex:repeat value="{!lista_Trade_Consolidation}" var="co" >
+						<div style=" display:table-cell;   width: 900px;">
+		        			<apex:pageBlockSection title="{!$ObjectType.CSH_Trade_Consolidation__c.labelPlural}:" columns="1">	
+		        				<apex:inputField value="{!co.Use_Shipment_Consolidation__c}"/>
+							</apex:pageBlockSection>
+						</div>
+			    	</apex:repeat>
+			    </apex:pageBlock>
+			    
+			     <apex:pageBlock mode="maindetail" id="self_registration">
+					 <apex:repeat value="{!lista_Self_Registration}" var="co" >
+						<div style=" display:table-cell;   width: 900px;">
+		        			<apex:pageBlockSection title="{!$ObjectType.CSL_Self_Registration__c.labelPlural} {!co.Name} :" columns="1">	
+		        				<apex:inputField value="{!co.Business_Areas__c}"/>
+							</apex:pageBlockSection>
+						</div>
+			    	</apex:repeat>
+			    </apex:pageBlock>
+		    
+		   </apex:pageBlock>
+	   </apex:outputPanel>
+	   <apex:outputpanel >
+       <apex:actionstatus id="myStatus">
+           <apex:facet name="start">
+               <div class="waitingSearchDiv" id="el_loading" style="background-color: #fbfbfb;
+                      height: 100%;opacity:0.65;width:100%;"> 
+                   <div class="waitingHolder" style="top: 74.2px; width: 91px;">
+                       <img class="waitingImage" src="/img/loading.gif" title="Please Wait..." />
+                       <span class="waitingDescription">Loading...</span>
+                   </div>
+               </div>
+           </apex:facet>
+       </apex:actionstatus>
+    </apex:outputpanel>
+    
+	</apex:form>
+</apex:page>

@@ -1,0 +1,29 @@
+<aura:component implements="forceCommunity:availableForAllPageTypes">
+	<div id="main">
+        <div id="footer">
+            <ul id="footer_list">
+                <li><p>01800 APOYO 06 <span>(Todo México)</span></p></li>
+                <li><p>(55) 5531 3553 <span>(distrito federal)</span></p></li>
+                <li><p>(656) 623 5823 <span>(Cd. Juárez)</span></p></li>
+                <li><p>(161) 9777 6906 <span>(California)</span></p></li>
+                <li><p>(81) 1365 5333 <span>(Monterrey)</span></p></li>
+                <li><p>(33) 3615 6427 <span>(guadalajara)</span></p></li>
+                <li><p>(444) 274 0307 <span>(San Luis Potosí)</span></p></li>
+                <li><p>(614) 481 0497 <span>(Chihuahua)</span></p></li>
+                <li><p>(477) 717 5906 <span>(león)</span></p></li>
+                <li><p>(222) 169 6425 <span>(Puebla)</span></p></li>
+                <li><p>(442) 221 5528 <span>(Querétaro)</span></p></li>
+                <li><p>(229) 293 9950 <span>(Veracruz)</span></p></li>
+                <li><p>(852) 2201 1066 <span>(PAK2GO LIMITED)</span></p></li>
+                <li id="fs_li">
+                	<div id="footer_social">
+                        <a href="mailto:info@pak2go.com" id="mail_info" class="fs_link">info@pak2go.com</a>
+                        <a href="http://www.facebook.com/pak2go" target="_blank" class="fs_link"><img src="{!$Resource.facebook_icon}" alt="Facebook Pak2Go"/></a>
+                        <a href="http://www.twitter.com/pak2go" target="_blank" class="fs_link"><img src="{!$Resource.twitter_icon}" alt="Twitter Pak2Go"/></a>
+                        <a href="https://plus.google.com/+Pak2go" target="_blank" class="fs_link"><img src="{!$Resource.googleplus_icon}" alt="Google Plus Pak2Go"/></a>
+                    </div>	
+                </li>
+            </ul>
+    	</div>
+    </div>
+</aura:component>

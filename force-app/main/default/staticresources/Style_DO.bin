@@ -1,0 +1,77 @@
+/*CSS STYLE DO*/
+
+#contenedor
+{
+	 font-size: 12px;
+
+}
+
+.logo_title
+{
+	margin-bottom: 29px;
+	    width: 185px !important;
+}
+@page {
+    @bottom-right {
+      content: "Page " counter(page) " of " counter(pages);
+          font-weight: lighter;
+          font-size:9pt;
+	  font-family:Arial,Helvetica,sans-serif;
+        }
+
+    }
+
+
+.title_document
+{
+    float: right;
+    font-family: Arial,Helvetica,sans-serif;
+    font-weight: bold;
+    font-size: 25px;
+    margin-top: 15px;
+}
+
+.table_cabecera
+{
+	    margin-top: 29px;
+	font-family: Arial,Helvetica,sans-serif;
+    width: 100%;
+
+}
+
+.table_cabecera td
+{
+	    text-align: left;
+	width: 256px;
+}
+
+.table_cabecera th
+{
+	    color: #0079be;
+	width: 176px;
+}
+
+.table_lines
+{
+	margin-top: 29px;
+font-family: Arial,Helvetica,sans-serif;
+    width: 100%;
+}
+
+.table_lines td
+{
+}
+
+.table_lines th
+{
+	background: #009ccc;
+    color: white;
+    text-align: center;
+}
+
+.logo_bcline
+{
+	width: 200px !important;
+    /*margin-top: 247px;*/
+    /*margin-left: -66px;*/
+}

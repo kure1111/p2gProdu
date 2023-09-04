@@ -1,0 +1,5 @@
+<apex:page StandardController="Air_Waybill__c" extensions="NEU_Traxon_Waybill_Status">
+    <apex:form >
+		<apex:pagemessages />         
+    </apex:form>
+</apex:page>

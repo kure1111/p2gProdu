@@ -1,0 +1,2 @@
+<apex:page standardController="Customer_Quote__c" extensions="NEU_Import_Export_NotifyCommunity" action="{!notificar}">
+</apex:page>

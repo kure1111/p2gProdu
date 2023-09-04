@@ -1,0 +1,252 @@
+<apex:page Controller="NEU_Send_Request_for_Quotation" sidebar="false" showHeader="false">
+<apex:includeScript value="{!$Resource.neu_jquery}"/> 
+<apex:includeScript value="{!$Resource.jquery_1_10_2}"/> 
+<apex:includeScript value="{!$Resource.jquery_ui_1_10_3}"/>
+<apex:includeScript value="{!$Resource.neurored_jquery}"/> 
+<apex:stylesheet value="{!URLFOR($Resource.jquery_ui_1_10_3_css,'jquery-ui-1.10.3.min.css')}"/>
+<script>
+        $(document).ready(function () {
+             
+            $($.sfId('{!$Component.form.radio}')).buttonset();
+            $("#radio td").css('display','inline-block');
+        });
+        
+        function marcar_suppliers()
+        {
+            $(' input[type="checkbox"].check_suppliers').prop("checked", $('.select_all_suppliers').is(':checked'));
+            
+        }
+        
+        function sacar_capa()
+        {
+            update_table_suppliers();
+        }
+        
+        function sort_data_quote(n)
+        {
+            var ordenacion = '';
+
+            if($('#orden_ad_quotes').val() == 'desc' || $('#orden_ad_quotes').val() == 'none')
+            {
+                ordenacion = n+'-asc';
+                $('#orden_ad_quotes').val('asc');
+            }
+            else
+            {
+                ordenacion = n+'-desc';
+                $('#orden_ad_quotes').val('desc');
+            }
+            
+            document.getElementById('{!$Component.form.orden_quotes}').value = ordenacion;
+            compare_data();
+        }
+        
+        function recargar_pagina_principal()
+        {
+            if($('.enviado_correctamente').val() == 'true')
+            {
+                window.parent.closeEvents();
+            }
+        }
+        
+        function del_oi(id)
+        {
+            document.getElementById('{!$Component.form.id_oi}').value = id;
+            delete_oi();
+        }
+        
+        function search_name_filter2()
+        {
+            document.getElementById('{!$Component.form.block0.supplier_filter_name}').value = $('.supplier_name_filter').val();
+            search_name_filter(); 
+        }
+        
+        function recolocar_columnas()
+        {
+             $('table.table_suppliers th.headerRow').each(function() {
+              if($(this).index()==0) $("table.cabecerasuppliers .column-AccountName").css("width",$(this).width());
+              if($(this).index()==1) $("table.cabecerasuppliers .column-Type").css("width",$(this).width());
+              if($(this).index()==2) $("table.cabecerasuppliers .column-Description").css("width",$(this).width());
+              if($(this).index()==3) $("table.cabecerasuppliers .column-Contacts").css("width",$(this).width());                  
+              if($(this).index()==4) $("table.cabecerasuppliers .column-Prices").css("width",$(this).width());
+              if($(this).index()==5) $("table.cabecerasuppliers .column-Colaboration").css("width",$(this).width());
+              if($(this).index()==6) $("table.cabecerasuppliers .column-DeliveryTimes").css("width",$(this).width());
+              if($(this).index()==7) $("table.cabecerasuppliers .column-EfficiencyLevel").css("width",$(this).width());
+              if($(this).index()==8) $("table.cabecerasuppliers .column-Observations").css("width",$(this).width());
+              if($(this).index()==10) $("table.cabecerasuppliers .column-Action").css("width",$(this).width()+17);
+            }); 
+        }
+        
+        $(window).load(function() {
+            $('table.table_suppliers th.headerRow').each(function() {
+              if($(this).index()==0) $("table.cabecerasuppliers .column-AccountName").css("width",$(this).width());
+              if($(this).index()==1) $("table.cabecerasuppliers .column-Type").css("width",$(this).width());
+              if($(this).index()==2) $("table.cabecerasuppliers .column-Description").css("width",$(this).width());
+              if($(this).index()==3) $("table.cabecerasuppliers .column-Contacts").css("width",$(this).width());                  
+              if($(this).index()==4) $("table.cabecerasuppliers .column-Prices").css("width",$(this).width());
+              if($(this).index()==5) $("table.cabecerasuppliers .column-Colaboration").css("width",$(this).width());
+              if($(this).index()==6) $("table.cabecerasuppliers .column-DeliveryTimes").css("width",$(this).width());
+              if($(this).index()==7) $("table.cabecerasuppliers .column-EfficiencyLevel").css("width",$(this).width());
+              if($(this).index()==8) $("table.cabecerasuppliers .column-Observations").css("width",$(this).width());
+              if($(this).index()==10) $("table.cabecerasuppliers .column-Action").css("width",$(this).width()+17);
+            });  
+        });  
+        
+</script>
+<style>
+    body .bPageTitle .pageTitleIcon {display: none;     }
+    .pageType, body .bPageTitle .ptBody .pageDescription {margin-left: -4px;}
+    body .bPageTitle .ptBody .pageType, body .bPageTitle .ptBody .pageDescription {margin-left: -4px;}
+    tr.cabeceraRow td {
+            border: 1px solid #ededed;
+            background: #f2f3f3;
+            border-width: 0 0 1px 1px;
+            border-color: #e0e3e5;
+            color: #000;
+            font-size: .9em;
+            font-weight: bold;
+            padding: 5px 2px 4px 5px;
+        }
+        
+        table.table_suppliers {
+            margin-top: -25px;
+        }
+        
+        table.cabecera {
+            position: relative; 
+            border-spacing: 0px;
+        }
+    .textarea_supplier{    width: 133px !important;}
+</style>
+    <apex:form id="form">
+        <apex:pageMessages id="pagemessages"/>
+        <apex:inputhidden value="{!enviado_correctamente}" id="enviado_correctamente" html-class="enviado_correctamente"/>
+        <apex:actionFunction name="compare_data" action="{!go_compare}" reRender="block0" status="myStatus"/>
+        <apex:actionFunction name="search_name_filter"  status="myStatus" reRender="block0"  action="{!search_name_filter}" oncomplete="recolocar_columnas();"/> 
+        <apex:actionFunction name="update_table_suppliers" reRender="block0" status="myStatus"/>
+        <apex:sectionHeader title="{!Service_Rate_Name}" subtitle="Send Request for Quotation" /> 
+         <!-- <span style="    position: relative;     top: -36px;     left: 258px;  font-size: 17px;">
+                 <a href="/{!Supply_Project__c.Id}" onblur="LookupHoverDetail.getHover(neu_getId(this)).hide();" onfocus="LookupHoverDetail.getHover(neu_getId(this),'/{!Supply_Project__c.Id}/m?isAjaxRequest=1').show();" onmouseout="LookupHoverDetail.getHover(neu_getId(this)).hide();" onmouseover="LookupHoverDetail.getHover(neu_getId(this),'/{!Supply_Project__c.Id}/m?isAjaxRequest=1').show();" target="_blank" id="new_id_1">{!Supply_Project__c.Name}</a>
+            </span>-->
+       <!--  <apex:outputPanel id="radios">
+            <div id="radio">
+                <apex:selectRadio id="radio" value="{!newcategory}" onchange="changeradios();">
+                    <apex:selectOptions value="{!newcategories}"/>
+                </apex:selectRadio>
+            </div>
+        </apex:outputPanel>-->
+        <apex:actionFunction name="changeradios"  status="myStatus" reRender="linesSelector">
+        </apex:actionFunction>
+        <apex:outputPanel id="linesSelector">
+           <!--  <apex:pageBlock mode="maindetail">
+            <apex:pageBlockSection title="Filters" columns="2">
+                <apex:pageBlockSectionItem >
+                <apex:outputLabel value="Subfamily"/> 
+                   <apex:selectList multiselect="false"  value="{!subfamily}" size="1" onchange="changeradios();">
+                       <apex:selectOptions value="{!subfamilies}"/>
+                   </apex:selectList>
+                </apex:pageBlockSectionItem>
+                <apex:pageBlockSectionItem >
+                <apex:outputLabel value="Item"/> 
+               <apex:selectList multiselect="false"  value="{!item}" size="1" onchange="changeradios();">
+                   <apex:selectOptions value="{!items}"/>
+               </apex:selectList>
+               </apex:pageBlockSectionItem>
+            </apex:pageBlockSection>
+        </apex:pageBlock>-->
+        <div>
+            <apex:outputlabel value="Subject" style="margin-left: 12px;    font-weight: bold;    margin-right: 12px;  float: left;"/>
+            <apex:inputtext value="{!Subject_email}" style="width: 230px;  float: left;"/>
+            <div style="   float: left;">
+                <apex:outputlabel value="Search Account Name" style="margin-left: 12px;    font-weight: bold;    margin-right: 12px;"/>
+                <input type="text" value="{!supplier_filter_name}" label="Rate Name" style="    width: 90px;" class="supplier_name_filter"/>
+                <span style="    background-image: url(/img/func_icons/util/lookup20.gif);    background-position: 0 0;    width: 20px;    height: 20px;    background-position: top left;     float: right; cursor: pointer;" onclick="search_name_filter2();"></span>
+            </div>
+        </div>
+            <apex:pageBlock id="block0" title="Supply Chain Partners" mode="maindetail">
+                <apex:inputHidden value="{!supplier_filter_name}" id="supplier_filter_name"/>
+                <table class="cabecera cabecerasuppliers">
+                <tr class="cabeceraRow">
+                    <td class="column-AccountName" style="    width: 117px;">Account Name
+                    </td>
+                    <td class="column-Type">Type</td>
+                    <td class="column-Description">Description</td>
+                    <td class="column-Contacts">Contacts</td>                                                        
+                    <td class="column-Prices">Prices</td>
+                    <td class="column-Colaboration">Colaboration</td>
+                    <td class="column-DeliveryTimes">Delivery Times</td>
+                    <td class="column-EfficiencyLevel">Efficiency Level</td>
+                    <td class="column-Observations">Observations</td>
+                    <td class="column-Action">Action <br/><input type="checkbox" style="float: right;" class="select_all_suppliers" onclick="marcar_suppliers();" /></td>
+                </tr>
+            </table>
+            <div style="overflow: scroll;     height: 170px; overflow-x: hidden;">
+                <apex:pageBlockTable id="table" value="{!lista_suppliers}" styleclass="table_suppliers" var="su" style="    margin-right: 36px;     width: 915px;">
+                    <apex:column >
+                        <apex:facet name="header"><div style="text-align:center; cursor: pointer; width: 117px;" onclick="sort_data_quote('line.Name');">Account Name</div></apex:facet>
+                        <c:customobject2 objid="{!su.line.Id}" objname="{!su.line.Name}"/>
+                    </apex:column>
+                    <apex:column value="{!su.line.Type}">
+                        <apex:facet name="header"><div style="text-align:center; cursor: pointer;" onclick="sort_data_quote('line.Type');">Type</div></apex:facet>
+                        
+                    </apex:column>
+                    <apex:column value="{!su.line.Description}" >
+                        <apex:facet name="header"><div style="text-align:center; cursor: pointer;" onclick="sort_data_quote('line.Description');">Description</div></apex:facet>
+                    </apex:column>
+                    <apex:column >
+                        <apex:facet name="header"><div style="text-align:center; cursor: pointer;" onclick="sort_data_quote('contact_select');">Contacts</div></apex:facet>
+                        <apex:selectList label="Contacts" value="{!su.contact_select}" size="1" >
+                            <apex:selectOptions value="{!su.contact}"/>
+                         </apex:selectList>
+                    </apex:column>
+                    <apex:column value="{!su.line.Prices_Score__c}"  style="text-align:right">
+                        <apex:facet name="header"><div style="text-align:center; cursor: pointer;" onclick="sort_data_quote('line.Prices_Score__c');">{!$ObjectType.Account.fields.Prices__c.Label}</div></apex:facet>
+                    </apex:column>
+                    <apex:column value="{!su.line.Colaboration_Score__c}"  style="text-align:right" >
+                         <apex:facet name="header"><div style="text-align:center; cursor: pointer;" onclick="sort_data_quote('line.Colaboration_Score__c');">{!$ObjectType.Account.fields.Colaboration__c.Label}</div></apex:facet>
+                    </apex:column>
+                    <apex:column value="{!su.line.Delivery_Times_Score__c}"  style="text-align:right">
+                        <apex:facet name="header"><div style="text-align:center; cursor: pointer;" onclick="sort_data_quote('line.Delivery_Times_Score__c');">{!$ObjectType.Account.fields.Delivery_Times__c.Label}</div></apex:facet>
+                    </apex:column>
+                    <apex:column value="{!su.line.Efficiency_Level_Score__c}"  style="text-align:right">
+                        <apex:facet name="header"><div style="text-align:center; cursor: pointer;" onclick="sort_data_quote('line.Efficiency_Level_Score__c');">{!$ObjectType.Account.fields.Efficiency_Level__c.Label}</div></apex:facet>
+                    </apex:column>
+                    <apex:column headerValue="Observations">  
+                            <apex:inputTextarea value="{!su.observation}" StyleClass="textarea_supplier" style="width: 100%; height: 44px;"/>
+                         </apex:column>
+                     <apex:column style="text-align: center;">
+                             <apex:facet name="header"><div style="text-align:center;">Action<!-- <input type="checkbox" style="float: right;" class="select_all_suppliers" onclick="marcar_suppliers();" />--></div></apex:facet>
+                             <apex:inputCheckbox StyleClass="inputcheck {!if((su.contact != null && su.contact.size == 0) || su.contact == null , '' , 'check_suppliers')}" value="{!su.selected}" disabled="{!if((su.contact != null && su.contact.size == 0 )|| su.contact == null , true , false)}"/>
+                        </apex:column>
+                        
+                    </apex:pageBlockTable>
+                </div>
+                <apex:pageBlockButtons >
+                        <apex:commandButton value="Send Request" status="myStatus"  styleClass="calculate" reRender="pagemessages, enviado_correctamente "  action="{!create_service_rate_send_email}" oncomplete="recargar_pagina_principal();"/>
+                </apex:pageBlockButtons>
+            </apex:pageBlock>
+        </apex:outputPanel>
+        <apex:outputpanel >
+           <apex:actionstatus id="myStatus">
+               <apex:facet name="start">
+                   <div class="waitingSearchDiv" id="el_loading" style="background-color: #fbfbfb;
+                          height: 100%;opacity:0.65;width:100%;"> 
+                       <div class="waitingHolder" style="top: 74.2px; width: 91px;">
+                           <img class="waitingImage" src="/img/loading.gif" title="Please Wait..." />
+                           <span class="waitingDescription">Loading...</span>
+                       </div>
+                   </div>
+               </apex:facet>
+           </apex:actionstatus>
+        </apex:outputpanel>
+         <div class="waitingSearchDiv" id="otherStatus" style="display:none;background-color:#fbfbfb;height:100%;opacity:0.65;width:100%;"> 
+            <div class="waitingHolder" style="top:74.2px;width:91px;">
+                <img class="waitingImage" src="/img/loading.gif" title="Please Wait..." />
+                <span class="waitingDescription">Loading...</span>
+            </div>
+        </div>
+        <apex:inputHidden value="{!id_oi}" id="id_oi"/>
+        <input type="hidden" value="none" id="orden_ad_quotes"/>
+        <apex:inputHidden value="{!orden_quotes}" id="orden_quotes"/>
+    </apex:form>
+</apex:page>

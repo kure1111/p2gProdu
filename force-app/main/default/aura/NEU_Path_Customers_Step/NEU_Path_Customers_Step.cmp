@@ -1,0 +1,61 @@
+<aura:component >
+    
+    <aura:attribute name="eType" type="String"/>
+    <aura:attribute name="active" type="Boolean"/>
+    <aura:attribute name="completed" type="Boolean"/>
+    <aura:attribute name="current" type="Boolean"/>
+    <aura:attribute name="stepName" type="String"/>
+    <aura:attribute name="rejection" type="Boolean"/>
+    
+    <aura:registerEvent name="stepClickCargo" type="c:NEU_Path_Customers_StepClickCargo"/>
+    <aura:registerEvent name="stepClickSendToP2G" type="c:NEU_Path_Customers_StepClickSendToP2G"/>
+    <aura:registerEvent name="stepClickConfirmToP2G" type="c:NEU_Path_Customers_StepClickConfirmToP2G"/>
+    <aura:registerEvent name="stepClickRejectToP2G" type="c:NEU_Path_Customers_StepClickRejectToP2G"/>
+   
+    <aura:renderIf isTrue="{!v.completed}">
+        <li class="slds-path__item slds-is-complete" role="presentation">
+            <a aria-selected="false" class="slds-path__link" onclick="{!c.process}" href="javascript:void(0);" id="path-1" role="option" tabindex="-1">
+                <span class="slds-path__stage">
+                    <lightning:icon iconName="utility:check" size="x-small" variant="inverse"/>
+                    <span class="slds-assistive-text">Stage Complete</span>                    
+                </span>
+                <span class="slds-path__title">{!v.stepName}</span>
+            </a>
+        </li> 
+  	</aura:renderIf>
+    
+    <aura:renderIf isTrue="{!and(not(v.completed), not(v.current))}">
+        <li class="slds-path__item slds-is-incomplete" role="presentation">
+            <a aria-selected="false" class="slds-path__link" onclick="{!c.process}" href="javascript:void(0);" id="path-1" role="option" tabindex="-1">
+                <span class="slds-path__stage">
+                    
+                </span>
+                <span class="slds-path__title">{!v.stepName}</span>
+            </a>
+        </li> 
+    </aura:renderIf>
+
+    <aura:renderIf isTrue="{!and(not(v.completed), v.current)}">
+        <aura:if isTrue="{!not(v.rejection)}">
+            <li class="slds-path__item slds-is-current slds-is-active" role="presentation">
+                <a aria-selected="false" class="slds-path__link" onclick="{!c.process}" href="javascript:void(0);" id="path-1" role="option" tabindex="-1">
+                    <span class="slds-path__stage">
+                        <span class="slds-assistive-text">Current Stage:</span>    
+                    </span>
+                    <span class="slds-path__title">{!v.stepName}</span>
+                </a>
+            </li>
+            <aura:set attribute="else">              
+                <li class="slds-path__item slds-is-lost slds-is-incomplete" role="presentation">
+                    <a aria-selected="false" class="slds-path__link" onclick="{!c.process}" href="javascript:void(0);" id="path-1" role="option" tabindex="-1">
+                        <span class="slds-path__stage">
+                            <span class="slds-assistive-text">Current Stage:</span>    
+                        </span>
+                        <span class="slds-path__title">{!v.stepName}</span>
+                    </a>
+                </li>
+            </aura:set>    
+        </aura:if>        
+	</aura:renderIf>
+
+</aura:component>

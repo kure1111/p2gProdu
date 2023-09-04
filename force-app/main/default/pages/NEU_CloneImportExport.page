@@ -1,0 +1,18 @@
+<apex:page standardController="Customer_Quote__c" extensions="NEU_CloneImportExport" action="{!duplicate_order}">
+	<apex:form >
+	<apex:includeScript value="{!$Resource.jquery_1_10_2}"/>
+	<apex:includeScript value="{!$Resource.jquery_ui_1_10_3}"/>
+	<apex:includeScript value="{!$Resource.neurored_jquery}"/>
+	<script>
+    $(document).ready(function () {
+		if({!record.Account_for__r.ActiveSap__c} == false)
+		{
+			alert('Account for isn´t active, you can´t duplicate IE');
+			back_to_ie();
+		}
+    });
+	</script>
+	<apex:outputText value="{!resultado}"/>
+	<apex:actionFunction name="back_to_ie" action="{!back_record}" status="myStatus"/>
+	</apex:form>
+</apex:page>

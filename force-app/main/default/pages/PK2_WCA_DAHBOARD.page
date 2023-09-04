@@ -1,0 +1,26 @@
+<apex:page showHeader="false" tabStyle="Account">
+<head>
+  <base target="_top">
+  </base>
+</head> 
+    <apex:pageBlock title="DASHBOARD - WCA" mode="edit">
+        <apex:pageBlockSection title="Status Quotes" columns="3" >
+            <analytics:reportChart reportId="00O0Y000007wkn1" size="tiny"/>  
+            <analytics:reportChart reportId="00O0Y000007wknf" size="tiny"/> 
+            <analytics:reportChart reportId="00O0Y000007wknk" size="tiny"/>
+            <analytics:reportChart reportId="00O0Y000007wsD5" size="tiny"/>
+            <analytics:reportChart reportId="00O0Y000007wsDA" size="tiny"/>
+            <analytics:reportChart reportId="00O0Y000007wsDF" size="tiny"/>
+        </apex:pageblocksection>
+     <apex:pageBlockSection title="COMMERCIAL - Open orders" columns="3" >
+            <analytics:reportChart reportId="00O0Y000007wkn6" size="tiny"/>  
+            <analytics:reportChart reportId="00O0Y000007wULZ" size="tiny"/> 
+        </apex:pageblocksection>    
+     <apex:pageBlockSection title="OPERATIONS - Not Shipped" columns="3" >
+            <analytics:reportChart reportId="00O0Y000007wUxT" size="tiny"/>
+            <analytics:reportChart reportId="00O0Y000007x95N" size="tiny"/>
+            <analytics:reportChart reportId="00O0Y000007x95D" size="tiny"/>
+            <analytics:reportChart reportId="00O0Y000007x95I" size="tiny"/> 
+        </apex:pageblocksection>
+    </apex:pageBlock>
+ </apex:page>

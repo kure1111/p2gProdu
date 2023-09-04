@@ -1,0 +1,99 @@
+<!--
+ - Created by jamarin on 11/12/2018.
+ -->
+
+<apex:page standardController="Customer_Quote__c" extensions="NEU_create_shipmet_pallets">
+        <apex:includeScript value="{!$Resource.neu_jquery}"/>
+        <apex:includeScript value="{!$Resource.jquery_1_10_2}"/>
+        <apex:includeScript value="{!$Resource.jquery_ui_1_10_3}"/>
+        <apex:includeScript value="{!$Resource.neurored_jquery}"/>
+        <apex:stylesheet value="{!URLFOR($Resource.jquery_ui_1_10_3_css,'jquery-ui-1.10.3.min.css')}"/>
+        <script type="text/javascript"> var __sfdcSessionId = '{!GETSESSIONID()}'; </script>
+        <script src="/soap/ajax/28.0/connection.js" type="text/javascript"></script>
+        <script>
+    	function recalcular_volume(id)
+        {
+            var length = "";
+            var width = "";
+            var height = "";
+            var units = 0;
+                
+            if(id == "new")
+            {
+                length = ($(".new_len_size").val() != "" ? ({!Customer_Quote__c.Only_Warehouse_Service__c} == true ? $(".new_len_size").getFloatSep() * 100 : $(".new_len_size").getFloatSep()) : "");
+                width = ($(".new_wid_size").val() != "" ? ({!Customer_Quote__c.Only_Warehouse_Service__c} == true ? $(".new_wid_size").getFloatSep() * 100 : $(".new_wid_size").getFloatSep()) : "");
+                height = ($(".new_hei_size").val() != "" ? ({!Customer_Quote__c.Only_Warehouse_Service__c} == true ? $(".new_hei_size").getFloatSep() : $(".new_hei_size").getFloatSep()) : "");
+                units = ($(".units").val() != "" ? $(".units").val() : 0);
+            }
+            
+             if (length != "" && width != "" && height != ""){
+                var total_volume = 0;
+                total_volume = (length * width * height) / 1000000;
+                
+                if(id == "new")
+                {
+                    $(".new_vol").text(total_volume.toFixed(4));
+                    $(".new_total_vol").val((total_volume * units).toFixed(4));
+                }
+             }
+        }
+        </script>
+        <style>
+		.cargo_features{margin: 0; padding: 3px 0 3px 0; float: left; width: 100%;}
+        .cargo_features label{float: left;}
+        .cargo_features input{margin: 0 5px 0 0px; float: left;}
+        .nuevalinea{cursor:pointer;}
+	</style>
+        <apex:form id="form">
+		    <apex:actionFunction name="crearPallets" action="{!createNewPallet}" status="myStatus" reRender="block1,block0"/>
+            <apex:sectionHeader title="Create {!$ObjectType.pallet_warehouse__c.labelPlural}"/>
+            <span style="    position: relative;     top: -36px;     left: 400px;    font-size: 17px;">
+            <a href="{!$Site.BaseUrl}/{!Customer_Quote__c.Id}" onblur="LookupHoverDetail.getHover(neu_getId(this)).hide();" onfocus="LookupHoverDetail.getHover(neu_getId(this),'{!$Site.BaseUrl}/{!Customer_Quote__c.Id}/m?isAjaxRequest=1').show();" onmouseout="LookupHoverDetail.getHover(neu_getId(this)).hide();" onmouseover="LookupHoverDetail.getHover(neu_getId(this),'{!$Site.BaseUrl}/{!Customer_Quote__c.Id}/m?isAjaxRequest=1').show();" target="_blank" id="new_id_1">{!Customer_Quote__c.Name}</a></span>
+    		<apex:pageMessages id="messages"/>
+
+            
+            <!-- creating new pallet -->
+
+            <apex:pageBlock id="block1" title="Create {!$ObjectType.pallet_warehouse__c.labelPlural}">
+                <apex:pageBlockTable id="table2" value="{!Customer_Quote__c}" var="lineanueva">
+                    <apex:column >
+                        <apex:image styleClass="nuevalinea" value="{!$Resource.Plus}" style="width: 39px;" onclick="crearPallets();"/>
+                    </apex:column>
+                    <apex:column headerValue="Pallet Name">
+                        <apex:inputText style="text-align: left;" StyleClass="nombrepallet" value="{!newPallet.Name}"/>
+                    </apex:column>
+
+                    <apex:column style="text-align: right;" >
+                        <apex:facet name="header"><div style="text-align:center;">Pallet Volume</div></apex:facet>
+                        <table class="list tabla_medidas">
+                            <tr class="dataRow"><th class="headerRow th_sizes">Length &nbsp;<apex:outputtext value="(cm.)" /></th><td class="dataCell"><apex:inputField value="{!newPallet.Lenght_cm__c}" styleclass="medidas new_len_size" onKeyUp="recalcular_volume('new');" required="true"/></td></tr>
+                            <tr class="dataRow"><th class="headerRow th_sizes">Width &nbsp;<apex:outputtext value="(cm.)" /></th><td class="dataCell"><apex:inputField value="{!newPallet.Width_cm__c}" styleclass="medidas new_wid_size" onKeyUp="recalcular_volume('new');" required="true"/></td></tr>
+                            <!--tr class="dataRow"><th class="headerRow th_sizes">Height &nbsp;<apex:outputtext value="(cm.)" /></th><td class="dataCell"><apex:inputField value="{!newPallet.Height_cm__c}" styleclass="medidas new_hei_size" onKeyUp="recalcular_volume('new');" required="true"/></td></tr>
+                            <tr class="dataRow"><th class="headerRow th_volume">Volume (m3)</th><td class="dataCell"><span class="medidas new_vol"></span></td></tr-->
+                        </table>
+                    </apex:column>
+
+                </apex:pageBlockTable>
+            </apex:pageBlock>
+            
+            
+            <!-- exitings pallets -->
+            <apex:pageBlock id="block0" title="Last 10 {!$ObjectType.pallet_warehouse__c.labelPlural}">
+                <apex:pageBlockTable id="table" value="{!palletShipments}" var="item">
+                    <apex:column headerValue="Pallet Name" style="width: 40%;">
+                        <a href="/{!item.Id}" target="_blank" >{!item.Name}</a>
+                    </apex:column>
+                    <apex:column style="text-align: right;" >
+                        <apex:facet name="header"><div style="text-align:center;">Pallet Volume</div></apex:facet>
+                        <table class="list tabla_medidas">
+                            <tr class="dataRow"><th class="headerRow th_sizes">Length &nbsp;<apex:outputtext value="(cm.)" /></th><td class="dataCell"><apex:outputtext value="{!item.Lenght_cm__c}" styleclass="medidas new_len_size" /></td></tr>
+                            <tr class="dataRow"><th class="headerRow th_sizes">Width &nbsp;<apex:outputtext value="(cm.)" /></th><td class="dataCell"><apex:outputtext value="{!item.Width_cm__c}" styleclass="medidas new_wid_size" /></td></tr>
+                            <!--tr class="dataRow"><th class="headerRow th_sizes">Height &nbsp;<apex:outputtext value="(cm.)" /></th><td class="dataCell"><apex:outputtext value="{!item.Height_cm__c}" styleclass="medidas new_hei_size" /></td></tr>
+                            <tr class="dataRow"><th class="headerRow th_volume">Volume (m3)</th><td class="dataCell"><apex:outputText value="{!item.Volume_m3__c}" styleclass="medidas packvol_{!item.Id}"/></td></tr-->
+                        </table>
+                    </apex:column>
+                </apex:pageBlockTable>
+            </apex:pageBlock>
+            
+        </apex:form>
+</apex:page>

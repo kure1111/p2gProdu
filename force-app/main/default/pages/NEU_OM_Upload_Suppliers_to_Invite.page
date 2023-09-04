@@ -1,0 +1,178 @@
+<apex:page standardController="Supply_Project__c" extensions="NEU_OM_Upload_Suppliers_to_Invite" >
+<apex:includeScript value="{!$Resource.neu_jquery}"/> 
+<apex:includeScript value="{!$Resource.jquery_1_10_2}"/> 
+<apex:includeScript value="{!$Resource.jquery_ui_1_10_3}"/>
+<apex:includeScript value="{!$Resource.neurored_jquery}"/> 
+<apex:stylesheet value="{!URLFOR($Resource.jquery_ui_1_10_3_css,'jquery-ui-1.10.3.min.css')}"/>
+<script>
+    $(document).ready(function () {
+            
+            $($.sfId('{!$Component.form.radio}')).buttonset();
+            $("#radio td").css('display','inline-block');
+        });
+        
+        function marcar_suppliers()
+        {
+            $($.sfId('{!$Component.form.block0.table}')+' input[type="checkbox"].check_suppliers').prop("checked", $('.select_all_suppliers').is(':checked'));
+        }
+        
+        function sacar_capa()
+        {
+            update_table_suppliers();
+        }
+        
+        function sort_data_quote(n)
+        {
+            var ordenacion = '';
+
+            if($('#orden_ad_quotes').val() == 'desc' || $('#orden_ad_quotes').val() == 'none')
+            {
+                ordenacion = n+'-asc';
+                $('#orden_ad_quotes').val('asc');
+            }
+            else
+            {
+                ordenacion = n+'-desc';
+                $('#orden_ad_quotes').val('desc');
+            }
+            
+            document.getElementById('{!$Component.form.orden_quotes}').value = ordenacion;
+            compare_data();
+        }
+        
+        function del_oi(id)
+        {
+            document.getElementById('{!$Component.form.id_oi}').value = id;
+            delete_oi();
+        }
+        
+</script>
+    <apex:form id="form">
+        <apex:actionFunction name="compare_data" action="{!go_compare}" reRender="block0" status="myStatus"/>
+        <apex:actionFunction name="update_table_suppliers" reRender="block0" status="myStatus"/>
+        <apex:sectionHeader title="Upload Suppliers"/>
+         <span style="    position: relative;     top: -36px;     left: 258px;  font-size: 17px;">
+                 <a href="/{!Supply_Project__c.Id}" onblur="LookupHoverDetail.getHover(neu_getId(this)).hide();" onfocus="LookupHoverDetail.getHover(neu_getId(this),'/{!Supply_Project__c.Id}/m?isAjaxRequest=1').show();" onmouseout="LookupHoverDetail.getHover(neu_getId(this)).hide();" onmouseover="LookupHoverDetail.getHover(neu_getId(this),'/{!Supply_Project__c.Id}/m?isAjaxRequest=1').show();" target="_blank" id="new_id_1">{!Supply_Project__c.Name}</a>
+            </span>
+        <apex:outputPanel id="radios">
+            <div id="radio">
+                <apex:selectRadio id="radio" value="{!newcategory}" onchange="changeradios();">
+                    <apex:selectOptions value="{!newcategories}"/>
+                </apex:selectRadio>
+            </div>
+        </apex:outputPanel>
+        <apex:actionFunction name="changeradios"  status="myStatus" reRender="linesSelector">
+        </apex:actionFunction>
+        <apex:outputPanel id="linesSelector">
+        	<apex:pageBlock mode="maindetail">
+            <apex:pageBlockSection title="Filters" columns="2">
+            	<apex:pageBlockSectionItem >
+            	<apex:outputLabel value="Subfamily"/> 
+		           <apex:selectList multiselect="false"  value="{!subfamily}" size="1" onchange="changeradios();">
+		               <apex:selectOptions value="{!subfamilies}"/>
+		           </apex:selectList>
+		        </apex:pageBlockSectionItem>
+            	<apex:pageBlockSectionItem >
+            	<apex:outputLabel value="Item"/> 
+	           <apex:selectList multiselect="false"  value="{!item}" size="1" onchange="changeradios();">
+	               <apex:selectOptions value="{!items}"/>
+	           </apex:selectList>
+	           </apex:pageBlockSectionItem>
+	        </apex:pageBlockSection>
+	    </apex:pageBlock>
+            <apex:pageBlock id="block0" title="Suppliers" mode="maindetail">
+                <apex:pageBlockTable id="table" value="{!lista_suppliers}" var="su">
+                    <apex:column >
+                        <apex:facet name="header"><div style="text-align:center; cursor: pointer;" onclick="sort_data_quote('line.Name');">Account Name</div></apex:facet>
+                        <c:customobject2 objid="{!su.line.Id}" objname="{!su.line.Name}"/>
+                    </apex:column>
+                    <apex:column value="{!su.line.Brand_Name__c}">
+                        <apex:facet name="header"><div style="text-align:center; cursor: pointer;" onclick="sort_data_quote('line.Brand_Name__c');">Brand Name</div></apex:facet>
+                    </apex:column>  
+                    <apex:column value="{!su.line.Activity_Sector__c}">
+                        <apex:facet name="header"><div style="text-align:center; cursor: pointer;" onclick="sort_data_quote('line.Activity_Sector__c');">Activity Sector</div></apex:facet>
+                    </apex:column>    
+                    
+                    <apex:column value="{!su.line.Description}" >
+                        <apex:facet name="header"><div style="text-align:center; cursor: pointer;" onclick="sort_data_quote('line.Description');">Description</div></apex:facet>
+                    </apex:column>
+                    <apex:column >
+                        <apex:facet name="header"><div style="text-align:center; cursor: pointer;" onclick="sort_data_quote('contact_select');">Contacts</div></apex:facet>
+                        <apex:selectList label="Contacts" value="{!su.contact_select}" size="1" rendered="{!su.insertado == false}">
+                            <apex:selectOptions value="{!su.contact}"/>
+                         </apex:selectList>
+                         <apex:outputText value="{!su.contact_select}" rendered="{!su.insertado == true}"/>
+                    </apex:column>
+                    <apex:column value="{!su.line.Quality_Products_Score__c}"  style="text-align:right">
+                        <apex:facet name="header"><div style="text-align:center; cursor: pointer;" onclick="sort_data_quote('line.Quality_Products_Score__c');">Quality Products</div></apex:facet>
+                    </apex:column>
+                    <apex:column value="{!su.line.Prices_Score__c}"  style="text-align:right" >
+                         <apex:facet name="header"><div style="text-align:center; cursor: pointer;" onclick="sort_data_quote('line.Prices_Score__c');">Prices</div></apex:facet>
+                    </apex:column>
+                    <apex:column value="{!su.line.Colaboration_Score__c}"  style="text-align:right">
+                        <apex:facet name="header"><div style="text-align:center; cursor: pointer;" onclick="sort_data_quote('line.Colaboration_Score__c');">Colaboration</div></apex:facet>
+                    </apex:column>
+                    <apex:column value="{!su.line.Delivery_Times_Score__c}"  style="text-align:right">
+                        <apex:facet name="header"><div style="text-align:center; cursor: pointer;" onclick="sort_data_quote('line.Delivery_Times_Score__c');">Delivery Times</div></apex:facet>
+                    </apex:column>
+                    <apex:column value="{!su.line.Efficiency_Level_Score__c}"  style="text-align:right">
+                        <apex:facet name="header"><div style="text-align:center; cursor: pointer;" onclick="sort_data_quote('line.Efficiency_Level_Score__c');">Efficiency Level</div></apex:facet>
+                    </apex:column>
+                    
+                     <apex:column style="text-align: center;">
+                             <apex:facet name="header"><div style="text-align:center;">Action<input type="checkbox" style="float: right;" class="select_all_suppliers" onclick="marcar_suppliers();" /></div></apex:facet>
+                             <apex:inputCheckbox StyleClass="inputcheck check_suppliers" value="{!su.selected}"  rendered="{!su.insertado == false}"/>
+                             <apex:image id="del_oi" value="/img/permissions_deny16.gif" onclick="del_oi('{!su.line.Id}');" style="cursor:pointer;"  rendered="{!su.insertado == true}"/>
+                        </apex:column>
+                        
+                </apex:pageBlockTable>
+                <apex:pageBlockButtons >
+                        <apex:commandButton value="CREATE SUPPLIERS TO INVITE" status="myStatus"  styleClass="calculate" reRender="linesSelector"  action="{!crearsupplierinvite}" oncomplete="sacarcapa();"/>
+                        <apex:commandButton value="RETURN TO SUPPLY PROJECT" status="myStatus" action="{!return_project}"/>
+                </apex:pageBlockButtons>
+            </apex:pageBlock>
+            <apex:pageBlock id="block1" title="Actual Suppliers related with this Supply Project (All Families)">
+                <apex:pageBlockTable id="table" value="{!lista_todos_suppliers}" var="su">
+                    <apex:column headerValue="Account Name">
+                        <c:customobject2 objid="{!su.Account__c}" objname="{!su.Account__r.Name}"/>
+                    </apex:column>
+                    <apex:column headerValue="Brand Name" value="{!su.Account__r.Brand_Name__c}"/>  
+                    <apex:column headerValue="Activity Sector" value="{!su.Account__r.Activity_Sector__c}" />
+                    <apex:column headerValue="Description" value="{!su.Account__r.Description}"  />
+                    <apex:column headerValue="Contacts" value="{!su.Responsible_for_the_Project__r.Name}"/>
+                    <apex:column headerValue="Quality Products" value="{!su.Account__r.Quality_Products_Score__c}"  style="text-align:right"/>
+                    <apex:column headerValue="Prices" value="{!su.Account__r.Prices_Score__c}"  style="text-align:right" />
+                    <apex:column headerValue="Colaboration" value="{!su.Account__r.Colaboration_Score__c}"  style="text-align:right"/>
+                    <apex:column headerValue="Delivery Times" value="{!su.Account__r.Delivery_Times_Score__c}"  style="text-align:right"/>
+                    <apex:column headerValue="Efficiency Level" value="{!su.Account__r.Efficiency_Level_Score__c}"  style="text-align:right"/>
+                    <apex:column headerValue="Delete" style="text-align: center;">
+                        <apex:image id="del_oi" value="/img/permissions_deny16.gif" onclick="del_oi('{!su.Account__c}');" style="cursor:pointer;" />
+                    </apex:column>
+                </apex:pageBlockTable>
+            </apex:pageBlock>
+        </apex:outputPanel>
+        <apex:outputpanel >
+           <apex:actionstatus id="myStatus">
+               <apex:facet name="start">
+                   <div class="waitingSearchDiv" id="el_loading" style="background-color: #fbfbfb;
+                          height: 100%;opacity:0.65;width:100%;"> 
+                       <div class="waitingHolder" style="top: 74.2px; width: 91px;">
+                           <img class="waitingImage" src="/img/loading.gif" title="Please Wait..." />
+                           <span class="waitingDescription">Loading...</span>
+                       </div>
+                   </div>
+               </apex:facet>
+           </apex:actionstatus>
+        </apex:outputpanel>
+         <div class="waitingSearchDiv" id="otherStatus" style="display:none;background-color:#fbfbfb;height:100%;opacity:0.65;width:100%;"> 
+            <div class="waitingHolder" style="top:74.2px;width:91px;">
+                <img class="waitingImage" src="/img/loading.gif" title="Please Wait..." />
+                <span class="waitingDescription">Loading...</span>
+            </div>
+        </div>
+        <apex:actionFunction name="delete_oi" action="{!delete_supplier_select}" status="myStatus" reRender="linesSelector"/>
+        <apex:inputHidden value="{!id_oi}" id="id_oi"/>
+        <input type="hidden" value="none" id="orden_ad_quotes"/>
+        <apex:inputHidden value="{!orden_quotes}" id="orden_quotes"/>
+    </apex:form>
+</apex:page>

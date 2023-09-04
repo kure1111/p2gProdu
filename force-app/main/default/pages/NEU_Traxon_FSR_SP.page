@@ -1,0 +1,10 @@
+<apex:page standardController="Shipment_Program__c" extensions="NEU_Traxon_FSR_SP" action="{!sendToTraxon}">
+   <apex:form id="form">
+   <apex:pageBlock mode="maindetail">
+    <apex:pageMessages id="pagemessages"/>
+     <apex:pageBlockButtons location="bottom">
+         <apex:commandButton status="myStatus" value="Return" action="{!cancel}"/>
+     </apex:pageBlockButtons>
+    </apex:pageBlock>
+   </apex:form>
+</apex:page>

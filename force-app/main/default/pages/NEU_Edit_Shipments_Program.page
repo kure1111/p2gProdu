@@ -1,0 +1,1310 @@
+<apex:page standardController="Shipment_Program__c" extensions="NEU_Edit_Shipments_Program" sidebar="false">
+    <apex:stylesheet value="{!$Resource.Style_OrdertoStock}"/>
+    <apex:includeScript value="{!$Resource.jquery_1_10_2}"/> 
+    <apex:includeScript value="{!$Resource.jquery_ui_1_10_3}"/>
+    <apex:includeScript value="{!$Resource.neurored_jquery}"/> 
+    <apex:stylesheet value="{!URLFOR($Resource.jquery_ui_1_10_3_css,'jquery-ui-1.10.3.min.css')}"/>
+    <script>  
+        $(document).ready(function () {
+            $("#accordion").accordion({heightStyle:"content",active:false, activate:function(event,ui){}});//  
+            setDecimalSep($($.sfId('{!$Component.form.decimalSep}')).val(),$($.sfId('{!$Component.form.thousandSep}')).val());
+        });
+      
+        function sort_data_quote(n)
+        {
+            var ordenacion = '';
+
+            if($('#orden_ad_quotes').val() == 'desc' || $('#orden_ad_quotes').val() == 'none')
+            {
+                ordenacion = n+'-asc';
+                $('#orden_ad_quotes').val('asc');
+            }
+            else
+            {
+                ordenacion = n+'-desc';
+                $('#orden_ad_quotes').val('desc');
+            }
+            
+            document.getElementById('{!$Component.form.orden_quotes}').value = ordenacion;
+            compare_data();
+        }
+        
+         function sort_data_quote2(n)
+        {
+            var ordenacion = '';
+
+            if($('#orden_ad_quotes').val() == 'desc' || $('#orden_ad_quotes').val() == 'none')
+            {
+                ordenacion = n+'-asc';
+                $('#orden_ad_quotes').val('asc');
+            }
+            else
+            {
+                ordenacion = n+'-desc';
+                $('#orden_ad_quotes').val('desc');
+            }
+            
+            document.getElementById('{!$Component.form.orden_quotes}').value = ordenacion;
+            compare_data_lines_update();
+        }
+        
+        function marcar_lines()
+        {
+             var status_check = false;
+            if($('.select_all_items').is(':checked'))
+                status_check = true;
+            else
+                status_check = false;
+                
+            $('table .tabla_principal .check_linea_selected2').each(function()
+            {
+             
+                if(status_check == true)
+                    $(this).prop("checked", true);
+                else
+                    $(this).prop("checked", false);
+               
+            });
+            calculartotalpesovolumen();
+        }
+        
+        function updatedata()
+        {
+            $('table.tabla_principal input.supplyinput').calcularpeso();
+            calculartotalpesovolumen();
+           
+        }
+        
+        (function($) {
+            $.fn.calcularpeso = (function() {
+                var seleccion_de_contenedores  = $('.seleccioncontainer').prop('selectedIndex');
+                var valores_contenedores = $($.sfId('{!$Component.form.block4.ids_pallet_idscontenedores}')).val().split('|');
+                if(seleccion_de_contenedores > 0)
+                {
+                    var valor_pallet_container_seleccionado= valores_contenedores[seleccion_de_contenedores-1];
+                    var valores = valor_pallet_container_seleccionado.split('_');
+                    var id_pallet_selected = valores[1];
+                    var volumen_pallet = valores[2];
+                    if(isNaN(volumen_pallet))
+                        volumen_pallet=0.0000;
+                    var peso_pallet = valores[3];
+                    if(isNaN(peso_pallet))
+                        peso_pallet=0;
+                    var volumen_max_container = valores[4];
+                    if(isNaN(volumen_max_container))
+                        volumen_max_container=0;
+                    var peso_max_container = valores[5];
+                    if(isNaN(peso_max_container))
+                        peso_max_container=0;
+                    var numero_pallet_container = valores[6];
+                    if(isNaN(numero_pallet_container))
+                        numero_pallet_container=0;
+                        
+                    $($.sfId('{!$Component.form.max_peso_container}')).val(valores[5]);
+                     if(isNaN($($.sfId('{!$Component.form.max_peso_container}')).val()) || $($.sfId('{!$Component.form.max_peso_container}')).val() == null )
+                        $($.sfId('{!$Component.form.max_peso_container}')).val(0);
+                        
+                    $($.sfId('{!$Component.form.max_volumen_container}')).val(valores[4]);
+                    if(isNaN($($.sfId('{!$Component.form.max_volumen_container}')).val()) || $($.sfId('{!$Component.form.max_volumen_container}')).val() == null )
+                        $($.sfId('{!$Component.form.max_volumen_container}')).val(0);
+                        
+                    $($.sfId('{!$Component.form.num_cont_x_pallet}')).val(valores[6]);
+                    if(isNaN($($.sfId('{!$Component.form.num_cont_x_pallet}')).val()) || $($.sfId('{!$Component.form.num_cont_x_pallet}')).val() == null )
+                        $($.sfId('{!$Component.form.num_cont_x_pallet}')).val(0);
+                        
+                    $($.sfId('{!$Component.form.la_lista_no_cero}')).val(true);
+                }
+                if(seleccion_de_contenedores == 0)
+                {
+                     $($.sfId('{!$Component.form.la_lista_no_cero}')).val(false);
+                }
+                
+                this.each(function()
+                {
+                
+                     var iditem=$(this).attr('neudata');
+                     var supply=$(this).getFloatSep();
+                    
+                     var pallet_x_caja = 0;
+                     var units_x_masterbox =$('table.tabla_principal input[neudata="packagingunits'+iditem+'"]').val();
+                     if($('table.tabla_principal input[neudata="packagingunits'+iditem+'"]').val() == '')
+                     {
+                        units_x_masterbox=$('table.tabla_principal input[neudata="packagingunits'+iditem+'"]').val(1);
+                     }
+                     if($('table.tabla_principal input[neudata="relacionconlospallet'+iditem+'"]').val() != '' && seleccion_de_contenedores != 0 && $('table.tabla_principal input[neudata="relacionconlospallet'+iditem+'"]').val() != null)
+                     {
+                       var comprobante_mismo_pallet = $('table.tabla_principal input[neudata="relacionconlospallet'+iditem+'"]').val().split('|');
+                       $.each(comprobante_mismo_pallet ,function(index,contenido){
+                        var tipo_pallet = contenido.split('_');
+                        if(id_pallet_selected == tipo_pallet[0])
+                        {
+                            pallet_x_caja = tipo_pallet[1];
+                        }
+                        });
+                        
+                     }
+                        if(units_x_masterbox != 0)
+                     {
+                       $('table.tabla_principal span[neudata="packaging'+iditem+'"]').html(Math.ceil(supply/units_x_masterbox));//calculo total cajas
+                       $('table.tabla_principal input[neudata="packaging_hidden'+iditem+'"]').val($('table.tabla_principal span[neudata="packaging'+iditem+'"]').getFloat()); 
+                    }
+                    else
+                    {
+                        $('table.tabla_principal span[neudata="packaging'+iditem+'"]').html(0);
+                        $('table.tabla_principal input[neudata="packaging_hidden'+iditem+'"]').val(0);
+                    }
+                   
+                    var totalcajas = $('table.tabla_principal span[neudata="packaging'+iditem+'"]').html();
+                    if(pallet_x_caja != 0)
+                    {
+                         $('table.tabla_principal span[neudata="numberpallet'+iditem+'"]').html(Math.ceil(supply/pallet_x_caja));//calculo pallet
+                         $('table.tabla_principal input[neudata="numberpallet_hidden'+iditem+'"]').val($('table.tabla_principal span[neudata="numberpallet'+iditem+'"]').html());
+                         $('table.tabla_principal input[neudata="tienerelacion_con_pallet'+iditem+'"]').val(false);
+                         $('table.tabla_principal img[neudata="sin_pallet'+iditem+'"]').css('display','none');
+                         
+                    }
+                    else
+                    {
+                        $('table.tabla_principal span[neudata="numberpallet'+iditem+'"]').html(0);
+                         $('table.tabla_principal input[neudata="numberpallet_hidden'+iditem+'"]').val($('table.tabla_principal span[neudata="numberpallet'+iditem+'"]').html());
+                         $('table.tabla_principal input[neudata="tienerelacion_con_pallet'+iditem+'"]').val(true);
+                         $('table.tabla_principal img[neudata="sin_pallet'+iditem+'"]').css('display','');
+                         
+                    }
+                    
+                    
+                   
+                    
+                    var peso_pallets= peso_pallet*$('table.tabla_principal span[neudata="numberpallet'+iditem+'"]').html();
+                    if(isNaN(peso_pallets))
+                        peso_pallets=0;
+                    var volumen_pallets = volumen_pallet*$('table.tabla_principal span[neudata="numberpallet'+iditem+'"]').html();
+                     if(isNaN(volumen_pallets))
+                        volumen_pallets=0.0000;
+                    if(pallet_x_caja != 0)
+                    {
+                        $('table.tabla_principal span[neudata="weight'+iditem+'"]').setFloatSep(($('table.tabla_principal input[neudata="packagingweight'+iditem+'"]').getFloat()*supply + peso_pallets).toFixed(2));// peso
+                        $('table.tabla_principal input[neudata="weight_hidden'+iditem+'"]').val($('table.tabla_principal span[neudata="weight'+iditem+'"]').getFloatSep());
+                        $('table.tabla_principal span[neudata="volume'+iditem+'"]').setFloatSep(($('table.tabla_principal input[neudata="packagingvolume'+iditem+'"]').getFloat()*supply + volumen_pallets).toFixed(4)); //volumen
+                        $('table.tabla_principal input[neudata="volume_hidden'+iditem+'"]').val($('table.tabla_principal span[neudata="volume'+iditem+'"]').getFloatSep());
+                        
+                        if($('table.tabla_principal span[neudata="volume'+iditem+'"]').html() == 0 || $('table.tabla_principal span[neudata="volume'+iditem+'"]').getFloat() == 0.0000)//cuando no tiene volument la caja
+                        {   
+                            $('table.tabla_principal span[neudata="volume'+iditem+'"]').getFloat(0.0000);
+                            $('table.tabla_principal input[neudata="volume_hidden'+iditem+'"]').val($('table.tabla_principal span[neudata="volume'+iditem+'"]').getFloatSep());
+                        }
+                        $('table.tabla_principal span[neudata="weight'+iditem+'"]').css('color','#000');
+                        $('table.tabla_principal span[neudata="volume'+iditem+'"]').css('color','#000');
+                        $('table.tabla_principal span[neudata="numberpallet'+iditem+'"]').css('color','#000');
+                    }
+                    else
+                    {
+                        $('table.tabla_principal span[neudata="weight'+iditem+'"]').setFloatSep(($('table.tabla_principal input[neudata="packagingweight'+iditem+'"]').getFloat()*supply).toFixed(2));//peso
+                        $('table.tabla_principal input[neudata="weight_hidden'+iditem+'"]').val($('table.tabla_principal span[neudata="weight'+iditem+'"]').getFloatSep());
+                        $('table.tabla_principal span[neudata="volume'+iditem+'"]').setFloatSep(($('table.tabla_principal input[neudata="packagingvolume'+iditem+'"]').getFloat()*supply).toFixed(4)); //volumen
+                        $('table.tabla_principal input[neudata="volume_hidden'+iditem+'"]').val($('table.tabla_principal span[neudata="volume'+iditem+'"]').getFloatSep());
+                        
+                 
+                    }
+                    
+                    if(pallet_x_caja ==0 && seleccion_de_contenedores >0)
+                    {
+                        $('.imagen_warning'+iditem+'').css('display','block');
+                    }
+                    if(pallet_x_caja !=0 && seleccion_de_contenedores >0)
+                       $('.imagen_warning'+iditem+'').css('display','none'); 
+                    if(seleccion_de_contenedores == 0)
+                       $('.imagen_warning'+iditem+'').css('display','none');  
+                       
+                    //calculo total amount              
+                    $('table.tabla_principal span[neudata="total_amount_linea'+iditem+'"]').setFloatSep(($('table.tabla_principal input[neudata="precio_unidad'+iditem+'"]').getFloat()*supply+$('table.tabla_principal input[neudata="exense_amount'+iditem+'"]').getFloat()).toFixed(2));// precio por unidades + gastos extra
+                     $('table.tabla_principal input[neudata="total_amount_linea_hidden'+iditem+'"]').val( $('table.tabla_principal span[neudata="total_amount_linea'+iditem+'"]').getFloatSep());   
+                   
+                });
+            });
+        })(jQuery);
+        
+        function calculartotalpesovolumen()
+        {
+            
+            var total_cajas = 0;
+            var total_pallets = 0;
+            var total_peso = 0;
+            var total_volumen = 0;
+            $('table .tabla_principal .check_linea_selected:checked').each(function()
+            {
+            
+                    total_cajas +=$('table.tabla_principal span[neudata="packaging'+$(this).attr('neudata')+'"]').getFloat();
+                    total_pallets +=$('table.tabla_principal span[neudata="numberpallet'+$(this).attr('neudata')+'"]').getFloat();
+                    total_peso +=$('table.tabla_principal span[neudata="weight'+$(this).attr('neudata')+'"]').getFloatSep();
+                    total_volumen +=$('table.tabla_principal span[neudata="volume'+$(this).attr('neudata')+'"]').getFloatSep();
+                    
+ 
+            });
+            
+            $($.sfId('{!$Component.form.TotalNumberBoxes}')).val(total_cajas);
+            $('#totalcajas').html(total_cajas);
+            $($.sfId('{!$Component.form.TotalNumberPallets}')).val(total_pallets);
+            $('#totalpallet').html(total_pallets);
+            total_peso = total_peso.toFixed(2);
+            $($.sfId('{!$Component.form.Grossweight}')).val(total_peso);
+            $('#totalweight').setFloatSep(total_peso);//falta sumar pallet peso
+            $($.sfId('{!$Component.form.Cube}')).val(total_volumen);
+            $('#totalvolume').setFloatSep(total_volumen.toFixed(4));//falta sumar pallet volumen
+            
+             
+            var ocupacion_peso = 0;
+            var ocupacion_volumen = 0;
+            var ocupacion_pallet = 0;
+            var TotalNumberCont = 0;
+            var FreeSpaceCont = 0;
+            var porc_ocupacion = 0;
+            if($($.sfId('{!$Component.form.max_peso_container}')).val() > 0)
+            {
+                ocupacion_peso = $($.sfId('{!$Component.form.Grossweight}')).val()/$($.sfId('{!$Component.form.max_peso_container}')).val();
+            }
+            if($($.sfId('{!$Component.form.max_volumen_container}')).val() >0)
+            {
+                ocupacion_volumen =  $($.sfId('{!$Component.form.Cube}')).val()/$($.sfId('{!$Component.form.max_volumen_container}')).val();
+            }
+            if( $($.sfId('{!$Component.form.num_cont_x_pallet}')).val() >0)
+            {
+                ocupacion_pallet = $($.sfId('{!$Component.form.TotalNumberPallets}')).val()/$($.sfId('{!$Component.form.num_cont_x_pallet}')).val();
+            }
+                        
+                if(ocupacion_peso > ocupacion_pallet)
+                {
+                    if(ocupacion_peso > ocupacion_volumen)
+                    {
+                        TotalNumberCont = Math.ceil($($.sfId('{!$Component.form.Grossweight}')).val()/$($.sfId('{!$Component.form.max_peso_container}')).val());
+                        
+                    }
+                    else
+                    {
+                        TotalNumberCont =Math.ceil($($.sfId('{!$Component.form.Cube}')).val()/$($.sfId('{!$Component.form.max_volumen_container}')).val());
+                        
+                    }
+                }
+                else
+                {
+                    if(ocupacion_pallet > ocupacion_volumen)
+                    {
+                         if( $($.sfId('{!$Component.form.num_cont_x_pallet}')).val() >0)
+                        {
+                            TotalNumberCont =  Math.ceil($($.sfId('{!$Component.form.TotalNumberPallets}')).val()/$($.sfId('{!$Component.form.num_cont_x_pallet}')).val());
+                        }
+                    }
+                    else
+                    {
+                        TotalNumberCont = Math.ceil($($.sfId('{!$Component.form.Cube}')).val()/$($.sfId('{!$Component.form.max_volumen_container}')).val());
+                    }
+                }
+         
+          
+               if(TotalNumberCont != null && TotalNumberCont !='Infinity' && isNaN(TotalNumberCont) == false  )
+                 $($.sfId('{!$Component.form.TotalNumberCont}')).val(TotalNumberCont);
+               else
+                $($.sfId('{!$Component.form.TotalNumberCont}')).val(0);
+            
+                if(ocupacion_peso > ocupacion_pallet)
+                {
+                    if(ocupacion_peso > ocupacion_volumen)
+                        FreeSpaceCont =(TotalNumberCont- ocupacion_peso)*100;
+                    else
+                        FreeSpaceCont =(TotalNumberCont- ocupacion_volumen)*100;
+                }
+                else
+                {
+                    if(ocupacion_pallet > ocupacion_volumen)
+                        FreeSpaceCont =(TotalNumberCont- ocupacion_pallet)*100;
+                    else
+                        FreeSpaceCont =(TotalNumberCont- ocupacion_volumen)*100;
+                }
+                if(FreeSpaceCont > 0 || FreeSpaceCont == 0)
+                {
+                    if(FreeSpaceCont == 100)
+                        porc_ocupacion = 100;
+                    else
+                        porc_ocupacion = 100 - FreeSpaceCont;
+                        
+                    porc_ocupacion = porc_ocupacion.toFixed(2)+ '%';        
+                }
+                else
+                    porc_ocupacion= 0;
+ 
+                if( $($.sfId('{!$Component.form.la_lista_no_cero}')).val() == 'true')
+                {
+                    $('#totalcontenedores').html(TotalNumberCont);
+                    $('.ui-progress').css('width',porc_ocupacion);
+                    $('.ui-dato_container').html(TotalNumberCont);
+                    $('.value').html(formatFloatSep(porc_ocupacion));
+                }
+                else
+                {
+                    $('#totalcontenedores').html(0);
+                    $('.ui-progress').css('width','0%');
+                    $('.ui-dato_container').html(0);
+                    $('.value').html(0);
+                }
+                
+                 
+                if(porc_ocupacion != null &&  porc_ocupacion!='-Infinity%' && porc_ocupacion!='Infinity%')
+                     $($.sfId('{!$Component.form.porc_ocupacion}')).val(porc_ocupacion);
+                else
+                    $($.sfId('{!$Component.form.porc_ocupacion}')).val(0);  
+        }
+        
+        function marcar_all_cabeceras_lines()
+        {
+             $('.select_linea_cabecera').prop("checked",$('.select_all_cabeceras').is(':checked'));
+        }
+        
+        function sort_data_table_cabeceras(n)
+        {
+                document.getElementById('{!$Component.form.orden_cabeceras}').value = n;
+                if(document.getElementById('{!$Component.form.orden_cabeceras}').value ==$('#orderField').val())
+                {
+                    if($('#orderValue').val()!='asc')
+                        $('#orderValue').val('asc');
+                    else
+                        $('#orderValue').val('desc');
+      
+                }
+                else
+                {
+                    $('#orderField').val(n);
+                    $('#orderValue').val('desc');
+                }
+                
+                document.getElementById('{!$Component.form.orden_cabeceras_modo}').value = $('#orderValue').val();
+                ordenar_tabla_cabecera(); 
+        }
+         
+        function mostrar_ordenacion_cabeceras()
+        {
+            var n = document.getElementById('{!$Component.form.orden_cabeceras}').value;
+            $('.flecha_ordenacion1').css('display','none');
+            var clase_ordenacion  = n.replace('.','');
+            clase_ordenacion = clase_ordenacion.replace('.','');
+            clase_ordenacion = clase_ordenacion.replace('.','');
+            $('.'+clase_ordenacion+'cabecera').css('display','block');
+            if($('#orderValue').val()=='asc')
+                $('.flecha_ordenacion1').css('background-position-y','-15px');
+            else
+                $('.flecha_ordenacion1').css('background-position-y','0px');
+        } 
+            
+        function adjustBackground()
+        {
+            $('table.tabla_principal img.icon1').attr('src','{!$Resource.more_png}');
+            $('table.tabla_principal img.icon1').parent().parent().css("background-color", "#f3f3f3");
+            $('table.tabla_principal img.icon2').attr('src','{!$Resource.plus_png}');
+            $('table.tabla_principal img.icon2').css('cursor','pointer');
+            $('table.tabla_principal img.icon3').attr('src','{!$Resource.minus_png}');
+            $('table.tabla_principal img.icon3').css('cursor','pointer');
+            var alertuser=$($.sfId('{!$Component.form.block4.alertuser}')).getString();
+            if(alertuser)
+            {
+                $($.sfId('{!$Component.form.block4.alertuser}')).val('');
+                alert(alertuser);
+            }
+        }
+        
+        function changeAccountSelected(s)
+        {
+            $($.sfId('{!$Component.form.block4.buttons.totalweight}')).html('0');
+            $($.sfId('{!$Component.form.TotalNumberBoxes}')).val('0');
+            $($.sfId('{!$Component.form.TotalNumberPallets}')).val('0');
+            $($.sfId('{!$Component.form.Grossweight}')).val('0');
+            $($.sfId('{!$Component.form.Cube}')).val('0');
+            $($.sfId('{!$Component.form.TotalNumberCont}')).val('0');
+            $($.sfId('{!$Component.form.porc_ocupacion}')).val('0');  
+            $($.sfId('{!$Component.form.max_peso_container}')).val(0);
+            $($.sfId('{!$Component.form.max_volumen_container}')).val(0);
+            $($.sfId('{!$Component.form.num_cont_x_pallet}')).val(0); 
+            $($.sfId('{!$Component.form.FreeSpaceCont}')).val('0%');
+            var nuevo_seleccionado=s.selectedIndex;
+        }
+        
+        </script>
+        <style>
+            .div_cabecera{cursor: pointer; white-space: normal;}
+            .ui-widget {font-size: 1em;}
+        </style>
+    <apex:form id="form">
+         <apex:pageMessages />
+         <apex:actionFunction name="compare_data" action="{!go_compare}" reRender="block4" status="myStatus"/>
+         <apex:actionFunction name="compare_data_lines_update" action="{!go_compare_update}" reRender="block4" status="myStatus"/>
+         <apex:actionFunction name="apply_lines" action="{!applyLines}"  status="myStatus"/>
+         <apex:actionFunction name="updateLines" action="{!cambio_de_fecha}"  reRender="block4" status="myStatus" oncomplete="adjustBackground(); updatedata();"/>
+         <apex:actionFunction name="actualizar_lineas" reRender="block4"/> 
+         <apex:actionFunction name="refresh_tabla_cabecera_imp_exp" action="{!actualizar_import_export_supplier_order_put_null}" reRender="tabla_cabecera_imp_exp" status="myStatus"/>
+         <apex:actionFunction name="refresh_tabla_cabecera_imp_exp2" reRender="tabla_cabecera_imp_exp" status="myStatus"/>
+         <apex:inputHidden value="{!decimalSep}" id="decimalSep"/>
+         <apex:inputHidden value="{!thousandSep}" id="thousandSep"/>
+         <!-- ordenacion -->
+         <apex:inputHidden value="{!orden_cabeceras}" id="orden_cabeceras"/>
+         <apex:inputHidden value="{!orden_cabeceras_modo}" id="orden_cabeceras_modo"/>
+         <input type="hidden" id="orderField" value="CreatedDate"/>
+         <input type="hidden" id="orderValue" value="asc"/>
+         <apex:actionFunction name="ordenar_tabla_cabecera" action="{!actualizar_import_export_supplier_order}" reRender="tabla_cabecera_imp_exp" status="myStatus" oncomplete="mostrar_ordenacion_cabeceras();"/>
+         
+         <apex:actionFunction name="actualizar_fecha" reRender="filter_date"/>
+         <div id="accordion">
+              
+                <h3 title="{!If(linesTypeNumber == 3,'Select Supplier Orders','Select Import-Export Orders')}" id="bloque_cabeceras" onclick="refresh_tabla_cabecera_imp_exp();">{!If(linesTypeNumber == 3,'Select Supplier Orders','Select Import-Export Orders')}</h3>
+             <apex:pageBlock id="bloque_acodeon_1">
+                 
+                 <table border="0" cellspacing="5" cellpadding="5" class="actions_table2">
+                    <tr>
+                       <th>Import Export Order Status:</th>
+                       <td>
+                            <apex:selectCheckboxes value="{!status_selected}" style="    min-width: 350px;">
+                                    <apex:selectOption itemValue="Approved as Succesful" itemLabel="Approved as Succesful" html-onchange="refresh_tabla_cabecera_imp_exp();"/>
+                                    <apex:selectOption itemValue="Partially Shipped" itemLabel="Partially Shipped" html-onchange="refresh_tabla_cabecera_imp_exp();"/>
+                                    <apex:selectOption itemValue="Shipped" itemLabel="Shipped" html-onchange="refresh_tabla_cabecera_imp_exp();"/>
+                           </apex:selectCheckboxes>
+                       </td>
+                       <th>Last Shipment Country of Discharge:</th>
+                       <td><apex:inputField value="{!new_filter_route_cabeceras.Country_of_Discharge__c}" onchange="refresh_tabla_cabecera_imp_exp();"/></td>
+                       <th style="       width: 12%; text-align: right;">{!$ObjectType.Shipment__c.fields.ETD_from_Point_of_Load__c.Label}</th>
+                       <td><apex:inputField value="{!new_filter_date_cabeceras.ETD_from_Point_of_Load__c}" onchange="refresh_tabla_cabecera_imp_exp2();"/></td><!-- calculate_storage_days($(this).val()); -->
+                    </tr>
+                    <tr>
+                        <th>Customer Credit Status:</th>
+                        <td><apex:inputcheckbox value="{!notAuthorizedNumber}" style="    margin-left: 19px;    float: left;" onchange="refresh_tabla_cabecera_imp_exp();"/></td>
+                        <th>Last Shipment Site of Discharge:</th>
+                        <td><apex:inputField value="{!new_filter_route_cabeceras.Port_Airport_of_Discharge__c}" onchange="refresh_tabla_cabecera_imp_exp();"/></td>
+                        <th style="       width: 12%; text-align: right;">Show Included Import-Export</th> 
+                        <td><apex:inputcheckbox value="{!see_actual_import_export}" style="    margin-left: 19px;    float: left;" onchange="refresh_tabla_cabecera_imp_exp();"/></td>
+                    </tr>
+                    
+                 </table>
+                 
+                 <apex:pageBlockTable value="{!List_import_export_supplier_order}" var="ieso" id="tabla_cabecera_imp_exp">
+                    <apex:column style="background:{!if(contenedor_actual_import_export != null && contenedor_actual_import_export !='' && CONTAINS(contenedor_actual_import_export, ieso.import_export.Id) && ieso.import_export.Id != null && ieso.import_export.Id != '' , '#e3f3ff;' , '')}">
+                       <apex:facet name="header">
+                            <div class="div_cabecera" onclick="sort_data_table_cabeceras('import_export.CreatedDate');"> {!$ObjectType.Customer_Quote__c.fields.Name.Label}
+                                <span style="       width: 10px;    height: 11px;    float: right;    margin: 0 5px;    vertical-align: 0px;    background: transparent url(/img/alohaSkin/sortArrows_sprite.png);    background-size: 16px;    background-repeat: no-repeat;    background-position: center 2px;" class="flecha_ordenacion1 import_exportCreatedDatecabecera"/>
+                            </div>
+                        </apex:facet>
+                        <apex:outputlink value="{!$Site.BaseUrl}/{!ieso.import_export.Id}">{!ieso.import_export.Name}</apex:outputlink>
+                   </apex:column>   
+                   
+                   <apex:column style="background:{!if(contenedor_actual_import_export != null && contenedor_actual_import_export !='' && CONTAINS(contenedor_actual_import_export, ieso.import_export.Id) && ieso.import_export.Id != null && ieso.import_export.Id != '' , '#e3f3ff;' , '')}">
+                       <apex:facet name="header">
+                            <div  class="div_cabecera" onclick="sort_data_table_cabeceras('import_export.Quotation_Status__c');"> {!$ObjectType.Customer_Quote__c.fields.Quotation_Status__c.Label}
+                                <span style="       width: 10px;    height: 11px;    float: right;    margin: 0 5px;    vertical-align: 0px;    background: transparent url(/img/alohaSkin/sortArrows_sprite.png);    background-size: 16px;    background-repeat: no-repeat;    background-position: center 2px; display:none;" class="flecha_ordenacion1 import_exportQuotation_Status__ccabecera"/>
+                            </div>
+                        </apex:facet>
+                        <apex:outputfield value="{!ieso.import_export.Quotation_Status__c}" />
+                   </apex:column>   
+                   
+                   <apex:column style="background:{!if(contenedor_actual_import_export != null && contenedor_actual_import_export !='' && CONTAINS(contenedor_actual_import_export, ieso.import_export.Id) && ieso.import_export.Id != null && ieso.import_export.Id != '' , '#e3f3ff;' , '')}">
+                       <apex:facet name="header">
+                            <div  class="div_cabecera" onclick="sort_data_table_cabeceras('import_export.Account_for__r.Name');"> {!$ObjectType.Customer_Quote__c.fields.Account_for__c.Label}
+                                <span style="       width: 10px;    height: 11px;    float: right;    margin: 0 5px;    vertical-align: 0px;    background: transparent url(/img/alohaSkin/sortArrows_sprite.png);    background-size: 16px;    background-repeat: no-repeat;    background-position: center 2px; display:none;" class="flecha_ordenacion1 import_exportAccount_for__rNamecabecera"/>
+                            </div>
+                        </apex:facet>
+                        <apex:outputlink value="{!$Site.BaseUrl}/{!ieso.import_export.Account_for__c}">{!ieso.import_export.Account_for__r.Name}</apex:outputlink>
+                   </apex:column>
+                   
+                   <apex:column style="background:{!if(contenedor_actual_import_export != null && contenedor_actual_import_export !='' && CONTAINS(contenedor_actual_import_export, ieso.import_export.Id) && ieso.import_export.Id != null && ieso.import_export.Id != '' , '#e3f3ff;' , '')}">
+                       <apex:facet name="header">
+                            <div  class="div_cabecera" onclick="sort_data_table_cabeceras('import_export.Supplier_Account__r.Name');"> {!$ObjectType.Customer_Quote__c.fields.Supplier_Account__c.Label}
+                                <span style="       width: 10px;    height: 11px;    float: right;    margin: 0 5px;    vertical-align: 0px;    background: transparent url(/img/alohaSkin/sortArrows_sprite.png);    background-size: 16px;    background-repeat: no-repeat;    background-position: center 2px; display:none;" class="flecha_ordenacion1 import_exportSupplier_Account__rNamecabecera"/>
+                            </div>
+                        </apex:facet>
+                        <apex:outputlink value="{!$Site.BaseUrl}/{!ieso.import_export.Supplier_Account__c}">{!ieso.import_export.Supplier_Account__r.Name}</apex:outputlink>
+                   </apex:column>
+                   
+                   <!--<apex:column style="background:{!if(contenedor_actual_import_export != null && contenedor_actual_import_export !='' && CONTAINS(contenedor_actual_import_export, ieso.import_export.Id) && ieso.import_export.Id != null && ieso.import_export.Id != '' , '#e3f3ff;' , '')}">
+                       <apex:facet name="header">
+                            <div  class="div_cabecera" onclick="sort_data_table_cabeceras('import_export.Consignee__r.Name');"> {!$ObjectType.Customer_Quote__c.fields.Consignee__c.Label}
+                                <span style="       width: 10px;    height: 11px;    float: right;    margin: 0 5px;    vertical-align: 0px;    background: transparent url(/img/alohaSkin/sortArrows_sprite.png);    background-size: 16px;    background-repeat: no-repeat;    background-position: center 2px; display:none;" class="flecha_ordenacion1 import_exportConsignee__rNamecabecera"/>
+                            </div>
+                        </apex:facet>
+                        <apex:outputlink value="{!$Site.BaseUrl}/{!ieso.import_export.Consignee__c}">{!ieso.import_export.Consignee__r.Name}</apex:outputlink>
+                   </apex:column>-->
+                   
+                   <apex:column style="background:{!if(contenedor_actual_import_export != null && contenedor_actual_import_export !='' && CONTAINS(contenedor_actual_import_export, ieso.import_export.Id) && ieso.import_export.Id != null && ieso.import_export.Id != '' , '#e3f3ff;' , '')}">
+                       <apex:facet name="header">
+                            <div  class="div_cabecera" onclick="sort_data_table_cabeceras('import_export.Nature_Merchandise__c');"> {!$ObjectType.Customer_Quote__c.fields.Nature_Merchandise__c.Label}
+                                <span style="       width: 10px;    height: 11px;    float: right;    margin: 0 5px;    vertical-align: 0px;    background: transparent url(/img/alohaSkin/sortArrows_sprite.png);    background-size: 16px;    background-repeat: no-repeat;    background-position: center 2px; display:none;" class="flecha_ordenacion1 import_exportNature_Merchandise__ccabecera"/>
+                            </div>
+                        </apex:facet>
+                         <strong><apex:outputtext value="{!ieso.import_export.Nature_Merchandise__c}"/></strong>
+                        <br/>
+                        <apex:outputfield value="{!ieso.import_export.Total_Items_Units__c}"/><span  style="    margin-left: 10px;">Units</span>
+                   </apex:column>
+                   
+                   <apex:column style="background:{!if(contenedor_actual_import_export != null && contenedor_actual_import_export !='' && CONTAINS(contenedor_actual_import_export, ieso.import_export.Id) && ieso.import_export.Id != null && ieso.import_export.Id != '' , '#e3f3ff;' , '')}">
+                       <apex:facet name="header">
+                            <div  class="div_cabecera" onclick="sort_data_table_cabeceras('import_export.Site_of_Load__r.Name');"> {!$ObjectType.Customer_Quote__c.fields.Site_of_Load__c.Label}
+                                <span style="       width: 10px;    height: 11px;    float: right;    margin: 0 5px;    vertical-align: 0px;    background: transparent url(/img/alohaSkin/sortArrows_sprite.png);    background-size: 16px;    background-repeat: no-repeat;    background-position: center 2px; display:none;" class="flecha_ordenacion1 import_exportSite_of_Load__rNamecabecera"/>
+                            </div>
+                        </apex:facet>
+                        <apex:outputlink value="{!$Site.BaseUrl}/{!ieso.import_export.Site_of_Load__c}">{!ieso.import_export.Site_of_Load__r.Name}</apex:outputlink>
+                   </apex:column>
+                   
+                   <!--<apex:column style="background:{!if(contenedor_actual_import_export != null && contenedor_actual_import_export !='' && CONTAINS(contenedor_actual_import_export, ieso.import_export.Id) && ieso.import_export.Id != null && ieso.import_export.Id != '' , '#e3f3ff;' , '')}">
+                       <apex:facet name="header">
+                            <div  class="div_cabecera" onclick="sort_data_table_cabeceras('import_export.Transhipment_Port__r.Name');"> {!$ObjectType.Customer_Quote__c.fields.Transhipment_Port__c.Label}
+                                <span style="       width: 10px;    height: 11px;    float: right;    margin: 0 5px;    vertical-align: 0px;    background: transparent url(/img/alohaSkin/sortArrows_sprite.png);    background-size: 16px;    background-repeat: no-repeat;    background-position: center 2px; display:none;" class="flecha_ordenacion1 import_exportTranshipment_Port__rNamecabecera"/>
+                            </div>
+                        </apex:facet>
+                        <apex:outputlink value="{!$Site.BaseUrl}/{!ieso.import_export.Transhipment_Port__c}">{!ieso.import_export.Transhipment_Port__r.Name}</apex:outputlink>
+                   </apex:column>-->
+                   
+                   <apex:column style="background:{!if(contenedor_actual_import_export != null && contenedor_actual_import_export !='' && CONTAINS(contenedor_actual_import_export, ieso.import_export.Id) && ieso.import_export.Id != null && ieso.import_export.Id != '' , '#e3f3ff;' , '')}">
+                       <apex:facet name="header">
+                            <div  class="div_cabecera" onclick="sort_data_table_cabeceras('import_export.Site_of_Discharge__r.Name');"> {!$ObjectType.Customer_Quote__c.fields.Site_of_Discharge__c.Label}
+                                <span style="       width: 10px;    height: 11px;    float: right;    margin: 0 5px;    vertical-align: 0px;    background: transparent url(/img/alohaSkin/sortArrows_sprite.png);    background-size: 16px;    background-repeat: no-repeat;    background-position: center 2px; display:none;" class="flecha_ordenacion1 import_exportSite_of_Discharge__rNamecabecera"/>
+                            </div>
+                        </apex:facet>
+                        <apex:outputlink value="{!$Site.BaseUrl}/{!ieso.import_export.Site_of_Discharge__c}">{!ieso.import_export.Site_of_Discharge__r.Name}</apex:outputlink>
+                   </apex:column>
+                   
+                   <apex:column style="background:{!if(contenedor_actual_import_export != null && contenedor_actual_import_export !='' && CONTAINS(contenedor_actual_import_export, ieso.import_export.Id) && ieso.import_export.Id != null && ieso.import_export.Id != '' , '#e3f3ff;' , '')}">
+                       <apex:facet name="header">
+                            <div  class="div_cabecera" onclick="sort_data_table_cabeceras('import_export.Last_Shipment__r.Name');"> {!$ObjectType.Customer_Quote__c.fields.Last_Shipment__c.Label}
+                                <span style="       width: 10px;    height: 11px;    float: right;    margin: 0 5px;    vertical-align: 0px;    background: transparent url(/img/alohaSkin/sortArrows_sprite.png);    background-size: 16px;    background-repeat: no-repeat;    background-position: center 2px; display:none;" class="flecha_ordenacion1 import_exportLast_Shipment__rNamecabecera"/>
+                            </div>
+                        </apex:facet>
+                        <apex:outputlink value="{!$Site.BaseUrl}/{!ieso.import_export.Last_Shipment__c}">{!ieso.import_export.Last_Shipment__r.Name}</apex:outputlink>
+                   </apex:column>
+                   
+                   <apex:column style="background:{!if(contenedor_actual_import_export != null && contenedor_actual_import_export !='' && CONTAINS(contenedor_actual_import_export, ieso.import_export.Id) && ieso.import_export.Id != null && ieso.import_export.Id != '' , '#e3f3ff;' , '')}">
+                       <apex:facet name="header">
+                            <div  class="div_cabecera" onclick="sort_data_table_cabeceras('import_export.Last_Shipment__r.Shipment_Status__c');"> {!$ObjectType.Shipment__c.fields.Shipment_Status__c.Label}
+                                <span style="       width: 10px;    height: 11px;    float: right;    margin: 0 5px;    vertical-align: 0px;    background: transparent url(/img/alohaSkin/sortArrows_sprite.png);    background-size: 16px;    background-repeat: no-repeat;    background-position: center 2px; display:none;" class="flecha_ordenacion1 import_exportLast_Shipment__rShipment_Status__ccabecera"/>
+                            </div>
+                        </apex:facet>
+                        <apex:outputField value="{!ieso.import_export.Last_Shipment__r.Shipment_Status__c}"/>
+                   </apex:column>
+                   
+                   <apex:column style="background:{!if(contenedor_actual_import_export != null && contenedor_actual_import_export !='' && CONTAINS(contenedor_actual_import_export, ieso.import_export.Id) && ieso.import_export.Id != null && ieso.import_export.Id != '' , '#e3f3ff;' , '')}">
+                       <apex:facet name="header">
+                            <div  class="div_cabecera" onclick="sort_data_table_cabeceras('import_export.Last_Shipment__r.Track_Option__c');"> {!$ObjectType.Customer_Quote__c.fields.Track_Option__c.Label}
+                                <span style="       width: 10px;    height: 11px;    float: right;    margin: 0 5px;    vertical-align: 0px;    background: transparent url(/img/alohaSkin/sortArrows_sprite.png);    background-size: 16px;    background-repeat: no-repeat;    background-position: center 2px; display:none;" class="flecha_ordenacion1 import_exportLast_Shipment__rTrack_Option__ccabecera"/>
+                            </div>
+                        </apex:facet>
+                        <apex:outputField value="{!ieso.import_export.Track_Option__c}"/> 
+                   </apex:column>
+                   
+                   <apex:column style="background:{!if(contenedor_actual_import_export != null && contenedor_actual_import_export !='' && CONTAINS(contenedor_actual_import_export, ieso.import_export.Id) && ieso.import_export.Id != null && ieso.import_export.Id != '' , '#e3f3ff;' , '')}">
+                       <apex:facet name="header">
+                            <div  class="div_cabecera" onclick="sort_data_table_cabeceras('import_export.Last_Shipment__r.Number__c');"> {!$ObjectType.Customer_Quote__c.fields.Reference_Number__c.Label}
+                                <span style="       width: 10px;    height: 11px;    float: right;    margin: 0 5px;    vertical-align: 0px;    background: transparent url(/img/alohaSkin/sortArrows_sprite.png);    background-size: 16px;    background-repeat: no-repeat;    background-position: center 2px; display:none;" class="flecha_ordenacion1 import_exportLast_Shipment__rNumber__ccabecera"/>
+                            </div>
+                        </apex:facet>
+                        <apex:outputField value="{!ieso.import_export.Reference_Number__c}"/>
+                   </apex:column>
+                   
+                   <apex:column style="background:{!if(contenedor_actual_import_export != null && contenedor_actual_import_export !='' && CONTAINS(contenedor_actual_import_export, ieso.import_export.Id) && ieso.import_export.Id != null && ieso.import_export.Id != '' , '#e3f3ff;' , '')}">
+                       <apex:facet name="header">
+                            <div  class="div_cabecera" onclick="sort_data_table_cabeceras('import_export.Last_Shipment__r.Site_of_Discharge__r.Name');"> {!$ObjectType.Shipment__c.fields.Site_of_Discharge__c.Label}
+                                <span style="       width: 10px;    height: 11px;    float: right;    margin: 0 5px;    vertical-align: 0px;    background: transparent url(/img/alohaSkin/sortArrows_sprite.png);    background-size: 16px;    background-repeat: no-repeat;    background-position: center 2px; display:none;" class="flecha_ordenacion1 import_exportLast_Shipment__rSite_of_Discharge__rNamecabecera"/>
+                            </div>
+                        </apex:facet>
+                        <apex:outputlink value="{!$Site.BaseUrl}/{!ieso.import_export.Last_Shipment__r.Site_of_Discharge__c}">{!ieso.import_export.Last_Shipment__r.Site_of_Discharge__r.Name}</apex:outputlink>
+                   </apex:column>
+                   
+                   <apex:column style="background:{!if(contenedor_actual_import_export != null && contenedor_actual_import_export !='' && CONTAINS(contenedor_actual_import_export, ieso.import_export.Id) && ieso.import_export.Id != null && ieso.import_export.Id != '' , '#e3f3ff;' , '')}">
+                       <apex:facet name="header">
+                            <div  class="div_cabecera" onclick="sort_data_table_cabeceras('import_export.Last_Shipment__r.ETA_Point_of_Discharge__c');"> {!$ObjectType.Shipment__c.fields.ETA_Point_of_Discharge__c.Label}
+                                <span style="       width: 10px;    height: 11px;    float: right;    margin: 0 5px;    vertical-align: 0px;    background: transparent url(/img/alohaSkin/sortArrows_sprite.png);    background-size: 16px;    background-repeat: no-repeat;    background-position: center 2px; display:none;" class="flecha_ordenacion1 import_exportLast_Shipment__rETA_Point_of_Discharge__ccabecera"/>
+                            </div>
+                        </apex:facet>
+                        <div class="fecha_llegada_{!ieso.import_export.Id}">
+                            <apex:outputField value="{!ieso.import_export.Last_Shipment__r.ETA_Point_of_Discharge__c}" rendered="{!ieso.import_export.Last_Shipment__c !=null && ieso.import_export.Last_Shipment__r.ETA_Point_of_Discharge__c != null}"/>
+                        </div>
+                        
+                   </apex:column>
+                   
+                   <apex:column style="background:{!if(contenedor_actual_import_export != null && contenedor_actual_import_export !='' && CONTAINS(contenedor_actual_import_export, ieso.import_export.Id) && ieso.import_export.Id != null && ieso.import_export.Id != '' , '#e3f3ff;' , '')}">
+                       <apex:facet name="header">
+                            <div class="div_cabecera" onclick="sort_data_table_cabeceras('numero_dias');"> {!$ObjectType.Shipment__c.fields.Storage_days__c.Label}
+                                <span style="       width: 10px;    height: 11px;    float: right;    margin: 0 5px;    vertical-align: 0px;    background: transparent url(/img/alohaSkin/sortArrows_sprite.png);    background-size: 16px;    background-repeat: no-repeat;    background-position: center 2px; display:none;" class="flecha_ordenacion1 numero_diascabecera"/>
+                            </div>
+                        </apex:facet>
+                        <apex:outputText value="{!ieso.numero_dias2}" html-class="numero_dias_{!ieso.import_export.Id} numero_dias" html-neudata="{!ieso.import_export.Id}" rendered="{!ieso.import_export.Last_Shipment__c !=null && ieso.import_export.Last_Shipment__r.ETA_Point_of_Discharge__c != null}"/>
+                   </apex:column> 
+                   
+                   <apex:column style="background:{!if(contenedor_actual_import_export != null && contenedor_actual_import_export !='' && CONTAINS(contenedor_actual_import_export, ieso.import_export.Id) && ieso.import_export.Id != null && ieso.import_export.Id != '' , '#e3f3ff;' , '')}">
+                        <apex:facet name="header"> Select <input type="checkbox" class="select_all_cabeceras" onclick="marcar_all_cabeceras_lines();" /></apex:facet>
+                        <apex:inputcheckbox value="{!ieso.selected}" styleclass="select_linea_cabecera"/>
+                    </apex:column>
+                 </apex:pageBlockTable>
+             </apex:pageBlock>  
+         
+         
+         
+              <!-- <h3 id="filterLabel" title="Select the account and whether to display consolidated and unconsolidated lines">Filter lines</h3>
+                <apex:pageBlock id="block3">
+                    <div style=" width: 447px; display:table-cell">
+                            <apex:pageBlockSection columns="1" html-style=" margin-right: 16px;">
+                                <div id="consolidatedLabel">Lines to show:</div>
+                                    <apex:selectRadio id="notConsolidated"  value="{!notConsolidatedNumber}">
+                                        <apex:selectOption itemValue="0" itemLabel="Show only unconsolidated lines" />
+                                        <apex:selectOption itemValue="1" itemLabel="Show all lines"/>
+                                    </apex:selectRadio>
+                                <div id="showAuthorizedCredit">
+                                    <div>Authorized credit lines:</div>
+                                    <apex:selectRadio id="notAuthotized"  value="{!notAuthorizedNumber}">
+                                        <apex:selectOption itemValue="0" itemLabel="Show only authorized credit lines" />
+                                        <apex:selectOption itemValue="1" itemLabel="Show all lines"/>
+                                       </apex:selectRadio>
+                                </div>
+                            </apex:pageBlockSection>
+                    </div>
+
+                    <div style="  width: 100px; display:table-cell">
+                        <apex:pageBlockSection columns="1" html-style=" margin-right: 16px;">
+                            <div id="accountLabel">Please select the account on which to perform the consolidation:</div>
+                            <apex:outputPanel id="accountSelector">
+                                <apex:selectList id="accountidSelector" multiselect="true" label="Account" value="{!accountid}" onchange="changeAccountSelected(this);" style="width: 336px;">
+                                    <apex:selectOptions value="{!accountList}"/>
+                                </apex:selectList>
+                            </apex:outputPanel>
+                        </apex:pageBlockSection>
+                     </div>
+                    <br/>
+                    <br/>
+                     <div style="  display:table-cell;display:{!If(linesTypeNumber==2, 'table-cell','none')};">
+                        <div id="DateLabel">Please select the ETD:</div>
+                        <apex:outputPanel id="filter_date">
+                            <apex:inputField value="{!filtro_fecha.Delivery_Date__c}" id="input_filter_date"/>
+                        </apex:outputPanel>
+                    </div>
+                </apex:pageBlock>-->
+                
+                
+                
+              <h3 title="Lines to consolidate" id="itemLabel" onclick="updateLines();"><span id="labelConsolidation">Consolidation</span></h3>
+                <apex:pageBlock id="block4" title="{!accountName}">
+                    <apex:pageMessages ></apex:pageMessages>
+                        <apex:pageBlockButtons rendered="{!showLines}">
+                            <apex:commandButton action="{!applyLines}" value="Update {!$ObjectType.Shipment_Program__c.label}" reRender="block4" status="myStatus" oncomplete="adjustBackground();"/>
+                        </apex:pageBlockButtons>
+                        <apex:outputPanel >
+                        <div id="capa_totales">
+                            <span id="titulo_status_container" style="margin: 0px 10px 10px 3px;">Packaging Resume</span>
+                             <apex:selectList id="chooseClient" value="{!container_selected}" size="1" styleclass="seleccioncontainer"  onchange="updatedata();" style="margin: 10px 10px 10px 51px;">
+                                <apex:selectOptions value="{!containers}"/>
+                             </apex:selectList>
+                             <apex:inputHidden id="ids_pallet_idscontenedores" value="{!ids_pallet_idscontenedores}"/>
+                            <table id="lista_datos_container"> 
+                                <tr>
+                                    <td><img src="{!URLFOR($Resource.ImagesUtilContainer,'caja-mod.png')}" class="imagen_dato_container" style="height: 41px; margin-top: 2px; width: 35px;"/><span class="nombre_dato_container">Number of Packages</span><span class="dato_container" id="totalcajas">{!TotalNumberBoxes}</span></td>
+                                    <td style="margin-left: 12px;"><img src="{!URLFOR($Resource.ImagesUtilContainer,'weight_kilogram.png')}" class="imagen_dato_container" style="width: 43px; margin-top: 2px; margin-right: 1px;"/><span class="nombre_dato_container" style="margin-left: 10px;">Total Gross Weight (Kg)</span><span class="dato_container" id="totalweight" style="margin: 19px 5px 10px 10px;">{!Grossweight}</span></td>
+                                    <td style="margin-left: 17px;"><img src="{!URLFOR($Resource.ImagesUtilContainer,'cobo-mod.png')}" class="imagen_dato_container" style="width: 34px; height: 32px; margin-right: 4px; margin-right: 10px;"/><span class="nombre_dato_container" style="margin-left: 6px;">Total Gross Volume (m3)</span><span class="dato_container" id="totalvolume">{!Cube}</span></td>
+                                 </tr>
+                                 <tr>   
+                                    <td style="margin-left: 16px;"><img src="{!URLFOR($Resource.ImagesUtilContainer,'pallets-mod.png')}" class="imagen_dato_container" style="margin-top: 11px; height: 26px; width: 39px;"/><span class="nombre_dato_container">Number of Pallets</span><span class="dato_container" id="totalpallet">{!TotalNumberPallets}</span></td>
+                                    <td><img src="{!$Resource.ContainerBlue}" class="imagen_dato_container" style="height: 44px; width: 43px; margin-top: 2px;"/><span class="nombre_dato_container" style="margin-left: 13px;">Number of Containers</span><span class="dato_container" id="totalcontenedores">{!TotalNumberCont}</span></td>
+                                    <td><img src="{!URLFOR($Resource.ImagesUtilContainer,'free-container-mod.png')}" class="imagen_dato_container"/><div id="progress_bar" class="ui-progress-bar ui-container" style="width: 238px; float: left; margin-left: 12px; height: 28px;">
+                                            <span class="ui-label" style="margin: 6px 0px 7px 21px; z-index: 1;">% Last Container Load  <b class="value"> {!porc_ocupacion}</b></span>
+                                            <div class="ui-progress" style="height: 26px; width:0%; width: {!porc_ocupacion}; "><!--este rellena -->
+                                            </div>
+                                        </div>
+                                    </td>
+                                 </tr>
+                            </table>
+                        </div>         
+                        
+                        <!-- ----------------------------------Import -Export Lines a modificar -->
+                        <br/>
+                        <span style="    vertical-align: middle;    color: #222;    font-size: 91%;    width: 30%;    margin: 0;    font-weight: bold; float: left;    width: 100%;    margin-top: 17px;">Actual Lines related with this Shipments Program</span>
+                        <br/>
+                         <apex:pageBlockTable value="{!Lines_update}" var="item" rendered="{!ShowImportExportItemLines_update}" styleClass="tabla_principal">
+                            <apex:column title="Check to consolidate this line">
+                                <apex:facet name="header"><!--  <input type="checkbox" class="select_all_items" onclick="marcar_lines();" />--></apex:facet>
+                                <apex:inputCheckbox value="{!item.selected}" onchange="calculartotalpesovolumen();" rendered="{!item.Id!=null}" html-neudata="{!item.Id}" styleClass="check_linea_selected" html-idcabecera="{!item.quote_line.Import_Export_Quote__r.Id}" style="display:none;" disabled="true"/>
+                                <apex:inputCheckbox value="{!item.selected2}" rendered="{!item.icon=1}" html-neudata="{!item.idPrincipal}" styleClass="icon1 check_linea_selected" html-idcabecera="{!item.quote_line.Import_Export_Quote__r.Id}"/>
+                                <apex:image value="/img/msg_icons/warning16.png" title="It hasn´t relation to the pallet" html-neudata="sin_pallet{!item.Id}" style="display:none;"/>
+                            </apex:column>
+                           <apex:column style="text-align:right">
+                                <apex:facet name="header"><div style="text-align:center; cursor: pointer;" onclick="sort_data_quote2('quote_line.Units__c');">Units</div></apex:facet>
+                                <apex:inputfield value="{!item.shipment_line.Units_Shipped__c}" style="text-align: right;     width: 100px;"  onKeyUp="$(this).calcularpeso();calculartotalpesovolumen();"  html-neudata="{!item.Id}" styleClass="supplyinput"  html-placeholder="{!item.unidades_iniciales}"/>
+                            </apex:column>
+                            <apex:column headerValue="">
+                                <apex:facet name="header"><div style="text-align:center; cursor: pointer;" onclick="sort_data_quote2('shipment_line.Shipment__r.Name');">Shipment </div></apex:facet><!--<img class="x-grid3-sort-icon"/>-->
+                                <c:customobject2 rendered="{!item.shipment_line!=null}" objid="{!item.shipment_line.Shipment__r.Id}" objname="{!item.shipment_line.Shipment__r.Name}"/>
+                            </apex:column>
+                            <apex:column headerValue="Line">
+                                <apex:facet name="header"><div style="text-align:center; cursor: pointer;" onclick="sort_data_quote2('shipment_line.Name');">Line</div></apex:facet>
+                                <c:customobject2 rendered="{!item.shipment_line!=null}" objid="{!item.shipment_line.Id}" objname="{!item.shipment_line.Name}"/>
+                            </apex:column>
+                            <apex:column >
+                                <apex:facet name="header"><div style="text-align:center; cursor: pointer;" onclick="sort_data_quote2('shipment_line.Import_Export_Quote__r.Name');">Import-Export Quote </div></apex:facet><!--<img class="x-grid3-sort-icon"/>-->
+                                <c:customobject2 rendered="{!item.shipment_line!=null}" objid="{!item.shipment_line.Import_Export_Quote__r.Id}" objname="{!item.shipment_line.Import_Export_Quote__r.Name}"/>
+                            </apex:column>
+                            <apex:column >
+                                <apex:facet name="header"><div style="text-align:center; cursor: pointer;" onclick="sort_data_quote2('shipment_line.Quote_Item_Line__r.Name');">Quote Item Line </div></apex:facet>
+                                <c:customobject2 rendered="{!item.shipment_line!=null}" objid="{!item.shipment_line.Quote_Item_Line__r.Id}" objname="{!item.shipment_line.Quote_Item_Line__r.Name}"/>
+                            </apex:column>
+                            <!--<apex:column >
+                                <apex:facet name="header"><div style="text-align:center; cursor: pointer;" onclick="sort_data_quote2('shipment_line.Shipment__r.Supply_Project__r.Name');">Supply Project</div></apex:facet>
+                                <c:customobject2 objid="{!item.shipment_line.Shipment__r.Supply_Project__c}" objname="{!item.shipment_line.Shipment__r.Supply_Project__r.Name}"/>
+                            </apex:column>-->
+                            <apex:column style="text-align: right;">
+                                <apex:facet name="header"><div style="text-align:center; cursor: pointer;" onclick="sort_data_quote2('totalcajas');">Packages <br/>Quantity</div></apex:facet>
+                                <apex:outputText value="{!item.totalcajas}" style="text-align:right;" html-neudata="packaging{!item.Id}"/>
+                                <apex:inputHidden value="{!item.totalcajas}" html-neudata="packaging_hidden{!item.Id}"/>
+                            </apex:column>
+                            <apex:column >
+                                <apex:facet name="header"><div style="text-align:center; cursor: pointer;" onclick="sort_data_quote2('quote_line.Import_Export_Quote__r.Account_for__r.Name');">Account for</div></apex:facet>
+                                <c:customobject2 rendered="{!item.quote_line!=null}" objid="{!item.quote_line.Import_Export_Quote__r.Account_for__r.Id}" objname="{!item.quote_line.Import_Export_Quote__r.Account_for__r.Name}"/>
+                            </apex:column>
+                            <apex:column >
+                                <apex:facet name="header"><div style="text-align:center; cursor: pointer;" onclick="sort_data_quote2('quote_line.Item_Supplier_Owner__r.Name');">Item Supplier/Owner</div></apex:facet>
+                                <c:customobject2 rendered="{!item.quote_line!=null}" objid="{!item.quote_line.Item_Supplier_Owner__r.Id}" objname="{!item.quote_line.Item_Supplier_Owner__r.Name}"/>
+                            </apex:column>
+                            <apex:column headerValue="Item">
+                                <apex:facet name="header"><div style="text-align:center; cursor: pointer;" onclick="sort_data_quote2('quote_line.Item_Name__r.Name');">Item</div></apex:facet>
+                                <c:customobject2 rendered="{!item.quote_line!=null}" objid="{!item.quote_line.Item_Name__r.Id}" objname="{!item.quote_line.Item_Name__r.Name}"/>
+                            </apex:column>
+                            <apex:column title="Item aditional info">
+                                <apex:facet name="header"><div style="text-align:center; cursor: pointer;" onclick="sort_data_quote2('extension');">Extension Item Name</div></apex:facet>
+                                <apex:outputText rendered="{!item.quote_line!=null}" value="{!item.extension}"/>
+                           </apex:column>  
+                           <apex:column headerValue="Aut Cred" rendered="{!notAuthorizedNumber == false}">
+                                <c:checkbox rendered="{!item.quote_line!=null}" value="{!item.quote_line.Import_Export_Quote__r.Authorized_Credit__c}" checkedtitle="Authorized Credit" notcheckedtitle="Not Authorized Credit" />
+                           </apex:column>
+                            <apex:column value="{!item.shipment_line.Unit_Origin_Sell_Price__c}" title="Price with discounts applied" style="text-align:right">
+                                <apex:facet name="header"><div style="text-align:center; cursor: pointer;" onclick="sort_data_quote2('shipment_line.Unit_Origin_Sell_Price__c');">Price</div></apex:facet>
+                            </apex:column>
+                            <apex:column style="text-align:right">
+                                <apex:facet name="header"><div style="text-align:center; cursor: pointer;" onclick="sort_data_quote2('shipment_line.Sell_Origin_Amount__c');">Amount</div></apex:facet>
+                                <apex:outputText value="{!item.shipment_line.Sell_Origin_Amount__c}" style="text-align:right;" html-neudata="total_amount_linea{!item.Id}"/>
+                                <apex:inputHidden value="{!item.shipment_line.Sell_Origin_Amount__c}" html-neudata="total_amount_linea_hidden{!item.Id}"/>
+                            </apex:column>
+                            <apex:column rendered="{!showConsolidated}" style="text-align:center">
+                                <apex:facet name="header"><div style="text-align:center">Cons</div></apex:facet>
+                                <c:checkbox rendered="{!item.quote_line!=null}" value="{!item.quote_line.Consolidated__c}" checkedtitle="Consolidated" notcheckedtitle="Not consolidated"/>
+                            </apex:column>
+                            <apex:column style="text-align: right;">
+                                <apex:facet name="header"><div style="text-align:center; cursor: pointer;" onclick="sort_data_quote2('total_peso_linea');">Gross <br/> Weight kg</div></apex:facet>
+                                 <apex:outputText value="{!item.total_peso_linea}" style="text-align:right; " html-neudata="weight{!item.Id}"/>
+                                 <apex:inputHidden value="{!item.total_peso_linea}" html-neudata="weight_hidden{!item.Id}"/>
+                            </apex:column>
+                            <apex:column style="text-align: right;">
+                                <apex:facet name="header"><div  style="text-align:center; cursor: pointer;" onclick="sort_data_quote2('total_volumen_linea');">Gross <br/>Volume m³</div></apex:facet>
+                                <apex:outputText value="{!item.total_volumen_linea}" style="text-align:right; " html-neudata="volume{!item.Id}"/>
+                                <apex:inputHidden value="{!item.total_volumen_linea}" html-neudata="volume_hidden{!item.Id}"/>
+                                <apex:inputHidden value="{!item.tiene_pallet}" html-neudata="tienerelacion_con_pallet{!item.Id}"/> 
+                                <apex:inputHidden value="{!item.peso_caja_items}" html-neudata="packagingweight{!item.Id}"/>
+                                <apex:inputHidden value="{!item.volumen_caja_items}" html-neudata="packagingvolume{!item.Id}"/>
+                                <apex:inputHidden value="{!item.relacion_con_pallet}" html-neudata="relacionconlospallet{!item.id}"/>   
+                                <apex:inputHidden value="{!item.peso_item_sin_caja}" html-neudata="pesodelitem_sin_caja{!item.id}"/>
+                                <apex:inputHidden value="{!item.Units_x_Master_Box}" html-neudata="packagingunits{!item.id}"/>
+                                <apex:inputHidden value="{!item.precio_unidad}" html-neudata="precio_unidad{!item.id}"/>
+                                <apex:inputHidden value="{!item.shipment_line.Expense_Amount__c}" html-neudata="exense_amount{!item.id}"/>
+                            </apex:column>  
+                             <apex:column style="text-align: right;">
+                                <apex:facet name="header"><div style="text-align:center;cursor: pointer;" onclick="sort_data_quote2('total_pallet_linea');">Number <br/> of Pallets </div></apex:facet>
+                                 <apex:outputText value="{!item.total_pallet_linea}" style="text-align:right; " html-neudata="numberpallet{!item.Id}"/>
+                                 <apex:inputHidden value="{!item.total_pallet_linea}" html-neudata="numberpallet_hidden{!item.Id}"/>
+                            </apex:column>
+                        </apex:pageBlockTable> 
+                        
+                        <!-- ---------------------------------Customer Order Lines a modificar -->
+                        
+                        <apex:pageBlockTable value="{!Lines_update}" var="item" rendered="{!ShowShoppingCartLines_update}" styleClass="tabla_principal">
+                            <apex:column title="Check to consolidate this line">
+                                <apex:facet name="header"><!--  <input type="checkbox" class="select_all_items" onclick="marcar_lines();" />--></apex:facet>
+                                <apex:inputCheckbox value="{!item.selected}" onchange="calculartotalpesovolumen();" rendered="{!item.Id!=null}" html-neudata="{!item.Id}" styleClass="check_linea_selected" html-idcabecera="{!item.shopping_line.Shopping_Cart__r.Id}" style="display:none;" disabled="true"/>
+                                <apex:inputCheckbox value="{!item.selected2}" rendered="{!item.icon=1}" html-neudata="{!item.idPrincipal}" styleClass="icon1 check_linea_selected" html-idcabecera="{!item.shopping_line.Shopping_Cart__r.Id}"/>
+                                <apex:image value="/img/msg_icons/warning16.png" title="It hasn´t relation to the pallet" html-neudata="sin_pallet{!item.Id}" style="display:none;"/>
+                            </apex:column>
+                           <apex:column style="text-align:right">
+                                <apex:facet name="header"><div style="text-align:center; cursor: pointer;" onclick="sort_data_quote2('quote_line.Units__c');">Units</div></apex:facet>
+                                <apex:inputField value="{!item.shipment_line.Units_Shipped__c}" style="text-align: right; width: 100px;"  onKeyUp="$(this).calcularpeso();calculartotalpesovolumen();"  html-neudata="{!item.Id}" styleClass="supplyinput"  html-placeholder="{!item.unidades_iniciales}"/>
+                            </apex:column>
+                            <apex:column headerValue="">
+                                <apex:facet name="header"><div style="text-align:center; cursor: pointer;" onclick="sort_data_quote2('shipment_line.Shipment__r.Name');">Shipment </div></apex:facet><!--<img class="x-grid3-sort-icon"/>-->
+                                <c:customobject2 rendered="{!item.shipment_line!=null}" objid="{!item.shipment_line.Shipment__r.Id}" objname="{!item.shipment_line.Shipment__r.Name}"/>
+                            </apex:column>
+                            <apex:column headerValue="Line">
+                                <apex:facet name="header"><div style="text-align:center; cursor: pointer;" onclick="sort_data_quote2('shipment_line.Name');">Line</div></apex:facet>
+                                <c:customobject2 rendered="{!item.shipment_line!=null}" objid="{!item.shipment_line.Id}" objname="{!item.shipment_line.Name}"/>
+                            </apex:column>
+                            <!--<apex:column >
+                                <apex:facet name="header"><div style="text-align:center; cursor: pointer;" onclick="sort_data_quote2('shipment_line.Shipment__r.Supply_Project__r.Name');">Supply Project</div></apex:facet>
+                                <c:customobject2 objid="{!item.shipment_line.Shipment__r.Supply_Project__c}" objname="{!item.shipment_line.Shipment__r.Supply_Project__r.Name}"/>
+                            </apex:column>-->
+                            <apex:column style="text-align: right;">
+                                <apex:facet name="header"><div style="text-align:center; cursor: pointer;" onclick="sort_data_quote2('totalcajas');">Packages <br/>Quantity</div></apex:facet>
+                                <apex:outputText value="{!item.totalcajas}" style="text-align:right;" html-neudata="packaging{!item.Id}"/>
+                                <apex:inputHidden value="{!item.totalcajas}" html-neudata="packaging_hidden{!item.Id}"/>
+                            </apex:column>
+                            <apex:column >
+                                <apex:facet name="header"><div style="text-align:center; cursor: pointer;" onclick="sort_data_quote2('shopping_line.Shopping_Cart__r.Customer__r.Name');">Account for</div></apex:facet>
+                                <c:customobject2 rendered="{!item.shopping_line!=null}" objid="{!item.shopping_line.Shopping_Cart__r.Customer__r.Id}" objname="{!item.shopping_line.Shopping_Cart__r.Customer__r.Name}"/>
+                            </apex:column>
+                            <apex:column >
+                                <apex:facet name="header"><div style="text-align:center; cursor: pointer;" onclick="sort_data_quote2('shopping_line.Supplier__r.Name');">Item Supplier/Owner</div></apex:facet>
+                                <c:customobject2 rendered="{!item.shopping_line!=null}" objid="{!item.shopping_line.Supplier__r.Id}" objname="{!item.shopping_line.Supplier__r.Name}"/>
+                            </apex:column>
+                            <apex:column headerValue="Item">
+                                <apex:facet name="header"><div style="text-align:center; cursor: pointer;" onclick="sort_data_quote2('shopping_line.Item_Name__r.Name');">Item</div></apex:facet>
+                                <c:customobject2 rendered="{!item.shopping_line!=null}" objid="{!item.shopping_line.Item_Name__r.Id}" objname="{!item.shopping_line.Item_Name__r.Name}"/>
+                            </apex:column>
+                            <apex:column title="Item aditional info">
+                                <apex:facet name="header"><div style="text-align:center; cursor: pointer;" onclick="sort_data_quote2('extension');">Extension Item Name</div></apex:facet>
+                                <apex:outputText rendered="{!item.shopping_line!=null}" value="{!item.extension}"/>
+                           </apex:column>  
+                           <apex:column headerValue="Aut Cred" rendered="{!notAuthorizedNumber == false}">
+                              <c:checkbox rendered="{!item.shopping_line!=null}" value="{!item.shopping_line.Shopping_Cart__r.Authorized_Credit__c}" checkedtitle="Authorized Credit" notcheckedtitle="Not Authorized Credit" />
+                           </apex:column>
+                            <apex:column value="{!item.shipment_line.Unit_Origin_Sell_Price__c}" title="Price with discounts applied" style="text-align:right">
+                                <apex:facet name="header"><div style="text-align:center; cursor: pointer;" onclick="sort_data_quote2('shipment_line.Unit_Origin_Sell_Price__c');">Price</div></apex:facet>
+                            </apex:column>
+                            <apex:column style="text-align:right">
+                                <apex:facet name="header"><div style="text-align:center; cursor: pointer;" onclick="sort_data_quote2('shipment_line.Sell_Origin_Amount__c');">Amount</div></apex:facet>
+                                <apex:outputText value="{!item.shipment_line.Sell_Origin_Amount__c}" style="text-align:right;" html-neudata="total_amount_linea{!item.Id}"/>
+                                <apex:inputHidden value="{!item.shipment_line.Sell_Origin_Amount__c}" html-neudata="total_amount_linea_hidden{!item.Id}"/>
+                            </apex:column>
+                            <apex:column style="text-align: right;">
+                                <apex:facet name="header"><div style="text-align:center; cursor: pointer;" onclick="sort_data_quote2('total_peso_linea');">Gross <br/> Weight kg</div></apex:facet>
+                                 <apex:outputText value="{!item.total_peso_linea}" style="text-align:right; " html-neudata="weight{!item.Id}"/>
+                                 <apex:inputHidden value="{!item.total_peso_linea}" html-neudata="weight_hidden{!item.Id}"/>
+                            </apex:column>
+                            <apex:column style="text-align: right;">
+                                <apex:facet name="header"><div  style="text-align:center; cursor: pointer;" onclick="sort_data_quote2('total_volumen_linea');">Gross <br/>Volume m³</div></apex:facet>
+                                <apex:outputText value="{!item.total_volumen_linea}" style="text-align:right; " html-neudata="volume{!item.Id}"/>
+                                <apex:inputHidden value="{!item.total_volumen_linea}" html-neudata="volume_hidden{!item.Id}"/>
+                                <apex:inputHidden value="{!item.tiene_pallet}" html-neudata="tienerelacion_con_pallet{!item.Id}"/> 
+                                <apex:inputHidden value="{!item.peso_caja_items}" html-neudata="packagingweight{!item.Id}"/>
+                                <apex:inputHidden value="{!item.volumen_caja_items}" html-neudata="packagingvolume{!item.Id}"/>
+                                <apex:inputHidden value="{!item.relacion_con_pallet}" html-neudata="relacionconlospallet{!item.id}"/>   
+                                <apex:inputHidden value="{!item.peso_item_sin_caja}" html-neudata="pesodelitem_sin_caja{!item.id}"/>
+                                <apex:inputHidden value="{!item.Units_x_Master_Box}" html-neudata="packagingunits{!item.id}"/>
+                                <apex:inputHidden value="{!item.precio_unidad}" html-neudata="precio_unidad{!item.id}"/>
+                                <apex:inputHidden value="{!item.shipment_line.Expense_Amount__c}" html-neudata="exense_amount{!item.id}"/>
+                            </apex:column>  
+                             <apex:column style="text-align: right;">
+                                <apex:facet name="header"><div style="text-align:center;cursor: pointer;" onclick="sort_data_quote2('total_pallet_linea');">Number <br/> of Pallets </div></apex:facet>
+                                 <apex:outputText value="{!item.total_pallet_linea}" style="text-align:right; " html-neudata="numberpallet{!item.Id}"/>
+                                 <apex:inputHidden value="{!item.total_pallet_linea}" html-neudata="numberpallet_hidden{!item.Id}"/>
+                            </apex:column>
+                        </apex:pageBlockTable> 
+                        
+                        
+                        <!-- ---------------------------------Supplier Quote lines a modificar -->
+                        <apex:pageBlockTable value="{!Lines_update}" var="item"  rendered="{!ShowSupplierQuoteLines_update}" styleClass="tabla_principal">
+                            <apex:column title="Check to consolidate this line">
+                                <apex:facet name="header"> <!-- <input type="checkbox" class="select_all_items" onclick="marcar_lines();" />--></apex:facet>
+                                <apex:inputCheckbox value="{!item.selected}"  rendered="{!item.Id!=null}" onchange="calculartotalpesovolumen();" html-neudata="{!item.Id}" styleClass="check_linea_selected" html-idcabecera="{!item.supplier_line.Supplier_Quote__r.Id}"/>
+                                <apex:image value="/img/msg_icons/warning16.png" title="It hasn´t relation to the pallet" html-neudata="sin_pallet{!item.Id}" style="display:none;"/>
+                            </apex:column>
+                           <apex:column style="text-align:right">
+                                <apex:facet name="header"><div style="text-align:center; cursor: pointer;" onclick="sort_data_quote2('supplier_line.Quantity__c');">Units</div></apex:facet>
+                                <apex:inputField value="{!item.shipment_line.Units_Shipped__c}" style="text-align: right; width: 100px;"  onKeyUp="$(this).calcularpeso();calculartotalpesovolumen();"  html-neudata="{!item.Id}" styleClass="supplyinput"  html-placeholder="{!item.unidades_iniciales}"/>
+                            </apex:column>
+                            <apex:column headerValue="">
+                                <apex:facet name="header"><div style="text-align:center; cursor: pointer;" onclick="sort_data_quote2('shipment_line.Shipment__r.Name');">Shipment </div></apex:facet><!--<img class="x-grid3-sort-icon"/>-->
+                                <c:customobject2 rendered="{!item.shipment_line!=null}" objid="{!item.shipment_line.Shipment__r.Id}" objname="{!item.shipment_line.Shipment__r.Name}"/>
+                            </apex:column>
+                            <apex:column headerValue="Line">
+                                <apex:facet name="header"><div style="text-align:center; cursor: pointer;" onclick="sort_data_quote2('shipment_line.Name');">Line</div></apex:facet>
+                                <c:customobject2 rendered="{!item.shipment_line!=null}" objid="{!item.shipment_line.Id}" objname="{!item.shipment_line.Name}"/>
+                            </apex:column>
+                            <!--<apex:column >
+                                <apex:facet name="header"><div style="text-align:center; cursor: pointer; " onclick="sort_data_quote2('shipment_line.Shipment__r.Supply_Project__r.Name');">Supply Project</div></apex:facet>
+                                <c:customobject2 objid="{!item.shipment_line.Shipment__r.Supply_Project__c}" objname="{!item.shipment_line.Shipment__r.Supply_Project__r.Name}"/>
+                            </apex:column>-->
+                             <apex:column style="text-align: right;">
+                                <apex:facet name="header"><div style="text-align:center; cursor: pointer;" onclick="sort_data_quote2('supplier_line.Delivery_Number__c');">Delivery<br/>Number</div></apex:facet>
+                                <apex:outputText value="{!item.supplier_line.Delivery_Number__c}" style="text-align: right;" />
+                             </apex:column>
+                             <apex:column style="text-align: right;">
+                                 <apex:facet name="header"><div style="text-align:center; cursor: pointer;" onclick="sort_data_quote2('supplier_line.Delivery_Date__c');">Delivery<br/>Date</div></apex:facet>
+                                 <apex:outputField value="{!item.supplier_line.Delivery_Date__c}" style="text-align: right;" />
+                            </apex:column>
+                            <apex:column style="text-align: right;">
+                                 <apex:facet name="header"><div style="text-align:center; cursor: pointer;" onclick="sort_data_quote2('totalcajas');">Packages <br/>Quantity</div></apex:facet>
+                                 <apex:outputText value="{!item.totalcajas}" style="text-align:right;" html-neudata="packaging{!item.Id}"/>
+                                 <apex:inputHidden value="{!item.totalcajas}" html-neudata="packaging_hidden{!item.Id}"/>
+                            </apex:column>
+                            <apex:column >
+                                <apex:facet name="header"><div style="text-align:center; cursor: pointer;" onclick="sort_data_quote2('supplier_line.Supplier_Quote__r.Customer__r.Name');">Buyer</div></apex:facet>
+                                <c:customobject2 objid="{!item.supplier_line.Supplier_Quote__r.Customer__r.Id}" objname="{!item.supplier_line.Supplier_Quote__r.Customer__r.Name}"/>
+                            </apex:column>
+                            <apex:column >
+                                <apex:facet name="header"><div style="text-align:center; cursor: pointer;" onclick="sort_data_quote2('supplier_line.Supplier_Quote__r.Supplier__r.Name');">Supplier</div></apex:facet>
+                                <c:customobject2 objid="{!item.supplier_line.Supplier_Quote__r.Supplier__r.Id}" objname="{!item.supplier_line.Supplier_Quote__r.Supplier__r.Name}"/>
+                            </apex:column>
+                            <apex:column >
+                                <apex:facet name="header"><div style="text-align:center; cursor: pointer;" onclick="sort_data_quote2('supplier_line.Item__r.Name');">Item</div></apex:facet>
+                                <c:customobject2 objid="{!item.supplier_line.Item__r.Id}" objname="{!item.supplier_line.Item__r.Name}"/>
+                            </apex:column>
+                            <apex:column title="Item aditional info">
+                                 <apex:facet name="header"><div style="text-align:center; cursor: pointer;" onclick="sort_data_quote2('extension');">Extension Item Name</div></apex:facet>
+                                <apex:outputText rendered="{!item.supplier_line!=null}" value="{!item.extension}"/>
+                             </apex:column>
+                            <apex:column value="{!item.shipment_line.Unit_Origin_Sell_Price__c}" title="{!item.shipment_line.Unit_Origin_Sell_Price__c}" style="text-align:right">
+                                <apex:facet name="header"><div style="text-align:center; cursor: pointer;" onclick="sort_data_quote2('shipment_line.Unit_Origin_Sell_Price__c');">Net Price</div></apex:facet>
+                            </apex:column>
+                            <apex:column style="text-align:right">
+                                <apex:facet name="header"><div style="text-align:center; cursor: pointer;" onclick="sort_data_quote2('shipment_line.Sell_Origin_Amount__c');">Total Amount</div></apex:facet>
+                                <apex:outputText value="{!item.shipment_line.Sell_Origin_Amount__c}" style="text-align:right;" html-neudata="total_amount_linea{!item.Id}"/>
+                                <apex:inputHidden value="{!item.shipment_line.Sell_Origin_Amount__c}" html-neudata="total_amount_linea_hidden{!item.Id}"/>
+                            </apex:column>
+                            <apex:column rendered="{!showConsolidated}" style="text-align:center">
+                                <apex:facet name="header"><div style="text-align:center">Cons</div></apex:facet>
+                                <c:checkbox value="{!item.supplier_line.Consolidated__c}" checkedtitle="Consolidated" notcheckedtitle="Not consolidated"/>
+                            </apex:column>
+                            <apex:column style="text-align: right;">
+                                <apex:facet name="header"><div style="text-align:center; cursor: pointer;" onclick="sort_data_quote2('total_peso_linea');">Gross <br/> Weight kg</div></apex:facet>
+                                <apex:outputText value="{!item.total_peso_linea}" style="text-align:right; " html-neudata="weight{!item.Id}"/>
+                                <apex:inputHidden value="{!item.total_peso_linea}" html-neudata="weight_hidden{!item.Id}"/>
+                            </apex:column>
+                            <apex:column style="text-align: right;">
+                                <apex:facet name="header"><div style="text-align:center; cursor: pointer;" onclick="sort_data_quote2('total_volumen_linea');">Gross <br/>Volume m³</div></apex:facet>
+                                <apex:outputText value="{!item.total_volumen_linea}" style="text-align:right; " html-neudata="volume{!item.Id}"/>
+                                <apex:inputHidden value="{!item.total_volumen_linea}" html-neudata="volume_hidden{!item.Id}"/>
+                                <apex:inputHidden value="{!item.tiene_pallet}" html-neudata="tienerelacion_con_pallet{!item.Id}"/> 
+                                <apex:inputHidden value="{!item.peso_caja_items}" html-neudata="packagingweight{!item.Id}"/>
+                                <apex:inputHidden value="{!item.volumen_caja_items}" html-neudata="packagingvolume{!item.Id}"/>
+                                <apex:inputHidden value="{!item.relacion_con_pallet}" html-neudata="relacionconlospallet{!item.id}"/>           
+                                <apex:inputHidden value="{!item.peso_item_sin_caja}" html-neudata="pesodelitem_sin_caja{!item.id}"/>
+                                <apex:inputHidden value="{!item.Units_x_Master_Box}" html-neudata="packagingunits{!item.id}"/>
+                                <apex:inputHidden value="{!item.precio_unidad}" html-neudata="precio_unidad{!item.id}"/>
+                                <apex:inputHidden value="{!item.shipment_line.Expense_Amount__c}" html-neudata="exense_amount{!item.id}"/>
+                            </apex:column>  
+                            <apex:column style="text-align: right;">
+                                <apex:facet name="header"><div style="text-align:center;cursor: pointer;" onclick="sort_data_quote2('total_pallet_linea');">Number <br/> of Pallets</div></apex:facet>
+                                <apex:outputText value="{!item.total_pallet_linea}" style="text-align:right; " html-neudata="numberpallet{!item.Id}"/>
+                                <apex:inputHidden value="{!item.total_pallet_linea}" html-neudata="numberpallet_hidden{!item.Id}"/>
+                            </apex:column>
+                        </apex:pageBlockTable>
+                        <br/>
+                        <br/>
+                        <span style="    vertical-align: middle;    color: #222;    font-size: 91%;    width: 30%;    margin: 0;    font-weight: bold; display:{!IF(ShowImportExportItemLines == true || ShowShoppingCartLines == true || showSupplierQuoteLines == true, 'initial','none')}">Add new Lines to this  Shipments Program</span>
+                        <br/>
+                        
+                        <!-- ------------------------------- Import - Export Lines nuevas -->
+                       <apex:pageBlockTable value="{!Lines}" var="item" rendered="{!ShowImportExportItemLines}" styleClass="tabla_principal">
+                            <apex:column title="Check to consolidate this line">
+                                <apex:facet name="header"> <input type="checkbox" class="select_all_items" onclick="marcar_lines();" /></apex:facet>
+                                <apex:inputCheckbox value="{!item.selected}" onchange="calculartotalpesovolumen();" rendered="{!item.Id!=null}" html-neudata="{!item.Id}" styleClass="check_linea_selected check_linea_selected2" html-idcabecera="{!item.quote_line.Import_Export_Quote__r.Id}"/><!-- onclick="newItemSelected('{!item.Id}');" -->
+                                <apex:inputCheckbox value="{!item.selected2}" rendered="{!item.icon=1}" html-neudata="{!item.idPrincipal}" styleClass="icon1 check_linea_selected check_linea_selected2" html-idcabecera="{!item.quote_line.Import_Export_Quote__r.Id}"/>
+                                <apex:image value="/img/msg_icons/warning16.png" title="It hasn´t relation to the pallet" html-neudata="sin_pallet{!item.Id}" style="display:none;"/>
+                            </apex:column>
+                           <apex:column style="text-align:right">
+                                <apex:facet name="header"><div style="text-align:center; cursor: pointer;" onclick="sort_data_quote('quote_line.Units__c');">Units</div></apex:facet>
+                                <apex:inputField value="{!item.quote_line.Units__c}" style="text-align: right; width: 100px;" onKeyUp="$(this).calcularpeso();calculartotalpesovolumen();"  html-neudata="{!item.Id}" styleClass="supplyinput"  html-placeholder="{!item.unidades_iniciales}"/>
+                            </apex:column>
+                            <apex:column >
+                                 <apex:facet name="header"><div style="text-align:center" title="Consolidate Full Line">F/L</div></apex:facet>
+                                <apex:inputCheckbox value="{!item.check_full}" html-neudata="{!item.idPrincipal}" styleClass="check_full"/>
+                            </apex:column>
+                            <apex:column headerValue="">
+                                <apex:facet name="header"><div style="text-align:center; cursor: pointer;" onclick="sort_data_quote('quote_line.Import_Export_Quote__r.Name');">Import-Export Quote </div></apex:facet><!--<img class="x-grid3-sort-icon"/>-->
+                                <c:customobject2 rendered="{!item.quote_line!=null}" objid="{!item.quote_line.Import_Export_Quote__r.Id}" objname="{!item.quote_line.Import_Export_Quote__r.Name}"/>
+                            </apex:column>
+                            <apex:column headerValue="Line">
+                                <apex:facet name="header"><div style="text-align:center; cursor: pointer;" onclick="sort_data_quote('quote_line.Name');">Line</div></apex:facet>
+                                <c:customobject2 rendered="{!item.quote_line!=null}" objid="{!item.quote_line.Id}" objname="{!item.quote_line.Name}"/>
+                            </apex:column>
+                            <apex:column >
+                                <apex:facet name="header"><div style="text-align:center; cursor: pointer;" onclick="sort_data_quote('quote_line.Import_Export_Quote__r.Supply_Project_Name__r.Name');">Supply Project</div></apex:facet>
+                                <c:customobject2 objid="{!item.quote_line.Import_Export_Quote__r.Supply_Project_Name__c}" objname="{!item.quote_line.Import_Export_Quote__r.Supply_Project_Name__r.Name}"/>
+                            </apex:column>
+                             <apex:column style="text-align: right;">
+                                <apex:facet name="header"><div style="text-align:center; cursor: pointer;" onclick="sort_data_quote('quote_line.Delivery_Number__c');">Delivery<br/>Number</div></apex:facet>
+                                <apex:outputText value="{!item.quote_line.Delivery_Number__c}" style="text-align: right;" />
+                            </apex:column> 
+                            <apex:column style="text-align: right;">
+                                <apex:facet name="header"><div style="text-align:center; cursor: pointer;" onclick="sort_data_quote('quote_line.Delivery_Date__c');">Customer<br/>Delivery Date</div></apex:facet>
+                                <apex:outputField value="{!item.quote_line.Delivery_Date__c}" style="text-align: right;" />
+                            </apex:column>
+                            <apex:column style="text-align: right;">
+                                <apex:facet name="header"><div style="text-align:center; cursor: pointer;" onclick="sort_data_quote('quote_line.ETD__c');">ETD</div></apex:facet>
+                                <apex:outputField value="{!item.quote_line.ETD__c}" style="text-align: right;" />
+                            </apex:column>
+                             <apex:column style="text-align: right;">
+                                <apex:facet name="header"><div style="text-align:center; cursor: pointer;" onclick="sort_data_quote('quote_line.Supplier_Quote_Line__r.Delivery_Date__c');">Supplier<br/>Delivery Date</div></apex:facet>
+                                <apex:outputField value="{!item.quote_line.Supplier_Quote_Line__r.Delivery_Date__c}" style="text-align: right;" rendered="{!item.quote_line.Supplier_Quote_Line__r.Delivery_Date__c != null}"/>
+                            </apex:column>
+                            <apex:column style="text-align: right;">
+                                <apex:facet name="header"><div style="text-align:center; cursor: pointer;" onclick="sort_data_quote('totalcajas');">Packages <br/>Quantity</div></apex:facet>
+                                <apex:outputText value="{!item.totalcajas}" style="text-align:right;" html-neudata="packaging{!item.Id}"/>
+                                <apex:inputHidden value="{!item.totalcajas}" html-neudata="packaging_hidden{!item.Id}"/>
+                            </apex:column>
+                            <apex:column >
+                                <apex:facet name="header"><div style="text-align:center; cursor: pointer;" onclick="sort_data_quote('quote_line.Import_Export_Quote__r.Account_for__r.Name');">Account for</div></apex:facet>
+                                <c:customobject2 rendered="{!item.quote_line!=null}" objid="{!item.quote_line.Import_Export_Quote__r.Account_for__r.Id}" objname="{!item.quote_line.Import_Export_Quote__r.Account_for__r.Name}"/>
+                            </apex:column>
+                            <apex:column >
+                                <apex:facet name="header"><div style="text-align:center; cursor: pointer;" onclick="sort_data_quote('quote_line.Item_Supplier_Owner__r.Name');">Item Supplier/Owner</div></apex:facet>
+                                <c:customobject2 rendered="{!item.quote_line!=null}" objid="{!item.quote_line.Item_Supplier_Owner__r.Id}" objname="{!item.quote_line.Item_Supplier_Owner__r.Name}"/>
+                            </apex:column>
+                            <apex:column headerValue="Item">
+                                <apex:facet name="header"><div style="text-align:center; cursor: pointer;" onclick="sort_data_quote('quote_line.Item_Name__r.Name');">Item</div></apex:facet>
+                                <c:customobject2 rendered="{!item.quote_line!=null}" objid="{!item.quote_line.Item_Name__r.Id}" objname="{!item.quote_line.Item_Name__r.Name}"/>
+                            </apex:column>
+                            <apex:column title="Item aditional info">
+                                <apex:facet name="header"><div style="text-align:center; cursor: pointer;" onclick="sort_data_quote('extension');">Extension Item Name</div></apex:facet>
+                                <apex:inputText rendered="{!item.quote_line!=null}" value="{!item.extension}"/>
+                           </apex:column>  
+                          <apex:column headerValue="Aut Cred" rendered="{!notAuthorizedNumber == false}">
+                              <c:checkbox rendered="{!item.quote_line!=null}" value="{!item.quote_line.Import_Export_Quote__r.Authorized_Credit__c}" checkedtitle="Authorized Credit" notcheckedtitle="Not Authorized Credit" />
+                          </apex:column>
+                            <apex:column value="{!item.quote_line.Price__c}" title="Price with discounts applied" style="text-align:right">
+                                <apex:facet name="header"><div style="text-align:center; cursor: pointer;" onclick="sort_data_quote('quote_line.Price__c');">Price</div></apex:facet>
+                            </apex:column>
+                            <apex:column style="text-align:right">
+                                <apex:facet name="header"><div style="text-align:center; cursor: pointer;" onclick="sort_data_quote('quote_line.Amount__c');">Amount</div></apex:facet>
+                                <apex:outputText value="{!item.quote_line.Amount__c}" style="text-align:right;" html-neudata="total_amount_linea{!item.Id}"/>
+                                <apex:inputHidden value="{!item.quote_line.Amount__c}" html-neudata="total_amount_linea_hidden{!item.Id}"/>
+                            </apex:column>
+                            <apex:column rendered="{!showConsolidated}" style="text-align:center">
+                                <apex:facet name="header"><div style="text-align:center">Cons</div></apex:facet>
+                                <c:checkbox rendered="{!item.quote_line!=null}" value="{!item.quote_line.Consolidated__c}" checkedtitle="Consolidated" notcheckedtitle="Not consolidated"/>
+                            </apex:column>
+                            <apex:column style="text-align: right;">
+                                <apex:facet name="header"><div style="text-align:center; cursor: pointer;" onclick="sort_data_quote('total_peso_linea');">Gross <br/> Weight kg</div></apex:facet>
+                                 <apex:outputText value="{!item.total_peso_linea}" style="text-align:right; " html-neudata="weight{!item.Id}"/>
+                                 <apex:inputHidden value="{!item.total_peso_linea}" html-neudata="weight_hidden{!item.Id}"/>
+                            </apex:column>
+                            <apex:column style="text-align: right;">
+                                <apex:facet name="header"><div  style="text-align:center; cursor: pointer;" onclick="sort_data_quote('total_volumen_linea');">Gross <br/>Volume m³</div></apex:facet>
+                                <apex:outputText value="{!item.total_volumen_linea}" style="text-align:right; " html-neudata="volume{!item.Id}"/>
+                                <apex:inputHidden value="{!item.total_volumen_linea}" html-neudata="volume_hidden{!item.Id}"/>
+                                <apex:inputHidden value="{!item.tiene_pallet}" html-neudata="tienerelacion_con_pallet{!item.Id}"/> 
+                                <apex:inputHidden value="{!item.peso_caja_items}" html-neudata="packagingweight{!item.Id}"/>
+                                <apex:inputHidden value="{!item.volumen_caja_items}" html-neudata="packagingvolume{!item.Id}"/>
+                                <apex:inputHidden value="{!item.relacion_con_pallet}" html-neudata="relacionconlospallet{!item.id}"/>   
+                                <apex:inputHidden value="{!item.peso_item_sin_caja}" html-neudata="pesodelitem_sin_caja{!item.id}"/>
+                                <apex:inputHidden value="{!item.Units_x_Master_Box}" html-neudata="packagingunits{!item.id}"/>
+                                <apex:inputHidden value="{!item.precio_unidad}" html-neudata="precio_unidad{!item.id}"/>
+                                <apex:inputHidden value="{!item.quote_line.Expense_Amount__c}" html-neudata="exense_amount{!item.id}"/>
+                            </apex:column>  
+                             <apex:column style="text-align: right;">
+                                <apex:facet name="header"><div style="text-align:center;cursor: pointer;" onclick="sort_data_quote('total_pallet_linea');">Number <br/> of Pallets </div></apex:facet>
+                                 <apex:outputText value="{!item.total_pallet_linea}" style="text-align:right; " html-neudata="numberpallet{!item.Id}"/>
+                                 <apex:inputHidden value="{!item.total_pallet_linea}" html-neudata="numberpallet_hidden{!item.Id}"/>
+                            </apex:column>
+                        </apex:pageBlockTable> 
+                        
+                        <!-- --------------------------------Customer orders nuevas -->
+                         <apex:pageBlockTable value="{!Lines}" var="item" rendered="{!showShoppingCartLines}" id="table1" styleClass="tabla_principal">
+                            <apex:column title="Check to consolidate this line">
+                                <apex:facet name="header"> <input type="checkbox" class="select_all_items" onclick="marcar_lines();" /></apex:facet>
+                                <apex:inputCheckbox value="{!item.selected}" onchange="calculartotalpesovolumen();" rendered="{!item.Id!=null}" html-neudata="{!item.Id}" styleClass="check_linea_selected"/><!-- onclick="newItemSelected('{!item.Id}');" -->
+                                <apex:inputCheckbox value="{!item.selected2}" rendered="{!item.icon=1}" html-neudata="{!item.idPrincipal}" styleClass="icon1 check_linea_selected"/>
+                                <apex:image value="/img/msg_icons/warning16.png" title="It hasn´t relation to the pallet" html-neudata="sin_pallet{!item.Id}" style="display:none;"/>
+                            </apex:column>
+                            
+                           <apex:column style="text-align:right">
+                               <apex:facet name="header"><div style="text-align:center; cursor: pointer;" onclick="sort_data_quote('shopping_line.Units__c');">Units</div></apex:facet>
+                               <apex:inputField value="{!item.shopping_line.Units__c}" style="text-align: right; width: 100px;" onKeyUp="$(this).calcularpeso();calculartotalpesovolumen();"  html-neudata="{!item.Id}" styleClass="supplyinput" html-placeholder="{!item.unidades_iniciales}"/>
+                            </apex:column>
+                            <apex:column >
+                                 <apex:facet name="header"><div style="text-align:center" title="Consolidate Full Line">F/L</div></apex:facet>
+                                <apex:inputCheckbox value="{!item.check_full}" html-neudata="{!item.idPrincipal}" styleClass="check_full"/>
+                            </apex:column>
+                            <apex:column >
+                                <apex:facet name="header"><div style="text-align:center; cursor: pointer;" onclick="sort_data_quote('shopping_line.Shopping_Cart__r.Name');">Customer Order</div></apex:facet>
+                                <c:customobject2 objid="{!item.shopping_line.Shopping_Cart__r.Id}" objname="{!item.shopping_line.Shopping_Cart__r.Name}"/>
+                            </apex:column>
+                            <apex:column >
+                                <apex:facet name="header"><div style="text-align:center; cursor: pointer;" onclick="sort_data_quote('shopping_line.Name');">Line</div></apex:facet>
+                                <c:customobject2 objid="{!item.shopping_line.Id}" objname="{!item.shopping_line.Name}"/>
+                            </apex:column>
+                            <apex:column style="text-align: right;">
+                                <apex:facet name="header"><div style="text-align:center; cursor: pointer;" onclick="sort_data_quote('shopping_line.Shopping_Cart__r.Delivery_Date__c');">Delivery<br/>Date</div></apex:facet>
+                                <apex:outputField value="{!item.shopping_line.Shopping_Cart__r.Delivery_Date__c}" style="text-align: right;" />
+                            </apex:column>
+                            <apex:column style="text-align: right;">
+                                <apex:facet name="header"><div style="text-align:center; cursor: pointer;" onclick="sort_data_quote('totalcajas');">Number <br/>Packaging</div></apex:facet>
+                                <apex:outputText value="{!item.totalcajas}" style="text-align:right;" html-neudata="packaging{!item.Id}"/>
+                                <apex:inputHidden value="{!item.totalcajas}" html-neudata="packaging_hidden{!item.Id}"/>
+                            </apex:column>
+                            <apex:column >
+                                <apex:facet name="header"><div style="text-align:center; cursor: pointer;" onclick="sort_data_quote('shopping_line.Shopping_Cart__r.Customer__r.Name');">Account for</div></apex:facet>
+                                <c:customobject2 objid="{!item.shopping_line.Shopping_Cart__r.Customer__r.Id}" objname="{!item.shopping_line.Shopping_Cart__r.Customer__r.Name}"/>
+                            </apex:column>
+                            <apex:column >
+                                <apex:facet name="header"><div style="text-align:cente; cursor: pointer;" onclick="sort_data_quote('shopping_line.Supplier__r.Name');">Item Supplier/Owner</div></apex:facet>
+                                <c:customobject2 objid="{!item.shopping_line.Supplier__r.Id}" objname="{!item.shopping_line.Supplier__r.Name}"/>
+                            </apex:column>
+                            <apex:column >
+                                <apex:facet name="header"><div style="text-align:center; cursor: pointer;" onclick="sort_data_quote('shopping_line.Item_Name__r.Name');">Item</div></apex:facet>
+                                <c:customobject2 objid="{!item.shopping_line.Item_Name__r.Id}" objname="{!item.shopping_line.Item_Name__r.Name}"/>
+                            </apex:column>
+                            <apex:column title="Item aditional info">
+                                <apex:facet name="header"><div style="text-align:center; cursor: pointer;" onclick="sort_data_quote('extension');">Extension Item Name</div></apex:facet>
+                                <apex:inputText rendered="{!item.shopping_line !=null}" value="{!item.extension}"/>
+                             </apex:column>
+                            <apex:column headerValue="Aut Cred" rendered="{!notAuthorizedNumber == false}">
+                              <c:checkbox value="{!item.shopping_line.Shopping_Cart__r.Authorized_Credit__c}" checkedtitle="Authorized Credit" notcheckedtitle="Not Authorized Credit" rendered="{!item.id!=null}"/>
+                            </apex:column>
+                            <apex:column value="{!item.shopping_line.Net_Price__c}" title="Price with discounts applied" style="text-align:right">
+                                <apex:facet name="header"><div style="text-align:center; cursor: pointer;" onclick="sort_data_quote('shopping_line.Net_Price__c');">Net Price</div></apex:facet>
+                            </apex:column>
+                            <apex:column style="text-align:right">
+                                <apex:facet name="header"><div style="text-align:center; cursor: pointer;" onclick="sort_data_quote('shopping_line.Amount__c');">Net Amount</div></apex:facet>
+                                <apex:outputText value="{!item.shopping_line.Amount__c}" style="text-align:right;" html-neudata="total_amount_linea{!item.Id}"/>
+                                <apex:inputHidden value="{!item.shopping_line.Amount__c}" html-neudata="total_amount_linea_hidden{!item.Id}"/>
+                            </apex:column>
+                            <apex:column rendered="{!showConsolidated}" style="text-align:center">
+                                <apex:facet name="header"><div style="text-align:center">Cons</div></apex:facet>
+                                <c:checkbox value="{!item.shopping_line.Consolidated__c}" checkedtitle="Consolidated" notcheckedtitle="Not consolidated" rendered="{!item.id!=null}"/>
+                            </apex:column>
+                            <apex:column style="text-align: right;">
+                                <apex:facet name="header"><div style="text-align:center; cursor: pointer;" onclick="sort_data_quote('total_peso_linea');">Gross <br/> Weight kg</div></apex:facet>
+                                <apex:outputText value="{!item.total_peso_linea}" style="text-align:right; " html-neudata="weight{!item.Id}"/>
+                                <apex:inputHidden value="{!item.total_peso_linea}"  html-neudata="weight_hidden{!item.Id}"/>
+                            </apex:column>
+                            <apex:column style="text-align: right;">
+                                 <apex:facet name="header"><div style="text-align:center; cursor: pointer;" onclick="sort_data_quote('total_volumen_linea');">Gross <br/>Volume m³</div></apex:facet>
+                                <apex:outputText value="{!item.total_volumen_linea}" style="text-align:right; " html-neudata="volume{!item.Id}"/>
+                                <apex:inputHidden value="{!item.total_volumen_linea}" html-neudata="volume_hidden{!item.Id}"/>
+                                <apex:inputHidden value="{!item.tiene_pallet}" html-neudata="tienerelacion_con_pallet{!item.Id}"/> 
+                                <apex:inputHidden value="{!item.shopping_line.Item_Name__r.Master_Box_Gross_Weight_kg__c}" html-neudata="packagingweight{!item.Id}"/>
+                                <apex:inputHidden value="{!item.shopping_line.Item_Name__r.Master_Box_Volume_m3__c}" html-neudata="packagingvolume{!item.Id}"/>
+                                <apex:inputHidden value="{!item.relacion_con_pallet}" html-neudata="relacionconlospallet{!item.id}"/>           
+                                <apex:inputHidden value="{!item.shopping_line.Item_Name__r.Weight_Kgs__c}" html-neudata="pesodelitem_sin_caja{!item.id}"/>
+                                <apex:inputHidden value="{!item.shopping_line.Item_Name__r.Units_x_Master_Box__c}" html-neudata="packagingunits{!item.id}"/>
+                                <apex:inputHidden value="{!item.precio_unidad}" html-neudata="precio_unidad{!item.id}"/>
+                                <apex:inputHidden value="{!valor_zero}" html-neudata="exense_amount{!item.id}"/>
+                            </apex:column>  
+                             <apex:column style="text-align: right;">
+                                <apex:facet name="header"><div style="text-align:center; cursor: pointer;" onclick="sort_data_quote('total_pallet_linea');">Number <br/> of Pallet</div></apex:facet>
+                                 <apex:outputText value="{!item.total_pallet_linea}" style="text-align:right; " html-neudata="numberpallet{!item.Id}"/>
+                                 <apex:inputHidden value="{!item.total_pallet_linea}" html-neudata="numberpallet_hidden{!item.Id}"/>
+                            </apex:column>
+                        </apex:pageBlockTable> 
+                        
+                        <!-- ------------------------------- Supplier quote lines nuevas -->
+                         <apex:pageBlockTable value="{!Lines}" var="item"  rendered="{!showSupplierQuoteLines}" styleClass="tabla_principal">
+                            <apex:column title="Check to consolidate this line">
+                                <apex:facet name="header"> <input type="checkbox" class="select_all_items" onclick="marcar_lines();" /></apex:facet>
+                                <apex:inputCheckbox value="{!item.selected}"  rendered="{!item.Id!=null}" onchange="calculartotalpesovolumen();" html-neudata="{!item.Id}" styleClass="check_linea_selected check_linea_selected2" html-idcabecera="{!item.supplier_line.Supplier_Quote__r.Id}"/>
+                                <apex:image value="/img/msg_icons/warning16.png" title="It hasn´t relation to the pallet" html-neudata="sin_pallet{!item.Id}" style="display:none;"/>
+                            </apex:column>
+                           <apex:column style="text-align:right">
+                                <apex:facet name="header"><div style="text-align:center; cursor: pointer;" onclick="sort_data_quote('supplier_line.Quantity__c');">Units</div></apex:facet>
+                                <apex:inputField value="{!item.supplier_line.Quantity__c}" style="text-align: right; width: 100px;"  onKeyUp="$(this).calcularpeso();calculartotalpesovolumen();"  html-neudata="{!item.Id}" styleClass="supplyinput"  html-placeholder="{!item.unidades_iniciales}"/>
+                            </apex:column>
+                           <apex:column >
+                                 <apex:facet name="header"><div style="text-align:center" title="Consolidate Full Line">F/L</div></apex:facet>
+                                <apex:inputCheckbox value="{!item.check_full}" html-neudata="{!item.idPrincipal}" styleClass="check_full"/>
+                            </apex:column>
+                            <apex:column >
+                                <apex:facet name="header"><div style="text-align:center; cursor: pointer;" onclick="sort_data_quote('supplier_line.Supplier_Quote__r.Name');">Supplier Quote</div></apex:facet>
+                                <c:customobject2 objid="{!item.supplier_line.Supplier_Quote__r.Id}" objname="{!item.supplier_line.Supplier_Quote__r.Name}"/>
+                            </apex:column>
+                            <apex:column >
+                                <apex:facet name="header"><div style="text-align:center; cursor: pointer;" onclick="sort_data_quote('supplier_line.Name');">Line</div></apex:facet>
+                                <c:customobject2 objid="{!item.supplier_line.Id}" objname="{!item.supplier_line.Name}"/>
+                            </apex:column>
+                            <apex:column >
+                                <apex:facet name="header"><div style="text-align:center; cursor: pointer; " onclick="sort_data_quote('supplier_line.Supplier_Quote__r.Supply_Project__r.Name');">Supply Project</div></apex:facet>
+                                <c:customobject2 objid="{!item.supplier_line.Supplier_Quote__r.Supply_Project__c}" objname="{!item.supplier_line.Supplier_Quote__r.Supply_Project__r.Name}"/>
+                            </apex:column>
+                             <apex:column style="text-align: right;">
+                                <apex:facet name="header"><div style="text-align:center; cursor: pointer;" onclick="sort_data_quote('supplier_line.Delivery_Number__c');">Delivery<br/>Number</div></apex:facet>
+                                <apex:outputText value="{!item.supplier_line.Delivery_Number__c}" style="text-align: right;" />
+                             </apex:column>
+                             <apex:column style="text-align: right;">
+                                <apex:facet name="header"><div style="text-align:center; cursor: pointer;" onclick="sort_data_quote('supplier_line.Delivery_Date__c');">Supplier<br/>Delivery Date</div></apex:facet>
+                                <apex:outputField value="{!item.supplier_line.Delivery_Date__c}" style="text-align: right;" />
+                            </apex:column>
+                            <apex:column style="text-align: right;">
+                                <apex:facet name="header"><div style="text-align:center; cursor: pointer;" onclick="sort_data_quote('totalcajas');">Packages <br/>Quantity</div></apex:facet>
+                                <apex:outputText value="{!item.totalcajas}" style="text-align:right;" html-neudata="packaging{!item.Id}"/>
+                                <apex:inputHidden value="{!item.totalcajas}" html-neudata="packaging_hidden{!item.Id}"/>
+                            </apex:column>
+                            <apex:column >
+                                <apex:facet name="header"><div style="text-align:center; cursor: pointer;" onclick="sort_data_quote('supplier_line.Supplier_Quote__r.Customer__r.Name');">Buyer</div></apex:facet>
+                                <c:customobject2 objid="{!item.supplier_line.Supplier_Quote__r.Customer__r.Id}" objname="{!item.supplier_line.Supplier_Quote__r.Customer__r.Name}"/>
+                            </apex:column>
+                            <apex:column >
+                                <apex:facet name="header"><div style="text-align:center; cursor: pointer;" onclick="sort_data_quote('supplier_line.Supplier_Quote__r.Supplier__r.Name');">Supplier</div></apex:facet>
+                                <c:customobject2 objid="{!item.supplier_line.Supplier_Quote__r.Supplier__r.Id}" objname="{!item.supplier_line.Supplier_Quote__r.Supplier__r.Name}"/>
+                            </apex:column>
+                            <apex:column >
+                                <apex:facet name="header"><div style="text-align:center; cursor: pointer;" onclick="sort_data_quote('supplier_line.Item__r.Name');">Item</div></apex:facet>
+                                <c:customobject2 objid="{!item.supplier_line.Item__r.Id}" objname="{!item.supplier_line.Item__r.Name}"/>
+                            </apex:column>
+                            <apex:column title="Item aditional info">
+                                 <apex:facet name="header"><div style="text-align:center; cursor: pointer;" onclick="sort_data_quote('extension');">Extension Item Name</div></apex:facet>
+                                <apex:inputText rendered="{!item.supplier_line!=null}" value="{!item.extension}"/>
+                             </apex:column>
+                            <apex:column value="{!item.supplier_line.Net_Price__c}" title="{!item.supplier_line.Net_Amount__c}" style="text-align:right">
+                                <apex:facet name="header"><div style="text-align:center; cursor: pointer;" onclick="sort_data_quote('supplier_line.Net_Amount__c');">Net Price</div></apex:facet>
+                            </apex:column>
+                            <apex:column style="text-align:right">
+                                <apex:facet name="header"><div style="text-align:center; cursor: pointer;" onclick="sort_data_quote('supplier_line.Total_Amount__c');">Total Amount</div></apex:facet>
+                                <apex:outputText value="{!item.supplier_line.Total_Amount__c}" style="text-align:right;" html-neudata="total_amount_linea{!item.Id}"/>
+                                <apex:inputHidden value="{!item.supplier_line.Total_Amount__c}" html-neudata="total_amount_linea_hidden{!item.Id}"/>
+                            </apex:column>
+                            <apex:column rendered="{!showConsolidated}" style="text-align:center">
+                                <apex:facet name="header"><div style="text-align:center">Cons</div></apex:facet>
+                                <c:checkbox value="{!item.supplier_line.Consolidated__c}" checkedtitle="Consolidated" notcheckedtitle="Not consolidated"/>
+                            </apex:column>
+                            <apex:column style="text-align: right;">
+                                 <apex:facet name="header"><div style="text-align:center; cursor: pointer;" onclick="sort_data_quote('total_peso_linea');">Gross <br/> Weight kg</div></apex:facet>
+                                 <apex:outputText value="{!item.total_peso_linea}" style="text-align:right; " html-neudata="weight{!item.Id}"/>
+                                 <apex:inputHidden value="{!item.total_peso_linea}" html-neudata="weight_hidden{!item.Id}"/>
+                            </apex:column>
+                            <apex:column style="text-align: right;">
+                                <apex:facet name="header"><div style="text-align:center; cursor: pointer;" onclick="sort_data_quote('total_volumen_linea');">Gross <br/>Volume m³</div></apex:facet>
+                                <apex:outputText value="{!item.total_volumen_linea}" style="text-align:right; " html-neudata="volume{!item.Id}"/>
+                                <apex:inputHidden value="{!item.total_volumen_linea}" html-neudata="volume_hidden{!item.Id}"/>
+                                <apex:inputHidden value="{!item.tiene_pallet}" html-neudata="tienerelacion_con_pallet{!item.Id}"/> 
+                                <apex:inputHidden value="{!item.peso_caja_items}" html-neudata="packagingweight{!item.Id}"/>
+                                <apex:inputHidden value="{!item.volumen_caja_items}" html-neudata="packagingvolume{!item.Id}"/>
+                                <apex:inputHidden value="{!item.relacion_con_pallet}" html-neudata="relacionconlospallet{!item.id}"/>           
+                                <apex:inputHidden value="{!item.peso_item_sin_caja}" html-neudata="pesodelitem_sin_caja{!item.id}"/>
+                                <apex:inputHidden value="{!item.Units_x_Master_Box}" html-neudata="packagingunits{!item.id}"/>
+                                <apex:inputHidden value="{!item.precio_unidad}" html-neudata="precio_unidad{!item.id}"/>
+                                <apex:inputHidden value="{!item.supplier_line.Expense_Amount__c}" html-neudata="exense_amount{!item.id}"/>
+                            </apex:column>  
+                            <apex:column style="text-align: right;">
+                                <apex:facet name="header"><div style="text-align:center;cursor: pointer;" onclick="sort_data_quote('total_pallet_linea');">Number <br/> of Pallets</div></apex:facet>
+                                <apex:outputText value="{!item.total_pallet_linea}" style="text-align:right; " html-neudata="numberpallet{!item.Id}"/>
+                                <apex:inputHidden value="{!item.total_pallet_linea}" html-neudata="numberpallet_hidden{!item.Id}"/>
+                            </apex:column>
+                        </apex:pageBlockTable>
+                    <apex:inputHidden value="{!alertuser}" id="alertuser"/>
+                    
+                </apex:outputPanel>
+             </apex:pageBlock>          
+         </div>
+         
+         
+          <apex:outputpanel >
+           <apex:actionstatus id="myStatus">
+               <apex:facet name="start">
+                   <div class="waitingSearchDiv" id="el_loading" style="background-color: #fbfbfb;
+                          height: 100%;opacity:0.65;width:100%;"> 
+                       <div class="waitingHolder" style="top: 74.2px; width: 91px;">
+                           <img class="waitingImage" src="/img/loading.gif" title="Please Wait..." />
+                           <span class="waitingDescription">Loading...</span>
+                       </div>
+                   </div>
+               </apex:facet>
+           </apex:actionstatus>
+        </apex:outputpanel>
+        
+        <input type="hidden" value="none" id="orden_ad_quotes"/>
+        <apex:inputHidden value="{!orden_quotes}" id="orden_quotes"/>
+        <apex:inputHidden value="{!max_peso_container}" id="max_peso_container"/>
+        <apex:inputHidden value="{!max_volumen_container}" id="max_volumen_container"/>
+        <apex:inputHidden value="{!num_cont_x_pallet}" id="num_cont_x_pallet"/>
+        <apex:inputHidden value="{!TotalNumberBoxes}" id="TotalNumberBoxes"/>
+        <apex:inputHidden value="{!TotalNumberPallets}" id="TotalNumberPallets"/>
+        <apex:inputHidden value="{!Grossweight}" id="Grossweight"/>
+        <apex:inputHidden value="{!Cube}" id="Cube"/>
+        <apex:inputHidden value="{!la_lista_no_cero}" id="la_lista_no_cero"/>
+        <apex:inputHidden value="{!TotalNumberCont}" id="TotalNumberCont"/>
+        <apex:inputHidden value="{!porc_ocupacion}" id="porc_ocupacion"/>
+        
+    </apex:form>
+</apex:page>

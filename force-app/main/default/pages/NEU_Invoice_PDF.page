@@ -1,0 +1,8 @@
+<apex:page standardController="Invoice__c"  extensions="NEU_Invoice_PDF" showHeader="false" sideBar="false" standardStylesheets="false" renderAs="pdf">
+	<apex:stylesheet value="{!$Resource.Style_Invoice_PDF}"/>
+    <apex:form >
+        <div id="contenedor">
+            <apex:outputText value="{!string_pdf}" escape="false"/>
+        </div>
+    </apex:form> 
+</apex:page>

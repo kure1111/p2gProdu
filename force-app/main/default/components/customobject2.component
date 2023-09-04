@@ -1,0 +1,8 @@
+<apex:component >
+    <apex:attribute name="objid" description="Object Id" type="String"/>
+    <apex:attribute name="objname" description="Object Name" type="String"/>
+    <apex:attribute name="atarget" description="Link Target" type="String" default="_blank"/>
+    <apex:attribute name="adata" description="Aditional data" type="String"/>
+    <apex:attribute name="aclass" description="Style class" type="String"/>
+    <a href="{!$Site.BaseUrl}/{!objid}" style="{!IF(objid=='','display:none','')}" class="{!aclass}" target="{!atarget}" adata="{!adata}" onblur="LookupHoverDetail.getHover(neu_getId(this)).hide();" onfocus="LookupHoverDetail.getHover(neu_getId(this),'{!$Site.BaseUrl}/{!objid}/m?isAjaxRequest=1').show();" onmouseout="LookupHoverDetail.getHover(neu_getId(this)).hide();" onmouseover="LookupHoverDetail.getHover(neu_getId(this),'{!$Site.BaseUrl}/{!objid}/m?isAjaxRequest=1').show();">{!objname}</a>
+</apex:component>

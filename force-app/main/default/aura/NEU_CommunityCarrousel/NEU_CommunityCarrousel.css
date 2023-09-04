@@ -1,0 +1,221 @@
+.THIS .crossfade
+{
+   	width: 100%;
+    height: 200px;
+    position: relative;
+}
+
+.THIS .crossfade > figure {
+  animation: imageAnimation 30s linear infinite 0s;
+  backface-visibility: hidden;
+  background-size: cover;
+  background-position: center center;
+  color: transparent;
+  height: 100%;
+  left: 0px;
+  opacity: 0;
+  position: absolute;
+  top: 0px;
+  width: 100%;
+  z-index: 0;
+}
+
+.THIS .crossfade > figure:nth-child(1) { background-image: url('/sfsites/c/resource/carousel_1'); }
+
+.THIS .crossfade > figure:nth-child(2) {
+  animation-delay: 6s;
+  background-image: url('/sfsites/c/resource/carousel_2');
+}
+
+.THIS .crossfade > figure:nth-child(3) {
+  animation-delay: 12s;
+  background-image: url('/sfsites/c/resource/carousel_3');
+}
+
+.THIS .crossfade > figure:nth-child(4) {
+  animation-delay: 18s;
+  background-image: url('/sfsites/c/resource/carousel_4');
+}
+
+.THIS .crossfade > figure:nth-child(5) {
+  animation-delay: 24s;
+  background-image: url('/sfsites/c/resource/carousel_5');
+}
+
+@keyframes 
+imageAnimation {  0% {
+ animation-timing-function: ease-in;
+ opacity: 0;
+}
+ 8% {
+ animation-timing-function: ease-out;
+ opacity: 1;
+}
+ 17% {
+ opacity: 1
+}
+ 25% {
+ opacity: 0
+}
+ 100% {
+ opacity: 0
+}
+}
+
+/*.THIS #container
+{
+	width: 100%;
+    height: 200px;
+    position:relative;
+}
+.THIS #bg1 {
+    background-image:url(/sfsites/c/resource/carousel_1);
+    background-size: 100%;
+    background-repeat: no-repeat;
+    background-position: center;
+   	width: 100%;
+    height: 100%;
+    position:absolute;
+}
+.THIS #bg2 {
+    background-image:url(/sfsites/c/resource/carousel_2);
+    background-size: 100%;
+    background-repeat: no-repeat;
+    background-position: center;
+    width: 100%;
+    height: 100%;
+    opacity:0;
+    position:absolute;
+}
+.THIS #bg3 {
+    background-image:url(/sfsites/c/resource/carousel_3);
+    background-size: 100%;
+    background-repeat: no-repeat;
+    background-position: center;
+    width: 100%;
+    height: 100%;
+    opacity:0;
+    position:absolute;
+}
+.THIS #bg4 {
+    background-image:url(/sfsites/c/resource/carousel_4);
+    background-size: 100%;
+    background-repeat: no-repeat;
+    background-position: center;
+    width: 100%;
+    height: 100%;
+    opacity:0;
+    position:absolute;
+}
+*/
+.THIS #main_message
+{
+	text-shadow: 0px 1px 2px rgba(0,0,0,.6);
+}
+
+@media screen and (min-width: 980px)
+{
+	.THIS #main_message
+	{    
+		width: 100%;
+		color: #fff;
+		position: absolute;
+		left: 0px;
+		font-size: 40px;
+		text-align: center;
+		font-weight: bold;
+	}
+    
+    .THIS #main_message span
+	{
+        font-size: 100px;
+        color: #FFF30B;
+        font-weight: normal;
+        position: relative;
+        bottom: -13px;
+        display: inline-block;
+        margin: 0 20px 0 20px;
+	}
+}
+
+@media screen and (max-width: 980px) and (min-width: 768px)
+{
+	.THIS #main_message
+	{
+		width: 100%;
+		color: #fff;
+		position: absolute;
+		left: 0px;
+		font-size: 40px;
+		text-align: center;
+		font-weight: bold;
+	}
+    
+    .THIS #main_message span
+	{
+        font-size: 100px;
+        color: #FFF30B;
+        font-weight: normal;
+        position: relative;
+        bottom: -13px;
+        display: inline-block;
+        margin: 0 20px 0 20px;
+	}
+}
+
+@media screen and (max-width: 767px) and (min-width: 376px)
+{
+	.THIS #main_message
+	{
+		width: 100%;
+		color: #fff;
+		position: absolute;
+		top: 0px;
+		left: 0px;
+		font-size: 30px;
+		text-align: center;
+		font-weight: bold;
+	}
+    
+    .THIS #main_message span
+	{
+        font-size: 60px;
+        color: #FFF30B;
+        font-weight: normal;
+        position: relative;
+        bottom: -8px;
+        display: inline-block;
+        margin: 0 20px 0 20px;
+	}
+}
+
+@media screen and (max-width: 416px)
+{
+	.THIS #main_message
+	{
+		width: 100%;
+		color: #fff;
+		position: absolute;
+		top: 14px;
+		left: 0px;
+		font-size: 25px;
+		text-align: center;
+		font-weight: bold;
+	}
+    
+    .THIS #main_message span
+	{
+        font-size: 50px;
+        color: #FFF30B;
+        font-weight: normal;
+        position: relative;
+        bottom: -5px;
+        display: inline-block;
+        margin: 0 20px 0 20px;
+	}
+}
+
+@media screen and (max-width: 530px)
+{
+	.THIS .crossfade{display:none;}
+}

@@ -1,0 +1,978 @@
+<apex:page standardController="Account" extensions="NEU_New_Service_Rate_Internal">
+    <apex:includeScript value="{!$Resource.jquery_1_10_2}"/> 
+    <apex:includeScript value="{!$Resource.jquery_ui_1_10_3}"/>
+    <apex:includeScript value="{!$Resource.neurored_jquery}"/> `
+    <apex:includeScript value="{!$Resource.jquery_flightboard_1_1_1}"/> 
+    <apex:stylesheet value="{!URLFOR($Resource.jquery_ui_1_10_3_css,'jquery-ui-1.10.3.min.css')}"/>
+    <script>
+        var n$ = jQuery.noConflict();
+        n$(document).ready(function(){ 
+            if(n$(n$.sfId('{!$Component.form.block1.ya_existe}')).val() != '0')
+            {
+                n$('#ranking').flightboard({maxLength:15,repeat:false,lettersImage:'{!$Resource.flightboard_png}',lettersSeq:' ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-'});
+                updatestatic();
+            }
+            setDecimalSep(document.getElementById('{!$Component.form.decimalSep}').value, document.getElementById('{!$Component.form.thousandSep}').value);
+            
+            n$("#openwindow" ).dialog({
+                open:function(event,ui){
+                    n$('#framewindow').attr('src','{!$Site.BaseUrl}/apex/NEU_Send_Request_for_Quotation?Service_Rate='+document.getElementById('{!$Component.form.id_oi}').value+'&imp_exp={!import_export}'); 
+                },
+                close:function(event,ui){ 
+                    n$('#framewindow').attr('src','');
+                },
+                autoOpen: false,
+                modal: true,
+                height: 450,
+                width: 1087
+            });
+            
+            n$("#openwindow_upload_document" ).dialog({
+                open:function(event,ui){
+                    n$('#framewindow_upload_document').attr('src','{!$Site.BaseUrl}/apex/NEU_Upload_LOT_Service_Rate?Id='+document.getElementById('{!$Component.form.id_oi}').value+'&imp_exp={!import_export}'); 
+                },
+                close:function(event,ui){ 
+                    n$('#framewindow_upload_document').attr('src','');
+                },
+                autoOpen: false,
+                modal: true,
+                height: 250,
+                width: 700
+            });
+            
+            n$("#openwindow_ship" ).dialog({
+                open:function(event,ui){
+                    n$('#framewindow_ship').attr('src','{!$Site.BaseUrl}/apex/NEU_Send_Request_for_Quotation?Service_Rate='+document.getElementById('{!$Component.form.id_oi}').value+'&ship={!shipment}'); 
+                },
+                close:function(event,ui){ 
+                    n$('#framewindow_ship').attr('src','');
+                },
+                autoOpen: false,
+                modal: true,
+                height: 450,
+                width: 1087
+            });
+            
+            n$("#openwindow_ship_prog" ).dialog({
+                open:function(event,ui){
+                    n$('#framewindow_ship_prog').attr('src','{!$Site.BaseUrl}/apex/NEU_Send_Request_for_Quotation?Service_Rate='+document.getElementById('{!$Component.form.id_oi}').value+'&ship_prog={!ship_program}'); 
+                },
+                close:function(event,ui){ 
+                    n$('#framewindow_ship_prog').attr('src','');
+                },
+                autoOpen: false,
+                modal: true,
+                height: 450,
+                width: 1087
+            });
+            
+        });
+        
+        var oldranking;
+        
+        var pintar_ranking_init = false;
+        function pintar_ranking()
+        {
+        if(n$('.price_fee').getFloat() > 0)
+        {
+            if(n$('.estado_fee').is(':checked'))
+            {
+           // if(n$(n$.sfId('{!$Component.form.block1.ya_existe}')).val() != '0')
+          //n$('#ranking').flightboard('destroy') // Remove flight board
+           //if(pintar_ranking_init == false)
+                n$('#ranking').flightboard({maxLength:15,repeat:false,lettersImage:'{!$Resource.flightboard_png}',lettersSeq:' ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-'});
+            pintar_ranking_init = true;
+            updatestatic();
+            }
+            else
+            {
+                n$('#ranking').flightboard('destroy');
+            }
+         }
+        }
+        
+        function closeEvents()
+        {
+            existencia();
+            n$("#openwindow").dialog('close');
+            n$("#openwindow_ship").dialog('close');
+            n$("#openwindow_ship_prog").dialog('close');
+            n$("#openwindow_upload_document").dialog('close');
+        }
+        
+        function check_campos()
+        {
+            var mayor_que_hoy = false;
+            var precio_relleno = false;
+            
+            var rate_type_relleno = false;
+            
+            var name_new_fee = false;
+            
+            var cuenta_rellena = true;
+            var id_ruta_parametro = '{!Route}';
+                
+            var id_del_fee = '{!id_fee_selected}';
+            var existe_fee = document.getElementById('{!$Component.form.es_fee_modificado}').value;
+          //  if(n$('.valid_until_fee').val() > n$(n$.sfId('{!$Component.form.dia_de_hoy}')).val())
+                mayor_que_hoy = true;
+          //  else
+          //      alert('The field "Valid Until" must be greater than today');
+            
+             if(n$('.rate_type_fee').val() != null && n$('.rate_type_fee').val() != '')
+                rate_type_relleno = true;
+            else
+                  alert('The field "Rate Type" must be filled');
+                  
+            /*if(n$('.price_fee').getFloat() > 0 || document.getElementById('{!$Component.form.tiene_costes_adicionales}').value == 'true')
+                precio_relleno = true;
+            else
+                  alert('The field "Buy Rate" must be filled');*/
+                  
+            //if( n$('.Name_fee_new').parent().find('select').val() != '' &&   n$('.Name_fee_new').parent().find('select').val() != null)
+            if(n$('.Name_fee_new').val() != '' && n$('.Name_fee_new').val() != null)
+            {
+                name_new_fee = true;
+            }
+            else
+                alert('The field "Service Rate Name" must be filled');
+            
+            if(id_ruta_parametro != null && id_ruta_parametro != '')
+            {
+                if((n$('.account_for_api').val() == null && existe_fee == 'false') || (n$('.account_for_api').val() == '' && existe_fee == 'false'))
+                {
+                    cuenta_rellena = false;
+                    alert('The field "Account for" must be filled');
+                }
+            } 
+            
+            if(mayor_que_hoy == true  && rate_type_relleno == true && name_new_fee == true && cuenta_rellena == true)//&& precio_relleno == true  
+                                enviar_formulario();
+        }
+        
+        function check_campos3()
+        {
+            var mayor_que_hoy = false;
+            var precio_relleno = false;
+            var rate_type_relleno = false;
+            var name_new_fee = false;
+            var cuenta_rellena = true;
+            var id_ruta_parametro = '{!Route}';
+                
+            var id_del_fee = '{!id_fee_selected}';
+            var existe_fee = document.getElementById('{!$Component.form.es_fee_modificado}').value;
+            mayor_que_hoy = true;
+            
+             if(n$('.rate_type_fee').val() != null && n$('.rate_type_fee').val() != '')
+                rate_type_relleno = true;
+            else
+                  alert('The field "Rate Type" must be filled');
+
+            if(n$('.Name_fee_new').val() != '' && n$('.Name_fee_new').val() != null)
+            {
+                name_new_fee = true;
+            }
+            else
+                alert('The field "Service Rate Name" must be filled');
+            
+            if(id_ruta_parametro != null && id_ruta_parametro != '')
+            {
+                if((n$('.account_for_api').val() == null && existe_fee == 'false') || (n$('.account_for_api').val() == '' && existe_fee == 'false'))
+                {
+                    cuenta_rellena = false;
+                    alert('The field "Account for" must be filled');
+                }
+            } 
+            
+            if(mayor_que_hoy == true  && rate_type_relleno == true && name_new_fee == true && cuenta_rellena == true)
+                enviar_formulario3();
+        }
+        
+        function check_campos2()
+        {
+            var mayor_que_hoy = false;
+            var precio_relleno = false;
+            
+            var rate_type_relleno = false;
+            
+            var name_new_fee = false;
+            
+            var cuenta_rellena = true;
+            var id_ruta_parametro = '{!Route}';
+                
+            var id_del_fee = '{!id_fee_selected}';
+            var existe_fee = document.getElementById('{!$Component.form.es_fee_modificado}').value;
+          //  if(n$('.valid_until_fee').val() > n$(n$.sfId('{!$Component.form.dia_de_hoy}')).val())
+                mayor_que_hoy = true;
+          //  else
+          //      alert('The field "Valid Until" must be greater than today');
+            
+             if(n$('.rate_type_fee').val() != null && n$('.rate_type_fee').val() != '')
+                rate_type_relleno = true;
+            else
+                  alert('The field "Rate Type" must be filled');
+                  
+            /*if(n$('.price_fee').getFloat() > 0 || document.getElementById('{!$Component.form.tiene_costes_adicionales}').value == 'true')
+                precio_relleno = true;
+            else
+                  alert('The field "Buy Rate" must be filled');*/
+                  
+            //if( n$('.Name_fee_new').parent().find('select').val() != '' &&   n$('.Name_fee_new').parent().find('select').val() != null)
+            if(n$('.Name_fee_new').val() != '' && n$('.Name_fee_new').val() != null)
+            {
+                name_new_fee = true;
+            }
+            else
+                alert('The field "Service Rate Name" must be filled');
+            
+            if(id_ruta_parametro != null && id_ruta_parametro != '')
+            {
+                if((n$('.account_for_api').val() == null && existe_fee == 'false') || (n$('.account_for_api').val() == '' && existe_fee == 'false'))
+                {
+                    cuenta_rellena = false;
+                    alert('The field "Account for" must be filled');
+                }
+            } 
+            
+            if(mayor_que_hoy == true  && rate_type_relleno == true && name_new_fee == true && cuenta_rellena == true)//&& precio_relleno == true  
+                                enviar_formulario2();
+        }
+        
+        function updatestatic()
+        {
+            if(oldranking!=n$(n$.sfId('{!$Component.form.block1.ranking}')).val())
+            {
+                oldranking=n$(n$.sfId('{!$Component.form.block1.ranking}')).val();
+                n$('#ranking').flightboard('option','messages',[oldranking]);
+               // if(pintar_ranking_init == false)
+                n$('#ranking').flightboard('flip'); 
+            }
+            
+        }
+        
+        function updatestatic2()
+        {
+            if(oldranking!=n$(n$.sfId('{!$Component.form.block1.ranking}')).val())
+            {
+                oldranking=n$(n$.sfId('{!$Component.form.block1.ranking}')).val();
+                n$('#ranking').flightboard('option','messages',[oldranking]);
+                n$('#ranking').flightboard('flip'); 
+            }
+            
+        }
+        
+        
+         function jvalidate()
+        {
+            if(n$(n$.sfId('{!$Component.form.block1.result}')).getInt()==-1)
+            {
+                n$('#otherStatus').show();
+                n$('#email').val(n$(n$.sfId('{!$Component.form.block1.email}')).val());
+                n$('#secret').val(n$(n$.sfId('{!$Component.form.block1.secret}')).val())
+                n$('#NEU_Shipments_Marketplace').submit();
+            }
+        }
+        
+         function jvalidate_internal()
+        {
+            if(n$(n$.sfId('{!$Component.form.block1.result}')).getInt()==-1)
+            {
+                n$('#otherStatus').show();
+                n$('#NEU_Shipments_Marketplace_Internal').submit();
+            }
+        }
+        
+        function mod_oi2(id)
+        {
+            document.getElementById('{!$Component.form.id_oi}').value = id;
+            n$('#ranking').html('');
+            mod_oi();
+        }
+        
+        function quitar_buy_obligatorio()
+        {
+            if(document.getElementById('{!$Component.form.tiene_costes_adicionales}').value == 'true')
+            {
+                n$('.price_fee').css('border','1px solid #ADADAD');
+                var total_costes= n$('.Cost_Concept_1').getFloatSep()+n$('.Cost_Concept_2').getFloatSep()+n$('.Cost_Concept_3').getFloatSep()+n$('.Cost_Concept_4').getFloatSep()+n$('.Cost_Concept_5').getFloatSep();
+                n$('.price_fee').setFloatSep(total_costes);
+                
+            }
+          /*  else
+            {
+                n$('.price_fee').css('border-left','2px red solid');
+            }*/
+        }
+        
+        function sort_data_table(n)
+        {
+            document.getElementById('{!$Component.form.orden_fees_filtro}').value = n;
+            if(document.getElementById('{!$Component.form.orden_fees_filtro}').value ==n$('#orderField2').val())
+            {
+                if(n$('#orderValue2').val()!='asc')
+                    n$('#orderValue2').val('asc');
+                else
+                    n$('#orderValue2').val('desc');
+  
+            }
+            else
+            {
+                n$('#orderField2').val(n);
+                n$('#orderValue2').val('desc');
+            }
+            
+            document.getElementById('{!$Component.form.orden_fees_filtro_modo}').value = n$('#orderValue2').val();
+            ordenar_tabla_filtro_fees(); 
+        }
+        
+        function quitar_ranking()
+        {
+            n$('#ranking').flightboard('destroy');
+        }
+        
+         function mostrar_ordenacion_fees_filtro()
+        {
+            var n = document.getElementById('{!$Component.form.orden_fees_filtro}').value;
+            n$('.Service_Rate_Name_filtro').css('display','none');
+            var clase_ordenacion  = n.replace('.','');
+            clase_ordenacion = clase_ordenacion.replace('.','');
+            n$('.fee'+clase_ordenacion).css('display','block');
+            if(n$('#orderValue2').val()=='asc')
+                n$('.Service_Rate_Name_filtro').css('background-position-y','-15px');
+            else
+                n$('.Service_Rate_Name_filtro').css('background-position-y','0px');
+        }
+        
+        function limpiar_tabla_modify()
+        {
+            //obtenemos la altura del documento
+            var altura = n$(document).height();
+            n$("html, body").animate({scrollTop:altura+"px"});
+            n$('#ranking').flightboard('destroy');
+        }
+        
+        function editEvents()
+        {
+            n$("#openwindow").dialog('open');
+        }
+        
+        function upload_documents_lot()
+        {
+            n$("#openwindow_upload_document").dialog('open');
+        }
+        
+        function editEvents_ship()
+        {
+            n$("#openwindow_ship").dialog('open');
+        }
+        
+        function editEvents_ship_prog()
+        {
+            n$("#openwindow_ship_prog").dialog('open');
+        }
+        
+        function quitar_buy_obligatorio_onchange()
+        {
+            if((n$('.Cost_Concept_1').val() != null && n$('.Cost_Concept_1').val() != '') ||
+            (n$('.Cost_Concept_2').val() != null && n$('.Cost_Concept_2').val() != '') ||
+            (n$('.Cost_Concept_3').val() != null && n$('.Cost_Concept_3').val() != '') ||
+            (n$('.Cost_Concept_4').val() != null && n$('.Cost_Concept_4').val() != '') ||
+            (n$('.Cost_Concept_5').val() != null && n$('.Cost_Concept_5').val() != ''))
+            {
+                n$('.price_fee').css('border','1px solid #ADADAD');
+                document.getElementById('{!$Component.form.tiene_costes_adicionales}').value = true;
+                var total_costes= n$('.Cost_Concept_1').getFloatSep()+n$('.Cost_Concept_2').getFloatSep()+n$('.Cost_Concept_3').getFloatSep()+n$('.Cost_Concept_4').getFloatSep()+n$('.Cost_Concept_5').getFloatSep();
+                n$('.price_fee').setFloatSep(total_costes);
+            }
+            else
+            {
+               // n$('.price_fee').css('border-left','2px red solid');
+                document.getElementById('{!$Component.form.tiene_costes_adicionales}').value = false;
+                var id_fee_selected = '{!id_fee_selected}';
+                
+                var tiene_valor = document.getElementById('{!$Component.form.valor_buy_rate}').value;
+                if((id_fee_selected == '' || tiene_valor == null || tiene_valor== '' ) || (id_fee_selected == null || tiene_valor == null || tiene_valor== ''))
+                {
+                    n$('.price_fee').val('');
+                }
+                if(document.getElementById('{!$Component.form.acabo_de_guardar}').value == 'true')
+                {
+                    n$('.price_fee').setFloatSep(tiene_valor);
+                    document.getElementById('{!$Component.form.acabo_de_guardar}').value = false;
+                }
+            }           
+        }
+        
+         function close_message(n)
+        {
+            n$(".alert_message_"+n).css("display","none");
+        }
+        
+        function get_message(n)
+        {
+            var position;
+            position = n$(".campo_products_"+n).position();
+            n$(".alert_message_"+n).css("left",position.left -310);
+            n$(".todas_las_lineas_alert").css("display","none");
+            n$(".alert_message_"+n).css("display","block");
+            n$(".alert_message_"+n).css("top",position.top - 3);
+            n$(".custom_style_left2").css("background-position-y","11px");
+        }
+        
+        function repintar_capa_upload()
+        {
+            var id_del_fee = '{!id_fee_selected}';
+            n$("#openwindow_upload_document" ).dialog({
+                open:function(event,ui){
+                    n$('#framewindow_upload_document').attr('src','{!$Site.BaseUrl}/apex/NEU_Upload_LOT_Service_Rate?Id='+id_del_fee+'&imp_exp={!import_export}'); 
+                },
+                close:function(event,ui){ 
+                    n$('#framewindow_upload_document').attr('src','');
+                },
+                autoOpen: false,
+                modal: true,
+                height: 250,
+                width: 700
+            });
+            upload_documents_lot();
+        }
+        
+        function return_shipment()
+        {
+            location.href = "/{!shipment}";
+        }
+        
+        function return_import_export()
+        {
+            location.href = "/{!import_export}";
+        }
+        
+        function return_ship_prog()
+        {
+            location.href = "/{!ship_program}";
+        }
+        
+        function return_route()
+        {
+            location.href = "/{!Route}";
+        }
+                
+    </script>
+    <style>
+        #alert_message{display:none; padding: 3px 6px 5px; margin-top: -12px; margin-right: 0; margin-bottom: 0; margin-left: -11px; background: transparent url(/img/sprites/hover_sprite.png) 15px -22px no-repeat; text-align:left; width: 301px;     width: 300px; background-size: 300px; }
+        #custom_style_left{/*background: transparent url(/img/alohaSkin/hover_arrow.png) -1px 3px no-repeat;*/background: transparent url({!$Resource.hover_arrow}) -1px 3px no-repeat; /*background: transparent url(/img/alohaSkin/hover_arrow.png) -40px 3px no-repeat;*/ width: 370px; padding-left: 15px; border: 0; margin: 0; border-top: none !important;     width: 393px;     width: 295px; width: 308px;     background-position-x: 303px;}
+        #custom_style_header{border-top: 3px solid #0043FF; margin: 0; border-radius: 4px; padding:6px 10px; color: rgb(51, 52, 53); font-family: Arial, Helvetica, sans-serif; font-size: 14px; font-weight: bold;     width: 351px;     width: 277px; width: 270px;}
+        #custom_style_body{font-family: Arial, Helvetica, sans-serif; font-size: 12px; font-weight: bold; /*height: 200px;*/ height: 125px; overflow-y: scroll;     overflow-y: hidden;     margin-top: -9px; margin-left: 0px;}
+        .cierre{float: right; display: block; cursor: pointer; background: #0043FF; color: #ffffff; padding: 3px; border-radius: 3px; cursor:pointer;     }
+        .table_bocadillo{ width: 316px;     width: 342px;     width: 300px; width: 250px;}
+        .table_bocadillo td{     font-weight: normal !important;     padding-left: 5px;}
+        .table_bocadillo th{        font-weight: bold !important;}
+        .boton_freight_rates_management{text-decoration: none;}
+        .boton_freight_rates_management:hover {text-decoration: none;}
+        .account_for_api{border-left: 2px red solid;}
+        .account_for_api1 a{border-left: 0px red solid;}
+        #custom_style_footer{background: transparent url(/img/sprites/hover_sprite.png) no-repeat; display: block; position: absolute; /*width: 100%;*/    width: 298px; height: 14px; bottom: -14px; left: 15px;     width: 298px;     background-size: 300px;}
+        .boton_freight_rates_management{text-decoration: none;}
+        .boton_freight_rates_management:hover {text-decoration: none;}
+        .list{}
+        .list td{    padding: 4px !important;}
+        .list th{}
+        
+    </style>
+    <apex:form id="form" >
+        <apex:inputHidden value="{!decimalSep}" id="decimalSep"/>
+        <apex:inputHidden value="{!thousandSep}" id="thousandSep"/>
+        <apex:inputHidden value="{!id_oi}" id="id_oi"/>
+        <apex:actionFunction name="mod_oi" action="{!load_fee_select}" status="myStatus" reRender="block1, block0, tiene_costes_adicionales,es_fee_modificado" oncomplete="quitar_buy_obligatorio();mostrar_ordenacion_fees_filtro();"/>
+        <apex:actionFunction name="existencia" action="{!check_fee}" reRender="block1,block0,es_fee_modificado" status="myStatus" oncomplete="quitar_ranking();mostrar_ordenacion_fees_filtro();"/>
+        
+        <!-- <apex:actionFunction name="permitir_vista_desactivados" action="{!check_fee}" reRender="block0" status="myStatus"/>-->
+        
+        <apex:actionFunction name="sacar_valor_fecha" reRender="block1" status="myStatus"/>
+        <apex:actionFunction name="enviar_formulario" action="{!send_form}"  rerender="block1, block0, valor_buy_rate, acabo_de_guardar,id_oi, es_fee_modificado" status="myStatus" oncomplete="pintar_ranking();quitar_buy_obligatorio_onchange();mostrar_ordenacion_fees_filtro();"/>
+        
+        <apex:actionFunction name="enviar_formulario3" action="{!send_form2}"  rerender="block1, block0, valor_buy_rate, acabo_de_guardar,id_oi, es_fee_modificado" status="myStatus" oncomplete="pintar_ranking();quitar_buy_obligatorio_onchange();mostrar_ordenacion_fees_filtro();"/>
+
+        <apex:actionFunction name="enviar_formulario2" action="{!send_form}"  rerender="block1, block0, valor_buy_rate, acabo_de_guardar,id_oi, es_fee_modificado" status="myStatus" oncomplete="pintar_ranking();quitar_buy_obligatorio_onchange();mostrar_ordenacion_fees_filtro();repintar_capa_upload();"/>
+        <apex:inputHidden id="dia_de_hoy" value="{!dia_de_hoy}"/>
+        <apex:sectionHeader title="Freight Rates Management" subtitle="New Service Rate"/>
+        
+        <!-- -ordenacion -->
+        <input type="hidden" id="orderField2" value="Name"/>
+        <input type="hidden" id="orderValue2" value="asc"/>
+        <apex:inputHidden value="{!orden_fees_filtro}" id="orden_fees_filtro"/>
+        <apex:inputHidden value="{!orden_fees_filtro_modo}" id="orden_fees_filtro_modo"/>
+        <apex:actionFunction name="ordenar_tabla_filtro_fees" action="{!go_compare_fees_filtro}" reRender="block0" status="myStatus" oncomplete="mostrar_ordenacion_fees_filtro();"/>
+       
+        <!-- -------------- -->
+         <apex:outputpanel id="block0" >
+         <apex:pageBlock title="Actual Services Rates on this Route {!if(carrier_Name != null && carrier_Name != '', '('+carrier_Name+')','')}"  mode="maindetail" > <!--  -->
+             <apex:pageBlockButtons location="top">
+                 <div>
+                     <div style="min-width: 175px;       float: left;">
+                        <apex:outputLabel value="Route" style="font-weight: bold;    margin-right: 7px;"/>
+                        <apex:selectList id="route_selector"  label="Route" value="{!route_selected_id}" size="1" onchange="existencia();">
+                                    <apex:selectOptions value="{!routes}"/>
+                        </apex:selectList>
+                    </div>
+                    
+                    <div style="min-width: 175px;       float: left;">
+                        <apex:outputLabel value="Carrier" style="font-weight: bold;    margin-right: 7px;"/>
+                        <apex:inputfield value="{!record_filter.Carrier_Account__c}" onchange="existencia();"/><!--  -->
+                    </div>
+                    <!-- <input type="button" value="Search" onclick="existencia();" class="btn"/>-->
+                   <!--  <span style="    font-weight: bold;    margin-right: 7px;    margin-left: 10px;">Display only Active Rates</span><apex:inputCheckbox value="{!display_only_active_rates}" />-->
+  
+                        <div style="min-width: 175px;       float: left;">
+                            <apex:outputLabel value="Display only Active Rates" style="font-weight: bold;    margin-right: 7px;    "/>
+                            <apex:inputCheckbox value="{!display_only_active_rates}" onchange="existencia();"/>
+                         </div>
+
+                 </div>
+                    
+             </apex:pageBlockButtons>  
+             <apex:pageBlockSection title="Services Rates" columns="1">
+             <!-- html-style="display:{!if(carrier_Name != null && carrier_Name != '', '','none;')}"> -->
+                    <apex:pageBlockTable id="table" value="{!listado_fees_carrier}" var="fee" rendered="{!listado_fees_carrier != null}">
+                         <apex:column style="background:{!IF(id_fee_selected != null && id_fee_selected !='' && id_fee_selected == fee.Id , '#CFEEF8;' , '')}">
+                             <apex:facet name="header">
+                                <div  style ="cursor: pointer;" onclick="sort_data_table('Name');">Service Rate Name
+                                    <span style="       width: 10px;    height: 11px;    float: right;    margin: 0 5px;    vertical-align: 0px;    background: transparent url(/img/alohaSkin/sortArrows_sprite.png);    background-size: 16px;    background-repeat: no-repeat;    background-position: center 2px; display:block;" class="Service_Rate_Name_filtro feeName"/>
+                                </div>
+                             </apex:facet>
+                             <c:customobject2 objid="{!fee.Id}" objname="{!fee.Name}"/>
+                        </apex:column> 
+                        <apex:column value="{!fee.Fee_Category__c}" style="background:{!if(id_fee_selected != null && id_fee_selected !='' && id_fee_selected == fee.Id , '#CFEEF8;' , '')}">
+                        
+                            <apex:facet name="header">
+                                <div  style ="cursor: pointer;" onclick="sort_data_table('Fee_Category__c');">Service Rate Category
+                                    <span style="       width: 10px;    height: 11px;    float: right;    margin: 0 5px;    vertical-align: 0px;    background: transparent url(/img/alohaSkin/sortArrows_sprite.png);    background-size: 16px;    background-repeat: no-repeat;    background-position: center 2px; display:none;" class="Service_Rate_Name_filtro feeFee_Category__c"/>
+                                </div>
+                             </apex:facet>
+                        </apex:column>
+                        <apex:column value="{!fee.Account_for__c}" style="background:{!if(id_fee_selected != null && id_fee_selected !='' && id_fee_selected == fee.Id , '#CFEEF8;' , '')}">
+                            <apex:facet name="header">
+                                <div  style ="cursor: pointer;" onclick="sort_data_table('Account_for__c');">Account for
+                                    <span style="       width: 10px;    height: 11px;    float: right;    margin: 0 5px;    vertical-align: 0px;    background: transparent url(/img/alohaSkin/sortArrows_sprite.png);    background-size: 16px;    background-repeat: no-repeat;    background-position: center 2px; display:none;" class="Service_Rate_Name_filtro feeAccount_for__c"/>
+                                </div>
+                             </apex:facet>
+                        </apex:column>
+                        <!--<apex:column headerValue="Currency" value="{!fee.CurrencyIsoCode}"/>-->
+                        <apex:column value="{!fee.Carrier_Account__c}" style="background:{!if(id_fee_selected != null && id_fee_selected !='' && id_fee_selected == fee.Id , '#CFEEF8;' , '')}">
+                            <apex:facet name="header">
+                                <div  style ="cursor: pointer;" onclick="sort_data_table('Carrier_Account__c');">Carrier Account
+                                    <span style="       width: 10px;    height: 11px;    float: right;    margin: 0 5px;    vertical-align: 0px;    background: transparent url(/img/alohaSkin/sortArrows_sprite.png);    background-size: 16px;    background-repeat: no-repeat;    background-position: center 2px; display:none;" class="Service_Rate_Name_filtro feeCarrier_Account__c"/>
+                                </div>
+                             </apex:facet>
+                        </apex:column> 
+                        <apex:column value="{!fee.TT_Days__c}" style="text-align: right; background:{!if(id_fee_selected != null && id_fee_selected !='' && id_fee_selected == fee.Id , '#CFEEF8;' , '')}">
+                            <apex:facet name="header">
+                                <div  style ="cursor: pointer;" onclick="sort_data_table('TT_Days__c');">TT Days
+                                    <span style="       width: 10px;    height: 11px;    float: right;    margin: 0 5px;    vertical-align: 0px;    background: transparent url(/img/alohaSkin/sortArrows_sprite.png);    background-size: 16px;    background-repeat: no-repeat;    background-position: center 2px; display:none;" class="Service_Rate_Name_filtro feeTT_Days__c"/>
+                                </div>
+                             </apex:facet>
+                        </apex:column>
+                        <apex:column value="{!fee.Rate_Type__c}"  style="background:{!if(id_fee_selected != null && id_fee_selected !='' && id_fee_selected == fee.Id , '#CFEEF8;' , '')}">
+                            <apex:facet name="header">
+                                <div  style ="cursor: pointer;" onclick="sort_data_table('Rate_Type__c');">Rate Type
+                                    <span style="       width: 10px;    height: 11px;    float: right;    margin: 0 5px;    vertical-align: 0px;    background: transparent url(/img/alohaSkin/sortArrows_sprite.png);    background-size: 16px;    background-repeat: no-repeat;    background-position: center 2px; display:none;" class="Service_Rate_Name_filtro feeRate_Type__c"/>
+                                </div>
+                             </apex:facet>
+                        </apex:column>
+                        
+                        <apex:column style="background:{!if(id_fee_selected != null && id_fee_selected !='' && id_fee_selected == fee.Id , '#CFEEF8;' , '')}">
+                            <apex:facet name="header">
+                                <div  style ="cursor: pointer;" onclick="sort_data_table('Container_Type__c');">Cont./Pallet Type
+                                    <span style="       width: 10px;    height: 11px;    float: right;    margin: 0 5px;    vertical-align: 0px;    background: transparent url(/img/alohaSkin/sortArrows_sprite.png);    background-size: 16px;    background-repeat: no-repeat;    background-position: center 2px; display:none;" class="Service_Rate_Name_filtro feeContainer_Type__c"/>
+                                </div>
+                             </apex:facet>
+                             
+                             <apex:outputField value="{!fee.Container_Type__c}" rendered="{!fee.Container_Type__c != null}"/>
+                             <apex:outputField value="{!fee.Pallet_Type__c}" rendered="{!fee.Container_Type__c == null}"/>
+                        
+                        </apex:column>
+                        
+                        <apex:column style="text-align: right; background:{!if(id_fee_selected != null && id_fee_selected !='' && id_fee_selected == fee.Id , '#CFEEF8;' , '')}">
+                        
+                            <apex:facet name="header">
+                                <div  style ="cursor: pointer;" onclick="sort_data_table('Buy_Rate__c');">Buy Rate
+                                    <span style="       width: 10px;    height: 11px;    float: right;    margin: 0 5px;    vertical-align: 0px;    background: transparent url(/img/alohaSkin/sortArrows_sprite.png);    background-size: 16px;    background-repeat: no-repeat;    background-position: center 2px; display:none;" class="Service_Rate_Name_filtro feeBuy_Rate__c"/>
+                                </div>
+                             </apex:facet>
+                             
+                            <div id="alert_message" style="display:none;" class="mruHoverDetail alert_message_{!fee.Id} todas_las_lineas_alert" >
+                              <div id="custom_style_left" class="bPageBlock brandSecondaryBrd secondaryPalette custom_style_left2">
+                                  <div id="custom_style_header" class="pbHeader brandSecondaryBrd">Concept Detail<span class="cierre" onclick="close_message('{!fee.Id}');">X</span></div>
+                                     <div id="custom_style_body" class="pbBody">
+                                        <table class="table_bocadillo">
+                                          <tr>
+                                              <th>Concept</th>
+                                              <th>Cost</th>
+                                          </tr>
+                                          <tr style="display:{!if(fee.Concept_1__c != null, '','none')}">
+                                              <td><apex:outputField value="{!fee.Concept_1__c}" /></td>
+                                              <td style="    text-align: right;"><apex:outputField value="{!fee.Cost_Concept_1__c}" /></td>
+                                          </tr>
+                                           <tr style="display:{!if(fee.Cost_Concept_2__c != null, '','none')}"> 
+                                              <td><apex:outputField value="{!fee.Concept_2__c}" /></td>
+                                              <td style="    text-align: right;"><apex:outputField value="{!fee.Cost_Concept_2__c}" /></td>
+                                          </tr>
+                                          <tr style="display:{!if(fee.Cost_Concept_3__c != null, '','none')}">
+                                              <td><apex:outputField value="{!fee.Concept_3__c}" /></td>
+                                              <td style="    text-align: right;"><apex:outputField value="{!fee.Cost_Concept_3__c}" /></td>
+                                          </tr>
+                                          <tr style="display:{!if(fee.Cost_Concept_4__c != null, '','none')}">
+                                              <td><apex:outputField value="{!fee.Concept_4__c}" /></td>
+                                              <td style="    text-align: right;"><apex:outputField value="{!fee.Cost_Concept_4__c}" /></td>
+                                          </tr>
+                                          <tr style="display:{!if(fee.Cost_Concept_5__c != null, '','none')}">
+                                              <td><apex:outputField value="{!fee.Concept_5__c}" /></td>
+                                              <td style="    text-align: right;"><apex:outputField value="{!fee.Cost_Concept_5__c}" /></td>
+                                          </tr>
+                                      </table>
+                                     </div>
+                                             <div id="custom_style_footer" class="pbFooter secondaryPalette"><div class="bg"></div></div>
+                                  </div>
+                              </div>
+                            <span class="campo_products_{!fee.Id}" onclick="get_message('{!fee.Id}');" style="    background: transparent url(/img/func_icons/util/lookup20.gif) no-repeat 0 0;    width: 18px;    height: 17px;     margin-right: 5px;   float: left; display:{!if(fee.Cost_Concept_1__c != null || fee.Cost_Concept_2__c != null || fee.Cost_Concept_3__c != null || fee.Cost_Concept_4__c != null || fee.Cost_Concept_5__c != null , '', 'none')}"></span>
+                            <apex:outputField value="{!fee.Buy_Rate__c}"/>
+                            
+                            
+                        </apex:column>
+                        <apex:column value="{!fee.Fee_Rate__c}" style="text-align: right; background:{!if(id_fee_selected != null && id_fee_selected !='' && id_fee_selected == fee.Id  , '#CFEEF8;' , '')}" >
+                            <apex:facet name="header">
+                                <div  style ="cursor: pointer;" onclick="sort_data_table('Fee_Rate__c');">Sell Rate
+                                    <span style="       width: 10px;    height: 11px;    float: right;    margin: 0 5px;    vertical-align: 0px;    background: transparent url(/img/alohaSkin/sortArrows_sprite.png);    background-size: 16px;    background-repeat: no-repeat;    background-position: center 2px; display:none;" class="Service_Rate_Name_filtro feeFee_Rate__c"/>
+                                </div>
+                             </apex:facet>
+                        </apex:column>
+                        <apex:column value="{!fee.Valid_Until__c}" style="background:{!if(id_fee_selected != null && id_fee_selected !='' && id_fee_selected == fee.Id , '#CFEEF8;' , '')}">
+                            <apex:facet name="header">
+                                <div  style ="cursor: pointer;" onclick="sort_data_table('Valid_Until__c');">Valid Until
+                                    <span style="       width: 10px;    height: 11px;    float: right;    margin: 0 5px;    vertical-align: 0px;    background: transparent url(/img/alohaSkin/sortArrows_sprite.png);    background-size: 16px;    background-repeat: no-repeat;    background-position: center 2px; display:none;" class="Service_Rate_Name_filtro feeValid_Until__c"/>
+                                </div>
+                             </apex:facet>
+                        </apex:column>
+                        <apex:column value="{!fee.Active__c}" style="background:{!if(id_fee_selected != null && id_fee_selected !='' && id_fee_selected == fee.Id , '#CFEEF8;' , '')}">
+                            <apex:facet name="header">
+                                <div  style ="cursor: pointer;" onclick="sort_data_table('Active__c');">Active
+                                    <span style="       width: 10px;    height: 11px;    float: right;    margin: 0 5px;    vertical-align: 0px;    background: transparent url(/img/alohaSkin/sortArrows_sprite.png);    background-size: 16px;    background-repeat: no-repeat;    background-position: center 2px; display:none;" class="Service_Rate_Name_filtro feeActive__c"/>
+                                </div>
+                             </apex:facet>
+                        </apex:column>
+                        
+                        <apex:column style="text-align: center; background:{!if(id_fee_selected != null && id_fee_selected !='' && id_fee_selected == fee.Id , '#CFEEF8;' , '')}">
+                            <input type="button" class="btn" value="Modify" onclick="mod_oi2('{!fee.Id}');" style="cursor:pointer;"/>
+                        </apex:column>
+                    </apex:pageBlockTable>
+                </apex:pageBlockSection>
+            </apex:pageBlock>
+        </apex:outputpanel>
+        <!-- -------------- -->
+         <div id="ranking" style="font-size:2em;height:34px;width:375px; float: right;        margin-top: -18px;"></div>
+         
+        <apex:pageBlock id="block1" mode="maindetail" title="Service Rate Detail">
+        <apex:pageMessages />
+        
+        <apex:inputHidden id="ranking" value="{!ranking}"/>
+            <apex:inputHidden value="{!result}" id="result"/>
+            <apex:inputHidden value="{!myid}" id="myid"/>
+            <apex:inputHidden value="{!secret}" id="secret"/>
+            <apex:inputHidden value="{!email}" id="email"/>
+            <apex:inputHidden value="{!ya_existe}" id="ya_existe"/>
+            <apex:pageBlockButtons >
+                <!-- <apex:commandButton value="Send Data" status="myStatus" action="{!send_form}" rerender="block1" oncomplete="pintar_ranking();"/>-->
+                
+                <input type="button" value="Save" class="btn" onclick ="check_campos();" style="width: 35px;"/>
+                
+                <apex:commandButton value="Duplicate" onclick="check_campos3();" status="myStatus" reRender="graph" rendered="{!import_export !=null && import_export !='' && shipment == null && ship_program == null && id_fee_selected != null && id_fee_selected !=''}"/>
+                
+                <apex:commandButton value="New" status="myStatus" action="{!create_new_fee}" rerender="block0, block1,es_fee_modificado" oncomplete="limpiar_tabla_modify();" style="width: 35px;"/>
+                <!-- <apex:commandButton value="Return to Freight Rates Management" status="myStatus" oncomplete="jvalidate_internal();"/>-->
+                <apex:commandButton value="Request for Quotation" onclick="editEvents();" status="myStatus" reRender="graph" rendered="{!import_export !=null && import_export !='' && shipment == null && ship_program == null && id_fee_selected != null && id_fee_selected !=''}"/>
+                <apex:commandButton value="Request for Quotation" onclick="editEvents_ship();" status="myStatus" reRender="graph" rendered="{!shipment !=null && shipment !='' && import_export == null && ship_program == null && id_fee_selected != null && id_fee_selected !=''}"/>
+                <apex:commandButton value="Request for Quotation" onclick="editEvents_ship_prog();" status="myStatus" reRender="graph" rendered="{!ship_program !=null && ship_program !='' && shipment == null && import_export = null && id_fee_selected != null && id_fee_selected !=''}"/>
+                <input type="button" value="Return to Shipment" class="btn" onclick="return_shipment();" style="display:{!if(shipment != null && shipment !='' && import_export==null,'','none;')}"/> 
+                <input type="button" value="Return to Import-Export Quotes/Orders" class="btn" onclick="return_import_export();" style="display:{!if(import_export != null && import_export !='' && shipment==null,'','none;')}"/> 
+                
+                <!-- <input type="button" value="Upload LOT" class="btn" onclick="return_import_export();" style="display:{!if(import_export != null && import_export !='' && shipment==null,'','none;')}"/>
+                -->
+                <apex:commandButton value="Attach File" onclick="upload_documents_lot();" status="myStatus" reRender="graph" rendered="{!import_export !=null && import_export !='' && shipment == null && ship_program == null && id_fee_selected != null && id_fee_selected !=''}"/>
+                
+                <!-- <apex:commandButton value="Upload LOT" onclick="check_campos2();" status="myStatus" reRender="graph" rendered="{!import_export !=null && import_export !='' && shipment == null && ship_program == null}"/>
+                -->
+                <input type="button" value="Return to Shipments Program" class="btn" onclick="return_ship_prog();" style="display:{!if(ship_program != null && ship_program !='' && shipment==null,'','none;')}"/> 
+                
+                <input type="button" value="Return to Route" class="btn" onclick="return_route();" style="display:{!if(import_export == null && shipment==null && Route != null,'','none;')}"/> 
+             </apex:pageBlockButtons>
+             <apex:pageBlockSection title="Information {!if(id_fee_selected != null && id_fee_selected !='' && name_fee_selected != '' && name_fee_selected != null,'('+ name_fee_selected +')','' )}" columns="2">
+            
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="Service Rate Name"/>
+                    <apex:inputField value="{!record.Name}" styleclass="Name_fee_new" style="border-left: 2px red solid;"/>
+                   <!-- <apex:pageBlockSectionItem >
+                        <span style="border-left: 3px #c00 solid; padding-top: 3px; padding-bottom: 2px;" class="Name_fee_new"></span>
+                        <apex:inputField value="{!record.Rate_Names_List__c}" styleclass="Name_fee_new" style="border-left: 2px red solid;"/>
+                        
+                    </apex:pageBlockSectionItem>-->
+                    
+                </apex:pageBlockSectionItem>
+                
+                <apex:pageBlockSectionItem > 
+                    <apex:outputLabel value="Service Rate Category"/>
+                    <apex:inputfield value="{!record.Fee_Category__c}" />
+                </apex:pageBlockSectionItem>
+            
+                <apex:pageBlockSectionItem rendered="{!id_fee_selected == null}">
+                    <apex:outputLabel value="Route"/>
+                    <apex:selectList id="route_selector2"  label="Route" value="{!route_selected_id2}" size="1" >
+                                 <apex:selectOptions value="{!routes}"/>
+                    </apex:selectList>
+                </apex:pageBlockSectionItem>
+                <apex:pageBlockSectionItem rendered="{!id_fee_selected != null}">
+                    <apex:outputLabel value="Route"/>
+                    <apex:outputtext value="{!route_selected_Name2}"/>
+                </apex:pageBlockSectionItem> 
+                
+                <apex:pageBlockSectionItem rendered="{!id_fee_selected != null}">
+                    <apex:outputLabel value="Carrier"/>
+                    <apex:inputfield value="{!record.Carrier_Account__c}"/><!-- required="true" onchange="existencia();" -->
+                </apex:pageBlockSectionItem>
+                 <apex:pageBlockSectionItem rendered="{!id_fee_selected == null}">
+                    <apex:outputLabel value="Carrier"/>
+                    <apex:inputfield value="{!record.Carrier_Account__c}"/><!-- required="true" onchange="existencia();" -->
+                </apex:pageBlockSectionItem>
+                              
+                <!-- <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="Active Rates"/>
+                    <apex:outputtext value="{!active_rates}"/>
+                </apex:pageBlockSectionItem>-->
+                <!--  <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="Move Type"/>
+                    <apex:outputtext value="{!shipment_move_type}"/>
+                </apex:pageBlockSectionItem> -->
+                
+                <!--<apex:pageBlockSectionItem >
+                    <apex:outputLabel value="Route Type"/>
+                    <apex:outputtext value="{!route_move_type}"/>
+                </apex:pageBlockSectionItem>-->
+                
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel value=""/>
+                    <apex:outputLabel value=""/>
+                </apex:pageBlockSectionItem>
+                
+                 <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="Valid From"/>
+                    <apex:inputField value="{!record.Valid_From__c}" label="Valid From" html-class="valid_from_fee" /><!-- onchange="sacar_valor_fecha();" -->
+                </apex:pageBlockSectionItem>
+                
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel value=""/>
+                    <apex:outputLabel value=""/>
+                </apex:pageBlockSectionItem>
+                
+                 <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="Valid Until"/>
+                    <apex:inputField value="{!record.Valid_Until__c}" label="Valid Until" html-class="valid_until_fee" /><!-- onchange="sacar_valor_fecha();" -->
+                </apex:pageBlockSectionItem>
+                 
+                <!-- <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="Min Rate"/>
+                    <apex:outputtext value="{!min_rate}"/>
+                </apex:pageBlockSectionItem>-->
+               
+                <!-- <apex:pageBlockSectionItem rendered="{!id_fee_selected != null}">
+                    <apex:outputLabel value="Account for"/>
+                    <apex:outputfield value="{!record.Account_for__c}" />
+                </apex:pageBlockSectionItem>-->
+                <apex:pageBlockSectionItem rendered="{!id_fee_selected == null && shipment == null && import_export == null}" html-class="account_for_api1">
+                    <apex:outputLabel value="Account for"/>
+                    <!-- <apex:inputfield value="{!record.Account_for__c}" />--> 
+                    <apex:inputfield value="{!record.Account_for_API__c}" style="    " html-class="account_for_api"  id="account_for_api" />
+
+                </apex:pageBlockSectionItem>
+                
+                <apex:pageBlockSectionItem rendered="{!(shipment != null || import_export != null)}"><!-- id_fee_selected == null && -->
+                    <apex:outputLabel value="Account for"/>
+                    <apex:inputfield value="{!record.Account_for__c}" style="    " />
+                </apex:pageBlockSectionItem>
+               
+               <apex:pageBlockSectionItem > 
+                    <apex:outputLabel value="Active"/>
+                    <apex:inputField value="{!record.Active__c}" html-class="estado_fee"/>
+                </apex:pageBlockSectionItem>
+                
+               <!-- <apex:pageBlockSectionItem >
+                    <apex:outputtext value=""/>
+                </apex:pageBlockSectionItem>-->
+                
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="Service Rate Description" style="width: 280px;"/>
+                    <apex:inputfield value="{!record.Fee_Description__c}" />
+                </apex:pageBlockSectionItem>
+                <!-- <apex:pageBlockSectionItem >
+                    <apex:outputtext value=""/>
+                </apex:pageBlockSectionItem>-->
+                     <apex:pageBlockSectionItem > 
+                    <apex:outputLabel value="Transit Time (Days)"/>
+                    <apex:inputField value="{!record.TT_Days__c}"/>
+                </apex:pageBlockSectionItem>
+                
+                <apex:pageBlockSectionItem rendered="{!shipment != null || import_export != null}">
+                    <apex:outputLabel value="Service Type"/>
+                    <apex:outputtext value="{!shipment_service_type}"/>
+                </apex:pageBlockSectionItem>
+                <apex:pageBlockSectionItem rendered="{!shipment != null || import_export != null}">
+                    <!-- <apex:outputtext value=""/>-->
+                    <apex:outputLabel value="Document LOT"/>
+                    <apex:outputField value="{!record.LOT__c}"/>
+                </apex:pageBlockSectionItem>
+                
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="Container Type"/>
+                    <apex:inputfield value="{!record.Container_Type__c}" />
+                </apex:pageBlockSectionItem>
+                <apex:pageBlockSectionItem >
+                    <!--<apex:outputText value="" />-->
+                    <apex:outputLabel value="Remarks"/>
+                    <apex:inputfield value="{!record.Comments__c}" />
+                </apex:pageBlockSectionItem>
+                
+                
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="Max Kgs"/>
+                    <apex:inputfield value="{!record.Max_Kgs__c}" />
+                </apex:pageBlockSectionItem>
+                
+                <apex:pageBlockSectionItem >
+                    <apex:outputText value="" />
+                </apex:pageBlockSectionItem>
+                
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="Max M3"/>
+                    <apex:inputfield value="{!record.Max_M3__c}" />
+                </apex:pageBlockSectionItem>
+                
+                <apex:pageBlockSectionItem >
+                    <apex:outputText value="" />
+                </apex:pageBlockSectionItem>    
+                
+                <apex:pageBlockSectionItem rendered="{!shipment != null || import_export != null}">
+                    <apex:outputLabel value="Containers Count"/>
+                    <apex:outputtext value="{!numero_contenedores}"/>
+                </apex:pageBlockSectionItem>
+                
+                
+                <apex:pageBlockSectionItem rendered="{!shipment != null || import_export != null}">
+                    <apex:outputtext value=""/>
+                </apex:pageBlockSectionItem>
+                
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="Rate Type"/>
+                    <!-- <apex:inputField value="{!record.Rate_Type__c}"/>-->
+                      <apex:selectList id="Rate_Type_selector"  label="Rate_Type_selector" value="{!record.Rate_Type__c}" html-class="rate_type_fee" size="1" style="    border-left: 2px red solid;">
+                            <apex:selectOptions value="{!listado_rate_type}"/>
+                       </apex:selectList>
+                </apex:pageBlockSectionItem>
+                <apex:pageBlockSectionItem >
+                    <apex:outputtext value=""/>
+                </apex:pageBlockSectionItem>
+                
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="Vol. Factor"/>
+                    <apex:inputfield value="{!record.Volumetric_Factor__c}" />
+                </apex:pageBlockSectionItem>
+                
+                <apex:pageBlockSectionItem >
+                    <apex:outputText value="" />
+                </apex:pageBlockSectionItem>  
+                
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="Min Amount"/>
+                    <apex:inputfield value="{!record.Min__c}" />
+                </apex:pageBlockSectionItem>
+                
+                <apex:pageBlockSectionItem >
+                    <apex:outputText value="" />
+                </apex:pageBlockSectionItem> 
+                
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="Buy Rate"/>
+                    <apex:inputField value="{!record.Buy_Rate__c}" html-class="price_fee"/>
+                </apex:pageBlockSectionItem>
+                <apex:pageBlockSectionItem >
+                    <apex:outputtext value=""/>
+                </apex:pageBlockSectionItem>
+                
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="Sell Rate"/>
+                    <apex:inputField value="{!record.Fee_Rate__c}" html-class="price_fee2" />
+                </apex:pageBlockSectionItem>
+                <apex:pageBlockSectionItem >
+                    <apex:outputtext value=""/>
+                </apex:pageBlockSectionItem>
+                
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="Currency"/>
+                    <apex:selectList id="Currency_selector" value="{!currency_selected}" size="1">
+                        <apex:selectOptions value="{!currencys}"/>
+                    </apex:selectList>
+                </apex:pageBlockSectionItem>
+                
+            </apex:pageBlockSection>
+            
+            <apex:pageBlockSection title="Cost Detail" columns="2">
+                <apex:inputField value="{!record.Concept_1__c}"/>  
+                <apex:inputField value="{!record.Cost_Concept_1__c}" onkeyup="quitar_buy_obligatorio_onchange();" styleclass="Cost_Concept_1"/>
+                <apex:inputField value="{!record.Concept_2__c}"/>
+                <apex:inputField value="{!record.Cost_Concept_2__c}" onkeyup="quitar_buy_obligatorio_onchange();" styleclass="Cost_Concept_2"/>
+                <apex:inputField value="{!record.Concept_3__c}"/>
+                <apex:inputField value="{!record.Cost_Concept_3__c}" onkeyup="quitar_buy_obligatorio_onchange();" styleclass="Cost_Concept_3"/>
+                <apex:inputField value="{!record.Concept_4__c}"/>
+                <apex:inputField value="{!record.Cost_Concept_4__c}" onkeyup="quitar_buy_obligatorio_onchange();" styleclass="Cost_Concept_4"/>
+                <apex:inputField value="{!record.Concept_5__c}"/>
+                <apex:inputField value="{!record.Cost_Concept_5__c}" onkeyup="quitar_buy_obligatorio_onchange();" styleclass="Cost_Concept_5"/>
+            </apex:pageBlockSection> 
+            
+        </apex:pageBlock>
+        
+        
+        
+        <apex:actionstatus id="myStatus">
+            <apex:facet name="start">
+                <div class="waitingSearchDiv" id="el_loading" style="background-color:#fbfbfb;height:100%;opacity:0.65;width:100%;"> 
+                    <div class="waitingHolder" style="top:74.2px;width:91px;">
+                        <img class="waitingImage" src="/img/loading.gif" title="Please Wait..." />
+                        <span class="waitingDescription">Loading...</span>
+                    </div>
+                </div>
+            </apex:facet>
+        </apex:actionstatus>
+        
+        <div class="waitingSearchDiv" id="otherStatus" style="display:none;background-color:#fbfbfb;height:100%;opacity:0.65;width:100%;"> 
+            <div class="waitingHolder" style="top:74.2px;width:91px;">
+                <img class="waitingImage" src="/img/loading.gif" title="Please Wait..." />
+                <span class="waitingDescription">Loading...</span>
+            </div>
+        </div>
+        <apex:inputhidden value="{!tiene_costes_adicionales}" id="tiene_costes_adicionales"/>
+        <apex:inputhidden value="{!valor_buy_rate}" id="valor_buy_rate"/>
+        <apex:inputhidden value="{!acabo_de_guardar}" id="acabo_de_guardar"/> 
+        <apex:inputhidden value="{!es_fee_modificado}" id="es_fee_modificado"/>  
+        
+        <div id="openwindow" style="display:none"><iframe id="framewindow" style="border:0px;  overflow-y: hidden;" width="100%" height="100%"></iframe></div>
+        
+        <div id="openwindow_ship" style="display:none"><iframe id="framewindow_ship" style="border:0px" width="100%" height="100%"></iframe></div>
+        <div id="openwindow_upload_document" style="display:none"><iframe id="framewindow_upload_document" style="border:0px;  overflow-y: hidden;" width="100%" height="100%"></iframe></div>
+        <div id="openwindow_ship_prog" style="display:none"><iframe id="framewindow_ship_prog" style="border:0px" width="100%" height="100%"></iframe></div>
+        
+    </apex:form>
+    
+    <form id="NEU_Shipments_Marketplace" method="post" action="NEU_Shipments_Marketplace">
+            <input type="hidden" name="email" id="email"/>
+            <input type="hidden" name="secret" id="secret"/>
+    </form>
+    <form id="NEU_Shipments_Marketplace_Internal" method="post" action="NEU_Shipments_Marketplace_Internal">
+    </form>
+</apex:page>

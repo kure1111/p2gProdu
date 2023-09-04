@@ -1,0 +1,210 @@
+<!--
+  @description       : 
+  @author            : Brandom / Leonardo
+  @group             : 
+  @last modified on  : 08-12-2022
+  @last modified by  : ChangeMeIn@UserSettingsUnder.SFDoc
+-->
+<template>        
+    <div if:true={bandera}>        
+        <div if:false={pakVerificacion}>
+            <template if:true={isModalOpen}>  
+                <div class="loading_wheel" if:true={isLoadedAll}>
+                    <div if:true={isLoadedAll} class="backgroundInverse ">
+                        <lightning-spinner
+                            alternative-text="Loading..." variant="brand" size="large">
+                        </lightning-spinner>
+                    </div>
+                </div>                         
+                <!-- Modal/Popup Box LWC starts here -->
+                <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+                    <div class="slds-modal__container">                                    
+                        <!-- Modal/Popup Box LWC header here Cierra el modal -->
+                        <header class="slds-modal__header">
+                            <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close" onclick={closeModal}>
+                                <lightning-icon icon-name="utility:close"
+                                    alternative-text="close"
+                                    variant="inverse"
+                                    size="small" ></lightning-icon>
+                                <span class="slds-assistive-text">Close</span>
+                            </button>
+                            <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">Validación Digital PakControl </h2>
+                        </header>
+                       
+                        <!-- Modal/Popup Box LWC body starts here -->                           
+                        <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                            <div if:false={itsAllOK}>                                                                                                                     
+                                <lightning-tabset variant="scoped">
+                                    <lightning-tab label="Información Requerida" icon-name="standard:timesheet">                                                                                  
+                                        <div class="slds-m-top_medium slds-m-bottom_x-large">                                                                                
+                                            <div class="slds-p-around_medium lgc-bg">
+                                                <template for:each={records.data} for:item="record">
+                                                    <lightning-card title="SHIPMENT"  icon-name="standard:promotions" if:true={isContado} key={record.Id}>       
+                                                        <lightning-input  type="text" label="Nombre del Shipment" value={record.Name} readonly></lightning-input>                                                                                                                                                           
+                                                        <lightning-input class="ligaCuenta" type="text" label="Liga Cuenta Espejo" onfocus={handleInputFocus} onblur={handleInputBlur} value={record.Liga_Cuenta_Espejo__c} required></lightning-input>
+                                                        <lightning-input class="usuarioCuenta" type="text" label="Usuario Cuenta Espejo" onfocus={handleInputFocus} onblur={handleInputBlur} value={record.Usuario_Cuenta_Espejo__c} required></lightning-input>
+                                                        <lightning-input class="passwordCuenta" type="text" label="Constraseña Cuenta Espejo" onfocus={handleInputFocus} onblur={handleInputBlur} value={record.Contrasena_Cuenta_Espejo__c} required></lightning-input>
+                                                    </lightning-card>
+                                                    <lightning-card title="CARRIER"  icon-name="standard:promotions" if:true={isContado} key={record.Id}>
+                                                        <div if:false={record.Carrier__c}>                                                                                                                        
+                                                            <p style="color: red;">No tienes registrado un Carrier</p>
+                                                            <c-l-w-c-_-lookup lookup-label="Carrier" object-api-name="Account" icon-name="standard:account" carrier-id="" record-type = "Supply Chain Partner"
+                                                             onrecordselection={onAccountSelection}></c-l-w-c-_-lookup>
+                                                        </div>    
+                                                        <div if:true={record.Carrier__c}>
+                                                            <div>
+                                                                <c-l-w-c-_-change-object object-name="Carrier" icon-name="standard:account" record-id={record.Id} obj-id={record.Carrier__c} record-name={record.Carrier__r.Name}></c-l-w-c-_-change-object>
+                                                            </div>                                                            
+                                                            <lightning-input class="companiaGPS" type="text" label="Compañia GPS" onfocus={handleInputFocus} onblur={handleInputBlur} value={record.Compania_GPS__c} required></lightning-input>
+                                                        </div>
+                                                    </lightning-card>                                                         
+                                                    <lightning-card title="VEHICULO"  icon-name="standard:promotions" if:true={isContado} key={record.Id}>
+                                                        <div if:true={record.Carrier__c}>
+                                                            <div if:true={record.Vehicle__c}>                                                                
+                                                                <div>
+                                                                    <c-l-w-c-_-change-object object-name="Vehiculo" icon-name="custom:custom98" record-id={record.Id} obj-id={record.Vehicle__c} record-name={record.Vehicle__r.Name}></c-l-w-c-_-change-object>
+                                                                </div>                                                                                                                           
+                                                                <lightning-input class="aseguradoraN" type="text" label="Nombre de la Aseguradora" onfocus={handleInputFocus} onblur={handleInputBlur} value={record.Vehicle__r.Nombre_Aseguradora__c}  required></lightning-input>
+                                                                <lightning-input class="registrationN" type="text" label="Registration Number" onfocus={handleInputFocus} onblur={handleInputBlur} value={record.Vehicle__r.Registration_Number__c}  required></lightning-input>
+                                                                <lightning-input class="polizaCarga" type="text" label="Poliza Carga" onfocus={handleInputFocus} onblur={handleInputBlur} value={record.Vehicle__r.Numero_Poliza_Seguro__c}   required></lightning-input>
+                                                                <lightning-input class="polizaResp" type="text" label="Poliza Responsabilidad civil" onfocus={handleInputFocus} onblur={handleInputBlur} value={record.Vehicle__r.Poliza_Responsabilidad_civil__c}   required></lightning-input>
+                                                                <lightning-input class="polizaSeguro" type="text" label="Poliza Seguro Medio Ambiente" onfocus={handleInputFocus} onblur={handleInputBlur} value={record.Vehicle__r.Poliza_Seguro_Medio_Ambiente__c}  required></lightning-input>                                                                
+                                                            </div>
+                                                            <div if:false={record.Vehicle__c}>
+                                                                <p style="color: red;">No tienes registrado un Vehiculo</p>
+                                                                <c-l-w-c-_-lookup lookup-label="Vehiculo" object-api-name="Vehicle__c" icon-name="custom:custom98" carrier-id={record.Carrier__c} record-type = ""
+                                                                onrecordselection={onAccountSelection}></c-l-w-c-_-lookup>
+                                                            </div>                                                            
+                                                        </div>
+                                                        <div if:false={record.Carrier__c}>
+                                                            <p style="color: red;">Debes de agregar un Carrier para agregar un Vehiculo</p>
+                                                        </div>                                                                                     
+                                                    </lightning-card>
+                                                    <lightning-card title="OPERADOR"  icon-name="standard:promotions" if:true={isContado} key={record.Id}>
+                                                        <div if:true={record.Carrier__c}>                                                            
+                                                            <div if:true={record.National_Operator__c}>
+                                                                <div>
+                                                                    <c-l-w-c-_-change-object object-name="Operador" icon-name="custom:custom84" record-id={record.Id} obj-id={record.National_Operator__c} record-name={record.National_Operator__r.Name}></c-l-w-c-_-change-object>
+                                                                </div>                                                                                                                                  
+                                                                <lightning-input class="numLicVig" type="text" label="Num. Licencia Vigente" onfocus={handleInputFocus} onblur={handleInputBlur} value={record.National_Operator__r.Numlicvig_ope__c} required></lightning-input>                                                              
+                                                                <div if:true={record.National_Operator__r.Licvig_ope__c}>
+                                                                    <lightning-input class="licenciaVigente" type="checkbox" label="Licencia Vigente" onfocus={handleInputFocus} onblur={handleInputBlur} value={record.National_Operator__r.Licvig_ope__c} checked></lightning-input>
+                                                                </div>                                                
+                                                                <div if:false={record.National_Operator__r.Licvig_ope__c}>
+                                                                    <lightning-input class="licenciaVigente" type="checkbox" label="Licencia Vigente" onfocus={handleInputFocus} onblur={handleInputBlur} value="true" required></lightning-input>
+                                                                </div>
+                                                                <lightning-input class="fechaVigencia" type="date" label="Fecha de vigencia de la licencia" onfocus={handleInputFocus} onblur={handleInputBlur} value={record.National_Operator__r.Fecha_de_vigencia_de_la_licencia__c} required></lightning-input>
+                                                                <lightning-input class="telefonoFijo" type="tel" label="Teléfono fijo" onfocus={handleInputFocus} onblur={handleInputBlur} value={record.National_Operator__r.Telfij_ope__c} required></lightning-input>
+                                                            </div>                                                        
+                                                            <div if:false={record.National_Operator__c}>
+                                                                <p style="color: red;">No tienes registrado un Operador</p>
+                                                                <c-l-w-c-_-lookup lookup-label="Operador" object-api-name="Operadores__c" icon-name="custom:custom84" carrier-id={record.Carrier__c} record-type = ""
+                                                                onrecordselection={onAccountSelection}></c-l-w-c-_-lookup>
+                                                            </div>
+                                                        </div> 
+                                                        <div if:false={record.Carrier__c}>
+                                                            <p style="color: red;">Debes de agregar un Carrier para agregar un Operador</p>
+                                                        </div>                                                       
+                                                    </lightning-card>
+                                                   
+                                                    <lightning-card title="PROVEEDOR TERCERIZADO"  icon-name="standard:promotions" if:true={isContado} key={record.Id}>                                                                
+                                                        <div if:true={record.Vehicle__c}>
+                                                            <div if:true={record.Vehicle__r.Account_Owner_Vehicle__c}>
+                                                                <div if:true={record.Vehicle__r.Account_Owner_Vehicle__r.Parent}>
+                                                                    <lightning-input  type="text" label="Nombre del Proveedor Tercerizado" value={record.Vehicle__r.Account_Owner_Vehicle__r.Name} readonly></lightning-input>
+                                                                    <lightning-input label="Parent Account" value={record.Vehicle__r.Account_Owner_Vehicle__r.Parent.Name} readonly></lightning-input>
+                                                                    <lightning-input label="Record Type Name" value={record.Vehicle__r.Account_Owner_Vehicle__r.Record_Type_Name__c} readonly></lightning-input>
+                                                                    <lightning-input label="Tipo de Relación" value={record.Vehicle__r.Account_Owner_Vehicle__r.Arrendatario_Propietario__c} readonly></lightning-input>
+                                                                </div>
+                                                                <div if:false={record.Vehicle__r.Account_Owner_Vehicle__r.Parent}>
+                                                                    <h4>El Proveedor Tercerizado no es el correcto. El Record Type Name debe ser: <p style="color:red ;">Supplier Owner or Lessee of Vehicule</p> </h4>
+                                                                </div>
+                                                            </div>
+                                                            <div if:false={record.Vehicle__r.Account_Owner_Vehicle__c}>
+                                                                <h4>El Vehiculo no cuenta con Proveedor Tercerizado</h4>
+                                                            </div>
+                                                        </div>  
+                                                        <div if:false={record.Vehicle__c}>
+                                                            <p style="color: red;">Debes de agregar un Vehiculo para tener un Proveedor Tercerizado</p>
+                                                        </div>                                                      
+                                                    </lightning-card>
+                                                    
+                                                    <!--<lightning-card title="ACCOUNT"  icon-name="standard:promotions" if:true={isContado} key={record.Id}>
+                                                        <div if:true={record.Account_for__c}>
+                                                            <lightning-input type="text" label="Razon social" onfocus={handleInputFocus} onblur={handleInputBlur}  value="valorStatico" required></lightning-input>
+                                                            <lightning-input type="text" label="Account for (Customer)" onfocus={handleInputFocus} onblur={handleInputBlur}  value={record.Account_for__r.Name} required></lightning-input>
+                                                            <lightning-input type="text" label="Record Type Name" onfocus={handleInputFocus} onblur={handleInputBlur}  value={record.Account_for__r.RecordType.Name} disabled></lightning-input>
+                                                        </div>                             
+                                                        <div if:false={record.Account_for__c}>
+                                                            <p style="color: red;">Debes de agregar un Cuenta (Account for (Customer) )</p>
+                                                            <c-l-w-c-_-lookup lookup-label="Account for (Customer)" object-api-name="Account" icon-name="standard:account" carrier-id="" record-type = "Customer"
+                                                             onrecordselection={onAccountSelection}></c-l-w-c-_-lookup>
+                                                        </div>                           
+                                                    </lightning-card>-->
+                                                </template>
+                                            </div>
+                                        </div>
+                                    </lightning-tab>
+                                    <lightning-tab label="Documentación Requerida" icon-name="standard:drafts" title="2nd tab extended title">
+                                        <div>   
+                                            <p style="color: red;">{documentosFaltantes}</p>                                                                                             
+                                            <template for:each={records.data} for:item="record">                                                
+                                                <div key={record.Id}>
+                                                    <lightning-card title="VEHICULO:" icon-name="standard:promotions">
+                                                        <c-l-w-c-_-associated-Documents record-id={record.Vehicle__c} style="width:100%; height:300px;" sp-id={record.Id}></c-l-w-c-_-associated-Documents>
+                                                    </lightning-card>                                                    
+                                                    <lightning-card title="OPERADOR:" icon-name="standard:promotions">
+                                                        <c-l-w-c-_-associated-Documents record-id={record.National_Operator__c} style="width:100%; height:300px;" sp-id={record.Id}></c-l-w-c-_-associated-Documents>
+                                                    </lightning-card>
+                                                    <!--<lightning-card title="ACCOUNT FOR (CUSTOMER):" icon-name="standard:promotions">
+                                                        <c-l-w-c-_-associated-Documents record-id={record.Account_for__c} style="width:100%; height:300px;"></c-l-w-c-_-associated-Documents>
+                                                    </lightning-card>-->
+                                                </div>
+                                            </template>                                                
+
+                                                <!--<lightning-card title="AWS" icon-name="standard:promotions">
+                                                    <template if:true={fileData}>
+                                                        <p>{fileData.filename}</p>
+                                                    </template>
+                                                    <lightning-input 
+                                                        label="Ejemplo para subir archivos a AWS" 
+                                                        type="file" 
+                                                        accept={acceptedFormats}
+                                                        onchange={openfileUpload}>
+                                                    </lightning-input>                                        
+                                                    <lightning-button variant="brand" label="submit" title="Submit" onclick={handleClick} class="slds-m-left_x-small"></lightning-button>
+                                                </lightning-card>-->
+                                        </div>                                        
+                                    </lightning-tab>
+                                </lightning-tabset>
+                            </div>
+                            
+                            <div if:true={itsAllOK}>
+                                <div class="slds-notify slds-notify_toast slds-theme_success" role="status">
+                                    <span class="slds-assistive-text">Los campos requeridos se encuentran llenos</span>
+                                    <span class="slds-icon_container slds-icon-utility-success slds-var-m-right_small slds-no-flex slds-align-top" title="Description of icon when needed">
+                                        <lightning-icon icon-name="standard:task2" alternative-text="success!" title="success"></lightning-icon>
+                                    </span>					
+                                    <div class="slds-notify__content">
+                                        <h2 class="slds-text-heading_small ">El SP ha sido confirmado Correctamente</h2>
+                                    </div>	
+                                </div>
+                            </div>
+                        </div>
+        
+                        <!-- Modal/Popup Box LWC footer starts here  cierra el modal-->
+                        <footer class="slds-modal__footer">
+                            <lightning-button variant="destructive" label="Cancelar" title="Cancel Action" onclick={closeModal} class="slds-m-left_x-small"></lightning-button>
+                            <!-- <button class="slds-button slds-button_neutral" onclick={closeModal} title="Cancel">Cancel</button> -->
+                            <lightning-button if:false={itsAllOK} variant="success" label="Validar" title="Validate all fileds an documents" onclick={validateFieds} class="slds-m-left_x-small" ></lightning-button>
+                            <!--<lightning-button if:false={itsAllOK} variant="success" label="Validar" title="Validate all fileds an documents" onclick={showNotification} class="slds-m-left_x-small" ></lightning-button>-->
+                            <!-- <button class="slds-button slds-button_brand" onclick={submitDetails} title="Validar">Validar</button> -->
+                        </footer>
+                    </div>
+                </section>
+                <div class="slds-backdrop slds-backdrop_open"></div>
+            </template>
+        </div>
+    </div>
+    
+ </template>

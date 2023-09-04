@@ -1,0 +1,255 @@
+<aura:component implements="forceCommunity:availableForAllPageTypes,flexipage:availableForAllPageTypes,force:hasRecordId" controller="NEU_Import_Export_Controller">
+	
+    <aura:attribute name="cargo_line_s" type="NEU_Import_Export_Controller.Import_Export_Cargo_Line_s"/>
+    <aura:attribute name="cargo_line" type="Quote_Item_Line__c" default="{'sobjectType' : 'Quote_Item_Line__c'}"/>
+    <aura:attribute name="item" type="Sourcing_Item__c" default="{ 'sobjectType' : 'Sourcing_Item__c'}"/>
+    <aura:attribute name="status" type="String" default="CUSTOMER CREATED"/>
+    <aura:attribute name="recordId" type="String" />
+    <aura:attribute name="reasons" type="String" /> 
+    <aura:attribute name="conType" type="String" default=""/>
+    <aura:attribute name="lines" type="List" />
+    <aura:attribute name="ie" type="Customer_Quote__c" default="{'sobjectType' : 'Customer_Quote__c'}" />    
+	<aura:attribute name="options" type="List" />
+    <aura:attribute name="service_type" type="string" default="{!v.ie.Service_Type__c}"/>
+    
+    <aura:method name="clickCreate" action="{!c.clickCreate}" description="clickCreate controller function" />
+    <aura:method name="clickS1" action="{!c.clickS1}" description="clickS1 controller function" />   
+
+	<aura:handler name="init" value="{!this}" action="{!c.doInit}" />    
+    
+    <aura:handler name="stepClickCargo" event="c:NEU_Path_Customers_StepClickCargo" action="{!c.openModal}"/>
+    <aura:handler name="stepClickSendToP2G" event="c:NEU_Path_Customers_StepClickSendToP2G" action="{!c.sendNotificationToPak2Go}" /> 
+    <aura:handler name="stepClickConfirmToP2G" event="c:NEU_Path_Customers_StepClickConfirmToP2G" action="{!c.confirmQuoteToPak2Go}" /> 
+    <aura:handler name="stepClickRejectToP2G" event="c:NEU_Path_Customers_StepClickRejectToP2G" action="{!c.openModalRejection}" /> 
+    
+    <c:NEU_Path_Customers status="{!v.status}" numCargoLines="{!v.lines.length}"/>  
+    
+    <aura:renderIf isTrue="{!v.status == 'SENT TO PAK2GO'}">
+        <div class="demo-only" style="height: 4rem;">
+            <div class="slds-notify_container slds-is-relative">
+                <div class="slds-notify slds-notify_toast slds-theme_warning" role="alert">
+                    <span class="slds-assistive-text">warning</span>
+                    <div class="slds-notify__content">
+                        <h2 class="slds-text-heading_small">The Import-Export Quote Request was sent to Pak2Go to be completed.</h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </aura:renderIf>
+    
+    <aura:renderIf isTrue="{!v.status == 'COMPLETED BY PAK2GO'}">
+        <div class="demo-only" style="height: 4rem; margin-bottom: 10px;">
+            <div class="slds-region_narrow slds-is-relative">
+                <div class="slds-notify_container slds-is-absolute">
+                    <div class="slds-notify slds-notify_toast slds-theme_info" role="alert">
+                        <span class="slds-assistive-text">info</span>                 
+                        <div class="slds-notify__content">
+                            <h2 class="slds-text-heading_small">The Import-Export was completed by Pak2Go. Please, review details and send the confirmation to Pak2Go.</h2>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>    
+        <!--<div>
+            <ui:button label="Confirm To Pak2Go" class="slds-button slds-button_neutral" press="{!c.confirmQuoteToPak2Go}" />
+            <ui:button label="Reject" class="slds-button slds-button_neutral" press="{!c.openModalRejection}" />
+        </div>-->           
+    </aura:renderIf>     
+    
+    <aura:renderIf isTrue="{!v.status == 'CONFIRMED'}">
+        <div class="demo-only" style="height: 4rem;">
+            <div class="slds-notify_container slds-is-relative">
+                <div class="slds-notify slds-notify_toast slds-theme_success" role="alert">
+                    <span class="slds-assistive-text">success</span>
+                    <div class="slds-notify__content">
+                        <h2 class="slds-text-heading_small">The Import-Export has been confirmed to Pak2Go.</h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </aura:renderIf>
+    
+    <aura:renderIf isTrue="{!v.status == 'REJECTED'}">
+        <div class="demo-only" style="height: 4rem;">
+            <div class="slds-notify_container slds-is-relative">
+                <div class="slds-notify slds-notify_toast slds-theme_error" role="alert">
+                    <span class="slds-assistive-text">succerroress</span>
+                    <div class="slds-notify__content">
+                        <h2 class="slds-text-heading_small">The Import-Export has been rejected to Pak2Go.</h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </aura:renderIf>  
+    
+    <lightning:spinner variant="brand" size="large" aura:id="mySpinner" alternativeText="Loading..."/>
+    
+    <!-- MODAL CON LA TABLA DE CARGO LINES -->
+    <div role="dialog" tabindex="-1" aria-labelledby="header43" aura:id="Modalbox" class="slds-modal slds-modal_large">
+        <div class="slds-modal__container" style="width: 95%;">
+            <div class="slds-modal__header">
+                <div class="slds-grid">
+                    <div class="slds-col slds-has-flexi-truncate">
+                        <div class="slds-media slds-no-space slds-grow">
+                            <div class="slds-media__figure">
+                                <lightning:icon iconName="utility:edit_form"/>
+                            </div>
+                            <div class="slds-media__body">
+                                <p class="slds-text-title--caps slds-line-height--reset">{!v.ie.Name}</p>
+                                <h1 class="slds-page-header__title slds-m-right--small slds-align-middle slds-truncate" title="My Contacts">Import-Export Cargo Lines</h1>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="slds-col slds-no-flex slds-grid slds-align-top">
+                        <div class="slds-button-group" role="group">
+                            <ui:button label="Add New Import-Export Cargo Line" class="slds-button slds-button_neutral" press="{!c.openModalCreation}" />
+                        </div>
+                    </div>
+                </div>               
+            </div>
+            <div class="slds-modal__content slds-p-around--medium"> 
+                <div>
+                    <table class="slds-table slds-table--bordered slds-table--striped slds-table--cell-buffer slds-table--fixed-layout">
+                        <thead>
+                            <tr class="slds-text-heading--label">
+                                <th scope="col" style="width: 7.5%;"><div class="slds-truncate" title="Line">Line</div></th>
+                                <th scope="col" style="width: 15%;"><div class="slds-truncate" title="Description of Goods">Description of Goods</div></th>
+                                <th scope="col" style="width: 20%;"><div class="slds-truncate" title="Description of Packaging">Description of Packaging</div></th>
+                                <th scope="col" style="width: 7.5%;"><div class="slds-truncate" title="Units">Units</div></th>
+                                <th scope="col" style="width: 15%;"><div class="slds-truncate" title="Packaging Unit Weight (Kgs)">Unit Weight (Kgs)</div></th>
+                                <th scope="col" style="width: 15%;"><div class="slds-truncate" title="Total Shipping Weight (Kgs)">Shipping Weight (Kgs)</div></th>
+                                <th scope="col" style="width: 20%;"><div class="slds-truncate" title="Actions">Actions</div></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <aura:iteration items="{!v.lines}" var="line">
+                                <tr>
+                                    <td><div class="slds-truncate" title="{!line.Name}">{!line.Name}</div></td>
+                                    <td><div class="slds-truncate" title="{!line.Item_Name__r.Name}">{!line.Item_Name__r.Name}</div></td>
+                                    <td><div class="slds-truncate" title="{!line.Extension_Item_Name__c}">{!line.Extension_Item_Name__c}</div></td>
+                                    <td><div class="slds-truncate" title="{!line.Units__c}">{!line.Units__c}</div></td>
+                                    <td><div class="slds-truncate" title="{!line.Item_Name__r.Master_Box_Packing_Weight_kg__c}">{!line.Item_Name__r.Master_Box_Packing_Weight_kg__c}</div></td>
+                                    <td><div class="slds-truncate" title="{!line.Total_Shipping_Weight_Kgs__c}">{!line.Total_Shipping_Weight_Kgs__c}</div></td>
+                                    <td>
+                                        <form class="aline-form" onsubmit="{!c.deleteLine}">
+                                            <input type="hidden" value="{!line.Id}" class="line-id" />
+                                            <lightning:button class="slds-button slds-button_small slds-button_neutral" label="Delete" iconName="utility:delete" iconPosition="left" type="submit"/>
+                                        </form>
+                                    </td>                                  
+                                </tr>
+                            </aura:iteration>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="slds-modal__footer">
+                <ui:button label="Close" class="slds-button slds-button_neutral" press="{!c.closeModal}" />
+            </div>
+        </div>
+    </div>
+    <!--// MODAL CON LA TABLA DE CARGO LINES -->
+    
+    <!-- MODAL DE CREACIÓN DE NUEVA CARGO LINE -->
+    <div role="dialog" tabindex="-1" aria-labelledby="header43" aura:id="Modalbox2" class="slds-modal">
+        <div class="slds-modal__container">
+            <div class="slds-modal__header">
+                <div class="slds-grid">
+                    <div class="slds-col slds-has-flexi-truncate">
+                        <div class="slds-media slds-no-space slds-grow">
+                            <div class="slds-media__figure">
+                                <lightning:icon iconName="utility:edit_form"/>
+                            </div>
+                            <div class="slds-media__body">
+                                <p class="slds-text-title--caps slds-line-height--reset">{!v.ie.Name}</p>
+                                <h1 class="slds-page-header__title slds-m-right--small slds-align-middle slds-truncate" title="My Contacts">Create Import-Export Cargo Line {!v.ie.Service_Type__c == 'Containerised' ? '(FCL)' : ''}</h1>
+                            </div>
+                        </div>
+                    </div>
+                </div>               
+            </div>
+
+          	<div class="slds-modal__content slds-grow slds-p-around_medium" id="modal-content-id-1" style="max-height: 450px;">
+            	<c:NEU_Add_Import_Export_Cargo_Line_S1 cargo_line="{!v.cargo_line}" item="{!v.item}" shipment_type="{!v.ie.Service_Type__c}" conType="{!v.conType}"/>
+          	</div>
+          
+            <div class="slds-modal__content slds-grow slds-p-around_medium" id="modal-content-id-2" style="max-height: 450px; display:none;">
+            	<c:NEU_Add_Import_Export_Cargo_Line_S2 cargo_line_s="{!v.cargo_line_s}" cargo_line="{!v.cargo_line}" item="{!v.item}" options="{!v.options}" service_type="{!v.ie.Service_Type__c}"/>
+          	</div>
+            
+            <div class="slds-modal__footer cargo-footer">
+                <div class="footer-div">
+                    <button class="slds-button slds-button_neutral footer-button" onclick="{!c.closeModalCreation}">Cancel</button>
+                    <button class="slds-button slds-button_neutral footer-button" onclick="{!c.clickS1}" id="btn_previous" style="display:none;" >Previous</button>              
+                </div>
+                <div class="footer-div">
+                    <div class="slds-progress slds-progress_shade" style="width: 100px; max-width: 100px;">
+                        <ol class="slds-progress__list">
+                            <li class="slds-progress__item  slds-is-active" id="li_step1" onclick="{!c.clickS1}">
+                                <button class="slds-button slds-button_icon slds-button_icon slds-progress__marker slds-progress__marker_icon" title="Step 1 - Completed">
+                                    <span class="slds-assistive-text" id="step1">Step 1 - Completed</span>
+                                </button>
+                            </li>
+                            <li class="slds-progress__item " id="li_step2" onclick="{!c.clickNext}">
+                                <button class="slds-button slds-progress__marker">
+                                    <span class="slds-assistive-text" id="step2">Step 2 - Active</span>
+                                </button>
+                            </li>
+                        </ol>
+                        <div class="slds-progress-bar slds-progress-bar_x-small" aria-valuemin="0" aria-valuemax="100" aria-valuenow="25" role="progressbar">
+                            <span class="slds-progress-bar__value" style="width: 0%;" id="progress_bar_percent">
+                                <span class="slds-assistive-text">Progress: 0%</span>
+                            </span>
+                        </div>
+                    </div>                
+                </div>
+                <div class="footer-div">
+                    <button id="btn_next" class="slds-button slds-button_neutral footer-button" onclick="{!c.clickNext}">Next</button>  
+            		<button id="btn_save" class="slds-button slds-button_neutral footer-button" onclick="{!c.clickCreate}" style="display:none;">Save</button>             
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--// MODAL DE CREACIÓN DE NUEVA CARGO LINE -->    
+
+    <!-- MODAL ERROR -->
+    <div role="dialog" tabindex="-1" aria-labelledby="header43" aura:id="ModalboxError" class="slds-modal">
+        <div class="slds-modal__container">
+            <div class="slds-modal__header slds-theme_error slds-theme_alert-texture">
+                <h2 class="slds-text-heading_medium" id="prompt-heading-id">Required fields missing</h2>              
+            </div>
+            <div class="slds-modal__content slds-p-around--medium"> 
+                <div>
+                    <p>You have to complet all fields, including measures using the unit conversors.</p>
+                </div>
+            </div>
+            <div class="slds-modal__footer">
+                <ui:button label="Close" class="slds-button slds-button_neutral" press="{!c.closeModalError}" />
+            </div>
+        </div>
+    </div>
+    <!--// MODAL ERROR -->
+    
+    <!-- MODAL REJECTION -->
+    <div role="dialog" tabindex="-1" aria-labelledby="header43" aura:id="ModalboxRejection" class="slds-modal">
+        <div class="slds-modal__container">
+            <div class="slds-modal__header slds-theme_alert-texture">
+                <h2 class="slds-text-heading_medium" id="prompt-heading-id">Why are rejecting the Quote Request?</h2>              
+            </div>
+            <div class="slds-modal__content slds-p-around--medium"> 
+                <div>
+                    <ui:inputText aura:id="reasons" value="{!v.reasons}" required="true" label="Reasons"/>
+                </div>
+            </div>
+            <footer class="slds-modal__footer">
+                <ui:button label="Close" class="slds-button slds-button_neutral" press="{!c.closeModalRejection}" />
+                <ui:button label="Send" class="slds-button slds-button_neutral" press="{!c.rejectToPak2Go}" />
+            </footer>
+        </div>
+    </div>
+    <!--// MODAL REJECTION --> 
+
+    <!-- MODAL BACKDROP -->
+    <div class="slds-backdrop" aura:id="modalbackdrop"></div>    
+    <!--// MODAL BACKDROP -->
+    
+</aura:component>

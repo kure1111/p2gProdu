@@ -1,0 +1,40 @@
+<apex:page lightningStylesheets="true">
+    <apex:pageBlock title="ZONA NORESTE" mode="edit"> 
+        <apex:pageBlockSection title="ESTATUS COTIZACIONES" columns="3" >
+            <analytics:reportChart reportId="00O4T000000YoUi" size="tiny"/>
+            <analytics:reportChart reportId="00O4T000000YoVA" size="tiny"/>
+            <analytics:reportChart reportId="00O4T000000YoV6" size="tiny"/>
+            <analytics:reportChart reportId="00O4T000000YoV7" size="tiny"/>
+            <analytics:reportChart reportId="00O4T000000YoV8" size="tiny"/>
+            <analytics:reportChart reportId="00O4T000000YoV9" size="tiny"/>
+        </apex:pageblocksection>
+        <apex:pageBlockSection title="MONTERREY " columns="3" >
+            <analytics:reportChart reportId="00O4T000000YtOT" size="tiny"/>
+            <analytics:reportChart reportId="00O4T000000YtOO" size="tiny"/>
+            <analytics:reportChart reportId="00O4T000000YtOY" size="tiny"/>
+            <analytics:reportChart reportId="00O4T000000YtOd" size="tiny"/>
+            <analytics:reportChart reportId="00O4T000000YtOn" size="tiny"/>
+            <analytics:reportChart reportId="00O4T000000YtOs" size="tiny"/>
+            <analytics:reportChart reportId="00O4T000000YtOx" size="tiny"/>
+            <analytics:reportChart reportId="00O4T000000YtP2" size="tiny"/>    
+        </apex:pageblocksection>
+        <apex:pageBlockSection title="TORREON" columns="3" >
+            <analytics:reportChart reportId="00O4T000000YoaE" size="tiny"/>
+            <analytics:reportChart reportId="00O4T000000YoaI" size="tiny"/>
+            <analytics:reportChart reportId="00O4T000000YoaH" size="tiny"/>
+            <analytics:reportChart reportId="00O4T000000YoaJ" size="tiny"/>
+            <analytics:reportChart reportId="00O4T000000YoaM" size="tiny"/>
+            <analytics:reportChart reportId="00O4T000000YoaN" size="tiny"/>
+            <analytics:reportChart reportId="00O4T000000YoaK" size="tiny"/>
+            <analytics:reportChart reportId="00O4T000000YoaL" size="tiny"/>        
+        </apex:pageblocksection>
+        <apex:pageBlockSection title="SALTILLO" columns="3" >
+            <analytics:reportChart reportId="00O4T000000Yoa8" size="tiny"/>
+            <analytics:reportChart reportId="00O4T000000Yoa7" size="tiny"/>
+            <analytics:reportChart reportId="00O4T000000Yoa6" size="tiny"/>
+            <analytics:reportChart reportId="00O4T000000YoaB" size="tiny"/>
+            <analytics:reportChart reportId="00O4T000000Yoa9" size="tiny"/>
+            <analytics:reportChart reportId="00O4T000000YoaA" size="tiny"/>
+        </apex:pageblocksection>
+    </apex:pageBlock>
+ </apex:page>

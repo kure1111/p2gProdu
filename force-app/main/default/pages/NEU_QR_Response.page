@@ -1,0 +1,22 @@
+<apex:page showHeader="false" sidebar="false">
+    <script>
+        $Lightning.use("c:NEU_QR_ResponseAPP",
+            function() {          
+                $Lightning.createComponent(
+                    "c:NEU_QR_Response",
+                    {
+                        recordId : '{!$CurrentPage.parameters.id}'                  
+                    },                  // attributes to set on the component when created
+                    "lightningLocator",
+                    function(cmp) {
+                        // callback when component is created and active on the page
+                    }
+                );
+            },
+            'https://pak2go--c.eu17.visual.force.com' //Site endpoint
+        );
+    </script>
+    <apex:includeLightning />
+    <div id="lightningLocator">
+    </div>
+</apex:page>

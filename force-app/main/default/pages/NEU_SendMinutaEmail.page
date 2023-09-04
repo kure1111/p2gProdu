@@ -1,0 +1,205 @@
+<!--
+ - Created by jamarin on 30/01/2019.
+ -->
+
+<!--apex:page id="NEU_SendMinutaEmail" standardController="Event" extensions="NEU_SendMinutaEmail" -->
+<apex:page standardController="Event" extensions="NEU_SendMinutaEmail" >
+    <apex:includeScript value="{!$Resource.neu_jquery}"/>
+    <apex:includeScript value="{!$Resource.jquery_1_10_2}"/>
+    <apex:includeScript value="{!$Resource.jquery_ui_1_10_3}"/>
+    <apex:includeScript value="{!$Resource.neurored_jquery}"/>
+    <apex:stylesheet value="{!URLFOR($Resource.jquery_ui_1_10_3_css,'jquery-ui-1.10.3.min.css')}"/>
+    <script>
+
+    </script>
+    <style>
+		table.templates tr {
+			display: inline-block;
+			width : 23%;
+		}
+
+        .result_table{margin: 0 0 10px 0; font-style:italic; font-size:15px;}
+        .filter_button{float:left; width:205px;}
+        .button_selected{background:#C0C0C0 !important;}
+        .homeTab .bPageBlock{border-top:3px solid #007a37;}
+        .actions_table{border:none; width:100%;}
+        .actions_table th, .sort_table th
+        {
+            background: #f2f3f3;
+            border:1px solid #e0e3e5;
+            border-bottom:2px solid #cccccc;
+            color: #000;
+            font-size: .9em;
+            font-weight: bold;
+            padding: 5px 2px 4px 5px;
+        }
+        .actions_table td, .sort_table td
+        {
+            border:1px solid #e0e3e5;
+            background:#ffffff;
+        }
+        .actions_table .header_red{background:#007a37; border:1px solid #007a37; color:#ffffff;}
+        .action_link{color:#015ba7 !important; cursor:pointer; text-decoration:none;}
+        .action_link:hover{color:#015ba7 !important; cursor:pointer; text-decoration:none;}
+        .homeTab .tertiaryPalette{background-color:#007a37;}
+        .lista_usuarios
+        {
+            float:left;
+            margin:10px 0 10px 0 !important;
+            width:100%;
+        }
+        #iframe_prod
+        {
+            border:3px solid #8a9ebe;
+            border-radius:5px;
+            float: left;
+            position: fixed;
+            z-index: 1200;
+            display:none;
+            background-color:#cccccc;
+            background-image: url('/img/loading32.gif');
+            background-repeat: no-repeat;
+            background-position: center;
+            -webkit-box-shadow: 7px 7px 5px 0px rgba(50, 50, 50, 0.75);
+            -moz-box-shadow: 7px 7px 5px 0px rgba(50, 50, 50, 0.75);
+            box-shadow: 7px 7px 5px 0px rgba(50, 50, 50, 0.75);
+        }
+        #tapa
+        {
+            background-color: rgb(119, 119, 119);
+            opacity: 0.7;
+            height: 100%;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1100;
+            display: none;
+            margin: 0;
+            padding: 0;
+            border: 0;
+        }
+        #cierre
+        {
+            display:block;
+            font-family:Arial;
+            font-size:20px;
+            color:white;
+            border-radius:11px;
+            float: left;
+            position: fixed;
+            z-index: 1201;
+            display:none;
+            background-color:#8a9ebe;
+            padding: 5px;
+            cursor: pointer;
+            -webkit-box-shadow: 7px 7px 5px 0px rgba(50, 50, 50, 0.75);
+            -moz-box-shadow: 7px 7px 5px 0px rgba(50, 50, 50, 0.75);
+            box-shadow: 7px 7px 5px 0px rgba(50, 50, 50, 0.75);
+        }
+        .panel_datos .bPageBlock{border-top: 3px solid #8a9ebe !important;}
+        .cuerpo_email_asunto .bPageBlock{border-top: 0px solid #8a9ebe !important;}
+        .panel_actividades .bPageBlock{border-top: 3px solid #8a9ebe !important;}
+        .panel_datos .tertiaryPalette{background-color: #8a9ebe !important;}
+        .lista_contactos, .lista_banqueros{padding:0; margin:0;}
+        .lista_contactos li, .lista_banqueros li{list-style-type:none;}
+        span.lookupInput input {margin-left: 5px;}
+        #capa_referencias{}
+        .tabla_referencias{}
+    </style>
+    <apex:pageMessages id="messages"/>
+    <div id="tapa" onclick="cerrar_pdf();"></div>
+    <iframe src="" id="iframe_prod" width="568" height="709" frameborder="1" scrolling="no"></iframe>
+    <span id="cierre" onclick="cerrar_pdf();">X</span>
+    <apex:form id="form">
+        <a href="{!URLFOR(URLFOR($Action.Event.View,Id))}" title="return to {!$ObjectType.Event.label}"><apex:sectionHeader title="{!$ObjectType.Event.label}" subtitle="Send Email{!$ObjectType.Event.label}"/></a>
+        <apex:actionFunction name="update"  status="myStatus" reRender="botones"/>
+        <apex:outputPanel id="datos_email" styleclass="panel_datos">
+            <apex:pageBlock title="Communication Details"><!--title="Shipment Order"-->
+                <apex:pageBlockButtons location="top">
+                    <input type="button" value="Send Email" class="btn" style="" onclick="send_email();"/>
+                    <apex:commandButton value="Return" action="{!return_event}"/>
+                </apex:pageBlockButtons>
+
+
+                <apex:pageBlockSection columns="1" title="To:"/>
+                <table style="width: 90%;">
+                    <tr>
+                        <td>
+
+                            <div style="width: 100%; display: inline-block;">
+                                <apex:outputText >* Please enter the Cc Addresses separated by ";" at the end of each one.</apex:outputText>
+                                <apex:inputText value="{!defaultTo}" style="width:100%;"/>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+
+                <apex:pageBlockSection columns="1" title="Cc (Additional Addresses):"/>
+                <table style="width: 90%;">
+                    <tr>
+                        <td>
+                            <apex:outputText >* Please enter the Cc Addresses separated by ";" at the end of each one.</apex:outputText>
+                            <apex:inputText value="{!defaultCc}" style="width:100%;"/>
+                        </td>
+                    </tr>
+                </table>
+
+                <apex:pageBlockSection columns="1" title="Bcc:"/>
+                <table style="width: 90%;">
+                    <tr>
+                        <td>
+                            <!--<div style="width: 5%; display: inline-block;"><apex:outputText >Bcc:</apex:outputText></div>-->
+                            <apex:outputText >* Please enter the Bcc Addresses separated by ";" at the end of each one.</apex:outputText>
+                            <apex:inputText value="{!defaultBcc}" style="width:100%;"/>
+                        </td>
+                    </tr>
+                </table>
+
+                <apex:pageBlockSection columns="1" title="Subject:"/>
+                <table style="width: 90%;">
+                    <tr>
+                        <td>
+                            <!--<div style="width: 5%; display: inline-block;"><apex:outputText >Subject:</apex:outputText></div>-->
+                            <apex:inputText value="{!subject}" style="width: 100%;"/>
+                        </td>
+                    </tr>
+                </table>
+
+            </apex:pageBlock>
+        </apex:outputPanel>
+
+
+        <apex:outputPanel id="cuerpo_email" styleclass="panel_datos">
+            <apex:pageBlock title="Email Body">
+
+                <apex:pageBlockSection columns="1" title="Email Preview" id="subject_body"/>
+                <table style="width: 100%;">
+                    <tr>
+                        <td rowspan="2">
+                            <apex:outputText value="{!html_body}" escape="false" style="width: 95%; height:250px; resize:none; margin-left: 7px; background-color: blue;" rendered="{!if(html_body !=  null, true, false)}"/>
+                        </td>
+                    </tr>
+                </table>
+            </apex:pageBlock>
+        </apex:outputPanel>
+
+
+        <apex:outputpanel >
+            <apex:actionstatus id="myStatus">
+                <apex:facet name="start">
+                    <div class="waitingSearchDiv" id="el_loading" style="background-color: #fbfbfb;
+                          height: 100%;opacity:0.65;width:100%;">
+                        <div class="waitingHolder" style="top: 74.2px; width: 91px;">
+                            <img class="waitingImage" src="/img/loading.gif" title="Please Wait..." />
+                            <span class="waitingDescription">Loading...</span>
+                        </div>
+                    </div>
+                </apex:facet>
+            </apex:actionstatus>
+        </apex:outputpanel>
+
+        <apex:actionFunction name="send_email" action="{!send_email}" status="myStatus"/>
+    </apex:form>
+
+</apex:page>

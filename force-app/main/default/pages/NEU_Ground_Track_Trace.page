@@ -1,0 +1,274 @@
+<apex:page standardController="Shipment__c" extensions="NEU_Ground_Track_Trace"  sidebar="false" showHeader="false">
+    <apex:includeScript value="{!$Resource.jquery_1_10_2}"/> 
+    <apex:includeScript value="{!$Resource.jquery_ui_1_10_3}"/>
+    <script type="text/javascript" src="https://maps.google.com/maps/api/js?key=AIzaSyAK8UqXuiT9IFTwkvhF-Nh1wS2JAdk6Fig"></script>
+    <apex:includeScript value="{!$Resource.neurored_jquery}"/> 
+    <script>
+        $(document).ready(function () {
+            //pintar_mapa();
+            initialize_inicio();
+        });
+        
+          var map;
+          var directionsDisplay;
+          var directionsService = new google.maps.DirectionsService();
+          var markers = [];
+          var geocoder;
+          var route_paint_init = false;
+        function initialize_inicio() 
+        {
+            var mundo= new google.maps.LatLng(8.4324774,20.1243519); 
+            var mapOptions = {
+                zoom: 2,
+                center: mundo
+                };
+            map = new google.maps.Map(document.getElementById('map_canvas'), mapOptions);
+            geocoder = new google.maps.Geocoder();
+            showactivities();
+        }
+        
+        
+        var activities=[];
+        var cactivity;
+        var cletter;
+        var activitylocation;
+        function showactivities()
+        {
+            activities=$('.direcciones_recogidas').getString().split('|');
+            cactivity=(Math.floor(activities.length/8)-1)*8;
+            cletter=65;
+            preshowactivity();
+        }
+        
+        function preshowactivity()
+        {
+            if(cactivity>=0)
+            {
+                activitylocation=activities[cactivity].trim();
+                showactivity();
+            }
+            else
+               pintar_ruta();
+        }
+        
+        
+        var waypts = [];    
+        var waypts2 = []; 
+        function pintar_ruta()
+        {
+            directionsService = new google.maps.DirectionsService();
+            if(route_paint_init == false)
+            {
+                //direccion_destino
+                directionsDisplay = new google.maps.DirectionsRenderer();
+                directionsDisplay.setMap(null);    
+            }
+            else// si no se pone esto queda las demas rutas en transparente
+            {
+                directionsDisplay.setMap(null);    
+                //directionsService = new google.maps.DirectionsService();
+                
+            }
+             waypts = [];
+             waypts2 = []
+             var start = $('.direccion_origen').val();
+             var end = $('.direccion_destino').val();
+  
+               for(var i=0;i<markers.length;i++)
+               {
+                    if(markers[i].location != start && markers[i].location != end)
+                      waypts.push({location: markers[i].location, stopover:true });
+                    // markers[i].setMap(null);---- 
+                }
+                //recorro el array para mostrarlo al reves
+                if(waypts != null && waypts.length > 0)
+                {
+                    //var posicion_array2 = 0;
+                    for(var i=waypts.length-1; i>=0; i--)
+                    {
+                       // waypts2[posicion_array2] = waypts[i];
+                        waypts2.push({location: waypts[i].location, stopover:true });
+                        //posicion_array2 ++;
+                    }
+                }
+   
+              route_paint_init = true;
+              
+              var request = {
+                  origin: start,
+                  destination: end,
+                  waypoints: waypts2,
+                  //waypoints: markers,
+                //  optimizeWaypoints: true,
+                optimizeWaypoints: false,
+             //   waypoint_order:waypts,
+                  travelMode: google.maps.TravelMode.DRIVING
+              };
+              
+              //esto es para pintar la route
+              directionsService.route(request, function(response, status) {
+                if (status == google.maps.DirectionsStatus.OK) 
+                {
+                  directionsDisplay.setDirections(response);
+                }
+              });
+              
+             directionsDisplay.setMap(map);
+             directionsDisplay.setOptions( { suppressMarkers: true } );
+        }
+        
+        function showactivity()
+        {
+            geocoder.geocode( { 'address': activitylocation}, function(results, status) {
+              if (status == google.maps.GeocoderStatus.OK) 
+              {
+                 map.setCenter(results[0].geometry.location);
+                 var marker = new google.maps.Marker({
+                     map: map,
+                     position: results[0].geometry.location,
+                     location: activitylocation,
+                     idmarker: String.fromCharCode(cletter),
+                     idmarker2: activities[cactivity+7].trim(),
+                     animation: google.maps.Animation.DROP,
+                       icon: activities[cactivity+6].trim()
+      
+                 });
+                  
+                 markers.push(marker);
+                   
+                 var infowindow = new google.maps.InfoWindow({
+                   content:'<div style="color: black;">'+ activities[cactivity+1].trim()+'<br/>'+activities[cactivity+2].trim()+'<br/>'+activities[cactivity+3].trim()+'<br/>'+activities[cactivity+4].trim()+'<br/>'+activities[cactivity+5].trim()+'</div>'
+                   });
+                   
+                 google.maps.event.addListener(marker, 'click', function() {
+                   infowindow.open(marker.get('map'), marker);
+                   });
+                   
+                cactivity-=8;
+                cletter++;
+                setTimeout(function (){preshowactivity();}, 200);
+              }
+              else if(status == google.maps.GeocoderStatus.OVER_QUERY_LIMIT)
+                setTimeout(function(){showactivity();},2000);
+              else if(status == google.maps.GeocoderStatus.ZERO_RESULTS)
+              {
+                    var pos=activitylocation.indexOf(' ');
+                    if(pos>=0)
+                    {
+                        activitylocation=activitylocation.substring(pos+1);
+                        setTimeout(function (){showactivity();},0);
+                    }
+                    else
+                    {
+                        cactivity-=8
+                        cletter++;
+                        setTimeout(function(){preshowactivity();},200);
+                    }
+               }
+               
+             });
+        }
+    </script>
+    <style>
+        #contenedor
+        {
+            font-family: Arial, Helvetica, sans-serif;
+            width: 100%;
+            float: left;
+            margin-top: 10px;
+                margin-bottom: 10px;
+        }
+        
+        .tabla_datos
+        {
+            width: 100%;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+        
+        #logotipo
+        {
+            width: 51px;
+            margin-top: -11px;
+            margin-bottom: -12px;
+        }
+        
+        .cabecera_tabla
+        {
+                text-align: center;
+                font-weight: bold !important;
+                width: 40%;
+                height: 28px;
+                vertical-align: middle;
+        }
+        
+        .marca_tipo
+        {
+                float: left;
+                margin-left: 11px;
+        }
+        
+        .titulo_cuenta
+        {
+
+            margin-top: 10px;
+            float: left;
+            margin-left: 35px;
+        }
+        
+        .img_tabla
+        {
+            background-color: white !important;
+              background-color: white;
+            -webkit-box-shadow: 0px 0px 0px #999 !important;
+            -moz-box-shadow: 0px 0px 0px #999 !important;
+            filter: shadow(color=#999999, direction=135, strength=2) !important;
+                width: 10% !important;
+        }
+        
+        .tabla_datos th
+        {
+            font-weight: normal;
+            font-size: 12px;
+            background-color: #007a37;
+            color: white;
+            -webkit-box-shadow: 2px 2px 5px #999;
+            -moz-box-shadow: 2px 2px 5px #999;
+            filter: shadow(color=#999999, direction=135, strength=2);
+        }
+        .capa_mapa .bPageBlock{border-top: 0px solid #007a37 !important;}
+        .panel_grupoed .tertiaryPalette{background-color: #007a37 !important;}
+        .tabla_datos td
+        {
+            -webkit-box-shadow: 2px 2px 5px #999;
+            -moz-box-shadow: 2px 2px 5px #999;
+            filter: shadow(color=#999999, direction=135, strength=2);
+            padding: 4px;
+        }
+        html{background-color:#ffffff !important;}
+        html .brandQuaternaryBgr{background-color:#ffffff !important;}
+    </style>
+    <apex:form id="form">
+        <apex:inputHidden value="{!direccion_origen}" id="direccion_origen" html-class="direccion_origen"/>
+        <apex:inputHidden value="{!direccion_destino}" id="direccion_destino" html-class="direccion_destino"/>
+        <apex:inputHidden value="{!direcciones_recogidas}" id="direcciones_recogidas" html-class="direcciones_recogidas"/>
+        <apex:outputText value="{!string_tabla}" escape="false"/>
+        <apex:outputPanel styleClass="capa_mapa">
+            <apex:pageBlock >
+                <div id="map_canvas" style="width:100%; height: 410px;"></div>
+           </apex:pageBlock>
+        </apex:outputPanel>
+        <apex:outputpanel >
+           <apex:actionstatus id="myStatus">
+               <apex:facet name="start">
+                   <div class="waitingSearchDiv" id="el_loading" style="background-color: #fbfbfb;
+                          height: 100%;opacity:0.65;width:100%;"> 
+                       <div class="waitingHolder" style="top: 74.2px; width: 91px;">
+                           <img class="waitingImage" src="/img/loading.gif" title="Please Wait..." />
+                           <span class="waitingDescription">Loading...</span>
+                       </div>
+                   </div>
+               </apex:facet>
+           </apex:actionstatus>
+        </apex:outputpanel>
+    </apex:form>
+</apex:page>

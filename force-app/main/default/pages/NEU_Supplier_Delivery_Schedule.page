@@ -1,0 +1,631 @@
+<apex:page id="page" standardController="Customer_Quote__c" extensions="NEU_Supplier_Delivery_Schedule" docType="html-5.0">
+<apex:stylesheet value="{!$Resource.Style_OrdertoStock}"/> 
+<apex:includeScript value="{!$Resource.jquery_1_10_2}"/> 
+<apex:includeScript value="{!$Resource.jquery_ui_1_10_3}"/>
+<apex:includeScript value="{!$Resource.neurored_jquery}"/> 
+<apex:stylesheet value="{!URLFOR($Resource.jquery_ui_1_10_3_css,'jquery-ui-1.10.3.min.css')}"/>
+<script>
+    $(document).ready(function () {
+            setDecimalSep($('#page\\:form\\:decimalSep').val(),$('#page\\:form\\:thousandSep').val());
+            updateLines();
+            quitar_fondo();
+        });
+        function changeNotConsolidated()
+        {
+            if($($.sfId('{!$Component.form.block1.accountidSelector}')).getString()!='')
+            {
+                updateLines();
+                $('#accordion').accordion('option','active',1);
+            }
+        }
+        
+        function quitar_fondo()
+        {
+            $('.capa_boton').children().children().children().children().css('background','none');
+            $('.capa_boton').children().children().children().children().css('border','0px');
+        }
+    
+        var todas_cuentas = new Array();
+        function changeAccountSelected(s)
+        {
+            $($.sfId('{!$Component.form.block2.buttons.totalweight}')).html('0');
+            
+            $($.sfId('{!$Component.form.TotalNumberBoxes}')).val('0');
+            $($.sfId('{!$Component.form.TotalNumberPallets}')).val('0');
+            $($.sfId('{!$Component.form.Grossweight}')).val('0');
+            $($.sfId('{!$Component.form.Cube}')).val('0');
+            $($.sfId('{!$Component.form.TotalNumberCont}')).val('0');
+            
+             $($.sfId('{!$Component.form.porc_ocupacion}')).val('0');  
+            
+            $($.sfId('{!$Component.form.max_peso_container}')).val(0);
+            $($.sfId('{!$Component.form.max_volumen_container}')).val(0);
+            $($.sfId('{!$Component.form.num_cont_x_pallet}')).val(0); 
+             
+            
+            var nuevo_seleccionado=s.selectedIndex;
+            for(y=0;y<s.options.length;y++)
+            {
+                if(y==nuevo_seleccionado)
+                {
+                    todas_cuentas[y]=!todas_cuentas[y];
+                    s.options[y].selected=todas_cuentas[y];
+                }
+                else
+                    s.options[y].selected=todas_cuentas[y];
+            }
+            updateLines();
+        }
+        
+        function go_supply_project()
+        {
+            var idproject = $('.idproyecto').getString();
+            if(idproject)
+            {
+                $('#otherStatus').show();
+               // location.href= $('.direccion_base').val()+idproject;
+                var url_red = '{!$Site.BaseUrl}/'+idproject;    
+                $(location).attr('href',url_red);
+            }
+            else
+            {
+                $( "#contenedormensaje" ).dialog({
+                     height: 150,
+                     width: 280,
+                     modal: true
+                     });
+            }
+        }
+        
+        (function($) {
+            $.fn.calcularpeso = (function() {
+                var seleccion_de_contenedores  = $('.seleccioncontainer').prop('selectedIndex');
+                var valores_contenedores = $($.sfId('{!$Component.form.block2.ids_pallet_idscontenedores}')).val().split('|');
+                if(seleccion_de_contenedores > 0)
+                {
+                    var valor_pallet_container_seleccionado= valores_contenedores[seleccion_de_contenedores-1];
+                    var valores = valor_pallet_container_seleccionado.split('_');
+                    var id_pallet_selected = valores[1];
+                    var volumen_pallet = valores[2];
+                    if(isNaN(volumen_pallet))
+                        volumen_pallet=0.0000;
+                    var peso_pallet = valores[3];
+                    if(isNaN(peso_pallet))
+                        peso_pallet=0;
+                    var volumen_max_container = valores[4];
+                    if(isNaN(volumen_max_container))
+                        volumen_max_container=0;
+                    var peso_max_container = valores[5];
+                    if(isNaN(peso_max_container))
+                        peso_max_container=0;
+                    var numero_pallet_container = valores[6];
+                    if(isNaN(numero_pallet_container))
+                        numero_pallet_container=0;
+                        
+                    $($.sfId('{!$Component.form.max_peso_container}')).val(valores[5]);
+                     if(isNaN($($.sfId('{!$Component.form.max_peso_container}')).val()) || $($.sfId('{!$Component.form.max_peso_container}')).val() == null )
+                        $($.sfId('{!$Component.form.max_peso_container}')).val(0);
+                        
+                    $($.sfId('{!$Component.form.max_volumen_container}')).val(valores[4]);
+                    if(isNaN($($.sfId('{!$Component.form.max_volumen_container}')).val()) || $($.sfId('{!$Component.form.max_volumen_container}')).val() == null )
+                        $($.sfId('{!$Component.form.max_volumen_container}')).val(0);
+                        
+                    $($.sfId('{!$Component.form.num_cont_x_pallet}')).val(valores[6]);
+                    if(isNaN($($.sfId('{!$Component.form.num_cont_x_pallet}')).val()) || $($.sfId('{!$Component.form.num_cont_x_pallet}')).val() == null )
+                        $($.sfId('{!$Component.form.num_cont_x_pallet}')).val(0);
+                        
+                    $($.sfId('{!$Component.form.la_lista_no_cero}')).val(true);
+                }
+               if(seleccion_de_contenedores == 0)
+                {
+                     $($.sfId('{!$Component.form.la_lista_no_cero}')).val(false);
+                }
+                this.each(function(){
+
+                     var iditem=$(this).attr('neudata');
+                     var supply=$(this).getFloatSep();
+                     var pallet_x_caja = 0;
+                     var units_x_masterbox =$($.sfId('{!$Component.form.block2.table1}')+' span[neudata="packagingunits'+iditem+'"]').getFloatSep();
+                     if($($.sfId('{!$Component.form.block2.table1}')+' span[neudata="packagingunits'+iditem+'"]').html() == '')
+                     {
+                        units_x_masterbox=$($.sfId('{!$Component.form.block2.table1}')+' span[neudata="packagingunits'+iditem+'"]').html(1);
+                     }
+                     if($($.sfId('{!$Component.form.block2.table1}')+' input[neudata="relacionconlospallet'+iditem+'"]').val() != '' && seleccion_de_contenedores != 0 && $($.sfId('{!$Component.form.block2.table1}')+' input[neudata="relacionconlospallet'+iditem+'"]').val() != null)
+                     {
+                       var comprobante_mismo_pallet = $($.sfId('{!$Component.form.block2.table1}')+' input[neudata="relacionconlospallet'+iditem+'"]').val().split('|');
+                       $.each(comprobante_mismo_pallet ,function(index,contenido){
+                        var tipo_pallet = contenido.split('_');
+                        if(id_pallet_selected == tipo_pallet[0])
+                        {
+                            pallet_x_caja = tipo_pallet[1];
+                        }
+                        });
+                        
+                     }
+                     //----------------------------------------
+                     if(units_x_masterbox != 0)
+                        $($.sfId('{!$Component.form.block2.table1}')+' span[neudata="packaging'+iditem+'"]').setFloatSep(Math.ceil(supply/units_x_masterbox));//calculo total cajas
+                    else
+                        $('table.tabla_principal span[neudata="packaging'+iditem+'"]').html(0);
+                    
+                    var totalcajas = $($.sfId('{!$Component.form.block2.table1}')+' span[neudata="packaging'+iditem+'"]').getFloatSep();
+                    
+                    if(pallet_x_caja != 0)
+                    {
+                        //$($.sfId('{!$Component.form.block2.table1}')+' span[neudata="numberpallet'+iditem+'"]').html(Math.ceil(totalcajas/pallet_x_caja));//calculo pallet
+                        $($.sfId('{!$Component.form.block2.table1}')+' span[neudata="numberpallet'+iditem+'"]').setFloatSep(Math.ceil(supply/pallet_x_caja));//calculo pallet
+                    }
+                    else
+                    {
+                        $($.sfId('{!$Component.form.block2.table1}')+' span[neudata="numberpallet'+iditem+'"]').html(0);
+                    }
+                        
+                    $($.sfId('{!$Component.form.block2.table1}')+' input[neudata="tienerelacion_con_pallet'+iditem+'"]').val(true);
+                    
+                    var peso_pallets= peso_pallet*$($.sfId('{!$Component.form.block2.table1}')+' span[neudata="numberpallet'+iditem+'"]').getFloatSep();
+                    
+                    if(isNaN(peso_pallets))
+                        peso_pallets=0;
+                    var volumen_pallets = volumen_pallet*$($.sfId('{!$Component.form.block2.table1}')+' span[neudata="numberpallet'+iditem+'"]').getFloatSep();
+                     if(isNaN(volumen_pallets))
+                        volumen_pallets=0.0000;
+                    
+                    if(pallet_x_caja != 0)
+                    {
+                         $($.sfId('{!$Component.form.block2.table1}')+' span[neudata="weight'+iditem+'"]').setFloatSep(($($.sfId('{!$Component.form.block2.table1}')+' input[neudata="packagingweight'+iditem+'"]').getFloat()*supply + peso_pallets).toFixed(2));// peso
+                         $($.sfId('{!$Component.form.block2.table1}')+' span[neudata="volume'+iditem+'"]').setFloatSep(($($.sfId('{!$Component.form.block2.table1}')+' input[neudata="packagingvolume'+iditem+'"]').getFloat()*supply + volumen_pallets).toFixed(4)); //volumen
+                         if($($.sfId('{!$Component.form.block2.table1}')+' span[neudata="volume'+iditem+'"]').getFloatSep() == 0 || $($.sfId('{!$Component.form.block2.table1}')+' span[neudata="volume'+iditem+'"]').getFloatSep() == 0.0000)//cuando no tiene volument la caja
+                            $($.sfId('{!$Component.form.block2.table1}')+' span[neudata="volume'+iditem+'"]').setFloatSep(0.0000);
+                        
+                        $($.sfId('{!$Component.form.block2.table1}')+' span[neudata="weight'+iditem+'"]').css('color','#000');
+                        $($.sfId('{!$Component.form.block2.table1}')+' span[neudata="volume'+iditem+'"]').css('color','#000');
+                        $($.sfId('{!$Component.form.block2.table1}')+' span[neudata="numberpallet'+iditem+'"]').css('color','#000');
+                    }
+                    else
+                    {
+                        $($.sfId('{!$Component.form.block2.table1}')+' span[neudata="weight'+iditem+'"]').setFloatSep(($($.sfId('{!$Component.form.block2.table1}')+' input[neudata="packagingweight'+iditem+'"]').getFloat()*supply).toFixed(2));//peso
+                        $($.sfId('{!$Component.form.block2.table1}')+' span[neudata="volume'+iditem+'"]').setFloatSep(($($.sfId('{!$Component.form.block2.table1}')+' input[neudata="packagingvolume'+iditem+'"]').getFloat()*supply).toFixed(4)); //volumen
+                    }
+                     $($.sfId('{!$Component.form.block2.table1}')+' input[neudata="volume_hidden'+iditem+'"]').val($($.sfId('{!$Component.form.block2.table1}')+' span[neudata="volume'+iditem+'"]').getFloatSep());
+                     $($.sfId('{!$Component.form.block2.table1}')+' input[neudata="weight_hidden'+iditem+'"]').val( $($.sfId('{!$Component.form.block2.table1}')+' span[neudata="weight'+iditem+'"]').getFloatSep());
+                    if(pallet_x_caja ==0 && seleccion_de_contenedores >0)
+                    {
+                        $('.imagen_warning'+iditem+'').css('display','block');
+                    }
+                    if(pallet_x_caja !=0 && seleccion_de_contenedores >0)
+                       $('.imagen_warning'+iditem+'').css('display','none'); 
+                    if(seleccion_de_contenedores == 0)
+                       $('.imagen_warning'+iditem+'').css('display','none');  
+                       
+                       
+                       console.log('nuemr1'+$(this).getFloatSep());
+                       console.log('nuemr2'+$($.sfId('{!$Component.form.block2.table1}')+' span[neudata="packagingunits'+iditem+'"]').getFloatSep());
+                        console.log($(this).getFloatSep()%$($.sfId('{!$Component.form.block2.table1}')+' span[neudata="packagingunits'+iditem+'"]').getFloatSep());
+                        if($(this).getFloatSep()%$($.sfId('{!$Component.form.block2.table1}')+' span[neudata="packagingunits'+iditem+'"]').getFloatSep() != 0)
+                        {
+                            
+                            $($.sfId('{!$Component.form.block2.table1}')+' span[neudata="packagingunits'+iditem+'"]').css('color','red');
+                        }
+                        else
+                            $($.sfId('{!$Component.form.block2.table1}')+' span[neudata="packagingunits'+iditem+'"]').css('color','black');
+                
+                      
+                });
+            });
+        })(jQuery);
+        
+        function calculartotalpesovolumen()
+        {
+            var shipment_selected = $('.seleccionshipmentpricipal').val();
+            var total_cajas = 0;
+            var total_pallets = 0;
+            var total_peso = 0;
+            var total_volumen = 0;
+            $($.sfId('{!$Component.form.block2.table1}')+' .supplyinput').each(function() 
+            {
+                if(shipment_selected == $(this).parent().parent().find('.select_shipments').val())
+                {
+                    total_cajas +=$($.sfId('{!$Component.form.block2.table1}')+' span[neudata="packaging'+$(this).attr('neudata')+'"]').getFloatSep();
+                    total_pallets +=$($.sfId('{!$Component.form.block2.table1}')+' span[neudata="numberpallet'+$(this).attr('neudata')+'"]').getFloatSep();
+                    total_peso +=$($.sfId('{!$Component.form.block2.table1}')+' span[neudata="weight'+$(this).attr('neudata')+'"]').getFloatSep();
+                    total_volumen +=$($.sfId('{!$Component.form.block2.table1}')+' span[neudata="volume'+$(this).attr('neudata')+'"]').getFloatSep();
+                }
+            });
+            $($.sfId('{!$Component.form.TotalNumberBoxes}')).val(total_cajas);
+            $('#totalcajas').setFloatSep(total_cajas);
+            $($.sfId('{!$Component.form.TotalNumberPallets}')).val(total_pallets);
+            $('#totalpallet').setFloatSep(total_pallets);
+            total_peso = total_peso.toFixed(2);
+            $($.sfId('{!$Component.form.Grossweight}')).val(total_peso);
+            $('#totalweight').setFloatSep(total_peso);//falta sumar pallet peso
+            $($.sfId('{!$Component.form.Cube}')).val(total_volumen);
+            $('#totalvolume').setFloatSep(total_volumen.toFixed(4));//falta sumar pallet volumen
+            
+             
+            var ocupacion_peso = 0;
+            var ocupacion_volumen = 0;
+            var ocupacion_pallet = 0;
+            var TotalNumberCont = 0;
+            var FreeSpaceCont = 0;
+            var porc_ocupacion = 0;
+            if($($.sfId('{!$Component.form.max_peso_container}')).val() > 0)
+            {
+                ocupacion_peso = $($.sfId('{!$Component.form.Grossweight}')).val()/$($.sfId('{!$Component.form.max_peso_container}')).val();
+            }
+            if($($.sfId('{!$Component.form.max_volumen_container}')).val() >0)
+            {
+                ocupacion_volumen =  $($.sfId('{!$Component.form.Cube}')).val()/$($.sfId('{!$Component.form.max_volumen_container}')).val();
+            }
+            if( $($.sfId('{!$Component.form.num_cont_x_pallet}')).val() >0)
+            {
+                ocupacion_pallet = $($.sfId('{!$Component.form.TotalNumberPallets}')).val()/$($.sfId('{!$Component.form.num_cont_x_pallet}')).val();
+            }
+                        
+                if(ocupacion_peso > ocupacion_pallet)
+                {
+                    if(ocupacion_peso > ocupacion_volumen)
+                    {
+                        TotalNumberCont = Math.ceil($($.sfId('{!$Component.form.Grossweight}')).val()/$($.sfId('{!$Component.form.max_peso_container}')).val());
+                        
+                    }
+                    else
+                    {
+                        TotalNumberCont =Math.ceil($($.sfId('{!$Component.form.Cube}')).val()/$($.sfId('{!$Component.form.max_volumen_container}')).val());
+                        
+                    }
+                }
+                else
+                {
+                    if(ocupacion_pallet > ocupacion_volumen)
+                    {
+                         if( $($.sfId('{!$Component.form.num_cont_x_pallet}')).val() >0)
+                        {
+                            TotalNumberCont =  Math.ceil($($.sfId('{!$Component.form.TotalNumberPallets}')).val()/$($.sfId('{!$Component.form.num_cont_x_pallet}')).val());
+                        }
+                    }
+                    else
+                    {
+                        TotalNumberCont = Math.ceil($($.sfId('{!$Component.form.Cube}')).val()/$($.sfId('{!$Component.form.max_volumen_container}')).val());
+                    }
+                }
+         
+          
+             if(TotalNumberCont != null && TotalNumberCont !='Infinity' && isNaN(TotalNumberCont) == false  )
+                $($.sfId('{!$Component.form.TotalNumberCont}')).val(TotalNumberCont);
+             else
+                $($.sfId('{!$Component.form.TotalNumberCont}')).val(0);
+            
+              if(ocupacion_peso > ocupacion_pallet)
+              {
+                    if(ocupacion_peso > ocupacion_volumen)
+                        FreeSpaceCont =(TotalNumberCont- ocupacion_peso)*100;
+                    else
+                        FreeSpaceCont =(TotalNumberCont- ocupacion_volumen)*100;
+                }
+                else
+                {
+                    if(ocupacion_pallet > ocupacion_volumen)
+                        FreeSpaceCont =(TotalNumberCont- ocupacion_pallet)*100;
+                    else
+                        FreeSpaceCont =(TotalNumberCont- ocupacion_volumen)*100;
+                }
+                if(FreeSpaceCont > 0 || FreeSpaceCont == 0)
+                {
+                    if(FreeSpaceCont == 100)
+                        porc_ocupacion = 100;
+                    else
+                        porc_ocupacion = 100 - FreeSpaceCont;
+                        
+                    porc_ocupacion = porc_ocupacion.toFixed(2)+ '%';        
+                }
+                else
+                    porc_ocupacion= 0;
+                    
+                 
+                 
+                 
+                 if( $($.sfId('{!$Component.form.la_lista_no_cero}')).val() == 'true')
+                 {
+                    $('#totalcontenedores').html(TotalNumberCont);
+                    $('.ui-progress').css('width',porc_ocupacion);
+                    $('.ui-dato_container').html(TotalNumberCont);
+                    $('.value').html(formatFloatSep(porc_ocupacion));
+                 }
+                 else
+                 {
+                    $('#totalcontenedores').html(0);
+                    $('.ui-progress').css('width','0%');
+                    $('.ui-dato_container').html(0);
+                    $('.value').html(0);
+                 }
+                
+                 
+                 if(porc_ocupacion != null &&  porc_ocupacion!='-Infinity%' && porc_ocupacion!='Infinity%')
+                     $($.sfId('{!$Component.form.porc_ocupacion}')).val(porc_ocupacion);
+                 else
+                    $($.sfId('{!$Component.form.porc_ocupacion}')).val(0);
+                
+               
+        }
+        
+        function updatedata()
+        {
+            $($.sfId('{!$Component.form.block2.table1}')+' input.supplyinput').calcularpeso();
+            calculartotalpesovolumen();
+            comprobar_unit_max(); 
+            quitar_fondo(); 
+        }
+        
+        
+        function comprobar_unit_max()
+        {
+            
+            $($.sfId('{!$Component.form.block2.table1}')+' .units_quoted').each(function() 
+            {
+                var total_unidades = $(this).getFloatSep();
+                var data = $(this).attr('neudata');
+                
+                var unidades_pedidas = $($.sfId('{!$Component.form.block2.table1}')+' input[neudata2="'+data+'"]').getFloatSep();
+                if(unidades_pedidas > total_unidades)
+                {
+                
+                    $($.sfId('{!$Component.form.block2.table1}')+' input[neudata2="'+data+'"]').css('color','red');
+                    $('.confirmar_order').css('display', 'none');
+                }
+                
+                
+            });
+            
+            $($.sfId('{!$Component.form.block2.table1}')+' .supplyinput').each(function() 
+            {
+                
+                    if($(this).getFloatSep()%$($.sfId('{!$Component.form.block2.table1}')+' span[neudata="packagingunits'+$(this).attr('neudata')+'"]').getFloatSep() > 0 || $(this).getFloatSep()<$($.sfId('{!$Component.form.block2.table1}')+' span[neudata="packagingunits'+$(this).attr('neudata')+'"]').getFloatSep())//-------------ver esto porque estaba asi
+                        $($.sfId('{!$Component.form.block2.table1}')+' span[neudata="packagingunits'+$(this).attr('neudata')+'"]').css('color','red');
+                    else
+                        $($.sfId('{!$Component.form.block2.table1}')+' span[neudata="packagingunits'+$(this).attr('neudata')+'"]').css('color','black');
+                
+            });
+        }
+        
+        function cambio_de_fecha(element)
+        {
+        	var select_shipments=element.parent().parent().parent().find('.select_shipments').val();
+        	if(select_shipments)
+        	{
+	        	var date_delivery=element.val();
+	            $($.sfId('{!$Component.form.block2.table1}')+' .supplyinput').each(function() 
+	            {
+	                if($(this).parent().parent().find('.select_shipments').val()==select_shipments)
+	                    $(this).parent().parent().find('.date_delivery').val(date_delivery) ;
+	            });
+	        }
+        }
+        
+        function cambio_de_shipment(element)
+        {
+        	var select_shipments=element.val();
+        	if(select_shipments)
+        	{
+	            $($.sfId('{!$Component.form.block2.table1}')+' .supplyinput').each(function() 
+	            {
+	            	var dest=$(this).parent().parent().find('.select_shipments');
+	                if(dest.val() == select_shipments && dest.attr('neudata') != element.attr('neudata') )
+	                {
+	                    element.parent().parent().find('.date_delivery').val($(this).parent().parent().find('.date_delivery').val());
+	                    return false;
+	                }
+	                
+	            });
+			}           
+            updatedata();
+        }
+        
+        function actualizar_lineas_autos(element)
+        {
+        
+              //alert(element.parent().find('.check_automatico').val());
+            // $($.sfId('{!$Component.form.block2.table1}')+' input[neudata="check_selecionado'+busca_check_selected+'"]').val('true');
+            //alert($($.sfId('{!$Component.form.block2.table1}')+' input[neudata="check_selecionado'+busca_check_selected+'"]').val());
+            
+            actualizar_lineas_auto();
+        }
+</script>
+
+<apex:form id="form">
+   <apex:inputHidden value="{!decimalSep}" id="decimalSep"/>
+   <apex:inputHidden value="{!thousandSep}" id="thousandSep"/>
+    <apex:actionFunction name="updatedeliverys" status="myStatus" action="{!guardar_nuevos_deliverys}" />
+    <a class="direccion_base" style="display:none;">{!$Site.BaseUrl}</a>
+    <apex:sectionHeader title="Customer Delivery Schedule "/>
+        <span style="    position: relative;     top: -36px;     left: 360px; font-size: 17px;">
+        <c:customobject2 objid="{!Customer_Quote__c.Id}" objname="{!Customer_Quote__c.Name}" atarget="_self"/>
+    </span>
+        <div style="display:none;" id="contenedormensaje" title="You can't create Supply Projects">
+            <p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>You haven´t associated any customer for your user</p>
+        </div>
+    <apex:actionFunction name="updateLines" reRender="block2" status="myStatus" oncomplete="updatedata();"/>
+    <apex:actionFunction name="actualizar_lineas_auto" action="{!calculo_auto}" reRender="block2" status="myStatus"  oncomplete="updatedata();"><!--  -->
+    
+    <apex:param name="firstParam" assignTo="{!id_principal_check}" value="" />
+</apex:actionFunction>
+    <div id="accordion">
+        <apex:pageBlock id="block2">
+        	<apex:PageMessages />
+            <apex:pageBlockButtons location="top" id="buttons">
+                <apex:commandButton status="myStatus" action="{!Recalcular}" value="Recalculate Lines" rerender="block2" oncomplete="updatedata();"/>
+                <apex:inputText value="{!Customer_Quote__c.Id}" style="display:none;" styleclass="idproyecto"/>
+               <!-- <apex:commandButton status="myStatus" action="{!calculo_auto}" value="Recalculate Lines auto" styleclass="cancelar" rerender="block2"/>-->
+                <apex:commandButton status="myStatus" action="{!Actualizar_lineas}" value="Confirm" styleclass="confirmar_order" rerender="block2" oncomplete="go_supply_project();"/>
+                <apex:commandButton status="myStatus" action="{!cancelar}" value="Cancel" styleclass="cancelar" rerender="block2" oncomplete="quitar_fondo();"/>
+                <div style="float: right;">
+                    <apex:outputLabel value="Max Deliveries" style="font-weight: bold; color: #4a4a56; margin-right: 6px;"/>
+                    <apex:inputField value="{!Customer_Quote__c.Max_Deliveries__c}" style="text-align: right; margin-right: 10px;"/>
+                    <apex:outputLabel value="Contract Duration (months)" style="font-weight: bold; color: #4a4a56; margin-right: 6px;"/>
+                    <apex:inputField value="{!Customer_Quote__c.Contract_Duration_months__c}" style="text-align: right; margin-right: 10px;"/>
+                     <input type="button" value="Save" class="btn" onclick="updatedeliverys();"/>
+                </div>
+            </apex:pageBlockButtons> 
+            <apex:outputPanel >
+            <div id="capa_totales" style="width: 100%;">
+                        <span id="titulo_status_container" style="margin: 0px 10px 5px 3px;">Cargo Summary</span>
+                         <apex:selectList id="chooseShipment" value="{!Numero_shipment_selected}" size="1" styleclass="seleccionshipmentpricipal"  onchange="updatedata();" style="margin: 10px 10px 10px 51px; float:left;">
+                            <apex:selectOptions value="{!Numero_shipment}"/>
+                        </apex:selectList>
+                         <apex:selectList id="chooseClient" value="{!container_selected}" size="1" styleclass="seleccioncontainer"  onchange="updatedata();" style="margin: 10px 10px 10px 51px; float:left;">
+                            <apex:selectOptions value="{!containers}"/>
+                        </apex:selectList>
+                        <apex:inputHidden id="ids_pallet_idscontenedores" value="{!ids_pallet_idscontenedores}"/>
+                     <div style="width: 1088px;">
+                        <table id="lista_datos_container"> 
+                        <tr>
+                            <td><img src="{!URLFOR($Resource.ImagesUtilContainer,'caja-mod.png')}" class="imagen_dato_container" style="height: 41px; margin-top: 2px; width: 35px;"/><span class="nombre_dato_container">Number of Packages</span><span class="dato_container" id="totalcajas">{!TotalNumberBoxes}</span></td>
+                            <td style="margin-left: 12px;"><img src="{!URLFOR($Resource.ImagesUtilContainer,'weight_kilogram.png')}" class="imagen_dato_container" style="width: 43px; margin-top: 2px; margin-right: 1px;"/><span class="nombre_dato_container" style="margin-left: 10px;">Total Gross Weight (Kg)</span><span class="dato_container" id="totalweight" style="margin: 19px 5px 10px 10px;">{!Grossweight}</span></td>
+                            <td style="margin-left: 17px;"><img src="{!URLFOR($Resource.ImagesUtilContainer,'cobo-mod.png')}" class="imagen_dato_container" style="width: 34px; height: 32px; margin-right: 4px; margin-right: 10px;"/><span class="nombre_dato_container" style="margin-left: 6px;">Total Gross Volume (m3)</span><span class="dato_container" id="totalvolume">{!Cube}</span></td>
+                         </tr>
+                         <tr>   
+                            <td style="margin-left: 16px;"><img src="{!URLFOR($Resource.ImagesUtilContainer,'pallets-mod.png')}" class="imagen_dato_container" style="margin-top: 11px; height: 26px; width: 39px;"/><span class="nombre_dato_container">Number of Pallets</span><span class="dato_container" id="totalpallet">{!TotalNumberPallets}</span></td>
+                            <td><img src="{!$Resource.ContainerBlue}" class="imagen_dato_container" style="height: 44px; width: 43px; margin-top: 2px;"/><span class="nombre_dato_container" style="margin-left: 13px;">Number of Containers</span><span class="dato_container" id="totalcontenedores">{!TotalNumberCont}</span></td>
+                            <td><img src="{!URLFOR($Resource.ImagesUtilContainer,'free-container-mod.png')}" class="imagen_dato_container"/><div id="progress_bar" class="ui-progress-bar ui-container" style="width: 238px; float: left; margin-left: 12px; height: 28px;">
+                                    <span class="ui-label" style="margin: 6px 0px 7px 21px; z-index: 100;">% Last Container Load  <b class="value"> {!porc_ocupacion}</b></span>
+                                    <div class="ui-progress" style="height: 26px; width:0%; width: {!porc_ocupacion}; "><!--este rellena -->
+                                    </div>
+                                </div>
+                            </td>
+                         </tr>
+                        </table>
+                   
+                     </div>
+                          <div style="float: right; margin: 80px 4px 0px 0px;"> 
+                            <span style="float: left; margin: -2px 10px 0px 10px;">Consolidated</span> <span style="border: 1px solid #4F5051; float: left; width: 10px; height: 10px; background: #F8F2C0; vertical-align: middle;"></span>
+                        </div>
+            </div>
+            <div> 
+                <apex:pageBlockTable value="{!listado_supplierquoteline}" var="item"  id="table1" styleClass="tabla_items">
+                    <apex:column style="text-align: right;  background: {!If(item.sup_quot_line.Consolidated__c == true, 'rgba(248, 242, 192, 0.42)', '')};">
+                        <apex:facet name="header"><div style="text-align:center">Import-Export <br/>Item Lines</div><!--<input type="button" value="Auto Generate" onclick="actualizar_lineas_autos();" class="btn"/>--></apex:facet>
+                        <!--<apex:inputCheckbox value="{!item.sup_quot_line.Consolidated__c}" disabled="true" style="float:left;" rendered="{!item.sup_quot_line.Consolidated__c == true}"/>-->
+                        <div class="capa_boton">
+                            <apex:pageBlock rendered="{!item.calculo_auto == true}" >
+                                <input type="button" value="Auto Generate" onclick="actualizar_lineas_auto('{!item.idprincipal}');" class="btn clase_boton" style="display:{!If(item.mismas_unidades==true, 'block','none')};"/>
+                            </apex:pageBlock>
+                        </div>
+                       <!-- <apex:inputCheckbox value="{!item.selected}"  style="float:left; opacity: 0;" styleClass="check_automatico"/>--><!-- rendered="{!item.sup_quot_line.Consolidated__c == false}"-->
+                        <c:customobject2 objid="{!item.sup_quot_line.Id}" objname="{!item.sup_quot_line.Name}"/>
+                        <apex:inputHidden value="{!item.cantidad_inicial}" html-neudata="unidades_reales{!item.iditem_mod}"/>
+                        <apex:inputHidden value="{!item.line.Id}" html-neudata="id_item_real{!item.iditem_mod}"/>
+                       <!-- <apex:inputHidden value="{!item.selected}" html-neudata="check_selecionado{!item.iditem_mod}" />-->
+                    </apex:column>
+                    <apex:column style="text-align: right; background: {!If(item.sup_quot_line.Consolidated__c == true, 'rgba(248, 242, 192, 0.42)', '')};">
+                        <apex:facet name="header"><div style="text-align:center">Units<br/>Quote</div></apex:facet>
+                        <apex:outputText value="{!item.cantidad_inicialSep}" styleclass="units_quoted" html-neudata="{!item.idprincipal}" rendered="{!item.sup_quot_line.Id != null}"/>
+                    </apex:column>
+                    <apex:column style="text-align: right; background: {!If(item.sup_quot_line.Consolidated__c == true, 'rgba(248, 242, 192, 0.42)', '')};">
+                        <apex:facet name="header"><div style="text-align:center">Units</div></apex:facet>
+                       <apex:inputText value="{!item.supplySep}"  style="text-align: right;" size="10" rendered="{!item.mismas_unidades == true}" html-neudata2="{!item.idprincipal}" html-placeholder="{!item.UnitsSep}"  onKeyUp="$(this).calcularpeso();calculartotalpesovolumen();"  html-neudata="{!item.iditem_mod}" styleClass="supplyinput"/>
+                        <apex:outputtext style="border:0px;background-color:#F3F3EC; text-align: right; width: 94px; height: 13px; float: right; padding: 4px 2px 4px 5px; border-collapse: separate; border-spacing: 2px; border-color: gray; color: rgb(84, 84, 84); border: 1px solid #B4B4AE;" value="{!item.supplySep}"  rendered="{!item.mismas_unidades == false}" html-neudata2="{!item.idprincipal}" html-neudata="{!item.iditem_mod}" styleClass="supplyinput"/>
+                    </apex:column>
+                    
+                     <apex:column style="text-align: right; background: {!If(item.sup_quot_line.Consolidated__c == true, 'rgba(248, 242, 192, 0.42)', '')};">
+                        <apex:facet name="header"><div style="text-align:center">Delivery <br/> Number</div></apex:facet>
+                         <apex:selectList id="chooseShip2" value="{!item.shipment_number_selected}" size="1" styleclass="select_shipments"  onchange="cambio_de_shipment($(this));" style="margin: 10px 10px 10px 51px;"  html-neudata="shipmentnumber{!item.iditem_mod}">
+                            <apex:selectOptions value="{!item.shipment_number}"/>
+                        </apex:selectList>
+                    </apex:column>
+                    <apex:column style="text-align: right; background: {!If(item.sup_quot_line.Consolidated__c == true, 'rgba(248, 242, 192, 0.42)', '')};">
+                        <apex:facet name="header"><div style="text-align:center">Delivery Date</div></apex:facet>
+                        <apex:inputField value="{!item.fechaField.Delivery_Date__c}" onchange="cambio_de_fecha($(this));" styleclass="date_delivery"/>
+                    </apex:column>
+                    <apex:column style="text-align: right; background: {!If(item.sup_quot_line.Consolidated__c == true, 'rgba(248, 242, 192, 0.42)', '')};">
+                        <apex:facet name="header"><div style="text-align:center">Units x  <br/>Packaging</div></apex:facet>
+                    <apex:outputText value="{!item.unidades_x_caja_linea}" style="text-align: right;" html-neudata="packagingunits{!item.iditem_mod}"/>
+                   
+                    <!-- ------------ -->
+                    </apex:column>
+                    <apex:column style="text-align: right; background: {!If(item.sup_quot_line.Consolidated__c == true, 'rgba(248, 242, 192, 0.42)', '')};">
+                        <apex:facet name="header"><div style="text-align:center">Packaging</div></apex:facet>
+                        <apex:outputText value="{!item.totalcajasSep}" style="text-align:right;" html-neudata="packaging{!item.iditem_mod}"/>
+                        <apex:outputText value="{!item.line.Master_Box_Description__c}" style="text-align:right; margin-left:6px;"/>
+                        <!-- ------------- -->
+                        <apex:inputHidden value="{!item.peso_x_caja_linea}" html-neudata="packagingweight{!item.iditem_mod}"/>
+                        <!-- <apex:inputHidden value="{!item.line.Master_Box_Gross_Weight_kg__c}" html-neudata="packagingweight{!item.iditem_mod}" rendered="{!item.sup_quot_line.Packaging_Gross_Weight_kg__c == 0}"/>
+                        <apex:inputHidden value="{!item.sup_quot_line.Packaging_Gross_Weight_kg__c}" html-neudata="packagingweight{!item.iditem_mod}" rendered="{!item.sup_quot_line.Packaging_Gross_Weight_kg__c != 0}"/>
+                        
+                        <apex:inputHidden value="{!item.line.Master_Box_Volume_m3__c}" html-neudata="packagingvolume{!item.iditem_mod}"  rendered="{!item.sup_quot_line.Packaging_Volume_m3__c == 0}"/>
+                        <apex:inputHidden value="{!item.sup_quot_line.Packaging_Volume_m3__c}" html-neudata="packagingvolume{!item.iditem_mod}" rendered="{!item.sup_quot_line.Packaging_Volume_m3__c != 0}"/>-->
+                        <apex:inputHidden value="{!item.volumen_x_caja_linea}" html-neudata="packagingvolume{!item.iditem_mod}"/>
+                        <!-- -------------- -->
+                        <apex:inputHidden value="{!item.relacion_con_pallet}" html-neudata="relacionconlospallet{!item.iditem_mod}"/>
+                        <apex:inputHidden value="{!item.line.Weight_Kgs__c}" html-neudata="pesodelitem_sin_caja{!item.iditem_mod}"/>
+                    </apex:column>
+                    <apex:column style="background: {!If(item.sup_quot_line.Consolidated__c == true, 'rgba(248, 242, 192, 0.42)', '')};">
+                        <apex:facet name="header"><div style="text-align:center">Observations</div></apex:facet>
+                        <apex:inputText value="{!item.observaciones}" html-neudataidfocus="{!item.iditem_mod}" style="width: 132px;"/>
+                    </apex:column>
+                    <apex:column style="background: {!If(item.sup_quot_line.Consolidated__c == true, 'rgba(248, 242, 192, 0.42)', '')};" >
+                        <apex:facet name="header"><div style="text-align:center">Item Supplier/Owner</div></apex:facet>
+                        <c:customobject2 rendered="{!item.line.Current_Supplier__c != null}" objid="{!item.line.Current_Supplier__c}" objname="{!item.line.Current_Supplier__r.Name}"/>
+                        <c:customobject2 rendered="{!item.line.Current_Supplier__c == null}" objid="{!item.line.Account_Owner__c}" objname="{!item.line.Account_Owner__r.Name}"/>
+                    </apex:column>
+                    <apex:column style="background: {!If(item.sup_quot_line.Consolidated__c == true, 'rgba(248, 242, 192, 0.42)', '')};">
+                        <apex:facet name="header"><div style="text-align:center">Item</div></apex:facet>
+                        <c:customobject2 objid="{!item.line.Id}" objname="{!item.line.Name}"/>
+                    </apex:column>
+                    <apex:column style="text-align: right; background: {!If(item.sup_quot_line.Consolidated__c == true, 'rgba(248, 242, 192, 0.42)', '')};">
+                        <apex:facet name="header"><div style="text-align:center">Gross <br/> Weight kg</div></apex:facet>
+                        <apex:outputText value="{!item.totalpesoSep}" style="text-align:right; " html-neudata="weight{!item.iditem_mod}"/>
+                        <apex:inputHidden value="{!item.Total_Shipping_Weight_Kgs}" html-neudata="weight_hidden{!item.iditem_mod}"/>
+                    </apex:column>
+                    <apex:column style="text-align: right; background: {!If(item.sup_quot_line.Consolidated__c == true, 'rgba(248, 242, 192, 0.42)', '')};">
+                        <apex:facet name="header"><div style="text-align:center">Gross <br/>Volume m³</div></apex:facet>
+                        <apex:outputText value="{!item.volumen_master_boxSep}" style="text-align:right; " html-neudata="volume{!item.iditem_mod}"/>
+                        <apex:inputHidden value="{!item.Total_Shipping_Volume_m3}" html-neudata="volume_hidden{!item.iditem_mod}"/>
+                         <apex:inputHidden value="{!item.tiene_relacion_con_pallet}" html-neudata="tienerelacion_con_pallet{!item.iditem_mod}"/>
+                    </apex:column>  
+                     <apex:column style="text-align: right; background: {!If(item.sup_quot_line.Consolidated__c == true, 'rgba(248, 242, 192, 0.42)', '')};">
+                        <apex:facet name="header"><div style="text-align:center">Number <br/> of Pallet</div></apex:facet>
+                        <apex:outputText value="{!item.total_pallet_lineaSep}" style="text-align:right; " html-neudata="numberpallet{!item.iditem_mod}"/>
+                    </apex:column>
+                </apex:pageBlockTable> 
+                </div>
+          </apex:outputPanel>
+      </apex:pageBlock>
+    </div>
+    
+    
+    <apex:outputpanel >
+       <apex:actionstatus id="myStatus">
+           <apex:facet name="start">
+               <div class="waitingSearchDiv" id="el_loading" style="background-color: #fbfbfb;
+                      height: 100%;opacity:0.65;width:100%;"> 
+                   <div class="waitingHolder" style="top: 74.2px; width: 91px;">
+                       <img class="waitingImage" src="/img/loading.gif" title="Please Wait..." />
+                       <span class="waitingDescription">Loading...</span>
+                   </div>
+               </div>
+           </apex:facet>
+       </apex:actionstatus>
+    </apex:outputpanel>
+        <div class="waitingSearchDiv" id="otherStatus" style="display:none;background-color:#fbfbfb;height:100%;opacity:0.65;width:100%;"> 
+            <div class="waitingHolder" style="top:74.2px;width:91px;">
+                <img class="waitingImage" src="/img/loading.gif" title="Please Wait..." />
+                <span class="waitingDescription">Loading...</span>
+            </div>
+        </div>
+        <input type="hidden" id="id_focus"/>
+        
+        <apex:inputHidden value="{!max_peso_container}" id="max_peso_container"/>
+        <apex:inputHidden value="{!max_volumen_container}" id="max_volumen_container"/>
+        <apex:inputHidden value="{!num_cont_x_pallet}" id="num_cont_x_pallet"/>
+        <apex:inputHidden value="{!TotalNumberBoxes}" id="TotalNumberBoxes"/>
+        <apex:inputHidden value="{!TotalNumberPallets}" id="TotalNumberPallets"/>
+        <apex:inputHidden value="{!Grossweight}" id="Grossweight"/>
+        <apex:inputHidden value="{!Cube}" id="Cube"/>
+        <apex:inputHidden value="{!la_lista_no_cero}" id="la_lista_no_cero"/>
+        <apex:inputHidden value="{!TotalNumberCont}" id="TotalNumberCont"/>
+        <apex:inputHidden value="{!porc_ocupacion}" id="porc_ocupacion"/>
+        
+        <apex:inputHidden value="{!unidades_quoted}" id="unidades_quoted"/>
+        
+                
+</apex:form>
+</apex:page>

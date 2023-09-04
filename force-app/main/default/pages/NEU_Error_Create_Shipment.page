@@ -1,0 +1,20 @@
+<!--
+ - Created by aserrano on 24/11/2017.
+ -->
+
+<apex:page id="NEU_Error_Create_Shipment" standardController="Shipment__c">
+    <script>
+        function goBack()
+        {
+            window.history.back();
+        }
+    </script>
+    <apex:pageMessage severity="Error" summary="Error, you can only create Shipments from an Import Export Order" strength="2"></apex:pageMessage>
+    <apex:form >
+        <p>
+            <apex:outputLink value="{!URLFOR('/apex/NEU_ShipmentsSearch')}" style="margin:20px; font-size:larger">
+                Back
+            </apex:outputLink>
+        </p>
+    </apex:form>
+</apex:page>

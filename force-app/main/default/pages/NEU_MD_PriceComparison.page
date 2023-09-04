@@ -1,0 +1,822 @@
+<apex:page standardController="Supply_Project__c" extensions="NEU_MD_PriceComparison" action="{!carga_filtros}" sidebar="false">
+    <apex:includeScript value="{!$Resource.jquery_1_10_2}"/>
+    <apex:stylesheet value="{!$Resource.Buscador_Style}"/> 
+    <apex:includeScript value="{!$Resource.jquery_ui_1_10_3}"/>
+    <apex:includeScript value="{!$Resource.neurored_jquery}"/> 
+    <apex:stylesheet value="{!URLFOR($Resource.jquery_ui_1_10_3_css,'jquery-ui-1.10.3.min.css')}"/>
+    <script>
+        $(document).ready(function() {
+        setDecimalSep(document.getElementById('{!$Component.form.decimalSep}').value, document.getElementById('{!$Component.form.thousandSep}').value);
+        
+         var loc = document.location.href;
+            //fees
+            if(loc.indexOf('zind')>0)
+            {
+      
+                insert_fees_new();
+            }
+            
+            //duty consultas
+             if(loc.indexOf('yind')>0)
+            {
+      
+                insert_dutys_new();
+            }
+            
+            //duty 10 llamadas
+            if(loc.indexOf('xind')>0)
+            {
+      
+                seguir_duty_new();
+            }
+            
+            $(".search_data").click(function(){
+                
+                var listado_supplier = '';
+                var listado_item = '';
+                var listado_delivery_zone = '';
+                $(".button_selected_sup").each(function(){
+                    listado_supplier += $(this).attr('name') + ',';
+                });
+                if(listado_supplier == '')
+                    listado_supplier = '[]';
+                document.getElementById('{!$Component.form.sup_list}').value = listado_supplier;
+                
+                $(".button_selected_it").each(function(){
+                    listado_item += $(this).attr('name') + ',';
+                
+                });
+                
+                  $(".button_selected_dz").each(function(){
+                    listado_delivery_zone += $(this).attr('name') + ',';
+                
+                });
+                
+                if(listado_item == '')
+                    listado_item = '[]';
+                
+                if(listado_delivery_zone == '')
+                    listado_delivery_zone  = '[]';
+                document.getElementById('{!$Component.form.it_list}').value = listado_item;
+                
+                document.getElementById('{!$Component.form.delivery_zone_selected}').value = listado_delivery_zone ;
+                document.getElementById('{!$Component.form.operator_total_amount}').value = $(".list_operator_ta").val();
+                document.getElementById('{!$Component.form.operator_net_price}').value = $(".list_operator_np").val();
+                document.getElementById('{!$Component.form.operator_target_price}').value = $(".list_operator_tp").val();
+
+                compare_data();
+            });
+            
+            
+         $(function() {
+            $( ".automatic" )
+              .button()
+              .click(function( event ) {
+                event.preventDefault();
+              });
+          });
+          
+            $(".filter_button_sup").click(function(){
+                if($(this).hasClass('button_selected_sup'))
+                {
+                    $(this).removeClass('button_selected');
+                    $(this).removeClass('button_selected_sup');
+                }
+                else
+                {
+                    $(this).addClass('button_selected');
+                    $(this).addClass('button_selected_sup');
+                }
+            });
+            
+            $(".filter_button_it").click(function(){
+                if($(this).hasClass('button_selected_it'))
+                {
+                    $(this).removeClass('button_selected');
+                    $(this).removeClass('button_selected_it');
+                }
+                else
+                {
+                    $(this).addClass('button_selected');
+                    $(this).addClass('button_selected_it');
+                }
+            });
+        
+        
+         $(".filter_button_dz").click(function(){
+                if($(this).hasClass('button_selected_dz'))
+                {
+                    $(this).removeClass('button_selected');
+                    $(this).removeClass('button_selected_dz');
+                }
+                else
+                {
+                    $(this).addClass('button_selected');
+                    $(this).addClass('button_selected_dz');
+                }
+            });
+            
+           rellenar_contenedores();
+      
+       });
+       
+       function rellenar_contenedores()
+       {
+         var opciones_container = $('.opciones_contenedores').val().split('_&_');
+        
+                $.each(opciones_container , function (ind, elem) { 
+                      $('.seleccioncontainer').append(elem);
+                }); 
+                
+             var opciones_container = $('.seleccioncontainer').val().split(';');
+        
+            $('table.tabla_principal input[neudata="volumen_de_la_linea"]').each(function() 
+            {
+             
+                var volumen = $(this).html();
+                var peso = $(this).parent().find('input[neudata="peso_de_la_linea"]').val();
+                if(volumen != null && volumen != '')
+                {
+                 var cuantos_contenedores1 = volumen /opciones_container[0];
+                 var cuantos_contenedores2 =volumen /opciones_container[0];
+                      if(opciones_container[0] == 'null')
+                 {
+                     cuantos_contenedores1 = 0;
+                     cuantos_contenedores2 = 0;
+                 }
+                 if(peso!= null && peso!= '')
+                 {
+                     cuantos_contenedores2 = peso /opciones_container[1];
+                     if(opciones_container[1] == 'null')
+                         cuantos_contenedores2 = 0;
+                 }
+                 if(cuantos_contenedores2 > cuantos_contenedores1)
+                 cuantos_contenedores1  = cuantos_contenedores2;
+                }
+                else
+                    cuantos_contenedores1 = 1; 
+                 
+                cuantos_contenedores1 = cuantos_contenedores1.toFixed(2);
+                
+                $(this).parent().parent().find('span[neudata="numero_contenedores"]').setFloatSep(cuantos_contenedores1);
+            });
+       }
+        
+        function update_link()
+        {
+            $('#link_excel').attr("href", document.getElementById('{!$Component.form.url_export_excel}').value);
+            $('#link_pdf').attr("href", document.getElementById('{!$Component.form.url_export_pdf}').value);
+        }
+        
+        function sort_data_supplier(n)
+        {
+            var ordenacion = '';
+
+            if($('#orden_ad_suppliers').val() == 'desc' || $('#orden_ad_suppliers').val() == 'none')
+            {
+                ordenacion = n+'-asc';
+                $('#orden_ad_suppliers').val('asc');
+            }
+            else
+            {
+                ordenacion = n+'-desc';
+                $('#orden_ad_suppliers').val('desc');
+            }
+            
+            document.getElementById('{!$Component.form.orden_suppliers}').value = ordenacion;
+            
+            if(document.getElementById('{!$Component.form.sup_list}').value != '')
+                compare_data();
+        }
+        
+        function sort_data_quote(n)
+        {
+            var ordenacion = '';
+
+            if($('#orden_ad_quotes').val() == 'desc' || $('#orden_ad_quotes').val() == 'none')
+            {
+                ordenacion = n+'-asc';
+                $('#orden_ad_quotes').val('asc');
+            }
+            else
+            {
+                ordenacion = n+'-desc';
+                $('#orden_ad_quotes').val('desc');
+            }
+            
+            document.getElementById('{!$Component.form.orden_quotes}').value = ordenacion;
+            
+            if(document.getElementById('{!$Component.form.sup_list}').value != '')
+                compare_data();
+        }
+        
+        function aprobar_supplier_quote2(id_items)
+        {
+            document.getElementById('{!$Component.form.id_supplier_quote_update}').value = id_items;
+            aprobar_supplier_quote();
+        }
+        
+        function sort_data_line(n)
+        {
+            var ordenacion = '';
+
+            if($('#orden_ad_lines').val() == 'desc' || $('#orden_ad_lines').val() == 'none')
+            {
+                ordenacion = n+'-asc';
+                $('#orden_ad_lines').val('asc');
+            }
+            else
+            {
+                ordenacion = n+'-desc';
+                $('#orden_ad_lines').val('desc');
+            }
+            
+            document.getElementById('{!$Component.form.orden_lines}').value = ordenacion;
+            
+            if(document.getElementById('{!$Component.form.sup_list}').value != '')
+                compare_data();
+        }
+        
+        function numero_containers()
+        {
+            var opciones_container = $('.seleccioncontainer').val().split(';');
+        
+            $('table.tabla_principal input[neudata="volumen_de_la_linea"]').each(function() 
+            {
+             
+                var volumen = $(this).html();
+                var peso = $(this).parent().find('input[neudata="peso_de_la_linea"]').val();
+                if(volumen != null && volumen != '')
+                {
+                 var cuantos_contenedores1 = volumen /opciones_container[0];
+                 var cuantos_contenedores2 = volumen /opciones_container[0];
+                     if(opciones_container[0] == 'null')
+                 {
+                     cuantos_contenedores1 = 0;
+                     cuantos_contenedores2 = 0;
+                 }
+                 if(peso!= null && peso!= '')
+                 {
+                     cuantos_contenedores2 = peso /opciones_container[1];
+                     if(opciones_container[1] == 'null')
+                         cuantos_contenedores2 = 0;
+                 }
+                 if(cuantos_contenedores2 > cuantos_contenedores1)
+                 cuantos_contenedores1  = cuantos_contenedores2;
+                }
+                else 
+                    cuantos_contenedores1 = 1; 
+                 
+                cuantos_contenedores1 = cuantos_contenedores1.toFixed(2);
+                
+                $(this).parent().parent().find('span[neudata="numero_contenedores"]').setFloatSep(cuantos_contenedores1);
+            });
+        }
+        
+     function cuadro_dialogo()
+     {
+        if($("#errores").html()!='')
+        {
+            $( "#hay_errores" ).dialog({
+              dialogClass: "no-close",
+              buttons: [
+                {
+                  text: "OK",
+                  click: function() {
+                  
+                     $( this ).dialog( "close" );
+                  }
+                }
+              ]
+            });
+        }
+        
+        compare_data();
+     }
+        
+        
+        function desactive_line(id)
+        {
+            document.getElementById('{!$Component.form.id_oi}').value = id;
+            desactive_lines();
+        }
+
+    </script>
+    <style>
+        .Custom39Tab .tertiaryPalette, .individualPalette .Custom39Block .tertiaryPalette{background:#669966;}
+        .result_table{margin: 0 0 10px 0; font-style:italic; font-size:15px;}
+        .filter_button{float:left; width: 333px; overflow-wrap: break-word;}
+        .button_selected{background:#C0C0C0 !important;}
+        .actions_table{border-top: 3px solid #669966;}
+        .actions_table th, .sort_table th
+        {
+            background: #f2f3f3;
+            border:1px solid #e0e3e5;
+            border-bottom:2px solid #cccccc;
+            color: #000;
+            font-size: .9em;
+            font-weight: bold;
+            padding: 5px 2px 4px 5px;
+        }
+        .actions_table td, .sort_table td
+        {
+            border:1px solid #e0e3e5;
+            background:#ffffff;
+        }
+    </style>
+    <apex:form id="form">
+        <apex:inputHidden value="{!decimalSep}" id="decimalSep"/>
+       <apex:inputHidden value="{!thousandSep}" id="thousandSep"/>
+      <apex:inputHidden id="total_consultas" value="{!total_de_consultas}"/>
+      
+        <apex:actionFunction name="aprobar_supplier_quote" action="{!update_supplier_quote_approved}" status="myStatus" rerender="id_supplier_quote_update" oncomplete="compare_data();"/>
+        <apex:actionFunction name="desactive_lines" action="{!desactive_lines}" status="myStatus" oncomplete="compare_data();"/>
+        <apex:actionFunction name="standar_fees" action="{!calculate_std_fees}" status="myStatus" oncomplete="compare_data();"/>
+        <apex:actionFunction name="calc_duty" action="{!calculate_duty}" status="myStatus" reRender="list_suppliers, block0" oncomplete="cuadro_dialogo();"/>
+        <apex:actionFunction name="insert_fees_new" action="{!calculate_std_fees}" status="myStatus" oncomplete="compare_data();"/>
+        <apex:actionFunction name="insert_dutys_new" action="{!calculate_duty}" status="myStatus" reRender="list_suppliers, block0" oncomplete="cuadro_dialogo();" />
+        <apex:actionFunction name="seguir_duty_new" action="{!calcular_tasas}" status="myStatus" reRender="list_suppliers, block0" oncomplete="cuadro_dialogo();">
+         
+         </apex:actionFunction>
+        <apex:inputHidden value="{!id_oi}" id="id_oi"/>
+        <span style=" position: relative; top: 49px; left: 325px; font-size: 17px;">
+            <a href="/{!Supply_Project__c.Id}" onblur="LookupHoverDetail.getHover(neu_getId(this)).hide();" onfocus="LookupHoverDetail.getHover(neu_getId(this),'/{!Supply_Project__c.Id}/m?isAjaxRequest=1').show();" onmouseout="LookupHoverDetail.getHover(neu_getId(this)).hide();" onmouseover="LookupHoverDetail.getHover(neu_getId(this),'/{!Supply_Project__c.Id}/m?isAjaxRequest=1').show();" target="_blank" id="new_id_1">{!Supply_Project__c.Name}</a>
+        </span>
+       
+        <apex:sectionHeader title="Price Comparison Tool"/>
+        <table border="0" cellspacing="5" cellpadding="5" class="actions_table">
+            <tr>
+                <th><apex:outputLabel value="Search"/></th>
+                <th><apex:outputLabel value="Export Data to Excel"/></th>
+                <th><apex:outputLabel value="Generate Report PDF"/></th>
+            </tr>
+          
+            
+            <tr>
+                <td><input type="button" value="SEARCH" class="search_data btn"/></td>
+                <td align="center"><a href="#" id="link_excel"><input type="button" value="" class="import_data btn" style="background-image:url({!URLFOR($Resource.excel_icon)})"/></a></td>
+                <td align="center"><a href="#" id="link_pdf"><input type="button" value="" class="file_pdf btn" style="background-image:url({!URLFOR($Resource.pdf_icon)})"/></a></td>
+            </tr>
+        </table>   
+         <div style="float: left; width: 100%; margin: -54px 3px 10px 345px;">
+            <input type="submit" value="Automatic Calculation of Fees" class="automatic" onclick="standar_fees();"/>
+            <input type="submit" value="Automatic Calculation of Duties" class="automatic" onclick="calc_duty();"/>
+        </div>     
+        <table border="0" cellspacing="5" cellpadding="5" class="actions_table">
+            <tr>
+                <th>Suppliers Project</th>
+                <th>Items Project</th>
+                <th>Pickup / Delivery Zone</th>
+                <th>Filters</th>
+            </tr>
+            <tr>
+                <td style="vertical-align:top !important;"><apex:outputText value="{!suppliers}" escape="false"/></td>
+                <td style="vertical-align:top !important;"><apex:outputText value="{!items}" escape="false"/></td>
+                 <td style="vertical-align:top !important;"><apex:outputText value="{!select_delivery_zone}" escape="false"/></td>
+                <td>
+                    <table border="0" cellpadding="5" cellspacing="5" class="lista_filtros_amount">
+                     <!--   <tr>
+                            <td>Delivery Zones</td>
+                            <td colspan="2"><apex:OutputText value="{!select_delivery_zone}" escape="false"/></td>
+                            <td><apex:inputCheckbox value="{!check_delivery_zone}"/></td>
+                           
+                        </tr>-->
+                        <tr>
+                            <td>Total Amount</td>
+                            <td>
+                                <select class="list_operator_ta">
+                                    <option value="equal">=</option>
+                                    <option value="greater_than">&gt;</option>
+                                    <option value="less_than">&lt;</option>
+                                    <option value="greater_or_equal">&gt;=</option>
+                                    <option value="less_or_equal">&lt;=</option>
+                                </select>
+                            </td>
+                            <td><apex:inputText value="{!total_amount_filter}"/></td>
+                            <td><apex:inputCheckbox value="{!check_total_amount}"/></td>
+                        </tr>
+                        <tr>
+                            <td>Net Price</td>
+                            <td>
+                                <select class="list_operator_np">
+                                    <option value="equal">=</option>
+                                    <option value="greater_than">&gt;</option>
+                                    <option value="less_than">&lt;</option>
+                                    <option value="greater_or_equal">&gt;=</option>
+                                    <option value="less_or_equal">&lt;=</option>
+                                </select>
+                            </td>
+                            <td><apex:inputText value="{!net_price_filter}"/></td>
+                            <td><apex:inputCheckbox value="{!check_net_price}"/></td>
+                        </tr>
+                        <tr>
+                            <td>Target Price</td>
+                            <td>
+                                <select class="list_operator_tp">
+                                    <option value="equal">=</option>
+                                    <option value="greater_than">&gt;</option>
+                                    <option value="less_than">&lt;</option>
+                                    <option value="greater_or_equal">&gt;=</option>
+                                    <option value="less_or_equal">&lt;=</option>
+                                </select>
+                            </td>
+                            <td><apex:inputText value="{!target_price_filter}"/></td>
+                            <td><apex:inputCheckbox value="{!check_target_price}"/></td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+        <apex:outputPanel id="list_suppliers">
+        <apex:inputHidden value="{!errores_duty}" id="errores_duty"/>
+            <apex:outputText value="{!resultado}"/>
+            <apex:pageBlock title="Suppliers">
+                <apex:pageBlockTable value="{!suppliers_to_invite}" var="sq">
+                    <apex:column >
+                        <apex:facet name="header">
+                            <span style="cursor: pointer;" onclick="sort_data_supplier('Name');" class="sort-Name">Nombre</span>
+                        </apex:facet>
+                        <apex:outputLink value="/{!sq.Id}" target="_blank">{!sq.Name}</apex:outputLink>
+                    </apex:column>
+                    <apex:column >
+                        <apex:facet name="header">
+                            <span style="cursor: pointer;" onclick="sort_data_supplier('Account__r.Status_Account__c');" class="sort-Account__r.Status_Account__c">Status</span>
+                        </apex:facet>
+                        <apex:outputText value="{!sq.Account__r.Status_Account__c}"/>
+                    </apex:column>
+                    
+                    <apex:column style="text-align: right;" value="{!sq.Account__r.SUM_Destination_Amount_Supplier_Quote__c}">
+                        <apex:facet name="header">
+                            <span style="cursor: pointer;" onclick="sort_data_supplier('Account__r.SUM_Destination_Amount_Supplier_Quote__c');" class="sort-Account__r.SUM_Destination_Amount_Supplier_Quote__c">SUM Destination Amount</span>
+                        </apex:facet>
+                        <!--<apex:outputText value="{!sq.Account__r.SUM_Destination_Amount_Supplier_Quote__c}"/>-->
+                    </apex:column>
+                    
+                    <apex:column >
+                        <apex:facet name="header">
+                            <span style="cursor: pointer;" onclick="sort_data_supplier('Responsible_for_the_Project__r.Name');" class="sort-Responsible_for_the_Project__r.Name">Contact for this Project</span>
+                        </apex:facet>
+                        <apex:outputLink value="/{!sq.Responsible_for_the_Project__c}" target="_blank">{!sq.Responsible_for_the_Project__r.Name}</apex:outputLink>
+                    </apex:column>
+                    <apex:column >
+                        <apex:facet name="header">
+                            <span style="cursor: pointer;" onclick="sort_data_supplier('Account__r.Quality_Products__c');" class="sort-Account__r.Quality_Products__c">Quality Products</span>
+                        </apex:facet>
+                        <apex:image value="{!If(sq.Account__r.Quality_Products__c == null, $Resource.score_0, If(sq.Account__r.Quality_Products__c == "1", $Resource.score_1, If(sq.Account__r.Quality_Products__c == "2", $Resource.score_2, If(sq.Account__r.Quality_Products__c == "3", $Resource.score_3, If(sq.Account__r.Quality_Products__c == "4", $Resource.score_4, $Resource.score_5)))))}"/>
+                    </apex:column>
+                    <apex:column >
+                        <apex:facet name="header">
+                            <span style="cursor: pointer;" onclick="sort_data_supplier('Account__r.Prices__c');" class="sort-Account__r.Prices__c">Prices</span>
+                        </apex:facet>
+                        <apex:image value="{!If(sq.Account__r.Prices__c == null, $Resource.score_0, If(sq.Account__r.Prices__c == "1", $Resource.score_1, If(sq.Account__r.Prices__c == "2", $Resource.score_2, If(sq.Account__r.Prices__c == "3", $Resource.score_3, If(sq.Account__r.Prices__c == "4", $Resource.score_4, $Resource.score_5)))))}"/>
+                    </apex:column>
+                    <apex:column >
+                        <apex:facet name="header">
+                            <span style="cursor: pointer;" onclick="sort_data_supplier('Account__r.Colaboration__c');" class="sort-Account__r.Colaboration__c">Colaboration</span>
+                        </apex:facet>
+                        <apex:image value="{!If(sq.Account__r.Colaboration__c == null, $Resource.score_0, If(sq.Account__r.Colaboration__c == "1", $Resource.score_1, If(sq.Account__r.Colaboration__c == "2", $Resource.score_2, If(sq.Account__r.Colaboration__c == "3", $Resource.score_3, If(sq.Account__r.Colaboration__c == "4", $Resource.score_4, $Resource.score_5)))))}"/>
+                    </apex:column>
+                    <apex:column >
+                        <apex:facet name="header">
+                            <span style="cursor: pointer;" onclick="sort_data_supplier('Account__r.Delivery_Times__c');" class="sort-Account__r.Delivery_Times__c">Delivery Times</span>
+                        </apex:facet>
+                        <apex:image value="{!If(sq.Account__r.Delivery_Times__c == null, $Resource.score_0, If(sq.Account__r.Delivery_Times__c == "1", $Resource.score_1, If(sq.Account__r.Delivery_Times__c == "2", $Resource.score_2, If(sq.Account__r.Delivery_Times__c == "3", $Resource.score_3, If(sq.Account__r.Delivery_Times__c == "4", $Resource.score_4, $Resource.score_5)))))}"/>
+                    </apex:column>
+                    <apex:column >
+                        <apex:facet name="header">
+                            <span style="cursor: pointer;" onclick="sort_data_supplier('Account__r.Efficiency_Level__c');" class="sort-Account__r.Efficiency_Level__c">Efficiency Level</span>
+                        </apex:facet>
+                        <apex:image value="{!If(sq.Account__r.Efficiency_Level__c == null, $Resource.score_0, If(sq.Account__r.Efficiency_Level__c == "1", $Resource.score_1, If(sq.Account__r.Efficiency_Level__c == "2", $Resource.score_2, If(sq.Account__r.Efficiency_Level__c == "3", $Resource.score_3, If(sq.Account__r.Efficiency_Level__c == "4", $Resource.score_4, $Resource.score_5)))))}"/>
+                    </apex:column>
+                    
+                   
+                    
+                </apex:pageBlockTable>
+            </apex:pageBlock>
+        </apex:outputPanel>
+        <apex:outputPanel id="list_quotes">
+            <apex:pageBlock title="Supplier Quotes">
+                <apex:pageBlockTable value="{!supplier_quotes}" var="q">
+                    <apex:column >
+                        <apex:facet name="header">
+                            <span style="cursor: pointer;" onclick="sort_data_quote('Name');" class="sort-Name">Number</span>
+                        </apex:facet>
+                        <apex:outputLink value="/{!q.Id}" target="_blank">{!q.Name}</apex:outputLink>
+                    </apex:column>
+                    <apex:column >
+                        <apex:facet name="header">
+                            <span style="cursor: pointer;" onclick="sort_data_quote('Supplier_Quote_Status__c');" class="sort-Supplier_Quote_Status__c">Status</span>
+                        </apex:facet>
+                        <apex:outputText value="{!q.Supplier_Quote_Status__c}"/>
+                        <input type="button" value="Approve" class="btn"  onclick="aprobar_supplier_quote2('{!q.Id}');" style="float: right; display:{!IF(q.Taxes_Calculated__c = true && q.Service_Charges_Calculated__c = true && (q.Supplier_Quote_Status__c ='Sent Final Bid' || q.Supplier_Quote_Status__c ='Sent Bid'), '', 'none')};"/>
+                    </apex:column>
+                    <apex:column >
+                        <apex:facet name="header">
+                            <span style="cursor: pointer;" onclick="sort_data_quote('Supplier__r.Name');" class="sort-Supplier__r.Name">Supplier</span>
+                        </apex:facet>
+                        <apex:outputLink value="/{!q.Supplier__c}" target="_blank">{!q.Supplier__r.Name}</apex:outputLink>
+                    </apex:column>
+                    <apex:column >
+                        <apex:facet name="header">
+                            <span style="cursor: pointer;" onclick="sort_data_quote('Incoterm__c');" class="sort-Incoterm__c">Incoterm</span>
+                        </apex:facet>
+                        <apex:outputText value="{!q.Incoterm__c}"/>
+                    </apex:column>
+                    <apex:column >
+                        <apex:facet name="header">
+                            <span style="cursor: pointer;" onclick="sort_data_quote('Incoterm_Place__c');" class="sort-Incoterm_Place__c">Incoterm Place</span>
+                        </apex:facet>
+                        <apex:outputText value="{!q.Incoterm_Place__c}"/>
+                    </apex:column>
+                      <apex:column >
+                        <apex:facet name="header">
+                            <span style="cursor: pointer;" onclick="sort_data_quote('Delivery_Zone__c');" class="sort-Delivery_Zone__c">Pickup / Delivery Zone</span>
+                        </apex:facet>
+                        <apex:outputText value="{!q.Delivery_Zone__r.Name}"/>
+                    </apex:column>
+                    <!--<apex:column style="text-align:right;">
+                        <apex:facet name="header">
+                            <span style="cursor: pointer;" onclick="sort_data_quote('Production_Time_Days__c');" class="sort-Production_Time_Days__c">Production Time (Days)</span>
+                        </apex:facet>
+                        <apex:outputText value="{!q.Production_Time_Days__c}"/>
+                    </apex:column>-->
+                    <apex:column >
+                        <apex:facet name="header">
+                            <span style="cursor: pointer;" onclick="sort_data_quote('Valid_Until__c');" class="sort-Valid_Until__c">Valid Until</span>
+                        </apex:facet>
+                        <apex:outputField value="{!q.Valid_Until__c}" /> 
+                    </apex:column>
+                    <!--<apex:column style="text-align:right;">
+                        <apex:facet name="header">
+                            <span style="cursor: pointer;" onclick="sort_data_quote('Total_Amount__c');" class="sort-Total_Amount__c">Total Amount</span>
+                        </apex:facet>
+                        <apex:outputText value="{0, number, ###,###,###,##0.00}"><apex:param value="{!q.Total_Amount_Number__c}"/></apex:outputText>
+                    </apex:column>-->
+                    <apex:column style="text-align:right;">
+                      <apex:facet name="header">
+                            <span style="cursor: pointer;" onclick="sort_data_quote('Total_Amount__c');" class="sort-Total_Amount__c">Total Amount</span>
+                        </apex:facet>
+                        <apex:outputField value="{!q.Total_Amount__c}" style="text-align: right;"/>
+                    </apex:column>
+                    
+                    
+                     <apex:column style="text-align: right;">
+                        <apex:facet name="header">
+                            <span style="cursor: pointer;" onclick="sort_data_quote('SUM_Destination_Amount__c');" class="sort-SUM_Destination_Amount__c">SUM Destination Amount</span>
+                        </apex:facet>
+                        <apex:outputField value="{!q.SUM_Destination_Amount__c}" style="text-align: right;"/>
+                    </apex:column>
+                    
+                     <apex:column style="text-align: right; color:{!if(q.MIN_Valid_Until__c != null ,if(q.MIN_Valid_Until__c >= fecha_de_hoy,'','red'),'')};">
+                        <apex:facet name="header">
+                            <span style="cursor: pointer;" onclick="sort_data_quote('MIN_Valid_Until__c');" class="sort-MIN_Valid_Until__c">Fees Valid Until</span>
+                        </apex:facet>
+                        
+                        <!-- <apex:outputtext value="{!q.MIN_Valid_Until__c}" style="text-align: right; color:{!if(q.MIN_Valid_Until__c != null ,if(q.MIN_Valid_Until__c >= fecha_de_hoy,'','red'),'')};"/>
+                        --><!--<apex:outputText value="{0,date,dd'/'MM'/'yyyy}"  style="text-align: right; color:{!if(q.MIN_Valid_Until__c != null ,if(q.MIN_Valid_Until__c >= fecha_de_hoy,'','red'),'')};">
+                            <apex:param value="{!q.MIN_Valid_Until__c}" /> 
+                            
+                        </apex:outputText>-->
+                        <apex:outputField value="{!q.MIN_Valid_Until__c}"/> 
+                    </apex:column>
+               
+                </apex:pageBlockTable>
+            </apex:pageBlock>
+        </apex:outputPanel>
+        <apex:outputPanel id="list_quote_lines">
+            <apex:pageBlock title="Supplier Quote Lines">
+             <input type="hidden" class="opciones_contenedores" value="{!container_selected}" />
+                <apex:pageBlockTable value="{!supplier_quote_lines}" var="ql" styleClass="tabla_principal">
+                    <apex:column >
+                        <apex:facet name="header">
+                            <span style="cursor: pointer;" onclick="sort_data_line('Name');" class="sort-Name">SQO Line</span>
+                        </apex:facet>
+                        <apex:outputLink value="/{!ql.Id}" target="_blank">{!ql.Name}</apex:outputLink>
+                    </apex:column>
+                    <apex:column >
+                        <apex:facet name="header">
+                            <span style="cursor: pointer;" onclick="sort_data_line('Supplier_Quote__r.Name');" class="sort-Supplier_Quote__r.Name">Supplier Quote</span>
+                        </apex:facet>
+                        <apex:outputLink value="/{!ql.Supplier_Quote__c}" target="_blank">{!ql.Supplier_Quote__r.Name}</apex:outputLink>
+                    </apex:column>
+                    <apex:column >
+                        <apex:facet name="header">
+                            <span style="cursor: pointer;" onclick="sort_data_line('Supplier__c');" class="sort-Supplier__c">Supplier</span>
+                        </apex:facet>
+                        <apex:outputLink value="/{!ql.Supplier_Quote__r.Supplier__c}" target="_blank">{!ql.Supplier__c}</apex:outputLink>
+                    </apex:column>
+                    <apex:column >
+                        <apex:facet name="header">
+                            <span style="cursor: pointer;" onclick="sort_data_line('Item__r.Name');" class="sort-Item__r.Name">Item</span>
+                        </apex:facet>
+                        <apex:outputLink value="/{!ql.Item__c}" target="_blank">{!ql.Item__r.Name}</apex:outputLink>
+                    </apex:column>
+                    
+                      <apex:column >
+                        <apex:facet name="header">
+                            <div style="text-align:center; cursor: pointer;" onclick="sort_data_line('Production_Time_Days__c');" class="sort-Production_Time_Days__c">
+                                Lead <br/> Time
+                           </div>
+                        </apex:facet>
+                        <apex:outputText value="{!ql.Production_Time_Days__c}"/>
+                    </apex:column>
+                    
+                    <apex:column style="text-align: right;">
+                        <apex:facet name="header" >
+                            
+                            <div style="text-align:center; cursor: pointer;" onclick="sort_data_line('Quantity__c');" class="sort-Quantity__c">
+                                Units
+                           </div>
+                        </apex:facet>
+                       <!-- <apex:outputText value="{0, number, ###,###,###,##0.00}"><apex:param value="{!ql.Quantity__c}"/></apex:outputText>-->
+                       <apex:outputField value="{!ql.Quantity__c}"/>
+                    </apex:column>
+                    <apex:column >
+                         <apex:facet name="header">
+                            <div style="text-align:center; cursor: pointer;" onclick="sort_data_line('Unit_of_measure__c');" class="sort-Unit_of_measure__c">
+                               Unit of <br/> Measure
+                              </div>
+                        </apex:facet>
+                        <apex:outputText value="{!ql.Unit_of_measure__c}"/>
+                    </apex:column>
+                    
+                    <apex:column style="text-align: right;">
+                        <apex:facet name="header">
+                            <div style="text-align:center">
+                                <span style="cursor: pointer; text-align: center;" onclick="sort_data_line('Total_Weight_Kg__c');" class="sort-Total_Weight_Kg__c">Total <br/>Weight Kg</span>
+                           </div>
+                           </apex:facet>
+                        <apex:outputField value="{!ql.Total_Weight_Kg__c}" />
+                     </apex:column>   
+                     
+                      <apex:column style="text-align: right;">
+                        <apex:facet name="header">
+                            <div style="text-align:center">
+                                <span style="cursor: pointer; text-align: center;" onclick="sort_data_line('Total_Volume_m3__c');" class="sort-Total_Volume_m3__c">Total <br/>Volume m3</span>
+                           </div>
+                        </apex:facet>
+                        <apex:outputField value="{!ql.Total_Volume_m3__c}"/>
+                        <apex:inputHidden value="{!ql.Total_Volume_m3__c}" html-neudata="volumen_de_la_linea"/>
+                        <apex:inputHidden value="{!ql.Total_Weight_Kg__c}" html-neudata="peso_de_la_linea"/>
+                    </apex:column>
+                    
+                    
+                     <apex:column style="text-align: right;">
+                        <apex:facet name="header">
+                            <div style="text-align: right;">
+                                <!-- onchange="updatedata();" -->
+                                
+                                <select class="seleccioncontainer"  onchange="numero_containers();" style="margin: 10px 10px 10px 51px;">
+                                </select>
+                           </div>
+                        </apex:facet>
+                        <apex:outputtext value="{!ql.Number_of_Containers__c}" styleClass="text-align: right;" html-neudata="numero_contenedores" />
+                    </apex:column>
+                    
+                    
+               
+                    <apex:column style="text-align:right; color:{!if(ql.Net_Price__c != null && ql.Item__r.Item_Price__c != null, if(ql.Net_Price__c > ql.Item__r.Item_Price__c, 'red', 'green'), 'green')};">
+                        <apex:facet name="header">
+                            <div style="text-align:center; cursor: pointer;" onclick="sort_data_line('Net_Price__c');" class="sort-Net_Price__c">
+                                Net Price
+                            </div>
+                        </apex:facet>
+                        <apex:outputfield value="{!ql.Net_Price__c}" styleClass="text-align: right;"/>
+                    </apex:column>
+                   <!-- <apex:column style="text-align:right;" headerValue="Expense Amount" value="{!ql.Expense_Amount__c}"/>-->
+                    
+                     <apex:column style="text-align:right;"  value="{!ql.Unit_Origin_Price__c}">
+                        <apex:facet name="header">
+                            <div style="text-align:center">
+                                <span style="cursor: pointer;" onclick="sort_data_line('Unit_Origin_Price__c');" class="sort-Unit_Origin_Price__c">Unit Origin Price</span>
+                             </div>
+                         </apex:facet>
+                    </apex:column>
+                    
+                    <apex:column style="text-align:right;" value="{!ql.Total_Amount__c}">
+                     <apex:facet name="header">
+                            <div style="text-align:center">
+                                <span style="cursor: pointer;" onclick="sort_data_line('Total_Amount__c');" class="sort-Total_Amount__c">Total Origin Amount</span>
+                             </div>
+                         </apex:facet>
+                    </apex:column>
+                    
+                  
+                   
+                    <apex:column style="text-align:right; color:{!if(ql.Supplier_Quote__r.MIN_Valid_Until__c != null ,if(ql.Supplier_Quote__r.MIN_Valid_Until__c >= fecha_de_hoy,'','red'),'')};">
+                        <apex:facet name="header">
+                            <div style="text-align:center">
+                                <span style="cursor: pointer;" onclick="sort_data_line('Imp_Exp_Charges_Assigned__c');"  class="sort-Imp_Exp_Charges_Assigned__c">Imp-Exp Fees<br/>assigned</span>
+                             </div>
+                         </apex:facet>
+                         <apex:outputField value="{!ql.Imp_Exp_Charges_Assigned__c}" title="{!ql.Supplier_Quote__r.MIN_Valid_Until__c}" style="color:{!if(ql.Supplier_Quote__r.MIN_Valid_Until__c != null ,if(ql.Supplier_Quote__r.MIN_Valid_Until__c >= fecha_de_hoy,'','red'),'')};" />
+                    </apex:column>
+                    
+                    
+                    <apex:column style="text-align:right;"  value="{!ql.Total_Taxes__c}">
+                         <apex:facet name="header">
+                             <div style="text-align:center">
+                                <span style="cursor: pointer;" onclick="sort_data_line('Total_Taxes__c');" class="sort-Total_Taxes__c">Total <br/> Taxes</span>
+                            </div>
+                         </apex:facet>
+                    </apex:column>
+                    
+                    <apex:column style="text-align:right;" value="{!ql.Total_Destination_Amount__c}">
+                         <apex:facet name="header">
+                             <div style="text-align:center">
+                                <span style="cursor: pointer;" onclick="sort_data_line('Total_Destination_Amount__c');" class="sort-Total_Destination_Amount__c">Total Destination Amount</span>
+                            </div>
+                         </apex:facet>
+                    </apex:column>
+                    
+                     <apex:column style="text-align:right;"  value="{!ql.Imp_Exp_Charges_Assigned_Percent__c}">
+                         <apex:facet name="header">
+                             <div style="text-align:center">
+                                <span style="cursor: pointer;" onclick="sort_data_line('Percent__c');" class="sort-Percent__c">Imp-Exp <br/> Fees (%)</span>
+                            </div>
+                         </apex:facet>
+                    </apex:column>
+                    
+                    <apex:column style="text-align:right;"  value="{!ql.Percent_Duty__c}">
+                         <apex:facet name="header">
+                             <div style="text-align:center">
+                                <span style="cursor: pointer;" onclick="sort_data_line('Percent_Duty__c');" class="sort-Percent__c">Duty <br/> (%)</span>
+                            </div>
+                         </apex:facet>
+                    </apex:column>
+                    
+                    <apex:column style="text-align:right;" value="{!ql.Unit_Destination_Price__c}">
+                      <apex:facet name="header">
+                             <div style="text-align:center">
+                                <span style="cursor: pointer;" onclick="sort_data_line('Unit_Destination_Price__c');" class="sort-Unit_Destination_Price__c">Unit Destination Price</span>
+                            </div>
+                         </apex:facet>
+                    </apex:column>
+                    <apex:column style="text-align:center; font-weight:bold; color:green;">
+                         <apex:facet name="header">
+                             <div style="text-align:center">
+                                <span style="cursor: pointer;" onclick="sort_data_line('Active__c');" class="sort-Active__c">Active</span>
+                            </div>
+                         </apex:facet>
+                         <apex:inputCheckbox StyleClass="inputcheck" value="{!ql.Active__c}" onclick="desactive_line('{!ql.Id}');"/>
+                    </apex:column>
+                    
+                </apex:pageBlockTable>
+            </apex:pageBlock>
+        </apex:outputPanel>
+        <apex:outputpanel id="graficos">
+            <apex:pageBlock title="Gráficos" id="block_graficos">
+                <apex:pageBlockSection columns="1" id="chartSection1" title="Total Amount Quotes">
+                    <apex:chart height="400" width="100%" data="{!datos_grafico_1}">
+                        <apex:legend position="bottom"/>
+                        <apex:axis type="Numeric" position="right" fields="AMOUNT" grid="false" minimum="0"/>
+                        <apex:axis type="Category" position="bottom" fields="SUPPLIER"/>
+                        <apex:barSeries orientation="vertical" axis="right" xField="SUPPLIER" yField="AMOUNT">
+                            <apex:chartTips height="25" width="240"/>
+                        </apex:barSeries>
+                    </apex:chart>
+                </apex:pageBlockSection>
+      
+            </apex:pageBlock>
+        </apex:outputpanel>
+        <apex:outputpanel >
+            <apex:actionstatus id="myStatus">
+                <apex:facet name="start">
+                   <div class="waitingSearchDiv" id="el_loading" style="background-color: #fbfbfb;
+                          height: 100%;opacity:0.65;width:100%;"> 
+                       <div class="waitingHolder" style="top: 74.2px; width: 91px;">
+                           <img class="waitingImage" src="/img/loading.gif" title="Please Wait..." />
+                           <span class="waitingDescription">Loading...</span>
+                       </div>
+                   </div>
+                </apex:facet>
+            </apex:actionstatus>
+        </apex:outputpanel>
+        <apex:actionFunction name="compare_data" action="{!go_compare}" reRender="list_suppliers, list_quotes, list_quote_lines, graficos, block0" onComplete="update_link(); rellenar_contenedores();" status="myStatus"/>
+        <apex:inputHidden value="{!sup_list}" id="sup_list"/>
+        <apex:inputHidden value="{!it_list}" id="it_list"/>
+        <apex:inputHidden value="{!url_export_excel}" id="url_export_excel"/>
+        <apex:inputHidden value="{!url_export_pdf}" id="url_export_pdf"/>
+        <apex:inputHidden value="{!orden_suppliers}" id="orden_suppliers"/>
+        <apex:inputHidden value="{!orden_quotes}" id="orden_quotes"/>
+        <apex:inputHidden value="{!orden_lines}" id="orden_lines"/>
+        <input type="hidden" value="none" id="orden_ad_suppliers"/>
+        <input type="hidden" value="none" id="orden_ad_quotes"/>
+        <input type="hidden" value="none" id="orden_ad_lines"/>
+        <apex:inputHidden value="{!operator_total_amount}" id="operator_total_amount"/>
+        <apex:inputHidden value="{!operator_net_price}" id="operator_net_price"/>
+        <apex:inputHidden value="{!operator_target_price}" id="operator_target_price"/>
+         <apex:inputHidden value="{!delivery_zone_selected}" id="delivery_zone_selected"/>
+         <apex:pageBlock id="block0" >
+              <div id="hay_errores" title="Error List" style="display:none;">
+                  <p id="errores"><apex:outputtext value="{!errores_duty}" escape="false"/></p>
+              </div>
+          </apex:pageBlock>
+          
+          <apex:inputHidden value="{!id_supplier_quote_update}" id="id_supplier_quote_update"/>
+    </apex:form>
+    <script>
+        twistSection(document.getElementById('{!$Component.form.block_graficos.chartSection1}').getElementsByTagName('img')[0])
+        twistSection(document.getElementById('{!$Component.form.block_graficos.chartSection2}').getElementsByTagName('img')[0])
+    </script>
+</apex:page>

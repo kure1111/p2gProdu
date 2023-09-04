@@ -1,0 +1,147 @@
+<!-- <apex:page standardController="Shipment__c" extensions="NEU_View_Associated_Photos" sidebar="false">-->
+<apex:page standardController="Associated_Photo__c" extensions="NEU_View_Associated_Photos" recordSetVar="s" sidebar="false">
+    <apex:includeScript value="{!$Resource.neu_jquery}"/> 
+    <apex:includeScript value="{!$Resource.jquery_1_10_2}"/> 
+    <apex:includeScript value="{!$Resource.jquery_ui_1_10_3}"/>
+    <apex:includeScript value="{!$Resource.neurored_jquery}"/> 
+    <apex:stylesheet value="{!URLFOR($Resource.galleriffic,'basic.css')}"/>
+    <apex:stylesheet value="{!URLFOR($Resource.galleriffic,'galleriffic-2.css')}"/>
+    <apex:includeScript value="{!URLFOR($Resource.galleriffic,'jquery.galleriffic.js')}"/>
+    <apex:includeScript value="{!URLFOR($Resource.galleriffic,'jquery.history.js')}"/>
+    <apex:includeScript value="{!URLFOR($Resource.galleriffic,'jquery.opacityrollover.js')}"/>
+    <script>
+        jQuery(document).ready(function($) {
+            // We only want these styles applied when javascript is enabled
+            $('div.navigation').css({'width' : '202px', 'float' : 'left', 'height':'100%','margin-right':'30px'});     
+            $('div.content').css('display', 'block');
+
+            // Initially set opacity on thumbs and add
+            // additional styling for hover effect on thumbs
+            var onMouseOutOpacity = 0.67;
+            $('#thumbs ul.thumbs li').opacityrollover({
+                mouseOutOpacity:   onMouseOutOpacity,
+                mouseOverOpacity:  1.0,
+                fadeSpeed:         'fast',
+                exemptionSelector: '.selected'
+            });
+            
+            // Initialize Advanced Galleriffic Gallery
+            var gallery = $('#thumbs').galleriffic({
+                delay:                     2500,
+                numThumbs:                 9,
+                preloadAhead:              10,
+                enableTopPager:            true,
+                enableBottomPager:         true,
+                maxPagesToShow:            7,
+                imageContainerSel:         '#slideshow',
+                controlsContainerSel:      '#controls',
+                captionContainerSel:       '#caption',
+                loadingContainerSel:       '#loading',
+                renderSSControls:          true,
+                renderNavControls:         true,
+                //playLinkText:              'Play Slideshow',
+                //pauseLinkText:             'Pause Slideshow',
+                prevLinkText:              '&lsaquo; Previous Photo',
+                nextLinkText:              'Next Photo &rsaquo;',
+                nextPageLinkText:          'Next &rsaquo;',
+                prevPageLinkText:          '&lsaquo; Prev',
+                enableHistory:             false,
+                autoStart:                 false,
+                syncTransitions:           false,
+                defaultTransitionDuration: 900,
+                onSlideChange:             function(prevIndex, nextIndex) {
+                    // 'this' refers to the gallery, which is an extension of $('#thumbs')
+                    this.find('ul.thumbs').children()
+                        .eq(prevIndex).fadeTo('fast', onMouseOutOpacity).end()
+                        .eq(nextIndex).fadeTo('fast', 1.0);
+                },
+                onPageTransitionOut:       function(callback) {
+                    this.fadeTo('fast', 0.0, callback);
+                },
+                onPageTransitionIn:        function() {
+                    this.fadeTo('fast', 1.0);
+                }
+            });
+            
+            //$('.top').html('<span style="    font-family: Trebuchet MS, Verdana, sans-serif;    font-size: 17px;">List Photos</span>');
+        });
+    </script>
+    <style>
+    .play{    display: none;}
+    div#page {border: 0px;}
+    .bPageTitle .ptBody .content{    /*width: 100px;*/}
+    div#page{    width: 100%; border-bottom: 1px solid #dbdbdb;    background-color: #f8f8f8;    border-bottom: 1px solid #eaeaea;    border-left: 1px solid #eaeaea;    border-right: 1px solid #eaeaea;    -moz-border-radius: 4px;    -webkit-border-radius: 4px;    border-radius: 4px;     border-top: 2px solid #966;     background-color: white;     height: 100%;    float: left;}
+    ul.thumbs img {    height: 75px;}
+    div.slideshow img {max-height: 500px;}
+    div.slideshow {    width: 100% !important;    height: 100%;}
+    div.content{/*width: 78%;*/}
+    div.slideshow a.advance-link{width: 100% !important; height: 100%; line-height: 100%;}
+    div.slideshow-container{    height: 100%;    width: 100%;    max-height: 500px;    min-height: 259px;}
+    div.slideshow span.image-wrapper{    float: left;    position: inherit; width: 100% !important;    height: 100%;}
+    div.controls{    float: left;}
+    span.image-caption{width: 100%;}
+    div.download{float: left;     width: 100%; text-align: left;}
+    div.image-title{float: left;}
+    div.navigation {     /*min-width: 300px !important;    width: 390px !Important; */   border: 1px solid #b1b1b1;       padding: 5px;    height: 100%;    min-height: 318px;    overflow-y: scroll; border-radius: 5px 0px 0px 5px;     height: 607px !important;     width: 202px;}
+    div.content {display: table !important; /*min-width: 891px;   width: 70%;*/  border: 1px solid #b1b1b1;    border-radius: 5px;     min-width: 900px; padding-top: 5px;}
+    body .bPageTitle .ptBody h1.noSecondHeader{float: left;}
+    div.navigation div.bottom{    display: none;}
+    .bPageTitle .ptBody .content{    border: 0px;}
+    .prev{    color: #333;    margin: 1px;    padding: 2px 3px;    border: 1px solid #b5b5b5;    border-bottom-color: #7f7f7f;    background: #e8e8e9 url('/img/alohaSkin/btn_sprite.png') repeat-x right top;    font-weight: bold;    font-size: .9em;    -moz-border-radius: 3px;    -webkit-border-radius: 3px;    border-radius: 3px;     margin: 5px; text-decoration: none !important;}
+    .next{    color: #333;    margin: 1px;    padding: 2px 3px;    border: 1px solid #b5b5b5;    border-bottom-color: #7f7f7f;    background: #e8e8e9 url('/img/alohaSkin/btn_sprite.png') repeat-x right top;    font-weight: bold;    font-size: .9em;    -moz-border-radius: 3px;    -webkit-border-radius: 3px;    border-radius: 3px; text-decoration: none !important;}
+    .prev:hover{background-position: right -30px;     text-decoration: none !important;}
+    .next:hover{background-position: right -30px;     text-decoration: none !important;}
+    .title_navigation_photos{    margin-left: -9%;    width: 212px;    color: #000;    font-size: 1.1em;    font-weight: normal;     font-family: "Trebuchet MS", Verdana, sans-serif;     color: #777;}
+    body {text-align: left;}
+    div#container{/*width: 100%;    min-width: 1291px;*/    text-align: center;    float: left; min-width: 1159px;}
+    </style>
+    <apex:form id="form">
+        <apex:sectionHeader title="Associated Photos" html-style="border: 0px;"/>
+           <span style="        position: relative;    top: -36px;    float: left;    left: 290px;    font-size: 17px;     border: 0px; display:{!If(shipment_id != null,'','none')}">
+                <a href="/{!shipment_id}" style="    border: 0px;" onblur="LookupHoverDetail.getHover(neu_getId(this)).hide();" onfocus="LookupHoverDetail.getHover(neu_getId(this),'/{!shipment_id}/m?isAjaxRequest=1').show();" onmouseout="LookupHoverDetail.getHover(neu_getId(this)).hide();" onmouseover="LookupHoverDetail.getHover(neu_getId(this),'/{!shipment_id}/m?isAjaxRequest=1').show();"  id="new_id_1">{!name_shipment}</a><!--target="_blank"-->
+             </span>
+             <span style="        position: relative;    top: -36px;    float: left;    left: 290px;    font-size: 17px;     border: 0px; display:{!If(shipment_prog_id != null,'','none')}">
+                <a href="/{!shipment_prog_id}" style="    border: 0px;" onblur="LookupHoverDetail.getHover(neu_getId(this)).hide();" onfocus="LookupHoverDetail.getHover(neu_getId(this),'/{!shipment_prog_id}/m?isAjaxRequest=1').show();" onmouseout="LookupHoverDetail.getHover(neu_getId(this)).hide();" onmouseover="LookupHoverDetail.getHover(neu_getId(this),'/{!shipment_prog_id}/m?isAjaxRequest=1').show();"  id="new_id_1">{!shipment_prog_name}</a>
+             </span>
+        <div id="page" style="display:{!if(list_associated_photo.size != 0,'','none')}">
+            <div id="container">
+                <span class="title_navigation_photos">Photos Associated with this record </span>
+                <!-- Start Advanced Gallery Html Containers -->
+                <div id="gallery" class="content">
+                    <div id="controls" class="controls"></div>
+                    <div class="slideshow-container">
+                        <div id="loading" class="loader"></div>
+                        <div id="slideshow" class="slideshow"></div>
+                    </div>
+                    <div id="caption" class="caption-container"></div>
+                </div>
+                <!-- <span style="    font-family: Trebuchet MS, Verdana, sans-serif;    font-size: 17px;">List Photos</span>-->
+                <div id="thumbs" class="navigation" style="width: 22%;">
+                    
+                    <ul class="thumbs noscript">
+                        <apex:repeat value="{!list_associated_photo}" var="ap">
+                            <li>
+                                <a class="thumb" name="leaf" href="{!ap.associated_photo.Photo_URL__c}" title="Title {!ap.Name}">
+                                    <div>
+                                        <img src="{!ap.associated_photo.Photo_URL__c}" alt="Title {!ap.Name}" />
+                                    </div>
+                                </a>
+                                <div class="caption">
+                                    <div class="download">
+                                        <a href="{!ap.associated_photo.Photo_URL__c}">Download Original</a>
+                                    </div>
+                                    <div class="image-title">Title {!ap.Name}</div>
+                                </div>
+                            </li>
+                        </apex:repeat>
+                        
+                    </ul>
+                </div>
+                <div style="clear: both;"></div>
+            </div>
+        </div>
+        
+        <div style="display:{!if(list_associated_photo.size != 0,'none','')}"><apex:image url="{!$Resource.No_Photo}" style="    margin-right: 10px;"/><span style="    margin-top: 9px;    margin-bottom: 0;    color: #000;    font-size: 1.5em;    font-weight: normal;">There are no Associated Photos</span>
+        </div>
+    </apex:form>
+</apex:page>

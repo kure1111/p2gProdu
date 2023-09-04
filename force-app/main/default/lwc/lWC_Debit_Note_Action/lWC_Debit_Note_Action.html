@@ -1,0 +1,191 @@
+<!-- sldsValidatorIgnore -->
+<template>
+    <lightning-quick-action-panel header={title}>
+        <div class="slds-is-relative">
+            <template if:true={isLoadedAll}>
+                <lightning-spinner variant="brand" size="medium"> 
+                </lightning-spinner>    
+            </template>
+            <div if:true={isCreateInvoice}>
+                <div class="slds-box slds-theme_shade">
+                    <h2><b style="color: red;">ATENCION:</b>&nbsp; Se va a crear la Debit Note para los siguientes Shipments</h2>
+                </div><br/><br/>
+                <!--estas apunto de crear las siguientes debit notes con las cargo lines mostradas     {serviceLines}    -->
+                <template for:each={shipmentsLine} for:item="record">                                
+                    <h3 class="slds-text-heading_medium slds-m-bottom_xx-small" key={record.Id}>Shipment Number: <b style="color:red">{record.shipmentName}</b> - Status: <b style="color:red">{record.statusSp}</b></h3>                                                                                                                                   
+                        <div class="slds-scrollable_x" style={record.styleTable} key={record.Id}>
+                            <table class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_col-bordered">
+                                <thead>
+                                    <tr class="slds-line-height_reset">
+                                        <th class="" scope="col">
+                                            <div class="slds-truncate" title="Services Line">Services Line Name</div>
+                                        </th>
+                                        <th class="" scope="col">
+                                            <div class="slds-truncate" title="Carrier">Carrier</div>
+                                        </th>
+                                        <th class="" scope="col">
+                                            <div class="slds-truncate" title="Rate Category">Rate Category</div>
+                                        </th>
+                                        <th class="" scope="col">
+                                            <div class="slds-truncate" title="Codigo Sap">Codigo Sap</div>
+                                        </th>
+                                        <th class="" scope="col">
+                                            <div class="slds-truncate" title="Rate Name">Rate Name</div>
+                                        </th>
+                                        <th class="" scope="col">
+                                            <div class="slds-truncate" title="Units">Units</div>
+                                        </th>
+                                        <th class="" scope="col">
+                                            <div class="slds-truncate" title="Buy Amount">Buy Amount</div>
+                                        </th>
+                                        <th class="" scope="col">
+                                            <div class="slds-truncate" title="Sell Net Amount">Sell Net Amount</div>
+                                        </th>
+                                        <th class="" scope="col">
+                                            <div class="slds-truncate" title="Services Profit">Services Profit</div>
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <template for:each={record.servicesLines} for:item="line">
+                                    <tbody key={line.Id}>
+                                        <tr class="slds-hint-parent">
+                                            <th data-label="Services Line" scope="row">
+                                                <div class="slds-truncate" title={line.Name}>{line.Name}</div>
+                                            </th>
+                                            <td data-label="Carrier">
+                                                <div class="slds-truncate" title={line.Carrier__c}>{line.Carrier__c}</div>
+                                            </td>
+                                            <td data-label="Rate Category">
+                                                <div class="slds-truncate" title={line.Service_Rate_Category__c>{line.Service_Rate_Category__c}</div>
+                                            </td>
+                                            <td data-label="Codigo Sap">
+                                                <div class="slds-truncate" title={line.Code_SAP__c}>{line.Code_SAP__c}</div>
+                                            </td>
+                                            <td data-label="Rate Name">
+                                                <div class="slds-truncate" title={line.Service_Rate_Name__c}>{line.Service_Rate_Name__r.Name}</div>
+                                            </td>
+                                            <td data-label="Units">
+                                                <div class="slds-truncate" title={line.Units__c}>{line.Units__c}</div>
+                                            </td>
+                                            <td data-label="Buy Amount">
+                                                <div class="slds-truncate" title={line.Units__c}>{line.Std_Buy_Amount_header_currency__c}</div>
+                                            </td>
+                                            <td data-label="Sell Net Amount">
+                                                <div class="slds-truncate" title={line.Units__c}>{line.Sell_Amount__c}</div>
+                                            </td> 
+                                            <td data-label="Services Profit">
+                                                <div class="slds-truncate" title={line.Units__c}>{line.Service_Std_Profit__c}</div>
+                                            </td>                                                
+                                        </tr>                                           
+                                    </tbody>
+                                </template>
+                            </table>                    
+                        </div><br key={record}/><br key={record}/>                                                                                                                                                                                                          
+                </template>  
+            </div>                                         
+        </div>        
+        <div if:true={isDetailModal}>
+            <div class="slds-modal__content slds-p-around_medium">                                                        
+                <template for:each={invoiceResponse} for:item="record">
+                    <article class="slds-card" key={record}>
+                        <div class="slds-card__header slds-grid">
+                            <header class="slds-media slds-media_center slds-has-flexi-truncate">
+                                <div class="slds-media__figure">
+                                    <span class="slds-icon_container slds-icon-standard-contact" title="contact">                                                    
+                                        <lightning-icon icon-name="custom:custom18" alternative-text="Approved" title="Invoice"></lightning-icon>                                                                                                        
+                                    </span>
+                                </div>
+                                <div class="slds-media__body">
+                                    <h2 class="slds-card__header-title">
+                                        <a href="#" class="slds-card__header-link slds-truncate" title="Invoices Name">
+                                            <span>{record.invoice.Name} - {record.invoice.Shipment__r.Name}</span>
+                                        </a>
+                                    </h2>
+                                </div>
+                                <div class="slds-no-flex">                                                
+                                </div>
+                            </header>
+                        </div>
+                        <div class="slds-card__body">
+                            <div class="slds-scrollable_x" style={record.styleTable}>
+                                <table class="slds-table slds-table_cell-buffer slds-no-row-hover slds-table_bordered slds-table_fixed-layout" role="grid">
+                                    <thead>
+                                        <tr class="slds-line-height_reset">
+                                            <th class="" scope="col">
+                                                <div class="slds-truncate" title="Invoice Line Name">Invoice Line Name</div>
+                                            </th>                                                        
+                                            <th class="" scope="col">
+                                                <div class="slds-truncate" title="Concept">Concept</div>
+                                            </th>
+                                            <th class="" scope="col">
+                                                <div class="slds-truncate" title="Units">Units</div>
+                                            </th>
+                                            <th class="" scope="col">
+                                                <div class="slds-truncate" title="Unit Price">Unit Price</div>
+                                            </th>
+                                            <th class="" scope="col">
+                                                <div class="slds-truncate" title="Total (Excl.VAT)">Total (Excl.VAT)</div>
+                                            </th>
+                                            <th class="" scope="col">
+                                                <div class="slds-truncate" title="VAT">VAT</div>
+                                            </th>
+                                            <th class="" scope="col">
+                                                <div class="slds-truncate" title="Total VAT">Total VAT</div>
+                                            </th>
+                                            <th class="" scope="col">
+                                                <div class="slds-truncate" title="Total (incl. VAT)">Total (incl. VAT)</div>
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <template for:each={record.invoiceLine} for:item="line">
+                                        <tbody key={line.Id}>
+                                            <tr class="slds-hint-parent">
+                                                <th data-label="Invoice Line Name" scope="row">
+                                                    <div class="slds-truncate" title={line.Name}>{line.Name}</div>
+                                                </th>                                                           
+                                                <td data-label="Concept">
+                                                    <div class="slds-truncate" title={line.Concept__c>{line.Concept__c}</div>
+                                                </td>
+                                                <td data-label="Units">
+                                                    <div class="slds-truncate" title={line.Units__c}>{line.Units__c}</div>
+                                                </td>
+                                                <td data-label="Unit Price">
+                                                    <div class="slds-truncate" title={line.Unit_Price__c}>{line.Unit_Price__c}</div>
+                                                </td>
+                                                <td data-label="Total (Excl.VAT)">
+                                                    <div class="slds-truncate" title={line.Amount__c}>{line.Amount__c}</div>
+                                                </td>
+                                                <td data-label="VAT">
+                                                    <div class="slds-truncate" title={line.VAT__c}>{line.VAT__c}</div>
+                                                </td>
+                                                <td data-label="Total VAT">
+                                                    <div class="slds-truncate" title={line.Total_VAT__c}>{line.Total_VAT__c}</div>
+                                                </td> 
+                                                <td data-label="Total (incl. VAT)">
+                                                    <div class="slds-truncate" title={line.Total_Incl_VAT__c}>{line.Total_Incl_VAT__c}</div>
+                                                </td>                                                
+                                            </tr>                                           
+                                        </tbody>
+                                    </template>
+                                </table>    
+                            </div>                                        
+                        </div>
+                        <footer class="slds-card__footer">                                        
+                        </footer>
+                    </article>                                                                
+                    <br key={record}/><br key={record}/>                                                                                                                                                                                                          
+                </template>                               
+            </div>                                
+        </div>                           
+        <footer class="slds-modal__footer">      
+            <div if:true={isDetailModal}>
+                <lightning-button variant="brand" label="Generar PDF y Enviar Email" title="Generar PDF y Enviar Email" onclick={generatePDF} class="slds-m-left_x-small"></lightning-button>
+                <lightning-button variant="success" label="Finalizar" title="Finalizar" onclick={finalizar} class="slds-m-left_x-small" ></lightning-button>                
+            </div>                              
+            <div if:true={isCreateInvoice}>                
+                <lightning-button variant="success" label="Confirmar" title="Save Debit Note" onclick={generateInvoice} class="slds-m-left_x-small"  ></lightning-button>
+                <lightning-button variant="destructive" label="Cancelar" title="Cancel Action" onclick={cancelar}  class="slds-m-left_x-small"></lightning-button>
+            </div>                        
+        </footer>
+    </lightning-quick-action-panel>
+</template>

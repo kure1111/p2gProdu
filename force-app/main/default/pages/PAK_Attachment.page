@@ -1,0 +1,26 @@
+<apex:page standardController="Account" extensions="PAK_Attachment" showHeader="false" sidebar="false"  tabStyle="Account" lightningStylesheets="true">
+    <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+    <script>
+        $(document).ready(function(){
+        	console.log('entro');
+        	$(".btnEnviar").click();
+        });
+    </script>
+    <apex:form id="formId">
+        <apex:pageMessages /><br/><br/>
+		<div align="center">
+            <apex:commandButton action="/{!Account.Id}" value="Back" />
+            <apex:commandButton style="display:none;" action="{!SendWS}" value="Enviar" styleclass="btnEnviar" reRender="formId" status="actStatusId" />
+        </div>
+    </apex:form>
+    <apex:actionstatus id="actStatusId">
+       	<apex:facet name="start">
+      		<div class="waitingSearchDiv" id="el_loading" style="background-color: #DCD6D6; height: 100%;opacity:0.65;width:100%;">
+      			<div class="waitingHolder" style="top: 74.2px; width: 91px;">
+        			<img class="waitingImage" src="/img/loading.gif"     title="Please Wait..." />
+       	 			<span class="waitingDescription">Saving...</span>
+       			</div>
+          	</div>
+      	</apex:facet>
+ 	</apex:actionstatus>
+</apex:page>

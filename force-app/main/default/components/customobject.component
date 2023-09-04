@@ -1,0 +1,7 @@
+<apex:component >
+    <apex:attribute name="objid" description="Object Id" type="String"/>
+    <apex:attribute name="objname" description="Object Name" type="String"/>
+    <apex:attribute name="aid" description="Object Id" type="String" default=""/>
+    <apex:attribute name="atarget" description="Link Target" type="String" default="_blank"/>
+    <a href="/{!objid}" id="{!objid+aid}" target="{!atarget}" onblur="LookupHoverDetail.getHover('{!objid+aid}').hide();" onfocus="LookupHoverDetail.getHover('{!objid+aid}', '/{!objid}/m?isAjaxRequest=1').show();" onmouseout="LookupHoverDetail.getHover('{!objid+aid}').hide();" onmouseover="LookupHoverDetail.getHover('{!objid+aid}', '/{!objid}/m?isAjaxRequest=1').show();">{!objname}</a>
+</apex:component>

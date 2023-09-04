@@ -1,0 +1,344 @@
+<aura:component controller="NEU_ControlTower" implements="forceCommunity:availableForAllPageTypes">
+    
+    <aura:attribute name="shipment" type="Shipment__c" default="{'sobjectType':'Shipment__c'}"/>
+    <aura:attribute name="planned_shipments" type="Object"/>
+    <aura:attribute name="planned_shipments_columns" type="List"/>
+    <aura:attribute name="intransit_shipments" type="Object"/>
+    <aura:attribute name="intransit_shipments_columns" type="List"/>
+    <aura:attribute name="delivered_shipments" type="Object"/>
+    <aura:attribute name="delivered_shipments_columns" type="List"/>
+    <aura:attribute name="road_shipments" type="Object"/>
+    <aura:attribute name="road_shipments_columns" type="List"/>
+    <aura:attribute name="air_shipments" type="Object"/>
+    <aura:attribute name="air_shipments_columns" type="List"/>
+    <aura:attribute name="shipment_track" type="Shipment_Track__c" default="{'sobjectType':'Shipment_Track__c'}"/>
+    <aura:attribute name="shipment_stops" type="List" />
+    <aura:attribute name="route_points" type="Object"/>
+    <aura:handler name="init" value="{!this}" action="{!c.init}"/>
+   	
+    <aura:attribute name="sortedBy1" type="string" default="Name" />
+    <aura:attribute name="sortedDirection1" type="string" default="asc" />
+    <aura:attribute name="sortedBy2" type="string" default="Name" />
+    <aura:attribute name="sortedDirection2" type="string" default="asc" />
+    <aura:attribute name="sortedBy3" type="string" default="Name" />
+    <aura:attribute name="sortedDirection3" type="string" default="asc" />
+    <aura:attribute name="sortedBy4" type="string" default="Name" />
+    <aura:attribute name="sortedDirection4" type="string" default="asc" />
+    <aura:attribute name="sortedBy5" type="string" default="Name" />
+    <aura:attribute name="sortedDirection5" type="string" default="asc" />
+
+    <div id="main">
+
+        <lightning:card title="Sea" iconName="custom:custom54">
+
+            <h3 class="slds-section-title--divider">Planned Shipments (next 30 days)</h3>
+            <div class="slds-form--stacked slds-p-around--medium slds-m-bottom--x-small">
+                <div class="slds-form-element">
+                    
+                    <div class="mobile_interface">
+                        <aura:iteration items="{!v.planned_shipments}" var="ship">
+                            <table class="mobile_table">
+                                <tr>
+                                    <td class="td_button">
+                                        <form class="aline-form" onsubmit="{!c.showTracking}">
+                                            <input type="hidden" value="{!ship.Id}" class="shipment-id"/>
+                                            <input type="hidden" value="{!ship.Freight_Mode__c}" class="freight-mode"/>
+                                            <lightning:button class="slds-button slds-button_small slds-button_neutral mobile_button view_button" label="Tracking" iconName="utility:checkin" iconPosition="left" type="submit"/>
+                                        </form>
+                                    </td>
+                                    <td>
+                                        <p class="li_td name_ship">{!ship.Name}</p>
+                                        <p class="li_td status_ship">{!ship.Ocean_Shipment_Status__c}</p>
+                                        <p class="li_td status_ship">{!ship.Shipment_Status__c}</p>
+                                        <p class="li_td">ETD: <ui:outputDate value="{!ship.ETD_from_Point_of_Load__c}"/></p>
+                                        <p class="li_td">ETA: <ui:outputDate value="{!ship.ETA_Point_of_Discharge__c}"/></p>
+                                    </td>
+                                </tr>
+                            </table>
+                        </aura:iteration>						
+                    </div>
+                    
+                    <div class="pc_interface">
+                        <lightning:datatable data="{!v.planned_shipments}" 
+                                             columns="{!v.planned_shipments_columns}" 
+                                             keyField="id" 
+                                             onrowaction="{!c.handleRowActionSea}" 
+                                             onrowselection="{!c.getSelectedName}"
+                                             hideCheckboxColumn="true" 
+                                             onsort="{!c.updateColumnSorting1}" 
+                                             sortedBy="{!v.sortedBy1}" 
+                                             sortedDirection="{!v.sortedDirection1}"/>
+                    </div>
+                </div>
+            </div>
+            
+            <h3 class="slds-section-title--divider">In Transit</h3>
+            <div class="slds-form--stacked slds-p-around--medium slds-m-bottom--x-small">
+                <div class="slds-form-element">
+                    
+                    <div class="mobile_interface">
+                        <aura:iteration items="{!v.intransit_shipments}" var="ship">
+                            <table class="mobile_table">
+                                <tr>
+                                    <td class="td_button">
+                                        <form class="aline-form" onsubmit="{!c.showTracking}">
+                                            <input type="hidden" value="{!ship.Id}" class="shipment-id"/>
+                                            <input type="hidden" value="{!ship.Freight_Mode__c}" class="freight-mode"/>
+                                            <lightning:button class="slds-button slds-button_small slds-button_neutral mobile_button view_button" label="Tracking" iconName="utility:checkin" iconPosition="left" type="submit"/>
+                                        </form>
+                                    </td>
+                                    <td>
+                                        <p class="li_td name_ship">{!ship.Name}</p>
+                                        <p class="li_td status_ship">{!ship.Ocean_Shipment_Status__c}</p>
+                                        <p class="li_td status_ship">{!ship.Shipment_Status__c}</p>
+                                        <p class="li_td">ETD: <ui:outputDate value="{!ship.ETD_from_Point_of_Load__c}"/></p>
+                                        <p class="li_td">ETA: <ui:outputDate value="{!ship.ETA_Point_of_Discharge__c}"/></p>
+                                    </td>
+                                </tr>
+                            </table>
+                        </aura:iteration>						
+                    </div>
+                    
+                    <div class="pc_interface">
+                        <lightning:datatable data="{!v.intransit_shipments}" 
+                                             columns="{!v.intransit_shipments_columns}" 
+                                             keyField="id"
+                                             onrowaction="{!c.handleRowActionSea}"
+                                             onrowselection="{!c.getSelectedName}"
+                                             hideCheckboxColumn="true" 
+                                             onsort="{!c.updateColumnSorting2}" 
+                                             sortedBy="{!v.sortedBy2}" 
+                                             sortedDirection="{!v.sortedDirection2}"/>
+                    </div>
+                </div>
+            </div>
+            
+            <h3 class="slds-section-title--divider">Delivered Shipments (last 30 days)</h3>
+            <div class="slds-form--stacked slds-p-around--medium slds-m-bottom--x-small">
+                <div class="slds-form-element">
+                    
+                    <div class="mobile_interface">
+                        <aura:iteration items="{!v.delivered_shipments}" var="ship">
+                            <table class="mobile_table">
+                                <tr>
+                                    <td class="td_button">
+                                        <form class="aline-form" onsubmit="{!c.showTracking}">
+                                            <input type="hidden" value="{!ship.Id}" class="shipment-id"/>
+                                            <input type="hidden" value="{!ship.Freight_Mode__c}" class="freight-mode"/>
+                                            <lightning:button class="slds-button slds-button_small slds-button_neutral mobile_button view_button" label="Tracking" iconName="utility:checkin" iconPosition="left" type="submit"/>
+                                        </form>
+                                    </td>
+                                    <td>
+                                        <p class="li_td name_ship">{!ship.Name}</p>
+                                        <p class="li_td status_ship">{!ship.Ocean_Shipment_Status__c}</p>
+                                        <p class="li_td status_ship">{!ship.Shipment_Status__c}</p>
+                                        <p class="li_td">ETD: <ui:outputDate value="{!ship.ETD_from_Point_of_Load__c}"/></p>
+                                        <p class="li_td">ETA: <ui:outputDate value="{!ship.ETA_Point_of_Discharge__c}"/></p>
+                                    </td>
+                                </tr>
+                            </table>
+                        </aura:iteration>						
+                    </div>
+                    
+                    <div class="pc_interface">
+                        <lightning:datatable data="{!v.delivered_shipments}" 
+                                             columns="{!v.delivered_shipments_columns}" 
+                                             keyField="id"
+                                             onrowaction="{!c.handleRowActionSea}"
+                                             onrowselection="{!c.getSelectedName}"
+                                             hideCheckboxColumn="true" 
+                                             onsort="{!c.updateColumnSorting3}" 
+                                             sortedBy="{!v.sortedBy3}" 
+                                             sortedDirection="{!v.sortedDirection3}"/>
+                    </div>
+                </div>
+            </div>
+            
+        </lightning:card>
+        
+        <lightning:card title="Road" iconName="custom:custom98">
+            <h3 class="slds-section-title--divider">In Transit</h3>
+            <div class="slds-form--stacked slds-p-around--medium slds-m-bottom--x-small">
+                <div class="slds-form-element">
+                    
+                    <div class="mobile_interface">
+                        <aura:iteration items="{!v.road_shipments}" var="ship">
+                            <table class="mobile_table">
+                                <tr>
+                                    <td class="td_button">
+                                        <form class="aline-form" onsubmit="{!c.showTracking}">
+                                            <input type="hidden" value="{!ship.Id}" class="shipment-id"/>
+                                            <input type="hidden" value="{!ship.Freight_Mode__c}" class="freight-mode"/>
+                                            <lightning:button class="slds-button slds-button_small slds-button_neutral mobile_button view_button" label="Tracking" iconName="utility:checkin" iconPosition="left" type="submit"/>
+                                        </form>
+                                    </td>
+                                    <td>
+                                        <p class="li_td name_ship">{!ship.Name}</p>
+                                        <p class="li_td status_ship">{!ship.Shipment_Status_Mon__c}</p>
+                                        <p class="li_td">ETD: <ui:outputDate value="{!ship.ETD_from_Point_of_Load__c}"/></p>
+                                        <p class="li_td">ETA: <ui:outputDate value="{!ship.ETA_Point_of_Discharge__c}"/></p>
+                                    </td>
+                                </tr>
+                            </table>
+                        </aura:iteration>						
+                    </div>
+                    
+                    <div class="pc_interface">
+                        <lightning:datatable data="{!v.road_shipments}" 
+                                             columns="{!v.road_shipments_columns}" 
+                                             keyField="id" 
+                                             onrowaction="{!c.handleRowActionRoad}" 
+                                             onrowselection="{!c.getSelectedName}"
+                                             hideCheckboxColumn="true" 
+                                             onsort="{!c.updateColumnSorting4}" 
+                                             sortedBy="{!v.sortedBy4}" 
+                                             sortedDirection="{!v.sortedDirection4}"/>
+                    </div>
+                </div>
+            </div>
+        </lightning:card>
+        
+        <lightning:card title="Air" iconName="custom:custom20">
+            <h3 class="slds-section-title--divider">In Transit</h3>
+            <div class="slds-form--stacked slds-p-around--medium slds-m-bottom--x-small">
+                <div class="slds-form-element">
+                    
+                    <div class="mobile_interface">
+                        <aura:iteration items="{!v.air_shipments}" var="ship">
+                            <table class="mobile_table">
+                                <tr>
+                                    <td class="td_button">
+                                        <form class="aline-form" onsubmit="{!c.showTracking}">
+                                            <input type="hidden" value="{!ship.Id}" class="shipment-id"/>
+                                            <input type="hidden" value="{!ship.Freight_Mode__c}" class="freight-mode"/>
+                                            <lightning:button class="slds-button slds-button_small slds-button_neutral mobile_button view_button" label="Tracking" iconName="utility:checkin" iconPosition="left" type="submit"/>
+                                        </form>
+                                    </td>
+                                    <td>
+                                        <p class="li_td name_ship">{!ship.Name}</p>
+                                        <p class="li_td status_ship">{!ship.Air_Shipment_Status__c}</p>
+                                        <p class="li_td">ETD: <ui:outputDate value="{!ship.ETD_from_Point_of_Load__c}"/></p>
+                                        <p class="li_td">ETA: <ui:outputDate value="{!ship.ETA_Point_of_Discharge__c}"/></p>
+                                    </td>
+                                </tr>
+                            </table>
+                        </aura:iteration>						
+                    </div>
+                    
+                    <div class="pc_interface">
+                        <lightning:datatable data="{!v.air_shipments}" 
+                                             columns="{!v.air_shipments_columns}" 
+                                             keyField="id" 
+                                             onrowaction="{!c.handleRowActionAir}" 
+                                             onrowselection="{!c.getSelectedName}"
+                                             hideCheckboxColumn="true" 
+                                             onsort="{!c.updateColumnSorting5}" 
+                                             sortedBy="{!v.sortedBy5}" 
+                                             sortedDirection="{!v.sortedDirection5}"/>
+                	</div>       
+                </div>
+            </div>
+        </lightning:card>
+        
+        <div id="capa_track_trace">
+            <lightning:card title="Track and Trace" iconName="standard:shipment">
+    
+                <h3 class="slds-section-title--divider">MAP</h3>
+                <div class="slds-form--stacked slds-p-around--medium slds-m-bottom--x-small" style="{!(and(v.shipment_track != null , v.shipment.Freight_Mode__c == 'Road') ? 'padding:0;' : '')}">
+                    <div class="slds-form-element">
+                        <ul id="leyenda">
+                            <li class="li_origin">Origin</li>
+                            <li class="li_destination">Destination</li>
+                            <li class="li_stop" style="{!(v.shipment.Freight_Mode__c == 'Road' ? '' : 'display:none;')}">Stop</li>
+                            <li class="li_vessel" style="{!(v.shipment.Freight_Mode__c == 'Sea' ? '' : 'display:none;')}">Vessel</li>
+                            <li class="li_truck" style="{!(v.shipment.Freight_Mode__c == 'Road' ? '' : 'display:none;')}">Truck</li>
+                        </ul>
+                        <div id="mapa" class="capa_mapa">
+                            <aura:renderIf isTrue="{!v.shipment.Freight_Mode__c == 'Sea'}">
+                                <iframe src="{!'/customers/NEU_SeaTrackTrace?id='+v.shipment.Id}" id="shipment_track_frame"/>
+                            </aura:renderIf>
+                            <aura:renderIf isTrue="{!v.shipment.Freight_Mode__c == 'Air'}">
+                                <iframe src="{!'/customers/NEU_AirTrackTrace?id='+v.shipment.Id}" id="shipment_track_frame"/>
+                            </aura:renderIf>
+                            <aura:renderIf isTrue="{!and(v.shipment_track == null, v.shipment.Freight_Mode__c == 'Road')}">
+                                <iframe src="{!'/customers/NEU_RoadTrackTrace?id='+v.shipment.Id}" id="shipment_track_frame"/>
+                            </aura:renderIf>
+                        </div>
+                    </div>
+                    <!--<aura:renderIf isTrue="{!and(v.shipment_track != null, v.shipment.Freight_Mode__c == 'Road')}">-->
+                    <div style="{!(and(v.shipment_track != null , v.shipment.Freight_Mode__c == 'Road') ? '' : 'display:none;')}">
+                        <div class="hide_header"></div>
+                        <iframe src="{!v.shipment_track.Public_Sharing_URL__c}" id="shipment_track_frame"/>
+                    </div>
+                    <!--</aura:renderIf>-->
+                </div>
+    
+                <!--<aura:renderIf isTrue="{!and(v.shipment_track == null, v.shipment.Freight_Mode__c == 'Road')}">-->
+                <div style="{!(and(v.shipment_track == null , v.shipment.Freight_Mode__c == 'Road') ? '' : 'display:none;')}">
+                    <h3 class="slds-section-title--divider">Progress</h3>
+                    <div class="slds-form--stacked slds-p-around--medium slds-m-bottom--x-small">
+                        <div class="slds-form-element">
+                            
+                            <div class="mobile_interface">
+                                <aura:iteration items="{!v.route_points}" var="point">
+                                    <table class="mobile_table">
+                                        <tr>
+                                            <td class="td_button">
+                                                <div class="slds-truncate"><img src="{!'/sfsites/c/resource/'+point.Image}"/></div>
+                                            </td>
+                                            <td>
+                                                <p class="li_td name_ship">{!point.Address}</p>
+                                                <p class="li_td">{!point.Country}</p>
+                                                <p class="li_td">{!point.State}</p>
+                                                <p class="li_td">{!point.Location}</p>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </aura:iteration>						
+                            </div>
+                            
+                            <div class="pc_interface">
+                                <table class="slds-table slds-table--bordered slds-table--striped slds-table--cell-buffer slds-table--fixed-layout">
+                                    <thead>
+                                        <tr class="slds-text-heading--label">
+                                            <th scope="col" style="width: 20%;"><div class="slds-truncate" title="Image">Name</div></th>
+                                            <th scope="col" style="width: 20%;"><div class="slds-truncate" title="Image">Country</div></th>
+                                            <th scope="col" style="width: 20%;"><div class="slds-truncate" title="Image">State</div></th>
+                                            <th scope="col" style="width: 20%;"><div class="slds-truncate" title="Image">Location</div></th>
+                                            <th scope="col" style="width: 20%;"><div class="slds-truncate" title="Image">Address</div></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <aura:iteration items="{!v.route_points}" var="point">
+                                            <tr>                                      
+                                                <td><div class="slds-truncate"><img src="{!'/sfsites/c/resource/'+point.Image}"/></div></td>
+                                                <td><div class="slds-truncate">{!point.Country}</div></td>
+                                                <td><div class="slds-truncate">{!point.State}</div></td>
+                                                <td><div class="slds-truncate">{!point.Location}</div></td>
+                                                <td><div class="slds-truncate">{!point.Address}</div></td>
+                                            </tr>
+                                        </aura:iteration>
+                                    </tbody>
+                                </table>
+                            </div>
+                            
+                        </div>
+                    </div>
+                </div>
+                <!--</aura:renderIf>-->
+                
+                <!--<aura:renderIf isTrue="{!v.shipment.Freight_Mode__c == 'Sea'}">-->
+                <div style="{!(v.shipment.Freight_Mode__c == 'Sea' ? '' : 'display:none;')}">
+                    <h3 class="slds-section-title--divider">Progress</h3>
+                    <div class="slds-form--stacked slds-p-around--medium slds-m-bottom--x-small">
+                        <div class="slds-form-element">
+                            <iframe src="{!'/customers/NEU_SeaMilestones?id='+v.shipment.Id}" id="milestones_frame"/>
+                        </div>
+                    </div>
+                </div>
+                <!--</aura:renderIf>-->
+                <lightning:spinner variant="brand" size="large" aura:id="mySpinner" class="slds-hide" alternativeText="Geolocating the Vessel..."/>
+            </lightning:card>
+        </div>
+    </div>
+</aura:component>

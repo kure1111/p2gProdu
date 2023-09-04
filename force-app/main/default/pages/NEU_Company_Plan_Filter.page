@@ -1,0 +1,112 @@
+<apex:page standardController="Company_Plan__c" extensions="NEU_Company_Plan_Filter" sidebar="true" id="page" action="{!pintar_grafico}">
+<apex:includeScript value="{!$Resource.jquery_1_10_2}"/> 
+<apex:includeScript value="{!$Resource.neurored_jquery}"/> 
+<apex:form id="form" style="overflow-x:auto">
+     <apex:actionFunction name="changefilter" status="myStatus" rerender="b1" action="{!pintar_grafico}"/>
+    <apex:pageBlock id="b1" mode="maindetail">
+        <apex:chart height="400" width="100%" data="{!datos_grafico}">
+            <apex:legend position="bottom"/>
+            <apex:axis type="Numeric" position="right" fields="Available_Time,Available_Loading_Time,Loading_Time" grid="false" minimum="0"/>
+            <apex:axis type="Category" position="bottom" fields="labor_program"/>
+            <apex:barSeries orientation="vertical" axis="right" xField="labor_program" yField="Available_Time,Available_Loading_Time,Loading_Time" colorSet="#0070c0,#17375e,#8eb4e3" groupGutter="0">
+                <apex:chartTips height="25" width="180"/>
+            </apex:barSeries>
+        </apex:chart>
+        <apex:pageBlockSection id="p1" title="Line Plans" columns="1">
+            <apex:pageBlockTable value="{!programs}" var="program" id="theTable" rowClasses="odd,even">
+                <apex:column >
+                     <apex:facet name="header">
+                        <apex:selectList multiselect="false" label="Country" value="{!country}" size="1" onchange="changefilter();">
+                            <apex:selectOptions value="{!countries}"/>
+                        </apex:selectList>
+                     </apex:facet>
+                     <c:customobject2 objid="{!program.Factory_Line__r.Country__c}" objname="{!program.Factory_Line__r.Country__r.Name}"/>
+                </apex:column>
+                <apex:column >
+                     <apex:facet name="header">
+                        <apex:selectList multiselect="false" label="State" value="{!state}" size="1" onchange="changefilter();">
+                            <apex:selectOptions value="{!states}"/>
+                        </apex:selectList>
+                     </apex:facet>
+                     <c:customobject2 objid="{!program.Factory_Line__r.State__c}" objname="{!program.Factory_Line__r.State__r.Name}"/>
+                </apex:column>
+                <apex:column >
+                     <apex:facet name="header">
+                        <apex:selectList multiselect="false" label="Location" value="{!location}" size="1" onchange="changefilter();">
+                            <apex:selectOptions value="{!locations}"/>
+                        </apex:selectList>
+                     </apex:facet>
+                     <c:customobject2 objid="{!program.Factory_Line__r.Location__c}" objname="{!program.Factory_Line__r.Location__r.Name}"/>
+                </apex:column>
+                <apex:column >
+                     <apex:facet name="header">
+                        <apex:selectList multiselect="false" label="Factory Line" value="{!factory}" size="1" onchange="changefilter();">
+                            <apex:selectOptions value="{!factories}"/>
+                        </apex:selectList>
+                     </apex:facet>
+                     <c:customobject2 objid="{!program.Factory_Line__c}" objname="{!program.Factory_Line__r.Name}"/>
+                </apex:column>
+                <apex:column >
+                     <apex:facet name="header">
+                        <apex:selectList multiselect="false" label="Family" value="{!family}" size="1" onchange="changefilter();">
+                            <apex:selectOptions value="{!families}"/>
+                        </apex:selectList>
+                     </apex:facet>
+                     <c:customobject2 objid="{!program.Factory_Line__r.Family__c}" objname="{!program.Factory_Line__r.Family__r.Name}"/>
+                </apex:column>
+                <apex:column >
+                     <apex:facet name="header">
+                        <apex:selectList multiselect="false" label="Subfamily" value="{!subfamily}" size="1" onchange="changefilter();">
+                            <apex:selectOptions value="{!subfamilies}"/>
+                        </apex:selectList>
+                     </apex:facet>
+                     <c:customobject2 objid="{!program.Factory_Line__r.Subfamily__c}" objname="{!program.Factory_Line__r.Subfamily__r.Name}"/>
+                </apex:column>
+                <apex:column >
+                     <apex:facet name="header">Line Plan</apex:facet>
+                     <c:customobject2 objid="{!program.Id}" objname="{!program.Name}"/>
+                </apex:column>
+                <apex:column >
+                    <apex:facet name="header">
+                     <apex:selectList multiselect="false" label="Valid From" value="{!valid_from}" size="1" onchange="changefilter();">
+                            <apex:selectOptions value="{!valids_froms}"/>
+                        </apex:selectList>
+                    </apex:facet>
+                    <apex:outputField value="{!program.Valid_From__c}"/>
+                </apex:column>
+                <apex:column value="{!program.Valid_To__c}">
+                </apex:column>
+                <apex:column value="{!program.Available_Time__c}" style="text-align:right;">
+                     <apex:facet name="header"><div style="text-align:right">Available<br/>Time</div></apex:facet>
+                </apex:column>
+                <apex:column value="{!program.Available_Loading_Time__c}" style="text-align:right;">
+                     <apex:facet name="header"><div style="text-align:right">Available<br/>Loading</div></apex:facet>
+                </apex:column>
+                <apex:column value="{!program.Idle_Time__c}" style="text-align:right;">
+                     <apex:facet name="header"><div style="text-align:right">Idle<br/>Time</div></apex:facet>
+                </apex:column>
+                <apex:column value="{!program.Loading_Time__c}" style="text-align:right;">
+                     <apex:facet name="header"><div style="text-align:right">Loading<br/>Time</div></apex:facet>
+                </apex:column>
+                <apex:column value="{!program.Unconstrained_Capacity_Utilisation__c}" style="text-align:right;">
+                     <apex:facet name="header"><div style="text-align:right">Unconstr.<br/>Capacity</div></apex:facet>
+                </apex:column>
+                <apex:column style="text-align:right;">
+                     <apex:facet name="header"><div style="text-align:right">Constr.<br/>Capacity</div></apex:facet>
+                     <apex:outputText value="{!program.Constrained_Capacity_Utilisation__c}" style="{!IF(program.Constrained_Capacity_Utilisation__c < 80, 'color:#000000;',IF(program.Constrained_Capacity_Utilisation__c >= 80 && program.Constrained_Capacity_Utilisation__c <= 90, 'color:#d79800;',IF(program.Constrained_Capacity_Utilisation__c > 100, 'color:#ff0000;','')))}"/>
+                </apex:column>
+            </apex:pageBlockTable>
+        </apex:pageBlockSection>
+    </apex:pageBlock>
+<apex:actionstatus id="myStatus">
+    <apex:facet name="start">
+        <div class="waitingSearchDiv" id="el_loading" style="background-color:#fbfbfb;height:100%;opacity:0.65;width:100%;"> 
+            <div class="waitingHolder" style="top:74.2px;width:91px;">
+                <img class="waitingImage" src="/img/loading.gif" title="Please Wait..." />
+                <span class="waitingDescription">Loading...</span>
+            </div>
+        </div>
+    </apex:facet>
+</apex:actionstatus>
+</apex:form>
+</apex:page>

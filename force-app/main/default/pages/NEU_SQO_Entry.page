@@ -1,0 +1,187 @@
+<apex:page standardController="Supplier_Quote__c" extensions="NEU_SQO_Entry">
+<apex:includeScript value="{!$Resource.jquery_1_10_2}"/> 
+<apex:includeScript value="{!$Resource.jquery_ui_1_10_3}"/>
+<apex:includeScript value="{!$Resource.neurored_jquery}"/> 
+<apex:stylesheet value="{!URLFOR($Resource.jquery_ui_1_10_3_css,'jquery-ui-1.10.3.min.css')}"/>
+<script>
+        $(document).ready(function () {
+            updateLines();
+            setDecimalSep($($.sfId('{!$Component.form.decimalSep}')).val(),$($.sfId('{!$Component.form.thousandSep}')).val());
+        });
+        function linea_modificada()
+        {
+            var idlineamodificada =  $('.linea_modificada').val(); 
+            $('.tabla_importExport .'+idlineamodificada).css("color", "#F84D4D");
+            $('.tabla_importExport .'+idlineamodificada+' span a').css("color", "#F84D4D");
+            $('.tabla_supplierquotelines .'+idlineamodificada).css("color", "#F84D4D");
+            $('.tabla_supplierquotelines .'+idlineamodificada+' span a').css("color", "#F84D4D");
+        }
+           (function($) {
+            $.fn.calcular_pending_units = (function() {
+                var total_unidades_escritas = 0;
+                $('table .new_units').each(function(){
+                
+                     total_unidades_escritas += $(this).getFloatSep();
+                 });
+              
+                 $('.cal_pending_units').setFloatSep(($('.cal_total_units').getFloat() - total_unidades_escritas).toFixed(2));
+                 $('.cal_total_units').setFloatSep($('.cal_total_units').getFloat());
+            });
+        })(jQuery);
+        function calcular_units_pending()
+        {
+            var total_unidades_escritas = 0;
+            $('table .new_units').each(function(){
+            
+                 total_unidades_escritas += $(this).getFloatSep();
+             });
+            $('.cal_pending_units').setFloatSep(($('.cal_total_units').getFloat() - total_unidades_escritas).toFixed(2)); 
+            $('.cal_total_units').setFloatSep($('.cal_total_units').getFloat());
+        }
+        function clickIcon(element,icon)
+        {
+            if(icon>1)
+            {
+                if(icon==3)
+                    if($($.sfId('{!$Component.form.block4.table1}')+' input:checkbox[neudata="'+element.attr('neudata')+'"]:checked.icon1').length>0)
+                        return;
+                newBOMShow(element.attr('neudata'));
+            }
+        }
+        function adjustBackground()
+        {
+            $($.sfId('{!$Component.form.block4.table1}')+' img.icon1').attr('src','{!$Resource.more_png}');
+            $($.sfId('{!$Component.form.block4.table1}')+' img.icon1').parent().parent().css("background-color", "#f3f3f3");
+            $($.sfId('{!$Component.form.block4.table1}')+' img.icon2').attr('src','{!$Resource.plus_png}');
+            $($.sfId('{!$Component.form.block4.table1}')+' img.icon2').css('cursor','pointer');
+            $($.sfId('{!$Component.form.block4.table1}')+' img.icon3').attr('src','{!$Resource.minus_png}');
+            $($.sfId('{!$Component.form.block4.table1}')+' img.icon3').css('cursor','pointer');
+            var alertuser=$($.sfId('{!$Component.form.block4.alertuser}')).getString();
+            if(alertuser)
+            {
+                $($.sfId('{!$Component.form.block4.alertuser}')).val('');
+                alert(alertuser);
+            }
+        }
+</script>
+<apex:form id="form">
+    <a href="{!URLFOR(URLFOR($Action.Supplier_Quote__c.View,Id))}" title="return to {!$ObjectType.Supplier_Quote__c.label}"><apex:sectionHeader title="{!$ObjectType.Supplier_Quote__c.label}" subtitle="{!Supplier_Quote__c.Name}"/></a>
+    <apex:actionFunction name="updateLines" reRender="block4" status="myStatus" oncomplete="adjustBackground();"/>
+    <apex:actionFunction name="updatewarehouse" reRender="block5" status="myStatus" oncomplete="$('#contenedorWarehouse').dialog({height: 550,width: 1204,modal: true,appendTo:'#positionWarehouse'}); calcular_units_pending();">
+        <apex:param name="one" assignTo="{!idItem}" value="" />
+        <apex:param name="two" assignTo="{!idLineItem}" value="" />
+        <apex:param name="three" assignTo="{!totalunits}" value="" />
+        <apex:param name="four" assignTo="{!nombreitem}" value="" />
+    </apex:actionFunction>
+    <apex:inputHidden value="{!decimalSep}" id="decimalSep"/>
+	<apex:inputHidden value="{!thousandSep}" id="thousandSep"/>
+    <apex:actionFunction name="newItemSelected" action="{!newItemSelected}" reRender="block4" status="myStatus" oncomplete="adjustBackground();linea_modificada();">
+        <apex:param name="firstParam" assignTo="{!idLine}" value="" />
+    </apex:actionFunction>
+        <apex:pageBlock id="block4" title="{!Supplier_Quote__c.Name}">
+            <apex:pageBlockButtons >
+                <apex:commandButton action="{!applyLines}" value="Create Inventory Entries" reRender="block4" status="myStatus" oncomplete="adjustBackground();"/>
+                <apex:commandButton action="{!cancelLines}" value="Cancel" reRender="block4" status="myStatus" oncomplete="adjustBackground();"/>
+            </apex:pageBlockButtons>
+        <apex:outputPanel >
+            <apex:pageBlockTable value="{!Lines}" var="item" styleClass="tabla_importExport">
+                <apex:column title="Check to consolidate this line">
+                    <apex:inputCheckbox value="{!item.selected}" onclick="newItemSelected('{!item.Id}');" rendered="{!item.Id!=null}"/>
+                </apex:column>
+                <apex:column value="{!item.line.Received__c}" style="text-align:center;"/>
+                <apex:column style="text-align:center;">
+                    <apex:facet name="header"><div style="text-align:center"><img src="/img/icon/custom51_100/shoppingCart32.png" style="width:20px" alt="Stock"/></div></apex:facet>
+                    <apex:image rendered="{!item.selected}" onclick="updatewarehouse('{!item.ItemId}','{!item.Id}','{!item.FinalUnits}','{!item.itemName}');" value="/img/msg_icons/confirm16.png" style="cursor:pointer"/>
+                </apex:column>
+               <apex:column style="text-align:right">
+                    <apex:facet name="header"><div style="text-align:center">Entry<br/>Units</div></apex:facet>
+                   <!-- <apex:outputText value="{!item.Units}" rendered="{!item.Units!=0}"/>-->
+                    <apex:outputText value="{!item.unitsSep}" rendered="{!item.Units!=0}"/>
+                </apex:column>
+                 <apex:column headerValue="Warehouse" styleClass="{!item.IdPrincipal}">
+                    <c:customobject2 objid="{!item.stockentry.Wharehouse_Id}" objname="{!item.stockentry.Wharehouse_Name}" rendered="{!item.stockentry!=null}"/>
+                </apex:column>
+                <apex:column headerValue="Storage Bin" styleClass="{!item.IdPrincipal}">
+                    <c:customobject2 rendered="{!item.stockentry!=null}" objid="{!item.stockentry.Id}" objname="{!item.stockentry.Name}"/>
+                </apex:column>
+                <apex:column style="text-align:center">
+                    <apex:facet name="header"><div style="text-align:center">Inventory<br/>Status</div></apex:facet>
+                    <apex:inputField rendered="{!item.stockentry!=null}" value="{!item.entry.Status__c}"/>
+                </apex:column>
+                <apex:column style="text-align:right">
+                    <apex:facet name="header"><div style="text-align:center">Line</div></apex:facet>
+                    <c:customobject2 rendered="{!item.line!=null}" objid="{!item.line.Id}" objname="{!item.line.Name}"/>
+                </apex:column>
+               <apex:column style="text-align:right">
+                    <apex:facet name="header"><div style="text-align:center">Line<br/>Units</div></apex:facet>
+                   <!-- <apex:outputText value="{!item.FinalUnits}" rendered="{!item.FinalUnits!=0}"/>-->
+                   <apex:outputField value="{!item.line.Quantity__c}" rendered="{!item.line.Quantity__c != null}"/>
+                </apex:column>
+               <!--<apex:column style="text-align:right" styleClass="{!item.IdPrincipal}">
+                    <apex:facet name="header"><div style="text-align:center">Total Stock<br/>(current)</div></apex:facet>
+                    <apex:outputField value="{!item.line.Item__r.Stock__c}" rendered="{!(item.id!=null)&&(item.itemtype==0)}"/>
+                </apex:column>-->
+                <apex:column headerValue="Item">
+                    <c:customobject2 rendered="{!item.line!=null}" objid="{!item.line.Item__r.Id}" objname="{!item.line.Item__r.Name}"/>
+                </apex:column>
+                <apex:column headerValue="Extension Item Name" title="Item aditional info">
+                     <apex:outputText rendered="{!item.line!=null}" value="{!item.extension}"/>
+                </apex:column>
+                <apex:column value="{!item.line.Unit_Destination_Price__c}" title="Price with discounts applied" style="text-align:right">
+                    <apex:facet name="header"><div style="text-align:center">Price</div></apex:facet>
+                </apex:column>
+                <apex:column value="{!item.line.Total_Destination_Amount__c}" style="text-align:right">
+                    <apex:facet name="header"><div style="text-align:center">Amount</div></apex:facet>
+                </apex:column>
+            </apex:pageBlockTable> 
+         <apex:inputText value="{!linea_modificada}" id="theTextInput" styleClass="linea_modificada" style="display:none;"/>
+        <apex:inputHidden value="{!alertuser}" id="alertuser"/>
+        </apex:outputPanel>
+    </apex:pageBlock>
+<div id="positionWarehouse"></div>
+<div style="display:none; " id="contenedorWarehouse">
+<apex:actionRegion >
+    <apex:pageBlock id="block5" >
+    <apex:facet name="header"><div class="pbTitle"><h2 class="mainTitle"><img src="/img/icon/custom51_100/shoppingCart24.png" style="vertical-align:text-bottom"/>{!nombreitem}</h2></div></apex:facet>
+    <span style="position: absolute; top: 27px; right: 94px; font-family: Arial,Helvetica,sans-serif; color: #222; font-weight: bold;">Total Units</span>
+        <span style="position: absolute; top: 27px; right: 30px; font-family: Arial,Helvetica,sans-serif; color: #222;" class="cal_total_units"> {!totalunits}</span>
+        <span style="position: absolute; top: 42px; right: 94px; font-family: Arial,Helvetica,sans-serif; color: #222; font-weight: bold;">Pending Units</span>
+        <span style="position: absolute; top: 42px; right: 30px; font-family: Arial,Helvetica,sans-serif; color: #222;" class="cal_pending_units"> {!pendingunits}</span>
+        <apex:pageBlockButtons >
+                <apex:commandButton value="Update" action="{!updateStockEntries}" reRender="block4" status="myStatus" onclick="$('#contenedorWarehouse').dialog('close');" onComplete="adjustBackground();linea_modificada();" style="margin-left: 40px;"/>
+                <apex:commandButton value="Cancel" reRender="block4" status="myStatus" onclick="$('#contenedorWarehouse').dialog('close');" onComplete="adjustBackground();linea_modificada();"/>
+            </apex:pageBlockButtons>
+        <apex:outputPanel >
+        <div style="overflow-y:auto; max-height: 500px; margin-top: 15px;">
+            <apex:pageBlockTable value="{!StockEntries}" var="StorageBin">
+            <apex:column headerValue="Warehouse Name">
+                <c:customobject2 objid="{!StorageBin.Wharehouse_Id}" objname="{!StorageBin.Wharehouse_Name}"/>
+            </apex:column>
+            <apex:column headerValue="Warehouse Storage Bin">
+                <c:customobject2 objid="{!StorageBin.Storage_Bin}" objname="{!StorageBin.Name}"/>
+            </apex:column>
+            <apex:column headerValue="Units">
+                <!--  <apex:inputText value="{!StorageBin.newUnits}" html-placeholder="{!StorageBin.units}" size="5" onKeyUp="$(this).calcular_pending_units();" html-class="new_units" style="    text-align: right;"/>-->
+            		 <apex:inputText value="{!StorageBin.newUnitsSep}" html-placeholder="{!StorageBin.unitsSep}" size="5" onKeyUp="$(this).calcular_pending_units();" html-class="new_units" style="    text-align: right;"/>
+            </apex:column>
+            </apex:pageBlockTable>
+         </div> 
+        </apex:outputPanel>
+    </apex:pageBlock>
+</apex:actionRegion>
+   </div> 
+    <apex:outputpanel >
+       <apex:actionstatus id="myStatus">
+           <apex:facet name="start">
+               <div class="waitingSearchDiv" id="el_loading" style="background-color: #fbfbfb;
+                      height: 100%;opacity:0.65;width:100%;"> 
+                   <div class="waitingHolder" style="top: 74.2px; width: 91px;">
+                       <img class="waitingImage" src="/img/loading.gif" title="Please Wait..." />
+                       <span class="waitingDescription">Loading...</span>
+                   </div>
+               </div>
+           </apex:facet>
+       </apex:actionstatus>
+    </apex:outputpanel>
+</apex:form>
+</apex:page>

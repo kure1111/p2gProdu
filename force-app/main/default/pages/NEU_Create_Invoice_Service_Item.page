@@ -1,0 +1,836 @@
+<apex:page standardController="Invoice__c" extensions="NEU_Create_Invoice_Service_Item" id="page"  lightningStylesheets="false">
+    <apex:includeScript value="{!$Resource.jquery_1_11_1}"/> 
+    <apex:includeScript value="{!$Resource.jquery_ui_1_11_4}"/>
+    <apex:includeScript value="{!$Resource.neurored_jquery}"/> 
+    <apex:stylesheet value="{!URLFOR($Resource.jquery_ui_1_11_4_css,'jquery-ui.min.css')}"/>
+    <apex:stylesheet value="{!$Resource.NEU_Pagination_css}"/>
+   <apex:form id="form">
+    <script type="text/javascript">
+        $(document).ready(function () {
+            setDecimalSep($($.sfId('{!$Component.form.decimalSep}')).val(),$($.sfId('{!$Component.form.thousandSep}')).val());
+            var size_list = $('.size_list_table').getFloat();
+            if(size_list == 0)
+                twistSection(document.getElementById('page:form:pageblock_invoicelines:blockinvoicelines').childNodes[0].childNodes[0]);
+            updateData();
+        });
+        function updateData()
+        {
+            updateBalance();
+            taxesLoad();
+            calcular_all_amount_invoice_lines();
+            calcular_total_amounts();
+        }
+        function updateBalance()
+        {
+            var invoiceamount=0;
+            $('input.boxallocate:checked').each(function(){
+                invoiceamount+=$('input.amount',$(this).closest('tr')).getFloatSep();
+            });
+            $('.invoiceamount').setFloatSep(invoiceamount.toFixed(2));
+        }
+        function del_oi(id)
+        {
+            document.getElementById('{!$Component.form.id_line}').value = id;
+            delete_line();
+        }
+        function del_oi2(id)
+        {
+            document.getElementById('{!$Component.form.id_line}').value = id;
+            quit_line_select();
+        }
+        function newallocated(element)
+        {
+            var balance=0;
+            if($(element).prop('checked'))
+                balance=$('input:hidden',$(element).closest('td')).getFloat();
+            var amount=$('input.amount',$(element).closest('tr'));
+            amount.setFloatSep(balance.toFixed(2));
+            amountchanged(amount);
+        }
+        function new_invoice_line(check,f)
+        {
+            updateData();
+            var mytr=check.closest('tr');
+            var box=$('.amount_line_val_'+f);
+            amountchanged(box);
+            console.log(f);
+            if(check.is(':checked') == true)
+                new_invoice_line2($('.amount_line_val_'+f).getFloatSep(),f);
+        }
+        
+        function calcular_total_amount_excl_vat()
+        {
+            var invoiceamount=0;
+            var invoiceamount_vat = 0;
+            $('.amount_invoice').each(function(){
+                invoiceamount+=($(this).children()).getFloatSep();
+            });
+            
+            $('.vat_invoice').each(function(){
+                invoiceamount_vat+=($(this).children()).getFloatSep();
+            });
+            $('.invoiceamount2').setFloatSep(invoiceamount.toFixed(2));
+            $('.invoiceamount3').setFloatSep(invoiceamount_vat.toFixed(2));
+            $('.invoiceamount4').setFloatSep((invoiceamount_vat+invoiceamount).toFixed(2));
+        }
+        
+        function calcular_all_amount_invoice_lines()
+        {
+            $('.amount_invoice').each(function(){
+                var id_linea=$(this).attr('id');
+                var total_units = $('.units_'+id_linea).getFloatSep();
+                var precio_unit = $('.unit_price_'+id_linea).getFloatSep();
+                var vat_line = $('.line_vat_hidden_'+id_linea).getFloat();
+                var vat_withholding_line = $('.line_vat_withholding_hidden_'+id_linea).getFloat();
+                var vat_withholding_isr_line = $('.line_vat_withholding_isr_hidden_'+id_linea).getFloat();
+                var total_amount = (total_units*precio_unit).toFixed(2);
+                var total_vat = 0;
+                if(vat_line != 0)
+                {
+                    total_vat = ((total_amount*vat_line)/100);
+                    total_vat = total_vat - ((total_amount*vat_withholding_line)/100) - ((total_amount*vat_withholding_isr_line)/100);
+                    $('.vat_hidden_'+id_linea).val(total_vat);
+                    $('.vat_invoice_'+id_linea).children().setFloatSep(total_vat.toFixed(2));
+                    var num = parseFloat(total_vat+total_amount);
+                    $('.include_invoice_'+id_linea).children().setFloatSep(num.toFixed(2));
+                }
+                else
+                {
+                    $('.vat_hidden_'+id_linea).val(total_vat);
+                    $('.vat_invoice_'+id_linea).children().setFloatSep(total_vat.toFixed(2));
+                    $('.include_invoice_'+id_linea).setFloatSep(total_amount);
+                }
+                $('.amount_hidden_'+id_linea).val(total_amount);
+                $('.amount_'+id_linea).children().setFloatSep(total_amount);
+            });
+            calcular_total_amount_excl_vat();
+        } 
+        
+        function calcular_total_amounts()
+        {
+            $('.amount_invoice').each(function(){
+                var id_linea=$(this).attr('id');
+                var vat_line = $('.line_vat_hidden_'+id_linea).getFloat();
+                var vat_withholding_line = $('.line_vat_withholding_hidden_'+id_linea).getFloat();
+                var vat_withholding_isr_line = $('.line_vat_withholding_isr_hidden_'+id_linea).getFloat();
+                var total_amount = $('.amount_'+id_linea).children().getFloatSep().toFixed(2);
+                var total_vat = 0;
+                if(vat_line != 0)
+                {
+                    total_vat = ((total_amount*vat_line)/100);
+                    total_vat = total_vat - ((total_amount*vat_withholding_line)/100) - ((total_amount*vat_withholding_isr_line)/100);
+                    $('.vat_hidden_'+id_linea).val(total_vat);
+                    $('.vat_invoice_'+id_linea).children().setFloatSep(total_vat.toFixed(2));
+                    var num = parseFloat(total_vat+parseFloat(total_amount));
+                    $('.include_invoice_'+id_linea).text(num.toFixed(2));
+                }
+                else
+                {
+                    $('.vat_hidden_'+id_linea).val(total_vat);
+                    $('.vat_invoice_'+id_linea).children().setFloatSep(total_vat.toFixed(2));
+                    $('.include_invoice_'+id_linea).text(total_amount);
+                }
+                
+            });
+            calcular_total_amount_excl_vat();
+        }
+        
+        function calcular_amount_invoice_lines(id_linea)
+        {
+            console.log(id_linea);
+            var total_units = $('.units_'+id_linea).getFloatSep();
+            var precio_unit = $('.unit_price_'+id_linea).getFloatSep();
+            var total_amount = (total_units*precio_unit).toFixed(2);
+            var vat_line = $('.line_vat_hidden_'+id_linea).getFloat();
+            var vat_withholding_line = $('.line_vat_withholding_hidden_'+id_linea).getFloat();
+            var vat_withholding_isr_line = $('.line_vat_withholding_isr_hidden_'+id_linea).getFloat();
+            $('.amount_'+id_linea).children().setFloatSep(total_amount);
+            $('.amount_hidden_'+id_linea).val(total_amount);
+            var total_vat = 0;
+            if(vat_line != 0)
+            {
+                total_vat = ((total_amount*vat_line)/100);
+                total_vat = total_vat - ((total_amount*vat_withholding_line)/100) - ((total_amount*vat_withholding_isr_line)/100);
+                $('.vat_hidden_'+id_linea).val(total_vat);
+                $('.vat_invoice_'+id_linea).children().setFloatSep(total_vat.toFixed(2));
+                $('.include_invoice_'+id_linea).children().setFloatSep((total_vat+total_amount).toFixed(2));
+            }
+            else
+            {
+                $('.vat_hidden_'+id_linea).val(total_vat);
+                $('.vat_invoice_'+id_linea).children().setFloatSep(total_vat.toFixed(2));
+                $('.include_invoice_'+id_linea).setFloatSep(total_amount);
+            }
+            calcular_total_amount_excl_vat();
+        }
+        
+        function calcular_units_invoice_lines(id_linea)
+        {
+            var total_amount = $('.amount_'+id_linea).children().getFloatSep();
+            var unit_price = $('.unit_price_'+id_linea).getFloatSep();
+            var unidades = total_amount/unit_price;
+            $('.units_'+id_linea).setFloatSep(unidades.toFixed(5));
+            var vat_line = $('.line_vat_hidden_'+id_linea).getFloat();
+            var vat_withholding_line = $('.line_vat_withholding_hidden_'+id_linea).getFloat();
+            var vat_withholding_isr_line = $('.line_vat_withholding_isr_hidden_'+id_linea).getFloat();
+            var total_vat = 0;
+            if(vat_line != 0)
+            {
+                total_vat = ((total_amount*vat_line)/100);
+                total_vat = total_vat - ((total_amount*vat_withholding_line)/100) - ((total_amount*vat_withholding_isr_line)/100);
+                $('.vat_hidden_'+id_linea).val(total_vat);
+                $('.vat_invoice_'+id_linea).children().setFloatSep(total_vat.toFixed(2));
+                $('.include_invoice_'+id_linea).children().setFloatSep((total_vat+total_amount).toFixed(2));
+            }
+            else
+            {
+                $('.vat_hidden_'+id_linea).val(total_vat);
+                $('.vat_invoice_'+id_linea).children().setFloatSep(total_vat.toFixed(2));
+                $('.include_invoice_'+id_linea).setFloatSep(total_amount);
+            }
+            $('.amount_hidden_'+id_linea).val(total_amount);
+            calcular_total_amount_excl_vat();
+        }
+        
+        function amountchanged(element)
+        {
+            var mytr=element.closest('tr');
+            var box=$('input.boxallocate',mytr);
+            var balance=balance=$('input:hidden',box.closest('td')).getFloat();
+            if(box.prop('checked'))
+                balance-=element.getFloatSep();
+            balance=balance.toFixed(2);
+            var iob=$('.iob',mytr);
+            iob.html(formatFloatSep(balance));
+            $('input:hidden',iob.closest('td')).val(balance);
+            updateBalance();
+        }
+
+        function taxesLoad(){
+            $('.amount_invoice').each(function(){
+                var id_linea=$(this).attr('id');
+                var vat_line = $('.line_vat_hidden_'+id_linea).val();
+                var vat_withholding_line = $('.line_vat_withholding_hidden_'+id_linea).val();
+                var vat_withholding_isr_line = $('.line_vat_withholding_isr_hidden_'+id_linea).val();
+                switch(vat_line) {
+                    case "Non Applicable":
+                        // alert("Non");
+                        $('.line_vat_full_'+id_linea).val(0);
+                        break;
+                    case "0":
+                        // alert("0");
+                        $('.line_vat_full_'+id_linea).val(1);
+                        break;
+                    case "4":
+                        // alert("4");
+                        $('.line_vat_full_'+id_linea).val(2);
+                        break;
+                    case "11":
+                        // alert("11");
+                        if(vat_withholding_line=="" && vat_withholding_isr_line=="") {
+                            $('.line_vat_full_'+id_linea).val(3);
+                        }
+                        if(vat_withholding_line=="4" && vat_withholding_isr_line=="") {
+                            $('.line_vat_full_'+id_linea).val(4);
+                        }
+                        if(vat_withholding_line=="10.66" && vat_withholding_isr_line=="") {
+                            $('.line_vat_full_'+id_linea).val(5);
+                        }
+                        if(vat_withholding_line=="10.66" && vat_withholding_isr_line=="10") {
+                            $('.line_vat_full_'+id_linea).val(6);
+                        }
+                        break;
+                    case "16":
+                        // alert("16");
+                        if(vat_withholding_line=="" && vat_withholding_isr_line=="") {
+                            $('.line_vat_full_'+id_linea).val(7);
+                        }
+                        if(vat_withholding_line=="4" && vat_withholding_isr_line=="") {
+                            $('.line_vat_full_'+id_linea).val(8);
+                        }
+                        if(vat_withholding_line=="10.66" && vat_withholding_isr_line=="") {
+                            $('.line_vat_full_'+id_linea).val(9);
+                        }
+                        if(vat_withholding_line=="10.66" && vat_withholding_isr_line=="10") {
+                            $('.line_vat_full_'+id_linea).val(10);
+                        }
+                        break;
+                }
+            });
+        }
+
+        function taxesChanged(el, id, id_linea){
+            // alert(el.text + " " + id);
+            switch(id) {
+                case 0:
+                    // alert("0 - "+id_linea);
+                    $('.line_vat_hidden_'+id_linea).val("Non Applicable");
+                    $('.line_vat_withholding_hidden_'+id_linea).val("");
+                    $('.line_vat_withholding_isr_hidden_'+id_linea).val("");
+                    break;
+                case 1:
+                    $('.line_vat_hidden_'+id_linea).val("0");
+                    $('.line_vat_withholding_hidden_'+id_linea).val("");
+                    $('.line_vat_withholding_isr_hidden_'+id_linea).val("");
+                    break;
+                case 2:
+                    $('.line_vat_hidden_'+id_linea).val("4");
+                    $('.line_vat_withholding_hidden_'+id_linea).val("");
+                    $('.line_vat_withholding_isr_hidden_'+id_linea).val("");
+                    break;
+                case 3:
+                    $('.line_vat_hidden_'+id_linea).val("11");
+                    $('.line_vat_withholding_hidden_'+id_linea).val("");
+                    $('.line_vat_withholding_isr_hidden_'+id_linea).val("");
+                    break;
+                case 4:
+                    $('.line_vat_hidden_'+id_linea).val("11");
+                    $('.line_vat_withholding_hidden_'+id_linea).val("4");
+                    $('.line_vat_withholding_isr_hidden_'+id_linea).val("");
+                    break;
+                case 5:
+                    $('.line_vat_hidden_'+id_linea).val("11");
+                    $('.line_vat_withholding_hidden_'+id_linea).val("10.66");
+                    $('.line_vat_withholding_isr_hidden_'+id_linea).val("");
+                    break;
+                case 6:
+                    $('.line_vat_hidden_'+id_linea).val("11");
+                    $('.line_vat_withholding_hidden_'+id_linea).val("10.66");
+                    $('.line_vat_withholding_isr_hidden_'+id_linea).val("10");
+                    break;
+                case 7:
+                    $('.line_vat_hidden_'+id_linea).val("16");
+                    $('.line_vat_withholding_hidden_'+id_linea).val("");
+                    $('.line_vat_withholding_isr_hidden_'+id_linea).val("");
+                    break;
+                case 8:
+                    $('.line_vat_hidden_'+id_linea).val("16");
+                    $('.line_vat_withholding_hidden_'+id_linea).val("4");
+                    $('.line_vat_withholding_isr_hidden_'+id_linea).val("");
+                    break;
+                case 9:
+                    $('.line_vat_hidden_'+id_linea).val("16");
+                    $('.line_vat_withholding_hidden_'+id_linea).val("10.66");
+                    $('.line_vat_withholding_isr_hidden_'+id_linea).val("");
+                    break;
+                case 10:
+                    $('.line_vat_hidden_'+id_linea).val("16");
+                    $('.line_vat_withholding_hidden_'+id_linea).val("10.66");
+                    $('.line_vat_withholding_isr_hidden_'+id_linea).val("10");
+                    break;
+            }
+            calcular_total_amounts();
+        }
+
+        function check_positive()
+        {
+            var sap_fields_validation = true;
+            /*
+            $('.table_invoice_lines .sap_group').each(function(){
+                if($(this).val() == null || $(this).val() == '')
+                {
+                    $(this).addClass("required_field");
+                    sap_fields_validation = false;
+                }
+                else
+                    $(this).removeClass("required_field");
+            });
+            
+            $('.table_invoice_lines .sap_service_type').each(function(){
+                campo = $(this).parent().parent().find("input[name*='_lkid']").val();
+                if(campo == null || campo == '' || campo == '000000000000000')
+                {
+                    $(this).addClass("required_field");
+                    sap_fields_validation = false;
+                }
+                else
+                    $(this).removeClass("required_field");  
+            });
+            */
+            
+            $('.table_invoice_lines .total_amount_line').each(function(){
+                if($(this).val() == null || $(this).val() == '' || $(this).val() <= 0)
+                {
+                    $(this).addClass("required_field");
+                    sap_fields_validation = false;
+                }
+                else
+                    $(this).removeClass("required_field");  
+            });
+            
+            if(sap_fields_validation)
+            {
+                if(document.getElementById('{!$Component.form.type_invoice}').value == 'Credit Note')
+                {
+                    var todos_negativos = true;
+                    var total_invoice_include_vat = $('.invoiceamount4').getFloatSep();
+                    if(total_invoice_include_vat > 0)
+                        todos_negativos = false;
+    
+                    if(todos_negativos == true)
+                        generate();
+                    else
+                        alert('You can´t include lines because Total (Incl. VAT) in the "Credit Note" Invoice must be negative');
+                }
+                else
+                {
+                    var todos_positivos = true;
+                    var total_invoice_include_vat = $('.invoiceamount4').getFloatSep();
+                    if(total_invoice_include_vat < 0)
+                        todos_positivos = false;
+    
+                    if(todos_positivos == true)
+                        generate();
+                    else
+                        alert('You can´t include these lines because Total (Incl. VAT) in the "Debit Note" Invoice must be positive');
+                }
+            }
+            else
+                alert('You have to fill the required fields.');
+        }
+    </script>
+    <style>
+        .panel_allocate .tertiaryPalette{background-color: #c4c5c5 !important;}
+        .block_allocate .bPageBlock{border-top: 3px solid #c4c5c5 !important;}
+        .class_distinta_moneda{color:red;}
+        [id*=block_allocate] .bPageBlock{border-top: 3px solid #898e8c !important;}
+        .outputpanel_allocate .bPageBlock{border-top: 3px solid #898e8c !important;}
+        .main_line_ie{background: rgba(0, 128, 0, 0.44) !important;}
+        .main_line_sh{background: rgba(34, 156, 185, 0.48) !important;}
+        .option_line{background:#ffffff;}
+        .option_name{margin:0 0 0 10px;}
+        .pa1 .tertiaryPalette{background-color:#008000 !important;}
+        .pa2 .tertiaryPalette{background-color:#229cb9 !important;}
+        table.table_lines th.headerRow{white-space: normal!important}
+        .required_field{border:2px solid #ff0000;}
+        /*.sap_group, .sap_service_type, .total_amount_line{border-left:2px solid #ff0000}*/
+    </style>
+    <apex:inputHidden value="{!decimalSep}" id="decimalSep"/>
+    <apex:inputHidden value="{!thousandSep}" id="thousandSep"/>
+    <apex:inputHidden value="{!id_line}" id="id_line"/>
+    <apex:inputHidden value="{!record.Type__c}" id="type_invoice"/>
+    <apex:actionFunction name="delete_line" action="{!delete_line_select}" status="myStatus" reRender="blockinvoicelines" oncomplete="updateData();"/>
+    <apex:actionFunction name="quit_line_select" action="{!quit_line_select}" status="myStatus" reRender="blockinvoicelines" oncomplete="updateData();"/>
+    <apex:actionFunction name="quit_line" action="{!quit_line_select}" status="myStatus" reRender="blockinvoicelines" oncomplete="updateData();"/>
+    <apex:actionFunction name="new_line_invoiceline_empty" action="{!new_line_invoiceline_empty}" status="myStatus" reRender="blockinvoicelines" oncomplete="updateData();"/>
+    <apex:actionFunction name="sorting" action="{!sorting}" status="myStatus" reRender="errors,blocklines,blocklinesS" oncomplete="updateData();">
+        <apex:param name="one" assignTo="{!compareField}" value="" />
+        <apex:param name="two" assignTo="{!listNumber}" value="" />
+    </apex:actionFunction>
+    
+    <apex:actionFunction name="new_invoice_line2" action="{!new_invoice_line}" status="myStatus" reRender="blockinvoicelines" oncomplete="updateData();">
+        <apex:param name="one" assignTo="{!amount}" value="" />
+        <apex:param name="two" assignTo="{!id_linea}" value="" />
+    </apex:actionFunction>
+    <apex:sectionHeader subtitle="{!Invoice__c.Name}" title="Allocate Lines"/>
+    <apex:pageBlock mode="maindetail" title="{!$ObjectType.Invoice__c.label} Detail">
+            <apex:pageBlockButtons location="top">
+                <apex:commandButton styleClass="slds-vf-button_brand" status="myStatus" value="Return" action="{!cancel}"/>
+            </apex:pageBlockButtons>
+            <apex:pageBlockSection showHeader="false">
+                <apex:outputField value="{!Invoice__c.Name}"/>
+                <apex:outputField value="{!Invoice__c.CreatedById}"/>
+                <apex:outputField value="{!Invoice__c.Date_of_Invoice__c}"/>
+                <apex:outputField value="{!Invoice__c.LastModifiedById}"/>
+                <apex:outputField value="{!Invoice__c.Invoice_Concept__c}"/>
+                <apex:outputLabel />
+                <apex:outputField value="{!Invoice__c.Invoice_Template__c}"/>
+                <apex:outputField value="{!Invoice__c.Payable_Before__c}"/>
+                
+                <apex:outputField value="{!Invoice__c.Comments__c}"/>
+                <apex:outputField value="{!Invoice__c.Invoiced__c}"/>
+                <apex:outputLabel />
+                <apex:outputLabel />
+                <apex:outputField value="{!Invoice__c.Account__c}"/>
+                <apex:outputField value="{!Invoice__c.Proforma_Invoice__c}"/>
+                <apex:outputField value="{!Invoice__c.Contact__c}"/>
+                <apex:outputLabel />
+            </apex:pageBlockSection>
+            <apex:pageBlockSection title="Related" columns="2">
+                <apex:outputField value="{!Invoice__c.Import_Export_Quote_Order__c}"/>
+                <apex:outputLabel />
+                <apex:outputField value="{!Invoice__c.Shipment__c}"/>
+                <apex:outputLabel />
+                <apex:outputField value="{!Invoice__c.Vessel__c}"/>
+                <apex:outputLabel />
+            </apex:pageBlockSection>
+            
+          </apex:pageBlock>
+          <apex:pageBlock id="pageblock_invoicelines">
+            <apex:actionFunction name="generate" status="myStatus" action="{!generate}" reRender="errors"/>
+            <apex:pageBlockButtons location="top">
+                <apex:commandButton styleClass="slds-vf-button_brand" status="myStatus" value="Save Invoice" reRender="errors" onclick="check_positive();" />
+                <apex:commandButton styleClass="slds-vf-button_brand" status="myStatus" value="Return" action="{!cancel}"/>
+                <div style="float:right;font-size:1.1em;padding-right:1em"><span class="labelCol">{!$ObjectType.Invoice__c.fields.Total_Incl_VAT__c.Label}:</span><span class="dataCol invoiceamount4">0</span></div><!-- --calcular esto -->
+                <div style="float:right;font-size:1.1em;padding-right:1em"><span class="labelCol">{!$ObjectType.Invoice__c.fields.Total_VAT__c.Label}:</span><span class="dataCol invoiceamount3">0</span></div>
+                <div style="float:right;font-size:1.1em;padding-right:1em"><span class="labelCol">{!$ObjectType.Invoice__c.fields.Total_Excl_VAT__c.Label}:</span><span class="dataCol invoiceamount2">0</span></div>
+            </apex:pageBlockButtons>
+            <apex:pagemessages id="errors"/>
+            
+            <apex:pageBlockSection title="{!$ObjectType.Invoice_Line__c.labelPlural}" columns="1" id="blockinvoicelines" >
+                <img src="/img/feeds/follow12.png" style="cursor: pointer;" onclick="new_line_invoiceline_empty();"/><span style="    margin-left: 6px; cursor: pointer;" onclick="new_line_invoiceline_empty();">New {!$ObjectType.Invoice_Line__c.label}</span>
+                <apex:pageBlockTable value="{!Lines_invoices}" var="line" rendered="{!Lines_invoices.size!=0}" id="invoice_lines" styleclass="table_invoice_lines">
+                    <apex:column >
+                        <apex:facet name="header"><div onclick="sorting('Name',2);" class="{!IF(compareFieldArray[2]='Name',compareClassArray[2],'compare')}">{!$ObjectType.Invoice_Line__c.fields.Name.Label}</div></apex:facet>
+                        <c:customobject2 objid="{!line.line.Id}" objname="{!line.line.Name}" rendered="{!line.line.Id != null}"/>
+                        <apex:outputtext value="{!line.line.Name}" rendered="{!line.line.Id == null}"/>
+                    </apex:column>
+                    
+                    <apex:column >
+                        <apex:facet name="header"><div onclick="sorting('Concept__c',2);" class="{!IF(compareFieldArray[2]='Concept__c',compareClassArray[2],'compare')}">{!$ObjectType.Invoice_Line__c.fields.Concept__c.Label}</div></apex:facet>
+                        <apex:inputField value="{!line.line.Concept__c}" style="        width: 20em;"/>
+                    </apex:column>  
+                    
+                    <!--apex:column >
+                        <apex:facet name="header"><div>{!$ObjectType.Invoice_Line__c.fields.SAP_Service_Type__c.Label}</div></apex:facet>
+                        <apex:inputField value="{!line.line.Group__c}" styleclass="sap_group"/>
+                        <br/><br/>
+                        <apex:inputField value="{!line.line.SAP_Service_Type__c}" styleclass="sap_service_type"/>
+                        <apex:outputField value="{!line.line.Group__c}" styleclass="sap_group"/>
+                    </apex:column-->
+                    <apex:column >
+                        <apex:facet name="header"><div>{!$ObjectType.Invoice_Line__c.fields.SAP_Service_Type__c.Label}</div></apex:facet>
+                        <b>{!$ObjectType.Invoice_Line__c.fields.Group__c.Label}</b><br/>
+                            <apex:outputField value="{!line.line.Group__c}" styleclass="sap_group"/>
+                        <br/><br/>
+                        <b>{!$ObjectType.Invoice_Line__c.fields.SAP_Service_Type__c.Label}</b><br/>
+                        <apex:outputField value="{!line.line.SAP_Service_Type__c}" styleclass="sap_service_type"/>
+                    </apex:column>
+                    
+                    <apex:column style="text-align: right;">
+                        <apex:facet name="header"><div onclick="sorting('Units__c',2);" class="{!IF(compareFieldArray[2]='Units__c',compareClassArray[2],'compare')}">{!$ObjectType.Invoice_Line__c.fields.Units__c.Label}</div></apex:facet>
+                        <apex:inputField value="{!line.line.Units__c}" style="text-align: right; width: 8em;" styleclass="units_{!line.id_record}" html-neudata="{!line.id_record}" onkeyup="calcular_amount_invoice_lines('{!line.id_record}');"/>
+                    </apex:column>  
+                    
+                    <apex:column style="text-align: right;">
+                        <apex:facet name="header"><div onclick="sorting('Unit_Price__c',2);" class="{!IF(compareFieldArray[2]='Unit_Price__c',compareClassArray[2],'compare')}">{!$ObjectType.Invoice_Line__c.fields.Unit_Price__c.Label}</div></apex:facet>
+                        <apex:inputField value="{!line.line.Unit_Price__c}" style="text-align: right; width: 8em;" styleclass="unit_price_{!line.id_record}" html-neudata="{!line.id_record}" onkeyup="calcular_amount_invoice_lines('{!line.id_record}');"/>
+                    </apex:column>  
+                    
+                    <apex:column style="    text-align: right;">
+                        <apex:facet name="header"><div onclick="sorting('Amount__c',2);" class="{!IF(compareFieldArray[2]='Amount__c',compareClassArray[2],'compare')}">{!$ObjectType.Invoice_Line__c.fields.Amount__c.Label}</div></apex:facet>
+                        <div class="amount_{!line.id_record} amount_invoice" style="    text-align: right;" id="{!line.id_record}">
+                            <apex:inputField value="{!line.line.Amount__c}" style="    text-align: right;     width: 8em;" onkeyup="calcular_units_invoice_lines('{!line.id_record}');" styleclass="total_amount_line"/>
+                        </div>
+                        <apex:inputHidden value="{!line.line.Amount__c}" html-class="amount_hidden_{!line.id_record}"/>
+                    </apex:column>  
+                    
+                    <apex:column style="text-align:right">
+                        <apex:facet name="header"><div style="text-align:center">{!$ObjectType.Invoice_Line__c.fields.VAT__c.Label}</div></apex:facet>
+                        <apex:selectList onchange="taxesChanged(this.options[this.selectedIndex], this.selectedIndex, '{!line.id_record}');" html-class="line_vat_full_{!line.id_record}" size="1">
+                            <apex:selectoption itemLabel="Non Applicable" itemValue="0"></apex:selectoption>
+                            <apex:selectoption itemLabel="VAT 0%" itemValue="1"></apex:selectoption>
+                            <apex:selectoption itemLabel="VAT 4%" itemValue="2"></apex:selectoption>
+                            <apex:selectoption itemDisabled="true" itemLabel="VAT 11%" itemValue="3"></apex:selectoption>
+                            <apex:selectoption itemDisabled="true" itemLabel="VAT 11%, RET 4%" itemValue="4"></apex:selectoption>
+                            <apex:selectoption itemDisabled="true" itemLabel="VAT 11%, RET 10.66%" itemValue="5"></apex:selectoption>
+                            <apex:selectoption itemDisabled="true" itemLabel="VAT 11%, RET 10.66%, RET ISR 10%" itemValue="6"></apex:selectoption>
+                            <apex:selectoption itemLabel="VAT 16%" itemValue="7"></apex:selectoption>
+                            <apex:selectoption itemLabel="VAT 16%, RET 4%" itemValue="8"></apex:selectoption>
+                            <apex:selectoption itemLabel="VAT 16%, RET 10.66%" itemValue="9"></apex:selectoption>
+                            <apex:selectoption itemLabel="VAT 16%, RET 10.66%, RET ISR 10%" itemValue="10"></apex:selectoption>
+                        </apex:selectList>
+                        <apex:inputHidden value="{!line.line.VAT__c}" html-class="line_vat_hidden_{!line.id_record}"/>
+                        <apex:inputHidden value="{!line.line.VAT_Withholding__c}" html-class="line_vat_withholding_hidden_{!line.id_record}"/>
+                        <apex:inputHidden value="{!line.line.VAT_Withholding_ISR__c}" html-class="line_vat_withholding_isr_hidden_{!line.id_record}"/>
+                    </apex:column>
+                    
+                    <apex:column >
+                        <apex:facet name="header"><div onclick="sorting('Total_VAT__c',2);" class="{!IF(compareFieldArray[2]='Total_VAT__c',compareClassArray[2],'compare')}">{!$ObjectType.Invoice_Line__c.fields.Total_VAT__c.Label}</div></apex:facet>
+                        <div class="vat_invoice_{!line.id_record} vat_invoice" style="    text-align: right;" id="{!line.id_record}">
+                            <apex:outputField value="{!line.line.Total_VAT__c}" />
+                        </div>
+                        <apex:inputHidden value="{!line.line.Total_VAT__c}" html-class="vat_hidden_{!line.id_record}"/>
+                    </apex:column>  
+                    
+                    <apex:column >
+                        <apex:facet name="header"><div onclick="sorting('total_include_vatString',2);" class="{!IF(compareFieldArray[2]='total_include_vatString',compareClassArray[2],'compare')}">{!$ObjectType.Invoice__c.fields.Total_Incl_VAT__c.Label}</div></apex:facet>
+                        <div class=" include_invoice" style="text-align: right;" id="{!line.id_record}">
+                            <apex:outputText value="{!line.total_include_vatString}" styleclass="include_invoice_{!line.id_record}"/>
+                        </div>
+                    </apex:column>  
+                    
+                    <apex:column >
+                        <apex:image id="del_line" value="/img/permissions_deny16.gif" onclick="del_oi('{!line.line.Id}');" style="cursor:pointer; display:{!if(line.selected == true, '','none')}" />
+                        <apex:image id="del_line2" value="/img/permissions_deny16.gif" onclick="del_oi2('{!line.id_record}');" style="cursor:pointer; display:{!if(line.selected == true, 'none','')}" />
+                    </apex:column>
+                    
+                </apex:pageBlockTable>
+                <apex:inputHidden value="{!contador_lineas_factura}" html-class="size_list_table"/>
+            </apex:pageBlockSection>
+         </apex:pageBlock>
+         <apex:outputpanel styleclass="outputpanel_allocate">
+             <apex:pageBlock html-class="block_allocate" id="block_allocate" > 
+                <apex:pageBlockButtons location="top">
+                    <div style="float:right;font-size:1.1em;padding-right:1em"><span class="labelCol">Amount Allocated:</span><span class="dataCol invoiceamount"></span></div>
+                </apex:pageBlockButtons>
+                 
+                <!-- ------------------------------------------------ -->
+                <!--
+                <apex:pageBlockSection title="{!$ObjectType.Quote_Item_Line__c.labelPlural}" columns="1" id="blocklines_ie_item" html-class="panel_allocate">
+                    <apex:pageBlockTable value="{!Lines_ie_item}" var="line">
+                     <apex:column >
+                        <apex:facet name="header"><div onclick="sorting('Import_Export_Item_Line__r.Name',3);" class="{!IF(compareFieldArray[3]='Import_Export_Item_Line__r.Name',compareClassArray[3],'compare')}">{!$ObjectType.Import_Export_Item_Line_Invoice__c.fields.Import_Export_Item_Line__c.Label}</div></apex:facet>
+                        <c:customobject2 objid="{!line.line.Import_Export_Item_Line__r.Id}" objname="{!line.line.Import_Export_Item_Line__r.Name}"/>
+                    </apex:column>
+                     <apex:column >
+                        <apex:facet name="header"><div onclick="sorting('Import_Export_Item_Line__r.Item_Name__r.Name',3);" class="{!IF(compareFieldArray[3]='Import_Export_Item_Line__r.Item_Name__r.Name',compareClassArray[3],'compare')}">{!$ObjectType.Quote_Item_Line__c.fields.Item_Name__c.Label}</div></apex:facet>
+                        <c:customobject2 objid="{!line.line.Import_Export_Item_Line__r.Item_Name__r.Id}" objname="{!line.line.Import_Export_Item_Line__r.Item_Name__r.Name}"/>
+                    </apex:column>
+                     <apex:column >
+                        <apex:facet name="header"><div onclick="sorting('Import_Export_Item_Line__r.Item_Code__c',3);" class="{!IF(compareFieldArray[3]='Import_Export_Item_Line__r.Item_Code__c',compareClassArray[3],'compare')}">{!$ObjectType.Quote_Item_Line__c.fields.Item_Code__c.Label}</div></apex:facet>
+                        <apex:outputField value="{!line.line.Import_Export_Item_Line__r.Item_Code__c}"/>
+                    </apex:column>
+                     <apex:column style="text-align:right">
+                        <apex:facet name="header"><div style="text-align:center" onclick="sorting('Import_Export_Item_Line__r.Units__c',3);" class="{!IF(compareFieldArray[3]='Import_Export_Item_Line__r.Units__c',compareClassArray[3],'compare')}">{!$ObjectType.Quote_Item_Line__c.fields.Units__c.Label}</div></apex:facet>
+                        <apex:outputField value="{!line.line.Import_Export_Item_Line__r.Units__c}"/>
+                    </apex:column>
+
+                    
+                    <apex:column style="text-align:right" styleclass="{!IF(line.line != null, 'main_line_ie', 'option_line')}">
+                        <apex:facet name="header"><div style="text-align:center" onclick="sorting('Import_Export_Item_Line__r.Price__c',3);" class="{!IF(compareFieldArray[3]='Import_Export_Item_Line__r.Price__c',compareClassArray[3],'compare')}">{!$ObjectType.Quote_Item_Line__c.fields.Price__c.Label}</div></apex:facet>
+                        <apex:outputText value="{!line.Quote_Sell_Net_Price_String}" rendered="{!line.line != null}"/>                  
+                    </apex:column>
+                    
+
+                     
+                    <apex:column style="text-align:right" styleclass="{!IF(line.line != null, 'main_line_ie', 'option_line')}">
+                        <apex:facet name="header"><div style="text-align:center" onclick="sorting('Import_Export_Item_Line__r.Amount__c',3);" class="{!IF(compareFieldArray[3]='Import_Export_Item_Line__r.Amount__c',compareClassArray[3],'compare')}">{!$ObjectType.Quote_Item_Line__c.fields.Amount__c.Label}</div></apex:facet>
+                        <apex:outputText value="{!line.Sell_Net_Amount_String}" rendered="{!line.line != null}"/>
+                     </apex:column>
+                     
+                     <apex:column style="text-align:right">
+                        <apex:facet name="header"><div style="text-align:center" onclick="sorting('Invoice_Outstanding_Balance',3);" class="{!IF(compareFieldArray[3]='Invoice_Outstanding_Balance',compareClassArray[3],'compare')}">{!$ObjectType.Quote_Item_Line__c.fields.Invoice_Outstanding_Balance__c.Label}{!Invoice_Currency_String}</div></apex:facet>
+                        <apex:outputText value="{!line.Invoice_Outstanding_Balance_String}" styleClass="iob "/>
+                        <apex:inputHidden value="{!line.Invoice_Outstanding_Balance}"/>
+                    </apex:column>
+                     <apex:column style="text-align:right">
+                        <apex:facet name="header"><div style="text-align:center" onclick="sorting('Amount_Allocated__c',3);" class="{!IF(compareFieldArray[3]='Amount_Allocated__c',compareClassArray[3],'compare')}">{!$ObjectType.Import_Export_Item_Line_Invoice__c.fields.Amount_Allocated__c.Label}{!Invoice_Currency_String}</div></apex:facet>
+                        <apex:inputField value="{!line.line.Amount_Allocated__c}" style="text-align:right;width:10em" styleClass="amount amount_line_val_{!line.line.Import_Export_Item_Line__c}" onkeyup="amountchanged($(this));"/>
+                    </apex:column>
+                    <apex:column style="text-align:center">
+                        <apex:facet name="header"><div style="text-align:center" onclick="sorting('selected',3); " class="{!IF(compareFieldArray[3]='selected',compareClassArray[3],'compare')}">Allocate</div></apex:facet>
+                        <apex:inputCheckbox value="{!line.selected}" styleClass="boxallocate" onclick=" new_invoice_line($(this), '{!line.line.Import_Export_Item_Line__c}');" />
+                        <apex:inputHidden value="{!line.Invoice_Outstanding_Base}"/>
+                    </apex:column>
+                </apex:pageBlockTable>
+                </apex:pageBlockSection>
+                -->
+                
+                
+                <!-- ------------------------------------------------ -->
+                <apex:pageBlockSection title="{!$ObjectType.Import_Export_Fee_Line__c.labelPlural}" columns="1" id="blocklines_ie_service" html-class="panel_allocate">
+                    <apex:pageBlockTable value="{!Lines_ie_service}" var="line">
+                     <apex:column >
+                        <apex:facet name="header"><div onclick="sorting('Import_Export_Service_Line__r.Name',4);" class="{!IF(compareFieldArray[4]='Import_Export_Service_Line__r.Name',compareClassArray[4],'compare')}">{!$ObjectType.Import_Export_Service_Line_Invoice__c.fields.Import_Export_Service_Line__c.Label}</div></apex:facet>
+                        <c:customobject2 objid="{!line.line.Import_Export_Service_Line__r.Id}" objname="{!line.line.Import_Export_Service_Line__r.Name}"/>
+                    </apex:column>
+                     <apex:column >
+                        <apex:facet name="header"><div onclick="sorting('Import_Export_Service_Line__r.Service_Rate_Category__c',4);" class="{!IF(compareFieldArray[4]='Import_Export_Service_Line__r.Service_Rate_Category__c',compareClassArray[4],'compare')}">{!$ObjectType.Import_Export_Fee_Line__c.fields.Service_Rate_Category__c.Label}</div></apex:facet>
+                        <apex:outputField value="{!line.line.Import_Export_Service_Line__r.Service_Rate_Category__c}"/>
+                    </apex:column>
+                     <apex:column >
+                        <apex:facet name="header"><div onclick="sorting('Import_Export_Service_Line__r.Service_Rate_Name__r.Name',4);" class="{!IF(compareFieldArray[4]='Import_Export_Service_Line__r.Service_Rate_Name__r.Name',compareClassArray[4],'compare')}">{!$ObjectType.Import_Export_Fee_Line__c.fields.Service_Rate_Name__c.Label}</div></apex:facet>
+                        <apex:outputField value="{!line.line.Import_Export_Service_Line__r.Service_Rate_Name__r.Name}"/>
+                    </apex:column>
+                     <apex:column >
+                        <apex:facet name="header"><div onclick="sorting('Import_Export_Service_Line__r.Rate_Type__c',4);" class="{!IF(compareFieldArray[4]='Import_Export_Service_Line__r.Rate_Type__c',compareClassArray[4],'compare')}">{!$ObjectType.Import_Export_Fee_Line__c.fields.Rate_Type__c.Label}</div></apex:facet>
+                        <apex:outputField value="{!line.line.Import_Export_Service_Line__r.Rate_Type__c}"/>
+                    </apex:column>
+                    <!--<apex:column style="text-align:right">
+                        <apex:facet name="header"><div style="text-align:center" onclick="sorting('Import_Export_Service_Line__r.Units__c',4);" class="{!IF(compareFieldArray[4]='Import_Export_Service_Line__r.Units__c',compareClassArray[4],'compare')}">{!$ObjectType.Import_Export_Fee_Line__c.fields.Units__c.Label}</div></apex:facet>
+                        <apex:outputField value="{!line.line.Import_Export_Service_Line__r.Units__c}"/>
+                    </apex:column>-->
+                    
+                    
+                     <!-- <apex:column style="text-align:right">
+                        <apex:facet name="header"><div style="text-align:center" onclick="sorting('Import_Export_Service_Line__r.Quote_Sell_Price__c',4);" class="{!IF(compareFieldArray[4]='Import_Export_Service_Line__r.Quote_Sell_Price__c',compareClassArray[4],'compare')}">{!$ObjectType.Import_Export_Fee_Line__c.fields.Quote_Sell_Price__c.Label}</div></apex:facet>
+                        --><!--<span class="{!if(line.same_currency == false,'class_distinta_moneda','')}">-->
+                           <!--  <apex:outputField value="{!line.line.Import_Export_Service_Line__r.Quote_Sell_Price__c}"/>-->
+                        <!--</span>-->
+                    <!-- </apex:column>-->
+                    
+                     <apex:column style="text-align:right" styleclass="{!IF(line.line != null, 'main_line_ie', 'option_line')}">
+                        <apex:facet name="header"><div style="text-align:center" onclick="sorting('Import_Export_Service_Line__r.Quote_Sell_Net_Price__c',4);" class="{!IF(compareFieldArray[4]='Import_Export_Service_Line__r.Quote_Sell_Net_Price__c',compareClassArray[4],'compare')}">{!$ObjectType.Import_Export_Fee_Line__c.fields.Quote_Sell_Net_Price__c.Label}</div></apex:facet>
+                        <apex:outputText value="{!line.Quote_Sell_Net_Price_String}" rendered="{!line.line != null}"/>                  
+                    </apex:column>
+                    
+                    
+                    <!--  <apex:column style="text-align:right">
+                        <apex:facet name="header"><div style="text-align:center" onclick="sorting('Import_Export_Service_Line__r.Sell_Amount__c',4);" class="{!IF(compareFieldArray[4]='Import_Export_Service_Line__r.Sell_Amount__c',compareClassArray[4],'compare')}">{!$ObjectType.Import_Export_Fee_Line__c.fields.Sell_Amount__c.Label}</div></apex:facet>
+                        --><!--<span class="{!if(line.same_currency == false,'class_distinta_moneda','')}">-->
+                           <!--  <apex:outputField value="{!line.line.Import_Export_Service_Line__r.Sell_Amount__c}"/>-->
+                       <!-- </span>-->
+                    <!-- </apex:column>-->
+                    
+                    <apex:column style="text-align:right" styleclass="{!IF(line.line != null, 'main_line_ie', 'option_line')}">
+                        <apex:facet name="header"><div style="text-align:center" onclick="sorting('Import_Export_Service_Line__r.Sell_Amount__c',4);" class="{!IF(compareFieldArray[4]='Import_Export_Service_Line__r.Sell_Amount__c',compareClassArray[4],'compare')}">{!$ObjectType.Import_Export_Fee_Line__c.fields.Sell_Amount__c.Label}</div></apex:facet>
+                        <apex:outputText value="{!line.Sell_Net_Amount_String}" rendered="{!line.line != null}"/>
+                     </apex:column>
+                    
+                     <!--  <apex:column style="text-align:right">
+                        <apex:facet name="header"><div style="text-align:center" onclick="sorting('Invoice_Outstanding_Balance',4);" class="{!IF(compareFieldArray[4]='Invoice_Outstanding_Balance',compareClassArray[4],'compare')}">{!$ObjectType.Import_Export_Fee_Line__c.fields.Invoice_Outstanding_Balance__c.Label}</div></apex:facet>
+                        <apex:outputText value="{!line.Invoice_Outstanding_Balance_String}" styleClass="iob " /><!--{!if(line.same_currency == false,'class_distinta_moneda','')}-->
+                       <!--  <apex:inputHidden value="{!line.Invoice_Outstanding_Balance}"/>
+                    </apex:column>-->
+                    
+                    <apex:column style="text-align:right" styleclass="{!IF(line.line != null, 'main_line_ie', 'option_line')}">
+                        <apex:facet name="header"><div style="text-align:center" onclick="sorting('Invoice_Outstanding_Balance',4);" class="{!IF(compareFieldArray[4]='Invoice_Outstanding_Balance',compareClassArray[4],'compare')}">{!$ObjectType.Import_Export_Fee_Line__c.fields.Invoice_Outstanding_Balance__c.Label}{!Invoice_Currency_String}</div></apex:facet>
+                        <apex:outputText value="{!line.Invoice_Outstanding_Balance_String}" styleClass="iob" rendered="{!line.line != null}"/>
+                        <apex:inputHidden value="{!line.Invoice_Outstanding_Balance}"/>
+                    </apex:column>
+                    
+                     <apex:column style="text-align:right">
+                        <apex:facet name="header"><div style="text-align:center" onclick="sorting('Amount_Allocated__c',4);" class="{!IF(compareFieldArray[4]='Amount_Allocated__c',compareClassArray[4],'compare')}">{!$ObjectType.Import_Export_Service_Line_Invoice__c.fields.Amount_Allocated__c.Label}{!Invoice_Currency_String}</div></apex:facet>
+                        <apex:inputField value="{!line.line.Amount_Allocated__c}" style="text-align:right;width:10em" styleClass="amount amount_line_val_{!line.line.Import_Export_Service_Line__c}" onkeyup="amountchanged($(this));"/>
+                    </apex:column>
+                    <apex:column style="text-align:center">
+                        <apex:facet name="header"><div style="text-align:center" onclick="sorting('selected',4);" class="{!IF(compareFieldArray[4]='selected',compareClassArray[4],'compare')}">Allocate</div></apex:facet>
+                        <apex:inputCheckbox value="{!line.selected}" styleClass="boxallocate" onclick=" new_invoice_line($(this) ,'{!line.line.Import_Export_Service_Line__c}');" rendered="false"/><!--rendered="{!line.same_currency == true}"-->
+                        <apex:inputHidden value="{!line.Invoice_Outstanding_Base}"/>
+                    </apex:column>
+                    
+                </apex:pageBlockTable>
+                </apex:pageBlockSection>
+                
+                
+                <!-- ------------------------------------------------ -->
+                <!--
+                <apex:pageBlockSection title="{!$ObjectType.Shipment_Line__c.labelPlural}" columns="1" id="blocklines" html-class="panel_allocate">
+                    <apex:pageBlockTable value="{!Lines}" var="line">
+                     <apex:column >
+                        <apex:facet name="header"><div onclick="sorting('Shipment_Item_Line__r.Name',0);" class="{!IF(compareFieldArray[0]='Shipment_Item_Line__r.Name',compareClassArray[0],'compare')}">{!$ObjectType.Invoice_Item_Line__c.fields.Shipment_Item_Line__c.Label}</div></apex:facet>
+                        <c:customobject2 objid="{!line.line.Shipment_Item_Line__r.Id}" objname="{!line.line.Shipment_Item_Line__r.Name}"/>
+                    </apex:column>
+                     <apex:column >
+                        <apex:facet name="header"><div onclick="sorting('Shipment_Item_Line__r.Item_Name__r.Name',0);" class="{!IF(compareFieldArray[0]='Shipment_Item_Line__r.Item_Name__r.Name',compareClassArray[0],'compare')}">{!$ObjectType.Shipment_Line__c.fields.Item_Name__c.Label}</div></apex:facet>
+                        <c:customobject2 objid="{!line.line.Shipment_Item_Line__r.Item_Name__r.Id}" objname="{!line.line.Shipment_Item_Line__r.Item_Name__r.Name}"/>
+                    </apex:column>
+                     <apex:column >
+                        <apex:facet name="header"><div onclick="sorting('Shipment_Item_Line__r.Item_Code__c',0);" class="{!IF(compareFieldArray[0]='Shipment_Item_Line__r.Item_Code__c',compareClassArray[0],'compare')}">{!$ObjectType.Shipment_Line__c.fields.Item_Code__c.Label}</div></apex:facet>
+                        <apex:outputField value="{!line.line.Shipment_Item_Line__r.Item_Code__c}"/>
+                    </apex:column>
+                     <apex:column style="text-align:right">
+                        <apex:facet name="header"><div style="text-align:center" onclick="sorting('Shipment_Item_Line__r.Units_Shipped__c',0);" class="{!IF(compareFieldArray[0]='Shipment_Item_Line__r.Units_Shipped__c',compareClassArray[0],'compare')}">{!$ObjectType.Shipment_Line__c.fields.Units_Shipped__c.Label}</div></apex:facet>
+                        <apex:outputField value="{!line.line.Shipment_Item_Line__r.Units_Shipped__c}"/>
+                    </apex:column>
+                    
+                    <apex:column style="text-align:right" styleclass="{!IF(line.line != null, 'main_line_ie', 'option_line')}">
+                        <apex:facet name="header"><div style="text-align:center" onclick="sorting('Shipment_Item_Line__r.Unit_Origin_Sell_Price__c',0);" class="{!IF(compareFieldArray[0]='Shipment_Item_Line__r.Unit_Origin_Sell_Price__c',compareClassArray[0],'compare')}">{!$ObjectType.Shipment_Line__c.fields.Unit_Origin_Sell_Price__c.Label}</div></apex:facet>
+                        <apex:outputText value="{!line.Quote_Sell_Net_Price_String}" rendered="{!line.line != null}"/>                  
+                    </apex:column>
+                     
+                     <apex:column style="text-align:right" styleclass="{!IF(line.line != null, 'main_line_ie', 'option_line')}">
+                        <apex:facet name="header"><div style="text-align:center" onclick="sorting('Shipment_Item_Line__r.Sell_Origin_Amount__c',0);" class="{!IF(compareFieldArray[0]='Shipment_Item_Line__r.Sell_Origin_Amount__c',compareClassArray[0],'compare')}">{!$ObjectType.Shipment_Line__c.fields.Sell_Origin_Amount__c.Label}</div></apex:facet>
+                        <apex:outputText value="{!line.Sell_Net_Amount_String}" rendered="{!line.line != null}"/>
+                     </apex:column>
+                     
+                     <apex:column style="text-align:right">
+                        <apex:facet name="header"><div style="text-align:center" onclick="sorting('Invoice_Outstanding_Balance',0);" class="{!IF(compareFieldArray[0]='Invoice_Outstanding_Balance',compareClassArray[0],'compare')}">{!$ObjectType.Shipment_Line__c.fields.Invoice_Outstanding_Balance__c.Label}{!Invoice_Currency_String}</div></apex:facet>
+                        <apex:outputText value="{!line.Invoice_Outstanding_Balance_String}" styleClass="iob "/>
+                        <apex:inputHidden value="{!line.Invoice_Outstanding_Balance}"/>
+                    </apex:column>
+                    
+                     <apex:column style="text-align:right">
+                        <apex:facet name="header"><div style="text-align:center" onclick="sorting('Amount__c',0);" class="{!IF(compareFieldArray[0]='Amount__c',compareClassArray[0],'compare')}">{!$ObjectType.Invoice_Item_Line__c.fields.Amount__c.Label}{!Invoice_Currency_String}</div></apex:facet>
+                        <apex:inputField value="{!line.line.Amount__c}" style="text-align:right;width:10em" styleClass="amount amount_line_val_{!line.line.Shipment_Item_Line__c}" onkeyup="amountchanged($(this));"/>
+                    </apex:column>
+                    <apex:column style="text-align:center">
+                        <apex:facet name="header"><div style="text-align:center" onclick="sorting('selected',0); " class="{!IF(compareFieldArray[0]='selected',compareClassArray[0],'compare')}">Allocate</div></apex:facet>
+                        <apex:inputCheckbox value="{!line.selected}" styleClass="boxallocate" onclick=" new_invoice_line($(this), '{!line.line.Shipment_Item_Line__c}');" />
+                        <apex:inputHidden value="{!line.Invoice_Outstanding_Base}"/>
+                    </apex:column>
+                </apex:pageBlockTable>
+                </apex:pageBlockSection>
+                -->
+                
+                <apex:pageBlockSection title="{!$ObjectType.Shipment_Fee_Line__c.labelPlural}" columns="1" id="blocklinesS" html-class="panel_allocate">
+                    <apex:pageBlockTable value="{!LinesS}" var="line">
+                     <apex:column >
+                        <apex:facet name="header"><div onclick="sorting('Shipment_Service_Line__r.Name',1);" class="{!IF(compareFieldArray[1]='Shipment_Service_Line__r.Name',compareClassArray[1],'compare')}">{!$ObjectType.Invoice_Service_Line__c.fields.Shipment_Service_Line__c.Label}</div></apex:facet>
+                        <c:customobject2 objid="{!line.line.Shipment_Service_Line__r.Id}" objname="{!line.line.Shipment_Service_Line__r.Name}"/>
+                    </apex:column>
+                    <apex:column >
+                        <apex:facet name="header"><div onclick="sorting('Shipment_Service_Line__r.Shipment__r.Name',1);" class="{!IF(compareFieldArray[1]='Shipment_Service_Line__r.Shipment__r.Name',compareClassArray[1],'compare')}">{!$ObjectType.Invoice_Line__c.fields.Shipment__c.Label}</div></apex:facet>
+                        <c:customobject2 objid="{!line.line.Shipment_Service_Line__r.Shipment__r.Id}" objname="{!line.line.Shipment_Service_Line__r.Shipment__r.Name}"/>
+                    </apex:column>
+                     <apex:column >
+                        <apex:facet name="header"><div onclick="sorting('Shipment_Service_Line__r.Service_Rate_Category__c',1);" class="{!IF(compareFieldArray[1]='Shipment_Service_Line__r.Service_Rate_Category__c',compareClassArray[1],'compare')}">{!$ObjectType.Shipment_Fee_Line__c.fields.Service_Rate_Category__c.Label}</div></apex:facet>
+                        <apex:outputField value="{!line.line.Shipment_Service_Line__r.Service_Rate_Category__c}"/>
+                    </apex:column>
+                     <apex:column >
+                        <apex:facet name="header"><div onclick="sorting('Shipment_Service_Line__r.Service_Rate_Name__r.Name',1);" class="{!IF(compareFieldArray[1]='Shipment_Service_Line__r.Service_Rate_Name__r.Name',compareClassArray[1],'compare')}">{!$ObjectType.Shipment_Fee_Line__c.fields.Service_Rate_Name__c.Label}</div></apex:facet>
+                        <apex:outputField value="{!line.line.Shipment_Service_Line__r.Service_Rate_Name__r.Name}"/>
+                    </apex:column>
+                     <apex:column >
+                        <apex:facet name="header"><div onclick="sorting('Shipment_Service_Line__r.Rate_Type__c',1);" class="{!IF(compareFieldArray[1]='Shipment_Service_Line__r.Rate_Type__c',compareClassArray[1],'compare')}">{!$ObjectType.Shipment_Fee_Line__c.fields.Rate_Type__c.Label}</div></apex:facet>
+                        <apex:outputField value="{!line.line.Shipment_Service_Line__r.Rate_Type__c}"/>
+                    </apex:column>
+                    <!--<apex:column style="text-align:right">
+                        <apex:facet name="header"><div style="text-align:center" onclick="sorting('Shipment_Service_Line__r.Units__c',1);" class="{!IF(compareFieldArray[1]='Shipment_Service_Line__r.Units__c',compareClassArray[1],'compare')}">{!$ObjectType.Shipment_Fee_Line__c.fields.Units__c.Label}</div></apex:facet>
+                        <apex:outputField value="{!line.line.Shipment_Service_Line__r.Units__c}"/>
+                    </apex:column>-->
+                    
+                     <!-- <apex:column style="text-align:right">
+                        <apex:facet name="header"><div style="text-align:center" onclick="sorting('Shipment_Service_Line__r.Shipment_Sell_Price__c',1);" class="{!IF(compareFieldArray[1]='Shipment_Service_Line__r.Shipment_Sell_Price__c',compareClassArray[1],'compare')}">{!$ObjectType.Shipment_Fee_Line__c.fields.Shipment_Sell_Price__c.Label}</div></apex:facet>
+                        <!--<span class="{!if(line.same_currency == false,'class_distinta_moneda','')}">-->
+                          <!--   <apex:outputField value="{!line.line.Shipment_Service_Line__r.Shipment_Sell_Price__c}"/>
+                        <!--</span>-->
+                    <!-- </apex:column>-->
+                    
+                    <apex:column style="text-align:right" styleclass="{!IF(line.line != null, 'main_line_ie', 'option_line')}">
+                        <apex:facet name="header"><div style="text-align:center" onclick="sorting('Shipment_Service_Line__r.Shipment_Sell_Price__c',1);" class="{!IF(compareFieldArray[1]='Shipment_Service_Line__r.Shipment_Sell_Price__c',compareClassArray[1],'compare')}">{!$ObjectType.Shipment_Fee_Line__c.fields.Shipment_Sell_Price__c.Label}</div></apex:facet>
+                        <apex:outputText value="{!line.Quote_Sell_Net_Price_String}" rendered="{!line.line != null}"/>                  
+                    </apex:column>
+                    
+                    <!--  <apex:column style="text-align:right">
+                        <apex:facet name="header"><div style="text-align:center" onclick="sorting('Shipment_Service_Line__r.Sell_Amount__c',1);" class="{!IF(compareFieldArray[1]='Shipment_Service_Line__r.Sell_Amount__c',compareClassArray[1],'compare')}">{!$ObjectType.Shipment_Fee_Line__c.fields.Sell_Amount__c.Label}</div></apex:facet>
+                        <!--<span class="{!if(line.same_currency == false,'class_distinta_moneda','')}">-->
+                        <!--     <apex:outputField value="{!line.line.Shipment_Service_Line__r.Sell_Amount__c}"/>-->
+                        <!--</span>-->
+                   <!--  </apex:column>-->
+                    
+                    <apex:column style="text-align:right" styleclass="{!IF(line.line != null, 'main_line_ie', 'option_line')}">
+                        <apex:facet name="header"><div style="text-align:center" onclick="sorting('Shipment_Service_Line__r.Sell_Amount__c',1);" class="{!IF(compareFieldArray[1]='Shipment_Service_Line__r.Sell_Amount__c',compareClassArray[1],'compare')}">{!$ObjectType.Shipment_Fee_Line__c.fields.Sell_Amount__c.Label}</div></apex:facet>
+                        <apex:outputText value="{!line.Sell_Net_Amount_String}" rendered="{!line.line != null}"/>
+                     </apex:column>
+                    
+                     <!-- <apex:column style="text-align:right">
+                        <apex:facet name="header"><div style="text-align:center" onclick="sorting('Invoice_Outstanding_Balance',1);" class="{!IF(compareFieldArray[1]='Invoice_Outstanding_Balance',compareClassArray[1],'compare')}">{!$ObjectType.Shipment_Fee_Line__c.fields.Invoice_Outstanding_Balance__c.Label}</div></apex:facet>
+                        <apex:outputText value="{!line.Invoice_Outstanding_Balance_String}" styleClass="iob " /><!--{!if(line.same_currency == false,'class_distinta_moneda','')}-->
+                       <!--  <apex:inputHidden value="{!line.Invoice_Outstanding_Balance}"/>
+                    </apex:column>-->
+                    
+                    <apex:column style="text-align:right" styleclass="{!IF(line.line != null, 'main_line_ie', 'option_line')}">
+                        <apex:facet name="header"><div style="text-align:center" onclick="sorting('Invoice_Outstanding_Balance',1);" class="{!IF(compareFieldArray[1]='Invoice_Outstanding_Balance',compareClassArray[1],'compare')}">{!$ObjectType.Shipment_Fee_Line__c.fields.Invoice_Outstanding_Balance__c.Label}{!Invoice_Currency_String}</div></apex:facet>
+                        <apex:outputText value="{!line.Invoice_Outstanding_Balance_String}" styleClass="iob" rendered="{!line.line != null}"/>
+                        <apex:inputHidden value="{!line.Invoice_Outstanding_Balance}"/>
+                    </apex:column>
+                    
+                     <apex:column style="text-align:right">
+                        <apex:facet name="header"><div style="text-align:center" onclick="sorting('Amount__c',1);" class="{!IF(compareFieldArray[1]='Amount__c',compareClassArray[1],'compare')}">{!$ObjectType.Invoice_Item_Line__c.fields.Amount__c.Label}{!Invoice_Currency_String}</div></apex:facet>
+                        <apex:inputField value="{!line.line.Amount__c}" style="text-align:right;width:10em" styleClass="amount amount_line_val_{!line.line.Shipment_Service_Line__c}" onkeyup="amountchanged($(this));"/>
+                    </apex:column>
+                    
+                    <apex:column style="text-align:center">
+                        <apex:facet name="header"><div style="text-align:center" onclick="sorting('selected',1);" class="{!IF(compareFieldArray[1]='selected',compareClassArray[1],'compare')}">Allocate</div></apex:facet>
+                        <apex:inputCheckbox value="{!line.selected}" styleClass="boxallocate" onclick=" new_invoice_line($(this) ,'{!line.line.Shipment_Service_Line__c}');" /><!--rendered="{!line.same_currency == true}"-->
+                        <apex:inputHidden value="{!line.Invoice_Outstanding_Base}"/>
+                    </apex:column>
+                </apex:pageBlockTable>
+                </apex:pageBlockSection>
+             </apex:pageBlock> 
+          </apex:outputpanel>
+          <apex:actionstatus id="myStatus">
+             <apex:facet name="start">
+                 <div class="waitingSearchDiv" id="el_loading" style="background-color: #fbfbfb;
+                        height: 100%;opacity:0.65;width:100%;"> 
+                     <div class="waitingHolder" style="top: 74.2px; width: 91px;">
+                         <img class="waitingImage" src="/img/loading.gif" title="Please Wait..." />
+                         <span class="waitingDescription">Loading...</span>
+                     </div>
+                 </div>
+             </apex:facet>
+         </apex:actionstatus>
+    </apex:form>
+</apex:page>

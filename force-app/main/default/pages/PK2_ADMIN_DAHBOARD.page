@@ -1,0 +1,59 @@
+<apex:page showHeader="false" tabStyle="Account">
+<head>
+  <base target="_top">
+  </base>
+</head> 
+    <apex:pageBlock title="ZONA NORTE" mode="edit">
+        <apex:pageBlockSection title="Status Quotes" columns="3" >
+            <analytics:reportChart reportId="00O0Y000007wZzd" size="tiny"/>
+            <analytics:reportChart reportId="00O0Y000007wZzY" size="tiny"/>
+            <analytics:reportChart reportId="00O0Y000007wZxm" size="tiny"/>
+        </apex:pageblocksection>
+        <apex:pageBlockSection title="Open Orders" columns="3" >
+            <analytics:reportChart reportId="00O0Y000007wRsL" size="tiny"/>  
+            <analytics:reportChart reportId="00O0Y000007wSzS" size="tiny"/> 
+            <analytics:reportChart reportId="00O0Y000007wSzX" size="tiny"/>
+            <analytics:reportChart reportId="00O0Y000007wdKo" size="tiny"/>
+            <analytics:reportChart reportId="00O0Y000007wdKe" size="tiny"/>
+        </apex:pageblocksection> 
+     </apex:pageBlock>
+      <apex:pageBlock title="ZONA OCCIDENTE" mode="edit">
+        <apex:pageBlockSection title="Status Quotes" columns="3" >
+            <analytics:reportChart reportId="00O0Y000007wdYl" size="tiny"/>
+            <analytics:reportChart reportId="00O0Y000007wdYq" size="tiny"/>
+            <analytics:reportChart reportId="00O0Y000007wdZF" size="tiny"/>
+        </apex:pageblocksection>
+        <apex:pageBlockSection title="Open Orders" columns="3" >
+            <analytics:reportChart reportId="00O0Y000007wda3" size="tiny"/>
+            <analytics:reportChart reportId="00O0Y000007wdZP" size="tiny"/>  
+            <analytics:reportChart reportId="00O0Y000007wdZU" size="tiny"/> 
+            <analytics:reportChart reportId="00O0Y000007wdZe" size="tiny"/>
+            <analytics:reportChart reportId="00O0Y000007wdZj" size="tiny"/>
+        </apex:pageblocksection> 
+     </apex:pageBlock>
+         <apex:pageBlock title="ZONA CENTRO" mode="edit">
+        <apex:pageBlockSection title="Status Quotes" columns="3" >
+            <analytics:reportChart reportId="00O0Y000007wdaD" size="tiny"/>
+            <analytics:reportChart reportId="00O0Y000007wdaN" size="tiny"/>
+            <analytics:reportChart reportId="00O0Y000007wdaS" size="tiny"/>
+        </apex:pageblocksection>
+        <apex:pageBlockSection title="Open Orders" columns="3" >
+            <analytics:reportChart reportId="00O0Y000007wdaI" size="tiny"/>
+            <analytics:reportChart reportId="00O0Y000007wdah" size="tiny"/>
+            <analytics:reportChart reportId="00O0Y000007wdar" size="tiny"/>  
+        </apex:pageblocksection> 
+     </apex:pageBlock>
+     <apex:pageBlock title="ZONA SUR" mode="edit">
+        <apex:pageBlockSection title="Status Quotes" columns="3" >
+            <analytics:reportChart reportId="00O0Y000007wdb6" size="tiny"/>
+            <analytics:reportChart reportId="00O0Y000007wdbB" size="tiny"/>
+            <analytics:reportChart reportId="00O0Y000007wdbQ" size="tiny"/>
+        </apex:pageblocksection>
+        <apex:pageBlockSection title="Open Orders" columns="3" >
+            <analytics:reportChart reportId="00O0Y000007wdbL" size="tiny"/>
+            <analytics:reportChart reportId="00O0Y000007wdbV" size="tiny"/>
+            <analytics:reportChart reportId="00O0Y000007wdba" size="tiny"/>
+            <analytics:reportChart reportId="00O0Y000007wdbu" size="tiny"/>  
+        </apex:pageblocksection> 
+     </apex:pageBlock>
+ </apex:page>

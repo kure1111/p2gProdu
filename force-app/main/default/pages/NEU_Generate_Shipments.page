@@ -1,0 +1,1493 @@
+<apex:page StandardController="Customer_Quote__c" extensions="NEU_Generate_Shipments" sidebar="false" id="page" action="{!check_shipment_created}" lightningStylesheets="false">
+    <script type="text/javascript">
+        var __sfdcSessionId = '{!GETSESSIONID()}';
+    </script>
+    <apex:stylesheet value="{!$Resource.Style_OrdertoStock}"/>
+    <apex:includeScript value="{!$Resource.jquery_1_10_2}"/> 
+    <apex:includeScript value="{!$Resource.jquery_ui_1_10_3}"/>
+    <script type="text/javascript" src="https://maps.google.com/maps/api/js?key=AIzaSyAK8UqXuiT9IFTwkvhF-Nh1wS2JAdk6Fig"></script>
+    <script src="/soap/ajax/42.0/connection.js" type="text/javascript"></script>
+    <script src="/soap/ajax/42.0/apex.js" type="text/javascript"></script>
+    <apex:includeScript value="{!$Resource.neurored_jquery}"/> 
+    
+    <apex:stylesheet value="{!URLFOR($Resource.jquery_ui_1_10_3_css,'jquery-ui-1.10.3.min.css')}"/>
+    <script>
+            /* Truckstop Tracking */
+            var source_map_origin_address = [''];
+            var source_map_destination_address = [''];
+            var parsed_data_origin;
+            var parsed_data_destination;
+            
+            var typingTimer;                //timer identifier
+            var doneTypingInterval = 1000;  //time in ms, 5 second for example
+            
+            //user is "finished typing," do something
+            function search_origin_address_truckstop () {
+                var element = $('[id$=search_Origin_Address]');
+                element.addClass('ui-autocomplete-loading').prop("readonly", true);
+                var x = sforce.apex.execute(
+                    'NEU_Shipment_View_Tracking', 
+                    'getAddressStopTruckstop', 
+                    {
+                        address : element.val(),
+                        countryID : $('[id$=origin_country_load_lkid]').val(),
+                        stateID : $('[id$=origin_state_load_lkid]').val(),
+                        locationID : $('[id$=origin_location_load_lkid]').val(),
+                        point : 'Origin'
+                    }
+                );
+                
+                console.log('Origen: ' + x);
+                
+                if(x[0] != 'error'){
+                    parsed_data_origin = JSON.parse(x);
+                    source_map_origin_address= [parsed_data_origin.data.address];
+                }else{
+                    source_map_origin_address= [];
+                }
+                
+                
+                element.removeClass('ui-autocomplete-loading').prop("readonly", false);
+                element.autocomplete( "search", element.val() );
+            }
+            
+            function search_destination_address_truckstop () {
+                var element = $('[id$=search_Destination_Address]');
+                
+                element.addClass('ui-autocomplete-loading').prop("readonly", true);
+                var x = sforce.apex.execute(
+                    'NEU_Shipment_View_Tracking', 
+                    'getAddressStopTruckstop', 
+                    {
+                        address : element.val(),
+                        countryID : $('[id$=destination_country_discharge_lkid]').val(),
+                        stateID : $('[id$=destination_state_discharge_lkid]').val(),
+                        locationID : $('[id$=destination_location_discharge_lkid]').val(),
+                        point : 'Destination'
+                    }
+                );
+                
+                console.log('Destino: ' + x);
+                
+                if(x[0] != 'error'){
+                    parsed_data_destination = JSON.parse(x);
+                    source_map_destination_address= [parsed_data_destination.data.address];
+                }else{
+                    source_map_destination_address= [];
+                }
+                
+                element.removeClass('ui-autocomplete-loading').prop("readonly", false);
+                element.autocomplete( "search", element.val() );
+            }
+            
+            function search_address(point) {
+                clearTimeout(typingTimer);
+                if($('[id$=search_Origin_Address]').val() == '' && point == 'Origin'){
+                    source_map_origin_address= [];
+                    $("[id*='origin_Country_Code']").val('');
+                    $("[id*='origin_State_Code']").val('');
+                    $("[id*='origin_City']").val('');
+                    $("[id*='origin_Postal_Code']").val('');
+                    $("[id*='origin_Address']").val('');
+                    $('[id$=search_Origin_Address]').val('');
+                }else if ($('[id$=search_Origin_Address]').val() && point == 'Origin'){
+                    typingTimer = setTimeout(search_origin_address_truckstop, doneTypingInterval);
+                }
+                
+                if($('[id$=search_Destination_Address]').val() == '' && point == 'Destination'){
+                    source_map_origin_address= [];
+                    $("[id*='destination_Country_Code']").val('');
+                    $("[id*='destination_State_Code']").val('');
+                    $("[id*='destination_City']").val('');
+                    $("[id*='destination_Postal_Code']").val('');
+                    $("[id*='destination_Address']").val('');
+                    $('[id$=search_Destination_Address]').val('');
+                }else if($('[id$=search_Destination_Address]').val() && point == 'Destination') {
+                    typingTimer = setTimeout(search_destination_address_truckstop, doneTypingInterval);
+                }
+            }
+            
+            function createTrackingTruckstop(){
+                create_Tracking_Truckstop();
+            }
+            /* Truckstop Tracking */
+    
+            function generate_shipment(){
+                apply_lines();
+            }
+        
+            $(document).ready(function () {
+                $("#accordion").accordion({heightStyle:"content",active:false, activate:function(event,ui){/*if(ui.newHeader.attr('id')=='itemLabel')refreshlines();*/} });
+                $($.sfId('{!$Component.page.form}')).tooltip({track:true,show:{effect:"slideDown",delay:1000}});
+                setDecimalSep($($.sfId('{!$Component.page.form.decimalSep}')).val(),$($.sfId('{!$Component.page.form.thousandSep}')).val());
+                showFreightData();
+            });
+            
+            function showFreightData()
+            {
+                $('#airfreight').toggle($('#page\\:form\\:block_ruta\\:freightmode').val()=='Air');
+                $('#seafreight,#seafreight2').toggle($('#page\\:form\\:block_ruta\\:freightmode').val()=='Sea');
+                $('.roadfreight').toggle($('#page\\:form\\:block_ruta\\:freightmode').val()=='Road');
+                $('#railfreight').toggle($('#page\\:form\\:block_ruta\\:freightmode').val()=='Rail');
+            }
+
+            function clickIcon(element,icon)
+            {
+                if(icon>1)
+                {
+                    if(icon==3)
+                        if($('table.tabla_principal input:checkbox[neudata="'+element.attr('neudata')+'"]:checked.icon1').length>0)
+                            return;
+                    newBOMShow(element.attr('neudata'));
+                }
+            }
+            
+            function sort_data_quote(n)
+            {
+                var ordenacion = '';
+    
+                if($('#orden_ad_quotes').val() == 'desc' || $('#orden_ad_quotes').val() == 'none')
+                {
+                    ordenacion = n+'-asc';
+                    $('#orden_ad_quotes').val('asc');
+                }
+                else
+                {
+                    ordenacion = n+'-desc';
+                    $('#orden_ad_quotes').val('desc');
+                }
+                
+                document.getElementById('{!$Component.page.form.orden_quotes}').value = ordenacion;
+                compare_data();
+            }
+            
+            
+            function changeRouteSelected(s)
+            {
+                $($.sfId('{!$Component.page.form.block4.buttons.totalweight}')).html('0');
+                $($.sfId('{!$Component.page.form.TotalNumberBoxes}')).val('0');
+                $($.sfId('{!$Component.page.form.TotalNumberPallets}')).val('0');
+                $($.sfId('{!$Component.page.form.Grossweight}')).val('0');
+                $($.sfId('{!$Component.page.form.Cube}')).val('0');
+                $($.sfId('{!$Component.page.form.TotalNumberCont}')).val('0');
+                $($.sfId('{!$Component.page.form.porc_ocupacion}')).val('0');  
+                $($.sfId('{!$Component.page.form.max_peso_container}')).val(0);
+                $($.sfId('{!$Component.page.form.max_volumen_container}')).val(0);
+                $($.sfId('{!$Component.page.form.num_cont_x_pallet}')).val(0); 
+                $($.sfId('{!$Component.page.form.FreeSpaceCont}')).val('0%');
+                
+                var nuevo_seleccionado=s.selectedIndex;
+                updateLines_and_routes();
+            }
+            
+            function marcar_lines()
+            {
+                var status_check = false;
+                if($('.select_all_items').is(':checked'))
+                    status_check = true;
+                else
+                    status_check = false;
+                    
+                $('table .tabla_principal .check_linea_selected').each(function()
+                {
+                 
+                    if(status_check == true)
+                        $(this).prop("checked", true);
+                    else
+                        $(this).prop("checked", false);
+                   
+                });
+                calculartotalpesovolumen();
+            }
+            
+            function adjustBackground()
+            {
+                $('table.tabla_principal img.icon1').attr('src','{!$Resource.more_png}');
+                $('table.tabla_principal img.icon1').parent().parent().css("background-color", "#f3f3f3");
+                $('table.tabla_principal img.icon2').attr('src','{!$Resource.plus_png}');
+                $('table.tabla_principal img.icon2').css('cursor','pointer');
+                $('table.tabla_principal img.icon3').attr('src','{!$Resource.minus_png}');
+                $('table.tabla_principal img.icon3').css('cursor','pointer');
+                var alertuser=$($.sfId('{!$Component.page.form.block4.alertuser}')).getString();
+                if(alertuser)
+                {
+                    $($.sfId('{!$Component.page.form.block4.alertuser}')).val('');
+                    alert(alertuser);
+                }
+            }
+
+            function updatedata()
+            {
+                $('table.tabla_principal input.supplyinput').calcularpeso();
+                calculartotalpesovolumen();
+            }
+            
+            function actualizar_lineas()
+            {
+                $($.sfId('{!$Component.page.form.block4.buttons.totalweight}')).html('0');
+                $($.sfId('{!$Component.page.form.TotalNumberBoxes}')).val('0');
+                $($.sfId('{!$Component.page.form.TotalNumberPallets}')).val('0');
+                $($.sfId('{!$Component.page.form.Grossweight}')).val('0');
+                $($.sfId('{!$Component.page.form.Cube}')).val('0');
+                $($.sfId('{!$Component.page.form.TotalNumberCont}')).val('0');
+                $($.sfId('{!$Component.page.form.porc_ocupacion}')).val('0');  
+                $($.sfId('{!$Component.page.form.max_peso_container}')).val(0);
+                $($.sfId('{!$Component.page.form.max_volumen_container}')).val(0);
+                $($.sfId('{!$Component.page.form.num_cont_x_pallet}')).val(0); 
+                $($.sfId('{!$Component.page.form.FreeSpaceCont}')).val('0%');
+            }
+            
+            (function($) {
+                $.fn.calcularpeso = (function() {
+                    var seleccion_de_contenedores  = $('.seleccioncontainer').prop('selectedIndex');
+                    var valores_contenedores = $($.sfId('{!$Component.page.form.block4.ids_pallet_idscontenedores}')).val().split('|');
+                    if(seleccion_de_contenedores > 0)
+                    {
+                        var valor_pallet_container_seleccionado= valores_contenedores[seleccion_de_contenedores-1];
+                        var valores = valor_pallet_container_seleccionado.split('_');
+                        var id_pallet_selected = valores[1];
+                        var volumen_pallet = valores[2];
+                        if(isNaN(volumen_pallet))
+                            volumen_pallet=0.0000;
+                        var peso_pallet = valores[3];
+                        if(isNaN(peso_pallet))
+                            peso_pallet=0;
+                        var volumen_max_container = valores[4];
+                        if(isNaN(volumen_max_container))
+                            volumen_max_container=0;
+                        var peso_max_container = valores[5];
+                        if(isNaN(peso_max_container))
+                            peso_max_container=0;
+                        var numero_pallet_container = valores[6];
+                        if(isNaN(numero_pallet_container))
+                            numero_pallet_container=0;
+                            
+                        $($.sfId('{!$Component.page.form.max_peso_container}')).val(valores[5]);
+                         if(isNaN($($.sfId('{!$Component.page.form.max_peso_container}')).val()) || $($.sfId('{!$Component.page.form.max_peso_container}')).val() == null )
+                            $($.sfId('{!$Component.page.form.max_peso_container}')).val(0);
+                            
+                        $($.sfId('{!$Component.page.form.max_volumen_container}')).val(valores[4]);
+                        if(isNaN($($.sfId('{!$Component.page.form.max_volumen_container}')).val()) || $($.sfId('{!$Component.page.form.max_volumen_container}')).val() == null )
+                            $($.sfId('{!$Component.page.form.max_volumen_container}')).val(0);
+                            
+                        $($.sfId('{!$Component.page.form.num_cont_x_pallet}')).val(valores[6]);
+                        if(isNaN($($.sfId('{!$Component.page.form.num_cont_x_pallet}')).val()) || $($.sfId('{!$Component.page.form.num_cont_x_pallet}')).val() == null )
+                            $($.sfId('{!$Component.page.form.num_cont_x_pallet}')).val(0);
+                            
+                        $($.sfId('{!$Component.page.form.la_lista_no_cero}')).val(true);
+                    }
+                    
+                    if(seleccion_de_contenedores == 0)
+                    {
+                         $($.sfId('{!$Component.page.form.la_lista_no_cero}')).val(false);
+                    }
+                    
+                    this.each(function(){
+                    
+                         var iditem=$(this).attr('neudata');
+                         var supply=$(this).getFloatSep();
+                         var pallet_x_caja = 0;
+                         var units_x_masterbox =$('table.tabla_principal input[neudata="packagingunits'+iditem+'"]').val();
+                         if($('table.tabla_principal input[neudata="packagingunits'+iditem+'"]').val() == '')
+                         {
+                            units_x_masterbox=$('table.tabla_principal input[neudata="packagingunits'+iditem+'"]').val(1);
+                         }
+                         if($('table.tabla_principal input[neudata="relacionconlospallet'+iditem+'"]').val() != '' && seleccion_de_contenedores != 0 && $('table.tabla_principal input[neudata="relacionconlospallet'+iditem+'"]').val() != null)
+                         {
+                           var comprobante_mismo_pallet = $('table.tabla_principal input[neudata="relacionconlospallet'+iditem+'"]').val().split('|');
+                           $.each(comprobante_mismo_pallet ,function(index,contenido){
+                            var tipo_pallet = contenido.split('_');
+                            if(id_pallet_selected == tipo_pallet[0])
+                            {
+                                pallet_x_caja = tipo_pallet[1];
+                            }
+                            });
+                            
+                         }
+                         if(units_x_masterbox != 0)
+                        {
+                           $('table.tabla_principal span[neudata="packaging'+iditem+'"]').html(Math.ceil(supply/units_x_masterbox));//calculo total cajas
+                           $('table.tabla_principal input[neudata="packaging_hidden'+iditem+'"]').val($('table.tabla_principal span[neudata="packaging'+iditem+'"]').getFloat()); 
+                        }
+                        else
+                        {
+                            $('table.tabla_principal span[neudata="packaging'+iditem+'"]').html(0);
+                            $('table.tabla_principal input[neudata="packaging_hidden'+iditem+'"]').val(0);
+                        }
+                       
+                        var totalcajas = $('table.tabla_principal span[neudata="packaging'+iditem+'"]').html();
+                        if(pallet_x_caja != 0)
+                        {
+                             $('table.tabla_principal span[neudata="numberpallet'+iditem+'"]').html(Math.ceil(supply/pallet_x_caja));//calculo pallet
+                             $('table.tabla_principal input[neudata="numberpallet_hidden'+iditem+'"]').val($('table.tabla_principal span[neudata="numberpallet'+iditem+'"]').html());
+                             $('table.tabla_principal input[neudata="tienerelacion_con_pallet'+iditem+'"]').val(false);
+                             $('table.tabla_principal img[neudata="sin_pallet'+iditem+'"]').css('display','none');
+                             
+                        }
+                        else
+                        {
+                             $('table.tabla_principal span[neudata="numberpallet'+iditem+'"]').html(0);
+                             $('table.tabla_principal input[neudata="numberpallet_hidden'+iditem+'"]').val($('table.tabla_principal span[neudata="numberpallet'+iditem+'"]').html());
+                             $('table.tabla_principal input[neudata="tienerelacion_con_pallet'+iditem+'"]').val(true);
+                             $('table.tabla_principal img[neudata="sin_pallet'+iditem+'"]').css('display','');
+                             
+                        }
+                        
+                        var peso_pallets= peso_pallet*$('table.tabla_principal span[neudata="numberpallet'+iditem+'"]').html();
+                        if(isNaN(peso_pallets))
+                            peso_pallets=0;
+                        var volumen_pallets = volumen_pallet*$('table.tabla_principal span[neudata="numberpallet'+iditem+'"]').html();
+                         if(isNaN(volumen_pallets))
+                            volumen_pallets=0.0000;
+                        if(pallet_x_caja != 0)
+                        {
+                            $('table.tabla_principal span[neudata="weight'+iditem+'"]').setFloatSep(($('table.tabla_principal input[neudata="packagingweight'+iditem+'"]').getFloat()*supply + peso_pallets).toFixed(2));// peso
+                            $('table.tabla_principal input[neudata="weight_hidden'+iditem+'"]').val($('table.tabla_principal span[neudata="weight'+iditem+'"]').getFloatSep());
+                            $('table.tabla_principal span[neudata="volume'+iditem+'"]').setFloatSep(($('table.tabla_principal input[neudata="packagingvolume'+iditem+'"]').getFloat()*supply + volumen_pallets).toFixed(4)); //volumen
+                            $('table.tabla_principal input[neudata="volume_hidden'+iditem+'"]').val($('table.tabla_principal span[neudata="volume'+iditem+'"]').getFloatSep());
+                            if($('table.tabla_principal span[neudata="volume'+iditem+'"]').html() == 0 || $('table.tabla_principal span[neudata="volume'+iditem+'"]').getFloat() == 0.0000)//cuando no tiene volument la caja
+                            {   
+                                $('table.tabla_principal span[neudata="volume'+iditem+'"]').getFloat(0.0000);
+                                $('table.tabla_principal input[neudata="volume_hidden'+iditem+'"]').val($('table.tabla_principal span[neudata="volume'+iditem+'"]').getFloatSep());
+                            }
+                            $('table.tabla_principal span[neudata="weight'+iditem+'"]').css('color','#000');
+                            $('table.tabla_principal span[neudata="volume'+iditem+'"]').css('color','#000');
+                            $('table.tabla_principal span[neudata="numberpallet'+iditem+'"]').css('color','#000');
+                        }
+                        else
+                        {
+                            $('table.tabla_principal span[neudata="weight'+iditem+'"]').setFloatSep(($('table.tabla_principal input[neudata="packagingweight'+iditem+'"]').getFloat()*supply).toFixed(2));//peso
+                            $('table.tabla_principal input[neudata="weight_hidden'+iditem+'"]').val($('table.tabla_principal span[neudata="weight'+iditem+'"]').getFloatSep());
+                            $('table.tabla_principal span[neudata="volume'+iditem+'"]').setFloatSep(($('table.tabla_principal input[neudata="packagingvolume'+iditem+'"]').getFloat()*supply).toFixed(4)); //volumen
+                            $('table.tabla_principal input[neudata="volume_hidden'+iditem+'"]').val($('table.tabla_principal span[neudata="volume'+iditem+'"]').getFloatSep());
+                            
+                        }
+                        
+                        if(pallet_x_caja ==0 && seleccion_de_contenedores >0)
+                        {
+                            $('.imagen_warning'+iditem+'').css('display','block');
+                        }
+                        
+                        if(pallet_x_caja !=0 && seleccion_de_contenedores >0)
+                           $('.imagen_warning'+iditem+'').css('display','none'); 
+                        if(seleccion_de_contenedores == 0)
+                           $('.imagen_warning'+iditem+'').css('display','none');  
+                           
+                        //calculo total amount           
+                        $('table.tabla_principal span[neudata="total_amount_linea'+iditem+'"]').setFloatSep(($('table.tabla_principal input[neudata="precio_unidad'+iditem+'"]').getFloat()*supply+$('table.tabla_principal input[neudata="exense_amount'+iditem+'"]').getFloat()).toFixed(2));// precio por unidades + gastos extra
+                         $('table.tabla_principal input[neudata="total_amount_linea_hidden'+iditem+'"]').val( $('table.tabla_principal span[neudata="total_amount_linea'+iditem+'"]').getFloatSep());   
+                       
+                    });
+                });
+            })(jQuery);
+            
+            function seleccion_route_new()
+            {
+                $('.msg_err_route').css('display','none');
+                var id_ruta_seleccionada = $("input[name='select_route']:checked").attr('neudata');
+                $(".id_route_selected").val(id_ruta_seleccionada);
+            }
+            
+             function check_etd()
+             {
+                if($('.etd_filter').val() != null && $('.etd_filter').val() != '')
+                {
+                    $('.msg_error_etd').css('display', 'none');
+                    $('.msg_error_etd').css('border-color', '1px solid gray');
+                    refresh_storage_days();
+                }
+             }
+             
+             function check_eta()
+             {
+                if($('.eta_filter').val() != null && $('.eta_filter').val() != '')
+                {
+                    $('.msg_error_eta').css('display', 'none');
+                    $('.msg_error_eta').css('border-color', '1px solid gray');
+                }
+             }
+            
+            function sort_data_table_route(n)
+            {
+                document.getElementById('{!$Component.page.form.orden_routes}').value = n;
+                if(document.getElementById('{!$Component.page.form.orden_routes}').value ==$('#orderField2').val())
+                {
+                    if($('#orderValue2').val()!='asc')
+                        $('#orderValue2').val('asc');
+                    else
+                        $('#orderValue2').val('desc');
+      
+                }
+                else
+                {
+                    $('#orderField2').val(n);
+                    $('#orderValue2').val('desc');
+                }
+                
+                document.getElementById('{!$Component.page.form.orden_routes_modo}').value = $('#orderValue2').val();
+                ordenar_tabla_routes(); 
+            }
+            
+            function calculate_storage_days(n)
+            {
+                if(n != null && n != '')
+                { 
+                    $('.numero_dias').each(function()
+                    {
+                        if($('.fecha_llegada_'+$(this).attr("neudata")).children('span').html() != null && $('.fecha_llegada_'+$(this).attr("neudata")).children('span').html() != '')
+                        {
+                            var eta_linea = $('.fecha_llegada_'+$(this).attr("neudata")).children('span').html();
+                            //alert(Date.parse(n,"dd-MM-yyyy"));
+                            var diferencia_en_dias = ((Date.parse(n)-Date.parse(eta_linea))/86400000);//---ver como hacer funcionar esto
+                            
+                            $('.numero_dias_'+$(this).attr("neudata")).html(diferencia_en_dias);
+                        }
+                        
+                    });
+                }
+            }
+            
+             function mostrar_ordenacion_rutas()
+            {
+                var n = document.getElementById('{!$Component.page.form.orden_routes}').value;
+                $('.flecha_ordenacion2').css('display','none');
+                var clase_ordenacion  = n.replace('.','');
+                clase_ordenacion = clase_ordenacion.replace('.','');
+                clase_ordenacion = clase_ordenacion.replace('.','');
+                $('.'+clase_ordenacion+'route').css('display','block');
+                if($('#orderValue2').val()=='asc')
+                    $('.flecha_ordenacion2').css('background-position-y','-15px');
+                else
+                    $('.flecha_ordenacion2').css('background-position-y','0px');
+            } 
+            
+            function check_route()
+            {
+                if('{!Customer_Quote__c.Only_Warehouse_Service__c}' == 'true')
+                    $('.id_route_selected').val('{!Customer_Quote__c.Route__c}');
+
+                if($('.id_route_selected').val() != null && $('.id_route_selected').val() != '')
+                {
+                    if(($('.etd_filter').val() != null && $('.etd_filter').val() != '') || '{!Customer_Quote__c.Only_Warehouse_Service__c}' == 'true')
+                    {
+                        if(($('.eta_filter').val() != null && $('.eta_filter').val() != '') || '{!Customer_Quote__c.Only_Warehouse_Service__c}' == 'true')
+                        {
+                            if(($('#page\\:form\\:block_ruta\\:freightmode').val() != '' && $('#page\\:form\\:block_ruta\\:freightmode').val() != null) || '{!Customer_Quote__c.Only_Warehouse_Service__c}' == 'true')
+                            {
+                                $('.etd_filter').css('border' , '1px #e0e3e5 solid');
+                                $('.eta_filter').css('border' , '1px #e0e3e5 solid');
+                                $('#page\\:form\\:block_ruta\\:freightmode').css('border' , '1px #e0e3e5 solid');
+                                $('.msg_err_route').css('display' , 'none');
+                            
+                                //refreshlines();
+                            }
+                            else
+                            {
+                                $('#page\\:form\\:block_ruta\\:freightmode').css('border' , '2px red solid');
+                                setTimeout(function(){open_other_accordion();},2);
+                            }
+                        }
+                        else 
+                        {
+                            $('.eta_filter').css('border' , '2px red solid');
+                            setTimeout(function(){open_other_accordion();},2);
+                        }
+                    }
+                    else
+                    {
+                        $('.etd_filter').css('border' , '2px red solid');
+                        setTimeout(function(){open_other_accordion();},2);
+                    }
+                }
+                else
+                {
+                    setTimeout(function(){open_other_accordion();},2);
+                }
+            }
+            
+            function open_other_accordion()
+            {
+                $('#accordion').accordion('option','active',0);
+                $('.msg_err_route').css('display','');
+            }
+            
+             function mostrar_odenacion_table_lines()
+            {
+                var n = document.getElementById('{!$Component.page.form.orden_quotes}').value;
+                $('.flecha_ordenacion3').css('display','none');
+                var clase_ordenacion  = n.replace('.','');
+                clase_ordenacion = clase_ordenacion.replace('-asc','');
+                clase_ordenacion = clase_ordenacion.replace('-desc','');
+                clase_ordenacion = clase_ordenacion.replace('.','');
+                clase_ordenacion = clase_ordenacion.replace('.','');
+                clase_ordenacion = clase_ordenacion.replace('.','');
+                $('.'+clase_ordenacion+'Lines').css('display','block');
+                if($('#orden_ad_quotes').val()=='asc')
+                    $('.flecha_ordenacion3').css('background-position-y','-15px');
+                else
+                    $('.flecha_ordenacion3').css('background-position-y','0px');
+            }
+             
+            function calculartotalpesovolumen()
+            {
+                var total_cajas = 0;
+                var total_pallets = 0;
+                var total_peso = 0;
+                var total_volumen = 0;
+                $('table .tabla_principal .check_linea_selected:checked').each(function()
+                {
+                        total_cajas +=$('table.tabla_principal span[neudata="packaging'+$(this).attr('neudata')+'"]').getFloat();
+                        total_pallets +=$('table.tabla_principal span[neudata="numberpallet'+$(this).attr('neudata')+'"]').getFloat();
+                        total_peso +=$('table.tabla_principal span[neudata="weight'+$(this).attr('neudata')+'"]').getFloatSep();
+                        total_volumen +=$('table.tabla_principal span[neudata="volume'+$(this).attr('neudata')+'"]').getFloatSep(); 
+                });
+                
+                $($.sfId('{!$Component.page.form.TotalNumberBoxes}')).val(total_cajas);
+                $('#totalcajas').html(total_cajas);
+                $($.sfId('{!$Component.page.form.TotalNumberPallets}')).val(total_pallets);
+                $('#totalpallet').html(total_pallets);
+                total_peso = total_peso.toFixed(2);
+                $($.sfId('{!$Component.page.form.Grossweight}')).val(total_peso);
+                $('#totalweight').setFloatSep(total_peso);//falta sumar pallet peso
+                $($.sfId('{!$Component.page.form.Cube}')).val(total_volumen);
+                $('#totalvolume').setFloatSep(total_volumen.toFixed(4));//falta sumar pallet volumen
+                
+                 
+                var ocupacion_peso = 0;
+                var ocupacion_volumen = 0;
+                var ocupacion_pallet = 0;
+                var TotalNumberCont = 0;
+                var FreeSpaceCont = 0;
+                var porc_ocupacion = 0;
+                if($($.sfId('{!$Component.page.form.max_peso_container}')).val() > 0)
+                {
+                    ocupacion_peso = $($.sfId('{!$Component.page.form.Grossweight}')).val()/$($.sfId('{!$Component.page.form.max_peso_container}')).val();
+                }
+                if($($.sfId('{!$Component.page.form.max_volumen_container}')).val() >0)
+                {
+                    ocupacion_volumen =  $($.sfId('{!$Component.page.form.Cube}')).val()/$($.sfId('{!$Component.page.form.max_volumen_container}')).val();
+                }
+                if( $($.sfId('{!$Component.page.form.num_cont_x_pallet}')).val() >0)
+                {
+                    ocupacion_pallet = $($.sfId('{!$Component.page.form.TotalNumberPallets}')).val()/$($.sfId('{!$Component.page.form.num_cont_x_pallet}')).val();
+                }       
+                if(ocupacion_peso > ocupacion_pallet)
+                {
+                    if(ocupacion_peso > ocupacion_volumen)
+                        TotalNumberCont = Math.ceil($($.sfId('{!$Component.page.form.Grossweight}')).val()/$($.sfId('{!$Component.page.form.max_peso_container}')).val());
+                    else
+                        TotalNumberCont =Math.ceil($($.sfId('{!$Component.page.form.Cube}')).val()/$($.sfId('{!$Component.page.form.max_volumen_container}')).val());
+                }
+                else
+                {
+                    if(ocupacion_pallet > ocupacion_volumen)
+                    {
+                         if( $($.sfId('{!$Component.page.form.num_cont_x_pallet}')).val() >0)
+                            TotalNumberCont =  Math.ceil($($.sfId('{!$Component.page.form.TotalNumberPallets}')).val()/$($.sfId('{!$Component.page.form.num_cont_x_pallet}')).val());
+                    }
+                    else
+                        TotalNumberCont = Math.ceil($($.sfId('{!$Component.page.form.Cube}')).val()/$($.sfId('{!$Component.page.form.max_volumen_container}')).val());
+                }
+             
+              
+                 if(TotalNumberCont != null && TotalNumberCont !='Infinity' && isNaN(TotalNumberCont) == false  )
+                    $($.sfId('{!$Component.page.form.TotalNumberCont}')).val(TotalNumberCont);
+                 else
+                    $($.sfId('{!$Component.page.form.TotalNumberCont}')).val(0);
+                
+                  if(ocupacion_peso > ocupacion_pallet)
+                  {
+                        if(ocupacion_peso > ocupacion_volumen)
+                            FreeSpaceCont =(TotalNumberCont- ocupacion_peso)*100;
+                        else
+                            FreeSpaceCont =(TotalNumberCont- ocupacion_volumen)*100;
+                  }
+                  else
+                  {
+                      if(ocupacion_pallet > ocupacion_volumen)
+                          FreeSpaceCont =(TotalNumberCont- ocupacion_pallet)*100;
+                      else
+                          FreeSpaceCont =(TotalNumberCont- ocupacion_volumen)*100;
+                  }
+                  
+                  if(FreeSpaceCont > 0 || FreeSpaceCont == 0)
+                  {
+                      if(FreeSpaceCont == 100)
+                          porc_ocupacion = 100;
+                      else
+                          porc_ocupacion = 100 - FreeSpaceCont;
+                          
+                      porc_ocupacion = porc_ocupacion.toFixed(2)+ '%';        
+                  }
+                  else
+                      porc_ocupacion= 0;
+   
+                   if( $($.sfId('{!$Component.page.form.la_lista_no_cero}')).val() == 'true')
+                   {
+                      $('#totalcontenedores').html(TotalNumberCont);
+                      $('.ui-progress').css('width',porc_ocupacion);
+                      $('.ui-dato_container').html(TotalNumberCont);
+                      $('.value').html(formatFloatSep(porc_ocupacion));
+                   }
+                   else
+                   {
+                      $('#totalcontenedores').html(0);
+                      $('.ui-progress').css('width','0%');
+                      $('.ui-dato_container').html(0);
+                      $('.value').html(0);
+                   }
+                  
+                   
+                   if(porc_ocupacion != null &&  porc_ocupacion!='-Infinity%' && porc_ocupacion!='Infinity%')
+                       $($.sfId('{!$Component.page.form.porc_ocupacion}')).val(porc_ocupacion);
+                   else
+                      $($.sfId('{!$Component.page.form.porc_ocupacion}')).val(0);  
+            }
+            
+    </script>
+    <style>
+        .actions_table{border:none; width:100%;}
+        .btnBlue{
+               /* background-color: rgba(27, 82, 151, 1) !important;
+                border-color: rgba(27, 82, 151, 1) !important;
+                color: white !important;*/
+            }
+        .actions_table th
+        {
+            background: #f2f3f3;
+            border:1px solid #e0e3e5;
+            border-bottom:2px solid #cccccc;
+            color: #000;
+            font-size: .9em;
+            font-weight: bold;
+            padding: 5px 2px 4px 5px;
+        }
+        .actions_table_ie{border:none; width:100%;}
+        .actions_table_ie th{background: #f2f3f3;
+            border:1px solid #e0e3e5;
+            border-bottom:2px solid #cccccc;
+            color: #000;
+            font-size: .9em;
+            font-weight: bold;
+            padding: 5px 2px 4px 5px;
+            white-space: inherit;
+        }
+        .lista_pasos{padding: 0; margin: 0 0 15px 0;/*float: left;*/ width: 100%;     margin-bottom: 66px;}
+        .lista_pasos li
+        {  
+            list-style-type: none;
+            float: left;
+            color: #ffffff;
+            padding: 10px;
+            background-color: #2297cc;
+            margin: 0 15px 0 0;
+        }
+        .flecha_derecha {       width: 0;       height: 0;      border-top: 16px solid transparent;     border-bottom: 18px solid transparent;      border-left: 18px solid #2297cc;    }
+        .flecha_derecha_selected {      width: 0;       height: 0;      border-top: 16px solid transparent;     border-bottom: 18px solid transparent;      border-left: 18px solid #2297cc;        -webkit-box-shadow: 11px 5px 15px -10px rgba(50, 50, 50, 0.72), inset 0px 0px 12px #000;        -moz-box-shadow: 11px 5px 15px -10px rgba(50, 50, 50, 0.72), inset 0px 0px 12px #000;        box-shadow: 11px 5px 15px -10px rgba(50, 50, 50, 0.72), inset 0px 0px 12px #000;        background: -webkit-gradient(linear, 36% 12%, 33% 100%, from(#000000), to(#ffffff));   }
+        .lista_pasos .li_selected
+        {
+             -webkit-box-shadow: 5px 5px 15px 0px rgba(50, 50, 50, 0.72), inset 0px 0px 0px #000;
+            -moz-box-shadow: 5px 5px 15px 0px rgba(50, 50, 50, 0.72), inset 0px 0px 0px #000;
+            box-shadow: 5px 5px 15px 0px rgba(50, 50, 50, 0.72), inset 0px 0px 0px #000;
+            font-weight: bold;
+        }
+         .lista_pasos .li_selected
+        {
+             /*-webkit-box-shadow: 5px 5px 15px 0px rgba(50, 50, 50, 0.72), inset 0px 0px 0px #000;
+            -moz-box-shadow: 5px 5px 15px 0px rgba(50, 50, 50, 0.72), inset 0px 0px 0px #000;
+            box-shadow: 5px 5px 15px 0px rgba(50, 50, 50, 0.72), inset 0px 0px 0px #000;*/
+            font-weight: bold;
+        }
+        .actions_table_ie td
+        {
+            border:1px solid #e0e3e5;
+            background:#ffffff;
+        }
+        .p_extra_filter
+         {
+            width: 238px;
+            float: left;
+            margin-top: 0px;
+        }    
+        .div_cabecera{cursor: pointer; white-space: normal;}
+        .ui-widget {font-size: 1em;}
+        .actions_table td
+        {
+            border:1px solid #e0e3e5;
+            background:#ffffff;
+        }
+        
+        .ui-autocomplete-loading {
+            background: white url("/img/loading.gif") right center no-repeat;
+          }
+    </style>
+    <apex:sectionHeader title="Generate Shipment (Define Freight Mode and Route)"/>
+    <!-- <div>-->
+        <ul class="lista_pasos">
+            <li class="li_1 li_selected" style="    margin-right: 0px; ">1. DEFINE FREIGHT MODE AND ROUTE </li>
+            <li class="li_1" style="background: white; padding: 0px;"><div class="flecha_derecha_selected"></div></li>
+            <li class="li_2" style="    margin-right: 0px; ">2. SELECT SHIPMENT SERVICE LINES FROM IMPORT EXPORT SERVICE LINES</li>
+            <li class="li_2" style="background: white; padding: 0px;"><div class="flecha_derecha"></div></li>
+            <li class="li_3">3. CREATE NEW SHIPMENT SERVICE LINES</li>
+        </ul>
+    <!-- </div>-->
+    <apex:form id="form">
+        
+        <apex:actionFunction name="compare_data" action="{!go_compare}" reRender="table_lines_3, table_lines_2, table1" status="myStatus" oncomplete="mostrar_odenacion_table_lines(); "/>
+        <apex:actionFunction name="apply_lines" action="{!applyLines}"  status="myStatus" oncomplete="createTrackingTruckstop();"/>
+        <!-- <apex:actionFunction name="apply_lines" action="{!applyLines}"  status="myStatus" oncomplete="adjustBackground();"/> -->
+        <apex:actionFunction name="create_Tracking_Truckstop" action="{!createTrackingTruckstop}"  status="myStatus" reRender="errors" oncomplete="adjustBackground();"/>
+        <apex:actionFunction name="refresh_storage_days" reRender="Storage_days"/>
+        <apex:inputHidden value="{!decimalSep}" id="decimalSep"/>
+        <apex:inputHidden value="{!thousandSep}" id="thousandSep"/>
+        <apex:actionFunction name="updatewarehouse" reRender="block5" status="myStatus" oncomplete="$('#contenedorWarehouse').dialog({height: 280,width: 1000,modal: true,appendTo:'#positionWarehouse'});">
+            <apex:param name="one" assignTo="{!idItem}" value="" />
+            <apex:param name="two" assignTo="{!idLineItem}" value="" />
+            <apex:param name="three" assignTo="{!totalunits}" value="" />
+            <apex:param name="four" assignTo="{!nombreitem}" value="" />
+        </apex:actionFunction>
+        <apex:actionFunction name="search" action="{!search_routes}" reRender="block_ruta" status="myStatus" oncomplete="showFreightData();"/>
+        <apex:inputHidden value="{!routeid}"  html-class="id_route_selected"/>
+        <apex:actionFunction name="new_route" action="{!new_route}" status="myStatus" reRender="block_ruta,errors"/>
+        <!-- ordenacion -->
+
+        <apex:inputHidden value="{!orden_routes}" id="orden_routes"/>
+        <apex:inputHidden value="{!orden_routes_modo}" id="orden_routes_modo"/>
+        <input type="hidden" id="orderField2" value="Name"/>
+        <input type="hidden" id="orderValue2" value="asc"/>
+        <apex:actionFunction name="ordenar_tabla_routes" action="{!actualizar_table_route}" reRender="table_route" status="myStatus" oncomplete="mostrar_ordenacion_rutas();"/>
+        
+        <apex:pagemessages id="errors"/>
+    
+        <div id="accordion">
+             <h3 title="Select consolidation Route to display lines" id="tercer_bloque_ruta">Define Freight Mode &#38; Route Data</h3>
+             <apex:pageBlock id="block_ruta" mode="maindetail">
+                    <table border="0" cellspacing="0" cellpadding="0" class="actions_table_ie">
+                        <tr class="headerRow">
+                            <th class="headerRow" style="text-align:center;     background: #d8dada;     border-bottom: 0px;" colspan="7">Import-Export Order Data</th>
+                            <th class="headerRow" style="text-align:center;     background: #d8dada;     border-bottom: 0px;" colspan="7">Actual Stop</th> 
+                        </tr>
+                        <tr class="headerRow">
+                            <th class="headerRow"> {!$ObjectType.Customer_Quote__c.fields.Name.Label}</th> 
+                            <th class="headerRow"> {!$ObjectType.Customer_Quote__c.fields.Quotation_Status__c.Label}</th>
+                            <th class="headerRow"> {!$ObjectType.Customer_Quote__c.fields.Account_for__c.Label}</th>
+                            <th class="headerRow"> {!$ObjectType.Customer_Quote__c.fields.Supplier_Account__c.Label}</th>
+                            <th class="headerRow"> {!$ObjectType.Customer_Quote__c.fields.Consignee__c.Label}</th>
+                            <th class="headerRow"> {!$ObjectType.Customer_Quote__c.fields.Site_of_Load__c.Label}</th>
+                            <th class="headerRow"> {!$ObjectType.Customer_Quote__c.fields.Site_of_Discharge__c.Label}</th>
+                            <th class="headerRow"> {!$ObjectType.Customer_Quote__c.fields.Last_Shipment__c.Label}</th>
+                            <th class="headerRow"> {!$ObjectType.Customer_Quote__c.fields.Track_Option__c.Label}</th>
+                            <th class="headerRow"> {!$ObjectType.Shipment__c.fields.Shipment_Status__c.Label}</th>
+                            <th class="headerRow"> {!$ObjectType.Customer_Quote__c.fields.Reference_Number__c.Label}</th>
+                            <th class="headerRow"> {!$ObjectType.Shipment__c.fields.Site_of_Discharge__c.Label}</th>
+                            <th class="headerRow"> {!$ObjectType.Shipment__c.fields.ETA_Point_of_Discharge__c.Label}</th>
+                            <th class="headerRow"> {!$ObjectType.Shipment__c.fields.Storage_days__c.Label}</th>
+                         </tr>
+                         <tr class="headerRow">
+                            <td class="dataCol">        
+                                <apex:outputlink value="{!$Site.BaseUrl}/{!record.Id}">{!record.Name}</apex:outputlink>
+                            </td>
+                            <td class="dataCol">  
+                                <apex:outputfield value="{!record.Quotation_Status__c}" />
+                            </td> 
+                            <td class="dataCol">            
+                                <apex:outputlink value="{!$Site.BaseUrl}/{!record.Account_for__c}">{!record.Account_for__r.Name}</apex:outputlink>
+                            </td>
+                            <td class="dataCol">   
+                                <apex:outputlink value="{!$Site.BaseUrl}/{!record.Supplier_Account__c}">{!record.Supplier_Account__r.Name}</apex:outputlink>
+                            </td>   
+                            <td class="dataCol"> 
+                                <apex:outputlink value="{!$Site.BaseUrl}/{!record.Consignee__c}">{!record.Consignee__r.Name}</apex:outputlink>
+                            </td>
+                            <td class="dataCol"> 
+                                <apex:outputlink value="{!$Site.BaseUrl}/{!record.Site_of_Load__c}">{!record.Site_of_Load__r.Name}</apex:outputlink>
+                            </td>
+                            <td class="dataCol"> 
+                                <apex:outputlink value="{!$Site.BaseUrl}/{!record.Site_of_Discharge__c}">{!record.Site_of_Discharge__r.Name}</apex:outputlink>
+                            </td>
+                            <td class="dataCol"> 
+                                <apex:outputlink value="{!$Site.BaseUrl}/{!record.Last_Shipment__c}">{!record.Last_Shipment__r.Name}</apex:outputlink>
+                            </td>
+                            <td class="dataCol"> 
+                                <apex:outputField value="{!record.Last_Shipment__r.Shipment_Status__c}"/>
+                            </td>
+                             <td class="dataCol"> 
+                                <apex:outputField value="{!record.Track_Option__c}"/> 
+                            </td>
+                            <td class="dataCol"> 
+                                <apex:outputField value="{!record.Reference_Number__c}"/>
+                            </td>
+                            <td class="dataCol"> 
+                                <apex:outputlink value="{!$Site.BaseUrl}/{!record.Last_Shipment__r.Site_of_Discharge__c}">{!record.Last_Shipment__r.Site_of_Discharge__r.Name}</apex:outputlink>
+                            </td>
+                            <td class="dataCol"> 
+                                <div class="fecha_llegada_{!record.Id}">
+                                    <apex:outputField value="{!record.Last_Shipment__r.ETA_Point_of_Discharge__c}" rendered="{!record.Last_Shipment__c !=null && record.Last_Shipment__r.ETA_Point_of_Discharge__c != null}"/>
+                                </div>
+                            </td>
+                            <td class="dataCol" style="border-right: 1px solid #e0e3e5;"> 
+                                <apex:outputText value="{!numero_dias2}" html-class="numero_dias_{!record.Id} numero_dias" id="Storage_days" html-neudata="{!record.Id}" rendered="{!record.Last_Shipment__c !=null && record.Last_Shipment__r.ETA_Point_of_Discharge__c != null}"/>
+                            </td>
+                        </tr>   
+                    </table>
+                    
+                    <br/>
+                    <table class="list" border="0" cellpadding="0" cellspacing="0" style="{!IF(Customer_Quote__c.Only_Warehouse_Service__c, 'display:none;', '')}">
+                        <tr class="headerRow">
+                            <th class="headerRow" style="text-align:center;     background: #d8dada;     border-bottom: 0px;" colspan="8">Freight Mode Data</th> 
+                        </tr>
+                        <tr class="headerRow">
+                            <th class="headerRow">
+                                {!$ObjectType.Shipment__c.fields.Freight_Mode__c.Label}
+                            </th>
+                            <td class="dataCol" style="border-left-style: none;" colspan="2">
+                                <div class="requiredInput">
+                                    <div class="requiredBlock"></div>
+                                    <apex:inputField value="{!filter_shipment.Freight_Mode__c}" id="freightmode" onchange="showFreightData();"/>
+                                </div>
+                            </td>
+                            <th class="headerRow">
+                                {!$ObjectType.Shipment__c.fields.Service_Type__c.Label}
+                            </th>
+                            <td class="dataCol" style="border-left-style: none;" colspan="2">
+                                <apex:inputField value="{!filter_shipment.Service_Type__c}"/>
+                            </td>
+                            <th class="headerRow" id="seafreight" style="display:none">
+                                Carrier
+                            </th>
+                            <td class="dataCol" id="seafreight" style="border-left-style: none; display:none" colspan="3">
+                                <apex:inputField value="{!filter_shipment.Carriers_OI__c}"/>
+                            </td>
+                        </tr>
+                        <tr class="headerRow" id="airfreight" style="display:none">
+                            <th class="headerRow">
+                                {!$ObjectType.Shipment_Program__c.fields.MAWB_Number__c.Label}
+                            </th>
+                            <td class="dataCol" style="border-left-style: none;">
+                                <apex:inputField value="{!filter_program.MAWB_Number__c}"/>
+                            </td>
+                            <th class="headerRow">
+                                {!$ObjectType.Shipment_Program__c.fields.Air_Booking_Number__c.Label}
+                            </th>
+                            <td class="dataCol" style="border-left-style: none;">
+                                <apex:inputField value="{!filter_program.Air_Booking_Number__c}"/>
+                            </td>
+                            <th class="headerRow">
+                                {!$ObjectType.Shipment_Program__c.fields.Flight_Number__c.Label}
+                            </th>
+                            <td class="dataCol" style="border-left-style: none;">
+                                <apex:inputField value="{!filter_program.Flight_Number__c}"/>
+                            </td>
+                            <th class="headerRow">
+                                {!$ObjectType.Shipment__c.fields.Carrier__c.Label}
+                            </th>
+                            <td class="dataCol" style="border-left-style: none;">
+                                <apex:inputField value="{!filter_shipment.Carrier__c}"/>
+                            </td>
+                        </tr>
+                        <tr class="headerRow" id="seafreight" style="display:none">
+                            <th class="headerRow">
+                                {!$ObjectType.Shipment_Program__c.fields.Sea_Container_Number__c.Label}
+                            </th>
+                            <td class="dataCol" style="border-left-style: none;">
+                                <apex:inputField value="{!filter_program.Sea_Container_Number__c}"/>
+                            </td>
+                            <th class="headerRow">
+                                {!$ObjectType.Shipment_Program__c.fields.MBL_Number__c.Label}
+                            </th>
+                            <td class="dataCol" style="border-left-style: none;" colspan="3">
+                                <apex:inputField value="{!filter_program.MBL_Number__c}"/>
+                            </td>
+                            <th class="headerRow">
+                                {!$ObjectType.Shipment_Program__c.fields.Sea_Booking_Number__c.Label}
+                            </th>
+                            <td class="dataCol" style="border-left-style: none;" >
+                                <apex:inputField value="{!filter_program.Sea_Booking_Number__c}"/>
+                            </td>
+                        </tr>
+                        <tr class="headerRow" id="seafreight2" style="display:none">
+                            
+                            <th class="headerRow">
+                                {!$ObjectType.Vessel_Flight__c.fields.Name.Label}
+                            </th>
+                            <td class="dataCol" style="border-left-style: none;">
+                                <apex:inputField value="{!filter_vessel.Name}"/>
+                            </td>
+                            <th class="headerRow">
+                                {!$ObjectType.Vessel_Flight__c.fields.IMO__c.Label}
+                            </th>
+                            <td class="dataCol" style="border-left-style: none;" colspan="3">
+                                <apex:inputField value="{!filter_vessel.IMO__c}"/>
+                            </td>
+                            
+                            <th class="headerRow">
+                                {!$ObjectType.Shipment_Program__c.fields.Voyage_Number_sp__c.Label}
+                            </th>
+                            <td class="dataCol" style="border-left-style: none;" >
+                                <apex:inputField value="{!filter_program.Voyage_Number_sp__c}"/>
+                            </td>
+                        </tr>
+                        <tr class="headerRow roadfreight" style="display:none">
+                            <th class="headerRow">
+                                {!$ObjectType.Shipment_Program__c.fields.Truck_Number__c.Label}
+                            </th>
+                            <td class="dataCol" style="border-left-style: none;">
+                                <apex:inputField value="{!filter_program.Truck_Number__c}"/>
+                            </td>
+                            <th class="headerRow">
+                                {!$ObjectType.Shipment_Program__c.fields.Trailer_Number__c.Label}
+                            </th>
+                            <td class="dataCol" style="border-left-style: none;">
+                                <apex:inputField value="{!filter_program.Trailer_Number__c}"/>
+                            </td>
+                            <th class="headerRow" colspan="2">
+                                &nbsp;
+                            </th>
+                        </tr>
+                        <tr class="headerRow" id="railfreight" style="display:none">
+                            <th class="headerRow">
+                                {!$ObjectType.Shipment_Program__c.fields.Rail_Container_Number__c.Label}
+                            </th>
+                            <td class="dataCol" style="border-left-style: none;">
+                                <apex:inputField value="{!filter_program.Rail_Container_Number__c}"/>
+                            </td>
+                            <th class="headerRow">
+                                {!$ObjectType.Shipment_Program__c.fields.SMGS__c.Label}
+                            </th>
+                            <td class="dataCol" style="border-left-style: none;">
+                                <apex:inputField value="{!filter_program.SMGS__c}"/>
+                            </td>
+                            <th class="headerRow">
+                                {!$ObjectType.Shipment_Program__c.fields.CIM_Number__c.Label}
+                            </th>
+                            <td class="dataCol" style="border-left-style: none;">
+                                <apex:inputField value="{!filter_program.CIM_Number__c}"/>
+                            </td>
+                        </tr>
+                    </table>
+                    <br/>
+                    <!-- INTEGRACION TRUCKSTOP TRACKING -->
+                    <table class="list roadfreight" border="0" cellpadding="0" cellspacing="0" style="display:none">
+                        <tr class="headerRow">
+                             <th class="headerRow" style="text-align:center;     background: #d8dada;     border: none;" colspan="11">Truckstop Tracking</th>
+                        </tr>
+                        <tr class="headerRow roadfreight" style="display:none">
+                            <th class="headerRow">
+                                {!$ObjectType.Shipment__c.fields.National_Operator__c.Label}
+                            </th>
+                            <td class="dataCol" style="border-left-style: none;">
+                                <apex:inputField value="{!new_filter_date_cabeceras.National_Operator__c}"/>
+                            </td>
+                            <th class="headerRow">
+                                {!$ObjectType.Shipment__c.fields.Vehicle__c.Label}
+                            </th>
+                            <td class="dataCol" style="border-left-style: none;">
+                                <apex:inputField value="{!new_filter_date_cabeceras.Vehicle__c}"/>
+                            </td>
+                            <th class="headerRow" colspan="2">
+                                &nbsp;
+                            </th>
+                        </tr>
+                        <tr class="headerRow roadfreight" style="display:none">
+                            <script>
+                                $( function() {
+                                    $('[id$=search_Origin_Address]').autocomplete({
+                                        minLength: 0,
+                                        source: function (request, response) {
+                                            response(source_map_origin_address);
+                                        },
+                                        select: function( event, ui ) {
+                                            $("[id*='origin_Country_Code']").val(parsed_data_origin.data.country);
+                                            $("[id*='origin_State_Code']").val(parsed_data_origin.data.state);
+                                            $("[id*='origin_City']").val(parsed_data_origin.data.city);
+                                            $("[id*='origin_Postal_Code']").val(parsed_data_origin.data.zip);
+                                            $("[id*='origin_Address']").val(ui.item.value);
+                                            $('[id$=search_Origin_Address]').val( ui.item.value );
+                                            return false;
+                                        }
+                                    }).focus(function(){
+                                        if($(this).val() != ''){
+                                            if(source_map_origin_address[0] == ''){
+                                                search_origin_address_truckstop();
+                                            }else{
+                                                $(this).autocomplete( "search", $(this).val() );
+                                            }
+                                        }
+                                    });
+                                    
+                                    $('[id$=search_Destination_Address]').autocomplete({
+                                        minLength: 0,
+                                        source: function (request, response) {
+                                            response(source_map_destination_address);
+                                        },
+                                        select: function( event, ui ) {
+                                            $("[id*='destination_Country_Code']").val(parsed_data_destination.data.country);
+                                            $("[id*='destination_State_Code']").val(parsed_data_destination.data.state);
+                                            $("[id*='destination_City']").val(parsed_data_destination.data.city);
+                                            $("[id*='destination_Postal_Code']").val(parsed_data_destination.data.zip);
+                                            $("[id*='destination_Address']").val(ui.item.value);
+                                            $('[id$=search_Destination_Address]').val( ui.item.value );
+                                            return false;
+                                        }
+                                    }).focus(function(){
+                                        if($(this).val() != ''){
+                                            if(source_map_destination_address[0] == ''){
+                                                search_destination_address_truckstop();
+                                            }else{
+                                                $(this).autocomplete( "search", $(this).val() );
+                                            }
+                                        }
+                                    });
+                                });
+                            </script>
+                            <apex:inputHidden id="origin_Country_Code" value="{!shipment_track.Truckstop_Origin_Country_Code__c}"/>
+                            <apex:inputHidden id="origin_State_Code" value="{!shipment_track.Truckstop_Origin_State_Code__c}"/>
+                            <apex:inputHidden id="origin_City" value="{!shipment_track.Truckstop_Origin_City__c}"/>
+                            <apex:inputHidden id="origin_Postal_Code" value="{!shipment_track.Truckstop_Origin_Postal_Code__c}" />
+                            <apex:inputHidden id="origin_Address" value="{!shipment_track.Truckstop_Origin_Address__c}"/>
+                            <apex:inputHidden id="destination_Country_Code" value="{!shipment_track.Truckstop_Destination_Country_Code__c}"/>
+                            <apex:inputHidden id="destination_State_Code" value="{!shipment_track.Truckstop_Destination_State_Code__c}"/>
+                            <apex:inputHidden id="destination_City" value="{!shipment_track.Truckstop_Destination_City__c}"/>
+                            <apex:inputHidden id="destination_Postal_Code" value="{!shipment_track.Truckstop_Destination_Postal_Code__c}" />
+                            <apex:inputHidden id="destination_Address" value="{!shipment_track.Truckstop_Destination_Address__c}"/>
+                            <th class="headerRow">
+                                {!$ObjectType.Shipment__c.fields.Origin_Address_Shipment__c.Label}
+                            </th>
+                            <td class="dataCol" style="border-left-style: none;">
+                                <apex:inputTextarea id="search_Origin_Address" value="{!searchOriginAddress}" onkeyup="search_address('Origin');" styleClass="ui-autocomplete-input" style="width:98%;"/>
+                            </td>
+                            <th class="headerRow">
+                                {!$ObjectType.Shipment__c.fields.Delivery_Address_Shipment__c.Label}
+                            </th>
+                            <td class="dataCol" style="border-left-style: none;">
+                                <apex:inputTextarea id="search_Destination_Address" value="{!searchDestinationAddress}" onkeyup="search_address('Destination');" styleClass="ui-autocomplete-input" style="width:98%;"/>
+                            </td>
+                            <th class="headerRow" colspan="2">
+                                &nbsp;
+                            </th>
+                        </tr>
+                    </table>
+                    <br/>
+                    <!-- INTEGRACION TRUCKSTOP TRACKING -->
+                    <table border="0" cellspacing="0" cellpadding="0" class="actions_table">
+                        <tr class="headerRow">
+                             <th class="headerRow" style="text-align:center;     background: #d8dada;     border: none;" colspan="11">Route Data</th>
+                        </tr>
+                        <tr class="headerRow roadfreight">
+                             <th class="headerRow" style="border-bottom: none;">
+                                 {!$ObjectType.Shipment__c.fields.ETD_from_Point_of_Load__c.Label}
+                             </th>
+                             <td class="dataCol" style="    border-bottom: none;">
+                                 <apex:inputField value="{!new_filter_date_cabeceras.ETD_from_Point_of_Load__c}" onchange="check_etd();" style="border-left: 3px #c00 solid;" styleclass="etd_filter"/><span class="msg_error_etd" style="display:none;  color: red;">You must enter a value</span>
+                             </td>
+                             <th class="headerRow" style="border-bottom: none;">
+                                 {!$ObjectType.Shipment__c.fields.ETD_Time_from_Point_of_Load__c.Label}
+                             </th>
+                             <td class="dataCol" style="    border-bottom: none;">
+                                 <apex:inputField value="{!new_filter_date_cabeceras.ETD_Time_from_Point_of_Load__c}"/>
+                             </td>
+                             <th class="headerRow" style="border-bottom: none;">
+                                 {!$ObjectType.Carrier_Line_Load_Point__c.fields.Country_of_Load__c.Label}
+                             </th>
+                             <td class="dataCol" style="    border-bottom: none;">
+                                  <apex:inputField id="origin_country_load" value="{!new_filter_route.Country_of_Load__c}" required="true"/>
+                             </td>
+                             <th class="headerRow" style="border-bottom: none;">
+                                 {!$ObjectType.Carrier_Line_Load_Point__c.fields.State_of_Load__c.Label}
+                             </th>
+                             <td class="dataCol" style="    border-bottom: none;">
+                                  <apex:inputField id="origin_state_load" value="{!new_filter_route.State_of_Load__c}"/>
+                             </td>
+                             <th class="headerRow" style="border-bottom: none;">
+                                 {!$ObjectType.Carrier_Line_Load_Point__c.fields.Port_Airport_of_Load__c.Label}
+                             </th>
+                             <td class="dataCol"  style="    border-bottom: none;">
+                                  <apex:inputField id="origin_location_load" value="{!new_filter_route.Port_Airport_of_Load__c}"/>
+                             </td>
+                             <td class="dataCol"  rowspan="2" style="    border: 1px solid #e0e3e5;text-align: center;">
+                                  <input type="button" value="Search" class="btn btnBlue" onclick="search();"/>
+                                  <span class="msg_err_route" style="display:none;  color: red;">Please, select a Route</span>
+                             </td>
+                         </tr>
+                         
+                         <tr class="headerRow roadfreight">
+                             <th class="headerRow" style="border-bottom: none;"> 
+                                 {!$ObjectType.Shipment__c.fields.ETA_Point_of_Discharge__c.Label}
+                             </th>
+                             <td class="dataCol" style="border-left-style: none;">
+                                 <apex:inputField value="{!new_filter_date_cabeceras.ETA_Point_of_Discharge__c}" onchange="check_eta();" style="border-left: 3px #c00 solid;" styleclass="eta_filter"/><span class="msg_error_eta" style="display:none;  color: red;">You must enter a value</span>
+                             </td>
+                             <th class="headerRow" style="border-bottom: none;"> 
+                                 {!$ObjectType.Shipment__c.fields.ETA_Time_Point_of_Discharge__c.Label}
+                             </th>
+                             <td class="dataCol" style="border-left-style: none;">
+                                 <apex:inputField value="{!new_filter_date_cabeceras.ETA_Time_Point_of_Discharge__c}"/>
+                             </td>
+                             <th class="headerRow" style="border-bottom: none;">
+                                 {!$ObjectType.Carrier_Line_Load_Point__c.fields.Country_of_Discharge__c.Label}
+                             </th>
+                             <td class="dataCol" style="border-left-style: none;">
+                                     <apex:inputField id="destination_country_discharge" value="{!new_filter_route.Country_of_Discharge__c}" required="true"/>
+                             </td>
+                             <th class="headerRow" style="border-bottom: none;">
+                                 {!$ObjectType.Carrier_Line_Load_Point__c.fields.State_of_Discharge__c.Label}
+                             </th>
+                             <td class="dataCol" style="border-left-style: none;">
+                                     <apex:inputField id="destination_state_discharge" value="{!new_filter_route.State_of_Discharge__c}"/>
+                             </td>
+                             <th class="headerRow" style="border-bottom: none;">
+                                 {!$ObjectType.Carrier_Line_Load_Point__c.fields.Port_Airport_of_Discharge__c.Label}
+                             </th>
+                             <td class="dataCol" style="border-left-style: none;">
+                                     <apex:inputField id="destination_location_discharge" value="{!new_filter_route.Port_Airport_of_Discharge__c}"/>
+                             </td>
+                         </tr>
+                       </table>
+                       <br/>
+                       <apex:pageBlockTable value="{!list_route}" var="sdu" id="table_route">
+                           <apex:column >
+                               <apex:facet name="header">
+                                    <div  style ="cursor: pointer;" onclick="sort_data_table_route('ruta.CreatedDate');"> {!$ObjectType.Carrier_Line_Load_Point__c.fields.Name.Label}
+                                        <span style="       width: 10px;    height: 11px;    float: right;    margin: 0 5px;    vertical-align: 0px;    background: transparent url(/img/alohaSkin/sortArrows_sprite.png);    background-size: 16px;    background-repeat: no-repeat;    background-position: center 2px;" class="flecha_ordenacion2 rutaCreatedDateroute"/>
+                                    </div>
+                                </apex:facet>
+                                <c:customobject2 objid="{!sdu.ruta.Id}" objname="{!sdu.ruta.Name}"/>
+                           </apex:column>
+                           
+                           <apex:column >
+                               <apex:facet name="header">
+                                    <div  style ="cursor: pointer;" onclick="sort_data_table_route('ruta.Country_of_Load__r.Name');"> {!$ObjectType.Carrier_Line_Load_Point__c.fields.Country_of_Load__c.Label}
+                                        <span style="       width: 10px;    height: 11px;    float: right;    margin: 0 5px;    vertical-align: 0px;    background: transparent url(/img/alohaSkin/sortArrows_sprite.png);    background-size: 16px;    background-repeat: no-repeat;    background-position: center 2px; display:none;" class="flecha_ordenacion2 rutaCountry_of_Load__rNameroute"/>
+                                    </div>
+                                </apex:facet>
+                                <apex:outputlink value="{!$Site.BaseUrl}/{!sdu.ruta.Country_of_Load__c}">{!sdu.ruta.Country_of_Load__r.Name}</apex:outputlink>
+                           </apex:column>
+                           
+                           <apex:column >
+                               <apex:facet name="header">
+                                    <div  style ="cursor: pointer;" onclick="sort_data_table_route('ruta.State_of_Load__r.Name');"> {!$ObjectType.Carrier_Line_Load_Point__c.fields.State_of_Load__c.Label}
+                                        <span style="       width: 10px;    height: 11px;    float: right;    margin: 0 5px;    vertical-align: 0px;    background: transparent url(/img/alohaSkin/sortArrows_sprite.png);    background-size: 16px;    background-repeat: no-repeat;    background-position: center 2px; display:none;" class="flecha_ordenacion2 rutaState_of_Load__rNameroute"/>
+                                    </div>
+                                </apex:facet>
+                                <apex:outputlink value="{!$Site.BaseUrl}/{!sdu.ruta.State_of_Load__c}">{!sdu.ruta.State_of_Load__r.Name}</apex:outputlink>
+                           </apex:column>
+                           
+                           <apex:column >
+                               <apex:facet name="header">
+                                    <div  style ="cursor: pointer;" onclick="sort_data_table_route('ruta.Port_Airport_of_Load__r.Name');"> {!$ObjectType.Carrier_Line_Load_Point__c.fields.Port_Airport_of_Load__c.Label}
+                                        <span style="       width: 10px;    height: 11px;    float: right;    margin: 0 5px;    vertical-align: 0px;    background: transparent url(/img/alohaSkin/sortArrows_sprite.png);    background-size: 16px;    background-repeat: no-repeat;    background-position: center 2px; display:none;" class="flecha_ordenacion2 rutaPort_Airport_of_Load__rNameroute"/>
+                                    </div>
+                                </apex:facet>
+                                <apex:outputlink value="{!$Site.BaseUrl}/{!sdu.ruta.Port_Airport_of_Load__c}">{!sdu.ruta.Port_Airport_of_Load__r.Name}</apex:outputlink>
+                           </apex:column>   
+
+                           <apex:column >
+                               <apex:facet name="header">
+                                    <div  style ="cursor: pointer;" onclick="sort_data_table_route('ruta.Country_of_Discharge__r.Name');"> {!$ObjectType.Carrier_Line_Load_Point__c.fields.Country_of_Discharge__c.Label}
+                                        <span style="       width: 10px;    height: 11px;    float: right;    margin: 0 5px;    vertical-align: 0px;    background: transparent url(/img/alohaSkin/sortArrows_sprite.png);    background-size: 16px;    background-repeat: no-repeat;    background-position: center 2px; display:none;" class="flecha_ordenacion2 rutaCountry_of_Discharge__rNameroute"/>
+                                    </div>
+                                </apex:facet>
+                                <apex:outputlink value="{!$Site.BaseUrl}/{!sdu.ruta.Country_of_Discharge__c}">{!sdu.ruta.Country_of_Discharge__r.Name}</apex:outputlink>
+                           </apex:column>
+                           
+                           <apex:column >
+                               <apex:facet name="header">
+                                    <div  style ="cursor: pointer;" onclick="sort_data_table_route('ruta.State_of_Discharge__r.Name');"> {!$ObjectType.Carrier_Line_Load_Point__c.fields.State_of_Discharge__c.Label}
+                                        <span style="       width: 10px;    height: 11px;    float: right;    margin: 0 5px;    vertical-align: 0px;    background: transparent url(/img/alohaSkin/sortArrows_sprite.png);    background-size: 16px;    background-repeat: no-repeat;    background-position: center 2px; display:none;" class="flecha_ordenacion2 rutaState_of_Discharge__rNameroute"/>
+                                    </div>
+                                </apex:facet>
+                                <apex:outputlink value="{!$Site.BaseUrl}/{!sdu.ruta.State_of_Discharge__c}">{!sdu.ruta.State_of_Discharge__r.Name}</apex:outputlink>
+                           </apex:column>
+                           
+                           <apex:column >
+                               <apex:facet name="header">
+                                    <div  style ="cursor: pointer;" onclick="sort_data_table_route('ruta.Port_Airport_of_Discharge__r.Name');"> {!$ObjectType.Carrier_Line_Load_Point__c.fields.Port_Airport_of_Discharge__c.Label}
+                                        <span style="       width: 10px;    height: 11px;    float: right;    margin: 0 5px;    vertical-align: 0px;    background: transparent url(/img/alohaSkin/sortArrows_sprite.png);    background-size: 16px;    background-repeat: no-repeat;    background-position: center 2px; display:none;" class="flecha_ordenacion2 rutaPort_Airport_of_Discharge__rNameroute"/>
+                                    </div>
+                                </apex:facet>
+                                <apex:outputlink value="{!$Site.BaseUrl}/{!sdu.ruta.Port_Airport_of_Discharge__c}">{!sdu.ruta.Port_Airport_of_Discharge__r.Name}</apex:outputlink>
+                           </apex:column>
+                           
+                           <apex:column headervalue="select" style="    text-align: center;">
+                               <input type="radio"  name="select_route" class="route_selected_class route_seleceted_{!sdu.ruta.Id}" neudata="{!sdu.ruta.Id}" onclick="seleccion_route_new();"/>
+                           </apex:column>
+                    </apex:pageBlockTable> 
+                    
+                    <!-- <table border="0" cellspacing="0" cellpadding="0" class="actions_table" style="display:{!If(list_route == null || list_route.size == 0, '','none')}">
+                        <tr class="headerRow">
+                                <th class="headerRow" style="text-align:left;        border: none;">
+                                    No Routes Found
+                                      <!-- <img src="/img/feeds/follow12.png" style="cursor: pointer;" onclick="new_route();"/><span style="    margin-left: 6px; cursor: pointer;" onclick="new_route();">New Route</span>-->
+                                <!-- </th>
+                           </tr>
+                    </table>-->
+                       
+                    <table border="0" cellspacing="0" cellpadding="0" class="actions_table" style="display:{!If(new_filter_route.Country_of_Discharge__c != null && new_filter_route.Country_of_Load__c != null && new_filter_route.Port_Airport_of_Discharge__c != null && new_filter_route.Port_Airport_of_Load__c != null && new_filter_route.State_of_Discharge__c != null && new_filter_route.State_of_Load__c != null, '','none')}">
+                        <tr class="headerRow">
+                                <th class="headerRow" style="text-align:left;     background: #d8dada;     border: none;">
+                                      <img src="/img/feeds/follow12.png" style="cursor: pointer;" onclick="new_route();"/><span style="    margin-left: 6px; cursor: pointer;" onclick="new_route();">New Route</span>
+                                </th>
+                           </tr>
+                    </table>
+                </apex:pageBlock>
+                
+    
+                <h3 title="Lines to consolidate" id="itemLabel" onclick ="check_route();"><span id="labelConsolidation">Select Cargo Lines</span></h3><!-- onclick="actualizar_lineas();" -->
+                <apex:pageBlock id="block4" ><!-- title="{!accountName}" -->
+                    <apex:pageMessages ></apex:pageMessages>
+                    <apex:inputHidden value="{!direcciones_recogidas}" id="direcciones_recogidas" html-class="direcciones_recogidas"/>
+                    <apex:pageBlockButtons rendered="{!showLines}">
+                        <input name="CreateShipment" class="btn btnBlue" type="button" value="Create Shipment" onclick="generate_shipment();return false;"/>
+                        <!-- <apex:commandButton action="{!applyLines}" value="Create Shipment" reRender="block4" status="myStatus" oncomplete="adjustBackground();"/> -->
+                    </apex:pageBlockButtons>
+                    <apex:outputPanel >
+                        <div id="capa_totales">
+                            <span id="titulo_status_container" style="margin: 0px 10px 10px 3px;">Packaging Resume</span>
+                             <apex:selectList id="chooseClient" value="{!container_selected}" size="1" styleclass="seleccioncontainer"  onchange="updatedata();" style="margin: 10px 10px 10px 51px;">
+                                <apex:selectOptions value="{!containers}"/>
+                            </apex:selectList>
+                            <apex:inputHidden id="ids_pallet_idscontenedores" value="{!ids_pallet_idscontenedores}"/>
+                             
+                            <table id="lista_datos_container"> 
+                                <tr>
+                                    <td><img src="{!URLFOR($Resource.ImagesUtilContainer,'caja-mod.png')}" class="imagen_dato_container" style="height: 41px; margin-top: 2px; width: 35px;"/><span class="nombre_dato_container">Number of Packages</span><span class="dato_container" id="totalcajas">{!TotalNumberBoxes}</span></td>
+                                    <td style="margin-left: 12px;"><img src="{!URLFOR($Resource.ImagesUtilContainer,'weight_kilogram.png')}" class="imagen_dato_container" style="width: 43px; margin-top: 2px; margin-right: 1px;"/><span class="nombre_dato_container" style="margin-left: 10px;">Total Gross Weight (Kg)</span><span class="dato_container" id="totalweight" style="margin: 19px 5px 10px 10px;">{!Grossweight}</span></td>
+                                    <td style="margin-left: 17px;"><img src="{!URLFOR($Resource.ImagesUtilContainer,'cobo-mod.png')}" class="imagen_dato_container" style="width: 34px; height: 32px; margin-right: 4px; margin-right: 10px;"/><span class="nombre_dato_container" style="margin-left: 6px;">Total Gross Volume (m3)</span><span class="dato_container" id="totalvolume">{!Cube}</span></td>
+                                 </tr>
+                                 <tr>   
+                                    <td style="margin-left: 16px;"><img src="{!URLFOR($Resource.ImagesUtilContainer,'pallets-mod.png')}" class="imagen_dato_container" style="margin-top: 11px; height: 26px; width: 39px;"/><span class="nombre_dato_container">Number of Pallets</span><span class="dato_container" id="totalpallet">{!TotalNumberPallets}</span></td>
+                                    <td><img src="{!$Resource.ContainerBlue}" class="imagen_dato_container" style="height: 44px; width: 43px; margin-top: 2px;"/><span class="nombre_dato_container" style="margin-left: 13px;">Number of Containers</span><span class="dato_container" id="totalcontenedores">{!TotalNumberCont}</span></td>
+                                    <td><img src="{!URLFOR($Resource.ImagesUtilContainer,'free-container-mod.png')}" class="imagen_dato_container"/><div id="progress_bar" class="ui-progress-bar ui-container" style="width: 238px; float: left; margin-left: 12px; height: 28px;">
+                                            <span class="ui-label" style="margin: 6px 0px 7px 21px; z-index: 1;">% Last Container Load  <b class="value"> {!porc_ocupacion}</b></span>
+                                            <div class="ui-progress" style="height: 26px; width:0%; width: {!porc_ocupacion}; "><!--este rellena -->
+                                            </div>
+                                        </div>
+                                    </td>
+                                 </tr>
+                            </table>
+                        </div>
+                            
+                        <apex:pageBlockTable value="{!Lines}" var="item" rendered="{!ShowImportExportItemLines}" styleClass="tabla_principal" id="table_lines_2">
+                            <apex:column title="Check to consolidate this line">
+                                <apex:facet name="header"> <input type="checkbox" class="select_all_items" onclick="marcar_lines();" /></apex:facet>
+                                <apex:inputCheckbox value="{!item.selected}" onchange="calculartotalpesovolumen();" rendered="{!item.Id!=null}" html-neudata="{!item.Id}" styleClass="check_linea_selected" html-idcabecera="{!item.quote_line.Import_Export_Quote__r.Id}"/><!-- onclick="newItemSelected('{!item.Id}');" -->
+                                <apex:inputCheckbox value="{!item.selected2}" rendered="{!item.icon=1}" html-neudata="{!item.idPrincipal}" styleClass="icon1 check_linea_selected" html-idcabecera="{!item.quote_line.Import_Export_Quote__r.Id}"/>
+                                <apex:image value="/img/msg_icons/warning16.png" title="It hasn´t relation to the pallet" html-neudata="sin_pallet{!item.Id}" style="display:none;"/>
+                            </apex:column>
+                           <apex:column style="text-align:right">
+                               <apex:facet name="header"><!-- <div style="text-align:center; cursor: pointer;" onclick="sort_data_quote('quote_line.Units__c');">Units</div>-->
+                                    <div  style ="cursor: pointer; text-align: center;" onclick="sort_data_quote('quote_line.Units__c');"> Units
+                                      <span style="       width: 10px;    height: 11px;    float: right;    margin: 0 5px;    vertical-align: 0px;    background: transparent url(/img/alohaSkin/sortArrows_sprite.png);    background-size: 16px;    background-repeat: no-repeat;    background-position: center 2px; display:none;" class="flecha_ordenacion3 quote_lineUnits__cLines"/>
+                                    </div>
+                               </apex:facet>
+                               <apex:inputField value="{!item.quote_line.Units__c}" style="text-align: right;     width: 100px;" onKeyUp="$(this).calcularpeso();calculartotalpesovolumen();"  html-neudata="{!item.Id}" styleClass="supplyinput"  html-placeholder="{!item.unidades_iniciales}"/>    
+                            </apex:column>
+                            <apex:column >
+                                <apex:facet name="header">
+                                    <div style="text-align:center" title="Consolidate Full Line">F/L</div>
+                                </apex:facet>
+                                <apex:inputCheckbox value="{!item.check_full}" html-neudata="{!item.idPrincipal}" styleClass="check_full"/>
+                            </apex:column>
+                            <apex:column >
+                                <apex:facet name="header"><div style="text-align:center" title="Identifying Image"></div></apex:facet>
+                                <apex:image value="" title="Identify" html-class="{!item.quote_line.Import_Export_Quote__r.Id}" html-nombre_letra="A" onclick="animar_marca($(this).attr('nombre_letra'));"  style="display:none; cursor: pointer;"/>
+                                <apex:inputHidden value="{!item.quote_line.Import_Export_Quote__r.Origin_Address__c}" html-class="origen{!item.quote_line.Import_Export_Quote__r.Id}"/>
+                                <apex:inputHidden value="{!item.quote_line.Import_Export_Quote__r.Destination_Address__c}" html-class="destino{!item.quote_line.Import_Export_Quote__r.Id}"/>
+                            </apex:column> 
+                            <apex:column headerValue="">
+                                <apex:facet name="header">
+                                    <div  style ="cursor: pointer; text-align: center;" onclick="sort_data_quote('quote_line.Import_Export_Quote__r.Name');"> Import-Export Quote
+                                      <span style="       width: 10px;    height: 11px;    float: right;    margin: 0 5px;    vertical-align: 0px;    background: transparent url(/img/alohaSkin/sortArrows_sprite.png);    background-size: 16px;    background-repeat: no-repeat;    background-position: center 2px; display:none;" class="flecha_ordenacion3 quote_lineImport_Export_Quote__rNameLines"/>
+                                    </div>
+                                </apex:facet>
+                                <c:customobject2 rendered="{!item.quote_line!=null}" objid="{!item.quote_line.Import_Export_Quote__r.Id}" objname="{!item.quote_line.Import_Export_Quote__r.Name}"/>
+                            </apex:column>
+                            <apex:column headerValue="Line">
+                                <apex:facet name="header">
+                                    <div  style ="cursor: pointer; text-align: center;" onclick="sort_data_quote('quote_line.Name');"> Line
+                                      <span style="       width: 10px;    height: 11px;    float: right;    margin: 0 5px;    vertical-align: 0px;    background: transparent url(/img/alohaSkin/sortArrows_sprite.png);    background-size: 16px;    background-repeat: no-repeat;    background-position: center 2px; display:none;" class="flecha_ordenacion3 quote_lineNameLines"/>
+                                    </div>
+                                </apex:facet>
+                                <c:customobject2 rendered="{!item.quote_line!=null}" objid="{!item.quote_line.Id}" objname="{!item.quote_line.Name}"/>
+                            </apex:column>
+                             <apex:column >
+                                <apex:facet name="header">
+                                    <div  style ="cursor: pointer; text-align: center;" onclick="sort_data_quote('quote_line.Import_Export_Quote__r.Supply_Project_Name__r.Name');"> Supply Project
+                                      <span style="       width: 10px;    height: 11px;    float: right;    margin: 0 5px;    vertical-align: 0px;    background: transparent url(/img/alohaSkin/sortArrows_sprite.png);    background-size: 16px;    background-repeat: no-repeat;    background-position: center 2px; display:none;" class="flecha_ordenacion3 quote_lineImport_Export_Quote__rSupply_Project_Name__rNameLines"/>
+                                    </div>
+                                </apex:facet>
+                                <c:customobject2 objid="{!item.quote_line.Import_Export_Quote__r.Supply_Project_Name__c}" objname="{!item.quote_line.Import_Export_Quote__r.Supply_Project_Name__r.Name}"/>
+                            </apex:column>
+                            <apex:column style="text-align: right;">
+                                 <apex:facet name="header">
+                                   <div  style ="cursor: pointer; text-align: center;" onclick="sort_data_quote('quote_line.Delivery_Number__c');"> Delivery<br/>Number
+                                      <span style="       width: 10px;    height: 11px;    float: right;    margin: 0 5px;    vertical-align: 0px;    background: transparent url(/img/alohaSkin/sortArrows_sprite.png);    background-size: 16px;    background-repeat: no-repeat;    background-position: center 2px; display:none;" class="flecha_ordenacion3 quote_lineDelivery_Number__cLines"/>
+                                    </div>
+                                 </apex:facet>
+                                 <apex:outputText value="{!item.quote_line.Delivery_Number__c}" style="text-align: right;" />
+                            </apex:column>
+                            <apex:column style="text-align: right;">
+                                 <apex:facet name="header">
+                                   <div  style ="cursor: pointer; text-align: center;" onclick="sort_data_quote('quote_line.Delivery_Date__c');"> Customer<br/>Delivery Date
+                                      <span style="       width: 10px;    height: 11px;    float: right;    margin: 0 5px;    vertical-align: 0px;    background: transparent url(/img/alohaSkin/sortArrows_sprite.png);    background-size: 16px;    background-repeat: no-repeat;    background-position: center 2px; display:none;" class="flecha_ordenacion3 quote_lineDelivery_Date__cLines"/>
+                                    </div>
+                                 </apex:facet>
+                                 <apex:outputField value="{!item.quote_line.Delivery_Date__c}" style="text-align: right;" />
+                            </apex:column>  
+                             <apex:column style="text-align: right;">
+                                 <apex:facet name="header">
+                                    <div  style ="cursor: pointer; text-align: center;" onclick="sort_data_quote('quote_line.ETD__c');"> ETD
+                                      <span style="       width: 10px;    height: 11px;    float: right;    margin: 0 5px;    vertical-align: 0px;    background: transparent url(/img/alohaSkin/sortArrows_sprite.png);    background-size: 16px;    background-repeat: no-repeat;    background-position: center 2px; display:none;" class="flecha_ordenacion3 quote_lineETD__cLines"/>
+                                    </div>
+                                 </apex:facet>
+                                 <apex:outputField value="{!item.quote_line.ETD__c}" style="text-align: right;" />
+                            </apex:column>
+                            <apex:column style="text-align: right;">
+                                 <apex:facet name="header">
+                                    <div  style ="cursor: pointer; text-align: center;" onclick="sort_data_quote('quote_line.Supplier_Quote_Line__r.Delivery_Date__c');"> Supplier<br/>Delivery Date
+                                      <span style="       width: 10px;    height: 11px;    float: right;    margin: 0 5px;    vertical-align: 0px;    background: transparent url(/img/alohaSkin/sortArrows_sprite.png);    background-size: 16px;    background-repeat: no-repeat;    background-position: center 2px; display:none;" class="flecha_ordenacion3 quote_lineSupplier_Quote_Line__rDelivery_Date__cLines"/>
+                                    </div>
+                                 </apex:facet>
+                                 <apex:outputField value="{!item.quote_line.Supplier_Quote_Line__r.Delivery_Date__c}" style="text-align: right;" rendered="{!item.quote_line.Supplier_Quote_Line__r.Delivery_Date__c != null}"/>
+                            </apex:column>
+                            <apex:column style="text-align: right;">
+                                 <apex:facet name="header">
+                                   <div  style ="cursor: pointer; text-align: center;" onclick="sort_data_quote('totalcajas');"> Packages <br/>Quantity
+                                      <span style="       width: 10px;    height: 11px;    float: right;    margin: 0 5px;    vertical-align: 0px;    background: transparent url(/img/alohaSkin/sortArrows_sprite.png);    background-size: 16px;    background-repeat: no-repeat;    background-position: center 2px; display:none;" class="flecha_ordenacion3 totalcajasLines"/>
+                                    </div>
+                                 </apex:facet>
+                                 <apex:outputText value="{!item.totalcajas}" style="text-align:right;" html-neudata="packaging{!item.Id}"/>
+                                 <apex:inputHidden value="{!item.totalcajas}" html-neudata="packaging_hidden{!item.Id}"/>
+                            </apex:column>
+                            <apex:column >
+                                <apex:facet name="header">
+                                    <div  style ="cursor: pointer; text-align: center;" onclick="sort_data_quote('quote_line.Import_Export_Quote__r.Account_for__r.Name');"> Account for
+                                      <span style="       width: 10px;    height: 11px;    float: right;    margin: 0 5px;    vertical-align: 0px;    background: transparent url(/img/alohaSkin/sortArrows_sprite.png);    background-size: 16px;    background-repeat: no-repeat;    background-position: center 2px; display:none;" class="flecha_ordenacion3 quote_lineImport_Export_Quote__rAccount_for__rNameLines"/>
+                                    </div>
+                                </apex:facet>
+                                <c:customobject2 rendered="{!item.quote_line!=null}" objid="{!item.quote_line.Import_Export_Quote__r.Account_for__r.Id}" objname="{!item.quote_line.Import_Export_Quote__r.Account_for__r.Name}"/>
+                            </apex:column>
+                            <apex:column >
+                                <apex:facet name="header">
+                                    <div  style ="cursor: pointer; text-align: center;" onclick="sort_data_quote('quote_line.Item_Supplier_Owner__r.Name');"> Item Supplier/Owner
+                                      <span style="       width: 10px;    height: 11px;    float: right;    margin: 0 5px;    vertical-align: 0px;    background: transparent url(/img/alohaSkin/sortArrows_sprite.png);    background-size: 16px;    background-repeat: no-repeat;    background-position: center 2px; display:none;" class="flecha_ordenacion3 quote_lineItem_Supplier_Owner__rNameLines"/>
+                                    </div>
+                                </apex:facet>
+                                <c:customobject2 rendered="{!item.quote_line!=null}" objid="{!item.quote_line.Item_Supplier_Owner__r.Id}" objname="{!item.quote_line.Item_Supplier_Owner__r.Name}"/>
+                            </apex:column>
+                            <apex:column headerValue="Item">
+                                <apex:facet name="header">
+                                   <div  style ="cursor: pointer; text-align: center;" onclick="sort_data_quote('quote_line.Item_Name__r.Name');"> Item
+                                      <span style="       width: 10px;    height: 11px;    float: right;    margin: 0 5px;    vertical-align: 0px;    background: transparent url(/img/alohaSkin/sortArrows_sprite.png);    background-size: 16px;    background-repeat: no-repeat;    background-position: center 2px; display:none;" class="flecha_ordenacion3 quote_lineItem_Name__rNameLines"/>
+                                    </div>
+                                </apex:facet>
+                                <c:customobject2 rendered="{!item.quote_line!=null}" objid="{!item.quote_line.Item_Name__r.Id}" objname="{!item.quote_line.Item_Name__r.Name}"/>
+                            </apex:column>
+                            <apex:column title="Item aditional info">
+                                <apex:facet name="header">
+                                    <div  style ="cursor: pointer; text-align: center;" onclick="sort_data_quote('extension');"> Extension Item Name
+                                      <span style="       width: 10px;    height: 11px;    float: right;    margin: 0 5px;    vertical-align: 0px;    background: transparent url(/img/alohaSkin/sortArrows_sprite.png);    background-size: 16px;    background-repeat: no-repeat;    background-position: center 2px; display:none;" class="flecha_ordenacion3 extensionLines"/>
+                                    </div>
+                                </apex:facet>
+                                <apex:inputText rendered="{!item.quote_line!=null}" value="{!item.extension}"/>
+                            </apex:column>
+                            <apex:column headerValue="Aut Cred">
+                              <c:checkbox rendered="{!item.quote_line!=null}" value="{!item.quote_line.Import_Export_Quote__r.Authorized_Credit__c}" checkedtitle="Authorized Credit" notcheckedtitle="Not Authorized Credit" />
+                            </apex:column>
+                            <apex:column value="{!item.quote_line.Price__c}" title="Price with discounts applied" style="text-align:right">
+                                <apex:facet name="header">
+                                    <div  style ="cursor: pointer; text-align: center;" onclick="sort_data_quote('quote_line.Price__c');"> Price
+                                      <span style="       width: 10px;    height: 11px;    float: right;    margin: 0 5px;    vertical-align: 0px;    background: transparent url(/img/alohaSkin/sortArrows_sprite.png);    background-size: 16px;    background-repeat: no-repeat;    background-position: center 2px; display:none;" class="flecha_ordenacion3 quote_linePrice__cLines"/>
+                                    </div>
+                                </apex:facet>
+                            </apex:column>
+                            <apex:column style="text-align:right">
+                                <apex:facet name="header">
+                                   <div  style ="cursor: pointer; text-align: center;" onclick="sort_data_quote('quote_line.Amount__c');"> Amount
+                                      <span style="       width: 10px;    height: 11px;    float: right;    margin: 0 5px;    vertical-align: 0px;    background: transparent url(/img/alohaSkin/sortArrows_sprite.png);    background-size: 16px;    background-repeat: no-repeat;    background-position: center 2px; display:none;" class="flecha_ordenacion3 quote_lineAmount__cLines"/>
+                                    </div>
+                                </apex:facet>
+                                <apex:outputText value="{!item.quote_line.Amount__c}" style="text-align:right;" html-neudata="total_amount_linea{!item.Id}"/>
+                                <apex:inputHidden value="{!item.quote_line.Amount__c}" html-neudata="total_amount_linea_hidden{!item.Id}"/>
+                            </apex:column>
+                            <apex:column style="text-align: right;">
+                                <apex:facet name="header">
+                                    <div  style ="cursor: pointer; text-align: center;" onclick="sort_data_quote('total_peso_linea');"> Gross <br/> Weight kg
+                                      <span style="       width: 10px;    height: 11px;    float: right;    margin: 0 5px;    vertical-align: 0px;    background: transparent url(/img/alohaSkin/sortArrows_sprite.png);    background-size: 16px;    background-repeat: no-repeat;    background-position: center 2px; display:none;" class="flecha_ordenacion3 total_peso_lineaLines"/>
+                                    </div>
+                                </apex:facet>
+                                <apex:outputText value="{!item.total_peso_linea}" style="text-align:right; " html-neudata="weight{!item.Id}"/>
+                                <apex:inputHidden value="{!item.total_peso_linea}" html-neudata="weight_hidden{!item.Id}"/>
+                            </apex:column>
+                            <apex:column style="text-align: right;">
+                                <apex:facet name="header">
+                                    <div  style ="cursor: pointer;" onclick="sort_data_quote('total_volumen_linea');"> Gross <br/>Volume m³
+                                      <span style="       width: 10px;    height: 11px;    float: right;    margin: 0 5px;    vertical-align: 0px;    background: transparent url(/img/alohaSkin/sortArrows_sprite.png);    background-size: 16px;    background-repeat: no-repeat;    background-position: center 2px; display:none;" class="flecha_ordenacion3 total_volumen_lineaLines"/>
+                                    </div>
+                                </apex:facet>
+                                <apex:outputText value="{!item.total_volumen_linea}" style="text-align:right; " html-neudata="volume{!item.Id}"/>
+                                <apex:inputHidden value="{!item.total_volumen_linea}" html-neudata="volume_hidden{!item.Id}"/>
+                                <apex:inputHidden value="{!item.tiene_pallet}" html-neudata="tienerelacion_con_pallet{!item.Id}"/> 
+                                <apex:inputHidden value="{!item.peso_caja_items}" html-neudata="packagingweight{!item.Id}"/>
+                                <apex:inputHidden value="{!item.volumen_caja_items}" html-neudata="packagingvolume{!item.Id}"/>
+                                <apex:inputHidden value="{!item.relacion_con_pallet}" html-neudata="relacionconlospallet{!item.id}"/>   
+                                <apex:inputHidden value="{!item.peso_item_sin_caja}" html-neudata="pesodelitem_sin_caja{!item.id}"/>
+                                <apex:inputHidden value="{!item.Units_x_Master_Box}" html-neudata="packagingunits{!item.id}"/>
+                                <apex:inputHidden value="{!item.precio_unidad}" html-neudata="precio_unidad{!item.id}"/>
+                                <apex:inputHidden value="{!item.quote_line.Expense_Amount__c}" html-neudata="exense_amount{!item.id}"/>
+                            </apex:column>  
+                             <apex:column style="text-align: right;">
+                                <apex:facet name="header">
+                                    <div  style ="cursor: pointer; text-align: center;" onclick="sort_data_quote('total_pallet_linea');"> Number <br/> of Pallets
+                                      <span style="       width: 10px;    height: 11px;    float: right;    margin: 0 5px;    vertical-align: 0px;    background: transparent url(/img/alohaSkin/sortArrows_sprite.png);    background-size: 16px;    background-repeat: no-repeat;    background-position: center 2px; display:none;" class="flecha_ordenacion3 total_pallet_lineaLines"/>
+                                    </div>
+                                </apex:facet>
+                                <apex:outputText value="{!item.total_pallet_linea}" style="text-align:right; " html-neudata="numberpallet{!item.Id}"/>
+                                <apex:inputHidden value="{!item.total_pallet_linea}" html-neudata="numberpallet_hidden{!item.Id}"/>
+                            </apex:column>
+                            
+                             <apex:column >
+                                <apex:facet name="header">
+                                    <div  style ="cursor: pointer; text-align: center;"> {!$ObjectType.Shipment_Line__c.fields.Container_Number__c.Label}
+                                      <span style="       width: 10px;    height: 11px;    float: right;    margin: 0 5px;    vertical-align: 0px;    background: transparent url(/img/alohaSkin/sortArrows_sprite.png);    background-size: 16px;    background-repeat: no-repeat;    background-position: center 2px; display:none;" class="flecha_ordenacion3 quote_linePrice__cLines"/>
+                                    </div>
+                                </apex:facet>
+                                <apex:inputField value="{!item.ship_line.Container_Number__c}" style="    width: 106px;"/>
+                            </apex:column>
+                            
+                        </apex:pageBlockTable> 
+                        <apex:inputText value="{!linea_modificada}" id="theTextInput" styleClass="linea_modificada" style="display:none;"/>
+                        <apex:inputHidden value="{!alertuser}" id="alertuser"/>
+                    </apex:outputPanel>
+                </apex:pageBlock>
+            </div>
+            
+         <apex:outputpanel >
+            <apex:actionstatus id="myStatus">
+               <apex:facet name="start">
+                   <div class="waitingSearchDiv" id="el_loading" style="background-color: #fbfbfb;
+                          height: 100%;opacity:0.65;width:100%;"> 
+                       <div class="waitingHolder" style="top: 74.2px; width: 91px;">
+                           <img class="waitingImage" src="/img/loading.gif" title="Please Wait..." />
+                           <span class="waitingDescription">Loading...</span>
+                       </div>
+                   </div>
+               </apex:facet>
+           </apex:actionstatus>
+        </apex:outputpanel>
+        
+        <input type="hidden" value="none" id="orden_ad_quotes"/>
+        <apex:inputHidden value="{!orden_quotes}" id="orden_quotes"/>
+        <apex:inputHidden value="{!max_peso_container}" id="max_peso_container"/>
+        <apex:inputHidden value="{!max_volumen_container}" id="max_volumen_container"/>
+        <apex:inputHidden value="{!num_cont_x_pallet}" id="num_cont_x_pallet"/>
+        <apex:inputHidden value="{!TotalNumberBoxes}" id="TotalNumberBoxes"/>
+        <apex:inputHidden value="{!TotalNumberPallets}" id="TotalNumberPallets"/>
+        <apex:inputHidden value="{!Grossweight}" id="Grossweight"/>
+        <apex:inputHidden value="{!Cube}" id="Cube"/>
+        <apex:inputHidden value="{!la_lista_no_cero}" id="la_lista_no_cero"/>
+        <apex:inputHidden value="{!TotalNumberCont}" id="TotalNumberCont"/>
+        <apex:inputHidden value="{!porc_ocupacion}" id="porc_ocupacion"/>
+            
+    </apex:form>
+</apex:page>

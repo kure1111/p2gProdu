@@ -1,0 +1,79 @@
+<apex:page standardController="Labor_Program__c" sidebar="false" id="page">
+<apex:includeScript value="{!$Resource.jquery_1_10_2}"/> 
+<apex:includeScript value="{!$Resource.jquery_ui_1_10_3}"/>
+<apex:includeScript value="{!$Resource.neurored_jquery}"/> 
+<apex:includeScript value="{!$Resource.scrolltofixed}"/> 
+<apex:stylesheet value="{!URLFOR($Resource.jquery_ui_1_10_3_css,'jquery-ui-1.10.3.min.css')}"/>
+<style>
+#mygraph td
+{
+    text-align:center;
+    color:white;
+    padding:1em 0 1em 0;
+    border:2px solid white;
+}
+#mygraph td.dark
+{
+    color:black;
+}
+#myPageBlock .data2Col
+{
+    width: 32%;
+}
+</style>
+<script>
+    function adjustwidth(value,total,element)
+    {
+        if(isNaN(total))
+            total=0;
+        else if(total<0)
+            total=0;
+        value=parseInt(value);
+        if(isNaN(value))
+            value=0;
+        if(value<=0)
+            $('#'+element).hide();
+        else if(value>=total)
+        {
+            $('#'+element).width('100%');
+            if(value>total)
+                $('#'+element).css('color','red');
+        }
+        else
+            $('#'+element).width(((value/total)*100).toFixed(0)+'%');
+    }
+    $(document).ready(function () {
+        adjustwidth({!Labor_Program__c.Available_Time__c},{!Labor_Program__c.Total_Time__c},'availabletime');
+        adjustwidth({!Labor_Program__c.Total_Legal_Losses__c},{!Labor_Program__c.Total_Time__c},'legallosses');
+        adjustwidth({!Labor_Program__c.Available_Loading_Time__c},{!Labor_Program__c.Total_Time__c},'availableloading');
+        adjustwidth({!Labor_Program__c.Unutilized_Capacity_Losses__c},{!Labor_Program__c.Total_Time__c},'unutilizedcapacity');
+        adjustwidth({!Labor_Program__c.Loading_Time__c},{!Labor_Program__c.Total_Time__c},'loadingtime');
+        adjustwidth({!Labor_Program__c.Idle_Time__c},{!Labor_Program__c.Total_Time__c},'idletime');
+        adjustwidth({!Labor_Program__c.Value_Operating_Time__c},{!Labor_Program__c.Total_Time__c},'valueoperating');
+        adjustwidth({!Labor_Program__c.OEE_Losses__c},{!Labor_Program__c.Total_Time__c},'oeelosses');
+    });
+</script>
+<apex:form id="form">
+    <table id="mygraph" style="width:100%;border-collapse:collapse">
+        <tr>
+            <td colspan="5" style="background-color:#002060;width:100%">Total Time<br/>{!Labor_Program__c.Total_Time__c}</td>
+        </tr>
+        <tr>
+            <td id="availabletime" colspan="4" style="background-color:#0070c0">Available Time<br/>{!Labor_Program__c.Available_Time__c}</td>
+            <td id="legallosses" rowspan="4" style="background-color:#7f7f7f">Legal Losses<br/>{!Labor_Program__c.Total_Legal_Losses__c}</td>
+        </tr>
+        <tr>
+            <td id="availableloading" colspan="3" style="background-color:#17375e">Available Loading<br/>{!Labor_Program__c.Available_Loading_Time__c}</td>
+            <td id="unutilizedcapacity" class="dark" rowspan="3" style="background-color:#a6a6a6">Unutilized Capacity<br/>{!Labor_Program__c.Unutilized_Capacity_Losses__c}</td>
+        </tr>
+        <tr>
+            <td id="loadingtime" colspan="2" style="background-color:#8eb4e3">Loading Time<br/>{!Labor_Program__c.Loading_Time__c}</td>
+            <td id="idletime" class="dark" rowspan="2" style="background-color:#ddd9c3">Idle Time<br/>{!Labor_Program__c.Idle_Time__c}</td>
+        </tr>
+        <tr>
+            <td id="valueoperating" class="dark" style="background-color:#c6d9f1">Value Operating Time<br/>{!Labor_Program__c.Value_Operating_Time__c}</td>
+            <td id="oeelosses" class="dark" style="background-color:#c4bd97">OEE Losses<br/>{!Labor_Program__c.OEE_Losses__c}</td>
+        </tr>
+    </table>
+</apex:form>
+</apex:page>

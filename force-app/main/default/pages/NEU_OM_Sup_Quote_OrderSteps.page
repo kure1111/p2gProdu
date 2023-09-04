@@ -1,0 +1,65 @@
+<apex:page StandardController="Supplier_Quote__c" extensions="NEU_OM_Sup_Quote_OrderSteps">
+<apex:includeScript value="{!$Resource.neu_jquery}"/> 
+    <apex:form >
+    <script>
+            $(document).ready(function() {
+            
+            });
+    </script>  
+    
+    <style>
+         .container
+        {
+            width: 100%;
+            float: left;
+        }
+        .lista_steps
+        {
+            padding: 0;
+            margin: 10px auto 0 auto;
+            width: 666px;
+        }
+        .li_step
+        {
+            float: left;
+            /*padding: 10px;*/
+            padding: 10px 2px 10px 2px;
+            color: white;
+            font-family: Arial;
+            font-size: 12px;
+            border-radius: 10px;
+            webkit-box-shadow: 0px 0px 10px 0px rgba(50, 50, 50, 1);
+            -moz-box-shadow: 0px 0px 10px 0px rgba(50, 50, 50, 1);
+            box-shadow: 0px 0px 7px 0px rgba(50, 50, 50, 1);
+            margin: 0 0 0 7px;
+            cursor: pointer;
+            width: 98px;
+            text-align: center;
+            height: 28px;
+            list-style-type: none;
+            margin-top: 6px;
+
+        }
+        .li_step a, .li_step a:hover
+        {
+            color: white;
+            font-family: Arial;
+            font-size: 12px;
+            text-decoration:none;
+        }
+        .step_active{background-color: #007bff; border: 1px solid #004896;}
+        .step_inactive{background-color: #9c9c9c; border: 1px solid #636363;}
+        html{background-color:#ffffff !important;}
+    </style>
+        <div id="container">
+            <ul class="lista_steps" >
+                <a href="#" style="    cursor: default;"><li class="li_step {!step_1}" style="    cursor: default;">1. Create Item Lines</li></a>
+                <a href="{!$Site.BaseUrl}/apex/NEU_OM_SupQuOr_FeeLinesPriceListDiscount?id={!Supplier_Quote__c.Id}" target="_parent"><li class="li_step {!step_2}">2. Create Quote Fee Lines</li></a>
+                <a href="{!$Site.BaseUrl}/apex/NEU_OM_Start_Clearance_SupplierQuote?id={!Supplier_Quote__c.Id}" target="_parent"><li class="li_step {!step_3}">3. Customs Clearance</li></a>
+                <a href="{!$Site.BaseUrl}/apex/NEU_MD_Associated_Documents?id={!Supplier_Quote__c.Id}" target="_parent"><li class="li_step {!step_4}">4. Associate Documents</li></a>
+                <a href="{!$Site.BaseUrl}/apex/NEU_OM_Shipment_Management?id={!Supplier_Quote__c.Id}" target="_parent"><li class="li_step {!step_5}" >5. Generate Delivery Order</li></a>
+                <a href="{!$Site.BaseUrl}/apex/NEU_Purchase_Order_save_pdf?id={!Supplier_Quote__c.Id}" target="_parent"><li class="li_step {!step_6}">6. Generate Quote</li></a>
+            </ul> 
+        </div>  
+    </apex:form>
+</apex:page>

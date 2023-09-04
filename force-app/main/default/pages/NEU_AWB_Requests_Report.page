@@ -1,0 +1,93 @@
+<apex:page controller="NEU_AWB_Requests_Report" >
+	<style>
+		.homeTab .tertiaryPalette, .individualPalette .homeBlock .tertiaryPalette, .layoutEdit .individualPalette .homeBlock .tertiaryPalette 
+		{
+			background-color: #8e9dbe;
+			border-color: #8e9dbe;
+		}
+	</style>
+	<apex:form id="form">
+		<apex:pageBlock id="block" title="Air Waybill">
+			<apex:pageBlockButtons >
+		    	<apex:commandButton value="Search" status="myStatus" action="{!search_AWB}" reRender="block"/>
+			</apex:pageBlockButtons>
+			<apex:pageBlockSection columns="3" title="AWB Requests Report">
+				<apex:outputLabel >Waybill&nbsp;<apex:inputText value="{!AWB}"/></apex:outputLabel>
+				<apex:outputLabel >Month&nbsp;<apex:inputText value="{!month}"/></apex:outputLabel>
+				<apex:outputLabel >Year&nbsp;<apex:inputText value="{!year}"/></apex:outputLabel>
+			</apex:pageBlockSection>
+			<table id="table1">
+				<tr>                                                                       
+	            	<th>  
+	                    <span>Waybill Name</span>                    
+	                </th>	                
+	                <th>  
+	                    <span>FSR</span>                    
+	                </th>
+	                <th>  
+	                    <span>FSA</span>                    
+	                </th>
+	                <th>  
+	                    <span>FSU</span>                    
+	                </th>
+	                <th>  
+	                    <span>FWB</span>                    
+	                </th>
+	                <th>  
+	                    <span>FHL</span>                    
+	                </th>
+	                <th>  
+	                    <span>FNA</span>                    
+	                </th>
+	                <th>  
+	                    <span>Month</span>                    
+	                </th>
+	                <th>  
+	                    <span>Year</span>                    
+	                </th>
+	            </tr>
+                <tr>
+                	<td>
+                		<span>{!AWB}</span>
+                	</td>               	
+                	<td>
+                		<span>{!totalFSR}</span>
+                	</td>
+                	<td>
+                		<span>{!totalFSA}</span>
+                	</td>
+                	<td>
+                		<span>{!totalFSU}</span>
+                	</td>
+                	<td>
+                		<span>{!totalFWB}</span>
+                	</td>
+                	<td>
+                		<span>{!totalFHL}</span>
+                	</td>
+                	<td>
+                		<span>{!totalFNA}</span>
+                	</td>
+                	<td>
+                		<span>{!month}</span>
+                	</td>
+                	<td>
+                		<span>{!year}</span>
+                	</td>
+                </tr>               
+			</table>
+		</apex:pageBlock>
+		<apex:outputpanel >
+           <apex:actionstatus id="myStatus">
+               <apex:facet name="start">
+                   <div class="waitingSearchDiv" id="el_loading" style="background-color: #fbfbfb; height: 100%;opacity:0.65;width:100%;"> 
+                       <div class="waitingHolder" style="top: 74.2px; width: 91px;">
+                           <img class="waitingImage" src="/img/loading.gif" title="Please Wait..." />
+                           <span class="waitingDescription">Loading...</span>
+                       </div>
+                   </div>
+               </apex:facet>
+           </apex:actionstatus>
+        </apex:outputpanel>
+	</apex:form>         
+</apex:page>

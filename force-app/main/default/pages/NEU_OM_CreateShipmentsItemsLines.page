@@ -1,0 +1,481 @@
+<apex:page standardController="Shipment__c" extensions="NEU_OM_CreateShipmentsItemsLines" lightningStylesheets="false">
+<apex:includeScript value="{!$Resource.neu_jquery}"/> 
+<apex:includeScript value="{!$Resource.jquery_1_10_2}"/> 
+<apex:includeScript value="{!$Resource.jquery_ui_1_10_3}"/>
+<apex:includeScript value="{!$Resource.neurored_jquery}"/> 
+<apex:stylesheet value="{!URLFOR($Resource.jquery_ui_1_10_3_css,'jquery-ui-1.10.3.min.css')}"/>
+<script type="text/javascript"> var __sfdcSessionId = '{!GETSESSIONID()}'; </script>
+<script src="/soap/ajax/28.0/connection.js" type="text/javascript"></script>
+<script>
+        $(document).ready(function () {
+            $($.sfId('{!$Component.form}')).tooltip({track:true,show:{effect:"slideDown",delay:1000}});
+                
+            });
+        function creineas()
+        {   
+            var todos_rellenos = true;
+            if($('.numlinea').val() == '')
+            {
+                $('.numlinea').css('border','1px solid red');
+                todos_rellenos = false;
+            }
+            else
+                $('.numlinea').css('border','1px solid gray');
+            if($('.extensionname').val() == '')
+            {
+                $('.extensionname').css('border','1px solid red');
+                todos_rellenos = false;
+            }
+            else
+                $('.extensionname').css('border','1px solid gray');
+            if($('.units').val() == '')
+            {
+                $('.units').css('border','1px solid red');
+                todos_rellenos = false;
+            }
+            else
+                $('.units').css('border','1px solid gray');
+            if($('.price').val() == '')
+            {
+                $('.price').css('border','1px solid red');
+                todos_rellenos = false;
+            }
+            else
+                $('.price').css('border','1px solid gray');
+            if($('.shipweight').val() == '')
+            {
+                $('.shipweight').css('border','1px solid red');
+                todos_rellenos = false;
+            }   
+            else
+                $('.shipweight').css('border','1px solid gray');
+            if($('.shipvolume').val() == '')
+            {   
+                $('.shipvolume').css('border','1px solid red');
+                todos_rellenos = false;
+            }   
+            else
+                $('.shipvolume').css('border','1px solid gray');
+            if(todos_rellenos == true)
+                crearlineas();  
+            else
+            {
+                $('#contenedormensaje').css("display", "block");
+                         $(function() {
+                $( "#contenedormensaje" ).dialog({
+                     height: 200,
+                     width: 280,
+                     modal: true,
+                      buttons: {
+                    "Accept": function() {
+                       $( this ).dialog( "close" );
+                    },
+                   
+                    }
+                     });
+                });
+            }
+        }
+        
+        function calcular_total_amount()
+        {
+             $('.item_units').each(function (index) 
+            {
+                var line_id = $(this).attr('neudata');
+                $('.item_amount_'+line_id).setFloatSep(($(this).getFloatSep()*$('.item_price_'+line_id).getFloatSep()).toFixed(2));
+                $('.item_amount_'+line_id).html($('.item_amount_'+line_id).html()+'$');
+            })
+        }
+        
+        /* NUEVO */
+        function recalcular_volume(id)
+        {
+            var length = "";
+            var width = "";
+            var height = "";
+            var units = 0;
+                
+            if(id == "new")
+            {
+                length = ($(".new_len_size").val() != "" ? ({!Shipment__c.Only_Warehouse_Service__c} == true ? $(".new_len_size").getFloatSep() * 100 : $(".new_len_size").getFloatSep()) : "");
+                width = ($(".new_wid_size").val() != "" ? ({!Shipment__c.Only_Warehouse_Service__c} == true ? $(".new_wid_size").getFloatSep() * 100 : $(".new_wid_size").getFloatSep()) : "");
+                height = ($(".new_hei_size").val() != "" ? ({!Shipment__c.Only_Warehouse_Service__c} == true ? $(".new_hei_size").getFloatSep() : $(".new_hei_size").getFloatSep()) : "");
+                units = ($(".units").val() != "" ? $(".units").val() : 0);
+            }
+            else
+            {
+                length = ($(".len_size_"+id).val() != "" ? ({!Shipment__c.Only_Warehouse_Service__c} == true ? $(".len_size_"+id).getFloatSep() * 100 : $(".len_size_"+id).getFloatSep()) : "");
+                width = ($(".wid_size_"+id).val() != "" ? ({!Shipment__c.Only_Warehouse_Service__c} == true ? $(".wid_size_"+id).getFloatSep() * 100 : $(".wid_size_"+id).getFloatSep()) : "");
+                height = ($(".hei_size_"+id).val() != "" ? ({!Shipment__c.Only_Warehouse_Service__c} == true ? $(".hei_size_"+id).getFloatSep() : $(".hei_size_"+id).getFloatSep()) : "");
+                units = ($(".units_"+id).val() != "" ? $(".units_"+id).val() : 0);
+            }
+
+            if (length != "" && width != "" && height != ""){
+                var total_volume = 0;
+                total_volume = (length * width * height) / 1000000;
+                
+                if(id == "new")
+                {
+                    $(".new_vol").text(total_volume.toFixed(4));
+                    $(".new_total_vol").val((total_volume * units).toFixed(4));
+                }
+                else
+                {
+                    $(".packvol_"+id).text(total_volume.toFixed(4));
+                    $(".vol_"+id).val((total_volume * units).toFixed(4));
+                }
+                
+                //TOTAL AMOUNT
+                $('.item_units').each(function (index) 
+                {
+                    var line_id = $(this).attr('neudata');
+                    $('.item_amount_'+line_id).setFloatSep(($(this).getFloatSep()*$('.item_price_'+line_id).getFloatSep()).toFixed(2));
+                    $('.item_amount_'+line_id).html($('.item_amount_'+line_id).html()+'$');
+                })
+            }
+        }
+        
+        function recalcular_weight(id)
+        {
+            var units = 0;
+            var weight = 0;
+            
+            if(id == "new")
+            {
+                weight = ($(".new_packweight").val() != "" ? $(".new_packweight").getFloatSep() : "");
+                units = ($(".units").val() != "" ? $(".units").val() : 0);
+            }
+            else
+            {
+                weight = ($(".packweight_"+id).val() != "" ? $(".packweight_"+id).getFloatSep() : "");
+                units = ($(".units_"+id).val() != "" ? $(".units_"+id).val() : 0);
+            }
+            
+            if (weight != ""){
+                if(id == "new")
+                    $('.new_shipweight').val((weight * units).toFixed(2));
+                else
+                    $('.shipweight_'+id).val((weight * units).toFixed(2));
+            }
+        }
+            
+</script>
+	<style>
+		.cargo_features{margin: 0; padding: 3px 0 3px 0; float: left; width: 100%;}
+        .cargo_features label{float: left;}
+        .cargo_features input{margin: 0 5px 0 0px; float: left;}
+        .nuevalinea{cursor:pointer;}
+        table.list.tabla_medidas
+        {
+            width:40%;
+        }
+
+	</style>
+    <apex:form id="form">
+    
+    <div style="display:none;" id="contenedormensaje" title="Error: Invalid Data.">
+         <p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>Review all error messages below to correct your data.</p>
+    </div>
+    
+     <apex:inputHidden value="{!decimalSep}" id="decimalSep"/>
+      <apex:inputHidden value="{!thousandSep}" id="thousandSep"/>
+    
+    <apex:sectionHeader title="Create {!$ObjectType.Shipment_Line__c.labelPlural}"/>
+     <span style="    position: relative;     top: -36px;     left: 400px;    font-size: 17px;">
+        <a href="{!$Site.BaseUrl}/{!Shipment__c.Id}" onblur="LookupHoverDetail.getHover(neu_getId(this)).hide();" onfocus="LookupHoverDetail.getHover(neu_getId(this),'{!$Site.BaseUrl}/{!Shipment__c.Id}/m?isAjaxRequest=1').show();" onmouseout="LookupHoverDetail.getHover(neu_getId(this)).hide();" onmouseover="LookupHoverDetail.getHover(neu_getId(this),'{!$Site.BaseUrl}/{!Shipment__c.Id}/m?isAjaxRequest=1').show();" target="_blank" id="new_id_1">{!Shipment__c.Name}</a></span>
+     <apex:actionFunction name="crearlineas" action="{!crearlineaquoteitem}" status="myStatus" reRender="linesSelector, pagemessages_newline"/>
+     <apex:actionFunction name="crearpallet" action="{!createNewPallet}" status="myStatus" reRender="linesSelector, pagemessages_newline"/>
+
+        <apex:pageMessages id="pagemessages" escape="false"/>
+    <div>
+        <apex:outputPanel id="linesSelector">
+            <apex:pageBlock id="block0" title="{!$ObjectType.Shipment_Line__c.labelPlural}">
+                <apex:pageBlockbuttons >
+                     <apex:commandButton value="Update {!$ObjectType.Shipment_Line__c.labelPlural}" status="myStatus"  styleClass="slds-vf-button_brand" reRender="pagemessages, block0"  action="{!update_lineas_ship}"/>
+                </apex:pageBlockbuttons>
+                <apex:pageBlockTable id="table" value="{!ShipmentItemsLines}" var="item">
+                    <apex:column headerValue="Line" >
+                         <c:customobject2 objid="{!item.Id}" objname="{!item.Name}"/>
+                    </apex:column>
+                    <apex:column >
+                        <!--<apex:facet name="header"><div style="text-align:left;">Item Name</div></apex:facet>
+                        <apex:inputField value="{!item.Extension_Item_Name__c}" style="    text-align: left;" />-->
+                        
+                        <apex:facet name="header"><div style="text-align:left;">{!$ObjectType.Shipment_Line__c.fields.Clave_de_Servicio__c.Label}</div></apex:facet>
+                        <apex:inputField style="text-align: left;" value="{!item.Clave_de_Servicio__c}"/>
+
+                    </apex:column>  
+                     <apex:column >
+                        <apex:facet name="header"><div style="text-align:left;">SAT</div></apex:facet>
+                        <table>
+                             <tr>
+								<td><apex:outputlabel value="{!$ObjectType.Quote_Item_Line__c.fields.Material_Peligroso_Cat__c.Label}"/></td>
+								<td><apex:inputField value="{!item.Material_Peligroso__c}"/></td>
+							</tr>
+                              <tr>
+								<td><apex:outputlabel value="{!$ObjectType.Quote_Item_Line__c.fields.Embalaje_Cat__c.Label}"/></td>
+								<td><apex:inputField value="{!item.Embalaje__c}"/></td>
+							</tr>
+                             <tr>
+								<td><apex:outputlabel value="{!$ObjectType.Shipment_Line__c.fields.CP_Fraccion_Arancelaria__c.Label}" rendered="{!Shipment__c.Shipment_Type__c == 'FI' ||Shipment__c.Shipment_Type__c == 'PTO' }"  /></td>
+								<td><apex:inputField value="{!item.CP_Fraccion_Arancelaria__c}" rendered="{!Shipment__c.Shipment_Type__c == 'FI' ||Shipment__c.Shipment_Type__c == 'PTO' }"  /></td>
+							</tr>
+                              <tr>
+								<td><apex:outputlabel value="{!$ObjectType.Shipment_Line__c.fields.Pedimento__c.Label}" rendered="{!Shipment__c.Shipment_Type__c == 'FI' ||Shipment__c.Shipment_Type__c == 'PTO' }"  /></td>
+								<td><apex:inputField value="{!item.Pedimento__c}" rendered="{!Shipment__c.Shipment_Type__c == 'FI' || Shipment__c.Shipment_Type__c == 'PTO' }"  /></td>
+							</tr>
+                        </table>
+                    </apex:column>
+                    <apex:column style="text-align: right;" rendered="{!Shipment__c.Service_Type__c == 'FTL' ||
+                            Shipment__c.Service_Type__c == 'FP' || Shipment__c.Service_Type__c == 'FO' || Shipment__c.Service_Type__c == 'FCL'}">
+                        <apex:facet name="header"><div style="text-align:center;">Container Type</div></apex:facet>
+                        <apex:inputField value="{!item.Container_Type__c}"/>
+                    </apex:column>  
+                    <apex:column >
+                        
+                           <apex:facet name="header"><div style="text-align:left;"></div></apex:facet>
+                        <table>
+                             <tr>
+								<td><apex:outputlabel value="{!$ObjectType.Shipment_Line__c.fields.Units_Shipped__c.Label}"/></td>
+								<td>    <apex:inputField value="{!item.Units_Shipped__c}" style="text-align: right;" html-class="item_units" html-neudata="{!item.Id}" onkeyup="calcular_total_amount();recalcular_volume('{!item.Id}');recalcular_weight('{!item.Id}');" styleClass="units_{!item.Id}"/></td>
+							</tr>
+                            <tr>
+								<td><apex:outputlabel value="{!$ObjectType.Shipment_Line__c.fields.Shipping_Weight_Kg__c.Label}"/></td>
+								<td> <apex:inputField value="{!item.Shipping_Weight_Kg__c}" style="    text-align: right;" StyleClass="shipweight_{!item.Id}"/></td>
+							</tr>
+                            <tr>
+								<td><apex:outputlabel value="{!$ObjectType.Shipment_Line__c.fields.Peso_Neto__c.Label}"/></td>
+								<td> <apex:inputField value="{!item.Peso_Neto__c}" style="    text-align: right;" StyleClass="shipweight_{!item.Id}"/></td>
+							</tr>
+                           
+                        </table>
+                    </apex:column>
+                    <apex:column style="text-align: right;" rendered="{!Shipment__c.Only_Warehouse_Service__c == true || Shipment__c.Freight_Mode__c == 'Air' || (Shipment__c.Freight_Mode__c == 'Sea' && Shipment__c.Service_Type__c == 'LCL') || ((Shipment__c.Freight_Mode__c == 'Road' || Shipment__c.Freight_Mode__c == 'Rail') && Shipment__c.Service_Type__c == 'LTL') || Shipment__c.Service_Type__c == 'MAYOREO'}">
+                        <apex:facet name="header"><div style="text-align:center;">Packaging Unit Volume (m3)</div></apex:facet>
+                        <table class="list tabla_medidas">
+                            <tr class="dataRow"><th class="headerRow th_sizes">Length &nbsp;<apex:outputtext value="(cm.)" rendered="{!Shipment__c.Only_Warehouse_Service__c == false}"/><apex:outputtext value="(cm.)" rendered="{!Shipment__c.Only_Warehouse_Service__c == true}"/></th><td class="dataCell"><apex:inputField value="{!item.Item_Name__r.Master_Box_Length_cm__c}" styleclass="medidas len_size_{!item.Id}" onKeyUp="recalcular_volume('{!item.Id}');"/></td></tr>
+                            <tr class="dataRow"><th class="headerRow th_sizes">Width &nbsp;<apex:outputtext value="(cm.)" rendered="{!Shipment__c.Only_Warehouse_Service__c == false}"/><apex:outputtext value="(cm.)" rendered="{!Shipment__c.Only_Warehouse_Service__c == true}"/></th><td class="dataCell"><apex:inputField value="{!item.Item_Name__r.Master_Box_Width_cm__c}" styleclass="medidas wid_size_{!item.Id}" onKeyUp="recalcular_volume('{!item.Id}');"/></td></tr>
+                            <tr class="dataRow"><th class="headerRow th_sizes">Height &nbsp;<apex:outputtext value="(cm.)" rendered="{!Shipment__c.Only_Warehouse_Service__c == false}"/><apex:outputtext value="(cm.)" rendered="{!Shipment__c.Only_Warehouse_Service__c == true}"/></th><td class="dataCell"><apex:inputField value="{!item.Item_Name__r.Master_Box_Height_cm__c}" styleclass="medidas hei_size_{!item.Id}" onKeyUp="recalcular_volume('{!item.Id}');"/></td></tr>
+                            <tr class="dataRow"><th class="headerRow th_volume">Volume (m3)</th><td class="dataCell"><apex:outputText value="{!item.Item_Name__r.Master_Box_Volume_m3__c}" styleclass="medidas packvol_{!item.Id}"/></td></tr>
+                        </table>
+                    </apex:column> 
+                    <apex:column style="text-align: right;" rendered="{!Shipment__c.Only_Warehouse_Service__c == true || Shipment__c.Freight_Mode__c == 'Air' || (Shipment__c.Freight_Mode__c == 'Sea' && Shipment__c.Service_Type__c == 'LCL') || ((Shipment__c.Freight_Mode__c == 'Road' || Shipment__c.Freight_Mode__c == 'Rail') && Shipment__c.Service_Type__c == 'LTL') || Shipment__c.Service_Type__c == 'MAYOREO'}">
+                        <apex:facet name="header"><div style="text-align:center;">Packaging Unit Weight (Kgs)</div></apex:facet>
+                        <apex:inputfield value="{!item.Item_Name__r.Master_Box_Packing_Weight_kg__c}" onKeyUp="recalcular_weight('{!item.Id}');" style="text-align:right;" styleClass="width8em packweight_{!item.Id}"/>
+                    </apex:column>
+                    <apex:column headerValue="Currency" style="text-align: center;">
+                        <!-- <apex:outputField value="{!item.CurrencyIsoCode}"/>-->
+                        <apex:outputtext value="USD" />
+                    </apex:column>
+                    <apex:column style="text-align:right">
+                        <apex:facet name="header"><div style="text-align:center;">Item Price</div></apex:facet>
+                        <apex:inputField value="{!item.Unit_Origin_Sell_Price__c}" style="    text-align: right;" onkeyup="calcular_total_amount();" html-class="item_price_{!item.Id}"/>
+                    </apex:column>
+                    <apex:column style="text-align:right">
+                        <apex:facet name="header"><div style="text-align:center;">Product Value Shipped</div></apex:facet>
+                        <apex:outputText value="{!item.Sell_Origin_Amount__c}" styleclass="item_amount_{!item.Id}" />
+                    </apex:column>
+                    <apex:column style="text-align: right;">
+                        <apex:facet name="header"><div style="text-align:center;">Total Shipping Volume (m3)</div></apex:facet>
+                        <apex:inputField value="{!item.Shipping_Volume_m3__c}" style="    text-align: right;" styleClass="vol_{!item.Id}"/>
+                        <!-- <apex:outputText value="{0, number, ###,###,###,##0.00}" styleclass="formato_volumen"><apex:param value="{!item.Total_Volume_m3__c}"/></apex:outputText>-->
+                    </apex:column>
+                    <apex:column style="text-align: right;">
+                        <apex:facet name="header"><div style="text-align:center;">{!$ObjectType.Shipment_Line__c.fields.Container_Number__c.Label}</div></apex:facet>
+                        <apex:inputField value="{!item.Container_Number__c}" style="    text-align: right;"/>
+                    </apex:column>
+                    <apex:column style="text-align: right;">
+                        <apex:facet name="header"><div style="text-align:center;">{!$ObjectType.Shipment_Line__c.fields.Warehouse_Location__c.Label}</div></apex:facet>
+                        <apex:inputField value="{!item.Warehouse_Location__c}" style="    text-align: right;"/>
+                    </apex:column>
+                 <!--   <apex:column >
+                        <apex:facet name="header"><div style="text-align:left;">Cargo Features</div></apex:facet>
+                        <table>
+							<tr style="{!IF(Shipment__c.Only_Warehouse_Service__c == true, 'display:none;', '')}">
+								<td><apex:outputlabel value="{!$ObjectType.Sourcing_Item__c.fields.Freight_Class__c.Label}"/></td>
+								<td><apex:inputField value="{!item.Item_Name__r.Freight_Class__c}"/></td>
+							</tr>
+							<tr style="{!IF(Shipment__c.Only_Warehouse_Service__c == true, 'display:none;', '')}">
+								<td><apex:outputlabel value="{!$ObjectType.Sourcing_Item__c.fields.NMFC__c.Label}"/></td>
+								<td><apex:inputField value="{!item.Item_Name__r.NMFC__c}" styleClass="width6em"/></td>
+							</tr>
+							<tr style="{!IF(Shipment__c.Only_Warehouse_Service__c == true, '', 'display:none;')}">
+								<td><apex:outputlabel value="{!$ObjectType.Sourcing_Item__c.fields.Sourcing_Item_Code__c.Label}"/></td>
+								<td><apex:inputField value="{!item.Item_Name__r.Sourcing_Item_Code__c}" styleClass="width6em"/></td>
+							</tr>
+							<tr style="{!IF(Shipment__c.Only_Warehouse_Service__c == true, '', 'display:none;')}">
+								<td><apex:outputlabel value="{!$ObjectType.Sourcing_Item__c.fields.Item_Description__c.Label}"/></td>
+								<td><apex:inputField value="{!item.Item_Name__r.Item_Description__c}" styleClass="width6em"/></td>
+							</tr>
+							<tr>
+								<td><apex:outputlabel value="{!$ObjectType.Sourcing_Item__c.fields.Packaging_Type__c.Label}"/></td>
+								<td><apex:inputField value="{!item.Item_Name__r.Packaging_Type__c}"/></td>
+							</tr>
+							<tr style="{!IF(Shipment__c.Only_Warehouse_Service__c == true, '', 'display:none;')}">
+								<td><apex:outputlabel value="{!$ObjectType.Shipment_Line__c.fields.pallet_warehouse__c.Label}"/></td>
+								<td><apex:inputField value="{!item.pallet_warehouse__c}" styleClass="width6em"/>
+                                    <a href="/apex/NEU_create_shipmet_pallets" target="_blank"><img src="{!$Resource.Plus}"  style="width: 10%;float: right;"/></a>
+                                </td>
+                            </tr>
+						</table>
+                    </apex:column>-->
+                    
+                </apex:pageBlockTable>
+            </apex:pageBlock>
+            <apex:pageMessages id="pagemessages_newline" escape="false"/>
+                <apex:pageBlock id="block1" title="Create {!$ObjectType.Shipment_Line__c.labelPlural}">
+                	<!--apex:pageBlockbuttons >
+                     	<apex:commandButton value="Create {!$ObjectType.pallet_warehouse__c.labelPlural}" status="myStatus"  action="{!goToPallets}"/>
+                	</apex:pageBlockbuttons-->
+                <apex:pageBlockTable id="table2" value="{!Shipment__c}" var="lineanueva">
+                    <apex:column >
+                        <apex:image styleClass="nuevalinea" value="{!$Resource.Plus}" style="width: 39px;" onclick="creineas();"/>
+                    </apex:column>
+                    <apex:column headerValue="Line">
+                        <apex:inputText style="width: 60px; text-align: left;" StyleClass="numlinea" value="{!numerodelinea}"/>
+                    </apex:column>
+                    <apex:column >  
+                      <!--  <apex:facet name="header"><div style="text-align:left;">Item Name</div></apex:facet>
+                        <apex:inputText style="width: 138px; text-align: left; padding: 2px;" StyleClass="extensionname" value="{!extensionitemname}"/>
+                        -->
+                   <apex:facet name="header"><div style="text-align:left;">{!$ObjectType.Quote_Item_Line__c.fields.Clave_de_Servicio__c.Label}</div></apex:facet>
+                   <apex:inputField style="width: 250px; text-align: right; text-align: left; padding: 2px;" StyleClass="extensionname" value="{!nuevo_item.Clave_de_Servicio__c}"/>
+		
+                        
+                    </apex:column>
+                    <apex:column >
+                        <apex:facet name="header"><div style="text-align:left;">SAT</div></apex:facet>
+                        <table>
+                             <tr>
+								<td><apex:outputlabel value="{!$ObjectType.Quote_Item_Line__c.fields.Material_Peligroso_Cat__c.Label}"/></td>
+								<td><apex:inputField value="{!nuevo_item.Material_Peligroso__c}"/></td>
+							</tr>
+                              <tr>
+								<td><apex:outputlabel value="{!$ObjectType.Quote_Item_Line__c.fields.Embalaje_Cat__c.Label}"/></td>
+								<td><apex:inputField value="{!nuevo_item.Embalaje__c}"/></td>
+							</tr>
+                             <tr>
+								<td><apex:outputlabel value="{!$ObjectType.Shipment_Line__c.fields.CP_Fraccion_Arancelaria__c.Label}" rendered="{!Shipment__c.Shipment_Type__c == 'FI' ||Shipment__c.Shipment_Type__c == 'PTO' }"/></td>
+								<td><apex:inputField value="{!nuevo_item.CP_Fraccion_Arancelaria__c}" rendered="{!Shipment__c.Shipment_Type__c == 'FI' ||Shipment__c.Shipment_Type__c == 'PTO' }" /></td>
+							</tr>
+                              <tr>
+								<td><apex:outputlabel value="{!$ObjectType.Shipment_Line__c.fields.Pedimento__c.Label}" rendered="{!Shipment__c.Shipment_Type__c == 'FI' ||Shipment__c.Shipment_Type__c == 'PTO' }" /></td>
+								<td><apex:inputField value="{!nuevo_item.Pedimento__c}" rendered="{!Shipment__c.Shipment_Type__c == 'FI' ||Shipment__c.Shipment_Type__c == 'PTO' }" /></td>
+							</tr>
+                        </table>
+                    </apex:column>
+                    <apex:column style="text-align: right;" rendered="{!Shipment__c.Service_Type__c == 'FTL' ||
+                            Shipment__c.Service_Type__c == 'FP' || Shipment__c.Service_Type__c == 'FO' || Shipment__c.Service_Type__c == 'FCL'}">
+                        <apex:facet name="header"><div style="text-align:center;">Container Type</div></apex:facet>
+                        <apex:inputField value="{!nuevo_item.Container_Type__c}" styleClass="width6em contype"/>
+                    </apex:column>
+                    <apex:column style="text-align:center">
+                        
+                          <apex:facet name="header"><div style="text-align:left;"></div></apex:facet>
+                        <table>
+                             <tr>
+								<td><apex:outputlabel value="{!$ObjectType.Shipment_Line__c.fields.Units_Shipped__c.Label}"/></td>
+								<td> <apex:inputfield style="width: 138px; text-align: right; padding: 2px;" StyleClass="units" value="{!nuevo_item.Units_Shipped__c}"/></td>
+							</tr>
+                              <tr>
+								<td><apex:outputlabel value="{!$ObjectType.Shipment_Line__c.fields.Shipping_Weight_Kg__c.Label}"/></td>
+								<td> <apex:inputfield style="width: 138px; text-align: right; padding: 2px;" StyleClass="shipweight new_shipweight" value="{!nuevo_item.Shipping_Weight_Kg__c}"/></td>
+							</tr>
+                              <tr>
+								<td><apex:outputlabel value="{!$ObjectType.Shipment_Line__c.fields.Peso_Neto__c.Label}"/></td>
+								<td> <apex:inputfield style="width: 138px; text-align: right; padding: 2px;" StyleClass="shipweight new_shipweight" value="{!nuevo_item.Peso_Neto__c}"/></td>
+							</tr>
+                        </table>
+                    </apex:column>
+                    <apex:column style="text-align: right;" rendered="{!Shipment__c.Only_Warehouse_Service__c == true || Shipment__c.Freight_Mode__c == 'Air' || (Shipment__c.Freight_Mode__c == 'Sea' && Shipment__c.Service_Type__c == 'LCL') || ((Shipment__c.Freight_Mode__c == 'Road' || Shipment__c.Freight_Mode__c == 'Rail') && Shipment__c.Service_Type__c == 'LTL') || Shipment__c.Service_Type__c == 'MAYOREO'}">
+                        <apex:facet name="header"><div style="text-align:center;">Packaging Unit Volume</div></apex:facet>
+                        <table class="list tabla_medidas">
+                            <tr class="dataRow"><th class="headerRow th_sizes">Length &nbsp;<apex:outputtext value="(cm.)" rendered="{!Shipment__c.Only_Warehouse_Service__c == false}"/><apex:outputtext value="(m.)" rendered="{!Shipment__c.Only_Warehouse_Service__c == true}"/></th><td class="dataCell"><apex:inputField value="{!nuevo_item.Item_Name__r.Master_Box_Length_cm__c}" styleclass="medidas new_len_size" onKeyUp="recalcular_volume('new');"/></td></tr>
+                            <tr class="dataRow"><th class="headerRow th_sizes">Width &nbsp;<apex:outputtext value="(cm.)" rendered="{!Shipment__c.Only_Warehouse_Service__c == false}"/><apex:outputtext value="(m.)" rendered="{!Shipment__c.Only_Warehouse_Service__c == true}"/></th><td class="dataCell"><apex:inputField value="{!nuevo_item.Item_Name__r.Master_Box_Width_cm__c}" styleclass="medidas new_wid_size" onKeyUp="recalcular_volume('new');"/></td></tr>
+                            <tr class="dataRow"><th class="headerRow th_sizes">Height &nbsp;<apex:outputtext value="(cm.)" rendered="{!Shipment__c.Only_Warehouse_Service__c == false}"/><apex:outputtext value="(m.)" rendered="{!Shipment__c.Only_Warehouse_Service__c == true}"/></th><td class="dataCell"><apex:inputField value="{!nuevo_item.Item_Name__r.Master_Box_Height_cm__c}" styleclass="medidas new_hei_size" onKeyUp="recalcular_volume('new');"/></td></tr>
+                            <tr class="dataRow"><th class="headerRow th_volume">Volume (m3)</th><td class="dataCell"><span class="medidas new_vol"></span></td></tr>
+                        </table>
+                    </apex:column>
+                    <apex:column style="text-align: right;" rendered="{!Shipment__c.Only_Warehouse_Service__c == true ||Shipment__c.Freight_Mode__c == 'Air' || (Shipment__c.Freight_Mode__c == 'Sea' && Shipment__c.Service_Type__c == 'LCL') || ((Shipment__c.Freight_Mode__c == 'Road' || Shipment__c.Freight_Mode__c == 'Rail') && Shipment__c.Service_Type__c == 'LTL') || Shipment__c.Service_Type__c == 'MAYOREO'}">
+                        <apex:facet name="header"><div style="text-align:center;">Packaging Unit Weight (Kgs)</div></apex:facet>
+                        <apex:inputfield value="{!nuevo_item.Item_Name__r.Master_Box_Packing_Weight_kg__c}" onKeyUp="recalcular_weight('new');" style="text-align:right;" styleClass="new_packweight width8em" />
+                    </apex:column>
+                    <apex:column headerValue="Currency" style="text-align: center;">
+                        <apex:selectList id="Currency_selector"  label="Currency" value="{!moneda_seleccionada}" size="1">
+                            <apex:selectOptions value="{!lista_monedas}"/>
+                         </apex:selectList>
+                    </apex:column>
+                    <apex:column style="text-align:center">
+                            <apex:facet name="header"><div style="text-align:center;">Item Price</div></apex:facet>
+                            <!--<apex:inputText style="width: 138px; text-align: right; padding: 2px;" StyleClass="price" value="{!precio}"/>-->
+                            <apex:inputfield style="width: 138px; text-align: right; padding: 2px;" StyleClass="price" value="{!nuevo_item.Unit_Origin_Sell_Price__c}"/>
+                    </apex:column>
+                    <apex:column style="text-align: center;">
+                        <apex:facet name="header"><div style="text-align:center;">Total Shipping Volume (m3)</div></apex:facet>
+                       <!-- <apex:inputText style="width: 138px; text-align: right; padding: 2px;" StyleClass="shipvolume" value="{!volumen}"/>-->
+                       <apex:inputfield style="width: 138px; text-align: right; padding: 2px;" StyleClass="shipvolume new_total_vol" value="{!nuevo_item.Shipping_Volume_m3__c}"/>
+                    </apex:column>                    
+                     <apex:column style="text-align: center;">
+                        <apex:facet name="header"><div style="text-align:center;">{!$ObjectType.Shipment_Line__c.fields.Container_Number__c.Label}</div></apex:facet>
+                       <apex:inputfield style="width: 138px; text-align: right; padding: 2px;" value="{!nuevo_item.Container_Number__c}"/>
+                    </apex:column>
+                    <apex:column style="text-align: center;">
+                        <apex:facet name="header"><div style="text-align:center;">{!$ObjectType.Shipment_Line__c.fields.Warehouse_Location__c.Label}</div></apex:facet>
+                       <apex:inputfield style="width: 138px; text-align: right; padding: 2px;" value="{!nuevo_item.Warehouse_Location__c}"/>
+                    </apex:column>
+                   <!-- <apex:column >
+                        <apex:facet name="header"><div style="text-align:left;">Cargo Features</div></apex:facet>
+                        <table>
+							<tr style="{!IF(Shipment__c.Only_Warehouse_Service__c == true, 'display:none;', '')}">
+								<td><apex:outputlabel value="{!$ObjectType.Sourcing_Item__c.fields.Freight_Class__c.Label}"/></td>
+								<td><apex:inputField value="{!nuevo_item.Item_Name__r.Freight_Class__c}"/></td>
+							</tr>
+							<tr style="{!IF(Shipment__c.Only_Warehouse_Service__c == true, 'display:none;', '')}">
+								<td><apex:outputlabel value="{!$ObjectType.Sourcing_Item__c.fields.NMFC__c.Label}"/></td>
+								<td><apex:inputField value="{!nuevo_item.Item_Name__r.NMFC__c}" styleClass="width6em"/></td>
+							</tr>
+							<tr style="{!IF(Shipment__c.Only_Warehouse_Service__c == true, '', 'display:none;')}">
+								<td><apex:outputlabel value="{!$ObjectType.Sourcing_Item__c.fields.Sourcing_Item_Code__c.Label}"/></td>
+								<td><apex:inputField value="{!nuevo_item.Item_Name__r.Sourcing_Item_Code__c}" styleClass="width6em"/></td>
+							</tr>
+							<tr style="{!IF(Shipment__c.Only_Warehouse_Service__c == true, '', 'display:none;')}">
+								<td><apex:outputlabel value="{!$ObjectType.Sourcing_Item__c.fields.Item_Description__c.Label}"/></td>
+								<td><apex:inputField value="{!nuevo_item.Item_Name__r.Item_Description__c}" styleClass="width6em"/></td>
+							</tr>
+							<tr>
+								<td><apex:outputlabel value="{!$ObjectType.Sourcing_Item__c.fields.Packaging_Type__c.Label}"/></td>
+								<td><apex:inputField value="{!nuevo_item.Item_Name__r.Packaging_Type__c}"/></td>
+							</tr>
+							<tr style="{!IF(Shipment__c.Only_Warehouse_Service__c == true, '', 'display:none;')}">
+                                <td><b><apex:outputlabel value="{!$ObjectType.Shipment_Line__c.fields.pallet_warehouse__c.Label}"/></b></td>
+                            </tr>
+                            <tr style="{!IF(Shipment__c.Only_Warehouse_Service__c == true, '', 'display:none;')}">
+                                <td>Name</td><td><apex:inputField value="{!newPallet.Name}" style="width: 60%;margin-left: 5%;float:right;"/></td>
+                            </tr>
+                            <tr style="{!IF(Shipment__c.Only_Warehouse_Service__c == true, '', 'display:none;')}">
+                                <td>Length (cm.)</td><td><apex:inputField label="Length (cm.)" value="{!newPallet.Lenght_cm__c}" style="width: 60%;margin-left: 5%;float:right;"/></td>
+                            </tr>
+                            <tr style="{!IF(Shipment__c.Only_Warehouse_Service__c == true, '', 'display:none;')}">
+                                <td>Width (cm.)</td><td> <apex:inputField label="Width (cm.)" value="{!newPallet.Width_cm__c}" style="width: 60%;margin-left: 5%;float:right;"/></td>
+                            </tr>
+						</table>
+                    </apex:column>-->
+                </apex:pageBlockTable>
+            </apex:pageBlock>
+        </apex:outputPanel>
+    </div>
+    <apex:outputpanel >
+       <apex:actionstatus id="myStatus">
+           <apex:facet name="start">
+               <div class="waitingSearchDiv" id="el_loading" style="background-color: #fbfbfb;
+                      height: 100%;opacity:0.65;width:100%;"> 
+                   <div class="waitingHolder" style="top: 74.2px; width: 91px;">
+                       <img class="waitingImage" src="/img/loading.gif" title="Please Wait..." />
+                       <span class="waitingDescription">Loading...</span>
+                   </div>
+               </div>
+           </apex:facet>
+       </apex:actionstatus>
+    </apex:outputpanel>
+    </apex:form>
+</apex:page>

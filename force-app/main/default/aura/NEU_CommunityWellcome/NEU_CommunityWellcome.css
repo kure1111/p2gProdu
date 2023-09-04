@@ -1,0 +1,248 @@
+.THIS .home_community
+{
+    
+}
+
+.THIS .quote_request_button
+{
+	text-transform: uppercase;
+    margin: 20px auto;
+    background: #fff30b;
+    color: #484848!important;
+    border: 1px solid #484848;
+    display: block;
+    font-size: 14px;
+}
+
+.THIS #home_first_slide
+{
+    float: left;
+    margin: 20px 0 40px 0;
+}
+
+.THIS #home_second_slide
+{
+    float: left;
+    margin: 40px 0 20px 0;
+}
+
+.THIS #separator
+{
+    float: left;
+    width:100%;
+	border-bottom: 3px solid #484848;
+}
+
+.THIS #first_list
+{
+    float:left;
+    width:100%;
+}
+
+.THIS #first_list .first_list_li
+{
+    float:left;
+    width:300px;
+}
+
+.THIS #first_list .first_list_li #first_list_li_img1
+{
+    display: block;
+    width: 100%;
+    height: 120px;
+    background: url('/sfsites/c/resource/li_home_image1') center center no-repeat;
+    margin-bottom: 20px;
+    position: relative;
+    border-bottom: 2px solid #fff30b;
+}
+
+.THIS #first_list .first_list_li #first_list_li_img2
+{
+    display: block;
+    width: 100%;
+    height: 120px;
+    background: url('/sfsites/c/resource/li_home_image2') center center no-repeat;
+    margin-bottom: 20px;
+    position: relative;
+    border-bottom: 2px solid #fff30b;
+}
+
+.THIS #first_list .first_list_li #first_list_li_img3
+{
+    display: block;
+    width: 100%;
+    height: 120px;
+    background: url('/sfsites/c/resource/li_home_image3') center center no-repeat;
+    margin-bottom: 20px;
+    position: relative;
+    border-bottom: 2px solid #fff30b;
+}
+
+.THIS #first_list .first_list_li h3
+{
+	text-transform:uppercase;
+	margin-bottom: 20px;
+}
+
+.THIS .second_list .second_list_services_li
+{
+    margin-bottom: 15px;
+    padding: 0 0 0 30px;
+    background: url('/sfsites/c/resource/flecha_li') left top no-repeat;
+    line-height: 120%;
+}
+
+.THIS #first_list .middle_li
+{
+    margin: 0 108px 0 108px;
+}
+
+.THIS #first_list_services
+{
+    float:left;
+    width:100%;
+}
+
+.THIS #first_list_services .first_list_services_li
+{
+    float:left;
+    width:100%;
+    padding: 62px 0 31px 165px;
+    margin-bottom: 80px;
+}
+
+.THIS #first_list_services .first_list_services_li_image1
+{
+    background: url('/sfsites/c/resource/li_home_services_image1') left center no-repeat;
+}
+
+.THIS #first_list_services .first_list_services_li_image2
+{
+    background: url('/sfsites/c/resource/li_home_services_image2') left center no-repeat;
+	background-position: left 18px;
+}
+
+.THIS #first_list_services .first_list_services_li_image3
+{
+    background: url('/sfsites/c/resource/li_home_services_image3') left center no-repeat;
+    background-position: left 18px;
+}
+
+.THIS #first_list_services .first_list_services_li h4
+{
+    display: block;
+    width: 160px;
+    float: left;
+    padding-left: 15px;
+    font-size: 18px;
+    border-left: 4px solid #fff403;
+    text-transform: uppercase;
+}
+
+.THIS .second_list_services
+{
+	float:left;
+}
+
+.THIS .second_list_services .second_list_services_li
+{
+    float:left;
+    width:180px;
+	margin-left: 83px;
+}
+
+.THIS .second_list_services h5
+{
+	text-transform:uppercase;
+    margin-bottom: 15px;
+}
+
+.THIS .third_list_services
+{
+    float:left;
+}
+
+.THIS .third_list_services li
+{
+    margin-bottom: 15px;
+    padding: 0 0 0 30px;
+    background: url('/sfsites/c/resource/flecha_li') left top no-repeat;
+    line-height: 120%;
+}
+
+.THIS #first_list_services .first_list_services_li .middle_h4
+{
+    border-left: 4px solid #484848;
+}
+
+
+
+
+@media screen and (max-width: 1162px)
+{
+    .THIS #first_list .first_list_li
+    {
+        width:100%;
+    }
+    
+    .THIS #first_list .first_list_li h3
+    {
+        text-align:center;
+    }
+    
+    .THIS .second_list li
+    {
+        text-align:center;
+    }
+    
+    .THIS #first_list .middle_li
+    {
+        margin:0;
+    }
+    
+    .THIS #first_list_services .first_list_services_li_image1, .THIS #first_list_services .first_list_services_li_image2, .THIS #first_list_services .first_list_services_li_image3
+    {
+    	background-size: 80px;
+    }
+    
+    .THIS #first_list_services .first_list_services_li
+    {
+        padding: 62px 0 31px 91px;
+    }
+    
+    .THIS #first_list_services .first_list_services_li h4
+    {
+        width:100%;
+    }
+    
+    .THIS .second_list_services .second_list_services_li
+    {
+		margin: 5px 0 0 50px;
+    }
+    
+    .THIS #first_list_services .first_list_services_li_image2, .THIS #first_list_services .first_list_services_li_image3
+    {
+		background-position: left 73px;
+    }
+}
+
+@media screen and (max-width: 825px)
+{
+	.THIS #first_list_services .first_list_services_li
+    {
+		padding: 0;
+        background: none;
+        margin-bottom: 30px;
+    }
+    
+    .THIS .second_list_services .second_list_services_li
+    {
+        width:100%;
+        margin:0;
+    }
+    
+    .THIS #first_list_services .first_list_services_li h4
+    {
+        margin-bottom:15px;
+    }
+}

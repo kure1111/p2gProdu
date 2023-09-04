@@ -1,0 +1,336 @@
+<apex:page Controller="NEU_Form_Quotation">
+    <apex:includeScript value="{!$Resource.jquery_1_10_2}"/> 
+    <apex:includeScript value="{!$Resource.jquery_ui_1_10_3}"/>
+    <apex:includeScript value="{!$Resource.neurored_jquery}"/> `
+    <apex:includeScript value="{!$Resource.jquery_flightboard_1_1_1}"/> 
+    <apex:stylesheet value="{!URLFOR($Resource.jquery_ui_1_10_3_css,'jquery-ui-1.10.3.min.css')}"/>
+    <script>
+        $(document).ready(function(){ 
+            setDecimalSep(document.getElementById('{!$Component.form.decimalSep}').value, document.getElementById('{!$Component.form.thousandSep}').value);
+            
+            $('#phHeaderLogoImage').attr("src",function() {
+                var href='https://c.eu2.content.force.com/servlet/servlet.ImageServer?id=015b0000000AeRa&oid=00Db0000000cLrt&lastMod=1386235275000';
+                return href;
+            });
+        });
+        
+        
+        function check_campos()
+        {
+            var mayor_que_hoy = false;
+            var precio_relleno = false;
+            var rate_type_relleno = true;
+            var cuenta_rellena = true;
+            var id_del_fee = '{!id_fee_selected}';
+            var name_new_fee = false;
+            
+          //  if(n$('.valid_until_fee').val() > n$(n$.sfId('{!$Component.form.dia_de_hoy}')).val())
+                mayor_que_hoy = true;
+          //  else
+          //      alert('The field "Valid Until" must be greater than today');
+            
+            if($('.fee_quoted').val() == 'false')
+            {
+                if($('.price_fee').getFloat() > 0 )
+                    precio_relleno = true;
+                else
+                      alert('The field "Buy Rate" must be filled');
+            }
+            
+           /* if($('.Name_fee_new').val() != '' &&  $('.Name_fee_new').val() != null)
+            {
+                name_new_fee = true;
+            }
+            else
+                alert('The field "Service Rate Name" must be filled');*/
+            
+            if(mayor_que_hoy == true && precio_relleno == true && rate_type_relleno == true && cuenta_rellena == true)
+            {
+                var document_info = confirm("Are you sure you want to submit this quote?");
+                if (document_info  == true)
+                    enviar_formulario();
+            
+            }
+            else 
+                alert('no'+mayor_que_hoy +precio_relleno +rate_type_relleno +cuenta_rellena );
+        }
+        
+    </script>
+    <style>
+        textarea {
+            font-family: 'Arial','Helvetica',sans-serif;
+            font-size: 100%;
+            width: 166px;
+        }
+    </style>
+    <apex:form id="form" >
+        <apex:sectionHeader title="Request for Quotation" /> 
+        <apex:pageMessages />
+        <apex:actionFunction name="enviar_formulario" action="{!send_form}"  rerender="fee_quoted,block1" status="myStatus"/>
+        <apex:inputHidden value="{!decimalSep}" id="decimalSep"/>
+        <apex:inputHidden value="{!thousandSep}" id="thousandSep"/>
+        <apex:pageBlock id="block1" mode="maindetail" title="Service Rate Detail" rendered="{!error==false}">
+            <apex:inputhidden value="{!record.Quoted__c}" html-class="fee_quoted" id="fee_quoted"/>
+            <apex:pageBlockButtons >
+                <input type="button" value="Save" class="btn" onclick ="check_campos();" style="width: 35px; display:{!IF(record.Quoted__c == true,'none','')}"/>
+             </apex:pageBlockButtons>
+             <apex:pageBlockSection title="Information {!if(id_fee_selected != null && id_fee_selected !='' && name_fee_selected != '' && name_fee_selected != null,'('+ name_fee_selected +')','' )}" columns="2">
+            
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="Service Rate Name"/>
+                    <!-- <apex:inputField value="{!record.Name}" styleclass="Name_fee_new" style="border-left: 2px red solid;"/> -->
+                    <apex:outputField value="{!record.Name}" styleclass="Name_fee_new" />
+                </apex:pageBlockSectionItem>
+                
+               <!--  <apex:pageBlockSectionItem > 
+                    <apex:outputLabel value="Service Rate Category"/>
+                    <apex:inputfield value="{!record.Fee_Category__c}" />
+                </apex:pageBlockSectionItem>-->
+            
+                <!-- <apex:pageBlockSectionItem rendered="{!id_fee_selected == null}">
+                    <apex:outputLabel value="Route"/>
+                    <apex:selectList id="route_selector2"  label="Route" value="{!route_selected_id2}" size="1" >
+                                 <apex:selectOptions value="{!routes}"/>
+                    </apex:selectList>
+                </apex:pageBlockSectionItem>
+                <apex:pageBlockSectionItem rendered="{!id_fee_selected != null}">
+                    <apex:outputLabel value="Route"/>
+                    <apex:outputtext value="{!route_selected_Name2}"/>
+                </apex:pageBlockSectionItem> -->
+                
+                <apex:pageBlockSectionItem rendered="{!id_fee_selected != null}">
+                    <apex:outputLabel value="Carrier"/>
+                    <apex:outputfield value="{!record.Carrier_Account__c}"/><!-- required="true" onchange="existencia();" -->
+                </apex:pageBlockSectionItem>
+                 <apex:pageBlockSectionItem rendered="{!id_fee_selected == null}">
+                    <apex:outputLabel value="Carrier"/>
+                    <apex:inputfield value="{!record.Carrier_Account__c}"/><!-- required="true" onchange="existencia();" -->
+                </apex:pageBlockSectionItem>         
+                
+                
+                 
+               
+                <!--<apex:pageBlockSectionItem rendered="{!id_fee_selected != null}">
+                    <apex:outputLabel value="Account for"/>
+                    <apex:outputfield value="{!record.Account_for__c}" />
+                </apex:pageBlockSectionItem>
+                 <apex:pageBlockSectionItem rendered="{!id_fee_selected == null && shipment == null && import_export == null}" html-class="account_for_api1">
+                    <apex:outputLabel value="Account for"/>
+                    <apex:inputfield value="{!record.Account_for_API__c}" style="    " html-class="account_for_api"  id="account_for_api" />
+                </apex:pageBlockSectionItem>
+                
+                <apex:pageBlockSectionItem rendered="{!id_fee_selected == null && (shipment != null || import_export != null)}">
+                    <apex:outputLabel value="Account for"/>
+                    <apex:inputfield value="{!record.Account_for__c}" style="    " />
+                </apex:pageBlockSectionItem>
+               
+               <apex:pageBlockSectionItem > 
+                    <apex:outputLabel value="Active"/>
+                    <apex:inputField value="{!record.Active__c}" html-class="estado_fee"/>
+                </apex:pageBlockSectionItem>-->
+                
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="Route"/>
+                    <apex:outputText value="{!record.Route__r.Name}" />
+                </apex:pageBlockSectionItem>
+                
+                <apex:pageBlockSectionItem rendered="{!record.Quoted__c == false}">
+                    <apex:outputLabel value="Valid From"/>
+                    <apex:inputField value="{!record.Valid_From__c}" label="Valid From" html-class="valid_from_fee" /><!-- onchange="sacar_valor_fecha();" -->
+                </apex:pageBlockSectionItem>
+                
+                 <apex:pageBlockSectionItem rendered="{!record.Quoted__c == true}">
+                    <apex:outputLabel value="Valid From"/>
+                    <apex:outputField value="{!record.Valid_From__c}" label="Valid From" html-class="valid_from_fee" />
+                </apex:pageBlockSectionItem>
+                
+                
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="Service Type"/>
+                    <apex:outputtext value="{!shipment_service_type}"/>
+                </apex:pageBlockSectionItem>
+                
+                <apex:pageBlockSectionItem rendered="{!record.Quoted__c == false}">
+                    <apex:outputLabel value="Valid Until"/>
+                    <apex:inputField value="{!record.Valid_Until__c}" label="Valid Until" html-class="valid_until_fee" /><!-- onchange="sacar_valor_fecha();" -->
+                </apex:pageBlockSectionItem>
+                
+                <apex:pageBlockSectionItem rendered="{!record.Quoted__c == true}">
+                    <apex:outputLabel value="Valid Until"/>
+                    <apex:outputField value="{!record.Valid_Until__c}" label="Valid Until" html-class="valid_until_fee" />
+                </apex:pageBlockSectionItem>
+                
+                 <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="Service Rate Description"/>
+                   <!--  <apex:inputfield value="{!record.Fee_Description__c}" />-->
+                    <apex:outputfield value="{!record.Fee_Description__c}" />
+                </apex:pageBlockSectionItem>
+                
+                <apex:pageBlockSectionItem rendered="{!record.Quoted__c == false}"> 
+                    <apex:outputLabel value="Transit Time (Days)"/>
+                    <apex:inputField value="{!record.TT_Days__c}"/>
+                </apex:pageBlockSectionItem>
+                
+                <apex:pageBlockSectionItem rendered="{!record.Quoted__c == true}"> 
+                    <apex:outputLabel value="Transit Time (Days)"/>
+                    <apex:outputField value="{!record.TT_Days__c}"/>
+                </apex:pageBlockSectionItem>
+                
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="Container Type"/>
+                    <apex:outputtext value="{!record.Container_Type__r.Name}" />
+                </apex:pageBlockSectionItem>
+                
+                <apex:pageBlockSectionItem rendered="{!record.LOT_Url__c != null}">
+                    <apex:outputLabel value="Document LOT"/>
+                    <apex:outputField value="{!record.LOT__c}"/>
+                </apex:pageBlockSectionItem>   
+                
+                <apex:pageBlockSectionItem rendered="{!record.LOT_Url__c == null}">
+                    <apex:outputText value="" />
+                </apex:pageBlockSectionItem> 
+                
+                <apex:pageBlockSectionItem rendered="{!record.Quoted__c == false}">
+                    <apex:outputLabel value="Max Kgs"/>
+                    <apex:inputfield value="{!record.Max_Kgs__c}" />
+                </apex:pageBlockSectionItem>
+                
+                <apex:pageBlockSectionItem rendered="{!record.Quoted__c == true}">
+                    <apex:outputLabel value="Max Kgs"/>
+                    <apex:outputfield value="{!record.Max_Kgs__c}" />
+                </apex:pageBlockSectionItem>
+                
+                 <apex:pageBlockSectionItem rendered="{!record.Quoted__c == true}">
+                    <apex:outputLabel value="Remarks"/>
+                    <apex:outputfield value="{!record.Comments__c}" />
+                </apex:pageBlockSectionItem>
+                
+                <apex:pageBlockSectionItem rendered="{!record.Quoted__c == false}">
+                    <apex:outputLabel value="Remarks"/>
+                    <apex:inputfield value="{!record.Comments__c}" style="    width: 488px;"/>
+                </apex:pageBlockSectionItem>   
+                
+                <apex:pageBlockSectionItem rendered="{!record.Quoted__c == false}">
+                    <apex:outputLabel value="Max M3"/>
+                    <apex:inputfield value="{!record.Max_M3__c}" />
+                </apex:pageBlockSectionItem>
+                
+                <apex:pageBlockSectionItem rendered="{!record.Quoted__c == true}">
+                    <apex:outputLabel value="Max M3"/>
+                    <apex:outputfield value="{!record.Max_M3__c}" />
+                </apex:pageBlockSectionItem>
+                
+                <apex:pageBlockSectionItem >
+                    <apex:outputText value="" />
+                </apex:pageBlockSectionItem>    
+                
+                 <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="Containers Count"/>
+                    <apex:outputtext value="{!numero_contenedores}"/>
+                </apex:pageBlockSectionItem>
+                
+                 <apex:pageBlockSectionItem >
+                    <apex:outputText value="" />
+                </apex:pageBlockSectionItem>  
+                
+                <!-- <apex:pageBlockSectionItem rendered="{!shipment != null || import_export != null}">
+                    <apex:outputLabel value="Containers Count"/>
+                    <apex:outputtext value="{!numero_contenedores}"/>
+                </apex:pageBlockSectionItem>
+                
+                
+                <apex:pageBlockSectionItem rendered="{!shipment != null || import_export != null}">
+                    <apex:outputtext value=""/>
+                </apex:pageBlockSectionItem>-->
+                
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="Rate Type"/>
+                    <!-- <apex:selectList id="Rate_Type_selector"  label="Rate_Type_selector" value="{!record.Rate_Type__c}" html-class="rate_type_fee" size="1" style="    border-left: 2px red solid;">
+                        <apex:selectOptions value="{!listado_rate_type}"/>
+                    </apex:selectList>-->
+                    <apex:outputfield value="{!record.Rate_Type__c}" /> 
+                </apex:pageBlockSectionItem>
+                <apex:pageBlockSectionItem >
+                    <apex:outputtext value=""/>
+                </apex:pageBlockSectionItem>
+                
+                <apex:pageBlockSectionItem rendered="{!record.Quoted__c == false}">
+                    <apex:outputLabel value="Vol. Factor"/>
+                    <apex:inputfield value="{!record.Volumetric_Factor__c}" />
+                </apex:pageBlockSectionItem>
+                
+                <apex:pageBlockSectionItem rendered="{!record.Quoted__c == true}">
+                    <apex:outputLabel value="Vol. Factor"/>
+                    <apex:outputfield value="{!record.Volumetric_Factor__c}" />
+                </apex:pageBlockSectionItem>
+                
+                <apex:pageBlockSectionItem >
+                    <apex:outputText value="" />
+                </apex:pageBlockSectionItem>  
+                
+                <apex:pageBlockSectionItem rendered="{!record.Quoted__c == false}">
+                    <apex:outputLabel value="Min Amount"/>
+                    <apex:inputfield value="{!record.Min__c}" />
+                </apex:pageBlockSectionItem>
+                
+                <apex:pageBlockSectionItem rendered="{!record.Quoted__c == true}">
+                    <apex:outputLabel value="Min Amount"/>
+                    <apex:outputfield value="{!record.Min__c}" />
+                </apex:pageBlockSectionItem>
+                
+                <apex:pageBlockSectionItem >
+                    <apex:outputText value="" />
+                </apex:pageBlockSectionItem> 
+                
+                <apex:pageBlockSectionItem rendered="{!record.Quoted__c == false}">
+                    <apex:outputLabel value="Buy Rate"/>
+                    <apex:inputField value="{!record.Buy_Rate__c}" html-class="price_fee" style="    border-left: 2px red solid;"/>
+                </apex:pageBlockSectionItem>
+                
+                <apex:pageBlockSectionItem rendered="{!record.Quoted__c == true}">
+                    <apex:outputLabel value="Buy Rate"/>
+                    <apex:outputField value="{!record.Buy_Rate__c}" html-class="price_fee"/>
+                </apex:pageBlockSectionItem>
+                
+                <apex:pageBlockSectionItem >
+                    <apex:outputtext value=""/>
+                </apex:pageBlockSectionItem>
+                
+                <apex:pageBlockSectionItem rendered="{!record.Quoted__c == false}">
+                    <apex:outputLabel value="Currency"/>
+                    <apex:selectList id="Currency_selector" value="{!currency_selected}" size="1">
+                        <apex:selectOptions value="{!currencys}"/>
+                    </apex:selectList>
+                </apex:pageBlockSectionItem>
+                
+                <apex:pageBlockSectionItem rendered="{!record.Quoted__c == true}">
+                    <apex:outputLabel value="Currency"/>
+                    <apex:outputText value="{!currency_selected}" />
+                </apex:pageBlockSectionItem>
+            </apex:pageBlockSection>
+            
+        </apex:pageBlock>
+        
+        <apex:pageBlock id="block_list_cargoLines" title="Import-Export Cargo Lines" mode="maindetail" rendered="{!error==false}">
+        <apex:pageBlockTable value="{!list_to_IE_cargo_lines}" var="line">
+            <apex:column value="{!line.Name}"/>
+            <apex:column value="{!line.Item_Name__r.Name}"/>
+            <apex:column value="{!line.Units__c}"/>
+            <apex:column value="{!line.Unit_of_measure__c}"/>   
+            <apex:column style="text-align:right;" value="{!line.Total_Shipping_Volume_m3__c}"/>
+            <apex:column style="text-align:right;" value="{!line.Total_Shipping_Weight_Kgs__c}"/>
+        </apex:pageBlockTable>  
+        </apex:pageBlock>   
+        
+          <apex:actionstatus id="myStatus">
+            <apex:facet name="start">
+                <div class="waitingSearchDiv" id="el_loading" style="background-color:#fbfbfb;height:100%;opacity:0.65;width:100%;"> 
+                    <div class="waitingHolder" style="top:74.2px;width:91px;">
+                        <img class="waitingImage" src="/img/loading.gif" title="Please Wait..." />
+                        <span class="waitingDescription">Loading...</span>
+                    </div>
+                </div>
+            </apex:facet>
+        </apex:actionstatus>
+    </apex:form>    
+</apex:page>

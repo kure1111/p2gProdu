@@ -1,0 +1,182 @@
+<apex:page standardController="Price_List__c" extensions="NEU_Allocate_Families_Catalog" standardStylesheets="false">
+<apex:includeScript value="{!$Resource.neu_jquery}"/> 
+<apex:includeScript value="{!$Resource.jquery_1_10_2}"/> 
+<apex:includeScript value="{!$Resource.jquery_ui_1_10_3}"/>
+<apex:includeScript value="{!$Resource.neurored_jquery}"/> 
+<apex:stylesheet value="{!URLFOR($Resource.jquery_ui_1_10_3_css,'jquery-ui-1.10.3.min.css')}"/>
+    <apex:form id="form">
+        <script>
+            
+            $(document).ready(function(){
+             	$($.sfId('{!$Component.form.radio}')).buttonset();
+ 	   	});
+	   	
+	   	function sort(letter)
+		{
+			document.getElementById('{!$Component.form.sort_value}').value = letter;
+			document.getElementById('{!$Component.form.step}').value = "first";
+			get_productos();
+		}
+		
+        function del_oi(id)
+		{
+			document.getElementById('{!$Component.form.id_oi}').value = id;
+			delete_oi();
+		}
+		
+		function buscar()
+		{
+				document.getElementById('{!$Component.form.search_filter}').value = $(".buscar").val();
+				get_productos();
+		}
+		
+		function sort(letter)
+		{
+				document.getElementById('{!$Component.form.search_filter}').value = letter;
+				get_productos();
+		}
+        </script>
+        <style>
+            
+            .Custom67Tab .bPageBlock {border-top:3px solid #9e4fa5;}
+            .sort_table td {cursor: pointer;}
+            .outer td {height: 49px;}
+            .ui-buttonset .ui-button {height: 100%; vertical-align: middle;}
+        </style>
+
+          <apex:outputLink value="{!URLFOR($Action.Price_List__c.View,Price_List__c.Id)}">
+               <apex:sectionHeader subtitle="{!Price_List__c.Name}" title="Allocate Families to {!$ObjectType.Price_List__c.label}">
+               </apex:sectionHeader>
+          </apex:outputLink>
+        
+          <apex:outputPanel id="radios" style="border-bottom: 3px solid #9e4fa5;">
+			<apex:selectRadio id="radio" value="{!newcategory}" onchange="changeradios();" style="border-bottom: 3px solid #9e4fa5;">
+	        	<apex:selectOptions value="{!newcategories}"/>
+	    	</apex:selectRadio>
+	   	</apex:outputPanel>
+	   	<apex:actionFunction name="changeradios"  status="myStatus" reRender="linesSelector"/>
+        <table border="0" cellspacing="5" cellpadding="5" class="actions_table">
+			<tr>
+				<td style="font-size: 14px; font-weight: bold;">Search Family Name</td>
+				<td><apex:inputText value="{!search_filter}" styleclass="buscar"/></td>
+				<td><input type="button" value="SEARCH" class="search_data btn" onclick="buscar();"/></td>
+			</tr>
+		</table>
+        
+        <apex:outputPanel id="abc">
+			<apex:pageBlock title="Families">
+				<table border="0" cellspacing="5" cellpadding="5" class="sort_table">
+					<tr>
+						<td ><span onclick="sort('A');">A</span></td>
+						<td class="sort_table_separator">|</td>
+						<td><span onclick="sort('B');">B</span></td>
+						<td class="sort_table_separator">|</td>
+						<td><span onclick="sort('C');">C</span></td>
+						<td class="sort_table_separator">|</td>
+						<td><span onclick="sort('D');">D</span></td>
+						<td class="sort_table_separator">|</td>
+						<td><span onclick="sort('E');">E</span></td>
+						<td class="sort_table_separator">|</td>
+						<td><span onclick="sort('F');">F</span></td>
+						<td class="sort_table_separator">|</td>
+						<td><span onclick="sort('G');">G</span></td>
+						<td class="sort_table_separator">|</td>
+						<td><span onclick="sort('H');">H</span></td>
+						<td class="sort_table_separator">|</td>
+						<td><span onclick="sort('I');">I</span></td>
+						<td class="sort_table_separator">|</td>
+						<td><span onclick="sort('J');">J</span></td>
+						<td class="sort_table_separator">|</td>
+						<td><span onclick="sort('K');">K</span></td>
+						<td class="sort_table_separator">|</td>
+						<td><span onclick="sort('L');">L</span></td>
+						<td class="sort_table_separator">|</td>
+						<td><span onclick="sort('M');">M</span></td>
+						<td class="sort_table_separator">|</td>
+						<td><span onclick="sort('N');">N</span></td>
+						<td class="sort_table_separator">|</td>
+						<td><span onclick="sort('O');">O</span></td>
+						<td class="sort_table_separator">|</td>
+						<td><span onclick="sort('P');">P</span></td>
+						<td class="sort_table_separator">|</td>
+						<td><span onclick="sort('Q');">Q</span></td>
+						<td class="sort_table_separator">|</td>
+						<td><span onclick="sort('R');">R</span></td>
+						<td class="sort_table_separator">|</td>
+						<td><span onclick="sort('S');">S</span></td>
+						<td class="sort_table_separator">|</td>
+						<td><span onclick="sort('T');">T</span></td>
+						<td class="sort_table_separator">|</td>
+						<td><span onclick="sort('U');">U</span></td>
+						<td class="sort_table_separator">|</td>
+						<td><span onclick="sort('V');">V</span></td>
+						<td class="sort_table_separator">|</td>
+						<td><span onclick="sort('W');">W</span></td>
+						<td class="sort_table_separator">|</td>
+						<td><span onclick="sort('X');">X</span></td>
+						<td class="sort_table_separator">|</td>
+						<td><span onclick="sort('Y');">Y</span></td>
+						<td class="sort_table_separator">|</td>
+						<td><span onclick="sort('Z');">Z</span></td>
+						<td class="sort_table_separator">|</td>
+						<td><span onclick="sort('All');">All</span></td>
+						<td>&nbsp;&nbsp;</td>
+						<!-- <td>TOTAL REGISTROS:&nbsp;&nbsp;<strong><apex:outputText value="{!total_records}"/></strong></td>-->
+					</tr>
+				</table>
+				
+	         <apex:outputPanel id="linesSelector">
+				<apex:pageBlock id="block0">
+					<apex:pageBlockTable id="table" value="{!listado_pricelist}" var="fee">
+						<apex:column >
+	                        <apex:facet name="header"><div style="text-align:left;">Family Image</div></apex:facet>
+	                        <apex:image value="{!fee.line.Url_Image__c}" style="width: 80px;"/>
+	                    </apex:column>
+						<apex:column headerValue="Family Name"> 
+							<c:customobject2 objid="{!fee.line.Id}" objname="{!fee.line.Name}"/>
+						</apex:column>
+						<apex:column headerValue="Description" value="{!fee.line.Description__c}" />
+						<apex:column headerValue="Ecommerce" value="{!fee.line.Ecommerce__c}"  />
+						<apex:column headerValue="Keywords" value="{!fee.line.Keywords__c}"  />
+						<apex:column headerValue="Ranking" value="{!fee.line.Ranking__c}"  />
+						<apex:column headerValue="Action">
+							<apex:inputCheckbox StyleClass="inputcheck" value="{!fee.selected}"  rendered="{!fee.insertado == false}"/>
+							<apex:image id="del_oi" value="/img/permissions_deny16.gif" onclick="del_oi('{!fee.line.Id}');" style="cursor:pointer;"  rendered="{!fee.insertado == true}"/>
+						</apex:column>
+						
+					</apex:pageBlockTable>
+					<apex:pageBlockButtons >
+	        				<apex:commandButton value="Allocate Families" status="myStatus"  styleClass="calculate" reRender="linesSelector"  action="{!asignar_price_list}"/>
+	       		 			<apex:commandButton value="Return to Catalog Price List" status="myStatus" action="{!return_pricelist}"/>
+	       		 	</apex:pageBlockButtons>
+				</apex:pageBlock>
+			 </apex:outputPanel>
+		   </apex:pageBlock>
+		</apex:outputPanel>
+                <apex:actionFunction name="delete_oi" action="{!delete_item_pricelist_select}" status="myStatus" reRender="linesSelector"/>
+		<apex:inputHidden value="{!id_oi}" id="id_oi"/>
+		<apex:actionFunction name="get_productos"  reRender="linesSelector" status="myStatus"/><!-- action="{!get_productos}" -->
+		<apex:inputHidden value="{!step}" id="step"/>
+		<apex:inputHidden value="{!sort_value}" id="sort_value"/>
+		<apex:inputHidden value="{!search_filter}" id="search_filter"/>
+		<apex:outputpanel >
+	       <apex:actionstatus id="myStatus">
+	           <apex:facet name="start">
+	               <div class="waitingSearchDiv" id="el_loading" style="background-color: #fbfbfb;
+	                      height: 100%;opacity:0.65;width:100%;"> 
+	                   <div class="waitingHolder" style="top: 74.2px; width: 91px;">
+	                       <img class="waitingImage" src="/img/loading.gif" title="Please Wait..." />
+	                       <span class="waitingDescription">Loading...</span>
+	                   </div>
+	               </div>
+	           </apex:facet>
+	       </apex:actionstatus>
+	   	</apex:outputpanel>
+	     <div class="waitingSearchDiv" id="otherStatus" style="display:none;background-color:#fbfbfb;height:100%;opacity:0.65;width:100%;"> 
+			<div class="waitingHolder" style="top:74.2px;width:91px;">
+				<img class="waitingImage" src="/img/loading.gif" title="Please Wait..." />
+				<span class="waitingDescription">Loading...</span>
+			</div>
+		</div>
+    </apex:form>
+</apex:page>

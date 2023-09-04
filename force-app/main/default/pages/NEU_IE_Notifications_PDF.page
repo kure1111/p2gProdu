@@ -1,0 +1,6 @@
+<apex:page standardController="Customer_Quote__c"  extensions="NEU_IE_Notifications_PDF" standardStylesheets="false" renderAs="pdf">
+    <apex:stylesheet value="{!$Resource.Style_Shipment_Notifications_PDF}"/>
+    <apex:form >
+          <apex:outputText value="{!string_pdf}" escape="false"/>
+    </apex:form> 
+</apex:page>

@@ -1,0 +1,27 @@
+<apex:page standardController="Customer_Quote__c" extensions="NEU_IE_Route_Shipments_map" sidebar="false" docType="html-5.0" showHeader="false">
+    <script>
+  function showMaps(shipId) {
+        document.getElementById('buttonMaps').style.display = 'none';
+        document.getElementById('showMaps').style.display = 'block';
+        document.getElementById('ttmap').src = '/apex/NEU_IE_Route_Shipments_map_print?id='+shipId;
+
+  }
+    </script>
+    <style>
+    #buttonMaps { cursor: pointer; }
+    .mapIcon{margin-left: 38%;}
+    .linkIconMap{margin-left: 37.5%;font-size: x-large;}
+    </style>
+    <apex:form id="form">
+        <div id="buttonMaps">
+            <a onclick="showMaps('{!Customer_Quote__c.Id}')">
+                <apex:image value="{!$Resource.googleMapsIcon}"  width="300" styleClass="mapIcon"/>
+                <br/>
+                <h2 class="linkIconMap">See Track on Google Maps</h2>
+            </a>
+        </div>
+        <div id="showMaps" style="display:none;">
+            <iframe id="ttmap" src="" width= "98%" height="1200px" style="border: 0px;"></iframe>
+        </div>
+    </apex:form>
+</apex:page>

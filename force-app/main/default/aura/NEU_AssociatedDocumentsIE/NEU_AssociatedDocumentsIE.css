@@ -1,0 +1,53 @@
+.THIS .slds-section-title--divider
+{
+    background:rgba(25, 124, 190, 0.05);
+}
+
+.THIS .mobile_table
+{
+    width: 100%;
+    border-bottom: 1px solid #d4d4d4;
+}
+
+.THIS .mobile_table .mobile_button
+{
+    width: 68px;
+    text-align: center;
+    background-position: center;
+    padding: 0;
+    font-size: 11px;
+}
+
+.THIS .mobile_table .td_button
+{
+    width:80px;
+}
+
+.THIS .mobile_table .view_button
+{
+    margin: 10px 0 0 0;
+}
+
+.THIS .mobile_table .del_button
+{
+	margin: 10px 0 10px 0;
+}
+
+.THIS .mobile_table .li_td
+{
+    font-size: 12px;
+}
+
+.THIS .mobile_table .name_doc
+{
+    color: #3e84b3;
+    font-size: 11px;
+}
+
+.THIS .mobile_interface{display:none;}
+
+@media screen and (max-width: 500px)
+{
+	.THIS .mobile_interface{display:block;}
+    .THIS .pc_interface{display:none;}
+}

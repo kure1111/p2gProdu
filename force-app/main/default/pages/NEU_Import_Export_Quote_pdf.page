@@ -1,0 +1,4 @@
+<apex:page standardController="Customer_Quote__c" extensions="NEU_Import_Export_Quote_pdf"  renderas="pdf" language="en_US">
+<apex:stylesheet value="{!$Resource.quotation_style_v2}"/>
+	<apex:outputText value="{!quotation}" escape="false"/>
+</apex:page>

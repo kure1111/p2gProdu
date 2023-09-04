@@ -1,0 +1,123 @@
+<apex:page StandardController="Customer_Quote__c" extensions="NEU_OM_GenerateQuote" renderAs="pdf" standardStylesheets="false" >
+<apex:includeScript value="{!$Resource.jquery_1_10_2}"/> 
+<apex:includeScript value="{!$Resource.jquery_ui_1_10_3}"/>
+<apex:includeScript value="{!$Resource.neurored_jquery}"/> 
+<apex:stylesheet value="{!URLFOR($Resource.jquery_ui_1_10_3_css,'jquery-ui-1.10.3.min.css')}"/>
+<apex:includeScript value="{!URLFOR($Resource.jquery_vfFloatingHeaders)}"/>
+<apex:stylesheet value="{!$Resource.Estilo_Generate_Quote}"/>
+
+    <script>
+      $(document).ready(function() {
+      
+        });
+    </script>
+    <apex:form id="form" styleclass="formulario">
+    <!--    <div style="float:left;">   
+            <span style="margin-top: 0px; margin-bottom: 10px; color: #000; font-size: 18px; font-family: Arial,Helvetica,sans-serif; font-weight: normal; float:left;">Quote {!Customer_Quote__c.Name}</span>
+        </div>-->
+        <apex:pageBlock >
+            <apex:pageBlockSection >
+                <apex:pageBlockSectionItem >
+                    <apex:image value="{!$Resource.company_logo}" style="text-align: center;" styleclass="logo"/>
+                </apex:pageBlockSectionItem>
+                <apex:pageBlockSectionItem >
+                        <apex:pageBlock id="block0">
+                            <apex:pageBlockTable id="table00" value="{!Customer_Quote__c}" var="ip" styleclass="tablacabecera">
+                                <apex:column headerValue="Import-Export Quote Number" value="{!Customer_Quote__c.Name}" style="text-align: left;"/>
+                                <apex:column headerValue="Quotation Status" value="{!Customer_Quote__c.Quotation_Status__c}" style="text-align: left;" />
+                                <apex:column headerValue="Approved Date" value="{!Customer_Quote__c.Approved_Date__c}"  style="text-align:right"/>
+                                <apex:column headerValue="Account Executive User" value="{!Customer_Quote__c.Account_Executive_User__c}"  style="text-align:right"/>
+                             </apex:pageBlockTable>
+                            
+                            <apex:pageBlockTable id="table0" value="{!Customer_Quote__c}" var="ipa" styleclass="tablacabecera2">
+                                <apex:column headerValue="Account Name " value="{!Customer_Quote__c.Account_for__r.Name}" style="text-align: left;"/>
+                                <apex:column headerValue="Account for (Billing Address)" value="{!Customer_Quote__c.Account_for_Billing_Address__c}" style="text-align: left;" />
+                                <apex:column headerValue="Account for (Shipping Address)" value="{!Customer_Quote__c.Account_for_Shipping_Address__c}"  style="text-align:left"/>
+                                <apex:column headerValue="Contact" value="{!Customer_Quote__c.Contact__r.Name}"  style="text-align:right"/>
+                             </apex:pageBlockTable>
+                    </apex:pageBlock>
+                </apex:pageBlockSectionItem>
+                </apex:pageBlockSection>
+            </apex:pageBlock>
+            
+            
+        <apex:pageBlock >   
+        
+        <apex:pageBlockSection title="Quote Item Lines" rendered="{!hay_items = true}">
+             </apex:pageBlockSection>
+             
+                <apex:outputPanel id="linesSelector2" title="Quote Item Lines"  style="font-size: 10px;"   rendered="{!hay_items = true}" styleclass="titulos_secundarios">
+                  <apex:pageBlock id="block3" title="Items">
+                    <apex:pageBlockTable id="table3" value="{!itemslines}" var="linesdisbur" styleclass="tablasfees">
+                        <apex:column headerValue="Item Name" value="{!linesdisbur.Item_Name__r.Name} {!linesdisbur.Extension_Item_Name__c}" style="text-align: left;"/>
+                        <apex:column headerValue="Units" value="{!linesdisbur.Units__c}"  style="text-align:right"/>
+                        <apex:column headerValue="Price" value="{!linesdisbur.Price__c}"  style="text-align:left"/>
+                        <apex:column headerValue="Amount" value="{!linesdisbur.Amount__c}"  style="text-align:right"/>
+                        <apex:column headerValue="Duty" value="{!linesdisbur.Duty__c}" style="text-align: right;" />
+                        <apex:column headerValue="Total Taxes" value="{!linesdisbur.Total_Taxes_Form__c}"  style="text-align:right"/>
+                        
+                    </apex:pageBlockTable>
+                    <apex:outputText styleclass="totales_parciales" value="Total Value Items {0} {!currency_customer_quote}">
+                       <apex:param value="{!totallineasitems}"/>
+                    </apex:outputText>
+                </apex:pageBlock>
+                
+         <apex:pageBlockSection title="Quote Fee Lines" rendered="{!hay_fees_disbur = true || hay_fees_reve = true || hay_fees_trans = true}">
+            </apex:pageBlockSection>
+          <apex:outputPanel id="linesSelector" title="Quote Fee Lines" style="font-size: 10px; margin-bottom: 45px;"  rendered="{!hay_fees_disbur = true}" styleclass="titulos_secundarios">
+            <apex:pageBlock id="block1" title="Disbursements">
+                    <apex:pageBlockTable id="table1" value="{!disburfeelines}" var="linesdisbur" styleclass="tablasfees">
+                        <apex:column headerValue="Fee Name" value="{!linesdisbur.Service_Rate_Name__r.Name} {!linesdisbur.Extension_Service_Name__c}" style="text-align: left;"/>
+                        <apex:column headerValue="Rate Type" value="{!linesdisbur.Rate_Type__c}" style="text-align: left;" />
+                        <apex:column headerValue="Units" value="{!linesdisbur.Units__c}"  style="text-align:right"/>
+                        <apex:column headerValue="Quote Sell Price" value="{!linesdisbur.Quote_Sell_Price__c}"  style="text-align:right"/>
+                        <apex:column headerValue="Sell Amount" value="{!linesdisbur.Sell_Amount__c}"  style="text-align:right"/>
+                    </apex:pageBlockTable>
+                    <apex:outputText styleclass="totales_parciales" value="Disbursement Total {0} {1}">
+                      <apex:param value="{!totaldisburfee}"/>
+                      <apex:param value="{!currency_customer_quote}"/>
+                    </apex:outputText>
+                </apex:pageBlock>
+             </apex:outputPanel>
+              <apex:outputPanel style="font-size: 10px;" rendered="{!hay_fees_reve = true}" styleclass="titulos_secundarios">
+                  <apex:pageBlock id="block2" title="Clearing Costs" >
+                    <apex:pageBlockTable id="table2" value="{!revefeelines}" var="linesrevenue" styleclass="tablasfees">
+                        <apex:column headerValue="Fee Name" value="{!linesrevenue.Service_Rate_Name__r.Name} {!linesrevenue.Extension_Service_Name__c}" style="text-align: left;"/>
+                        <apex:column headerValue="Rate Type" value="{!linesrevenue.Rate_Type__c}" style="text-align: left;" />
+                        <apex:column headerValue="Units" value="{!linesrevenue.Units__c}"  style="text-align:right"/>
+                        <apex:column headerValue="Quote Sell Price" value="{!linesrevenue.Quote_Sell_Price__c}"  style="text-align:right"/>
+                        <apex:column headerValue="Sell Amount" value="{!linesrevenue.Sell_Amount__c}"  style="text-align:right"/>
+                    </apex:pageBlockTable>
+                    <apex:outputText styleclass="totales_parciales" value="Clearing Costs Total {0} {!currency_customer_quote}">
+                         <apex:param value="{!totalrefee}"/>
+                    </apex:outputText>
+                </apex:pageBlock>
+              </apex:outputPanel>
+              <apex:outputPanel style="font-size: 10px;" rendered="{!hay_fees_trans= true}" styleclass="titulos_secundarios">
+                  <apex:pageBlock id="block5" title="Transport & Freights" >
+                    <apex:pageBlockTable id="table5" value="{!Transportfeelines}" var="linestrans" styleclass="tablasfees">
+                        <apex:column headerValue="Fee Name" value="{!linestrans.Service_Rate_Name__r.Name} {!linestrans.Extension_Service_Name__c}" style="text-align: left;"/>
+                        <apex:column headerValue="Rate Type" value="{!linestrans.Rate_Type__c}" style="text-align: left;" />
+                        <apex:column headerValue="Units" value="{!linestrans.Units__c}"  style="text-align:right"/>
+                        <apex:column headerValue="Quote Sell Price" value="{!linestrans.Quote_Sell_Price__c}"  style="text-align:right"/>
+                        <apex:column headerValue="Sell Amount" value="{!linestrans.Sell_Amount__c}"  style="text-align:right"/>
+                    </apex:pageBlockTable>
+                    <apex:outputText styleclass="totales_parciales" value="Transport & Freights Total {0} {!currency_customer_quote}">
+                         <apex:param value="{!totalestrans}"/>
+                    </apex:outputText>
+                </apex:pageBlock>
+              </apex:outputPanel>
+               <apex:pageBlockSection title="Total">
+                </apex:pageBlockSection>
+                <apex:outputPanel id="block4" title="Totales">
+                  <apex:pageBlockTable id="table4" value="{!Customer_Quote__c}" var="total" styleclass="tabla_totales">
+                        <apex:column headerValue="Total Items" value="{!totallineasitems} {!currency_customer_quote}"  style="text-align:right; font-weight: bold; font-size: 14px;" rendered="{!hay_items = true}"/>
+                        <apex:column headerValue="Total Fees" value="{!totalfees} {!currency_customer_quote}"  style="text-align:right; font-weight: bold; font-size: 14px;" rendered="{!hay_fees_disbur = true || hay_fees_reve = true || hay_fees_trans = true}"/>
+                        <apex:column headerValue="Total Taxes" value="{!totaltaxesstring} {!currency_customer_quote}"  style="text-align:right; font-weight: bold; font-size: 14px;" rendered="{!hay_items = true}"/>
+                        <apex:column headerValue="Total Quote" value="{!totaldocumentos} {!currency_customer_quote}"  style="text-align:right; font-weight: bold; font-size: 14px;"/>
+                    </apex:pageBlockTable>
+                </apex:outputPanel>
+             </apex:outputPanel>
+         </apex:pageBlock>
+    </apex:form>
+</apex:page>

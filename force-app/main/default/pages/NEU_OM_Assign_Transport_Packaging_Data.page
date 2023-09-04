@@ -1,0 +1,103 @@
+<apex:page standardController="Transport_Packaging_Data__c" extensions="NEU_OM_Assign_Transport_Packaging_Data">
+<apex:stylesheet value="{!$Resource.Style_ContainerUtility}"/>
+<apex:includeScript value="{!$Resource.jquery_1_10_2}"/> 
+<apex:includeScript value="{!$Resource.jquery_ui_1_10_3}"/>
+<apex:includeScript value="{!$Resource.neurored_jquery}"/> 
+<apex:stylesheet value="{!URLFOR($Resource.jquery_ui_1_10_3_css,'jquery-ui-1.10.3.min.css')}"/>
+    <apex:form id="form">
+        <script>
+        $(document).ready(function () {
+            calcular();
+         });
+         function redireccionar()
+         {
+                $('#otherStatus').show();
+                top.location.href='/{!Transport_Packaging_Data__c.Id}';
+         }
+         function refres()
+         {
+            refrescar();
+         }
+       
+        </script>
+        
+        <div style="width: 71%; float: right; background: #f2f3f3; border-top: 2px solid #c6ad0f; border-radius: 4px; position: absolute; margin-left: 343px;">
+    <apex:outputPanel id="linesSelector">
+        <div style="overflow-y:auto; max-height:490px;">
+        <apex:actionFunction name="calcular" action="{!calcular}"  status="myStatus" reRender="linesSelector2" oncomplete="refres();"/>
+        <apex:actionFunction name="refrescar" status="myStatus" reRender="linesSelector"/>
+            <apex:pageBlock id="block1" mode="maindetail">
+                <apex:pageBlockTable id="table" value="{!Shipment_lines}" var="ShipmentItemsLine" rendered="{!ShowShipmentItemsLines}">
+                    <apex:column headerValue="">
+                        <apex:inputCheckbox StyleClass="inputcheck" id="linea_check" value="{!ShipmentItemsLine.selected}" onchange="calcular();"/>
+                        <apex:image value="/img/msg_icons/warning16.png" title="It hasn´t relation to the pallet" rendered="{!ShipmentItemsLine.tiene_relacion_pallet == true}"/>
+                    </apex:column>
+                    <apex:column headerValue="Shipment Item Line">
+                        <c:customobject2 objid="{!ShipmentItemsLine.line.Id}" objname="{!ShipmentItemsLine.line.Name}"/>
+                    </apex:column>
+                    <apex:column headerValue="Shipment" value="{!ShipmentItemsLine.line.Shipment__c}"/>
+                    <apex:column headerValue="Shipment Consolidation Data" value="{!ShipmentItemsLine.line.Shipment_Consolidation_Data__c}"/>
+                    <apex:column headerValue="Item Name" value="{!ShipmentItemsLine.line.Item_Name__c}"/>
+                    <apex:column headerValue="Unit of measure" value="{!ShipmentItemsLine.line.Item_Name__r.Unit_of_measure__c}"/>
+                    <apex:column headerValue="Units Shipped" value="{!ShipmentItemsLine.line.Units_Shipped__c}" style="text-align: right;"/>
+                    <apex:column headerValue="Sell Origin Amount" value="{!ShipmentItemsLine.line.Sell_Origin_Amount__c}" style="text-align: right;"/>
+                    <apex:column headerValue="Total Weight (Kg)" style="text-align: right;">
+                        <apex:outputText value="{!IF(ShipmentItemsLine.line.Shipping_Weight_Kg__c != null && ShipmentItemsLine.line.Shipping_Weight_Kg__c >0, ShipmentItemsLine.line.Shipping_Weight_Kg__c, 0)}" html-neudata="peso"/>
+                    </apex:column>
+                    <apex:column headerValue="Total Volume (m3)" style="text-align: right;">
+                        <apex:outputText value="{!IF(ShipmentItemsLine.line.Shipping_Volume_m3__c  != null && ShipmentItemsLine.line.Shipping_Volume_m3__c >0, ShipmentItemsLine.line.Shipping_Volume_m3__c , 0)}" html-neudata="volumen"/>
+                    </apex:column>
+                </apex:pageBlockTable> 
+                <apex:pageBlockButtons rendered="{!ShowShipmentItemsLines}"  location="top">
+                    <apex:commandButton value="Save Packaging Consolidation Data" status="myStatus" action="{!crearelacion}" reRender="linesSelector"  oncomplete="redireccionar();"/>
+                </apex:pageBlockButtons>
+             </apex:pageBlock>
+        </div>
+     
+</apex:outputPanel>
+</div>
+    <div>
+        <apex:outputPanel id="linesSelector2" >
+            <div id="capa_status_container" style="border-top: 2px solid #c6ad0f; border-radius: 4px; left: 0%; float: left; position: absolute;">
+               <span class="cabecera_modificacion_container" >Pallet / Container Type:</span>
+                <apex:selectList id="chooseClient" value="{!container_selected}" size="1" styleclass="seleccioncontainer"  onchange="calcular();">
+                  <apex:selectOptions value="{!containers}"/>
+                </apex:selectList>
+                <span id="titulo_status_container">Packaging Resume</span>
+                <ul id="lista_datos_container"> 
+                    <li><img src="{!URLFOR($Resource.ImagesUtilContainer,'caja-mod.png')}" class="imagen_dato_container" style="height: 41px; margin-top: 2px; width: 35px;"/><span class="nombre_dato_container">Number of Packages</span><span class="dato_container" id="totalcajas">{!TotalNumberBoxes}</span></li>
+                    <li style="margin-left: 12px;"><img src="{!URLFOR($Resource.ImagesUtilContainer,'weight_kilogram.png')}" class="imagen_dato_container" style="width: 43px; margin-top: 2px; margin-right: 1px;"/><span class="nombre_dato_container" style="margin-left: 10px;">Total Gross Weight (Kg)</span><span class="dato_container" id="totalweight" style="margin: 19px 5px 10px 10px;">{!Grossweight}</span></li>
+                    <li style="margin-left: 17px;"><img src="{!URLFOR($Resource.ImagesUtilContainer,'cobo-mod.png')}" class="imagen_dato_container" style="width: 34px; height: 32px; margin-right: 4px; margin-right: 10px;"/><span class="nombre_dato_container" style="margin-left: 6px;">Total Gross Volume (m3)</span><span class="dato_container">{!Cube}</span></li>
+                    <li style="margin-left: 16px;"><img src="{!URLFOR($Resource.ImagesUtilContainer,'pallets-mod.png')}" class="imagen_dato_container" style="margin-top: 11px; height: 26px; width: 39px;"/><span class="nombre_dato_container">Number of Pallets</span><span class="dato_container">{!TotalNumberPallets}</span></li>
+                    <li><img src="{!$Resource.ContainerBlue}" class="imagen_dato_container" style="height: 41px; margin-top: 2px;"/><span class="nombre_dato_container" style="margin-left: 13px;">Number of Containers</span><span class="dato_container">{!TotalNumberCont}</span></li>
+                    <li><img src="{!URLFOR($Resource.ImagesUtilContainer,'free-container-mod.png')}" class="imagen_dato_container"/><div id="progress_bar" class="ui-progress-bar ui-container" style="width: 238px; float: left; margin-left: 12px; height: 28px;">
+                            <span class="ui-label" style="margin: 6px 94px 7px 40px; z-index: 100;">% Last Container Load  <b class="value"> {!porc_ocupacion}</b></span>
+                            <div class="ui-progress" style="height: 26px; width:0%; width: {!porc_ocupacion}; "><!--este rellena -->
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </apex:outputPanel>
+    </div>
+        <apex:outputpanel >
+           <apex:actionstatus id="myStatus">
+               <apex:facet name="start">
+                   <div class="waitingSearchDiv" id="el_loading" style="background-color: #fbfbfb; height: 100%;opacity:0.65;width:100%;"> 
+                       <div class="waitingHolder" style="top: 74.2px; width: 91px;">
+                           <img class="waitingImage" src="/img/loading.gif" title="Please Wait..." />
+                           <span class="waitingDescription">Loading...</span>
+                       </div>
+                   </div>
+               </apex:facet>
+           </apex:actionstatus>
+        </apex:outputpanel>
+        <div class="waitingSearchDiv" id="otherStatus" style="display:none;background-color:#fbfbfb;height:100%;opacity:0.65;width:100%;"> 
+            <div class="waitingHolder" style="top:74.2px;width:91px;">
+                <img class="waitingImage" src="/img/loading.gif" title="Please Wait..." />
+                <span class="waitingDescription">Loading...</span>
+            </div>
+        </div>
+            <apex:inputHidden value="{!resultado}" id="resultado"/>
+    </apex:form>
+</apex:page>

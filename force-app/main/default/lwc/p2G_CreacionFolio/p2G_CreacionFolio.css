@@ -1,0 +1,28 @@
+.slds-modal__container{
+    position: absolute;
+    top: -200px;
+    left: 30px;
+    max-width: 97rem !important;
+    width: 90em !important;
+    height: 650px;
+}
+
+.slds-container{
+    top: 30px !important;
+    left: 80px !important;
+    height: 600px !important;
+    max-width: 80rem !important;
+    width: 80em !important;
+}
+
+.colorSection{
+    background-color: #E1E0DF;
+    text-align: center;
+}
+
+.container{
+    top: 10px !important;
+    left: 50px !important;
+    height: 500px !important;
+    width: 30em !important;
+}

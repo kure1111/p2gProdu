@@ -1,0 +1,106 @@
+<apex:page standardController="Warehouse__c" extensions="NEU_CreateInventoryExits">
+    <apex:form >
+        <apex:pagemessages id="messages"/>
+        <apex:outputpanel id="all_entries">
+            <apex:pageblock title="Warehouse Inventory">
+                <apex:pageblockbuttons location="top">
+                    <apex:inputfield value="{!filter.Account_for_Customer__c}"/>
+                    <apex:commandbutton value="Search Entries" action="{!search_entries}" rerender="entries, messages, all_entries"
+                                        status="myStatus"/>
+                    <apex:commandbutton value="Create Inventory Exits" action="{!create_exits}" rerender="messages"
+                                        status="myStatus"/>
+                    <apex:commandbutton value="Return Warehouse" action="{!return_warehouse}"/>
+                </apex:pageblockbuttons>
+                <apex:repeat value="{!palletLines}" var="palletLine">
+                    <apex:pageBlockSection title="{!palletLine.pallet}" columns="1">
+                        <apex:pageBlockTable value="{!palletLine.ex}" var="entry" id="entries">
+                            <apex:column >
+                                <apex:facet name="header">{!$ObjectType.Inventory_Exit__c.fields.Name.Label}</apex:facet>
+                                <apex:outputlink value="/{!entry.entry_record.Id}"
+                                                 target="_blank">{!entry.entry_record.Name}</apex:outputlink>
+                            </apex:column>
+                            <apex:column >
+                                <apex:facet name="header">{!$ObjectType.Inventory_Exit__c.fields.Warehouse__c.Label}</apex:facet>
+                                <apex:outputlink value="/{!entry.entry_record.Warehouse__c}"
+                                                 target="_blank">{!entry.entry_record.Warehouse__r.Name}</apex:outputlink>
+                            </apex:column>
+                            <apex:column >
+                                <apex:facet name="header">{!$ObjectType.Inventory_Exit__c.fields.Warehouse_Storage_Bin__c.Label}</apex:facet>
+                                <apex:outputlink value="/{!entry.entry_record.Warehouse_Storage_Bin__c}"
+                                                 target="_blank">{!entry.entry_record.Warehouse_Storage_Bin__r.Name}</apex:outputlink>
+                            </apex:column>
+                            <!--apex:column >
+                                <apex:facet name="header">{!$ObjectType.Shipment_Line__c.fields.Pallet_Code__c.Label}</apex:facet>
+                                <apex:outputText value="{!entry.entry_record.Shipment_Item_Line__r.Pallet_Code__c}"/>
+                            </apex:column-->
+                            <apex:column >
+                                <apex:facet name="header">{!$ObjectType.Inventory_Entry__c.fields.Item__c.Label}</apex:facet>
+                                <apex:outputlink value="/{!entry.entry_record.Item__c}"
+                                                 target="_blank">{!entry.entry_record.Item__r.Name}</apex:outputlink>
+                            </apex:column>
+                            <apex:column >
+                                <apex:facet name="header">{!$ObjectType.Inventory_Entry__c.fields.Item_Code__c.Label}</apex:facet>
+                                <apex:outputfield value="{!entry.entry_record.Item_Code__c}"/>
+                            </apex:column>
+                            <apex:column >
+                                <apex:facet name="header">{!$ObjectType.Inventory_Entry__c.fields.Item_Description__c.Label}</apex:facet>
+                                <apex:outputfield value="{!entry.entry_record.Item_Description__c}"/>
+                            </apex:column>
+                            <apex:column >
+                                <apex:facet name="header">{!$ObjectType.Inventory_Entry__c.fields.Total_Surface_m2__c.Label}</apex:facet>
+                                <apex:outputfield value="{!entry.entry_record.Total_Surface_m2__c}"/>
+                            </apex:column>
+                            <apex:column >
+                                <apex:facet name="header">{!$ObjectType.Inventory_Entry__c.fields.Units_Entry__c.Label}</apex:facet>
+                                <apex:outputfield value="{!entry.entry_record.Units_Entry__c}"/>
+                            </apex:column>
+                            <apex:column >
+                                <apex:facet name="header">{!$ObjectType.Inventory_Entry__c.fields.Units_Picked__c.Label}</apex:facet>
+                                <apex:outputfield value="{!entry.entry_record.Units_Picked__c}"/>
+                            </apex:column>
+                            <apex:column >
+                                <apex:facet name="header">{!$ObjectType.Inventory_Entry__c.fields.Remaining_Units__c.Label}</apex:facet>
+                                <apex:outputfield value="{!entry.entry_record.Remaining_Units__c}"/>
+                            </apex:column>
+                            <apex:column >
+                                <apex:facet name="header">{!$ObjectType.Inventory_Exit__c.fields.Units_Picked__c.Label}</apex:facet>
+                                <apex:inputfield value="{!entry.exit_record.Units_Picked__c}"/>
+                            </apex:column>
+                            <apex:column >
+                                <apex:facet name="header">{!$ObjectType.Inventory_Entry__c.fields.Arrival_Date__c.Label}</apex:facet>
+                                <apex:outputfield value="{!entry.entry_record.Arrival_Date__c}"/>
+                            </apex:column>
+                            <apex:column >
+                                <apex:facet name="header">{!$ObjectType.Inventory_Entry__c.fields.Days_in_Warehouse__c.Label}</apex:facet>
+                                <apex:outputfield value="{!entry.entry_record.Days_in_Warehouse__c}"/>
+                            </apex:column>
+                            <apex:column >
+                                <apex:facet name="header">{!$ObjectType.Inventory_Entry__c.fields.Exit_Date__c.Label}</apex:facet>
+                                <apex:outputfield value="{!entry.entry_record.Exit_Date__c}"/>
+                            </apex:column>
+                            <apex:column >
+                                <apex:facet name="header">Selected</apex:facet>
+                                <apex:inputcheckbox value="{!entry.selected}"/>
+                            </apex:column>
+                        </apex:pageBlockTable>
+                    </apex:pageBlockSection>
+                </apex:repeat>
+            </apex:pageblock>
+        </apex:outputpanel>
+
+        <apex:outputpanel >
+            <apex:actionstatus id="myStatus">
+                <apex:facet name="start">
+                    <div class="waitingSearchDiv" id="el_loading"
+                         style="background-color: #fbfbfb; height: 100%;opacity:0.65; width: 100%;">
+                        <div class="waitingHolder" style="width: 91px;">
+                            <img class="waitingImage" src="/img/loading.gif" title="Please Wait..."/>
+                            <span class="waitingDescription">Loading...</span>
+                        </div>
+                    </div>
+                </apex:facet>
+            </apex:actionstatus>
+        </apex:outputpanel>
+
+    </apex:form>
+</apex:page>

@@ -1,0 +1,63 @@
+<apex:page StandardController="Shipment__c" extensions="NEU_ShipmentRequestSteps">
+    <style>
+        #container
+        {
+            width: 100%;
+            float: left;
+        }
+        
+        .lista_steps
+        {
+            padding: 0;
+            margin: 10px auto 0 auto;
+            width: 555px;
+        }
+        
+        .li_step
+        {
+            float: left;
+            padding: 10px 2px 10px 2px;
+            color: white;
+            font-family: Arial;
+            font-size: 12px;
+            border-radius: 10px;
+            webkit-box-shadow: 0px 0px 10px 0px rgba(50, 50, 50, 1);
+            -moz-box-shadow: 0px 0px 10px 0px rgba(50, 50, 50, 1);
+            box-shadow: 0px 0px 7px 0px rgba(50, 50, 50, 1);
+            margin: 0 0 0 7px;
+            cursor: pointer;
+            width: 98px;
+            text-align: center;
+            height: 28px;
+            list-style-type: none;
+            margin-top: 6px;
+        }
+        .li_step a, .li_step a:hover
+        {
+            color: white;
+            font-family: Arial;
+            font-size: 12px;
+            text-decoration:none;
+        }
+        .step_active{background-color: #007bff; border: 1px solid #004896;}
+        .step_inactive{background-color: #9c9c9c; border: 1px solid #636363;}
+        html{background-color:#ffffff !important;}
+    </style> 
+    <apex:form >
+        <div id="container">
+            <ul class="lista_steps" >
+                <a href="{!$Site.BaseUrl}/apex/NEU_MD_Associated_Documents?id={!Shipment__c.Id}" target="_parent"><li class="li_step {!step_1}">1. Upload Documents</li></a>
+                <a href="{!$Site.BaseUrl}/apex/NEU_New_Service_Rate_Internal?shipment={!Shipment__c.Id}" target="_parent"><li class="li_step {!step_2}">2. Freight Rates Management</li></a>
+                <a href="{!$Site.BaseUrl}/apex/NEU_OM_ShipFeeLinesPriceListYDiscount?id={!Shipment__c.Id}" target="_parent"><li class="li_step {!step_3}">3. Create Service Lines</li></a>
+                <!--<a href="{!$Site.BaseUrl}/apex/NEU_SendDocuments_Shipment?id={!Shipment__c.Id}" target="_parent"><li class="li_step {!step_4}">4. Send Emails</li></a>-->
+                <a href="{!$Site.BaseUrl}/apex/NEU_SendDocuments_Shipment?id={!Shipment__c.Id}" target="_parent">
+                    <li class="li_step {!step_4}" style="    padding-top: 0px;    padding-bottom: 20px;    ">
+                        <apex:image value="/img/icon/mail16.png" />
+                        <span class="span_8">4. Send Email with</span><span class="span_8"> the Public Tracking</span>
+                    </li>
+                </a>
+                <a href="{!$Site.BaseUrl}/apex/NEU_ConfirmShipmentRequest?id={!Shipment__c.Id}" target="_parent"><li class="li_step {!step_5}">5. Change to Quote</li></a>
+            </ul>  
+         </div>
+    </apex:form>
+</apex:page>

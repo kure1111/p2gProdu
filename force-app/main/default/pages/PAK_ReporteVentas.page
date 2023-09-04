@@ -1,0 +1,65 @@
+<apex:page controller="PAK_ReporteVentas" showHeader="false" sidebar="false">
+    <apex:form >
+        <apex:pageBlock >
+        	<apex:pageBlockSection columns="3">
+            	<apex:inputField label="Fecha Inicio" value="{!Filtro.SAP_Create_Date__c}" required="true" />
+                <apex:inputField label="Fecha Fin" value="{!Filtro.Fecha_Recepcion_Factura__c}" required="true" />
+                	<apex:commandButton action="{!SendWs}" value="View Report" />  
+            </apex:pageBlockSection><br/><br/><br/>
+        </apex:pageBlock>
+    	<apex:pageBlock id="Reporte">
+            <apex:pageBlockButtons location="top">
+                <apex:outputPanel id="myButtons">
+                    <apex:commandButton action="{!Beginning}" value="Inicio" disabled="{!disablePrevious}" rerender="Reporte,myButtons"/>
+                    <apex:commandButton action="{!Previous}" value="Anterior" disabled="{!disablePrevious}" rerender="Reporte,myButtons"/>
+                    <apex:commandButton action="{!Next}" value="Siguiente" disabled="{!disableNext}" rerender="Reporte,myButtons"/>
+                    <!--<apex:commandButton action="{!Exportar}" value="Exportar" disabled="{!Bandera}" rerender="Reporte,myButtons"/>-->
+                    <apex:outputPanel style="font-size:15px;float:right;" rendered="{!!Bandera}">
+                    	<apex:outputText value="Sum Line Total:" />
+                        <apex:outputText value="      {0,Number,###,###,##0.00}">
+                            <apex:param value="{!Total}"/>
+                        </apex:outputText>
+                    </apex:outputPanel>
+                    <!--<apex:commandButton action="{!End}" value=">>" disabled="{!disableNext}" rerender="Reporte,myButtons"/>-->
+                </apex:outputPanel>
+            </apex:pageBlockButtons>
+            <apex:pageBlockTable value="{!lsR}" var="ls">
+            	<apex:column headerValue="Sucursal" value="{!ls.SucCte}" />
+                <apex:column headerValue="Vendedor" value="{!ls.Vendedor}" />
+                <apex:column headerValue="Ejecutivo" value="{!ls.Ejecutivo}" />
+                <apex:column headerValue="Usuario Factura" value="{!ls.UsuarioFactura}" />
+                <apex:column headerValue="Codigo" value="{!ls.Codigo}" />
+                <apex:column headerValue="Cliente" value="{!ls.Cliente}" />
+                <apex:column headerValue="Fecha" value="{!ls.Fecha}" />
+                <apex:column headerValue="Vencimiento" value="{!ls.Vencimiento}" />
+                <apex:column headerValue="AcctName" value="{!ls.AcctName}" />
+                <apex:column headerValue="Docto" value="{!ls.Docto}" />
+                <apex:column headerValue="Concepto NC" value="{!ls.Concepto_NC}" />
+                <apex:column headerValue="Documento" value="{!ls.Documento}" />
+                <apex:column headerValue="Referencia" value="{!ls.Referencia}" />
+                <apex:column headerValue="Grupo" value="{!ls.Grupo}" />
+                <apex:column headerValue="Item Code" value="{!ls.ItemCode}" />
+                <apex:column headerValue="Dscription" value="{!ls.Dscription}" />
+                <apex:column headerValue="Rutas/Otros" value="{!ls.Rutas_Otros}" />
+                <apex:column headerValue="Line Total">
+                	<apex:outputText value="{0,Number,###,###,##0.00}"><apex:param value="{!ls.LineTotal2}"/></apex:outputText>
+                </apex:column>
+                <apex:column headerValue="Costo">
+                	<apex:outputText value="{0,Number,###,###,##0.00}"><apex:param value="{!ls.Costo2}"/></apex:outputText>
+                </apex:column>
+                <apex:column headerValue="Costo Mayoreo">
+                	<apex:outputText value="{0,Number,###,###,##0.00}"><apex:param value="{!ls.CostoMayoreo2}"/></apex:outputText>
+                </apex:column>
+                <apex:column headerValue="Tipo Producto" value="{!ls.Tipo_Producto}" />
+                <apex:column headerValue="U_ID" value="{!ls.U_ID}" />
+                <apex:column headerValue="OcrCode3" value="{!ls.OcrCode3}" />
+                <apex:column headerValue="LineNum" value="{!ls.LineNum}" />
+                <apex:column headerValue="U_Factura_Original" value="{!ls.U_Factura_Original}" />
+                <apex:column headerValue="U_NC" value="{!ls.U_NC}" />
+                <apex:column headerValue="U_Sustituye" value="{!ls.U_Sustituye}" />
+                <apex:column headerValue="U_COMENT" value="{!ls.U_COMENT}" />
+                <apex:column headerValue="Canceled" value="{!ls.Canceled}" />
+            </apex:pageBlockTable>
+        </apex:pageBlock>
+    </apex:form>
+</apex:page>

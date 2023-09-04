@@ -1,0 +1,538 @@
+<apex:page standardController="Supply_Project__c" extensions="NEU_OM_Send_Requests" >
+<apex:includeScript value="{!$Resource.neu_jquery}"/> 
+<apex:includeScript value="{!$Resource.jquery_1_10_2}"/> 
+<apex:includeScript value="{!$Resource.jquery_ui_1_10_3}"/>
+<apex:includeScript value="{!$Resource.neurored_jquery}"/> 
+<apex:stylesheet value="{!URLFOR($Resource.jquery_ui_1_10_3_css,'jquery-ui-1.10.3.min.css')}"/>
+    <script>
+    $(document).ready(function () {
+        poner_conversiones();
+    });
+    function calculate()
+    {
+        var enviar = true;
+        var hay_suppliers = false;
+        var hay_items = false;
+        var hay_unidades = true;
+        var hay_correo = true;
+        var supplier_sin_correo = '';
+        $($.sfId('{!$Component.form.block1.table1}')+' .check_suppliers:checked').each(function() 
+        {
+           if($(this).parent().parent().find('.max_shipment').val() != $(this).parent().parent().find('.max_shipment').getInt() )
+            {
+                enviar = false;
+                $(this).parent().parent().find('.max_shipment').css('color','red');
+            }
+            
+            if($(this).parent().parent().find('.contrac_duration').val() != $(this).parent().parent().find('.contrac_duration').getInt() )
+            {
+                enviar = false;
+                $(this).parent().parent().find('.contrac_duration').css('color','red');
+            }
+            
+            if($(this).parent().parent().find('.check_suppliers').is(':checked'))
+                hay_suppliers = true;
+                
+               
+            if($(this).parent().parent().find('.correo_supplier').val() == '' && $(this).parent().parent().find('.correo_responsable').val() == '')
+            {
+                hay_correo = false;
+                supplier_sin_correo += $(this).parent().parent().find('.nombre_cuenta').val()+' has no email address. ';
+            }
+           
+        });
+        
+        supplier_sin_correo +=' Do you want to Continue?';
+        
+         $($.sfId('{!$Component.form.block0.table}')+' .check_Items:checked').each(function() 
+        {
+            if($(this).parent().parent().find('.check_Items').is(':checked'))
+                hay_items = true;
+                
+            if($(this).parent().parent().find('.select_all_items').is(':checked') == false)
+                if($(this).parent().parent().find('.cantidadItem').getInt() == 0)
+                    hay_unidades = false;
+                
+          
+                
+        });
+        if(hay_suppliers == false && hay_items == false)
+            $( "#ni_items_ni_suppliers" ).dialog();
+        else
+        {
+            if( hay_suppliers == false)
+             $( "#no_suppliers" ).dialog();
+                
+            if(hay_items == false)
+                $( "#no_items" ).dialog();
+            
+            if(hay_unidades == false)
+                $( "#ni_unidades" ).dialog();   
+                
+            if(hay_correo == false && hay_suppliers == true && hay_items == true && hay_unidades == true)
+            {
+                $( "#mensaje_no_correo" ).html(supplier_sin_correo);
+                $( "#ni_correo" ).dialog({
+                 height: 200,
+                 width: 280,
+                 modal: true,
+                  buttons: {
+                "Continue": function() {
+                    enviar_email();
+                    },
+                    "Cancel": function() {
+                   $(this).dialog( "close" );
+                    }
+                }
+                 });
+      
+            } 
+        }   
+
+        if(enviar == true && hay_suppliers == true &&  hay_items == true && hay_unidades == true && hay_correo == true)
+        {
+        
+            enviar_email();
+            
+        }
+    }
+    function poner_conversiones()
+    {
+        
+        $($.sfId('{!$Component.form.block0.table}')+' input[type="checkbox"]').each(function()
+        {
+        
+            if($(this).parent().parent().find('.unitofmeasure_final').val() =='Ton' && $(this).parent().parent().find('.unitmeasure_item').html() =='Kg')
+                $(this).parent().parent().find('.conversion').val(0.001);
+            if($(this).parent().parent().find('.unitofmeasure_final').val() =='Kg' && $(this).parent().parent().find('.unitmeasure_item').html() =='Ton')
+                $(this).parent().parent().find('.conversion').val(1000);
+                
+             if($(this).parent().parent().find('.unitofmeasure_final').val() == $(this).parent().parent().find('.unitmeasure_item').html())
+                $(this).parent().parent().find('.conversion').val(1);
+                
+            if($(this).parent().parent().find('.unitofmeasure_final').val() == '--None--')
+                $(this).parent().parent().find('.conversion').val(1);
+            
+         });
+    }
+    
+    function marcar_suppliers()
+    {
+        
+        $($.sfId('{!$Component.form.block1.table1}')+' input[type="checkbox"].check_suppliers').prop("checked", $('.select_all_suppliers').is(':checked'));
+    }
+    
+      function marcar_documents()
+    {
+        
+        //$($.sfId('{!$Component.form.documentos_asociados.tabla_documentos1}')+' input[type="checkbox"]').prop("checked", $('.select_all_documents').is(':checked'));
+        
+           var status_check = false;
+        if($('.select_all_documents').is(':checked'))
+            status_check = true;
+        else
+            status_check = false;
+           var ocupacion = 0;
+             
+        $($.sfId('{!$Component.form.documentos_asociados.tabla_documentos1}')+' input[type="checkbox"]').each(function()
+        {
+            if(status_check == true)
+            {
+                $(this).prop("checked", true);
+                if($(this).attr("class") > 0)
+                {
+                 ocupacion += parseFloat(($(this).attr("class")/1048576).toFixed(5));
+                }
+            }
+            else
+                $(this).prop("checked", false);
+                
+       
+        });
+        
+          $($.sfId('{!$Component.form.bytesocupados}')).val(ocupacion.toFixed(5));
+           $(".value").html(ocupacion.toFixed(5)+' Mb');
+           var porcentajetotal = 0;
+           porcentajetotal=ocupacion*100/10;
+           $($.sfId('{!$Component.form.porc_ocupacion}')).val(porcentajetotal+'%');
+           if(parseFloat($($.sfId('{!$Component.form.porc_ocupacion}')).val()) < 100)
+           {
+              $(".totui_progress").css('width',porcentajetotal+'%');
+              $(".totui_progress").css('background-color','#1797c0');
+              $(".totui_progress").css('border','1px solid #1797c0');
+           } 
+           else
+           {
+              $(".totui_progress").css('width','100%');
+              $(".totui_progress").css('background-color','#FF0000');
+              $(".totui_progress").css('border','1px solid #FF0000');
+           }
+    }
+    
+   
+    
+    function marcar_items()
+    {
+        var status_check = false;
+        if($('.select_all_items').is(':checked'))
+            status_check = true;
+        else
+            status_check = false;
+        $($.sfId('{!$Component.form.block0.table}')+' input[type="checkbox"].check_Items').prop("checked", status_check);
+    }
+    
+    function check_all_show_target_price()
+    {
+        var status_check = false;
+        if($('.select_all_show_target_price').is(':checked'))
+            status_check = true;
+        else
+            status_check = false;
+        $($.sfId('{!$Component.form.block0.table}')+' input[type="checkbox"].check_show_target_price').prop("checked", status_check);
+    }
+    
+    function check_partial_quote()
+    {
+        var status_check = false;
+        if($('.select_all_partial_quote').is(':checked'))
+        {
+            status_check = true;
+            $($.sfId('{!$Component.form.block0.table}')+' .check_hide_quantity2').css("display","none");
+            $($.sfId('{!$Component.form.block0.table}')+' .check_hide_quantity').css("display","");
+            $('.select_all_hide_quantity').removeAttr('disabled');
+        }
+        else
+        {
+            status_check = false;
+            $($.sfId('{!$Component.form.block0.table}')+' .check_hide_quantity').prop("checked", ""); 
+            $($.sfId('{!$Component.form.block0.table}')+' .check_hide_quantity').css("display","none");
+            $('.select_all_hide_quantity').attr('disabled','disabled');
+            $($.sfId('{!$Component.form.block0.table}')+' .check_hide_quantity2').css("display","");
+            $($.sfId('{!$Component.form.block0.table}')+' input[type="checkbox"].check_hide_quantity2').prop("checked", "");
+             $('.select_all_hide_quantity').prop("checked", "");
+             $($.sfId('{!$Component.form.block0.table}')+' .check_hide_quantity').children().prop("checked", "");
+
+        }
+        
+        $($.sfId('{!$Component.form.block0.table}')+' input[type="checkbox"].check_partial_quote').prop("checked", status_check);
+    }
+    
+    function check_hide_quantity()
+    {
+        var status_check = false;
+        if($('.select_all_hide_quantity').is(':checked'))
+        {
+            status_check = true;
+             $($.sfId('{!$Component.form.block0.table}')+' .check_hide_quantity').children().prop("checked", "checked");
+        }
+        else
+        {
+            status_check = false;
+             $($.sfId('{!$Component.form.block0.table}')+' .check_hide_quantity').children().prop("checked", "");
+        }    
+       
+       
+    }
+        
+    function disabled_quantity(iditem)
+    {
+        if($($.sfId('{!$Component.form.block0.table}')+' input[type="checkbox"].input_partial_quote'+iditem).is(':checked')==true) 
+        {
+            $($.sfId('{!$Component.form.block0.table}')+' .input_hide_quantity2'+iditem).css("display","none");
+            $($.sfId('{!$Component.form.block0.table}')+' .input_hide_quantity3'+iditem).css("display","");
+        }
+        else
+        {
+        
+            $($.sfId('{!$Component.form.block0.table}')+' input[type="checkbox"].input_hide_quantity'+iditem).prop('checked',false);
+            $($.sfId('{!$Component.form.block0.table}')+' .input_hide_quantity3'+iditem).css("display","none");
+            $($.sfId('{!$Component.form.block0.table}')+' .input_hide_quantity2'+iditem).css("display","");
+        }
+    }
+        
+        function changeSelected(s)
+        {
+              var ocupacion = 0;
+              $(".tabla_documentos input:checked").each(function() {
+                  if($(this).attr("class") > 0)
+                    ocupacion += parseFloat((parseFloat($(this).attr("class"))/1048576).toFixed(5));
+           
+            });
+           $($.sfId('{!$Component.form.bytesocupados}')).val(ocupacion.toFixed(5));
+           $(".value").html(ocupacion.toFixed(5)+' Mb');
+           var porcentajetotal = 0;
+           porcentajetotal=ocupacion*100/10;
+           $($.sfId('{!$Component.form.porc_ocupacion}')).val(porcentajetotal+'%');
+           
+           if($($.sfId('{!$Component.form.porc_ocupacion}')).val() < 100)
+              $(".totui_progress").css('width',porcentajetotal+'%')
+           else
+           {
+              $(".totui_progress").css('width','100%');
+              $(".totui_progress").css('background-color','#FF0000');
+              $(".totui_progress").css('border','1px solid #FF0000');
+           }
+           update();
+        }
+        
+     function alibaba()
+     {
+        var encoded = encodeURIComponent($($.sfId('{!$Component.form.name_item_selected}')).val());
+        window.open('http://www.alibaba.com/trade/search?SearchText='+encoded);
+     }
+     
+     function guardar_id_item(iditem,nameitem)
+     {
+        
+        $($.sfId('{!$Component.form.id_item_selected}')).val(iditem);
+        $($.sfId('{!$Component.form.name_item_selected}')).val(nameitem);
+        refrest_block5();
+     }
+     
+        
+    </script>
+        <apex:form id="form">
+        <apex:inputHidden value="{!all_country_load}" id="all_country_load"/>
+        <apex:inputHidden value="{!all_port_load}" id="all_port_load"/>
+        <apex:actionFunction name="enviar_email" reRender="block2,pagemessages" action="{!send_request}" status="myStatus"/>
+        <apex:actionFunction name="refrest_block5" reRender="block5" status="myStatus"/>
+        <apex:actionFunction name="update"  status="myStatus" reRender="documentos_asociados"/>
+            <apex:sectionHeader title="Send Requests ">
+            <span style="    position: relative;top: -36px;left: 224px;font-size: 17px;">
+                 <a href="/{!Supply_Project__c.Id}" onblur="LookupHoverDetail.getHover(neu_getId(this)).hide();" onfocus="LookupHoverDetail.getHover(neu_getId(this),'/{!Supply_Project__c.Id}/m?isAjaxRequest=1').show();" onmouseout="LookupHoverDetail.getHover(neu_getId(this)).hide();" onmouseover="LookupHoverDetail.getHover(neu_getId(this),'/{!Supply_Project__c.Id}/m?isAjaxRequest=1').show();" target="_blank" id="new_id_1">{!Supply_Project__c.Name}</a>
+            </span>
+            </apex:sectionHeader>
+            <apex:pageMessages id="pagemessages"/>
+            <apex:outputPanel id="linesSelector">
+                <apex:pageBlock id="block0" title="ITEMS FOR THIS REQUEST">
+                    <apex:pageBlockTable id="table" value="{!lista_items}" var="su">
+                        <apex:column headerValue="Item Name">
+                            <c:customobject2 objid="{!su.line.Sourcing_Item__c}" objname="{!su.line.Sourcing_Item__r.Name}"/>
+                        </apex:column>
+                        <apex:column headerValue="Technical Description" value="{!su.line.Technical_description__c}"/> 
+                        <apex:column headerValue="Packaging System" value="{!su.line.Sourcing_Item__r.Packaging_System__c}"/> 
+                        <apex:column headerValue="Quantity">
+                            <!--<apex:inputText value="{!su.quantity}" StyleClass="cantidadItem" style="text-align: right;" size="5"/>-->
+                            <apex:inputfield value="{!su.line.Quantity__c}" StyleClass="cantidadItem" style="text-align: right;     width: 64px;" />
+                        </apex:column>
+                         <apex:column headerValue="Item UOM" title="Item Unit of Measure" >
+                            <apex:outputtext value="{!su.line.Unit_of_measure__c}" styleClass="unitmeasure_item"/>
+                        </apex:column>
+                        <apex:column headerValue="Target Price">
+                           <!-- <apex:inputText StyleClass="target_price" value="{!su.target_price}" style="text-align: right;" size="8"/>-->
+                            <apex:inputfield StyleClass="target_price" value="{!su.line.Target_Price__c}" style="text-align: right; width: 89px;" />
+                        </apex:column>
+                        
+                        <apex:column headerValue="Currency" >
+                            <apex:selectList id="Currency_selector"  label="Currency" value="{!su.currency_selected}" size="1">
+                                <apex:selectOptions value="{!su.currencys}"/>
+                             </apex:selectList>
+                        </apex:column>
+                    
+                         <apex:column style="text-align:center">
+                            <apex:image value="{!$Resource.SendRequestAlibaba}" width="100" height="30"  style="cursor:pointer;cursor:hand;" onclick="guardar_id_item('{!su.line.Sourcing_Item__c}','{!su.line.Sourcing_Item__r.Name}'); $('#Send_request_on_alibaba').dialog({height: 360,width: 610,modal: true,appendTo:'#positionSend_request_on_alibaba'});"/>
+                           
+                        </apex:column>
+                        <apex:column style="text-align: center;">
+                            <apex:facet name="header"><div style="text-align:center;">Show Target Price <input type="checkbox" style="float: right;" class="select_all_show_target_price" onclick="check_all_show_target_price();" /></div></apex:facet>
+                            <apex:inputCheckbox StyleClass="inputcheck check_show_target_price" value="{!su.show_target_price}"/>
+                        </apex:column>
+                        
+                         <apex:column style="text-align: center;">
+                            <apex:facet name="header"><div style="text-align:center;">Partial Quote <input type="checkbox" style="float: right;" class="select_all_partial_quote" onclick="check_partial_quote();" /></div></apex:facet>
+                            <apex:inputCheckbox StyleClass="inputcheck input_partial_quote{!su.line.Sourcing_Item__c} check_partial_quote" value="{!su.partial_quote}" onclick="disabled_quantity('{!su.line.Sourcing_Item__c}');"/>
+                        </apex:column>
+                        
+                        <apex:column style="text-align: center;">
+                            <apex:facet name="header"><div style="text-align:center;">Hide Quantity <input type="checkbox" style="float: right;" disabled="disabled" class="select_all_hide_quantity" onclick="check_hide_quantity();" /></div></apex:facet>
+                            <div style="display:none;" class="input_hide_quantity3{!su.line.Sourcing_Item__c} check_hide_quantity" >
+                                <apex:inputCheckbox StyleClass="inputcheck input_hide_quantity{!su.line.Sourcing_Item__c}" value="{!su.hide_quantity}" />
+                           </div>
+                                <input type="checkbox" value="false" disabled="true" class="input_hide_quantity2{!su.line.Sourcing_Item__c} check_hide_quantity2"/>
+                            
+                        </apex:column>
+                        
+                        <apex:column headerValue="Conversion Factor" style="text-align: center;">
+                            <apex:inputText StyleClass="conversion" value="{!su.conversion_factor}" size="5" style="text-align: right;"/>
+                        </apex:column>
+                        
+                        <apex:column headerValue="Request UOM" title="Request Unit of Measure" style="text-align: center;">
+                            <apex:selectList label="UOM" value="{!su.select_uom}" size="1" style="text-align: right;" styleClass="unitofmeasure_final"  onchange="poner_conversiones();">
+                                <apex:selectOptions value="{!su.lista_uom}"/>
+                             </apex:selectList>
+                        </apex:column>
+                        
+                         <apex:column style="text-align: center;">
+                             <apex:facet name="header"><div style="text-align:center;">Select <input type="checkbox" style="float: right;" class="select_all_items" onclick="marcar_items();" /></div></apex:facet>
+                            <apex:inputCheckbox StyleClass="inputcheck check_Items" value="{!su.selected}"/>
+                        </apex:column>
+                    </apex:pageBlockTable>
+                </apex:pageBlock>
+                <apex:pageBlock id="block1" title="SUPPLIERS FOR THIS REQUEST">
+                    <apex:pageBlockTable id="table1" value="{!lista_suppliers}" var="su">
+                         <apex:column headerValue="Status" value="{!su.line.Account__r.Status_Account__c}"/> 
+                         <apex:column headerValue="Sent">  
+                            <apex:image id="email" value="{!$Resource.Sobre}" style="margin-right: 10px;" rendered="{!su.creado == true}"/>
+                            <apex:outputText value="{!su.fecha}" rendered="{!su.creado == true}"/>
+                         </apex:column>
+                         <apex:column headerValue="Suppliers">
+                            <c:customobject2 objid="{!su.line.Account__c}" objname="{!su.line.Account__r.Name}"/>
+                            <apex:inputHidden value="{!su.line.Account__r.Name}" rendered="{!su.line.Account__r.NEU_Email__c == null && su.line.Responsible_for_the_Project__c == null}" id="cuenta_sin_email" html-neudata="cuenta_sin_email"/>
+                             <input type="hidden" value="{!su.line.Account__r.NEU_Email__c}" class="correo_supplier"/>
+                             <input type="hidden" value="{!su.line.Responsible_for_the_Project__r.Email}" class="correo_responsable"/>
+                             <input type="hidden" value="{!su.line.Account__r.Name}" class="nombre_cuenta"/>
+                         </apex:column>
+                         <apex:column headerValue="Rol" value="{!su.line.Rol__c}"/>  
+                         <apex:column headerValue="Stakeholder for the Project">  
+                            <c:customobject2 objid="{!su.line.Responsible_for_the_Project__c}" objname="{!su.line.Responsible_for_the_Project__r.Name}"/>
+                         </apex:column>
+                        <apex:column headerValue="Currency">  
+                            <apex:selectList id="Currency_selector"  label="Currency" value="{!su.currency_select}" size="1">
+                                <apex:selectOptions value="{!su.currencys}"/>
+                             </apex:selectList>
+                         </apex:column>
+                        <apex:column headerValue="Incoterm">  
+                                <apex:selectList id="Incoterm_selector"  label="Currency" value="{!su.incoterm_selected}" size="1">
+                                    <apex:selectOptions value="{!su.incoterm}"/>
+                                 </apex:selectList>
+                         </apex:column>
+
+                          <apex:column headerValue="Country of Load">  
+                                <apex:inputField value="{!su.rfp.Country_of_Load__c}"/>
+                         </apex:column>
+                         <apex:column headerValue="State of Load">  
+                                <apex:inputField value="{!su.rfp.State_of_Load__c}"/>
+                         </apex:column>
+                           <apex:column headerValue="Port / Airport of Load">  
+                                <apex:inputField value="{!su.rfp.Port_Airport_of_Load__c}"/>
+                         </apex:column>
+                         
+                         
+                         
+                         <apex:column headerValue="Max Deliveries">
+                                <apex:inputText StyleClass="max_shipment" value="{!su.max_shipment}" style="text-align: right;" size="5"/>
+                         </apex:column>
+                          <apex:column >
+                                <apex:facet name="header"><div style="text-align:center">Contract <br/>Duration (months)</div></apex:facet>
+                                <apex:inputText StyleClass="contrac_duration" value="{!su.contract_duration}" style="text-align: right;" size="6"/>
+                         </apex:column>
+                         
+                          <apex:column headerValue="Observations">  
+                            <apex:inputTextarea value="{!su.observation}" StyleClass="textarea_supplier" style="width: 100%; height: 44px;"/>
+                         </apex:column>
+                         <apex:column style="text-align: center;">
+                             <apex:facet name="header"><div style="text-align:center;">Select <input type="checkbox" style="float: right;" class="select_all_suppliers" onclick="marcar_suppliers();" /></div></apex:facet>
+                            <apex:inputCheckbox StyleClass="inputcheck check_suppliers" value="{!su.selected}" />
+                        </apex:column>
+                    </apex:pageBlockTable>
+                </apex:pageBlock>
+                
+          <!-- <apex:outputPanel id="documentos">-->
+                <apex:pageBlock title="ASSOCIATED DOCUMENTS" id="documentos_asociados" rendered="{!associated_documents.size >0}">
+                    <div id="documentos">
+                       <div id="progress_bar" class="ui-progress-bar ui-container" style=" height: 35px; padding-right: 2px; background-color: #abb2bc; border-radius: 35px; -moz-border-radius: 35px; -webkit-border-radius: 35px; background: -webkit-gradient(linear, left bottom, left top, color-stop(0, #b6bcc6), color-stop(1, #9da5b0)); background: -moz-linear-gradient(#9da5b0 0%, #b6bcc6 100%); -webkit-box-shadow: inset 0px 1px 2px 0px rgba(0, 0, 0, 0.5), 0px 1px 0px 0px #FFF; -moz-box-shadow: inset 0px 1px 2px 0px rgba(0, 0, 0, 0.5), 0px 1px 0px 0px #FFF; box-shadow: inset 0px 1px 2px 0px rgba(0, 0, 0, 0.5), 0px 1px 0px 0px #FFF; width: 286px; margin: 10px; margin-left: 0px; border-radius: 5px; width: 238px; margin-left: 12px; height: 28px; margin: 0 auto 0 auto;">
+                            <span class="ui-label" style="float: left; position: absolute; margin: 9px 94px 7px 64px; z-index: 101; color: rgba(0,0,0,0.6); text-shadow: rgba(255,255,255, 0.45) 0 1px 0px; white-space: nowrap; margin: 6px 94px 7px 40px; z-index: 100;">Total Email Size   <b class="value"> {!bytesocupados} Mb</b></span>
+                            <div class="ui-progress totui_progress" style="position: relative; display: block;  overflow: hidden; height: 33px; -moz-border-radius: 35px; -webkit-border-radius: 35px; border-radius: 35px; -webkit-background-size: 44px 44px; background-color: #1797c0;  border: 1px solid #1797c0; -webkit-animation: animate-stripes 2s linear infinite; border-radius: 5px; -webkit-animation: animate-stripes 2s linear infinite; -moz-animation: progress-bar-stripes 2s linear infinite; -ms-animation: progress-bar-stripes 2s linear infinite; -o-animation: progress-bar-stripes 2s linear infinite; animation: progress-bar-stripes 2s linear infinite; background-size: 40px 40px; text-align: center; height: 26px; width:0%; width:{!porc_ocupacion}; "><!--este rellena -->
+                            </div>
+                        </div>
+                    <apex:pageBlockTable value="{!associated_documents}" var="ad" id="tabla_documentos1"  styleclass="tabla_documentos"  style="margin-top: 10px;">
+                        <apex:column >
+                            <apex:facet name="header"><div style="text-align:center;">Select <input type="checkbox" style="float: right;" class="select_all_documents" onclick="marcar_documents();" /></div></apex:facet>
+                            <apex:inputCheckbox value="{!ad.selected}" onchange="changeSelected(this);" styleclass="{!ad.espacio}"  />
+                        </apex:column>
+                        <apex:column headerValue="Associated Document Name" value="{!ad.name}"/>
+                        <apex:column headerValue="Document Type" value="{!ad.document_type}"/>
+                        <apex:column headerValue="Document Reference" value="{!ad.document_reference}"/>
+                        <apex:column headerValue="Document Description" value="{!ad.document_description}"/>
+                        <apex:column >
+                            <apex:facet name="header">
+                                <span>Document URL</span>
+                            </apex:facet>
+                            <a href="{!ad.document_url}" target="_blank">Document</a>
+                        </apex:column>
+                        <apex:column headerValue="Document Size">
+                            <div id="progress_bar" class="ui-progress-bar ui-container" style="position: relative; height: 35px; padding-right: 2px; background-color: #abb2bc; border-radius: 35px; -moz-border-radius: 35px; -webkit-border-radius: 35px; background: -webkit-gradient(linear, left bottom, left top, color-stop(0, #b6bcc6), color-stop(1, #9da5b0)); background: -moz-linear-gradient(#9da5b0 0%, #b6bcc6 100%); -webkit-box-shadow: inset 0px 1px 2px 0px rgba(0, 0, 0, 0.5), 0px 1px 0px 0px #FFF; -moz-box-shadow: inset 0px 1px 2px 0px rgba(0, 0, 0, 0.5), 0px 1px 0px 0px #FFF; box-shadow: inset 0px 1px 2px 0px rgba(0, 0, 0, 0.5), 0px 1px 0px 0px #FFF; width: 286px; margin: 10px; margin-left: 0px; border-radius: 5px; width: 238px; float: left; margin-left: 12px; height: 28px;">
+                                <span class="ui-label" style="float: left; position: absolute; margin: 9px 94px 7px 64px; z-index: 101; width: 100%; color: rgba(0,0,0,0.6); text-shadow: rgba(255,255,255, 0.45) 0 1px 0px; white-space: nowrap; margin: 6px 94px 7px 40px; z-index: 100;">Document Size   <b class="espacio_mb"> {!ad.espacio} bytes</b></span>
+                                <div class="ui-progress clase_width" style="position: relative; display: block;  overflow: hidden; height: 33px; -moz-border-radius: 35px; -webkit-border-radius: 35px; border-radius: 35px; -webkit-background-size: 44px 44px; background-color: #1797c0;  border: 1px solid #1797c0; -webkit-animation: animate-stripes 2s linear infinite; border-radius: 5px; -webkit-animation: animate-stripes 2s linear infinite; -moz-animation: progress-bar-stripes 2s linear infinite; -ms-animation: progress-bar-stripes 2s linear infinite; -o-animation: progress-bar-stripes 2s linear infinite; animation: progress-bar-stripes 2s linear infinite; background-size: 40px 40px; text-align: center; height: 26px; width:0%; width:{!ad.porespacio};% "><!--este rellena -->
+                                </div>
+                            </div>
+                        </apex:column>
+                    </apex:pageBlockTable>
+                    </div>
+                </apex:pageBlock>
+       <!--  </apex:outputPanel>-->
+                <apex:pageBlock id="block2" title="EMAIL BODY">
+                    <apex:pageBlockSection columns="1" title="Email Body" id="filtros">
+                        <apex:outputLabel >Subject</apex:outputLabel>
+                        <apex:inputText value="{!subject}" StyleClass="input_form" style="width: 618px;"/>
+                        <br/>
+                        <br/>
+                        <apex:outputLabel >Email Text</apex:outputLabel>
+                        <apex:inputTextarea value="{!message}" StyleClass="textarea_form" style="width: 618px; height: 77px;"/>
+                    </apex:pageBlockSection>
+                    <apex:pageBlockButtons >
+                        <apex:commandButton value="SEND EMAILS" onclick="calculate();return false;"/>
+                        <apex:commandButton value="RETURN TO SUPPLY PROJECT" status="myStatus" action="{!return_project}"/>
+                    </apex:pageBlockButtons>
+                </apex:pageBlock>
+                
+            </apex:outputPanel>
+            <apex:outputpanel >
+               <apex:actionstatus id="myStatus">
+                   <apex:facet name="start">
+                       <div class="waitingSearchDiv" id="el_loading" style="background-color: #fbfbfb; height: 100%;opacity:0.65;width:100%; z-index: 1000;"> 
+                           <div class="waitingHolder" style="top: 74.2px; width: 91px;">
+                               <img class="waitingImage" src="/img/loading.gif" title="Please Wait..." />
+                               <span class="waitingDescription">Loading...</span>
+                           </div>
+                       </div>
+                   </apex:facet>
+               </apex:actionstatus>
+            </apex:outputpanel>
+             <div class="waitingSearchDiv" id="otherStatus" style="display:none;background-color:#fbfbfb;height:100%;opacity:0.65;width:100%;"> 
+                <div class="waitingHolder" style="top:74.2px;width:91px;">
+                    <img class="waitingImage" src="/img/loading.gif" title="Please Wait..." />
+                    <span class="waitingDescription">Loading...</span>
+                </div>
+            </div>
+            
+        <div id="positionSend_request_on_alibaba"></div>        
+        <div style="display:none;" id="Send_request_on_alibaba">
+            <apex:actionRegion >
+                <apex:pageBlock id="block5" >
+                    <apex:facet name="header"><div class="pbTitle" style="width: 96%;"><h2 class="mainTitle">Copy this Text and Search on Alibaba</h2></div></apex:facet>
+                    <apex:pageBlockButtons >
+                        <apex:image value="{!$Resource.alibaba}" width="100" height="30" onclick="alibaba(); $('#Send_request_on_alibaba').dialog('close');" style="cursor: pointer;  margin-left: 40px; border: 1px solid gray; border-radius: 5px;"/>
+                     </apex:pageBlockButtons>
+                    <apex:outputPanel >
+                        <div style="overflow-y:auto; max-height: 190px;">
+                             <apex:outputText value="{!Info_item}" escape="false" />
+                         </div> 
+                    </apex:outputPanel>
+                </apex:pageBlock>
+            </apex:actionRegion>
+        </div> 
+         <apex:inputHidden value="{!id_item_selected}" id="id_item_selected"/>
+         <apex:inputHidden value="{!name_item_selected}" id="name_item_selected"/>
+        
+        <apex:inputHidden value="{!porc_ocupacion}" id="porc_ocupacion"/>
+        <apex:inputHidden value="{!bytesocupados}" id="bytesocupados"/>
+        
+        <div id="ni_correo" title="Email" style="display:none;">
+          <p id="mensaje_no_correo">Please, fill Quantity on the correct Item</p>
+        </div>
+        
+        <div id="no_suppliers" title="Error Select any Supplier" style="display:none;">
+          <p>Please, select one or more Suppliers to Send Email</p>
+        </div>
+         <div id="no_items" title="Error Select any Item" style="display:none;">
+          <p>Please, select one or more Items to Send Email</p>
+        </div>
+         <div id="ni_items_ni_suppliers" title="Error Select any Item and any Supplier" style="display:none;">
+          <p>Please, select one ore more Items and Suppliers to Send Email</p>
+        </div>
+        <div id="ni_unidades" title="Error Quantity" style="display:none;">
+          <p>Please, fill Quantity on the correct Item</p>
+        </div>
+     </apex:form>
+</apex:page>

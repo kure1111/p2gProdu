@@ -1,0 +1,383 @@
+<apex:page controller="NEU_Freight_Rates_Send_Emails" action="{!load_documents}">
+<apex:includeScript value="{!$Resource.neu_jquery}"/>
+<apex:includeScript value="{!$Resource.jquery_1_10_2}"/>
+<apex:includeScript value="{!$Resource.jquery_ui_1_10_3}"/>
+<apex:includeScript value="{!$Resource.neurored_jquery}"/>
+<apex:stylesheet value="{!URLFOR($Resource.jquery_ui_1_10_3_css,'jquery-ui-1.10.3.min.css')}"/>
+
+ <apex:form id="form">
+     <a href="{!$Site.BaseUrl}/{!id_object}" title="return to {!label_object}"><apex:sectionHeader title="{!label_object}" subtitle="Send Email {!label_object2}"/></a>
+     <apex:pageMessages id="messages"/>
+     <script>
+
+		$(document).ready(function(){
+            var porcentage = 0
+              $(".tabla_documentos input:checkbox").each(function() {
+
+                    $(this).parent().parent().find('.clase_width').css('width',(parseInt($(this).attr("class"))/1048576)*100/5+'%');
+                    porcentage = parseFloat(parseInt($(this).attr("class"))/1048576*100/5);
+
+                    if(porcentage >= 100)
+                        $(this).parent().parent().find('.clase_width').css('width','100%');
+                    $(this).parent().parent().find('.espacio_mb').html((parseInt($(this).attr("class"))/1048576).toFixed(5)+' mb');
+                    if(parseFloat($(this).parent().parent().find('.espacio_mb').html()) > 5)
+                    {
+                         $(this).parent().parent().find('.clase_width').css('background-color','#FF0000');
+                         $(this).parent().parent().find('.clase_width').css('border','1px solid #FF0000');
+                         $(this).attr('disabled', true);
+                    }
+            });
+            if($($.sfId('{!$Component.form.porc_ocupacion}')).val() < 100)
+              $(".totui_progress").css('width',$($.sfId('{!$Component.form.porc_ocupacion}')).val()+'%')
+           else
+           {
+              $(".totui_progress").css('width','100%');
+              $(".totui_progress").css('background-color','#FF0000');
+              $(".totui_progress").css('border','1px solid #FF0000');
+           }
+           // update();
+        });
+	    function send_so()
+		{
+		    var listado_usuarios = '';
+		    $(".button_selected_user").each(function(){
+		        listado_usuarios += $(this).attr('name') + ',';
+		    });
+		    if(listado_usuarios == '')
+		        listado_usuarios = '[]';
+		    document.getElementById('{!$Component.form.user_list}').value = listado_usuarios;
+
+		    var hay_documentos = false;
+		    $('.tabla_documentos input[type="checkbox"]:checked').each(function()
+		    {
+		        hay_documentos = true;
+		    });
+		    var hay_contactos = false;
+
+		     $('.tabla_clientes input[type="checkbox"]:checked').each(function()
+		    {
+		        hay_contactos = true;
+		    });
+
+            if(document.getElementsByClassName("emailusuario").length > 0)
+            {
+            	hay_contactos = true;
+            }
+            if(listado_usuarios == '[]' && hay_contactos == false)
+            {
+                //var receiver_info = confirm("You must select some email receiver");
+                alert("You must select some receiver email");
+            }
+		    else if(hay_documentos == false)
+		     {
+		        var document_info = confirm("You haven´t selected any document. Are you sure you want to send this email?");
+		        if (document_info  == true)
+		            send_email();
+		    }
+		    else
+		    {
+		        var r = confirm("Are you sure you want to send this email?");
+
+		       if (r == true)
+		            send_email();
+		   }
+		}
+     	function updateemailtemplate_subject_message()
+	    {
+
+	        $($.sfId('{!$Component.form.subject_hidden}')).val($('.resultado_subject').val());
+	        $($.sfId('{!$Component.form.message_hidden}')).val($('.resultado_message').val());
+	        updateemailtemplate();
+	        update_filtros();
+	    }
+    	$.fn.filter_user = (function(){
+            this.each(function(){
+                if($(this).hasClass('button_selected_user'))
+                {
+                    $(this).removeClass('button_selected');
+                    $(this).removeClass('button_selected_user');
+                }
+                else
+                {
+                    $(this).addClass('button_selected');
+                    $(this).addClass('button_selected_user');
+                }
+            });
+        });
+	    function update_filtros2()
+	    {
+	        update_filtros();
+
+	    }
+	   	function toggleCheckAllAccounts(checkAllBox)
+	   	{
+    		$('.checkableTableAccounts :checkbox').prop('checked', checkAllBox.checked);
+		}
+		function toggleCheckAllGroups(checkAllBox)
+	   	{
+    		$('.checkableTableGroups :checkbox').prop('checked', checkAllBox.checked);
+		}
+	</script>
+	<style>
+		.lista_usuarios
+     	{
+         float:left;
+         margin:10px 0 10px 0 !important;
+         width:100%;
+     	}
+		.filter_button{float:left; width:205px;}
+		.button_selected{background:#C0C0C0 !important;}
+		.lista_contactos{padding:0; margin:0;}
+		.lista_contactos li{list-style-type:none;}
+		span.lookupInput input {margin-left: 5px;}
+		.homeTab .tertiaryPalette, .individualPalette .homeBlock .tertiaryPalette, .layoutEdit .individualPalette .homeBlock .tertiaryPalette {background-color: #8a9ebe;}
+		.input_form {width:700px;}
+		.textarea_form {width:700px; height:200px; resize:none;}
+		#info_email:hover #capa_info_email {display:block;}
+		.panel_datos .bPageBlock{border-top: 3px solid #8a9ebe !important;}
+		.tabla_clientes{margin-top: 10px;}
+	</style>
+
+
+        <apex:actionFunction name="send_email" action="{!send_email}" status="myStatus"/>
+        <apex:actionFunction name="update_filtros"  status="myStatus" reRender="filtros"/>
+		<apex:actionFunction name="update_body_template" action="{!put_template}" status="myStatus" reRender="filtros,messages"/>
+
+        <apex:outputPanel id="datos_email" styleclass="panel_datos">
+            <apex:pageBlock title=""><!--title="Shipment Order"-->
+                <apex:pageBlockButtons location="top">
+                    <input type="button" value="Send Email" class="btn" style="display:{!IF(bytesocupados < 10, '','none')}" onclick="send_so();"/>
+                	<apex:commandButton value="Return" action="{!return_page}"/>
+                </apex:pageBlockButtons>
+
+                <apex:pageBlockSection columns="2" title="To:"/>
+                		<table style="margin-left: 7px; width: 95%;">
+		                    <tr>
+		                   		<td>
+									<p style="margin-bottom: 3px;">* Please enter the specific Addresses separated by ";" at the end of each one.</p>
+									<apex:inputText value="{!defaultTo}" style="width:95%;"/>
+								</td>
+							</tr>
+						</table>
+
+               <apex:pageBlockSection columns="1" title="Contacts (To)"/>
+               	<table style="width: 100%;">
+            	    		<tr>
+	                    	<td>
+								<div style="width: 100%; display: inline-block;">
+									<!-- Simple Account -->
+									<apex:inputField style="margin-bottom: 15px;" value="{!buscador.Account_for__c}" required="false"/>
+				        			<apex:CommandButton style="margin-bottom: 15px;" value="Add Customer" action="{!addAccountLista}" reRender="list_accounts,messages" status="myStatus"/>
+					                <apex:pageBlockTable id="list_accounts" value="{!clientes_seleccionados}" var="acc" styleclass="checkableTableAccounts" >
+					                    <apex:column >
+					                        <apex:facet name="header">
+					                            <span>Name</span>
+					                        </apex:facet>
+					                        <a href="/{!acc.cuenta.Id}" target="_blank"><apex:outputText value="{!acc.cuenta.Name}"/></a>
+					                    </apex:column>
+					                    <apex:column >
+					                        <apex:facet name="header">
+					                            <span>Type</span>
+					                        </apex:facet>
+					                        <apex:outputText value="{!acc.typo_cuenta}"/>
+					                    </apex:column>
+					                    <apex:column >
+					                        	<apex:facet name="header">
+					                        		<span>Select All Contacts</span>
+			       									<input type="checkbox" id="checkAllAccounts" onclick="toggleCheckAllAccounts(this)"/>
+			  	 								</apex:facet>
+					                            <ul class="lista_contactos">
+					                            <apex:repeat value="{!acc.contactos}" var="c">
+					                                <li><apex:inputCheckbox value="{!c.selected}"/><span> <a href="/{!c.contact.Id}" target="_blank"><apex:outputText value="{!c.contact.Name}"/></a></span><span> ({!c.contact.Email})</span></li>
+					                            </apex:repeat>
+					                        </ul>
+					                    </apex:column>
+					                </apex:pageBlockTable>
+				            	</div>
+							</td>
+						</tr>
+					</table>
+               <apex:pageBlockSection columns="1" title="Groups (To)"/>
+               <table style="width: 100%;">
+            	    		<tr>
+	                    	<td>
+								<div style="width: 100%; display: inline-block;">
+				        			<!-- Groups Mailing -->
+				                        <apex:selectList style="margin-bottom: 15px;" value="{!filterGroupEmail}" multiselect="false" size="1">
+				                            <apex:selectOptions value="{!filterGroupEmailList}"/>
+				                        </apex:selectList>
+				        			<apex:CommandButton style="margin-left: 15px;margin-bottom: 15px;" value="Add Group" action="{!addGroupLista}" reRender="list_groups,messages" status="myStatus"/>
+					                <apex:pageBlockTable id="list_groups" value="{!grupos_seleccionados}" var="grp" styleclass="checkableTableGroups" >
+					                    <apex:column >
+					                        <apex:facet name="header">
+					                            <span>Name</span>
+					                        </apex:facet>
+					                        <apex:outputText value="{!grp.Name}"/>
+					                    </apex:column>
+					                    <apex:column >
+					                            <apex:facet name="header">
+					                            	<span>Number of Contacts</span>
+			  	 								</apex:facet>
+					                            <apex:outputText value="{!grp.NumberContacts}"/>
+					                    </apex:column>
+					                    <apex:column >
+					                            <apex:facet name="header">
+					                            	<span>Select All Groups</span>
+			       									<input type="checkbox" id="checkAllGroups" onclick="toggleCheckAllGroups(this)"/>
+			  	 								</apex:facet>
+					                            <apex:inputCheckbox value="{!grp.selected}"/>
+					                    </apex:column>
+					                </apex:pageBlockTable>
+				            	</div>
+							</td>
+						</tr>
+					</table>
+
+
+				<apex:pageBlockSection columns="1" title="Users (CC)"/>
+				<table style="width: 100%;">
+					<tr>
+						<td>
+		            		<div class="lista_usuarios">
+			                    <apex:repeat value="{!usuarios}" var="u">
+			                        <input type="button" value="{!u.Name}" class="btn filter_button filter_button_user {!IF(u.id == userid, 'button_selected button_selected_user','')}" name="{!u.Email}" onclick="$(this).filter_user();"/>
+			                    </apex:repeat>
+		               		 </div>
+	               		 </td>
+	               	</tr>
+               	</table>
+		    </apex:pageBlock>
+		</apex:outputPanel>
+
+        <apex:outputPanel id="email_body">
+            <apex:pageBlock title="">
+                <apex:pageBlockSection columns="1" title="Email Data" id="filtros">
+                    <apex:outputLabel >Subject</apex:outputLabel>
+                    <apex:inputText value="{!subject}" StyleClass="input_form resultado_subject"/>
+                    <br/>
+                    <apex:outputLabel >Body <!-- <span style="background-image: url('/img/func_icons/util/lookup20.gif'); background-position: left top; height: 20px; float: left; width: 20px; margin: 5px;" onclick="$('#contenedorWarehouse3').dialog({height: 498,width: 1000,modal: true,appendTo:'#positionWarehouse3'});"></span>-->
+                    </apex:outputLabel>
+
+                    <div style="    float: left; width: 701px;">
+                        <span class="btn" onclick="update_body_template();" style="margin-left: 8px;  margin-bottom: 4px; width: 160px; margin-left: 0px; text-align: center; float: left;" >Freights Template</span>
+                    </div>
+
+                    <apex:inputTextarea value="{!texto_email}" StyleClass="textarea_form resultado_message" id="texto_email"/>
+                </apex:pageBlockSection>
+
+                <apex:pageBlockSection columns="1" title="Associated Documents">
+                    <div id="documentos">
+                        <apex:pageBlockTable value="{!associated_documents}" var="ad" styleclass="tabla_documentos" rendered="{!if(associated_documents.size > 0, true, false)}">
+                            <apex:column headerValue="Select" >
+                                <apex:inputCheckbox value="{!ad.selected}" onchange="changeSelected(this);" styleclass="{!ad.espacio}" html-identificador="check_documentos" />
+                                <img src="{!URLFOR($Resource.pdf_icon)}" onclick="get_message('{!ad.id_doc}');" style="cursor:pointer;" title="Preview PDF" />
+                            </apex:column>
+                            <apex:column headerValue="Associated Document Name" value="{!ad.name}"/>
+                            <apex:column headerValue="Document Type" value="{!ad.document_type}"/>
+                            <apex:column headerValue="Document Reference" value="{!ad.document_reference}"/>
+                            <apex:column headerValue="Document Description" value="{!ad.document_description}"/>
+                            <apex:column >
+                                <apex:facet name="header">
+                                    <span>Document URL</span>
+                                </apex:facet>
+                                <a href="{!ad.document_url}" target="_blank">Document</a>
+                            </apex:column>
+                            <apex:column headerValue="Document Size">
+                                <div id="progress_bar" class="ui-progress-bar ui-container" style="position: relative; height: 35px; padding-right: 2px; background-color: #abb2bc; border-radius: 35px; -moz-border-radius: 35px; -webkit-border-radius: 35px; background: -webkit-gradient(linear, left bottom, left top, color-stop(0, #b6bcc6), color-stop(1, #9da5b0)); background: -moz-linear-gradient(#9da5b0 0%, #b6bcc6 100%); -webkit-box-shadow: inset 0px 1px 2px 0px rgba(0, 0, 0, 0.5), 0px 1px 0px 0px #FFF; -moz-box-shadow: inset 0px 1px 2px 0px rgba(0, 0, 0, 0.5), 0px 1px 0px 0px #FFF; box-shadow: inset 0px 1px 2px 0px rgba(0, 0, 0, 0.5), 0px 1px 0px 0px #FFF; width: 286px; margin: 10px; margin-left: 0px; border-radius: 5px; width: 238px; float: left; margin-left: 12px; height: 28px;">
+                                    <span class="ui-label" style="float: left; position: absolute; margin: 9px 94px 7px 64px; z-index: 101; width: 100%; color: rgba(0,0,0,0.6); text-shadow: rgba(255,255,255, 0.45) 0 1px 0px; white-space: nowrap; margin: 6px 94px 7px 40px; z-index: 100;">Document Size   <b class="espacio_mb"> {!ad.espacio} Mb</b></span>
+                                    <div class="ui-progress clase_width" style="position: relative; display: block;  overflow: hidden; height: 33px; -moz-border-radius: 35px; -webkit-border-radius: 35px; border-radius: 35px; -webkit-background-size: 44px 44px; background-color: #1797c0;  border: 1px solid #1797c0; -webkit-animation: animate-stripes 2s linear infinite; border-radius: 5px; -webkit-animation: animate-stripes 2s linear infinite; -moz-animation: progress-bar-stripes 2s linear infinite; -ms-animation: progress-bar-stripes 2s linear infinite; -o-animation: progress-bar-stripes 2s linear infinite; animation: progress-bar-stripes 2s linear infinite; background-size: 40px 40px; text-align: center; height: 26px; width:0%; width:{!ad.porespacio}; ">
+                                    </div>
+                                </div>
+                            </apex:column>
+                        </apex:pageBlockTable>
+                    </div>
+                </apex:pageBlockSection>
+
+            </apex:pageBlock>
+
+        </apex:outputPanel>
+
+          <apex:outputPanel id="list_panel_actividades" styleclass="panel_actividades">
+            <apex:pageBlock title="Activities Associated to this Email">
+                <apex:pageBlockButtons location="bottom" id="botones">
+                     <input type="button" value="Send Email" class="btn" style="display:{!IF(bytesocupados < 10, '','none')}" onclick="send_so();"/>
+                </apex:pageBlockButtons>
+                <apex:pageBlockTable value="{!Due_Date_task}" var="s">
+                    <apex:column >
+                        <apex:facet name="header">
+                            <span>Assigned To</span>
+                        </apex:facet>
+                        <apex:selectList id="user_selector"  value="{!OwnerId_task}" size="1">
+                            <apex:selectOptions value="{!select_users}"/>
+                         </apex:selectList>
+                   </apex:column>
+
+                   <apex:column >
+                        <apex:facet name="header">
+                            <span>Subject</span>
+                        </apex:facet>
+                        <apex:inputText value="{!subject_task}" style="    width: 94%;"/>
+                   </apex:column>
+
+                   <apex:column >
+                        <apex:facet name="header">
+                            <span>Status</span>
+                        </apex:facet>
+                        <apex:selectList id="status_selector"  value="{!Status_task}" size="1">
+                            <apex:selectOptions value="{!select_status_task}"/>
+                         </apex:selectList>
+                   </apex:column>
+                   <apex:column >
+                        <apex:facet name="header">
+                            <span>Priority</span>
+                        </apex:facet>
+                        <apex:selectList id="priority_selector"  value="{!priority_task}" size="1">
+                            <apex:selectOption itemLabel="High" itemValue="High"/>
+                            <apex:selectOption itemLabel="Normal" itemValue="Normal" html-checked="checked"/>
+                            <apex:selectOption itemLabel="Low" itemValue="Low"/>
+                        </apex:selectList>
+                   </apex:column>
+                   <apex:column >
+                        <apex:facet name="header">
+                            <span>Due Date</span>
+                        </apex:facet>
+                        <apex:inputField value="{!Due_Date_task.Conversion_Rate_Date__c}"/>
+                   </apex:column>
+                     <apex:column >
+                        <apex:facet name="header">
+                            <span>Create Activity</span>
+                        </apex:facet>
+                        <apex:inputCheckbox value="{!create_task}"/>
+                   </apex:column>
+                </apex:pageBlockTable>
+            </apex:pageBlock>
+        </apex:outputPanel>
+
+        <apex:outputpanel >
+           <apex:actionstatus id="myStatus">
+               <apex:facet name="start">
+                   <div class="waitingSearchDiv" id="el_loading" style="background-color: #fbfbfb;
+                          height: 100%;opacity:0.65;width:100%;">
+                       <div class="waitingHolder" style="top: 74.2px; width: 91px;">
+                           <img class="waitingImage" src="/img/loading.gif" title="Please Wait..." />
+                           <span class="waitingDescription">Loading...</span>
+                       </div>
+                   </div>
+               </apex:facet>
+           </apex:actionstatus>
+        </apex:outputpanel>
+
+
+
+        <apex:inputHidden value="{!user_list}" id="user_list"/>
+
+        <apex:inputHidden value="{!porc_ocupacion}" id="porc_ocupacion"/>
+        <apex:inputHidden value="{!bytesocupados}" id="bytesocupados"/>
+
+
+        <apex:inputHidden value="{!to_hidden}" id="to_hidden"/>
+        <apex:inputHidden value="{!cc_hidden}" id="cc_hidden"/>
+        <apex:inputHidden value="{!subject_hidden}" id="subject_hidden"/>
+        <apex:inputHidden value="{!message_hidden}" id="message_hidden"/>
+    </apex:form>
+</apex:page>

@@ -1,0 +1,246 @@
+/*estilo pdf instruction letter*/
+
+@page
+{
+	background:#fdfdfc;
+}
+
+body
+{
+	background:#fdfdfc;
+}
+
+#container
+{
+	width: 700px; 
+	margin: 40px auto 40px auto;
+	font-family: times new roman;
+        font-size: 12px;
+}
+
+#cabecera
+{
+
+}
+
+#logotipo
+{
+	width: 28%;
+	float: left;
+}
+
+#cabecera ul
+{
+	    width: 207px;
+	list-style: none;
+	    text-align: center;
+	float: left;
+	padding-left: 0px;
+}
+
+#cabecera li
+{
+	    margin-left: 0px;
+}
+
+#cabecera table
+{
+	        width: 469px;
+	float: left;
+	border: 1px black solid;
+	    /*margin-left: 42px;*/
+	margin-left: 35px;
+	font-family: times new roman;
+    font-size: 12px;
+/*height: 98px;*/
+}
+
+#cabecera table th
+{
+	    text-align: left;
+}
+
+#cabecera table td
+{
+
+}
+
+#comentarios
+{
+	    float: left;
+    width: 100%;
+font-family: times new roman;
+    font-size: 12px;
+    border: 1px solid black;
+    margin-top: 10px;
+}
+
+#comentarios1
+{
+	float: left;
+    width: 100%;
+    border: 1px solid black;
+	font-family: times new roman;
+    font-size: 12px;
+	margin-top: 10px;
+}
+
+#tabla_comentarios1
+{
+	font-family: times new roman;
+    font-size: 12px;
+}
+
+#tabla_comentarios1 th
+{
+
+}
+
+#tabla_comentarios1 td
+{
+
+}
+
+#titulos_comentarios
+{
+	font-weight: bold;
+	width: 100%;
+	float: left;
+	/*padding-left: 4px;*/
+	margin-left: 4px;	
+}
+
+#lista_comentarios
+{
+	list-style: none;
+font-family: times new roman;
+    font-size: 12px;
+    border-top: 1px solid black;
+}
+
+#lista_comentarios li
+{
+	float: left;
+}
+
+.imagen_checked
+{
+	
+}
+
+.li_imagen
+{
+	    width: 32px;
+}
+
+#embarcador
+{
+float: left;
+    margin-top: 10px;	
+}
+
+#tabla_embarcador
+{
+	float: left;
+    width: 100%;
+    border: 1px solid black;
+font-family: times new roman;
+    font-size: 12px;
+}
+
+#titulo_embarcador
+{
+	float: left;
+    text-align: center;
+    border: 1px solid;
+    width: 698px;
+    font-weight: bold;
+font-family: times new roman;
+    font-size: 12px;
+}
+
+#tabla_embarcador td
+{
+	text-align: left;
+}
+
+#tabla_embarcador th
+{
+	text-align: left;
+}
+
+#entrega
+{
+float: left;
+    margin-top: 10px;
+}
+
+#titulo_entrega
+{
+    float: left;
+    text-align: center;
+    border: 1px solid;
+    width: 698px;
+    font-weight: bold;
+font-family: times new roman;
+    font-size: 12px;
+}
+
+#tabla_entrega
+{
+	float: left;
+    border: 1px solid black;
+    width: 100%;
+font-family: times new roman;
+    font-size: 12px;
+
+}
+
+#tabla_entrega td
+{
+	text-align: left;
+}
+
+#tabla_entrega th
+{
+	text-align: left;
+}
+
+#datos
+{
+	float: left;
+    margin-top: 10px;
+}
+
+#titulo_datos
+{
+    float: left;
+    text-align: center;
+    border: 1px solid;
+    width: 698px;
+    font-weight: bold;
+font-family: times new roman;
+    font-size: 12px;
+}
+
+#tabla_datos
+{
+	
+	float: left;
+    border: 1px solid black;
+    width: 100%;
+font-family: times new roman;
+    font-size: 12px;
+}
+
+#tabla_datos td
+{
+	text-align: left;
+}
+
+#tabla_datos th
+{
+	text-align: left;
+}
+
+

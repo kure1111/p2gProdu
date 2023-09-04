@@ -1,0 +1,8 @@
+<!--
+ - Created by aserrano on 20/11/2017.
+ -->
+
+<apex:page sideBar="false" showHeader="false" standardController="Shipment__c" extensions="NEU_Carta_Instrucciones_pdf_ES" renderAs="pdf" standardStylesheets="false" language="es_MX">
+    <apex:stylesheet value="{!$Resource.cartaInstruc_style}"/>
+    <apex:outputText value="{!carta}" escape="false"/>
+</apex:page>

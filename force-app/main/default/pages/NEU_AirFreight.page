@@ -1,0 +1,573 @@
+<apex:page controller="NEU_AirFreight" id="page" sidebar="false">
+<apex:includeScript value="{!$Resource.jquery_1_10_2}"/>
+<apex:includeScript value="{!$Resource.neurored_jquery}"/>
+
+	<script>
+		function save(){
+			save();
+		}
+		
+		function search(){
+			document.getElementById('{!$Component.form.page }').value = '1';
+			search_with_filters();
+		}
+		
+		function sort_data_table(n){
+			if(document.getElementById('{!$Component.form.order_by }').value == n){
+				if(document.getElementById('{!$Component.form.order_by_mode }').value != 'asc'){
+					document.getElementById('{!$Component.form.order_by_mode }').value = 'asc';
+				}else{
+					document.getElementById('{!$Component.form.order_by_mode }').value = 'desc';
+				}
+			}else{
+				document.getElementById('{!$Component.form.order_by }').value = n;
+				document.getElementById('{!$Component.form.order_by_mode }').value = 'desc';
+			}
+			document.getElementById('{!$Component.form.page }').value = '1';
+			search_with_filters();  
+		}
+		
+		function ordenacion_paginas(s){
+			document.getElementById('{!$Component.form.page }').value = s;
+			search_with_filters();
+		}
+		
+		function mostrar_ordenacion(){
+			var n = document.getElementById('{!$Component.form.order_by }').value;
+			$('.column_order').css('display','none');
+			var clase_ordenacion  = n.replace(/\\./g , "-");;
+			$('.column_'+clase_ordenacion).css('display','block');
+			if(document.getElementById('{!$Component.form.order_by_mode }').value == 'asc'){
+				$('.column_order').css('background-position-y','-15px');
+			}else{
+				$('.column_order').css('background-position-y','0px');
+			}
+		}
+		
+		function fill_new_service_rate(){
+			fill_new_service_rate();
+		}
+		
+		function mostrar_formulario(){
+			$('.search_view').css('display', 'none');
+			$('.edit_view').each(function(){
+				if($(this).prop("tagName").toLowerCase() == 'th'){
+					$(this).css('display', 'table-cell');
+				}else if($(this).prop("tagName").toLowerCase() == 'tr'){
+					$(this).css('display', 'table-row');
+				}else{
+					$(this).css('display', 'block');
+				}
+			});
+		}
+		
+		function ocultar_formulario(){
+			$('.search_view').each(function(index){
+				if($(this).prop("tagName").toLowerCase() == 'th'){
+					$(this).css('display', 'table-cell');
+				}else if($(this).prop("tagName").toLowerCase() == 'tr'){
+					$(this).css('display', 'table-row');
+				}else{
+					$(this).css('display', 'block');
+				}
+			});
+			$('.edit_view').css('display', 'none');
+		}
+		
+		function check_if_errors(){
+			var modo = document.getElementById('{!$Component.form.modo }').value;
+			if (modo == 'edit'){
+				mostrar_formulario();
+				document.getElementById('{!$Component.form.modo }').value = '';
+			}
+		}
+		
+		function get_message(id_service, id_carrier, info_type){
+			$(".main_info").css("display","none");
+			$(".main_header").css("display","none");
+			
+			var position;
+			
+			if(info_type == "buy_rate_1")
+				position = $(".buy_rate_1_"+id_service).position();
+			if(info_type == "buy_rate_2")
+				position = $(".buy_rate_2_"+id_service).position();
+			if(info_type == "sell_rate_1")
+				position = $(".sell_rate_1_"+id_service).position();
+			if(info_type == "sell_rate_2")
+				position = $(".sell_rate_2_"+id_service).position();
+			
+			$(".alert_message").css("display","block");
+			$(".alert_message").css("top",position.top - 8);
+			$(".alert_message").css("left",position.left -396);
+		
+			document.getElementById('{!$Component.form.id_service}').value = id_service;
+			document.getElementById('{!$Component.form.id_carrier}').value = id_carrier;
+			document.getElementById('{!$Component.form.info_type}').value = info_type;
+			document.getElementById('{!$Component.form.buy_rate_filter}').value = ($(".buy_rate_1_"+id_service).parent().find(".b0").val() != null ? $(".buy_rate_1_"+id_service).parent().find(".b0").getFloatSep() : 0);
+			document.getElementById('{!$Component.form.sell_rate_filter}').value = ($(".sell_rate_1_"+id_service).parent().find(".s0").val() != null ? $(".sell_rate_1_"+id_service).parent().find(".s0").getFloatSep() : 0);
+			
+			if(info_type == "buy_rate_1" || info_type == "buy_rate_2" || info_type == "sell_rate_1" || info_type == "sell_rate_2")
+				get_historical_prices();
+		}
+		
+		function show_message(){
+			$(".main_info").css("display","block");
+			$(".main_header").css("display","inline");
+		}
+		
+		function close_message(){
+			$(".alert_message").css("display","none");
+		}
+	</script>
+	<style>
+		.botonera_paginacion_table{
+			float: right;
+			width: 100%;
+			list-style: none;
+		}
+		
+		.botonera_paginacion_table li{
+			float: left;
+			padding-left: 0px;
+			margin-left: 0px;
+		}
+		
+		.botonera_paginacion_table li.resumen_totales{
+			vertical-align: middle;
+			width: 154px;
+			margin-top: 5px;
+			margin-left: 14px;
+		}
+		
+		.button_selected{background:#C0C0C0 !important;}
+		
+		.cabecera_tabla{
+			cursor: pointer;
+		}
+		
+		.cabecera_tabla span{
+			width: 10px; height: 11px; float: right; margin: 0 5px; vertical-align: 0px; background: transparent url(/img/alohaSkin/sortArrows_sprite.png); background-size: 16px; background-repeat: no-repeat; background-position: center 2px;
+		}
+		
+		.span_th {
+			padding: 4px 0px 4px 3px;
+			margin-top: 10px;
+			margin-bottom: 5px;
+			border: 1px solid #e0e3e5;
+			float: left;
+			width: 99%;
+			color: #000;
+			font-size: .9em;
+			font-weight: bold;
+			background: #f2f3f3;
+		}
+		
+		#alert_message{display:none; padding: 3px 6px 5px; margin-top: -12px; margin-right: 0; margin-bottom: 0; margin-left: -11px; background: transparent url(/img/sprites/hover_sprite.png) 15px -29px no-repeat; text-align:left;}
+		#custom_style_right{background: transparent url({!URLFOR($Resource.hover_arrow_right)}) 383px 3px no-repeat; width: 370px; padding-left: 15px; padding-right: 15px; border: 0; margin: 0;}
+		#custom_style_header{border-top: 3px solid #3f6075; margin: 0; border-radius: 4px; padding:6px 10px; color: rgb(51, 52, 53); font-family: Arial, Helvetica, sans-serif; font-size: 14px; font-weight: bold;}
+		#custom_style_body{font-family: Arial, Helvetica, sans-serif; font-size: 12px;}
+		#custom_style_footer{background: transparent url(/img/sprites/hover_sprite.png) no-repeat; display: block; position: absolute; width: 100%; height: 14px; bottom: -14px; left: 15px;}
+		.campo_azul{cursor:pointer; color:#015ba7 !important; text-decoration:underline !important;}
+		.cierre{float: right; display: block; cursor: pointer; background: #3f6075; color: #ffffff; padding: 3px; border-radius: 3px; cursor:pointer; font-size:10px;}
+		.board_image{margin:0 5px 0 0; cursor: pointer;}
+		.message_icon{height:25px;}
+		#alert_message .td_icon{text-align:center; width: 60px;}
+		#alert_message .td_text{font-size: 11px;}
+		.carrier_account{width:160px;}
+		.leyenda{float: left; margin-right: 30px; margin-top: 0;}
+		.texto_leyenda{float: right; margin: 2px 0 2px 5px;}
+		.table_data{border: 1px solid #3f6075 !important; margin-bottom:5px;}
+		.table_data .dataRow th
+		{
+			background: #f2f3f3;
+		    border-width: 0 0 1px 1px;
+		    border-color: #e0e3e5;
+		    color: #000;
+		    font-size: .9em;
+		    font-weight: bold;
+		    padding: 5px 2px 4px 5px;
+			border: 1px solid #ededed;
+		}
+		
+		.edit_view{
+			display:none;
+		}
+		
+		@media only screen and (max-width: 1920px) {
+			.bPageBlock .result_list {
+				/*width: 1450px;*/
+				overflow-x: auto;
+				display: block;
+				margin: auto;
+			}
+			
+			.bPageBlock .result_list th{
+				width: 10%;
+			}
+		}
+		
+		@media only screen and (max-width: 1280px) {
+			.bPageBlock .result_list {
+				/*width: 1200px;*/
+				overflow-x: auto;
+				display: block;
+				margin: auto;
+			}
+			
+			.bPageBlock .result_list th{
+				width: 10%;
+			}
+		}
+	</style> 
+	<apex:form id="form">
+		<apex:inputhidden value="{!id_service}" id="id_service"/>
+		<apex:inputhidden value="{!id_carrier}" id="id_carrier"/>
+		<apex:inputhidden value="{!info_type}" id="info_type"/>
+		<apex:inputhidden value="{!buy_rate_filter}" id="buy_rate_filter"/>
+		<apex:inputhidden value="{!sell_rate_filter}" id="sell_rate_filter"/>
+		
+		<apex:inputHidden value="{!modo}" id="modo"/>
+		<apex:inputHidden value="{!order_by}" id="order_by"/>
+		<apex:inputHidden value="{!order_by_mode}" id="order_by_mode"/>
+		<apex:inputHidden value="{!page}" id="page"/>
+	
+		<apex:sectionHeader title="{!$ObjectType.Fee__c.labelplural}" subtitle="Air Rates"/>
+		
+		<apex:actionFunction name="search_with_filters" action="{!search_with_filters}" status="myStatus" oncomplete="mostrar_ordenacion();" reRender="form" />
+		<apex:actionFunction name="save" action="{!save}" status="myStatus" reRender="form" oncomplete="check_if_errors();"/>
+		<apex:actionFunction name="fill_new_service_rate" action="{!fill_new_service_rate}" status="myStatus" reRender="form" oncomplete="mostrar_formulario();" />
+		<apex:actionFunction name="get_historical_prices" action="{!get_historical_prices}" reRender="message_data, message_header" status="myStatus_div" oncomplete="show_message();"/>
+		
+		<apex:pageBlock id="block1" mode="maindetail">
+			<apex:pageBlockButtons location="top">
+				<input type="button" class="btn btn-search" value="Search" onclick="search()"/>
+			</apex:pageBlockButtons>
+			<apex:pageBlockButtons location="bottom">
+				<input type="button" class="btn btn-search" value="Search" onclick="search()"/>
+			</apex:pageBlockButtons>
+			<apex:pageBlockSection title="Filters" columns="1">
+				<apex:pageBlockSection columns="2" showHeader="false">
+					<apex:inputField id="Account_for" value="{!filter.Account_for__c}" styleClass="carrier_i"/>
+					<apex:selectList value="{!filter.Fee_Category__c}" multiselect="false" size="1" disabled="true">
+						<apex:SelectOptions value="{!category}"/>
+					</apex:selectList>
+					<apex:pageBlockSectionItem >
+						<apex:outputLabel value="Currency"/>
+						<apex:outputPanel layout="block" styleClass="requiredInput">
+							<div class="requiredBlock"></div>
+							<apex:selectList value="{!filterCurrencyISOCode}" multiselect="false" size="1">
+								<apex:SelectOptions value="{!CurrencyISOCodeOptions}"/>
+							</apex:selectList>
+						</apex:outputPanel>
+					</apex:pageBlockSectionItem>
+					<apex:inputField value="{!filter.Rate_Type__c}"/>
+				</apex:pageBlockSection>
+				<apex:pageBlockSection columns="2" showHeader="false">
+					<apex:inputField value="{!filter.Carrier_Account__c}"/>
+					<apex:inputField value="{!filter.Valid_From__c}"/>
+					<apex:outputLabel />
+					<apex:inputField value="{!filter.Valid_Until__c}"/>
+				</apex:pageBlockSection>
+				<apex:pageBlockSection columns="2" showHeader="false">
+					<apex:pageBlockSectionItem >
+						<apex:outputLabel value="Region of Load"/>
+						<apex:inputField value="{!loadFilter.Region__c}"/>
+					</apex:pageBlockSectionItem>
+					<apex:pageBlockSectionItem >
+						<apex:outputLabel value="Region of Discharge"/>
+						<apex:inputField value="{!dischargeFilter.Region__c}"/>
+					</apex:pageBlockSectionItem>
+					<apex:inputField value="{!filter.Route__r.Country_of_Load__c}"/>
+					<apex:inputField value="{!filter.Route__r.Country_of_Discharge__c}"/>
+					<apex:inputField value="{!filter.Route__r.State_of_Load__c}"/>
+					<apex:inputField value="{!filter.Route__r.State_of_Discharge__c}"/>
+					<apex:inputField value="{!filter.Route__r.Port_Airport_of_Load__c}"/>
+					<apex:inputField value="{!filter.Route__r.Port_Airport_of_Discharge__c}"/>
+				</apex:pageBlockSection>
+			</apex:pageBlockSection>
+		</apex:pageBlock>
+	
+		<apex:pageMessages id="messages"/>
+		<apex:pageBlock id="block2" mode="detail">
+			<apex:pageBlockButtons location="top">
+				<apex:actionRegion rendered="{!n_records_total>0}">
+					<div class="search_view">
+						<apex:outputLabel value="Date Historical Prices"/>
+							&nbsp;&nbsp;&nbsp;
+						<apex:inputfield value="{!filter_date.Valid_Until__c}"/>
+					</div>
+				</apex:actionRegion>
+				<div>
+					<ul class="botonera_paginacion_table">
+						<li class="boton_new_record search_view"><input type="button" value="New" class="btn" onclick="fill_new_service_rate()"/></li>
+						<li class="boton_save_record edit_view" style="display:none;"><input type="button" value="Save" class="btn" onclick="save()"/></li>
+						<li class="boton_cancel_record edit_view" style="display:none;"><input type="button" value="Cancel" class="btn" onclick="ocultar_formulario()"/></li>
+						<apex:actionRegion rendered="{!n_records_total>0}">
+							<apex:repeat value="{!lst_pages}" var="s">
+								<li><input type="button" value="{!s}" class="boton_paginacion btn boton_para_paginar{!s} {!if(TEXT(s) == page,'button_selected','')} search_view" onclick="ordenacion_paginas('{!s}');"/></li>
+							</apex:repeat>
+							<li class="resumen_totales search_view">TOTAL Air Rates:&nbsp;&nbsp;<strong><apex:outputText value="{!n_records_total}"/></strong></li>
+						</apex:actionRegion>
+					</ul>
+				</div>
+			</apex:pageBlockButtons>
+			<apex:pageBlockButtons location="bottom">
+				<ul class="botonera_paginacion_table">
+					<li class="boton_new_record search_view"><input type="button" value="New" class="btn" onclick="fill_new_service_rate()"/></li>
+					<li class="boton_save_record edit_view" style="display:none;"><input type="button" value="Save" class="btn" onclick="save()"/></li>
+					<li class="boton_cancel_record edit_view" style="display:none;"><input type="button" value="Cancel" class="btn" onclick="ocultar_formulario()"/></li>
+					<apex:actionRegion rendered="{!n_records_total>0}">
+						<apex:repeat value="{!lst_pages}" var="s">
+							<li><input type="button" value="{!s}" class="boton_paginacion btn boton_para_paginar{!s} {!if(TEXT(s) == page,'button_selected','')} search_view" onclick="ordenacion_paginas('{!s}');"/></li>
+						</apex:repeat>
+						<li class="resumen_totales search_view">TOTAL Air Rates:&nbsp;&nbsp;<strong><apex:outputText value="{!n_records_total}"/></strong></li>
+					</apex:actionRegion>
+				</ul>
+			</apex:pageBlockButtons>
+			
+			<table class="list result_list" cellspacing="0" cellpadding="0" border="0">
+				<thead>
+					<tr class="headerRow">
+						<th class="headerRow">
+							<div class="cabecera_tabla" id="rate_name" onclick="sort_data_table('Name');" style="width:175px;">Rate Name
+								<span class="column_order column_Name" style="display:none;"></span>
+							</div>
+						</th>
+						<th class="headerRow">
+							<div class="cabecera_tabla" id="tt_days" onclick="sort_data_table('TT_Days__c');">TT Days
+								<span class="column_order column_TT_Days__c" style="display:none;"></span>
+							</div>
+						</th>
+						<th class="headerRow">
+							<div class="cabecera_tabla" id="rate_type" onclick="sort_data_table('Rate_Type__c');">Rate Type
+								<span class="column_order column_Rate_Type__c" style="display:none;"></span>
+							</div>
+						</th>
+						<th class="headerRow">
+							<div class="cabecera_tabla" id="max_kgs" onclick="sort_data_table('Max_Kgs__c');">Max Kg
+								<span class="column_order column_Max_Kgs__c" style="display:none;"></span>
+							</div>
+						</th>
+						<th>
+							<div class="cabecera_tabla" id="max_m3" onclick="sort_data_table('Max_M3__c');">Max M3
+								<span class="column_order column_Max_M3__c" style="display:none;"></span>
+							</div>
+						</th>
+						<th class="headerRow search_view">
+							<div class="cabecera_tabla " id="IATA_code_load" onclick="sort_data_table('Route__r.Port_Airport_of_Load__r.IATA_Code__c');">IATA Code Load
+								<span class="column_order column_Route__r-Port_Airport_of_Load__r-IATA_Code__c" style="display:none;"></span>
+							</div>
+						</th>
+						<th class="headerRow search_view">
+							<div class="cabecera_tabla" id="IATA_code_Discharge" onclick="sort_data_table('Route__r.Port_Airport_of_Discharge__r.IATA_Code__c');">IATA Code Discharge
+								<span class="column_order column_Route__r-Port_Airport_of_Discharge__r-IATA_Code__c" style="display:none;"></span>
+							</div>
+						</th>
+						<th class="headerRow">
+							<div class="cabecera_tabla" id="location_of_load" onclick="sort_data_table('Route__r.Port_Airport_of_Load__r.Name');">Location of Load
+								<span class="column_order column_Route__r-Port_Airport_of_Load__r-Name" style="display:none;"></span>
+							</div>
+						</th>
+						<th class="headerRow">
+							<div class="cabecera_tabla" id="location_of_discharge" onclick="sort_data_table('Route__r.Port_Airport_of_Discharge__r.Name');">Location of Discharge
+								<span class="column_order column_Route__r-Port_Airport_of_Discharge__r-Name" style="display:none;"></span>
+							</div>
+						</th>
+						<!--<th class="headerRow edit_view"><div>Country of Load</div></th>
+						<th class="headerRow edit_view"><div>State of Load</div></th>
+						<th class="headerRow edit_view"><div>Site of Load</div></th>
+						<th class="headerRow edit_view"><div>Country of Discharge</div></th>
+						<th class="headerRow edit_view"><div>State of Discharge</div></th>
+						<th class="headerRow edit_view"><div>Site of Discharge</div></th>-->
+						<th class="headerRow">
+							<div class="cabecera_tabla" id="transhipment" onclick="sort_data_table('Transhipment__c');">Transhipment
+								<span class="column_order column_Transhipment__c" style="display:none;"></span>
+							</div>
+						</th>
+						<th class="headerRow">
+							<div class="cabecera_tabla" id="carrier" onclick="sort_data_table('Carrier_Account__r.Name');">Carrier
+								<span class="column_order column_Carrier_Account__r-Name" style="display:none;"></span>
+							</div>
+						</th>
+						<th class="headerRow">
+							<div class="cabecera_tabla" id="carrier" onclick="sort_data_table('Vendor__r.Name');">Agent
+								<span class="column_order column_Vendor__r-Name" style="display:none;"></span>
+							</div>
+						</th>
+						<th class="headerRow">
+							<div class="cabecera_tabla" id="valid_from" onclick="sort_data_table('Valid_From__c');">Valid From
+								<span class="column_order column_Valid_From__c" style="display:none;"></span>
+							</div>
+						</th>
+						<th class="headerRow">
+							<div class="cabecera_tabla" id="valid_to" onclick="sort_data_table('Valid_Until__c');">Valid To
+								<span class="column_order column_Valid_Until__c" style="display:none;"></span>
+							</div>
+						</th>
+						<th class="headerRow">
+							<div class="cabecera_tabla" id="valid_to" onclick="sort_data_table('Min__c');">Min. Price
+								<span class="column_order column_Min__c" style="display:none;"></span>
+							</div>
+						</th>
+						<th class="headerRow">
+							<div class="cabecera_tabla" id="buy_rate" onclick="sort_data_table('Buy_Rate__c');">Buy Rate
+								<span class="column_order column_Buy_Rate__c" style="display:none;"></span>
+							</div>
+						</th>
+						<th class="headerRow">
+							<div class="cabecera_tabla" id="sell_rate" onclick="sort_data_table('Fee_Rate__c');">Sell Rate
+								<span class="column_order column_Fee_Rate__c" style="display:none;"></span>
+							</div>
+						</th>
+						<th class="headerRow search_view">
+							<div id="margin">Margin</div>
+						</th>
+						<th class="headerRow">
+							<div class="cabecera_tabla" id="observations" onclick="sort_data_table('Comments__c');">Observations
+								<span class="column_order column_Comments__c" style="display:none;"></span>
+							</div>
+						</th>
+						<th class="headerRow">
+							<div class="cabecera_tabla" id="group" onclick="sort_data_table('Group__c');">Group
+								<span class="column_order column_Group__c" style="display:none;"></span>
+							</div>
+						</th>
+						<th class="headerRow">
+							<div class="cabecera_tabla" id="sap_service_type" onclick="sort_data_table('SAP_Service_Type__c');">SAP Service Type
+								<span class="column_order column_SAP_Service_Type__c" style="display:none;"></span>
+							</div>
+						</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr class="dataRow edit_view" onmouseover="if (window.hiOn){hiOn(this);}" onmouseout="if (window.hiOff){hiOff(this);}" onblur="if (window.hiOff){hiOff(this);}" onfocus="if (window.hiOn){hiOn(this);}" style="display:none;">
+						<td class="dataCell"><div style="display:inline-block;"><apex:inputField value="{!service_rate_new.fee0.Name}"/></div></td>
+						<td class="dataCell"><div style="display:inline-block;"><apex:inputField style="width:6em;text-align:right" value="{!service_rate_new.fee0.TT_Days__c}"/></div></td>
+						<td class="dataCell"><div style="display:inline-block;"><apex:inputField value="{!service_rate_new.fee0.Rate_Type__c}"/></div></td>
+						<td class="dataCell"><div style="display:inline-block;"><apex:inputField style="width:6em;text-align:right" value="{!service_rate_new.fee0.Max_Kgs__c}"/></div></td>
+						<td class="dataCell"><div style="display:inline-block;"><apex:inputField style="width:6em;text-align:right" value="{!service_rate_new.fee0.Max_M3__c}"/></div></td>
+						<td class="dataCell">
+							<div style="display:inline-block;"><apex:inputField value="{!service_rate_new.fee0.Route__r.Country_of_Load__c}"/></div>
+							<br/>
+							<div style="display:inline-block;"><apex:inputField value="{!service_rate_new.fee0.Route__r.State_of_Load__c}"/></div>
+							<br/>
+							<div style="display:inline-block;"><apex:inputField value="{!service_rate_new.fee0.Route__r.Port_Airport_of_Load__c}"/></div>
+						</td>
+						<!--<td class="dataCell"><div style="display:inline-block;"><apex:inputField value="{!service_rate_new.fee0.Route__r.State_of_Load__c}"/></div></td>-->
+						<!--<td class="dataCell"><div style="display:inline-block;"><apex:inputField value="{!service_rate_new.fee0.Route__r.Port_Airport_of_Load__c}"/></div></td>-->
+						<td class="dataCell">
+							<div style="display:inline-block;"><apex:inputField value="{!service_rate_new.fee0.Route__r.Country_of_Discharge__c}"/></div>
+							<br/>
+							<div style="display:inline-block;"><apex:inputField value="{!service_rate_new.fee0.Route__r.State_of_Discharge__c}"/></div>
+							<br/>
+							<div style="display:inline-block;"><apex:inputField value="{!service_rate_new.fee0.Route__r.Port_Airport_of_Discharge__c}"/></div>
+						</td>
+						<!--<td class="dataCell"><div style="display:inline-block;"><apex:inputField value="{!service_rate_new.fee0.Route__r.State_of_Discharge__c}"/></div></td>-->
+						<!--<td class="dataCell"><div style="display:inline-block;"><apex:inputField value="{!service_rate_new.fee0.Route__r.Port_Airport_of_Discharge__c}"/></div></td>-->
+						<td class="dataCell"><div style="display:inline-block;"><apex:inputField value="{!service_rate_new.fee0.Transhipment__c}"/></div></td>
+						<td class="dataCell"><div style="display:inline-block;"><apex:inputField value="{!service_rate_new.fee0.Carrier_Account__c}"/></div></td>
+						<td class="dataCell"><div style="display:inline-block;"><apex:inputField value="{!service_rate_new.fee0.Vendor__c}"/></div></td>
+						<td class="dataCell"><div style="display:inline-block;"><apex:inputField value="{!service_rate_new.fee0.Valid_From__c}"/></div></td>
+						<td class="dataCell"><div style="display:inline-block;"><apex:inputField value="{!service_rate_new.fee0.Valid_Until__c}"/></div></td>
+						<td class="dataCell"><div style="display:inline-block;"><apex:inputField style="width:6em;text-align:right" value="{!service_rate_new.fee0.Min__c}"/></div></td>
+						<td class="dataCell"><div style="display:inline-block;"><apex:inputField style="width:6em;text-align:right" value="{!service_rate_new.fee0.Buy_Rate__c}"/></div></td>
+						<td class="dataCell"><div style="display:inline-block;"><apex:inputField style="width:6em;text-align:right" value="{!service_rate_new.fee0.Fee_Rate__c}"/></div></td>
+						<td class="dataCell"><div style="display:inline-block;"><apex:inputtextarea style="text-align:right" value="{!service_rate_new.fee0.Comments__c}"/></div></td>
+						<td class="dataCell"><div style="display:inline-block;"><apex:inputField value="{!service_rate_new.fee0.Group__c}"/></div></td>
+						<td class="dataCell"><div style="display:inline-block;"><apex:inputField value="{!service_rate_new.fee0.SAP_Service_Type__c}"/></div></td>
+					</tr>
+					<apex:actionRegion rendered="{!n_records_total==0}">
+						<tr class="dataRow search_view"><td colspan="30" style="text-align: center;background-color: #f6f6f6;">No results found</td></tr>
+					</apex:actionRegion>
+					<apex:repeat value="{!myList}" var="line">
+						<tr class="dataRow search_view" onmouseover="if (window.hiOn){hiOn(this);}" onmouseout="if (window.hiOff){hiOff(this);}" onblur="if (window.hiOff){hiOff(this);}" onfocus="if (window.hiOn){hiOn(this);}">
+							<td class="dataCell">
+								<div style="display:inline-block;">
+									<apex:outputField value="{!line.fee0.Name}"/>
+									<apex:outputLink value="{!URLFOR($Action.Fee__c.View,line.fee0.Id)}" target="_blank" rendered="{!line.fee0.Id!=null}" style="float:right"><apex:image value="/img/apexpages/setup/launch.jpg" height="15" width="15"/></apex:outputLink>
+									<apex:outputPanel rendered="{!line.lst_errors != null}">
+										<div class="message errorM3" role="alert">
+											<img alt="ERROR" class="msgIcon" src="/s.gif" title="ERROR"/><h4 style="margin: 5px 3px;position: absolute;">Error:</h4>
+											<apex:repeat value="{!line.lst_errors}" var="error">
+												<p><apex:outputText value="{!error}"/></p>
+											</apex:repeat>
+										</div>
+									</apex:outputPanel>
+								</div>
+							</td>
+							<td class="dataCell"><div style="display:inline-block;"><apex:outputField value="{!line.fee0.TT_Days__c}"/></div></td>
+							<td class="dataCell"><div style="display:inline-block;"><apex:outputField value="{!line.fee0.Rate_Type__c}"/></div></td>
+							<td class="dataCell"><div style="display:inline-block;"><apex:outputField value="{!line.fee0.Max_Kgs__c}"/></div></td>
+							<td class="dataCell"><div style="display:inline-block;"><apex:outputField value="{!line.fee0.Max_M3__c}"/></div></td>
+							<td class="dataCell"><div style="display:inline-block;"><apex:outputField value="{!line.fee0.Route__r.Port_Airport_of_Load__r.IATA_Code__c}"/></div></td>
+							<td class="dataCell"><div style="display:inline-block;"><apex:outputField value="{!line.fee0.Route__r.Port_Airport_of_Discharge__r.IATA_Code__c}"/></div></td>
+							<td class="dataCell"><div style="display:inline-block;"><apex:outputField value="{!line.fee0.Transhipment__c}"/></div></td>
+							<td class="dataCell"><div style="display:inline-block;"><apex:outputField value="{!line.fee0.Carrier_Account__c}"/></div></td>
+							<td class="dataCell"><div style="display:inline-block;"><apex:outputField value="{!line.fee0.Vendor__c}"/></div></td>
+							<td class="dataCell"><div style="display:inline-block;"><apex:outputField value="{!line.fee0.Valid_From__c}"/></div></td>
+							<td class="dataCell"><div style="display:inline-block;"><apex:outputField value="{!line.fee0.Valid_Until__c}"/></div></td>
+							<td class="dataCell"><div style="display:inline-block;"><apex:outputField value="{!line.fee0.Min__c}"/></div></td>
+							<td class="dataCell">
+								<div style="display:inline-block;">
+									<span class="campo_azul buy_rate_1_{!line.fee0.Id}" onclick="get_message('{!line.fee0.Id}','{!line.fee0.Carrier_Account__c}','buy_rate_1');"><img src="/img/func_icons/util/editLayout20.png" class="board_image"/></span>
+									<span class="campo_azul buy_rate_2_{!line.fee0.Id}" onclick="get_message('{!line.fee0.Id}','{!line.fee0.Carrier_Account__c}','buy_rate_2');"><img src="/img/func_icons/util/datePicker16.gif" class="board_image"/></span>
+									<apex:outputField value="{!line.fee0.Buy_Rate__c}"/>
+								</div>
+							</td>
+							<td class="dataCell">
+								<apex:actionRegion rendered="{!line.fee0.Id != null}">
+									<div style="display:inline-block;">
+										<span class="campo_azul sell_rate_1_{!line.fee0.Id}" onclick="get_message('{!line.fee0.Id}','{!line.fee0.Carrier_Account__c}','sell_rate_1');"><img src="/img/func_icons/util/editLayout20.png" class="board_image"/></span>
+										<span class="campo_azul sell_rate_2_{!line.fee0.Id}" onclick="get_message('{!line.fee0.Id}','{!line.fee0.Carrier_Account__c}','sell_rate_2');"><img src="/img/func_icons/util/datePicker16.gif" class="board_image"/></span>
+										<apex:outputField value="{!line.fee0.Fee_Rate__c}"/>
+									</div>
+								</apex:actionRegion>
+							</td>
+							<td class="dataCell"><div style="display:inline-block;"><apex:outputText value="{!line.margin}"/></div></td>
+							<td class="dataCell"><div style="display:inline-block;"><apex:outputField value="{!line.fee0.Comments__c}"/></div></td>
+							<td class="dataCell"><div style="display:inline-block;"><apex:outputField value="{!line.fee0.SAP_Service_Type__r.Name}"/><br/><strong><apex:outputField value="{!line.fee0.SAP_Service_Type__r.Code__c}"/></strong></div></td>
+						</tr>
+					</apex:repeat>
+				</tbody>
+			</table>
+		</apex:pageBlock>
+			
+		<apex:outputpanel >
+			<apex:actionstatus id="myStatus">
+				<apex:facet name="start">
+					<div class="waitingSearchDiv" id="el_loading" style="background-color: #fbfbfb; height: 100%;opacity:0.65; width: 100%;"> 
+						<div class="waitingHolder" style="width: 91px;">
+							<img class="waitingImage" src="/img/loading.gif" title="Please Wait..." />
+							<span class="waitingDescription">Loading...</span>
+						</div>
+					</div>
+				</apex:facet>
+			</apex:actionstatus>
+		</apex:outputpanel>
+		
+		<div id="alert_message" class="mruHoverDetail alert_message">
+			<div id="custom_style_right" class="bPageBlock brandSecondaryBrd secondaryPalette">
+				<div id="custom_style_header" class="pbHeader brandSecondaryBrd"><apex:outputtext value="{!message_header}" id="message_header" styleclass="main_header"/><span class="cierre" onclick="close_message();">X</span></div>
+				<div id="custom_style_body" class="pbBody">
+					<div class="main_info"><apex:outputtext value="{!message_data}" escape="false" id="message_data"/></div>
+					<apex:outputpanel >
+						<apex:actionstatus id="myStatus_div">
+							<apex:facet name="start">
+								<div class="waitingSearchDiv" id="el_loading" style="background-color: #fbfbfb; height: 100%;opacity:0.65; width: 370px; margin: 0 0 0 21px;"> 
+									<div class="waitingHolder" style="width: 91px;">
+										<img class="waitingImage" src="/img/loading.gif" title="Please Wait..." />
+										<span class="waitingDescription">Loading...</span>
+									</div>
+								</div>
+							</apex:facet>
+						</apex:actionstatus>
+					</apex:outputpanel>
+				</div>
+				<div id="custom_style_footer" class="pbFooter secondaryPalette">
+					<div class="bg"></div>
+				</div>
+			</div>
+		</div>
+	</apex:form>
+</apex:page>

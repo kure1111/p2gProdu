@@ -1,0 +1,33 @@
+<aura:component controller="UploadAccountController" implements="flexipage:availableForAllPageTypes,force:hasRecordId" access="global">
+    <aura:attribute name="quoteId" type="String" description="Quote Id" />
+    <aura:attribute name="fileToBeUploaded" type="Object[]"/>
+    <aura:attribute name="HideSpinner" type="Boolean" default="true"/>
+    <aura:handler event="aura:waiting" action="{!c.waiting}"/>
+    <aura:handler event="aura:doneWaiting" action="{!c.doneWaiting}"/>
+    <!--<aura:handler event="force:refreshView" action="{!c.isRefreshed}" />-->
+    
+    <lightning:card variant="Narrow" title=" Masivo Accounts" iconName="standard:account" >
+       <div class="slds-box slds-is-relative">
+        <aura:renderIf isTrue="{!v.HideSpinner}">
+            <div class="slds-spinner_container" >
+                <div class="slds-spinner--brand slds-spinner slds-spinner--large" role="alert">
+                    <span class="slds-assistive-text">Loading, Please Wait...</span>
+                    <div class="slds-spinner__dot-a"></div>
+                    <div class="slds-spinner__dot-b"></div>
+                </div>
+            </div>
+        </aura:renderIf>
+       
+        <div class="slds-align_absolute-center">
+            <lightning:input messageWhenTypeMismatch="Please upload supported file types" type="file" label="" multiple="false" 
+                             name="file" accept=".csv" onchange="{! c.CreateRecord }" files="{!v.fileToBeUploaded}" /> 
+        </div>     
+        <div class="slds-m-top_medium">
+            <b class="red">Note: Please use the standard template to upload Accounts. 
+                <a href='#' target='_blank'>Click here</a> to download the template.</b>
+        </div>
+    </div>
+    </lightning:card>
+    
+    
+</aura:component>

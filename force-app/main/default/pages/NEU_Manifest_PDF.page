@@ -1,0 +1,4 @@
+<apex:page StandardController="Air_Waybill__c"  extensions="NEU_Manifest_PDF" standardStylesheets="false" renderas="pdf">
+    <apex:stylesheet value="{!$Resource.Style_Manifest_PDF}"/>
+    <apex:outputText value="{!string_pdf}" escape="false"/>
+</apex:page>

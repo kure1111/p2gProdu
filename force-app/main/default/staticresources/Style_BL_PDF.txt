@@ -1,0 +1,119 @@
+@page { 
+	size: 21.5cm 29.5cm;
+	margin-top: 0.75cm; 
+	margin-left: 0.4cm; 
+	margin-right: 0.4cm; 
+	margin-bottom: 0.75cm; 
+	@bottom-right {
+		font-size: 11px;
+		content: "Page " counter(page) " of " counter(pages);
+	}
+}
+
+#contenedor {
+    font-family: Arial, Helvetica, sans-serif;
+    /*
+    background: url(/resource/1481133760000/NEU_Booking_PDF_Marca);
+    */
+}
+
+p, h4, h3, h2 {
+	margin: 2px;
+}
+
+h3 {
+    color: #0236a3;
+}
+
+#table_body {
+	font-size: 11px;
+    border-collapse: collapse;
+}
+
+#table_body img.logo {
+    width: 340px;
+}
+
+#table_body td, #table_lines td {
+    width: 16%;
+    padding: 2.5px;
+	border-bottom: 2px solid #0236a3;
+}
+
+#table_body td.borders div.info {
+    border-bottom: 2px solid #0236a3;
+}
+
+.separador {
+	border-right: 2px solid #0236a3;
+}
+
+.nobottom {
+	border-bottom: none!important;
+}
+
+#table_body div.mini {
+    width: 45%!important;
+}
+
+#table_body td {
+    vertical-align: top;
+}
+
+#table_body div.info {
+    display: inline-block;
+    width: 100%;
+    padding: 2px;
+}
+
+#table_body div.info h4, #table_head div.info p {
+    float: left;
+}
+
+div.number {
+    width: 350px;
+    height: 38px;
+    border: 2px solid #0236a3;
+    margin-bottom: 15px;
+}
+
+div.number p {
+    float: left;
+    vertical-align: bottom;
+	font-size: 25px;
+    padding: 2px;
+}
+
+div.number p.bl {
+    background-color: #0236a3;
+    color: white;
+    font-weight: bold;
+}
+
+div.number p.no {
+    color: #0236a3;
+}
+
+div.header {
+    margin-bottom: 15px;
+}
+
+div.header p {
+	font-size: 15px;
+    font-weight: bold;
+    color: #0236a3;
+}
+
+div.smallletters {
+	font-size: 9.5px;
+    color: #0236a3;
+    text-align: center;
+}
+
+span.cuadro {
+    height: 15x;
+    width: 15px;
+    border: 1px solid #0236a3;
+    float: left;
+    margin-right: 2px;
+}

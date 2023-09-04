@@ -1,0 +1,74 @@
+<aura:component implements="flexipage:availableForAllPageTypes,force:appHostable" 
+                controller="ConsultaTarifarioClienteController">
+    <aura:attribute type="Fee__c[]" name="ratesList"/>
+    <aura:attribute name="mycolumns" type="List"/>
+    
+    <aura:attribute name="factivo" type="Boolean" default="true"/>
+    <aura:attribute name="fruta" type="String" default=""/>
+    <aura:attribute name="fcliente" type="String" default=""/>
+    <aura:attribute name="fequipo" type="String" default=""/>    
+    <aura:attribute name="fvigencia" type="String" default=""/>
+    <aura:attribute name="fventa" type="String" default=""/>
+    
+    <aura:attribute name="totalRegistros" type="Integer" default="0"/>
+    <aura:attribute name="exportdisabled" type="Boolean" default="true"/>
+    
+    <aura:handler name="init" value="{!this}" action="{!c.cargaTabla}"/>
+    
+    <lightning:spinner variant="brand" size="large" aura:id="Id_spinner" class="slds-hide" />
+    
+    <div class="slds-box" style="background-color:white">
+        <div class="slds-text-heading_medium slds-text-align_center">Consulta Tarifario Clientes</div>
+        <div class="slds-text-align_right">Total registros: <b>{!v.ratesList.length}</b></div>
+        <div aria-labelledby="newSearchForm" class="slds-grid">
+            <!-- BOXED AREA -->
+            <fieldset class="slds-box slds-theme--default slds-size_2-of-12">
+                
+                <label id="newSearchForm" class="slds-text-heading--small
+                                                 slds-p-vertical--medium">
+                    Filtros de búsqueda
+                </label>
+                
+                <form class="slds-form--stacked">
+                    
+                    <lightning:input type="checkbox" label="Activo"
+                                     name="inputActivo" checked="{!v.factivo}"/>                    
+                    <lightning:input value="{!v.fruta}"
+                                     placeholder=""
+                                     aura:id="inputRuta"
+                                     label="Ruta"/>
+                    <lightning:input value="{!v.fcliente}"
+                                     placeholder=""
+                                     aura:id="inputCliente"
+                                     label="Cliente"/>
+                    <lightning:input value="{!v.fequipo}"
+                                     placeholder=""
+                                     aura:id="inputEquipo"
+                                     label="Equipo"/>       
+                    <lightning:input value="{!v.fvigencia}" type="date" name="inputVigencia" label="Vigencia" />
+                    <lightning:input value="{!v.fventa}"  type="number" name="inputVenta" label="Venta" />
+                    
+                    <lightning:button onclick="{!c.cargaDatos}"
+                                      class="slds-m-top--medium"
+                                      variant="brand"
+                                      label="Consultar"
+                                      iconName="utility:search"/>
+                    <lightning:button onclick="{!c.exportarCsv}"
+                                      class="slds-m-top--medium"
+                                      variant="brand"
+                                      label="Exportar CSV"
+                                      disabled="{!v.exportdisabled}"
+                                      iconName="utility:file"/>                    
+                </form>
+            </fieldset>
+            <div class="slds-size_10-of-12" style="height: 350px">
+                <lightning:datatable data="{! v.ratesList }"
+                                     columns="{! v.mycolumns }"
+                                     keyField="id"
+                                     showRowNumberColumn="true"
+                                     hideCheckboxColumn="true"
+                                     />
+            </div>
+        </div>
+    </div>
+</aura:component>

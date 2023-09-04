@@ -1,0 +1,683 @@
+<apex:page standardController="Shipment_Program__c" extensions="NEU_Track_and_Trace_Shipment_Programs" sidebar="false" showHeader="false"> 
+    <apex:includeScript value="{!$Resource.jquery_1_10_2}"/>
+    <apex:includeScript value="{!$Resource.neurored_jquery}"/>  
+    <apex:includeScript value="{!$Resource.jquery_ui_1_10_3}"/>
+    <apex:stylesheet value="{!URLFOR($Resource.jquery_ui_1_10_3_css,'jquery-ui-1.10.3.min.css')}"/>
+    <script type="text/javascript" src="https://maps.google.com/maps/api/js?key=AIzaSyAK8UqXuiT9IFTwkvhF-Nh1wS2JAdk6Fig"></script>
+        <style>
+    .list.thnormal tr.headerRow th.headerRow
+    {
+        white-space:normal;
+    }
+            .sep
+            {
+                width:20px;
+            }
+            .tdmil
+            {
+                vertical-align:top;
+                position:relative;
+                min-width: 5.5em;
+            }
+            .tdmil img
+            {
+                position:absolute;
+                left:-20px;
+                top:25px;
+            }
+            .tdmil .datestring
+            {
+                position:absolute;
+                left:-2.7em;
+                top:0px;
+                padding:2px;
+                border:3px #30caff solid;
+            }
+            .tdmilm
+            {
+                text-align:center;
+            }
+            .tdstatus
+            {
+                text-align:center;
+            }
+            .tdtrade
+            {
+                text-align:center;
+                vertical-align:baseline;
+            }
+            .tdtrade.textleft
+            {
+                text-align:left;
+            }
+            .tdtrade.textright
+            {
+                text-align:right;
+            }
+            .line1
+            {
+                background-color:#d9f5ff;
+                text-align:center;
+            }
+            .line2
+            {
+                background-color:#b4ebff;
+                text-align:center;
+            }
+            .line3
+            {
+                background-color:#ced6d9;
+                text-align:center;
+            }
+            .line4
+            {
+                background-color:#d9f5ff;
+                text-align:center;
+            }
+            #graph td
+            {
+                border:1px solid white;
+            }
+            #graph td.nobl
+            {
+                border-left:0;
+            }
+            #graph td.nobr
+            {
+                border-right:0;
+            }
+            html{background-color:#ffffff !important;}
+        </style>
+        <script>
+        var n$ = jQuery.noConflict();
+        var map_inicio;
+           n$(document).ready(function(){
+                google.maps.event.addDomListener(window, 'load', initialize_inicio);
+            n$("#openwindow" ).dialog({
+                open:function(event,ui){
+                    n$('#framewindow').attr('src','{!$Site.BaseUrl}/apex/NEU_Events_Edit?Id={!Shipment_Program__c.Id}');
+                },
+                close:function(event,ui){
+                    n$('#framewindow').attr('src','');
+                },
+                autoOpen: false,
+                modal: true,
+                height: 450,
+                width: 950
+            });
+            });
+            
+            
+            var map;
+            function initialize_inicio() {
+                var mundo= new google.maps.LatLng(8.4324774,20.1243519); 
+                var mapOptions = {
+                    zoom: 3,
+                    center: mundo
+                    };
+                map = new google.maps.Map(document.getElementById('map_canvas'), mapOptions);
+                geocoder = new google.maps.Geocoder();
+                updatemap();
+            }
+            
+            var markers = [];
+            var geocoder;
+            
+            function showmarker(selected)
+            {
+                  for (var i = 0; i < markers.length; i++)
+                  {
+                       if(selected == markers[i].idmarker)
+                       {
+                           google.maps.event.trigger(markers[i],'click');
+                           markers[i].setAnimation(google.maps.Animation.BOUNCE);
+                           var marca=markers[i];
+                           setTimeout(function () { marca.setAnimation(null);}, 3000);
+                           break;
+                       }
+                  }
+            }
+            function forgetmarkers()
+            {
+                for(var i=0;i<markers.length;i++)
+                    markers[i].setMap(null);
+                markers=[];
+            }
+            //si no hay contenedor buscar el vessel con la informacion del shipment
+            function showvessel_with_shipment_data()
+            {
+                forgetmarkers();
+                var latitude=n$(n$.sfId('{!$Component.form.vessellatitude_with_shipment_data}')).getFloat();
+                var longitude=n$(n$.sfId('{!$Component.form.vessellongitude_with_shipment_data}')).getFloat();
+                if((latitude!=0.0)||(longitude!=0.0))
+                {
+                     var myLatlng = new google.maps.LatLng(latitude,longitude);
+                     map.setCenter(myLatlng);
+                     var icon;
+                     var image;
+                     if(!n$(n$.sfId('{!$Component.form.vesselspeed_with_shipment_data}')).getString())
+                     {
+                        icon="{!URLFOR($Resource.ImagesTrackAndTrace,'last.png')}";
+                        image={url:icon,anchor: new google.maps.Point(12,12)};
+                     }
+                     else if(n$(n$.sfId('{!$Component.form.vesselspeed_with_shipment_data}')).getFloat()!=0.0)
+                     {
+                        icon="{!URLFOR($Resource.ImagesTrackAndTrace,'imagen_flecha0.png')}".replace('imagen_flecha0.png','imagen_flecha'+Math.floor(((n$(n$.sfId('{!$Component.form.vesselcourse_with_shipment_data}')).getFloat()+11.25)%360)/22.5)+'.png');
+                        image={url:icon,anchor: new google.maps.Point(12,12)};
+                     }
+                     else
+                     {
+                        icon="{!URLFOR($Resource.ImagesTrackAndTrace,'ancla.png')}";
+                        image={url:icon,anchor: new google.maps.Point(16,16)};
+                     } 
+                     var marker = new google.maps.Marker({
+                        map: map,
+                        position: myLatlng,
+                        animation: google.maps.Animation.DROP,
+                        icon: image
+                     });
+                     markers.push(marker);
+                     var infowindow = new google.maps.InfoWindow({
+                            content: '<b>'+n$(n$.sfId('{!$Component.form.vesselinformation_with_shipment_data}')).getString().replace(/ \|/g,'<br /><b>').replace(/: /g,':</b> ')
+                      });
+                     google.maps.event.addListener(marker, 'click', function() {
+                        infowindow.open(marker.get('map'), marker);
+                      });
+                      
+                      //map.setZoom(4);
+                }
+            }
+            
+            
+            //--------------------------------------------------
+            function showvessel()
+            {
+                //map.setZoom(3);
+                var latitude=n$(n$.sfId('{!$Component.form.block0.vessellatitude}')).getFloat();
+                var longitude=n$(n$.sfId('{!$Component.form.block0.vessellongitude}')).getFloat();
+                if((latitude!=0.0)||(longitude!=0.0))
+                {
+                     var myLatlng = new google.maps.LatLng(latitude,longitude);
+                     map.setCenter(myLatlng);
+                     var icon;
+                     var image;
+                     if((n$(n$.sfId('{!$Component.form.block0.vesselspeed}')).getString())||(n$(n$.sfId('{!$Component.form.block0.vesselcourse}')).getString()))
+                     {
+                        icon="{!URLFOR($Resource.ImagesTrackAndTrace,'imagen_flecha0.png')}".replace('imagen_flecha0.png','imagen_flecha'+Math.floor(((n$(n$.sfId('{!$Component.form.block0.vesselcourse}')).getFloat()+11.25)%360)/22.5)+'.png');
+                        image={url:icon,anchor: new google.maps.Point(12,12)};
+                     }
+                     else if(!n$(n$.sfId('{!$Component.form.block0.vesselspeed}')).getString())
+                     {
+                        icon="{!URLFOR($Resource.ImagesTrackAndTrace,'last.png')}";
+                        image={url:icon,anchor: new google.maps.Point(12,12)};
+                     }
+                     else
+                     {
+                        icon="{!URLFOR($Resource.ImagesTrackAndTrace,'ancla.png')}";
+                        image={url:icon,anchor: new google.maps.Point(16,16)};
+                     }
+                     var marker = new google.maps.Marker({
+                        map: map,
+                        position: myLatlng,
+                        animation: google.maps.Animation.DROP,
+                        icon: image
+                     });
+                     markers.push(marker);
+                     var infowindow = new google.maps.InfoWindow({
+                            content: '<b>'+n$(n$.sfId('{!$Component.form.block0.vesselinformation}')).getString().replace(/ \|/g,'<br /><b>').replace(/: /g,':</b> ')
+                      });
+                     google.maps.event.addListener(marker, 'click', function() {
+                        infowindow.open(marker.get('map'), marker);
+                      });
+                }
+       
+            }
+            var activities=[];
+            var cactivity;
+            var cletter;
+            var activitylocation;
+            var tiene_mas_de_un_abecedario = false;
+            function showactivities()
+            {
+                activities=n$(n$.sfId('{!$Component.form.block0.vesselactivities}')).getString().split(' |');
+                cactivity=(Math.floor(activities.length/3)-1)*3;
+                cletter=65;
+                preshowactivity();
+            }
+            function preshowactivity()
+            {
+                if(cactivity>=0)
+                {
+                    activitylocation=activities[cactivity].trim();
+                    showactivity();
+                }
+            }
+            function showactivity()
+            {
+                geocoder.geocode( { 'address': activitylocation}, function(results, status) {
+                  if (status == google.maps.GeocoderStatus.OK) 
+                  {
+                      if(cletter>90)
+                      {
+                          cletter = 65;
+                          tiene_mas_de_un_abecedario = true;
+                          
+                      }
+                      var id_de_la_marca;
+                      var id_logotipo_marca;
+                      if(tiene_mas_de_un_abecedario == false)
+                      {
+                          id_de_la_marca = 'marker'+String.fromCharCode(cletter);
+                          id_logotipo_marca = 'http://maps.google.com/mapfiles/marker'+String.fromCharCode(cletter)+'.png';
+                      }
+                      else
+                      {
+                          id_de_la_marca = 'marker_green'+String.fromCharCode(cletter);
+                          id_logotipo_marca = 'http://maps.google.com/mapfiles/marker_green'+String.fromCharCode(cletter)+'.png';
+                      
+                      }
+                     map.setCenter(results[0].geometry.location);
+                     var marker = new google.maps.Marker({
+                         map: map,
+                         position: results[0].geometry.location,
+                         idmarker: id_de_la_marca ,
+                         animation: google.maps.Animation.DROP,
+                         icon: id_logotipo_marca 
+                         
+                     });
+                      
+                     markers.push(marker);
+                       
+                     var infowindow = new google.maps.InfoWindow({
+                       content: activities[cactivity].trim()+'<br/>'+activities[cactivity+1].trim()+'<br/>'+activities[cactivity+2].trim()
+                       });
+                       
+                     google.maps.event.addListener(marker, 'click', function() {
+                       infowindow.open(marker.get('map'), marker);
+                       });
+                    cactivity-=3;
+                    cletter++;
+                    setTimeout(function (){preshowactivity();}, 200);
+                  }
+                  else if(status == google.maps.GeocoderStatus.OVER_QUERY_LIMIT)
+                    setTimeout(function(){showactivity();},2000);
+                  else if(status == google.maps.GeocoderStatus.ZERO_RESULTS)
+                  {
+                        var pos=activitylocation.indexOf(' ');
+                        if(pos>=0)
+                        {
+                            activitylocation=activitylocation.substring(pos+1);
+                            setTimeout(function (){showactivity();},0);
+                        }
+                        else
+                        {
+                            cactivity-=3;
+                            cletter++;
+                            setTimeout(function(){preshowactivity();},200);
+                        }
+                   }
+                 });
+            }
+            
+            function showNextLocation(counter)
+            {
+                
+                var location;
+                var ico;
+                switch(counter)
+                {
+                    case 0:
+                        counter++;
+                        location=n$(n$.sfId('{!$Component.form.block0.pollocation}')).getString();
+                        if(!location)
+                            location=(n$(n$.sfId('{!$Component.form.blockt.slocation1}')).getString()+', '+n$(n$.sfId('{!$Component.form.blockt.sstate1}')).getString()+' '+n$(n$.sfId('{!$Component.form.blockt.scountry1}')).getString()).trim();
+                        if(location)
+                        {
+                            ico="{!URLFOR($Resource.TrackTrace,'pol.png')}";
+                            break;
+                        }
+                        else
+                        {
+                            if(n$(n$.sfId('{!$Component.form.id_sacar_vessel_information}')).getString() == 'true')
+                                showvessel_with_shipment_data();
+                        }
+                    case 1:
+                        counter++;
+                        location=n$(n$.sfId('{!$Component.form.block0.ts1location}')).getString();
+                        if(location)
+                        {
+                            ico="{!URLFOR($Resource.TrackTrace,'ts1.png')}";
+                            break;
+                        }
+                    case 2:
+                        counter++;
+                        location=n$(n$.sfId('{!$Component.form.block0.ts2location}')).getString();
+                        if(location)
+                        {
+                            ico="{!URLFOR($Resource.TrackTrace,'ts2.png')}";
+                            break;
+                        }
+                    case 3:
+                        counter++;
+                        location=n$(n$.sfId('{!$Component.form.block0.ts3location}')).getString();
+                        if(location)
+                        {
+                            ico="{!URLFOR($Resource.TrackTrace,'ts3.png')}";
+                            break;
+                        }
+                    case 4:
+                        counter++;
+                        location=n$(n$.sfId('{!$Component.form.block0.podlocation}')).getString();
+                        if(!location)
+                            location=(n$(n$.sfId('{!$Component.form.blockt.slocation2}')).getString()+', '+n$(n$.sfId('{!$Component.form.blockt.sstate2}')).getString()+' '+n$(n$.sfId('{!$Component.form.blockt.scountry2}')).getString()).trim();
+                        if(location)
+                        {
+                            ico="{!URLFOR($Resource.TrackTrace,'pod.png')}";
+                            break;
+                        }
+                    case 5:
+                        {
+                            counter++;
+                            showvessel();
+                            return;
+                        }
+                }
+    
+                if(location)
+                {
+                    showLocation(location,ico,counter);
+                }
+            }
+            function showLocation(location,ico,counter)
+            {
+                geocoder.geocode( { 'address': location}, function(results, status) {
+                  if (status == google.maps.GeocoderStatus.OK) 
+                  {
+                     map.setCenter(results[0].geometry.location);
+                     var marker = new google.maps.Marker({
+                         map: map,
+                         position: results[0].geometry.location,
+                         animation: google.maps.Animation.DROP,
+                         icon:ico
+                     });
+                      
+                     markers.push(marker);
+                       
+                     var infowindow = new google.maps.InfoWindow({
+                       content: location.trim()
+                       });
+                       
+                     google.maps.event.addListener(marker, 'click', function() {
+                       infowindow.open(marker.get('map'), marker);
+                       });
+                    setTimeout(function (){showNextLocation(counter);}, 200);
+                  }
+                  else if(status == google.maps.GeocoderStatus.OVER_QUERY_LIMIT)
+                    setTimeout(function(){showLocation(location,ico,counter);},2000);
+                  else if(status == google.maps.GeocoderStatus.ZERO_RESULTS)
+                  {
+                        var pos=location.indexOf(' ');
+                        if(pos>=0)
+                        {
+                            location=location.substring(pos+1);
+                            setTimeout(function (){showLocation(location,ico,counter);},0);
+                        }
+                        else
+                            setTimeout(function(){showNextLocation(counter);},200);
+                   }
+                 });
+            }
+            function redimensionar() {
+            
+               n$('.informacion').css('width',n$(window ).width()-45+'px');
+               n$('.datos').css('width',n$(window ).width()-45+'px');
+            }
+            function updatemap()
+            {
+                forgetmarkers();
+                showNextLocation(0);
+            }
+            
+            function quitar_capa()
+            {
+                 n$('#otherStatus').css('display','none');
+            }
+            
+        function editEvents()
+        {
+            n$("#openwindow").dialog('open');
+        }
+        function closeEvents(mustUpdate)
+        {
+            n$("#openwindow").dialog('close');
+            if(mustUpdate)
+                updateGraph();
+        }
+        </script>
+        <body onresize="redimensionar()">
+        <apex:form id="form" >
+            <apex:actionfunction status="myStatus" name="updateGraph" action="{!updateGraph}" oncomplete="updatemap();redimensionar();quitar_capa();" reRender="pageblock1,panel2,panel_vessel,panel_vessel2,panel_vessel3,blockt,linesSelector4, id_sacar_vessel_information"/>
+            <div style="width:100%; background-color:#ffffff !important;">
+            <div style="width:100%;" class="informacion">
+                   <div style="width:20%;display:table-cell;padding:5px">
+                        <apex:pageBlock id="pageblock1" mode="maindetail" rendered="{!transportType!=3}">
+                            <apex:pageBlockSection title="Search Criterias" columns="2" id="search">
+                                <apex:pageBlockSectionItem >
+                                    <apex:outputLabel value="Carrier"/>
+                                    <apex:selectList value="{!operators_selected}" size="1" style="max-width:10em" styleclass="carrier_selected">
+                                          <apex:selectOptions value="{!operators}"/>
+                                    </apex:selectList>
+                                </apex:pageBlockSectionItem>
+                                <apex:pageBlockSectionItem >
+                                    <apex:outputLabel value="Track Option"/>
+                                    <apex:selectList value="{!trackoptions_selected}" size="1" style="max-width:10em" styleclass="track_option_selected">
+                                          <apex:selectOptions value="{!trackoptions}"/>
+                                        </apex:selectList>
+                                </apex:pageBlockSectionItem>
+                                <apex:pageBlockSectionItem >
+                                    <apex:outputLabel value="Number"/>
+                                    <apex:inputText value="{!Number_con_book}" style="max-width:10em" styleclass="number_selected"/>
+                                </apex:pageBlockSectionItem>
+                            </apex:pageBlockSection>
+                            <apex:pageBlockButtons id="sectionButtons" location="bottom">
+                               <apex:commandButton value="Search by BL/Booking/Container" styleclass="search_by_container" status="myStatus" action="{!registerOI}" onclick="n$('#otherStatus').css('display','block');"/>
+                             </apex:pageBlockButtons>
+                        <apex:pageMessages id="errors"/>
+                       </apex:pageBlock>
+                        <apex:outputpanel id="panel2" rendered="{!transportType!=3}">
+                           <apex:pageBlock id="pageblock2" mode="maindetail"  rendered="{!sacar_vessel_information == false}">
+                            <apex:pageBlockSection title="Origin & Destination" id="origindestination">
+                             <apex:outputField value="{!record.ETD__c}"/>
+                             <apex:outputField value="{!record.ETA_ATA__c}"/>
+                             <apex:outputLabel />
+                             <apex:outputField value="{!record.ATAPOD__c}"/>
+                             <apex:outputField value="{!record.Origin__c}"/>
+                             <apex:outputField value="{!record.Final_Discharge__c}"/>
+                             <apex:outputField value="{!record.Origin_Code__c}"/>
+                             <apex:outputField value="{!record.Final_Discharge_Code__c}"/>
+                             <apex:outputField value="{!record.Port_Of_Loading__c}"/>
+                             <apex:outputField value="{!record.Port_Of_Discharging__c}"/>
+                             <apex:outputField value="{!record.Port_Of_Loading_Code__c}"/>
+                             <apex:outputField value="{!record.Port_Of_Discharging_Code__c}"/>
+                         </apex:pageBlockSection>
+                         <apex:pageBlockSection title="Last Activity" id="lastactivity">
+                             <apex:outputField value="{!record.Last_Activity__c}"/>
+                             <apex:pageBlockSectionItem >
+                                 <apex:outputLabel value="Status"/>
+                                 <apex:outputText value="{!Status}"/>
+                             </apex:pageBlockSectionItem>
+                             <apex:outputField value="{!record.Date__c}"/>
+                             <apex:outputField value="{!record.Voyage_Number__c}"/>
+                             <apex:outputField value="{!record.Location__c}"/>
+                             <apex:outputField value="{!record.Vessel_Name__c}"/>
+                             <apex:outputField value="{!record.Location_Code__c}"/>
+                         </apex:pageBlockSection>
+                      </apex:pageBlock>
+                      </apex:outputpanel>
+                      <apex:outputpanel id="panel_vessel" rendered="{!transportType!=3}">
+                          <apex:pageblock id="vessel_information" mode="maindetail" rendered="{!sacar_vessel_information == true}">
+                            <apex:pageBlockButtons location="bottom">
+                               <!-- <a href="{!$Site.BaseUrl}/apex/NEU_MD_Associated_Documents?id={!Shipment__c.Id}" target="_blank" style="    color: #333;     padding: 2px 3px;    border: 1px solid #b5b5b5;    border-bottom-color: #7f7f7f;    background: #e8e8e9 url('/img/alohaSkin/btn_sprite.png') repeat-x right top;    font-weight: bold;    font-size: .9em;    -moz-border-radius: 3px;    -webkit-border-radius: 3px;    border-radius: 3px;     padding: 4px 3px; font-family: Arial,Helvetica,sans-serif;              text-decoration: none;"><span>Update Vessel Position</span></a> -->
+                                <apex:commandButton value="Update Vessel Position" styleclass="button_update_vessel_position" action="{!updatevessel}" status="myStatus" reRender="pageblock1,panel2,panel_vessel,panel_vessel2,panel_vessel3,blockt,linesSelector4,id_sacar_vessel_information, vessellatitude_with_shipment_data, vessellongitude_with_shipment_data, vesselspeed_with_shipment_data, vesselinformation_with_shipment_data, vesselcourse_with_shipment_data" oncomplete="showvessel_with_shipment_data();redimensionar(); quitar_capa();"/>
+                            </apex:pageBlockButtons>
+                            <apex:pageBlockSection title="Vessel Last Position Information" id="vessel_information_section" columns="1">
+                                <apex:pageBlockSectionItem >
+                                     <apex:outputLabel value="Vessel"/>
+                                     <apex:outputLink value="{!$Site.BaseUrl}/{!record.Vessel__c}" target="_blank" >{!record.Vessel__r.Name}</apex:outputLink>
+                                 </apex:pageBlockSectionItem>
+                                <apex:outputField value="{!vessel_update_shipment.Vessel_Latitude__c}"/>
+                                <apex:outputField value="{!vessel_update_shipment.Vessel_Longitude__c}"/>
+                                <apex:outputField value="{!vessel_update_shipment.Last_Update__c}"/>
+                                <apex:outputField value="{!vessel_update_shipment.Vessel_Information__c}"/>
+                            </apex:pageBlockSection>
+                          </apex:pageblock>
+                       </apex:outputpanel>
+                      
+                     <apex:outputpanel id="panel_vessel3" rendered="{!transportType!=3}"> 
+                     <!--link upload document-->
+                     <div style="    width: 100%;    text-align: center; display:{!if(sacar_vessel_information == true, 'none' , '')}">
+                         <a href="{!$Site.BaseUrl}/apex/NEU_MD_Associated_Documents?id={!Shipment_Program__c.Id}" target="_blank" style="    color: #333;     padding: 2px 3px;    border: 1px solid #b5b5b5;    border-bottom-color: #7f7f7f;    background: #e8e8e9 url('/img/alohaSkin/btn_sprite.png') repeat-x right top;    font-weight: bold;    font-size: .9em;    -moz-border-radius: 3px;    -webkit-border-radius: 3px;    border-radius: 3px;     padding: 4px 3px; font-family: Arial,Helvetica,sans-serif;              text-decoration: none;"><span>Upload Documents</span></a>   
+                     </div>
+                     </apex:outputpanel>
+                     <apex:outputpanel id="panel_vessel2" rendered="{!transportType!=3}"> 
+                         <apex:pageblock mode="maindetail" rendered="{!sacar_vessel_information == true}">
+                             <apex:pageBlockSection columns="1" id="seccion_upload_item" title="">    
+                                 <div style="    width: 90%;    text-align: center;">
+                                     <a href="{!$Site.BaseUrl}/apex/NEU_MD_Associated_Documents?id={!Shipment_Program__c.Id}" target="_blank" style="    color: #333;     padding: 2px 3px;    border: 1px solid #b5b5b5;    border-bottom-color: #7f7f7f;    background: #e8e8e9 url('/img/alohaSkin/btn_sprite.png') repeat-x right top;    font-weight: bold;    font-size: .9em;    -moz-border-radius: 3px;    -webkit-border-radius: 3px;    border-radius: 3px;     padding: 4px 3px; font-family: Arial,Helvetica,sans-serif;              text-decoration: none;"><span>Upload Documents</span></a>   
+                                 </div>
+                             </apex:pageBlockSection>
+                         </apex:pageblock>
+                    </apex:outputpanel> 
+                     
+             </div>
+            
+            <div style="{!IF(transportType!=3,'width:60%;display:table-cell;','')}padding:5px">
+                    <apex:pageBlock id="block0" mode="maindetail">
+                      <apex:pageBlockSection title="MAP" >
+                      </apex:pageBlockSection>  
+                      <div id="map_canvas" style="width:100%; height: 545px;"></div>
+                      <apex:outputPanel id="linesSelector4" style=" float: left;   width: 100%;  margin-bottom: 10px;">
+                        <apex:inputHidden value="{!Vessel_Information}" id="vesselinformation"/>
+                        <apex:inputHidden value="{!record.Truck_Vessel_Latitude__c}" id="vessellatitude"/>
+                        <apex:inputHidden value="{!record.Truck_Vessel_Longitude__c}" id="vessellongitude"/>
+                        <apex:inputHidden value="{!record.Vessel_Speed__c}" id="vesselspeed"/>
+                        <apex:inputHidden value="{!record.Vessel_Course__c}" id="vesselcourse"/>
+                        <apex:inputHidden value="{!Vessel_Activities}" id="vesselactivities"/>
+                        <apex:inputHidden value="{!record.Port_Of_Loading__c}" id="pollocation"/>
+                        <apex:inputHidden value="{!record.Port_of_Transshipment_1__c}" id="ts1location"/>
+                        <apex:inputHidden value="{!record.Port_of_Transshipment_2__c}" id="ts2location"/>
+                        <apex:inputHidden value="{!record.Port_of_Transshipment_3__c}" id="ts3location"/>
+                        <apex:inputHidden value="{!record.Port_Of_Discharging__c}" id="podlocation"/>
+                        
+                      </apex:outputPanel>
+                     </apex:pageBlock>
+                </div>
+            </div>
+           <apex:pageBlock id="blockt" mode="maindetail">
+             <!-- <apex:pageBlockButtons id="sectionButtons2" location="top">
+                   <apex:commandButton value="Update Progress" status="myStatus" action="{!getinformationv2}" oncomplete="updatemap();redimensionar();" reRender="pageblock1,pageblock2,blockt,linesSelector4" rendered="{!record.External_Reference_OI__c!=null}"/>
+               </apex:pageBlockButtons>-->
+         <apex:pageBlockButtons location="top">
+               <apex:commandButton value="Edit Events" onclick="editEvents();" status="myStatus" reRender="graph" rendered="{!Shipment_Program__c.MAWB_Number__c=null}"/>
+           </apex:pageBlockButtons>
+        <apex:pageBlockSection title="Progress" columns="1">
+        <apex:pageBlockTable value="{!events}" var="line" rendered="{!Shipment_Program__c.MAWB_Number__c!=null}" styleClass="thnormal">
+            <apex:column >
+                <apex:image value="{!URLFOR($Resource.iataevents,line.Name+'.png')}" width="50" height="50"/>
+            </apex:column>
+            <apex:column value="{!line.Name}"/>
+            <apex:column value="{!line.Event__c}"/>
+            <apex:column value="{!line.Date_Time__c}"/>
+            <apex:column value="{!line.Days_from_Previous_Event__c}"/>
+            <apex:column value="{!line.Flight_Number__c}"/>
+            <apex:column value="{!line.Departure_IATA_Code__c}"/>
+            <apex:column value="{!line.Arrival_IATA_Code__c}"/>
+            <apex:column value="{!line.Number_of_Pieces__c}"/>
+            <apex:column value="{!line.Weight_kg__c}"/>
+            <apex:column value="{!line.Additional_Information__c}"/>
+        </apex:pageBlockTable>
+            </apex:pageBlockSection>  
+        <apex:inputHidden value="{!record.Route_Country_of_Load__c}" id="scountry1"/>
+        <apex:inputHidden value="{!record.Route_Country_of_Discharge__c}" id="scountry2"/>
+        <apex:inputHidden value="{!record.Route_State_of_Load__c}" id="sstate1"/>
+        <apex:inputHidden value="{!record.Route_State_of_Discharge__c}" id="sstate2"/>
+        <apex:inputHidden value="{!record.Route_Site_of_Load__c}" id="slocation1"/>
+        <apex:inputHidden value="{!record.Route_Site_of_Discharge__c}" id="slocation2"/>
+            <apex:outputPanel id="graph" rendered="{!Shipment_Program__c.MAWB_Number__c=null}">
+            <table id="graph" style="width:100%;border-spacing:0;padding-left:20px;padding-right:20px">
+            <tr>
+                <td class="sep">&nbsp;</td>
+                 <apex:repeat value="{!processstatus}" var="processstatu" id="processstatus">
+                    <td class="tdtrade{!processstatu.classpngstatus}" colspan="{!processstatu.colspanstatus}"><apex:image url="{!URLFOR($Resource.TrackTrace,processstatu.pngstatus)}"/></td>
+                 </apex:repeat>
+                <td class="sep">&nbsp;</td>
+            </tr>
+            <tr style="height:2em">
+                <td class="sep">&nbsp;</td>
+                 <apex:repeat value="{!processstatus}" var="processstatu" id="processlocation">
+                    <td class="{!processstatu.classlocation}" colspan="{!processstatu.colspanstatus}"><apex:outputLabel value="{!processstatu.stringlocation}"/></td>
+                 </apex:repeat>
+                <td class="sep">&nbsp;</td>
+            </tr>
+            <tr style="height:2em">
+                <td class="sep">&nbsp;</td>
+                 <apex:repeat value="{!processstatus}" var="processstatu" id="processstring">
+                    <td class="tdstatus {!processstatu.classstatus}" colspan="{!processstatu.colspanstatus}"><apex:outputLabel value="{!processstatu.stringstatus}"/></td>
+                 </apex:repeat>
+                <td class="sep">&nbsp;</td>
+            </tr>
+            <tr style="height:20em;position:relative">
+                <td class="sep">&nbsp;</td>
+                 <apex:repeat value="{!milestones}" var="milestone" id="milestones">
+                     <td class="tdmil" colspan="{!milestone.steps}" style="width:{!(((milestone.dayEvent+milestone.dayEventDelay)*100)/totaldays)}%">
+                        <apex:outputLabel value="{!milestone.dateString}" styleClass="datestring" rendered="{!milestone.dateString!=null}"/>
+                        <apex:image url="{!URLFOR($Resource.TrackTrace,'stat'+TEXT(milestone.png)+'.png')}" rendered="{!milestone.png!=0}"/>
+                        <apex:image url="{!URLFOR($Resource.TrackTrace,'today.png')}" style="z-index:10;left:{!((todaydays-milestone.dayFirst)*100)/(milestone.dayCount)}%" rendered="{!((todaydays>milestone.dayFirst)&&(todaydays<=milestone.dayLast))}"/>
+                        <table class="graphinfo" style="width:100%;height:300px;padding-top:24px;{!IF(milestone.png!=14,'','display:none')}" cellpadding="0" cellspacing="0" title="Days:{!milestone.dayEvent+milestone.dayEventDelay}<br/>Previous process:{!milestone.dayFirst} days">
+                            <tr><td style="height:{!300-(((milestone.dayLast+milestone.dayEventNoDelay)*300)/totaldays)}px;border-width:0"></td></tr>
+                            <tr><td style="height:{!((milestone.dayEventNoDelay*300)/totaldays)}px;background-color:green;border-width:0"></td></tr>
+                            <tr><td style="height:{!((milestone.dayEventDelay*300)/totaldays)}px;background-color:red;border-width:0"></td></tr>
+                            <tr><td style="height:{!((milestone.dayEvent*300)/totaldays)}px;background-color:#30caff;border-width:0"></td></tr>
+                            <tr><td style="height:{!((milestone.dayFirst*300)/totaldays)}px;background-color:#ced6d9;border-width:0"></td></tr>
+                        </table>
+                     </td>
+                 </apex:repeat>
+            </tr>
+            </table>
+            </apex:outputPanel>
+            </apex:pageBlock>
+           <apex:outputpanel >
+              <apex:actionstatus id="myStatus">
+                  <apex:facet name="start">
+                      <div class="waitingSearchDiv" id="el_loading" style="background-color: #fbfbfb;
+                             height: 100%;opacity:0.65;width:100%;"> 
+                          <div class="waitingHolder" style="top: 74.2px; width: 91px;">
+                              <img class="waitingImage" src="/img/loading.gif" title="Please Wait..." />
+                              <span class="waitingDescription">Loading...</span>
+                          </div>
+                      </div>
+                  </apex:facet>
+              </apex:actionstatus>
+           </apex:outputpanel>
+           
+            <div class="waitingSearchDiv" id="otherStatus" style="display:none;background-color:#fbfbfb;height:100%;opacity:0.65;width:100%;"> 
+                    <div class="waitingHolder" style="top:74.2px;width:91px;">
+                        <img class="waitingImage" src="/img/loading.gif" title="Please Wait..." />
+                        <span class="waitingDescription">Loading...</span>
+                    </div>
+                </div>
+                  
+       <div id="openwindow" style="display:none"><iframe id="framewindow" style="border:0px" width="100%" height="100%"></iframe></div>
+       </div>
+       
+       <apex:inputhidden value="{!sacar_vessel_information}" id="id_sacar_vessel_information"/>
+       
+        <apex:inputHidden value="{!Vessel_Information2}" id="vesselinformation_with_shipment_data"/>
+        <apex:inputHidden value="{!vessel_update_shipment.Vessel_Latitude__c}" id="vessellatitude_with_shipment_data"/>
+        <apex:inputHidden value="{!vessel_update_shipment.Vessel_Longitude__c}" id="vessellongitude_with_shipment_data"/>
+        <apex:inputHidden value="{!vessel_update_shipment.Vessel_Speed__c}" id="vesselspeed_with_shipment_data"/>
+        <apex:inputHidden value="{!vessel_update_shipment.Vessel_Course__c}" id="vesselcourse_with_shipment_data"/>
+        
+    </apex:form>
+    </body>
+</apex:page>

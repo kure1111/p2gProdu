@@ -1,0 +1,85 @@
+<apex:page controller="NEU_Associated_10Documents_Request" cache="false" expires="0" sidebar="false" showHeader="false">
+<apex:includeScript value="{!$Resource.jquery_1_10_2}"/> 
+<apex:includeScript value="{!$Resource.jquery_ui_1_10_3}"/>
+<apex:includeScript value="{!$Resource.neurored_jquery}"/> 
+<apex:stylesheet value="{!URLFOR($Resource.jquery_ui_1_10_3_css,'jquery-ui-1.10.3.min.css')}"/>
+	<apex:form id="formulario">
+	<apex:actionFunction name="savedocument" action="{!Upload_Documents}"/>
+	<apex:image value="/img/icon/desk32.png" style="float: left; margin: 8px;"/>
+	<span style="margin-top: 9px; margin-bottom: 0; color: #000; font-size: 2em; font-family: Arial,Helvetica,sans-serif; font-weight: normal; float:left;" class="cabecera">{!type_document}</span>
+		<apex:pageBlock id="block1">	
+			 <apex:pageBlockButtons >
+				<input type="button" value="Done" class="button_save" onclick="guardar();"/>
+				<input type="button" value="Cancel" class="button_cancel" onclick="cancelar();"/>
+				<div class="pbError error1" id="errorDiv_ep" style="display:none;"></div>
+				<div style="float: left; color: green; margin: 3px 10px 10px 0px; display:none;" class="subido">Uploaded Successfully</div>	
+			</apex:pageBlockButtons>
+			<apex:pageBlockSection id="secciones" columns="1">
+				
+				<apex:pageBlockSectionItem dataStyle="width:0;vertical-align:middle">
+					<apex:outputText value="Document Description" />
+					<apex:inputText value="{!Document_Description}" style="width: 290px;"/>
+				</apex:pageBlockSectionItem>
+				
+				<apex:pageBlockSectionItem dataStyle="width:0;vertical-align:middle" id="secciondocumento">
+					<apex:outputText value="" styleClass="label_documento"/>
+					<apex:inputFile value="{!documento_asociado}" filename="{!documento_asociadoName}"  styleClass="documento_adjunto" id="document_adjunto"/>
+				</apex:pageBlockSectionItem>
+				
+			</apex:pageBlockSection>
+		</apex:pageBlock>	
+		
+	</apex:form>
+	<script>
+	
+	
+	
+         $(document).ready(function(){
+         
+         /*	var type = document.location.href;
+         	
+         	if(type.indexOf('type')>0)
+         	{
+         		var inicio_tipo = type.indexOf('type=');
+         		var fin_tipo = type.indexOf('&docu=');
+         		$('.cabecera').html(decodeURIComponent(type.substring(inicio_tipo+5,fin_tipo)));
+         	}*/
+         	
+            var loc = document.location.href;
+	        // si existe el redirec
+	        if(loc.indexOf('redirec')>0)
+	        {
+	            $('.subido').css('display','');  
+	            
+	            setTimeout(function(){if(window.opener)
+         								if(window.opener.updateDocuments)
+         									window.opener.updateDocuments();
+	             					  window.close();}, 1000);
+	        }
+        
+ 	   	});
+ 	   	
+		function guardar()
+		{
+			//poner aviso en rojo
+			var manual = document.getElementById('{!$Component.formulario.block1.secciones.secciondocumento.document_adjunto}').value;
+			if(manual != null && manual != '')
+			{
+				savedocument();
+			}
+		
+			if( manual == '')
+			{
+				$('.error1').html('You must select a Document');
+				$('.error1').css("display", "block");
+				$('.documento_adjunto').attr("class", "error");
+				$('.documento_url').attr("class", "error");
+			}
+		}
+		
+		function cancelar()
+		{
+			window.close(); 
+		}
+	</script>
+</apex:page>

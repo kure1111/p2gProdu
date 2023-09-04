@@ -1,0 +1,25 @@
+<apex:page StandardController="Transport_Packaging_Data__c" extensions="NEU_OM_Save_TDI" >
+	<apex:form >
+	<apex:sectionHeader title="Generate Transport Delivery Instruction"/>
+		<apex:pageBlock >
+	   		<apex:pageBlockButtons >
+       			<apex:commandButton value="Create Associated Document" status="myStatus"  styleClass="crear" action="{!crear}"/>
+      		</apex:pageBlockButtons>
+      		<iframe  scrolling="auto" src="{!$Site.BaseUrl}/apex/NEU_OM_GenerateTDI?id={!Transport_Packaging_Data__c.Id}" width= "100%" height="850px">
+	   		</iframe>
+	   </apex:pageBlock>
+	  	 <apex:outputpanel >
+		       <apex:actionstatus id="myStatus">
+		           <apex:facet name="start">
+		               <div class="waitingSearchDiv" id="el_loading" style="background-color: #fbfbfb;
+		                      height: 100%;opacity:0.65;width:100%;"> 
+		                   <div class="waitingHolder" style="top: 74.2px; width: 91px;">
+		                       <img class="waitingImage" src="/img/loading.gif" title="Please Wait..." />
+		                       <span class="waitingDescription">Loading...</span>
+		                   </div>
+		               </div>
+		           </apex:facet>
+		       </apex:actionstatus>
+		   </apex:outputpanel>
+	</apex:form>
+</apex:page>

@@ -1,0 +1,442 @@
+<apex:page standardController="Shipment__c" extensions="NEU_Inspecion_Booking_Email">
+<apex:includeScript value="{!$Resource.neu_jquery}"/> 
+<apex:includeScript value="{!$Resource.jquery_1_10_2}"/> 
+<apex:includeScript value="{!$Resource.jquery_ui_1_10_3}"/>
+<apex:includeScript value="{!$Resource.neurored_jquery}"/> 
+<apex:stylesheet value="{!URLFOR($Resource.jquery_ui_1_10_3_css,'jquery-ui-1.10.3.min.css')}"/>
+    <script>
+        $.fn.filter_user = (function(){
+            this.each(function(){
+                if($(this).hasClass('button_selected_user'))
+                {
+                    $(this).removeClass('button_selected');
+                    $(this).removeClass('button_selected_user');
+                }
+                else
+                {
+                    $(this).addClass('button_selected');
+                    $(this).addClass('button_selected_user');
+                }
+            });
+        });
+        
+         $(document).ready(function(){
+            
+            var porcentage = 0
+              $(".tabla_documentos input:checkbox").each(function() {
+                    
+                    $(this).parent().parent().find('.clase_width').css('width',(parseInt($(this).attr("class"))/1048576)*100/5+'%');
+                    porcentage = parseFloat(parseInt($(this).attr("class"))/1048576*100/5);
+                    
+                    if(porcentage >= 100)
+                        $(this).parent().parent().find('.clase_width').css('width','100%');
+                    $(this).parent().parent().find('.espacio_mb').html((parseInt($(this).attr("class"))/1048576).toFixed(5)+' mb');
+                    if(parseFloat($(this).parent().parent().find('.espacio_mb').html()) > 5)
+                    {
+                         $(this).parent().parent().find('.clase_width').css('background-color','#FF0000');
+                         $(this).parent().parent().find('.clase_width').css('border','1px solid #FF0000');
+                         $(this).attr('disabled', true);
+                    }
+                    
+                    
+                    
+                    
+                        
+                   
+            });
+            
+           /* if($($.sfId('{!$Component.form.porc_ocupacion}')).val() < 100)
+              $(".totui_progress").css('width',$($.sfId('{!$Component.form.porc_ocupacion}')).val()+'%')
+           else
+           {
+              $(".totui_progress").css('width','100%');
+              $(".totui_progress").css('background-color','#FF0000');
+              $(".totui_progress").css('border','1px solid #FF0000');
+           }*/
+            update();
+            });
+            
+         function changeSelected(s)
+        {
+              var ocupacion = 0;
+              $(".tabla_documentos input:checked").each(function() {
+                ocupacion += parseFloat((parseFloat($(this).attr("class"))/1048576).toFixed(5));
+           
+            });
+           $($.sfId('{!$Component.form.bytesocupados}')).val(ocupacion);
+          /* $(".value").html(ocupacion.toFixed(5)+' Mb');
+           var porcentajetotal = 0;
+           $($.sfId('{!$Component.form.porc_ocupacion}')).val(ocupacion*100/10);
+           porcentajetotal=ocupacion*100/10;
+           if($($.sfId('{!$Component.form.porc_ocupacion}')).val() < 100)
+              $(".totui_progress").css('width',porcentajetotal+'%')
+           else
+           {
+              $(".totui_progress").css('width','100%');
+              $(".totui_progress").css('background-color','#FF0000');
+              $(".totui_progress").css('border','1px solid #FF0000');
+           }*/
+           update();
+        }
+        
+        function get_message(id_documento)
+        {
+            var l =($(window).width()-568)/2;
+            var t =($(window).height()-709)/2;
+            $('#iframe_prod').css('top', t + 'px');
+            $('#iframe_prod').css('left', l + 'px');
+            $('#tapa').css("display","block");
+            $("#iframe_prod").attr("src", "/servlet/servlet.ImageServer?id=" + id_documento + "&oid={!$Organization.Id}");
+            $("#iframe_prod").css("display","block");
+            
+            var l_cierre =($(window).width()+553)/2;
+            var t_cierre =($(window).height()-727)/2;
+            $('#cierre').css('top', t_cierre + 'px');
+            $('#cierre').css('left', l_cierre + 'px');
+            $("#cierre").css("display","block");
+        }
+        
+        function cerrar_pdf()
+        {
+            $("#iframe_prod").css("display","none");
+            $("#iframe_prod").attr("src", "");
+            $('#tapa').css("display","none");
+            $("#cierre").css("display","none");
+        }
+        
+        function send_so()
+        {
+            var listado_usuarios = '';
+            $(".button_selected_user").each(function(){
+                listado_usuarios += $(this).attr('name') + ',';
+            });
+            if(listado_usuarios == '')
+                listado_usuarios = '[]';
+            document.getElementById('{!$Component.form.user_list}').value = listado_usuarios;
+            var hay_documentos = false; 
+            $('.tabla_documentos input[type="checkbox"]:checked').each(function()
+            {
+                hay_documentos = true;
+            });
+            var hay_contactos = false;
+            
+            
+            $('.tabla_clientes input[type="checkbox"]:checked').each(function()
+            {
+                hay_contactos = true;
+            });
+            if(listado_usuarios == '[]' && hay_contactos == false)
+            {
+                //var receiver_info = confirm("You must select some email receiver");
+                alert("You must select some receiver email");
+            }
+            else if(hay_documentos == false)
+             {
+                var document_info = confirm("You haven´t selected any document. Are you sure you want to send this email?");
+                if (document_info  == true)
+                    send_email();
+            }
+            else
+            {
+                var r = confirm("Are you sure you want to send this email?");
+                if (r == true) 
+                    send_email();
+            }
+        }
+        
+    </script>
+    <style>
+        .result_table{margin: 0 0 10px 0; font-style:italic; font-size:15px;}
+        .filter_button{float:left; width:205px;}
+        .button_selected{background:#C0C0C0 !important;}
+        .homeTab .bPageBlock{border-top:3px solid #007a37;}
+        .actions_table{border:none; width:100%;}
+        .actions_table th, .sort_table th
+        {
+            background: #f2f3f3;
+            border:1px solid #e0e3e5;
+            border-bottom:2px solid #cccccc;
+            color: #000;
+            font-size: .9em;
+            font-weight: bold;
+            padding: 5px 2px 4px 5px;
+        }
+        #table_invoice{width: 700px;    margin: 10px 0 20px 0;  float: left;}
+        #table_invoice th{color: #642279;   font-size: 12px; font-family:  Arial, Helvetica, sans-serif;    text-align: left;   padding-left: 0;    border-bottom: 2px solid #eadfed;   font-weight:normal;        font-size: 8px;     width: 50%;}
+        #table_invoice td{color: #908e8e;   font-size: 12px;    font-family:  Arial, Helvetica, sans-serif; background: #f3ecf4;    font-size: 10px;     width: 50%;}
+        .actions_table td, .sort_table td
+        {
+            border:1px solid #e0e3e5;
+            background:#ffffff;
+        }
+        .actions_table .header_red{background:#007a37; border:1px solid #007a37; color:#ffffff;}
+        .action_link{color:#015ba7 !important; cursor:pointer; text-decoration:none;}
+        .action_link:hover{color:#015ba7 !important; cursor:pointer; text-decoration:none;}
+        .homeTab .tertiaryPalette{background-color:#007a37;}
+        .lista_usuarios
+        {
+            float:left;
+            margin:10px 0 10px 0 !important;
+            width:100%;
+        }
+         #tapa
+        {
+            background-color: rgb(119, 119, 119);
+            opacity: 0.7;
+            height: 100%;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1100;
+            display: none;
+            margin: 0;
+            padding: 0;
+            border: 0;
+        }
+        #iframe_prod
+        {
+            border:3px solid #007a37; 
+            border-radius:5px; 
+            float: left; 
+            position: fixed; 
+            z-index: 1200; 
+            display:none; 
+            background-color:#cccccc; 
+            background-image: url('/img/loading32.gif'); 
+            background-repeat: no-repeat; 
+            background-position: center;
+            -webkit-box-shadow: 7px 7px 5px 0px rgba(50, 50, 50, 0.75); 
+            -moz-box-shadow: 7px 7px 5px 0px rgba(50, 50, 50, 0.75); 
+            box-shadow: 7px 7px 5px 0px rgba(50, 50, 50, 0.75);
+        }
+         #cierre
+        {
+            display:block;
+            font-family:Arial;
+            font-size:20px;
+            color:white;
+            border-radius:11px; 
+            float: left; 
+            position: fixed; 
+            z-index: 1201; 
+            display:none; 
+            background-color:#007a37; 
+            padding: 5px;
+            cursor: pointer;
+            -webkit-box-shadow: 7px 7px 5px 0px rgba(50, 50, 50, 0.75); 
+            -moz-box-shadow: 7px 7px 5px 0px rgba(50, 50, 50, 0.75); 
+            box-shadow: 7px 7px 5px 0px rgba(50, 50, 50, 0.75);
+        }
+        .panel_grupoed .bPageBlock{border-top: 3px solid #007a37 !important;}
+         .cuerpo_email_asunto .bPageBlock{border-top: 0px solid #007a37 !important;}
+        .panel_actividades .bPageBlock{border-top: 3px solid #007a37 !important;}
+        .panel_grupoed .tertiaryPalette{background-color: #007a37 !important;}
+        .lista_contactos, .lista_banqueros{padding:0; margin:0;}
+        .lista_contactos li, .lista_banqueros li{list-style-type:none;}
+    </style>
+    <apex:pageMessages id="messages"/>
+    <div id="tapa" onclick="cerrar_pdf();"></div>
+    <iframe src="" id="iframe_prod" width="568" height="709" frameborder="1" scrolling="no"></iframe>
+    <span id="cierre" onclick="cerrar_pdf();">X</span>
+    <apex:form id="form">
+        <a href="{!URLFOR(URLFOR($Action.Shipment__c.View,Id))}" title="return to {!$ObjectType.Shipment__c.label}"><apex:sectionHeader title="{!$ObjectType.Shipment__c.label}" subtitle="Inspection Booking {!Shipment__c.Name}"/></a>
+        <apex:actionFunction name="update"  status="myStatus" reRender="botones"/>
+        <apex:outputPanel id="datos_email" styleclass="panel_grupoed">
+        
+           
+                
+            <apex:pageBlock ><!--title="Shipment"-->
+                <apex:pageBlockButtons location="top">
+                    <apex:commandButton value="Return" action="{!return_shipment}"/>
+                    <input type="button" value="Send Email" class="btn" onclick="send_so();"/>
+                </apex:pageBlockButtons>
+                
+                 <!--<apex:outputPanel styleClass="body_documento">
+                    <apex:pageBlock >-->
+                    
+                        <apex:outputLabel >Users (CC)</apex:outputLabel>
+                        <p class="lista_usuarios">
+                            <apex:repeat value="{!usuarios}" var="u">
+                                <input type="button" value="{!u.Name}" class="btn filter_button filter_button_user " name="{!u.Email}" onclick="$(this).filter_user();"/><!-- button_selected button_selected_user-->
+                            </apex:repeat>
+                        </p>
+                        <apex:outputPanel styleClass="cuerpo_email_asunto">
+                            <apex:pageBlock html-style="border-top: 0px solid #007a37" html-class="asunto_cuerpo_email" id="asunto_cuerpo_email">
+                                <apex:pageBlockSection columns="1" title="Email Data">
+                                    <apex:outputLabel >Subject</apex:outputLabel>
+                                    <apex:inputText value="{!asunto}" style="width:500px;"/>
+                                    <apex:outputText value="{!tabla_shipping_order}" escape="false"/>
+                                    <!-- <apex:outputText value="{!tabla_shipping_order_lines}" escape="false"/>-->
+                                    <apex:outputLabel >Body</apex:outputLabel>
+                                    <apex:inputTextarea value="{!texto_email}" style="width:500px; height:100px; resize:none;" html-maxlength="5000"/>
+                                </apex:pageBlockSection>
+                        
+                  <!--  </apex:pageBlock>
+                </apex:outputPanel>-->
+                
+                
+                 <apex:pageBlockSection columns="1" title="Associated Documents">
+                    <div id="documentos">
+                        <apex:pageBlockTable value="{!associated_documents}" var="ad" styleclass="tabla_documentos" >
+                            <apex:column headerValue="Select" >
+                                <apex:inputCheckbox value="{!ad.selected}" onchange="changeSelected(this);" styleclass="{!ad.espacio}"  />
+                                <img src="{!URLFOR($Resource.pdf_icon)}" onclick="get_message('{!ad.id_doc}');" style="cursor:pointer;" title="Preview PDF" />
+                            </apex:column>
+                            <apex:column headerValue="Associated Document Name" value="{!ad.name}"/>
+                            <apex:column headerValue="Document Type" value="{!ad.document_type}"/>
+                            <apex:column headerValue="Document Reference" value="{!ad.document_reference}"/>
+                            <apex:column headerValue="Document Description" value="{!ad.document_description}"/>
+                            <apex:column >
+                                <apex:facet name="header">
+                                    <span>Document URL</span>
+                                </apex:facet>
+                                <a href="{!ad.document_url}" target="_blank">Document</a>
+                            </apex:column>
+                            <apex:column headerValue="Document Size">
+                                <div id="progress_bar" class="ui-progress-bar ui-container" style="position: relative; height: 35px; padding-right: 2px; background-color: #abb2bc; border-radius: 35px; -moz-border-radius: 35px; -webkit-border-radius: 35px; background: -webkit-gradient(linear, left bottom, left top, color-stop(0, #b6bcc6), color-stop(1, #9da5b0)); background: -moz-linear-gradient(#9da5b0 0%, #b6bcc6 100%); -webkit-box-shadow: inset 0px 1px 2px 0px rgba(0, 0, 0, 0.5), 0px 1px 0px 0px #FFF; -moz-box-shadow: inset 0px 1px 2px 0px rgba(0, 0, 0, 0.5), 0px 1px 0px 0px #FFF; box-shadow: inset 0px 1px 2px 0px rgba(0, 0, 0, 0.5), 0px 1px 0px 0px #FFF; width: 286px; margin: 10px; margin-left: 0px; border-radius: 5px; width: 238px; float: left; margin-left: 12px; height: 28px;">
+                                    <span class="ui-label" style="float: left; position: absolute; margin: 9px 94px 7px 64px; z-index: 101; width: 100%; color: rgba(0,0,0,0.6); text-shadow: rgba(255,255,255, 0.45) 0 1px 0px; white-space: nowrap; margin: 6px 94px 7px 40px; z-index: 100;">Document Size   <b class="espacio_mb"> {!ad.espacio} Mb</b></span>
+                                    <div class="ui-progress clase_width" style="position: relative; display: block;  overflow: hidden; height: 33px; -moz-border-radius: 35px; -webkit-border-radius: 35px; border-radius: 35px; -webkit-background-size: 44px 44px; background-color: #1797c0;  border: 1px solid #1797c0; -webkit-animation: animate-stripes 2s linear infinite; border-radius: 5px; -webkit-animation: animate-stripes 2s linear infinite; -moz-animation: progress-bar-stripes 2s linear infinite; -ms-animation: progress-bar-stripes 2s linear infinite; -o-animation: progress-bar-stripes 2s linear infinite; animation: progress-bar-stripes 2s linear infinite; background-size: 40px 40px; text-align: center; height: 26px; width:0%; width:{!ad.porespacio}; "><!--este rellena -->
+                                    </div>
+                                </div>
+                            </apex:column>
+                        </apex:pageBlockTable>
+                    </div>
+              </apex:pageBlockSection>
+              
+                      </apex:pageBlock>
+                </apex:outputPanel>
+            </apex:pageBlock>
+        </apex:outputPanel>
+        
+        <apex:outputPanel id="list_clientes_seleccionados" styleclass="panel_grupoed">
+            <apex:pageBlock title="Accounts">
+                <apex:pageBlockTable value="{!clientes_seleccionados}" var="acc" styleclass="tabla_clientes">
+                    <apex:column >
+                        <apex:facet name="header">
+                            <span>Name</span>
+                        </apex:facet>
+                        <a href="/{!acc.cuenta.Id}" target="_blank"><apex:outputText value="{!acc.cuenta.Name}"/></a>
+                    </apex:column>
+                     <apex:column >
+                        <apex:facet name="header">
+                            <span>Type</span>
+                        </apex:facet>
+                        <apex:outputText value="{!acc.typo_cuenta}"/>
+                    </apex:column>
+                    <apex:column >
+                        <apex:facet name="header">
+                            <span>Contacts</span>
+                            </apex:facet>
+                            <ul class="lista_contactos">
+                            <apex:repeat value="{!acc.contactos}" var="c">
+                                <li><apex:inputCheckbox value="{!c.selected}"/><span> <a href="/{!c.contact.Id}" target="_blank"><apex:outputText value="{!c.contact.Name}"/></a></span><span> ({!c.contact.Email})</span></li>
+                            </apex:repeat>
+                        </ul>
+                    </apex:column>
+                </apex:pageBlockTable>
+            </apex:pageBlock>
+        </apex:outputPanel>
+        
+        
+         <apex:outputPanel id="list_panel_actividades" styleclass="panel_actividades">
+            <apex:pageBlock title="Activities Associated to this Email">
+                 <apex:pageBlockButtons location="bottom" id="botones">
+                     <input type="button" value="Send Email" class="btn" style="display:{!IF(bytesocupados < 10, '','none')}" onclick="send_so();"/>
+                </apex:pageBlockButtons>
+                <apex:pageBlockTable value="{!Shipment__c}" var="s">
+                    <apex:column >
+                        <apex:facet name="header">
+                            <span>Assigned To</span>
+                        </apex:facet>
+                        <apex:selectList id="user_selector"  value="{!OwnerId_task}" size="1">
+                            <apex:selectOptions value="{!select_users}"/>
+                         </apex:selectList>
+                   </apex:column>
+                   
+                    <apex:column >
+                        <apex:facet name="header">
+                            <span>Subject</span>
+                        </apex:facet>
+                        <apex:inputText value="{!subject_task}" style="    width: 94%;"/>
+                   </apex:column>
+                   
+                   <apex:column >
+                        <apex:facet name="header">
+                            <span>Status</span>
+                        </apex:facet>
+                        <apex:selectList id="status_selector"  value="{!Status_task}" size="1">
+                            <apex:selectOptions value="{!select_status_task}"/>
+                         </apex:selectList>
+                   </apex:column>
+                   <apex:column >
+                        <apex:facet name="header">
+                            <span>Priority</span>
+                        </apex:facet>
+                        <apex:selectList id="priority_selector"  value="{!priority_task}" size="1">
+                            <apex:selectOption itemLabel="High" itemValue="High"/>
+                            <apex:selectOption itemLabel="Normal" itemValue="Normal" html-checked="checked"/>
+                            <apex:selectOption itemLabel="Low" itemValue="Low"/>
+                        </apex:selectList>
+                   </apex:column>
+                   <apex:column >
+                        <apex:facet name="header">
+                            <span>Due Date</span>
+                        </apex:facet>
+                        <apex:inputField value="{!Due_Date_task.Conversion_Rate_Date__c}"/>
+                   </apex:column>
+                     <apex:column >
+                        <apex:facet name="header">
+                            <span>Create Activity</span>
+                        </apex:facet>
+                        <apex:inputCheckbox value="{!create_task}"/>
+                   </apex:column>
+                </apex:pageBlockTable>
+            </apex:pageBlock>
+        </apex:outputPanel>
+        
+        <!-- <apex:outputPanel id="list_clientes_seleccionados" styleclass="panel_grupoed">
+            <apex:pageBlock title="Accounts">
+                <apex:pageBlockButtons location="bottom">
+                    <input type="button" value="Send Email" class="btn" onclick="send_so();"/>
+                </apex:pageBlockButtons>
+                <apex:pageBlockTable value="{!clientes_seleccionados}" var="acc">
+                    <apex:column >
+                        <apex:facet name="header">
+                            <span>Name</span>
+                        </apex:facet>
+                        <a href="/{!acc.cuenta.Id}" target="_blank"><apex:outputText value="{!acc.cuenta.Name}"/></a>
+                    </apex:column>
+                    <apex:column >
+                        <apex:facet name="header">
+                            <span>Contacts</span>
+                            </apex:facet>
+                            <ul class="lista_contactos">
+                            <apex:repeat value="{!acc.contactos}" var="c">
+                                <li><apex:inputCheckbox value="{!c.selected}"/><span>{!c.contact.Name}</span></li>
+                            </apex:repeat>
+                        </ul>
+                    </apex:column>
+                </apex:pageBlockTable>
+            </apex:pageBlock>
+        </apex:outputPanel>-->
+        
+        <apex:outputpanel >
+           <apex:actionstatus id="myStatus">
+               <apex:facet name="start">
+                   <div class="waitingSearchDiv" id="el_loading" style="background-color: #fbfbfb;
+                          height: 100%;opacity:0.65;width:100%;"> 
+                       <div class="waitingHolder" style="top: 74.2px; width: 91px;">
+                           <img class="waitingImage" src="/img/loading.gif" title="Please Wait..." />
+                           <span class="waitingDescription">Loading...</span>
+                       </div>
+                   </div>
+               </apex:facet>
+           </apex:actionstatus>
+        </apex:outputpanel>
+        
+        <apex:actionFunction name="send_email" action="{!send_email}" status="myStatus"/>
+        <apex:inputHidden value="{!user_list}" id="user_list"/>
+        <apex:inputHidden value="{!bytesocupados}" id="bytesocupados"/>
+    </apex:form>
+</apex:page>

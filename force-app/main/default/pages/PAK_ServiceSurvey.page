@@ -1,0 +1,9 @@
+<apex:page cache="false" controller="PAK_ServiceSurvey" tabStyle="Shipment__c" action="{!validate}" showHeader="false" sidebar="false">
+    <apex:form >
+        <apex:pageBlock title="{!shipment.Name} - Encuesta de servicio">
+            <apex:pageMessages />            
+            <apex:inputField value="{!shipment.Rating__c}" rendered="{!valid}" />
+            <apex:commandButton action="{!save}" value="Enviar" rendered="{!valid}" />
+        </apex:pageBlock>
+    </apex:form>
+</apex:page>

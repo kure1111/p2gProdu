@@ -1,0 +1,211 @@
+<apex:page controller="APX_Debit_Note" renderAs="pdf" showHeader="false" sidebar="false" standardStylesheets="false" applyBodyTag="false" applyHtmlTag="false">
+
+    <html>
+    <head>
+        <style>
+            @page {
+                size: letter; 
+                width: 100%;     
+            }  
+            @bottom-center {
+                    content: "Pagina " counter(page) " de " counter(pages);
+            }  
+            .page-break {
+                display:block;
+                page-break-after:always;
+            }                   
+        </style>
+    </head>
+    <body>
+
+        <div>
+            <table style="font-family:sans-serif; background-color:rgb(228, 228, 228)">
+                <caption style="font:18pt; text-align: center; padding-bottom:10px;">DEBIT NOTE</caption>
+                <tr>
+                    <td style="padding: 0px 20px;"><apex:image id="logoDebitNote" value="{!$Resource.logoDebitNote}" width="150" height="80"/></td>
+                    <td style="font:12pt; width:100%; padding: 0px 50px;">Grupo PGL MEXICO SAPI de CV (Pak2Go Logistics)<br/>
+                        Argentina #205-1 Col. Industrial Martel de Santa Catarina<br/>
+                        Santa Catarina, Nuevo León, C.P. 66367, Mexico<br/>
+                        Phone 52(81) 1365 5333<br/>
+                        E-mail: cobranza@opl.mx
+                    </td>            
+                </tr>
+            </table><br/> 
+            
+            <table style="border:solid 0.5px #000; font-family:sans-serif; width:100%; text-align:center">
+                <tr style=" background-color:#222f5e; font:9pt; color:#ffffff;">
+                    <th>Doc No.</th>
+                    <th>Date</th>
+                    <th style="width: 50px;">Referenced Shipments</th>
+                    <th>Currency</th>
+                    <th>Customer Reference</th>
+                    <th >Payment days</th>            
+                </tr>
+                <tr style="font:9pt;">
+                    <td>{!record.debitNote.Name}</td>
+                    <td><apex:outputText value="{0,date,dd'/'MM'/'yyyy}">
+                            <apex:param value="{!record.dateDN}" /> 
+                        </apex:outputText>            
+                    </td>
+                    <td style="text-align:left"><p style="margin:0px; padding:0px;">{!record.debitNote.Shipment_Number_1__r.Name}</p> 
+                        <p style="margin:0px; padding:0px;">{!record.debitNote.Shipment_Number_2__r.Name}  </p>
+                        <p style="margin:0px; padding:0px;">{!record.debitNote.Shipment_Number_3__r.Name} </p>
+                        <p style="margin:0px; padding:0px;">{!record.debitNote.Shipment_Number_4__r.Name}</p>  
+                        <p style="margin:0px; padding:0px;">{!record.debitNote.Shipment_Number_5__r.Name} </p>
+                    </td>
+                    <td>{!record.debitNote.CurrencyIsoCode}</td>
+                    <td style="text-align:center">
+                        <p style="margin:auto; padding:0px;">{!record.debitNote.Shipment_Number_1__r.Account_Shipment_Reference__c}</p><!--
+                        <p style="margin:auto; padding:0px;">{!record.debitNote.Shipment_Number_2__r.Account_Shipment_Reference__c}</p>
+                        <p style="margin:auto; padding:0px;">{!record.debitNote.Shipment_Number_3__r.Account_Shipment_Reference__c}</p>
+                        <p style="margin:auto; padding:0px;">{!record.debitNote.Shipment_Number_4__r.Account_Shipment_Reference__c} </p>
+                        <p style="margin:auto; padding:0px;">{!record.debitNote.Shipment_Number_5__r.Account_Shipment_Reference__c}</p>-->
+                    </td>
+                    <td>{!record.debitNote.Account_for__r.Credit_Terms__c}</td>
+                </tr>                  
+            </table><br/>
+            
+            <table style="border:solid 0.5px #000; font-family:sans-serif; width:100%;">
+                <tr>
+                    <td style="background-color:#222f5e; color:rgb(0, 0, 0); font:11pt; color:#ffffff;"><b>Account Information</b></td>
+                </tr>
+                <tr style="font:9pt;">
+                    <td style="text-align:center">
+                    
+                        <table style="width:100%">
+                            <tr>
+                                <th>Bank name</th>
+                                <th>Reference</th>
+                                <th>Account</th>
+                                <!--<th>Account No.</th> -->
+                                <th>CLABE</th>
+                                <th>SWIFT</th>  
+                            </tr>
+                            <!--<tr style=" text-align:center">
+                                <td>AFIRME</td>
+                                <td>CVER0195500053535</td>
+                                <td>164104117</td>
+                                <td></td>
+                                <td></td>
+                            </tr>--> 
+                            <tr style=" text-align:center">
+                                <td>MONEX</td>
+                                <td>CVER0195500053535</td>
+                                <td>2915692</td>
+                                <td>{!company.Cuenta_Clabe_1__c}</td>
+                                <td>MONXMXMM</td>
+                            </tr>                       
+                        </table>                
+                    </td>
+                </tr>                      
+            </table>    
+            <!--<table style="border:solid 0.5px #000; margin-left:510px; margin-top:-140px; z-index:1; font-family:sans-serif; width:28%;">
+                <tr>
+                    <td style="padding-right:20px; text-align:left; background-color:#e6ff27;"></td>            
+                </tr>
+                <tr>
+                    <td style="text-align:left;">DN-0001-0001</td>
+                </tr> 
+                <tr>
+                    <td style="padding-right:20px; text-align:left; background-color:#e6ff27;">Date:</td>            
+                </tr>
+                <tr>
+                    <td style="text-align:left;">30/09/2022</td>
+                </tr>
+                <tr>
+                    <td style="padding-right:20px; text-align:left; background-color:#e6ff27;">Referenced Shipments:</td>            
+                </tr>
+                <tr>
+                    <td style="text-align:left;">R-21-077611 <br/> R-21-077612 <br/> R-21-077613 <br/> R-21-077614 <br/> R-21-077615</td>
+                </tr>
+                <tr>
+                    <td style="padding-right:20px; text-align:left; background-color:#e6ff27;">Currency:</td>            
+                </tr>
+                <tr>
+                    <td style="text-align:left;">USD</td>
+                </tr>
+                <tr>
+                    <td style="padding-right:20px; text-align:left; background-color:#e6ff27;">Customer Reference:</td>            
+                </tr>
+                <tr>
+                    <td style="text-align:left;">FLEX-1318584</td>
+                </tr>
+                <tr>
+                    <td style="padding-right:20px; text-align:left; background-color:#e6ff27;">Payment days:</td>            
+                </tr>
+                <tr>
+                    <td style="text-align:left;">30 days</td>
+                </tr>
+            </table> -->  
+            <br/> 
+            
+            <table style="border:solid 0.5px #000; font-family:sans-serif; width:100%">
+                <tr style="background-color:#222f5e; font:12pt;">
+                    <th style="color:rgb(0, 0, 0);  width: 10px; color:#ffffff;">Customer</th>    
+                    <th style="color:rgb(0, 0, 0);  width: 280px; color:#ffffff;">Route</th>    
+                </tr>
+                <tr>
+                    <td style="font:9pt;">
+                        <b>{!record.debitNote.Account_for__r.Name}</b><br/>
+                        {!record.address}
+                        <!-- {!record.address} -->
+                    </td>    
+                    <td style="font:9pt;">                       
+                        <table>                       
+                            <tr>
+                                <td>                                                                                                           
+                                    <b>Loading:</b>{!record.route.Site_of_Load__r.Name} &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <b>MBL:</b>{!record.route.MBL_Number__c} <br/><br/>
+                                    <b>Discharge:</b>{!record.route.Site_of_Discharge__r.Name}  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <b>MAWB:</b>{!record.route.MAWB_Number__c}<br/><br/>
+                                </td>                            
+                            </tr>                               
+                        </table>                                           
+                    </td>
+                </tr>    
+            </table>        
+        </div><br/>
+        
+        <div>
+            <table style="font-family:sans-serif; width:100%; border:solid 0.5px #000; border-collapse: collapse;">
+                <tr style="color:#ffffff; background-color:#222f5e; font:12pt;">
+                    <th style="padding-left:5px; padding-right:300px;">Charge Description</th>
+                    <th style="text-align:center; padding-left:5px; padding-right:40px;">Debit</th>
+                    <th style="text-align:right; padding-left:15px; padding-right:40px;">Credit</th>    
+                </tr>
+                <apex:repeat var="line" value="{!record.lines}">
+                    <tr>
+                        <td style="padding-left:5px; font: 10pt; ">{!line.Shipment_Service_Line__r.Name} &nbsp; <!--{!line.Shipment_Service_Line__r.Sap_Service_Type__c}--></td>
+                        <td style="text-align:left; border-left: 1px solid black;">$ {!line.Amount__c}</td>
+                        <td style="text-align:left; padding-right:5px; border-left: 1px solid black;">$</td>    
+                    </tr>                    
+                </apex:repeat>
+            </table>
+            <br/>
+                    
+            <table style="border:solid 0.5px #000; margin-left:300px; margin-top:-10px;width:52%; font-family:sans-serif; font:12pt;">
+                <tr>
+                    <td style="text-align:left;">SUB-TOTAL</td>
+                    <td style="text-align:left;">$ {!record.subTotal}</td>
+                    <td style="text-align:left;">$0</td>
+                </tr>
+                <tr style="padding-left:5px;">
+                    <td style="text-align:left;">TAXES %</td>
+                    <td style="text-align:left;">${!record.taxes}</td>
+                    <td style="text-align:left;">$0</td>
+                </tr>
+                <tr style=" padding-left:5px;">
+                    <td style="text-align:left;">TOTAL (USD)</td>
+                    <td style="text-align:left;">${!record.total}</td>
+                    <td style="text-align:left;">$0</td>
+                </tr>
+            </table><br/>
+            <table style="font-family:sans-serif; width:100%;">
+                <tr>
+                    <td style="background-color:#e1e1e1; color:rgb(0, 0, 0); font:11pt;">Total Debit Balance Due To: <br/>
+                        GRUPO PGL MEXICO SAPI DE CV 
+                    </td>
+                </tr>
+            </table>                        
+        </div>          
+    </body>
+   </html>          
+</apex:page>

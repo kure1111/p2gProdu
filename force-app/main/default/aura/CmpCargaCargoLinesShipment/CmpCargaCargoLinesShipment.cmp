@@ -1,0 +1,25 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,force:hasRecordId" 
+                controller="CmpCargaCargoLinesShipmentController">
+    
+      <!--override Toast CSS with external [.CSS] file.--> 
+    <ltng:require styles="{!$Resource.multilineToastCSS}" />
+                            
+    <aura:attribute name="fileToBeUploaded" type="Object[]" />  
+    <aura:attribute name="recordId" type="Id" />
+    <div class="slds-box" style="background-color:white">
+        <lightning:spinner variant="brand" size="large" aura:id="Id_spinner" class="slds-hide" />
+        <div class="slds-box slds-is-relative">            
+            <div class="slds-text-title_bold">
+                Carga Cargo Lines
+            </div>
+            <div class="slds-align_absolute-center">
+                <lightning:input messageWhenTypeMismatch="Cargar solamente archivo soportado" type="file" label="" multiple="false" 
+                                 name="file" accept=".csv" onchange="{! c.CreateRecord }" files="{!v.fileToBeUploaded}" /> 
+            </div>     
+            <div class="slds-m-top_medium">
+                <b class="red">Nota: Usar el template estándar para subir el tarifario 
+                    <a href='https://pak2gologistics.my.salesforce.com/sfc/p/4T000000DybZ/a/4T000000LjXi/Ab2qFS2ls3hb6u0jucPsFC5Q6od_XMvO7rl8vMzCvgI' target='_blank'>Clic aquí</a> para descargar el template.</b>
+            </div>
+        </div>
+    </div>
+</aura:component>

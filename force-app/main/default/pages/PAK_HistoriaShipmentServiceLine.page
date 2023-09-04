@@ -1,0 +1,18 @@
+<apex:page controller="PK2_Utils" showHeader="false" sidebar="false" readOnly="true" action="{!getHistoriaFeeline}">
+    <apex:form >
+        <apex:pageBlock title="International - History Sell Price & Buy Price">
+            <apex:pageBlockTable value="{!lsFeelineHis}" var="Q">
+                <apex:column value="{!Q.Parent.Shipment__c}" />
+                <apex:column value="{!Q.Parent.Name}" />
+                <apex:column value="{!Q.Parent.Service_Rate_Name__c}" />
+                <apex:column value="{!Q.Field}" />
+                <apex:column value="{!Q.OldValue}" />
+                <apex:column value="{!Q.NewValue}" />
+                <apex:column value="{!Q.Parent.CreatedDate}" />
+                <apex:column value="{!Q.Parent.CreatedById}"/>
+                <apex:column headerValue="Last Modified Date" value="{!Q.CreatedDate}"/>
+                <apex:column headerValue="Last Modified By" value="{!Q.CreatedById}"/>           
+            </apex:pageBlockTable>
+        </apex:pageBlock>
+    </apex:form>
+</apex:page>

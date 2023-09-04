@@ -1,0 +1,3 @@
+<apex:page standardController="Shipment__c" sidebar="false" showheader="false">
+    <c:NEU_WarningsRecords object="Shipment__c" id_record="{!Shipment__c.Id}"/>
+</apex:page>

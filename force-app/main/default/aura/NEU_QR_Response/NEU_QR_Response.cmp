@@ -1,0 +1,213 @@
+<aura:component controller="NEU_QR_Response" implements="flexipage:availableForAllPageTypes,lightning:actionOverride,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:appHostable" access="GLOBAL">
+    <aura:handler name="init" value="{!this}" action="{!c.init}"/> 
+    <aura:attribute name="item" type="Warehouse_Exit_Order__c" default="{'sobjectType':'Warehouse_Exit_Order__c'}"/>
+    <aura:attribute name="wh_lines" type="Object[]" access="global"/>
+    <aura:attribute name="shipment_lines" type="Object[]" access="global"/>   
+    <aura:attribute name="inventory_entries" type="Object[]" access="global"/>    
+    <aura:attribute name="exitorder" type="String"/>
+    <aura:attribute name="pallet" type="String"/>
+    <c:NEU_CommunityHeader/>
+    <aura:renderIf isTrue="{!and($Browser.isPhone, v.shipment_lines.length > 0)}">
+        <div id="mobileDiv">
+            <lightning:card title="{!'PALLET: '+v.pallet}" iconName="standard:task">
+                <aura:iteration items="{!v.shipment_lines}" var="it">
+                    <lightning:card title="{!it.Item_Name__r.Name}" iconName="standard:contract_line_item">
+                        <div class="demo-only demo-only--sizing slds-grid slds-wrap">
+                            <div class="slds-size_1-of-2">
+                                <div class="slds-box slds-box_x-small slds-text-align_center slds-m-around_x-small"><span class="slds-text-title">Código Artículo: </span><ui:outputText class="slds-text-heading_medium" value="{!it.Item_Name__r.Sourcing_Item_Code__c}"/></div>
+                            </div>
+                            <div class="slds-size_1-of-2">
+                                <div class="slds-box slds-box_x-small slds-text-align_center slds-m-around_x-small"><span class="slds-text-title">Unidades: </span> <ui:outputText class="slds-text-heading_medium" value="{!it.Units_Shipped__c}"/></div>
+                            </div>
+                            <div class="slds-size_1-of-2">                                
+                                <div class="slds-box slds-box_x-small slds-text-align_center slds-m-around_x-small"><span class="slds-text-title">Volumen: </span> <ui:outputText class="slds-text-heading_medium" value="{!it.Item_Name__r.Master_Box_Volume_m3__c+' m3'}"/></div>
+                            </div>
+                            <div class="slds-size_1-of-2">
+                                <div class="slds-box slds-box_x-small slds-text-align_center slds-m-around_x-small"><span class="slds-text-title">Ubicación: </span> <ui:outputText class="slds-text-heading_medium" value="{!it.Warehouse_Location__c}"/></div>
+                            </div>
+                            <div class="slds-size_1-of-2">
+                                <div class="slds-box slds-box_x-small slds-text-align_center slds-m-around_x-small">
+                                    <span class="slds-text-title">
+                                        <!--span class="pieCaja"><h3>
+                                            <b><div class="slds-text-heading_medium medidasCajaMobile"><span class="slds-text-title">Volumen: </span>{!it.Item_Name__r.Master_Box_Volume_m3__c}</div></b>                                            
+                                            </h3>
+                                        </span-->
+                                        <img src="{!$Resource.box_image}" class="boxImageMobile"/>
+                                        <span class="pieCaja"><h3>
+                                            <b><div class="slds-text-heading_medium medidasCajaMobile">{!it.Item_Name__r.Master_Box_Height_cm__c} x {!it.Item_Name__r.Master_Box_Length_cm__c} x {!it.Item_Name__r.Master_Box_Width_cm__c}</div></b>                                            
+                                            </h3>
+                                        </span>
+                                    </span> 
+                                </div>
+                            </div>
+                            <div class="slds-size_1-of-2">
+                                <div class="slds-box slds-box_x-small slds-text-align_center slds-m-around_x-small"><span class="slds-text-title">
+                                    <img src="{!$Resource.weight_image}" class="pesoImgMobile"/>
+                                    <div class="pesoCajaMobile slds-text-heading_medium">
+                                        <ui:outputText class="slds-text-heading_medium" value="{!it.Item_Name__r.Master_Box_Packing_Weight_kg__c}"/>
+                                    </div>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="slds-size_2-of-2">
+                                <div class="slds-box slds-box_x-small slds-text-align_center slds-m-around_x-small"><span class="slds-text-title">Descripción: </span> <ui:outputText class="slds-text-heading_medium" value="{!it.Item_Name__r.Item_Description__c}"/></div>
+                            </div>
+                        </div>
+                    </lightning:card>
+                </aura:iteration>
+            </lightning:card>   
+        </div>
+    </aura:renderIf>
+    <aura:renderIf isTrue="{!and($Browser.isPhone, v.inventory_entries.length > 0)}">
+        <div id="mobileDiv">
+            <lightning:card title="{!'PALLET: '+v.pallet}" iconName="standard:task">
+                <aura:iteration items="{!v.inventory_entries}" var="it">
+                    <lightning:card title="{!it.Item__r.Name}" iconName="standard:contract_line_item">
+                        <div class="demo-only demo-only--sizing slds-grid slds-wrap">
+                            <div class="slds-size_1-of-2">
+                                <div class="slds-box slds-box_x-small slds-text-align_center slds-m-around_x-small"><span class="slds-text-title">Código Artículo: </span><ui:outputText class="slds-text-heading_medium" value="{!it.Item__r.Sourcing_Item_Code__c}"/></div>
+                            </div>
+                            <div class="slds-size_1-of-2">
+                                <div class="slds-box slds-box_x-small slds-text-align_center slds-m-around_x-small"><span class="slds-text-title">Unidades: </span> <ui:outputText class="slds-text-heading_medium" value="{!it.Remaining_Units__c}"/></div>
+                            </div>
+                            <div class="slds-size_1-of-2">                                
+                                <div class="slds-box slds-box_x-small slds-text-align_center slds-m-around_x-small"><span class="slds-text-title">Volumen: </span> <ui:outputText class="slds-text-heading_medium" value="{!it.Item__r.Master_Box_Volume_m3__c+' m3'}"/></div>
+                            </div>
+                            <div class="slds-size_1-of-2">
+                                <div class="slds-box slds-box_x-small slds-text-align_center slds-m-around_x-small"><span class="slds-text-title">Ubicación: </span> <ui:outputText class="slds-text-heading_medium" value="{!it.Shipment_Item_Line__r.Warehouse_Location__c}"/></div>
+                            </div>
+                            <div class="slds-size_1-of-2">
+                                <div class="slds-box slds-box_x-small slds-text-align_center slds-m-around_x-small">
+                                    <span class="slds-text-title">
+                                        <!--span class="pieCaja"><h3>
+                                            <b><div class="slds-text-heading_medium medidasCajaMobile"><span class="slds-text-title">Volumen: </span>{!it.Item_Name__r.Master_Box_Volume_m3__c}</div></b>                                            
+                                            </h3>
+                                        </span-->
+                                        <img src="{!$Resource.box_image}" class="boxImageMobile"/>
+                                        <span class="pieCaja"><h3>
+                                            <b><div class="slds-text-heading_medium medidasCajaMobile">{!it.Item__r.Master_Box_Height_cm__c} x {!it.Item__r.Master_Box_Length_cm__c} x {!it.Item__r.Master_Box_Width_cm__c}</div></b>                                            
+                                            </h3>
+                                        </span>
+                                    </span> 
+                                </div>
+                            </div>
+                            <div class="slds-size_1-of-2">
+                                <div class="slds-box slds-box_x-small slds-text-align_center slds-m-around_x-small"><span class="slds-text-title">
+                                    <img src="{!$Resource.weight_image}" class="pesoImgMobile"/>
+                                    <div class="pesoCajaMobile slds-text-heading_medium">
+                                        <ui:outputText class="slds-text-heading_medium" value="{!it.Item__r.Master_Box_Packing_Weight_kg__c}"/>
+                                    </div>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="slds-size_2-of-2">
+                                <div class="slds-box slds-box_x-small slds-text-align_center slds-m-around_x-small"><span class="slds-text-title">Descripción: </span> <ui:outputText class="slds-text-heading_medium" value="{!it.Item__r.Item_Description__c}"/></div>
+                            </div>
+                        </div>
+                    </lightning:card>
+                </aura:iteration>
+            </lightning:card>   
+        </div>
+    </aura:renderIf>
+    <aura:renderIf isTrue="{!and($Browser.isPhone == false, v.shipment_lines.length > 0)}">
+        <div id="desktopDiv" style="padding:2%;">
+            <div class="slds-m-horizontal_xx-large">
+                <lightning:card title="{!'PALLET: '+v.pallet}" iconName="standard:task">
+                    <div class="slds-grid slds-wrap ">
+                        
+                        <table class="slds-table slds-table_bordered slds-table_striped slds-table_cell-buffer slds-table_fixed-layout">
+                            <thead>
+                                <tr class="slds-text-heading_label">
+                                    <th scope="col"><div class="slds-truncate" >Código artículo</div></th>
+                                    <th scope="col"><div class="slds-truncate" >Nombre</div></th>
+                                    <th scope="col"><div class="slds-truncate">Descripción</div></th>
+                                    <th scope="col"><div class="slds-truncate">Ubicación</div></th>
+                                    <th scope="col"><div class="slds-truncate">Unidades</div></th>
+                                    <th scope="col"><div class="slds-truncate">Peso</div></th>
+                                    <th scope="col"><div class="slds-truncate">Volumen</div></th>
+                                </tr>
+                            </thead>
+                            <tbody>                                
+                                <aura:iteration items="{!v.shipment_lines}" var="it">
+                                    <tr>
+                                        <th scope="row"><div class="slds-truncate" title="{!it.Item_Name__r.Sourcing_Item_Code__c}">{!it.Item_Name__r.Sourcing_Item_Code__c}</div></th>
+                                        <td><div class="slds-truncate" title="{!it.Item_Name__r.Name}">{!it.Item_Name__r.Name}</div></td>
+                                        <td><div class="slds-truncate" title="{!it.Item_Name__r.Master_Box_Description__c}">{!it.Item_Name__r.Item_Description__c}</div></td>
+                                        <td><div class="slds-truncate" title="{!it.Shipment_Item_Line__r.Warehouse_Location__c}">{!it.Shipment_Item_Line__r.Warehouse_Location__c}</div></td>
+                                        <td><div class="slds-truncate" title="{!it.Units_Shipped__c}">{!it.Units_Shipped__c}</div></td>
+                                        <td>
+                                            <div class="slds-truncate"> 
+                                            <img src="{!$Resource.weight_image}" class="pesoImg"/><br/>
+                                                    <span class="pieCaja"><h3> <div class="pesoCaja">{!it.Item_Name__r.Master_Box_Packing_Weight_kg__c}</div></h3></span>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="slds-truncate">
+                                                <div class="contenedorItems2">   
+                                                    <div class="totalVolume">{!it.Item_Name__r.Master_Box_Volume_m3__c} m3</div>
+                                                    <img src="{!$Resource.box_image}" class="boxImage"/>
+                                                    <div class="medidasCaja">{!it.Item_Name__r.Master_Box_Height_cm__c} x {!it.Item_Name__r.Master_Box_Length_cm__c} x {!it.Item_Name__r.Master_Box_Width_cm__c}</div>
+                                                </div>   
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </aura:iteration>
+                            </tbody>
+                        </table>
+                    </div>
+                </lightning:card>                
+            </div>
+        </div>
+    </aura:renderIf>
+    <aura:renderIf isTrue="{!and($Browser.isPhone == false, v.inventory_entries.length > 0)}">
+        <div id="desktopDiv" style="padding:2%;">
+            <div class="slds-m-horizontal_xx-large">
+                <lightning:card title="{!'PALLET: '+v.pallet}" iconName="standard:task">
+                    <div class="slds-grid slds-wrap ">
+                        
+                        <table class="slds-table slds-table_bordered slds-table_striped slds-table_cell-buffer slds-table_fixed-layout">
+                            <thead>
+                                <tr class="slds-text-heading_label">
+                                    <th scope="col"><div class="slds-truncate" >Código artículo</div></th>
+                                    <th scope="col"><div class="slds-truncate" >Nombre</div></th>
+                                    <th scope="col"><div class="slds-truncate">Descripción</div></th>
+                                    <th scope="col"><div class="slds-truncate">Ubicación</div></th>
+                                    <th scope="col"><div class="slds-truncate">Unidades</div></th>
+                                    <th scope="col"><div class="slds-truncate">Peso</div></th>
+                                    <th scope="col"><div class="slds-truncate">Volumen</div></th>
+                                </tr>
+                            </thead>
+                            <tbody>                                
+                                <aura:iteration items="{!v.inventory_entries}" var="it">
+                                    <tr>
+                                        <th scope="row"><div class="slds-truncate" title="{!it.Item_Name__r.Sourcing_Item_Code__c}">{!it.Item__r.Sourcing_Item_Code__c}</div></th>
+                                        <td><div class="slds-truncate" title="{!it.Item_Name__r.Name}">{!it.Item__r.Name}</div></td>
+                                        <td><div class="slds-truncate" title="{!it.Item_Name__r.Item_Description__c}">{!it.Item__r.Item_Description__c}</div></td>
+                                        <td><div class="slds-truncate" title="{!it.Shipment_Item_Line__r.Warehouse_Location__c}">{!it.Shipment_Item_Line__r.Warehouse_Location__c}</div></td>
+                                        <td><div class="slds-truncate" title="{!it.Units_Shipped__c}">{!it.Remaining_Units__c}</div></td>
+                                        <td>
+                                            <div class="slds-truncate"> 
+                                            <img src="{!$Resource.weight_image}" class="pesoImg"/><br/>
+                                                    <span class="pieCaja"><h3> <div class="pesoCaja">{!it.Item__r.Master_Box_Packing_Weight_kg__c}</div></h3></span>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="slds-truncate">
+                                                <div class="contenedorItems2">   
+                                                    <div class="totalVolume">{!it.Item__r.Master_Box_Volume_m3__c} m3</div>
+                                                    <img src="{!$Resource.box_image}" class="boxImage"/>
+                                                    <div class="medidasCaja">{!it.Item__r.Master_Box_Height_cm__c} x {!it.Item__r.Master_Box_Length_cm__c} x {!it.Item__r.Master_Box_Width_cm__c}</div>
+                                                </div>   
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </aura:iteration>
+                            </tbody>
+                        </table>
+                    </div>
+                </lightning:card>                
+            </div>
+        </div>
+    </aura:renderIf>
+    <c:NEU_CommunityFooter/>
+</aura:component>

@@ -1,0 +1,66 @@
+<apex:page lightningStylesheets="false">
+<head>
+  <base target="_top">
+  </base>
+</head> 
+    <apex:pageBlock title="ZONA OCCIDENTE" mode="edit">
+        <apex:pageBlockSection title="Status Quotes" columns="3" >
+            <analytics:reportChart reportId="00O4T000000YoVV" size="tiny"/>
+            <analytics:reportChart reportId="00O4T000000YoVQ" size="tiny"/>
+            <analytics:reportChart reportId="00O4T000000YoVR" size="tiny"/>
+            <analytics:reportChart reportId="00O4T000000YoVS" size="tiny"/>
+            <analytics:reportChart reportId="00O4T000000YoVT" size="tiny"/>
+            <analytics:reportChart reportId="00O4T000000YoVU" size="tiny"/>
+            <analytics:reportChart reportId="00O4T000000YoVX" size="tiny"/>
+            <analytics:reportChart reportId="00O4T000000YoVY" size="tiny"/>
+        </apex:pageblocksection>
+        <apex:pageBlockSection title="GUADALAJARA" columns="3" >
+            <analytics:reportChart reportId="00O4T000000YoX8" size="tiny"/>
+            <analytics:reportChart reportId="00O4T000000YoXC" size="tiny"/>
+            <analytics:reportChart reportId="00O4T000000YoXB" size="tiny"/>
+            <analytics:reportChart reportId="00O4T000000YoXD" size="tiny"/>
+            <analytics:reportChart reportId="00O4T000000YoXJ" size="tiny"/>
+            <analytics:reportChart reportId="00O4T000000YoXI" size="tiny"/>
+            <analytics:reportChart reportId="00O4T000000YoXE" size="tiny"/>
+            <analytics:reportChart reportId="00O4T000000YoXH" size="tiny"/>
+            <analytics:reportChart reportId="00O4T000000YoXG" size="tiny"/>
+            <analytics:reportChart reportId="00O4T000000YoXA" size="tiny"/>
+        </apex:pageblocksection>
+        <apex:pageBlockSection title="LEON" columns="3" >
+            <analytics:reportChart reportId="00O4T000000YoXU" size="tiny"/>
+            <analytics:reportChart reportId="00O4T000000YoXX" size="tiny"/>
+            <analytics:reportChart reportId="00O4T000000YoXW" size="tiny"/>
+            <analytics:reportChart reportId="00O4T000000YoXY" size="tiny"/>
+            <analytics:reportChart reportId="00O4T000000YoXd" size="tiny"/>
+            <analytics:reportChart reportId="00O4T000000YoXc" size="tiny"/>
+            <analytics:reportChart reportId="00O4T000000YoXZ" size="tiny"/>
+            <analytics:reportChart reportId="00O4T000000YoXb" size="tiny"/>
+            <analytics:reportChart reportId="00O4T000000YoXa" size="tiny"/>
+            <analytics:reportChart reportId="00O4T000000YoXV" size="tiny"/>
+        </apex:pageblocksection> 
+        <apex:pageBlockSection title="QUERETARO" columns="3" >
+            <analytics:reportChart reportId="00O4T000000YoYE" size="tiny"/>
+            <analytics:reportChart reportId="00O4T000000YoYI" size="tiny"/>
+            <analytics:reportChart reportId="00O4T000000YoYH" size="tiny"/>
+            <analytics:reportChart reportId="00O4T000000YoYJ" size="tiny"/>
+            <analytics:reportChart reportId="00O4T000000YoYN" size="tiny"/>
+            <analytics:reportChart reportId="00O4T000000YoYM" size="tiny"/>
+            <analytics:reportChart reportId="00O4T000000YoYK" size="tiny"/>
+            <analytics:reportChart reportId="00O4T000000YoYO" size="tiny"/>
+            <analytics:reportChart reportId="00O4T000000YoYL" size="tiny"/>
+            <analytics:reportChart reportId="00O4T000000YoYG" size="tiny"/>
+        </apex:pageblocksection>
+        <apex:pageBlockSection title="SAN LUIS POTOSI" columns="3" >
+            <analytics:reportChart reportId="00O4T000000YoYP" size="tiny"/>
+            <analytics:reportChart reportId="00O4T000000YoYU" size="tiny"/>
+            <analytics:reportChart reportId="00O4T000000YoYT" size="tiny"/>
+            <analytics:reportChart reportId="00O4T000000YoYV" size="tiny"/>
+            <analytics:reportChart reportId="00O4T000000YoYb" size="tiny"/>
+            <analytics:reportChart reportId="00O4T000000YoYZ" size="tiny"/>
+            <analytics:reportChart reportId="00O4T000000YoYX" size="tiny"/>
+            <analytics:reportChart reportId="00O4T000000YoYd" size="tiny"/>
+            <analytics:reportChart reportId="00O4T000000YoYY" size="tiny"/>
+            <analytics:reportChart reportId="00O4T000000YoYS" size="tiny"/>
+        </apex:pageblocksection>
+     </apex:pageBlock>
+ </apex:page>

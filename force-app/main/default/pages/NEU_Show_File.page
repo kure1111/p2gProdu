@@ -1,0 +1,7 @@
+<apex:page controller="NEU_Show_File" showHeader="false" standardStylesheets="false" sidebar="false" action="{!getDocumentBase64}">
+
+    <apex:pageMessages id="pagemessages"/>
+    <iframe id="theFrame" style="border: 0; position:absolute; top:0; left:0; right:0; bottom:0; width:100%; height:100%"
+            src='data:{!contentType};content-disposition=inline;filename="{!URLENCODE(fileName)}";base64,{!documentBase64}'/>
+
+</apex:page>

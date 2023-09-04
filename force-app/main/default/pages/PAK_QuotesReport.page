@@ -1,0 +1,41 @@
+<apex:page docType="html-5.0" sidebar="false" controller="PAK_QuotesReport" tabStyle="Customer_Quote__c">
+    <script type="text/javascript">
+    function descargar(){
+        var startDate = document.getElementById('{!$Component.formReport.blockReport.sectionReport.secitemReport1.startDate}').value;
+        var endDate = document.getElementById('{!$Component.formReport.blockReport.sectionReport.secitemReport2.endDate}').value;
+        var service = document.getElementById('{!$Component.formReport.blockReport.sectionReport.secitemReport3.pickServicio}').value;   
+        window.open('/apex/reportexportxls?service=' + service + '&startDate=' + startDate + '&endDate=' + endDate);
+    }
+    </script>
+    <apex:sectionHeader title="Reporte" subtitle="Quality Assurance"/>
+    <apex:form id="formReport">
+        <apex:pageMessages ></apex:pageMessages>
+        <apex:pageBlock id="blockReport" title="Filtro de búsqueda">
+            <apex:pageBlockButtons location="bottom">
+                <apex:commandButton value="Generar" reRender="none" onclick="descargar();" />
+            </apex:pageBlockButtons>
+            <apex:pageBlockSection id="sectionReport" columns="1">
+                <apex:pageBlockSectionItem id="secitemReport1">
+                    <apex:outputLabel >Fecha inicio</apex:outputLabel>
+                    <apex:input id="startDate" type="date" value="{!startDate}" styleClass="standardizer"/>
+                </apex:pageBlockSectionItem>
+                <apex:pageBlockSectionItem id="secitemReport2">
+                    <apex:outputLabel >Fecha fin</apex:outputLabel>
+                    <apex:input id="endDate" type="date" value="{!endDate}"/>
+                </apex:pageBlockSectionItem>
+                <apex:pageBlockSectionItem id="secitemReport3">
+                    <apex:outputLabel >Servicio</apex:outputLabel>
+                    <apex:selectList id="pickServicio" value="{!servicio}" multiselect="false" size="1">
+                        <apex:selectOption itemValue="FN" itemLabel="FN"/>
+                        <apex:selectOption itemValue="FI" itemLabel="FI"/>
+                        <apex:selectOption itemValue="PTO" itemLabel="PTO"/>
+                        <apex:selectOption itemValue="A" itemLabel="A"/>
+                        <apex:selectOption itemValue="M" itemLabel="M"/>
+                         <apex:selectOption itemValue="R" itemLabel="R"/>
+						<apex:selectOption itemValue="CE" itemLabel="CE"/>
+                    </apex:selectList>
+                </apex:pageBlockSectionItem>
+            </apex:pageBlockSection>            
+        </apex:pageBlock>
+    </apex:form>
+</apex:page>

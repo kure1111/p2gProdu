@@ -1,0 +1,86 @@
+<template>
+    <lightning-card title="DebitNote Monitor"  icon-name="standard:record_signature_task">
+        <div if:false={witDN}>
+            <div class="slds-p-around_medium lgc-bg">
+                <b style="color: red;">ATENCION: No cuentas con una Debit Note asignada</b> <br/><br/>
+                <div class="slds-grid slds-wrap">
+                    <div class="slds-col slds-size_1-of-1 slds-large-size_6-of-12">
+                        <lightning-button variant="success" label="Asignar Debit Note" title="Debit Note" onclick={showModalCreateDN} class="slds-m-left_x-small"></lightning-button>
+                    </div>
+                    <div class="slds-col slds-size_1-of-1 slds-large-size_6-of-12">
+                        <lightning-button variant="success" label="Crear Debit Note" title="Debit Note" onclick={createDN} class="slds-m-left_x-small slds-float_right"></lightning-button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div if:true={witDN}>
+            <div class="slds-p-around_medium lgc-bg">
+                <div class="slds-box slds-theme_shade">
+                    <h2><b style="color: red;">ATENCION:</b>&nbsp; Se ha relacionado a la siguiente Debit Note: <b> <br/>
+                        <lightning-formatted-url value={dnWrapp.dnURL} label={dnWrapp.dnName} target="_blank"></lightning-formatted-url>
+                       </b></h2>
+                </div><br/>                                                 
+                <div class="slds-scrollable" style="height:100%; height: 100%;">                                       
+                    <div class="slds-text-longform">                                                              
+                        <div class="slds-scrollable" style="height:100%; height: 100%;">
+                            <table class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_col-bordered">
+                                <thead>
+                                    <tr class="slds-line-height_reset">
+                                        <th class="" scope="col">
+                                            <div class="slds-truncate" title="Shipment">Shipment</div>
+                                        </th>
+                                        <th class="" scope="col">
+                                            <div class="slds-truncate" title="Status">Status</div>
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <template for:each={dnWrapp.shipmentsDN} for:item="SP">
+                                    <tbody key={SP.Id}>
+                                        <tr class="slds-hint-parent">
+                                            <th data-label="Shipment Numbere" scope="row">
+                                                <lightning-formatted-url value={SP.Remitente_Acuse__c} label={SP.Name} target="_blank"></lightning-formatted-url>
+                                                <!-- <div class="slds-truncate" title={SP.name}>{SP.Name} - {SP.Id}</div> -->
+                                            </th>
+                                            <td data-label="Status">
+                                                <div class="slds-truncate" title={SP.Shipment_Status_Plann__c}>{SP.Shipment_Status_Plann__c}</div>
+                                            </td>
+                                        </tr>                                           
+                                    </tbody>
+                                </template>
+                            </table>    
+                        </div>   
+                        <br/>                                                                                                                                                                                 
+                    </div>
+                </div>
+                <div class="slds-grid slds-wrap">
+                    <div class="slds-col slds-size_1-of-1 slds-large-size_6-of-12">
+                        <lightning-button disabled={isEnable} variant="success" label="Timbrar Debit Note" title="Timbrar Debit Note" onclick={showDebitNote} class="slds-m-left_x-small"></lightning-button>
+                    </div>                   
+                    <div if:true={isEnable} class="slds-col slds-size_1-of-1 slds-large-size_6-of-12">
+                        <lightning-button variant="success" label="Crear PDF" title="Crear PDF" onclick={createPDF} class="slds-m-left_x-small slds-float_right"></lightning-button>
+                    </div>
+                </div> 
+            </div>                                            
+        </div>
+    </lightning-card>
+    <div if:true={showDN}>
+        <c-l-w-c-_-debit-_-note record-id={recordId} estatus="Closed"></c-l-w-c-_-debit-_-note>
+    </div>
+    <div if:true={showModal}>
+        <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+            <div class="slds-modal__container">
+                <header class="slds-modal__header">
+                    <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close" onclick={hideModalCreateDN}>
+                       <lightning-icon icon-name="utility:close"
+                          alternative-text="close"
+                          variant="inverse"
+                          size="small" ></lightning-icon>
+                       <span class="slds-assistive-text">Close</span>
+                    </button>
+                 </header>
+                <c-l-w-c-_-debit-note-s-p record-id={recordId}></c-l-w-c-_-debit-note-s-p>
+            </div>
+         </section>
+         <div class="slds-backdrop slds-backdrop_open"></div>
+    </div>
+</template>

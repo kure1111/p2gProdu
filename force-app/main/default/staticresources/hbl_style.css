@@ -1,0 +1,282 @@
+/* hbl_style */
+@page
+{
+	margin-top: 0.0cm;
+	margin-left: 0.0cm;
+	margin-right: 0.0cm;
+	margin-bottom: 0.8cm;
+
+	@bottom-center
+	{
+		font-family: Arial, Helvetica, sans-serif;
+		font-size: 13px;
+		content: counter(page) "/" counter(pages);
+	}
+}
+
+body
+{
+	font-family: Arial, Helvetica, sans-serif;
+	font-size:10px;
+	margin:8%;
+}
+
+.pagina
+{
+	float:left;
+	width:820px;
+	height:900px;
+}
+
+.logoP2g img
+{
+    width: 100%;
+    height: 100px;
+}
+
+.logoSea img
+{
+    width: 100%;
+    height: 120px;
+}
+
+.tabla
+{
+    border: 1px solid black;
+    border-spacing: 0px;
+    border-collapse: collapse;
+    width:83%;
+}
+
+.tabla td
+{
+    border: 1px solid black;
+
+}
+
+td.zona1
+{
+    width: 50%;
+    vertical-align: top;
+}
+
+td.zona2
+{
+    width: 33%;
+    height: 60px;
+    vertical-align: top;
+}
+
+td.zona3
+{
+    height: 140px;
+}
+
+
+
+.headerXL
+{
+	font-size:medium;
+	font-weight: bold;
+	color: #0B2161;
+	margin-top: 0px;
+    margin-left: 3px;
+    margin-bottom: 0px;
+}
+
+.header
+{
+	font-size:larger;
+	font-weight: bold;
+	color: #0B2161;
+	margin-top: 0px;
+	margin-left: 3px;
+	margin-bottom: 0px;
+}
+
+p.datos
+{
+    margin-top: 3px;
+    margin-left: 10px;
+    margin-bottom: 0px;
+}
+
+.header + p.datos
+{
+    margin-top: 10px;
+}
+
+p.datosBig
+{
+    margin-top: 3px;
+    margin-left: 10px;
+    margin-bottom: 0px;
+    font-size: larger;
+}
+
+.center
+{
+	text-align: center;
+	vertical-align: middle;
+}
+
+.vTop
+{
+    vertical-align: top;
+}
+
+.littleBlue
+{
+    padding-right: 5px;
+    padding-left: 5px;
+    font-size:x-small;
+    color: #0B2161;
+}
+
+/*
+
+.vigencia
+{
+	background:#ffe12d;
+	border:1px solid #bfbfbf;
+	margin-top:0;
+	font-size:12px;
+}
+
+.table_tarifas{float:left;}
+
+.table_data
+{
+	width:100%;
+}
+
+.table_data td{font-size:12px;}
+
+.table_data th{font-size:12px; width: 80px;}
+
+.table_data .folio
+{
+	color: #ffff00;
+	background: #595959;
+}
+
+.table_data_right{float:right;}
+.table_data h3{float:right;}
+
+.middle
+{
+	float:left;
+	height:270px;
+}
+
+.presentation
+{
+	float:left;
+	text-align:center;
+	width:770px;
+	margin-bottom:0;
+	font-size:9px;
+}
+
+.freight_mode
+{
+	float:left;
+	font-weight:bold;
+	background:#ffff00;
+	width:500px;
+	text-align:center;
+	margin: 10px 135px 10px 135px;
+}
+
+.route_info
+{
+	float:left;
+	width:770px;
+	text-align:center;
+	font-style: italic;
+	font-size:15px;
+	margin:0 0 5px 0;
+}
+
+.observations
+{
+	background:#ffff00;
+	border:1px solid #000000;
+	float:left;
+	padding:5px;
+}
+
+.table_tarifas
+{
+	width:770px;
+	float:left;
+}
+
+.table_tarifas .tt_1
+{
+	background: #ffff00;
+	border:2px solid #000000;
+	text-align:center;
+}
+
+.table_tarifas .tt_2
+{
+	color: #ffff00;
+	background: #595959;
+	border:2px solid #000000;
+	text-align:center;
+}
+
+.table_tarifas td
+{
+	border:1px solid;
+}
+
+.table_tarifas .td_blank
+{
+	border:none !important;
+	background:#ffffff;
+}
+
+.bottom
+{
+	float:left;
+	height:370px;
+}
+
+.title_notes
+{
+	font-size:14px;
+	border-bottom: 1px solid #bfbfbf;
+}
+
+.quotation_map
+{
+	float:right;
+	margin-top:20px;
+}
+
+.notas_text
+{
+	float:left;
+	width:770px;
+	font-size:9px;
+}
+
+.footer
+{
+	float:left;
+	width:770px;
+	text-align:center;
+	font-size: 8px;
+}
+
+.warning
+{
+	padding: 3px 0 3px 0;
+	color: #ff0000;
+	text-align:center;
+	border: 1px solid #ff0000;
+	margin: 5px 0 0 0;
+}
+*/
