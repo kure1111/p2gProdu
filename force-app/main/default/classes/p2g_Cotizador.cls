@@ -1,4 +1,5 @@
 public class p2g_Cotizador {
+    
     public static Lead crearLead(P2G_PruebaMetodos.wrapperCotizador cotizador) {
         Lead lead = new Lead();
         lead.Mkt_Executive__c = 'Comercial';//hacer spot
