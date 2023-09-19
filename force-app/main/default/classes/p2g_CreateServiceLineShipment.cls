@@ -57,7 +57,6 @@ public with sharing class p2g_CreateServiceLineShipment {
         System.debug('lista wrapper '+ feeWrapper);
         return feeWrapper;
     }
-    
     public static P2G_UpdateShipmentServiceLine.shipmentFeeLineWrapper rellena2(Import_Export_Fee_Line__c line, String Id){
         P2G_UpdateShipmentServiceLine.shipmentFeeLineWrapper wrapper = new P2G_UpdateShipmentServiceLine.shipmentFeeLineWrapper();
             wrapper.Id = line.Id;
@@ -143,16 +142,21 @@ public with sharing class p2g_CreateServiceLineShipment {
         wrapper.TotalVolume = String.valueOf(ship.Last_Shipment__r.Total_Volume_m3__c);
         wrapper.TotalWeight = String.valueOf(ship.Last_Shipment__r.Total_Weight_Kg__c);
         wrapper.ShipmentId = ship.Last_Shipment__c;
-        return wrapper; 
+        return wrapper;
+        
     }
     @AuraEnabled
-    public static List<P2G_UpdateShipmentServiceLine.shipmentFeeLineWrapper> CrearLineTarifario(String line, Integer numLinea){
+    public static List<p2g_CreateServiceLineQuote.quoteFeeLineWrapper> CrearLineTarifario(String line, Integer numLinea){
         System.debug('Json que llego: '+ line);
         List<P2G_UpdateShipmentServiceLine.shipmentFeeLineWrapper> listWrapper = P2G_UpdateShipmentServiceLine.CrearListaWrapper(line,numLinea);
+        System.debug('La line wrapper: '+ listWrapper);
         //calcular nombre de linea
         Integer NameLine = CalculoNombreLine(listWrapper[0].ShipmentId);
         List<Shipment_Fee_Line__c> listaFeeLine = new List<Shipment_Fee_Line__c>();
         List<Fee__c> creaFee = new List<Fee__c>();
+        String message;
+        p2g_CreateServiceLineQuote.quoteFeeLineWrapper nuevalinea = new p2g_CreateServiceLineQuote.quoteFeeLineWrapper();
+        List<p2g_CreateServiceLineQuote.quoteFeeLineWrapper> listaRespuesta = new List<p2g_CreateServiceLineQuote.quoteFeeLineWrapper>();
         try{
             System.debug('Entra al try');
             for(P2G_UpdateShipmentServiceLine.shipmentFeeLineWrapper fee: listWrapper){
@@ -171,19 +175,24 @@ public with sharing class p2g_CreateServiceLineShipment {
                 NameLine++;
             }
             //Crear service Line
+            System.debug('la lista a modificar de Service Line es: '+listaFeeLine);
             insert listaFeeLine;
+            Integer condador=0;
             for(P2G_UpdateShipmentServiceLine.shipmentFeeLineWrapper wrapper: listWrapper){
-                wrapper.seModifica = false;
-                wrapper.Tarifario = false;
-                wrapper.ShipmentSellPrice = wrapper.SellRate;
-	            wrapper.ShipmentBuyPrice = wrapper.BuyRate;
+                P2G_UpdateShipmentServiceLine.shipmentFeeLineWrapper complementoWrapperLine = completeFieldsShowLine(wrapper,listaFeeLine[condador],creaFee[condador]);
+                nuevalinea = p2g_CreateServiceLineQuote.rellenaSeccion(complementoWrapperLine);
+               	listaRespuesta.add(nuevalinea);
+                condador++;
             }
+            message='Se realizo la inserción exitosamente';
         }catch(Exception e){
             System.debug('Entra al catch');
+            nuevalinea = null;
+            message='Error al realizar la inserción: '+e.getMessage()+e.getLineNumber();
             System.debug('Error al realizar la modificacion: '+e.getMessage()+e.getLineNumber());
         }
-        System.debug('lo que devuelve: '+listWrapper);
-        return listWrapper;
+        System.debug('lo que devuelve es: '+nuevalinea);
+        return listaRespuesta;
     }
     //Seccion 3 Termina
     //Seccion 4 Inicia Shipment_Fee_Line__c
@@ -218,16 +227,17 @@ public with sharing class p2g_CreateServiceLineShipment {
         return wrapper;   
     }
     @AuraEnabled
-    public static P2G_UpdateShipmentServiceLine.shipmentFeeLineWrapper Create(P2G_UpdateShipmentServiceLine.shipmentFeeLineWrapper data){
-        System.debug('Wrapper que llega: '+data);
+    public static p2g_CreateServiceLineQuote.quoteFeeLineWrapper Create(P2G_UpdateShipmentServiceLine.shipmentFeeLineWrapper data){
         Integer NameLine = CalculoNombreLine(data.ShipmentId);
         Fee__c ServiceRate = P2G_UpdateShipmentServiceLine.CreateServiceRate(data);
         insert ServiceRate;
         data.ServiceRateId = ServiceRate.Id;
         Shipment_Fee_Line__c serviceLine = CreateServiceLine(NameLine,data);
         insert serviceLine;
-        List<P2G_UpdateShipmentServiceLine.shipmentFeeLineWrapper> listaRetun = P2G_UpdateShipmentServiceLine.getLineSp(data.ShipmentId);
-        return listaRetun[listaRetun.size()-1];
+        data.ValidUntil = Date.today();
+        P2G_UpdateShipmentServiceLine.shipmentFeeLineWrapper complementoWrapperLine = completeFieldsShowLine(data,serviceLine,ServiceRate);
+        p2g_CreateServiceLineQuote.quoteFeeLineWrapper nuevaLinea = p2g_CreateServiceLineQuote.rellenaSeccion(complementoWrapperLine);
+        return nuevaLinea;    
     }
     //Seccion 4 Termina
     public static Integer CalculoNombreLine(String ShipmentId){
@@ -240,7 +250,6 @@ public with sharing class p2g_CreateServiceLineShipment {
         System.debug('el resultado agregado: '+contador);
         return contador;
     }
-    
     public static Shipment_Fee_Line__c CreateServiceLine(Integer name,P2G_UpdateShipmentServiceLine.shipmentFeeLineWrapper line){
         Shipment_Fee_Line__c serviceLine = new Shipment_Fee_Line__c();
         serviceLine.Import_Export_Quote__c = line.IdQuote;
@@ -251,20 +260,17 @@ public with sharing class p2g_CreateServiceLineShipment {
         serviceLine.Service_Rate_Name__c = line.ServiceRateId;
         if(line.SellRate != null){serviceLine.Shipment_Sell_Price__c = Decimal.valueOf(line.SellRate);}else{serviceLine.Shipment_Sell_Price__c = 0;}
         if(line.BuyRate != null){serviceLine.Shipment_Buy_Price__c = Decimal.valueOf(line.BuyRate);}else{serviceLine.Shipment_Buy_Price__c = 0;}
+            
         return serviceLine;
     }
-    
     public static P2G_UpdateShipmentServiceLine.shipmentFeeLineWrapper completeFieldsShowLine(P2G_UpdateShipmentServiceLine.shipmentFeeLineWrapper wrapper,Shipment_Fee_Line__c line,Fee__c fee){
         Wrapper.Id = line.Id;
         Wrapper.Name = line.Name;
         Wrapper.FeeCategory = fee.Fee_Category__c;
-        Wrapper.ShipmentSellPrice = String.valueOf(line.Shipment_Sell_Price__c);
-        Wrapper.ShipmentBuyPrice = String.valueOf(line.Shipment_Buy_Price__c);
-        wrapper.SapServiceTypeBuy = wrapper.SapServiceTypeBuy;
-        wrapper.SapServiceTypeBuyId = line.Sap_Service_Type_Buy__c;
+        Wrapper.ShipmentSellPrice = String.valueOf(line.Units__c);
+        Wrapper.ShipmentBuyPrice = fee.Comments__c;
         return wrapper;
     }
-    
     public static Fee__c updateRate(P2G_UpdateShipmentServiceLine.shipmentFeeLineWrapper wrapper){
         Fee__c updateFee = new Fee__c();
         updateFee.Id = wrapper.ServiceRateId;
