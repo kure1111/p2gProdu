@@ -117,8 +117,8 @@ public class p2g_CreateServiceLineShipmentSec2Test {
             'SapServiceTypeId":"'+line.Service_Rate_Name__r.SAP_Service_Type__c+'","SellRate":"10000.00","seModifica":true,"ServiceRateId":"'+line.Service_Rate_Name__c+'","ServiceRateName":"Flete Nacional","TotalVolume":"1.00","TotalWeight":"1.0000","ShipmentRouteName":"ZM de Monterrey - ZM de Mexicali","ShipmentSellPrice":"1.00","ValidUntil":"2023-07-11"}}';
         String json2 = '{"0":{"Account":"HENKEL","AccountId":"0010R000019aZF8QAM","Activo":true,"BuyRate":"10355.00","CarrierId":"0014T00000EI8xsQAD","CarrierName":"FLETES LUEDAN DEL DESIERTO SA DE CV","ContainerType":"Caja 53 FT","ContainerTypeId":"a0F4T000000R9qxUAC","FeeCategory":"Road Freights","Grou":"SP-FN-FLETE NACIONAL","Id":"a0KDV000005NiGQ2A0","IdQuote":"a0JDV000003wqrh2AA","Moneda":"MXN","SapServiceType":"SERVICIOS LOGISTICOS FN (IC) (FN)","SapServiceTypeBuy":"FLETE NACIONAL (IC) (FN)","SapServiceTypeBuyId":"a1n0R000001lZceQAE","SapServiceTypeId":"a1n0R000001lZckQAE","SellRate":"0.00","seModifica":true,"ServiceRateName":"Flete Nacional","ShipmentId":"2.00","ShipmentName":"2.0000","ShipmentRouteId":"a0EDV0000049aX72AI","ShipmentRouteName":"ZM de Acapulco - ZM de Acayucan","Tarifario":true,"ValidUntil":"2023-12-31"}}';
         Test.startTest();
-        List<P2G_UpdateShipmentServiceLine.shipmentFeeLineWrapper> creaelinea = p2g_CreateServiceLineShipmentSec2.CrearLineQuote(json, 0);
-        List<P2G_UpdateShipmentServiceLine.shipmentFeeLineWrapper> creaelinea2 = p2g_CreateServiceLineShipmentSec2.CrearLineQuote(json2, 0);
+        List<p2g_CreateServiceLineQuote.quoteFeeLineWrapper> creaelinea = p2g_CreateServiceLineShipmentSec2.CrearLineQuote(json, 0);
+        List<p2g_CreateServiceLineQuote.quoteFeeLineWrapper> creaelinea2 = p2g_CreateServiceLineShipmentSec2.CrearLineQuote(json2, 0);
         Test.stopTest();
     }
 }

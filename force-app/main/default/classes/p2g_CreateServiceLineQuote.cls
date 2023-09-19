@@ -16,7 +16,6 @@ public class quoteFeeLineWrapper {
         @AuraEnabled public String CommentsServiceLine { get; set; }
         @AuraEnabled public String Carrier { get; set; }
         @AuraEnabled public String SSTS { get; set; }
-        @AuraEnabled public String Moneda { get; set; }
     }
     @AuraEnabled
     public static list<SAP_Service_Type__c> getSapServiceTypeQuote(string SapService,String IdQuote){
@@ -24,7 +23,7 @@ public class quoteFeeLineWrapper {
         string grou = 'SP-' + quote.FolioResume__c + '%';
         string searchKeyword = '%' + SapService + '%';
         list<SAP_Service_Type__c> SapServiceListRecord = new list<SAP_Service_Type__c>();
-        for(SAP_Service_Type__c sapServiceSearch : [SELECT Id, Name,Code__c FROM SAP_Service_Type__c 
+        for(SAP_Service_Type__c sapServiceSearch : [SELECT Id, Name FROM SAP_Service_Type__c 
                                                     WHERE Activo__c =: TRUE AND Name LIKE : searchKeyword AND Group__c LIKE : grou]){
                                                         SapServiceListRecord.add(sapServiceSearch);
                                                     }
@@ -41,7 +40,7 @@ public class quoteFeeLineWrapper {
             SELECT Id, Name, Service_Rate_Category__c, Units__c,Quote_Sell_Price__c,Sell_Amount_Number__c,Quote_Buy_Price__c,
 					Std_Buy_Amount_Number__c, Extension_Service_Name__c, Service_Rate_Name__c, Service_Rate_Name__r.Name,
 					Service_Rate_Name__r.Route__r.Name, Service_Rate_Name__r.SAP_Service_Type__r.Name,
-					Service_Rate_Name__r.Valid_Until__c, Service_Rate_Name__r.Account_for__r.Name,CurrencyIsoCode,
+					Service_Rate_Name__r.Valid_Until__c, Service_Rate_Name__r.Account_for__r.Name,
 					Service_Rate_Name__r.Carrier_Account__r.Name, Service_Rate_Name__r.Container_Type__r.Name,
 					Import_Export_Quote__r.Total_Volume_m3_2__c, Import_Export_Quote__r.Total_Weight_Kg2__c
 			FROM Import_Export_Fee_Line__c WHERE Import_Export_Quote__c =:Id];
@@ -63,7 +62,6 @@ public class quoteFeeLineWrapper {
             wrapper.CommentsServiceLine = feeLine.Extension_Service_Name__c;
             wrapper.SSTS = feeLine.Service_Rate_Name__r.SAP_Service_Type__r.Name;
             wrapper.Carrier = feeLine.Service_Rate_Name__r.Carrier_Account__r.Name;
-            wrapper.Moneda = feeLine.CurrencyIsoCode;
             quoteFeeLines.add(wrapper);
         }       
         return quoteFeeLines;
@@ -227,7 +225,6 @@ public class quoteFeeLineWrapper {
         System.debug('el resultado agregado: '+contador);
         return contador;
     }
-    
     public static Import_Export_Fee_Line__c CreateServiceLine(Integer name,String idQuote,Fee__c fee){
         Import_Export_Fee_Line__c serviceLine = new Import_Export_Fee_Line__c();
         serviceLine.Import_Export_Quote__c = idQuote;
@@ -241,7 +238,6 @@ public class quoteFeeLineWrapper {
         serviceLine.Quote_Buy_Price__c = fee.Buy_Rate__c;
         return serviceLine;
     }
-    
     public static P2G_UpdateShipmentServiceLine.shipmentFeeLineWrapper completeFieldsShowLine(P2G_UpdateShipmentServiceLine.shipmentFeeLineWrapper wrapper,Import_Export_Fee_Line__c line,Fee__c fee){
         Wrapper.Id = line.Id;
         Wrapper.Name = line.Name;
@@ -250,7 +246,6 @@ public class quoteFeeLineWrapper {
         Wrapper.ShipmentBuyPrice = line.Extension_Service_Name__c;
         return wrapper;
     }
-    
     public static quoteFeeLineWrapper rellenaSeccion(P2G_UpdateShipmentServiceLine.shipmentFeeLineWrapper line){
         quoteFeeLineWrapper nuevaLinea = new quoteFeeLineWrapper();
         nuevaLinea.Id = line.Id;
@@ -269,11 +264,9 @@ public class quoteFeeLineWrapper {
         nuevaLinea.CommentsServiceLine = line.ShipmentBuyPrice;
         nuevaLinea.Carrier = line.CarrierName;
         nuevaLinea.SSTS = line.SapServiceType;
-        nuevaLinea.Moneda = line.Moneda;
         System.debug('El wrapper final '+nuevaLinea);
         return nuevaLinea;
     }
-    
     public static Fee__c CreateServiceRate(P2G_UpdateShipmentServiceLine.shipmentFeeLineWrapper data){
         String recordTypeId = Schema.SObjectType.Fee__c.getRecordTypeInfosByName().get('Sea/Ground Freight').getRecordTypeId();
         Fee__c serviceRate = new Fee__c();
