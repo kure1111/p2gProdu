@@ -278,7 +278,8 @@ public class NEU_OM_FollowersAccount {
 		        {   
 		            delete del_subscriptions;
 		        }
-		        catch(Exception ex){ApexPages.addMessage(new ApexPages.message(ApexPages.severity.ERROR,'Error:'+ex)); }
+		        catch(Exception ex)
+                {ApexPages.addMessage(new ApexPages.message(ApexPages.severity.ERROR,'Error:'+ex)); }
 		        //--------------------
 		        
                 if(fs.selected==true)
