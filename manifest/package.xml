@@ -1,20 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <Package xmlns="http://soap.sforce.com/2006/04/metadata">
 	<types>
-		<members>P2G_UpdateShipmentServiceLine</members>
-		<members>P2G_UpdateShipmentServiceLineTest</members>
-		<members>p2g_CreateServiceLineShipment</members>
-		<members>p2g_CreateServiceLineShipmentSec2</members>
-		<members>p2g_CreateServiceLineShipmentSec2Test</members>
-		<members>p2g_CreateServiceLineShipmentTest</members>
+		<members>P2G_subscriptionClean</members>
+		<members>P2G_subscriptionCleanSchedule</members>
+		<members>P2G_subscriptionCleanScheduleTest</members>
 		<name>ApexClass</name>
 	</types>
-	<types>
-		<members>p2G_CreacionFolio</members>
-		<members>p2G_LWC_ChangeCarrier</members>
-		<members>p2gCreateShipmentServiceLine</members>
-		<members>p2g_CreateQuoteServiceLine</members>
-		<name>LightningComponentBundle</name>
-	</types>
-	<version>55.0</version>
+	<version>58.0</version>
 </Package>
