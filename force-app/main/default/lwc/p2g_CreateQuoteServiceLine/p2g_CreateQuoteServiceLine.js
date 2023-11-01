@@ -1,6 +1,7 @@
 import { LightningElement,track,wire,api } from 'lwc';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import { refreshApex } from '@salesforce/apex';
+import { CurrentPageReference } from 'lightning/navigation';
 import getLineQuote from '@salesforce/apex/p2g_CreateServiceLineQuote.getLineQuote';
 import getRate from '@salesforce/apex/p2g_CreateServiceLineQuote.getRateTarifario';
 import getWrapper from '@salesforce/apex/P2G_UpdateShipmentServiceLine.getwrapper';
@@ -10,7 +11,7 @@ import getSst from '@salesforce/apex/p2g_CreateServiceLineQuote.getSapServiceTyp
 import getCreaLine from '@salesforce/apex/p2g_CreateServiceLineQuote.getCreaLine';
 import createNewLine from '@salesforce/apex/p2g_CreateServiceLineQuote.Create';//P2G_PruebaALbert
 
-export default class P2g_CreateQuoteServiceLine extends LightningElement {
+export default class P2g_CreateQuoteServiceLine  extends LightningElement {
     @api recordId;
     activeSections = ['Seccion1', 'Seccion2', 'Seccion3'];
     /*@wire(getLineQuote, {Id: '$recordId'}) listServiceLine;
@@ -23,14 +24,21 @@ export default class P2g_CreateQuoteServiceLine extends LightningElement {
     @track elemento;
     cargoLine = true;
     idString='';
+    deURL=false;
     //seccion 3
     rateName;
     sellPrice;
     connectedCallback() {
-        console.log("Entra al connected");
-        this.initializeComponent();
+        const urlParams = new URLSearchParams(window.location.search);
+        const recordIdURL = urlParams.get('c__recordId');
+        if (recordIdURL) {
+            this.deURL = true;
+            this.recordId= recordIdURL;
+        }
+            this.initializeComponent();
     }
     initializeComponent(){
+        console.log("El ide que llega: ",this.recordId);
         getLineQuote({Id: this.recordId})
             .then(result => {
                 this.listServiceLine = result;
@@ -63,18 +71,6 @@ export default class P2g_CreateQuoteServiceLine extends LightningElement {
                 console.log("Entra al carch", this.vistaLine);              
             });
             console.log("record Id wp", this.recordId);
-        /*getWrapper2({idQuote: this.recordId})
-        .then(result => {
-            this.createServiceLine = result;
-            console.log("Entra al then wp", this.createServiceLine);
-        })
-        .catch(error => {
-            this.pushMessage('Error en cargar wrapper2','error', error.body.message);   
-            console.log("Entra al catch wp", error);                  
-        });
-        if(this.error == true){
-            pusherror(2);
-        }*/
     }
 
     @track sideRecordsSsts;
@@ -84,7 +80,9 @@ export default class P2g_CreateQuoteServiceLine extends LightningElement {
     showVista = false;
 
     nWrapper=0;
-    //para ver el message en pantalla
+    ruta = "https://pak2gologistics.lightning.force.com/lightning/r/Customer_Quote__c/"+this.recordId+"/view";
+    //produccion https://pak2gologistics.lightning.force.com/lightning/r/
+    //uat https://pak2gologistics--uat.sandbox.lightning.force.com/lightning/r/Customer_Quote__c/
     pushMessage(title, variant, message){
         const event = new ShowToastEvent({
             title: title,
@@ -229,6 +227,12 @@ export default class P2g_CreateQuoteServiceLine extends LightningElement {
         });
 
     }
+    registroCurrency(event){
+        const updateVistaLine = this.vistaLine.map( (item) => { 
+            return {...item, Moneda : event.target.value };
+        }); // Actualiza la lista de service lines
+        this.vistaLine = updateVistaLine;
+    }
     saveName(event){
         this.rateName = event.target.value;
         const updateVistaLine = this.vistaLine.map( (item) => { 
@@ -252,5 +256,13 @@ export default class P2g_CreateQuoteServiceLine extends LightningElement {
         this.varurl = "https://pak2gologistics.lightning.force.com/lightning/r/Import_Export_Fee_Line__c/"+IdServiceLine+"/view";
         var win = window.open(this.varurl, '_blank');
         win.focus();
+    }
+    abrirQuote(){
+        //produccion https://pak2gologistics.lightning.force.com/lightning/r/
+        //uat https://pak2gologistics--uat.sandbox.lightning.force.com/lightning/r/Customer_Quote__c/
+        const idQuote = this.recordId;
+        console.log('el id es: ',this.recordId);
+        this.ruta = "https://pak2gologistics.lightning.force.com/lightning/r/Customer_Quote__c/"+idQuote+"/view";
+        window.location = this.ruta;
     }
 }
