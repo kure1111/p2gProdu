@@ -144,7 +144,7 @@ public with sharing class P2G_UpdateShipmentServiceLine {
         string grou = 'SP-' + ship.Shipment_Type__c + '%';
         string searchKeyword = '%' + SapService + '%';
         list<SAP_Service_Type__c> SapServiceListRecord = new list<SAP_Service_Type__c>();
-        for(SAP_Service_Type__c sapServiceSearch : [SELECT Id, Name FROM SAP_Service_Type__c 
+        for(SAP_Service_Type__c sapServiceSearch : [SELECT Id, Name, Code__c FROM SAP_Service_Type__c 
                                                     WHERE Activo__c =: TRUE AND Name LIKE : searchKeyword AND Group__c LIKE : grou]){
                                                         SapServiceListRecord.add(sapServiceSearch);
                                                     }

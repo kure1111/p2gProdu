@@ -127,6 +127,15 @@ public class P2G_UpdateShipmentServiceLineTest {
         Fee__c modificacion = P2G_UpdateShipmentServiceLine.updateFee(wrapper[0]);
         List<P2G_UpdateShipmentServiceLine.shipmentFeeLineWrapper> repetido = P2G_UpdateShipmentServiceLine.rateRepetido(wrapper);
         List<Fee__c> listaUpdateRate = P2G_UpdateShipmentServiceLine.listaUpdateRate(wrapper, repetido);
+        wraper.listCarrier = true;
+        wraper.SellRate =  '';
+        wraper.listSstb = true;
+        wraper.listSsts = true;
+        wraper.Activo = true;
+        wraper.TotalVolume= '';
+        wraper.TotalWeight= '';
+        P2G_UpdateShipmentServiceLine.updateStatus(ship.Id, 'Closed');
+        Boolean status = P2G_UpdateShipmentServiceLine.getStatusClose(ship.Id);
         Test.stopTest();
     }
 }
