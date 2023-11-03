@@ -2,6 +2,7 @@
 public class P2G_UpdateShipmentServiceLineTest {
     @testSetup
     static void Setup(){
+        NEU_StaticVariableHelper.setBoolean1(true);
         List<Account> list_accounts = NEU_Utils.getAccounts('Customer,');
         Account account_test = list_accounts[0];
         account_test.Name = 'Bimbo';
@@ -113,6 +114,7 @@ public class P2G_UpdateShipmentServiceLineTest {
     }
     @isTest
     static void UpdateShipmentServiceLineTest(){
+        NEU_StaticVariableHelper.setBoolean1(true);
         Shipment__c ship =[SELECT Id, Name FROM Shipment__c WHERE Name = 'SP-FN-23-000783' LIMIT 1];
         String line = '{"0":{"Account":"HENKEL","AccountId":"0010R000019aZF8QAM","ContainerType":"53-FT Tractor Trailer","ContainerTypeId":"a0F4T000000R9qQUAS","Id":"a1yDV000001LGZPYA4","Name":"2","SapServiceType":"CARGOS ADICIONALES","SapServiceTypeBuy":"CARGOS ADICIONALES","seModifica":true,"ServiceRateId":"a0KDV000005VK7c2AG","ServiceRateName":"Flete Nacional","ShipmentBuyPrice":"4000.0000","ShipmentId":"a0JDV000003sbGc2AI","ShipmentName":"SP-FN-23-000783","ShipmentRouteId":"a0EDV0000049e3U2AQ","ShipmentRouteName":"ZM de Chihuahua - Centro","ShipmentSellPrice":"12.00","Tarifario":false,"TotalVolumen":"80.01999999999999999999999999999996","TotalWeight":"22132.300000000000000000000000000011","listSsts":false,"SapServiceTypeId":"a1n0R000001LnOeQAK","listSstb":false,"SapServiceTypeBuyId":"a1n0R000001LnOgQAK"},"1":{"Account":"HENKEL","AccountId":"0010R000019aZF8QAM","ContainerType":"53-FT Tractor Trailer","ContainerTypeId":"a0F4T000000R9qQUAS","Id":"a1yDV000001LH4OYAW","Name":"3","SapServiceType":"SERVICIOS LOGISTICOS FN (IC) (FN)","SapServiceTypeBuy":"SERVICIOS LOGISTICOS FN (IC) (FN)","seModifica":true,"ServiceRateId":"a0KDV000005VK7c2AG","ServiceRateName":"Flete Nacional","ShipmentBuyPrice":"4500.0000","ShipmentId":"a0JDV000003sbGc2AI","ShipmentName":"SP-FN-23-000783","ShipmentRouteId":"a0EDV0000049e3U2AQ","ShipmentRouteName":"ZM de Chihuahua - Centro","ShipmentSellPrice":"20.00","Tarifario":false,"TotalVolumen":"80.01999999999999999999999999999996","TotalWeight":"22132.300000000000000000000000000011","listSsts":false,"SapServiceTypeId":"a1n0R000001lZckQAE","listSstb":false,"SapServiceTypeBuyId":"a1n0R000001lZckQAE"},"2":{"Account":"HENKEL","AccountId":"0010R000019aZF8QAM","CarrierId":"0014T00000BHiFVQA1","CarrierName":"ALEJANDRO MARTINEZ RAMIREZ","ContainerType":"Caja 53 FT","ContainerTypeId":"a0F4T000000R9qxUAC","Id":"a1yDV000001aKTVYA2","Name":"003","SapServiceType":"SERVICIOS LOGISTICOS FN (IC) (FN)","seModifica":true,"ServiceRateId":"a0KDV000005VMo92AG","ServiceRateName":"Flete Nacional","ShipmentBuyPrice":"5500.0000","ShipmentId":"a0JDV000003sbGc2AI","ShipmentName":"SP-FN-23-000783","ShipmentRouteId":"a0EDV0000049e3U2AQ","ShipmentRouteName":"ZM de Chihuahua - Centro","ShipmentSellPrice":"123.00","Tarifario":true,"TotalVolumen":"80.01999999999999999999999999999996","TotalWeight":"22132.300000000000000000000000000011"}}';
         Test.startTest();
@@ -122,6 +124,7 @@ public class P2G_UpdateShipmentServiceLineTest {
         list<Account> account = P2G_UpdateShipmentServiceLine.getCustomer('Bimbo');
         list<Account> carrier = P2G_UpdateShipmentServiceLine.getCarrier('carrier');
         list<SAP_Service_Type__c> serviceType = P2G_UpdateShipmentServiceLine.getSapServiceTypeShipment('SERVICIOS',ship.Id);
+        list<SAP_Service_Type__c> serviceType2 = P2G_UpdateShipmentServiceLine.getSst('SERVICIOS',ship.Id);
         Shipment__c shipName = P2G_UpdateShipmentServiceLine.getShipmentName(ship.Id);
         P2G_UpdateShipmentServiceLine.shipmentFeeLineWrapper wraper = P2G_UpdateShipmentServiceLine.getwrapper();
         Fee__c modificacion = P2G_UpdateShipmentServiceLine.updateFee(wrapper[0]);
