@@ -113,6 +113,14 @@ public class p2g_CotizadorTest {
         cotizador.coloniaDestinoId = '210987';
         cotizador.etd = '2023-09-15';
         cotizador.eta = '2023-09-20';
+        cotizador.buyRate = 536.6;
+        cotizador.calleFiscal ='calle fiscal';
+        cotizador.interiorFiscal ='34';
+        cotizador.exteriorFiscal ='342';
+        cotizador.cPFiscal ='cp fiscal';
+        cotizador.cPFiscalId ='42334';
+        cotizador.coloniaFiscal ='colonia fiscal';
+        cotizador.coloniaFiscalId ='34234';
 
         Test.startTest(); 
         p2g_Cotizador.wrapperCotizador cotizador2 = p2g_Cotizador.Cotizador(cotizador,1);
@@ -148,7 +156,8 @@ public class p2g_CotizadorTest {
             'Colonia Ejemplo',
             coordenadas
         );
-        p2g_Cotizador.updateCosto(cotizador2.quoteId,'123');
+        p2g_Cotizador.updateQuote(cotizador2.quoteId,2,'','', '','','');
+        p2g_Cotizador.updateQuote(cotizador2.quoteId,3,result.Id,'2023-09-15', '2023-09-15',direccion.Id, direccion.Id);
         Test.stopTest();
     }
 

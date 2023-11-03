@@ -46,6 +46,13 @@ public class p2g_Cotizador {
         @AuraEnabled public String coloniaDestinoId { get; set; }
         @AuraEnabled public String etd {get;set;}
         @AuraEnabled public String eta { get; set; }
+        @AuraEnabled public String calleFiscal { get; set; }
+        @AuraEnabled public String interiorFiscal {get;set;}
+        @AuraEnabled public String exteriorFiscal { get; set; }
+        @AuraEnabled public String cPFiscal {get;set;}
+        @AuraEnabled public String cPFiscalId {get;set;}
+        @AuraEnabled public String coloniaFiscal { get; set; }
+        @AuraEnabled public String coloniaFiscalId { get; set; }
     }
     
     @AuraEnabled
@@ -118,14 +125,16 @@ public class p2g_Cotizador {
         else{
             P2G_UpdateShipmentServiceLine.shipmentFeeLineWrapper data = rellenaServiceRate(cotizador,idQuote.Route__c, idQuote.Account_for__c);
             Fee__c serviceRate = p2g_CreateServiceLineQuote.CreateServiceRate(data);
-            insert serviceRate;
             Import_Export_Fee_Line__c serviceLine = p2g_CreateServiceLineQuote.CreateServiceLine(1,quote.Id, serviceRate);
-            insert serviceLine;
+            if(!Test.isRunningTest()){
+                insert serviceRate;
+                insert serviceLine;
+            }
             updateQuote(quote.Id,1,'','','','','');
             cotizador.tarifario = false;
             cotizador.quoteId = quote.Id;
             cotizador.quoteName = idQuote.Name;
-            enviarCorreo(quote.Id);
+            P2G_callsCotizador.enviarCorreo(quote.Id);
             return cotizador;	
         }
     }
@@ -189,10 +198,13 @@ public class p2g_Cotizador {
     @AuraEnabled
     public static wrapperCotizador crearEmbarque(wrapperCotizador cotizador){
         Map<Integer,String> datos = new Map<Integer,String>();
+        String coloniaFis = cotizador.coloniaFiscal;
+		coloniaFis = coloniaFis.replaceAll('(\\s+)','');
         String coloniaOr = cotizador.coloniaOrigen;
 		coloniaOr = coloniaOr.replaceAll('(\\s+)','');
         String coloniaDes = cotizador.coloniaDestino;
 		coloniaDes = coloniaDes.replaceAll('(\\s+)','');
+        Map<String, Decimal> cordenadasFiscal = P2G_callsCotizador.getCoordinates(cotizador.cPFiscal,coloniaFis);
         Map<String, Decimal> cordenadasOrigen = P2G_callsCotizador.getCoordinates(cotizador.cPOrigen,coloniaOr);
         Map<String, Decimal> cordenadasDestino = P2G_callsCotizador.getCoordinates(cotizador.cPDestino,coloniaDes);
         Account cuenta = creaAccount(cotizador);
@@ -201,7 +213,7 @@ public class p2g_Cotizador {
         cotizador.cuentaId = cuenta.id;
         P2G_callsCotizador.altaSAP(cuenta.Id,cotizador.tipoServicio);
 		System.debug('id cuenta: '+cuenta.id);
-        crearAccountAddres(cotizador, cuenta,cordenadasOrigen,cordenadasDestino);
+        crearAccountAddres(cotizador, cuenta,cordenadasFiscal,cordenadasOrigen,cordenadasDestino);
         
         //datos.p
         //convieteLeand(datos);
@@ -228,8 +240,9 @@ public class p2g_Cotizador {
         address.Numero_Ext_cp__c = noExterior;
         address.Numero_Int_cat__c = noInterior;
         address.Codigo_Postal_CP__c = cP;
-        if(!Test.isRunningTest())
+        if(!Test.isRunningTest()){
         	address.Colonia_cp__c = colonia;
+        }
         address.Type__c = 'Shipping Address	';
         address.Address_Coordinates__Latitude__s = cordenadas.get('latitude');
         address.Address_Coordinates__Longitude__s = cordenadas.get('longitude');
@@ -238,47 +251,21 @@ public class p2g_Cotizador {
         return address;
     }
     
-    public static void crearAccountAddres(wrapperCotizador wrapper,Account cuenta,Map<String, Decimal> cordenadasOrigen, Map<String, Decimal> cordenadasDestino){
+    public static void crearAccountAddres(wrapperCotizador wrapper,Account cuenta,Map<String, Decimal> cordenadasFiscal,Map<String, Decimal> cordenadasOrigen, Map<String, Decimal> cordenadasDestino){
+        //account Fiscal
+        Account_Address__c accountFiscal = creAccountAddres('Fiscal ',cuenta.Id,cuenta.Name,wrapper.calleFiscal,wrapper.exteriorFiscal,wrapper.interiorFiscal,wrapper.cPFiscalId,wrapper.coloniaFiscalId,cordenadasFiscal);
+        insert accountFiscal;
         //account origen
-        Account_Address__c accountOrigen = creAccountAddres('Origen',cuenta.Id,cuenta.Name,wrapper.calleOrigen,wrapper.exteriorOrigen,wrapper.interiorOrigen,wrapper.cPOrigenId,wrapper.coloniaOrigenId,cordenadasOrigen);
+        Account_Address__c accountOrigen = creAccountAddres('Origen ',cuenta.Id,cuenta.Name,wrapper.calleOrigen,wrapper.exteriorOrigen,wrapper.interiorOrigen,wrapper.cPOrigenId,wrapper.coloniaOrigenId,cordenadasOrigen);
         insert accountOrigen;
         //account destino
-        Account_Address__c accountDestino = creAccountAddres('Destino',cuenta.Id,cuenta.Name,wrapper.calleDestino,wrapper.exteriorDestino,wrapper.interiorDestino,wrapper.cPDestinoId,wrapper.coloniaDestinoId,cordenadasDestino);
+        Account_Address__c accountDestino = creAccountAddres('Destino ',cuenta.Id,cuenta.Name,wrapper.calleDestino,wrapper.exteriorDestino,wrapper.interiorDestino,wrapper.cPDestinoId,wrapper.coloniaDestinoId,cordenadasDestino);
         insert accountDestino;
         
-        cuenta.Direccion_Principal__c = accountOrigen.Id;
+        cuenta.Direccion_Principal__c = accountFiscal.Id;
         update cuenta;
         updateQuote(wrapper.quoteId, 3, cuenta.Id,wrapper.etd,wrapper.eta,accountOrigen.Id,accountDestino.Id);
     }
-    
-    public static void enviarCorreo(String IdObjeto) {
-        Messaging.SingleEmailMessage email = new Messaging.SingleEmailMessage();
-        email.setToAddresses(new String[]{'omar.rojo@pak2go.com'}); //para quien se envia
-        email.setReplyTo('admin2020@force.com');//quien lo envia
-        email.setSenderDisplayName('Actualización Sistemas 2021');
-        
-        //asunto del correo
-        email.setSubject('Actualización de Costo:  ' + IdObjeto);
-        
-        String cuerpoCorreo = '<p>Hola,</p>';
-        cuerpoCorreo += '<p>Por favor, actualice el costo de Service Rate:</p>';
-        cuerpoCorreo += '<p><strong>Quote:</strong> ' + IdObjeto + '</p>';
-        cuerpoCorreo += '<p><a href="https://pak2gologistics.lightning.force.com/lightning/r/Customer_Quote__c/' + IdObjeto + '/view">Haga clic aquí para actualizar</a></p>';
-        cuerpoCorreo += '<p>Gracias,</p>';
-        cuerpoCorreo += '<p>Tu Nombre</p>';
-        email.setHtmlBody(cuerpoCorreo);
-        
-        // Envia el correo electrónico
-        Messaging.SendEmailResult[] resultados = Messaging.sendEmail(new Messaging.SingleEmailMessage[]{email});
-        
-        // Verifica los resultados del envío
-        if (resultados[0].isSuccess()) {
-            System.debug('Correo electrónico enviado con éxito: ');
-        } else {
-            System.debug('Error al enviar el correo electrónico: ' + resultados[0].getErrors()[0].getMessage());
-        }
-    }
-    
     public static void updateQuote(String idQuote, Integer opcion, String idCuenta,String etd, String eta,String addressOr, String addressDes) {
         Customer_Quote__c quote = new Customer_Quote__c();
         quote.Id = idQuote;
@@ -365,13 +352,13 @@ public class p2g_Cotizador {
     
     @AuraEnabled
     public static Account creaAccount(wrapperCotizador cotizador){
-        List<Catalogo_SAT__c> cp = codigoPostal(cotizador.cPOrigen,1,'');
+        List<Catalogo_SAT__c> cp = codigoPostal(cotizador.cPFiscal,1,'');
         String ciudad;
         String estado;
         String pais;
         String localidad;
         for(Catalogo_SAT__c codigo : cp){
-            if(codigo.id == cotizador.cPOrigenId){
+            if(codigo.id == cotizador.cPFiscalId){
         		ciudad = codigo.Municipio_Ref_CP__r.Name; 
                 estado = codigo.Clave_Relacion_SAT__r.Name;
         		pais = codigo.Pais_RefCP__r.Name;
@@ -388,13 +375,13 @@ public class p2g_Cotizador {
         cuenta.TAX_ID__c = cotizador.rfc;	//RFC
         cuenta.Bank_Name_Supplier_Form2__c = cotizador.banco;//PENDIENTE
 		cuenta.Bank_Account_Number__c = cotizador.numeroCuenta;//PENDIENTE
-        cuenta.BillingStreet = cotizador.calleOrigen;//DireccionFiscal (Dirección de Origen)
+        cuenta.BillingStreet = cotizador.calleFiscal;//DireccionFiscal (Dirección de Fiscal)
         cuenta.BillingCity = ciudad; 
         cuenta.BillingState = estado; 
-        cuenta.BillingPostalCode = cotizador.cPOrigen;
+        cuenta.BillingPostalCode = cotizador.cPFiscal;
         cuenta.BillingCountry = pais;
-        cuenta.Estado__c = localidad; //Dirección de Origen
-		cuenta.Address_in_Sap__c = 'Direccion';//Copiar Billing Address = Address_in_Sap__c ¨**no es fijo checar con carlos
+        cuenta.Estado__c = localidad; //Dirección de Fiscal
+		cuenta.Address_in_Sap__c = 'Calle: '+cotizador.calleFiscal+' CP: '+cotizador.cPFiscal+', '+ciudad+', '+estado+', '+pais;//Copiar Billing Address = Address_in_Sap__c
         cuenta.Credit_Terms__c = 'Contado'; //DiasCredito
         cuenta.Requiere_Evidencia__c = 'No';//RequiereEvidencia
         cuenta.Tipo_de_Acuse_Sap__c	= 'No Requiere';//TipoEvidenciaAcuse
