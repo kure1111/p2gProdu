@@ -120,14 +120,15 @@ public class p2g_Cotizador {
             cotizador.tarifario = true;
             cotizador.quoteId = quote.Id;
             cotizador.quoteName = idQuote.Name;
+            updateQuote(quote.Id,4,'','','','','');
             return cotizador;
         }
         else{
             P2G_UpdateShipmentServiceLine.shipmentFeeLineWrapper data = rellenaServiceRate(cotizador,idQuote.Route__c, idQuote.Account_for__c);
             Fee__c serviceRate = p2g_CreateServiceLineQuote.CreateServiceRate(data);
+                insert serviceRate;
             Import_Export_Fee_Line__c serviceLine = p2g_CreateServiceLineQuote.CreateServiceLine(1,quote.Id, serviceRate);
             if(!Test.isRunningTest()){
-                insert serviceRate;
                 insert serviceLine;
             }
             updateQuote(quote.Id,1,'','','','','');
@@ -166,6 +167,7 @@ public class p2g_Cotizador {
             Time myTime = Time.newInstance(8, 00, 0, 0);
             quote.Awaiting_load_time__c = myTime;
             quote.Pricing_Executive__c = UserInfo.getUserId();
+            quote.Final_Client_Pak__c = wrapper.idLead;
             switch on wrapper.tipoServicio {
                 when 'SP-FN-FLETE NACIONAL' {
                     //inicio FN-FLET_NACIONAL_IC
@@ -198,18 +200,12 @@ public class p2g_Cotizador {
     @AuraEnabled
     public static wrapperCotizador crearEmbarque(wrapperCotizador cotizador){
         Map<Integer,String> datos = new Map<Integer,String>();
-        String coloniaFis = cotizador.coloniaFiscal;
-		coloniaFis = coloniaFis.replaceAll('(\\s+)','');
-        String coloniaOr = cotizador.coloniaOrigen;
-		coloniaOr = coloniaOr.replaceAll('(\\s+)','');
-        String coloniaDes = cotizador.coloniaDestino;
-		coloniaDes = coloniaDes.replaceAll('(\\s+)','');
-        Map<String, Decimal> cordenadasFiscal = P2G_callsCotizador.getCoordinates(cotizador.cPFiscal,coloniaFis);
-        Map<String, Decimal> cordenadasOrigen = P2G_callsCotizador.getCoordinates(cotizador.cPOrigen,coloniaOr);
-        Map<String, Decimal> cordenadasDestino = P2G_callsCotizador.getCoordinates(cotizador.cPDestino,coloniaDes);
+        Map<String, Decimal> cordenadasFiscal = P2G_callsCotizador.getCoordinates(cotizador.cPFiscal,cotizador.coloniaFiscal);
+        Map<String, Decimal> cordenadasOrigen = P2G_callsCotizador.getCoordinates(cotizador.cPOrigen,cotizador.coloniaOrigen);
+        Map<String, Decimal> cordenadasDestino = P2G_callsCotizador.getCoordinates(cotizador.cPDestino,cotizador.coloniaDestino);
         Account cuenta = creaAccount(cotizador);
         insert cuenta;
-        eliminarSuscripcionCuenta(cuenta.Id, UserInfo.getUserId());
+        //eliminarSuscripcionCuenta(cuenta.Id, UserInfo.getUserId());
         cotizador.cuentaId = cuenta.id;
         P2G_callsCotizador.altaSAP(cuenta.Id,cotizador.tipoServicio);
 		System.debug('id cuenta: '+cuenta.id);
@@ -272,6 +268,7 @@ public class p2g_Cotizador {
         switch on opcion {
             when 1 {
                 	quote.Quotation_Status__c = 'Awaiting costs suppliers';
+                    quote.clave_de_lead__c='Spot cotizador';
             }
             when 2 {
                 quote.Motivo__c = 'TARIFA ALTA';
@@ -287,6 +284,9 @@ public class p2g_Cotizador {
                 quote.ETA__c = Date.valueOf(eta);
                 quote.Account_Origin_Address__c = addressOr;
                 quote.Account_Destination_Address__c = addressDes;
+            }
+            when 4 {
+                quote.clave_de_lead__c='Spot tarifario';
             }
             when else {
                 System.debug('default');
