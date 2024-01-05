@@ -9,6 +9,7 @@ public class p2g_CotizadorTest {
         account_test.Venta_Sap__c='Credito';
         account_test.Segment__c='Nuevo';
         account_test.Workplace__c=null;
+        account_test.NEU_Email__c='cuenta@correo.com';
         insert account_test;
         Account carrier_test = new Account();
         String recordCarrier = Schema.SObjectType.Account.getRecordTypeInfosByName().get('Supply Chain Partner').getRecordTypeId();
@@ -83,6 +84,24 @@ public class p2g_CotizadorTest {
         quote.Pricing_Executive__c= userT.Id;
         quote.Operations_Exec__c = userT.Id;
         insert quote;
+        Lead lead = new Lead();
+        lead.Mkt_Executive__c = 'Comercial';//hacer spot
+        lead.LeadSource='MKT - SPOT'; //hacer uno Spot
+        lead.LastName = 'cliente test';
+        lead.Company ='p2g';
+        lead.Medio_de_Contacto__c='Spot';//agregar Spot
+        lead.Tipo_de_Servicio_Prospecto__c ='FN';//Fn por ahora
+        lead.Description ='Spot';
+        lead.Mercancia__c='Viable';
+        lead.Status='Open';
+        lead.Customs_Broker_Required__c='No';
+        lead.Rating='A';
+        lead.Industry='Other';
+        lead.FirstName = 'cliente test';
+        lead.Phone = '56687';
+        lead.Email = 'cuenta@correo.com';
+        lead.Status = 'Qualified';
+        insert lead;
     }
     
     @isTest
@@ -98,7 +117,7 @@ public class p2g_CotizadorTest {
         cotizador.siteDischargeName = 'Descarga en Sitio de Prueba';
         cotizador.containerTypeName = 'Tipo de Contenedor de Prueba';
         cotizador.costo = '100.00';
-        cotizador.cuentaId = '001XXXXXXXXXXXXXXX';
+        cotizador.cuentaId = '';
         cotizador.interiorOrigen = 'Int 123';
         cotizador.exteriorOrigen = 'Ext 456';
         cotizador.cPOrigenId = '987654';
@@ -121,6 +140,11 @@ public class p2g_CotizadorTest {
         cotizador.cPFiscalId ='42334';
         cotizador.coloniaFiscal ='colonia fiscal';
         cotizador.coloniaFiscalId ='34234';
+        cotizador.idAddress = '234dczcsa';
+        
+        Fee__c tarifario = new Fee__c();
+        tarifario.Fee_Rate__c = 13465.8;
+        tarifario.Buy_Rate__c = 12456.76;
 
         Test.startTest(); 
         p2g_Cotizador.wrapperCotizador cotizador2 = p2g_Cotizador.Cotizador(cotizador,1);
@@ -131,7 +155,7 @@ public class p2g_CotizadorTest {
         cotizador.cPOrigen = '12345';
         cotizador.razonSocial = 'Nombre de Prueba';
         cotizador.telefonoCliente = '1234567890';
-        cotizador.emailCliente = 'test@test.com';
+        cotizador.emailCliente = 'cliente@ejemplo.com';
         cotizador.rfc = 'RFC12345';
         cotizador.banco = 'Banco de Prueba';
         cotizador.numeroCuenta = '1234567890';
@@ -139,6 +163,13 @@ public class p2g_CotizadorTest {
         Cotizador.tipoServicio ='SP-FN-FLETE NACIONAL';
         Account result = p2g_Cotizador.creaAccount(coti);
         
+        Contact contact = new Contact();
+        contact.LastName = 'Test';
+        contact.CurrencyIsoCode = 'MXN';
+        contact.Email = 'emai@fm.com';
+        contact.Phone = '9531374618';
+        contact.AccountId = result.Id;
+        Insert contact;
         List<Catalogo_SAT__c> codigoPostal = p2g_Cotizador.codigoPostal('adada',2,'Colonia');
 		list<SAP_Service_Type__c> lista = p2g_Cotizador.getSapServiceType('asas','asasas');
         Map<String, Decimal> coordenadas = new Map<String, Decimal>();
@@ -158,6 +189,11 @@ public class p2g_CotizadorTest {
         );
         p2g_Cotizador.updateQuote(cotizador2.quoteId,2,'','', '','','');
         p2g_Cotizador.updateQuote(cotizador2.quoteId,3,result.Id,'2023-09-15', '2023-09-15',direccion.Id, direccion.Id);
+        p2g_Cotizador.wrapperCotizador costos = p2g_Cotizador.generarCostos(tarifario, cotizador);
+        p2g_Cotizador.wrapperCotizador contactoConCuenta = p2g_Cotizador.contactoConCuenta(contact, cotizador);
+        p2g_Cotizador.wrapperCotizador buscarLeadExistente = p2g_Cotizador.buscarLeadExistente(Cotizador);
+        coti.emailCliente = 'cuenta@correo.com';
+        p2g_Cotizador.wrapperCotizador buscarContacExistente = p2g_Cotizador.buscarLeadExistente(coti);
         Test.stopTest();
     }
 

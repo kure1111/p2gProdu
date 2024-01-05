@@ -8,10 +8,10 @@ public class P2G_altaSpot {
                 Integer startIndex = message.indexOf(searchString) + searchString.length();
                 String leadNumber = message.substring(startIndex);            
                 leadNumber = leadNumber.replaceAll('[^a-zA-Z0-9_]*$', '');
-                System.debug('leadNumber: ' + leadNumber);
+                
                 List<Customer_Quote__c> quotesToUpdate = [SELECT Id, Quotation_Status__c
                                                           FROM Customer_Quote__c
-                                                          WHERE Account_for__r.Customer_Id__c = :leadNumber LIMIT 1];
+                                                          WHERE Account_for__r.Customer_Id__c = :leadNumber AND clave_de_lead__c = 'SPOT Tarifario' LIMIT 1];
                 if (!quotesToUpdate.isEmpty()) {
                     quotesToUpdate[0].Quotation_Status__c = 'Approved as Succesful';
                     update quotesToUpdate[0];

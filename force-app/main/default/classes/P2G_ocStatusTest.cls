@@ -118,7 +118,14 @@ public class P2G_ocStatusTest {
         Import_Export_Fee_Line__c serviceLine = [SELECT Id FROM Import_Export_Fee_Line__c limit 1];
         String message = 'OC Creada 0000000 | Estatus: Abierta | '+serviceLine.Id;
         Response__c sapResponse = new Response__c(Shipment__c = shipment.Id,Object__c='Shipment',Type__c='CONFIRM',Message__c=message);
-        insert sapResponse;
+        insert sapResponse;   
+    }
+        @isTest
+    static void altaSap(){
+        Shipment__c shipment = [SELECT Id FROM Shipment__c limit 1];
+        String message = 'Lead Creado No. : CMTY6892';
+        Response__c sapResponse = new Response__c(Shipment__c = shipment.Id,Object__c='Shipment',Type__c='CONFIRM',Message__c=message);
+        insert sapResponse;   
     }
 
 }

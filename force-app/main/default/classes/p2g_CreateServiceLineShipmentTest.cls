@@ -163,8 +163,8 @@ public class p2g_CreateServiceLineShipmentTest {
         p2g_CreateServiceLineShipment.getLineQuote(serviceLine.Shipment__c);
         Shipment_Line__c shipmentLine = new Shipment_Line__c();
         P2G_UpdateShipmentServiceLine.shipmentFeeLineWrapper wraper4 = p2g_CreateServiceLineShipment.rellena4(shipmentLine,2,'Idsasa');
-        //List<P2G_UpdateShipmentServiceLine.shipmentFeeLineWrapper>getCreaLine = p2g_CreateServiceLineShipment.getCreaLine(serviceLine.Shipment__c);
-        List<p2g_CreateServiceLineQuote.quoteFeeLineWrapper> CrearLineTarifario = p2g_CreateServiceLineShipment.CrearLineTarifario(json,0);
+        List<P2G_UpdateShipmentServiceLine.shipmentFeeLineWrapper> CrearLineTarifario = p2g_CreateServiceLineShipment.CrearLineTarifario(json,0);
+        //P2G_UpdateShipmentServiceLine.shipmentFeeLineWrapper create = p2g_CreateServiceLineShipment.Create(wraper4);
         Test.stopTest();
     }
 }
