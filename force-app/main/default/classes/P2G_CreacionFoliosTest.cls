@@ -99,6 +99,8 @@ public class P2G_CreacionFoliosTest {
         cargo.totalShipping='1';
         List<Customer_Quote__c> listQuote = P2G_CreacionFolios.creaFolios(fleteNacional,cargo);
         list<Customer_Quote__c> Listfolios = P2G_CreacionFolios.getIdFolio(listQuote,'MXN',container.Id,acc.Id,'a1n4T000001XXYCQA4');//uate a1n0R000001lZceQAE, Prod a1n4T000001XXYCQA4
+        Fee__c serviceRate = new Fee__c();
+        Fee__c serRate = P2G_CreacionFolios.createServiceRateTarifario(serviceRate);
         //List<Quote_Item_Line__c> ListCargo = P2G_CreacionFolios.creaCargoLine(listQuote,cargo);
         System.debug('1.Número de consultas utilizadas en este código ápice hasta el momento: ' + Limits.getQueries());
         Test.stopTest();

@@ -140,8 +140,8 @@ return SapServiceListRecord;
 } */
     @AuraEnabled
     public static list<SAP_Service_Type__c> getSapServiceTypeShipment(string SapService, String IdShip){
-        Shipment__c ship =[SELECT Shipment_Type__c,Account_for__r.Tipo_de_Servicio_TNA__c FROM Shipment__c WHERE Id =: IdShip LIMIT 1];
-        string grou = 'SP-' + ship.Shipment_Type__c + '%';
+        Shipment__c ship =[SELECT ShipmentService__c,Account_for__r.Tipo_de_Servicio_TNA__c FROM Shipment__c WHERE Id =: IdShip LIMIT 1];
+        string grou = ship.ShipmentService__c + '%';
         string searchKeyword = '%' + SapService + '%';
         string nosearch1 = '';
         string nosearch2 = '';
@@ -150,7 +150,7 @@ return SapServiceListRecord;
                 nosearch1 = 'SERVICIOS LOGISTICOS NACIONALES FN (IC) (FN)';
                 nosearch2 = 'SERVICIOS LOGISTICOS LOCALES FN (IC) (FN)';
             }
-            if(ship.Account_for__r.Tipo_de_Servicio_TNA__c == 'a1n4T000002JWphQAG'){
+            if(ship.Account_for__r.Tipo_de_Servicio_TNA__c == 'a1n4T000002JWphQAG' || ship.Account_for__r.Tipo_de_Servicio_TNA__c == null){
                 nosearch1 = 'FLETE NACIONAL (IC) (FN)';
                 nosearch2 = 'FLETE LOCAL (IC) (FN)';
             }          
@@ -365,10 +365,9 @@ update listaShip;
     }
     public static Fee__c CreateServiceRate(shipmentFeeLineWrapper wrapper){
         String recordTypeId = Schema.SObjectType.Fee__c.getRecordTypeInfosByName().get('Sea/Ground Freight').getRecordTypeId();
-        String category = wrapper.FeeCategory + '%';
-        String grou = 'SP-'+ wrapper.Grou +'%';
-        Fee__c campos;
-        if(!Test.isRunningTest()){campos =[SELECT Fee_Category__c, Group__c FROM fee__c WHERE Fee_Category__c LIKE: Category and Group__c LIKE:grou LIMIT 1];}
+        String grou = 'SP-'+wrapper.Grou;
+        String FeeCategory = getFeeCategory(wrapper.FeeCategory);
+    	String grupo = getGroup(grou);
         Fee__c serviceRate = new Fee__c();
         try{
             serviceRate.RecordTypeId = recordTypeId;
@@ -381,8 +380,8 @@ update listaShip;
             serviceRate.Rate_Type__c = 'Fixed';
             serviceRate.Account_for__c = wrapper.AccountId;
             serviceRate.Active__c=true;
-            serviceRate.Fee_Category__c = campos.Fee_Category__c; 
-            serviceRate.Group__c = campos.Group__c;
+            serviceRate.Fee_Category__c = FeeCategory; 
+            serviceRate.Group__c = grupo;
             if(wrapper.SapServiceTypeBuyId != null){serviceRate.SAP_Service_Type_Buy__c = wrapper.SapServiceTypeBuyId;}
             if(wrapper.SellRate != null){serviceRate.Fee_Rate__c = Decimal.valueOf(wrapper.SellRate);}
             if(wrapper.BuyRate != null){serviceRate.Buy_Rate__c = Decimal.valueOf(wrapper.BuyRate);}
@@ -409,5 +408,31 @@ update listaShip;
             throw new AuraHandledException('No Record Found..'); 
         }
         return SapServiceListRecord;
+    }
+    public static String getFeeCategory(string category){
+        String FeeCategory;
+        Schema.DescribeFieldResult cober = Fee__c.Fee_Category__c.getDescribe();
+        List<Schema.PicklistEntry> values = cober.getPicklistValues();
+        for(Schema.PicklistEntry item:values){
+            if(!Test.isRunningTest()){
+            	if(item.getValue().CONTAINS(category)){
+                    FeeCategory = item.getValue();
+                    System.debug('Fee Category: '+item.getValue());
+                }
+            }
+        }
+        return FeeCategory;
+    }
+    public static String getGroup(string grupo){
+        String elGrupo;
+        Schema.DescribeFieldResult cober = Fee__c.Group__c.getDescribe();
+        List<Schema.PicklistEntry> values = cober.getPicklistValues();
+        for(Schema.PicklistEntry item:values){
+            if(item.getValue().CONTAINS(grupo)){
+                elGrupo = item.getValue();
+                System.debug('Grupo: '+item.getValue());
+            }
+        }
+        return elGrupo;
     }
 }

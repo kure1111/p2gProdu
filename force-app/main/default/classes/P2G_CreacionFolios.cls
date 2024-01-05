@@ -140,13 +140,17 @@ public with sharing class P2G_CreacionFolios {
         else{
             for(Customer_Quote__c IdName : [SELECT Id, Name, Route__c, Account_for__c, Account_for__r.Customer_Id__c FROM Customer_Quote__c WHERE Id =: listaFolio]){
                 IdFolio.add(IdName);
+                listServiceRate.add(createServiceRateTarifario(buscaTarifario));
             }
             if(idConteinerType != '' && idConteinerType != null){
-                for(Customer_Quote__c folio:IdFolio){
-                    String idService = buscaTarifario.Id;
-                    Decimal feeRate = buscaTarifario.Fee_Rate__c;
-                    Decimal buyRate = buscaTarifario.Buy_Rate__c;
-                    String idQuote = folio.Id;
+                insert listServiceRate;
+                integer posicionItem = 0;
+                for(fee__c service:listServiceRate){
+                    String idService = service.Id;
+                    Decimal feeRate = service.Fee_Rate__c;
+                    Decimal buyRate = service.Buy_Rate__c;
+                    String idQuote = IdFolio[posicionItem].Id;
+                    posicionItem = posicionItem+1;
                     listserviceLine.add(CreateServiceLine(idQuote, idService,feeRate,buyRate)); 
                 }
                 insert listserviceLine;
@@ -214,7 +218,32 @@ public with sharing class P2G_CreacionFolios {
         
         return serviceRate; 
     }
-    
+    public static Fee__c createServiceRateTarifario(Fee__c serviceRateTarifario){
+        Fee__c serviceRate = new Fee__c();
+        try{
+            
+            serviceRate.RecordTypeId = serviceRateTarifario.recordTypeId;
+            serviceRate.Name = serviceRateTarifario.Name; //
+            serviceRate.Route__c = serviceRateTarifario.Route__c; 
+            serviceRate.CurrencyIsoCode = serviceRateTarifario.CurrencyIsoCode; 
+            serviceRate.Fee_Category__c = serviceRateTarifario.Fee_Category__c; 
+            serviceRate.Group__c = serviceRateTarifario.Group__c; 
+            serviceRate.SAP_Service_Type__c = serviceRateTarifario.SAP_Service_Type__c; //uate a1n0R000001lZceQAE, Prod a1n4T000001XXYCQA4
+            serviceRate.Container_Type__c = serviceRateTarifario.Container_Type__c;
+            serviceRate.TT_Days__c = serviceRateTarifario.TT_Days__c;
+            serviceRate.Rate_Type__c = serviceRateTarifario.Rate_Type__c;
+            serviceRate.Account_for__c = serviceRateTarifario.Account_for__c;
+            serviceRate.Active__c=serviceRateTarifario.Active__c;
+            serviceRate.Fee_Rate__c = serviceRateTarifario.Fee_Rate__c;
+            serviceRate.Buy_Rate__c = serviceRateTarifario.Buy_Rate__c;
+            
+        }catch(Exception e){
+            System.debug('Error rellenar createServiceRateTarifario: '+e.getMessage());
+            
+        }
+        
+        return serviceRate; 
+    }
     public static Import_Export_Fee_Line__c CreateServiceLine(String idQuote, String idService, Decimal feeRate, Decimal buyRate){
         String x;
         Import_Export_Fee_Line__c serviceLine = new Import_Export_Fee_Line__c();
@@ -234,7 +263,7 @@ public with sharing class P2G_CreacionFolios {
         Quote_Item_Line__c cargoLine = new Quote_Item_Line__c();
         cargoLine.CE_Descripcion_de_Producto_PAK__c=cargo.description;
         cargoLine.Import_Export_Quote__c=cargo.idQuote;
-        cargoLine.Name='002';
+        cargoLine.Name='001';
         cargoLine.Item_Name__c=cargo.idItem;
         cargoLine.Container_Type__c=cargo.idConteinerType;
         cargoLine.Clave_de_Servicio__c=cargo.idClaveSat;
@@ -283,19 +312,18 @@ public with sharing class P2G_CreacionFolios {
     public static Fee__c condicionesTarifario(String idAccount, String idServiceType, String idContainerType,String IdRoute){
         list<Fee__c> tarifarioExiste = new List<Fee__c>();
         list<Fee__c> tarifarioCotizador = new list<Fee__c>();
-        Date fechaHoy = Date.today();
+        Date fechaHoy = Date.today();        
         try{
-            tarifarioExiste = [SELECT Id, Account_for__c,Route__c, CustomRate__c, Valid_Until__c, Fee_Rate__c, Buy_Rate__c FROM Fee__c
+            tarifarioExiste = [SELECT Id,Name,RecordTypeId,CurrencyIsoCode,SAP_Service_Type__c,Container_Type__c,TT_Days__c,Rate_Type__c,Active__c,Fee_Category__c,Group__c, Account_for__c,Route__c, CustomRate__c, Valid_Until__c, Fee_Rate__c, Buy_Rate__c FROM Fee__c
                                WHERE Account_for__c =:idAccount AND Valid_Until__c>:fechaHoy AND CustomRate__c=true
-                               AND SAP_Service_Type__c=:idServiceType AND Container_Type__c=:idContainerType AND Route__c=:IdRoute limit 1];
-            
+                               AND SAP_Service_Type__c=:idServiceType AND Container_Type__c=:idContainerType AND Route__c=:IdRoute limit 1];  
         }
         catch(Exception e){
             System.debug('No existe tarifario con idAccount: ');
         }
         try{
             String idCotizador=[SELECT Id, Name FROM Account Where Name = 'Cotizador' limit 1].Id;
-            tarifarioCotizador = [SELECT Id, Account_for__c,Route__c, CustomRate__c, Valid_Until__c, Fee_Rate__c, Buy_Rate__c FROM Fee__c
+            tarifarioCotizador = [SELECT Id,Name,RecordTypeId,CurrencyIsoCode,SAP_Service_Type__c,Container_Type__c,TT_Days__c,Rate_Type__c,Active__c,Fee_Category__c,Group__c, Account_for__c,Route__c, CustomRate__c, Valid_Until__c, Fee_Rate__c, Buy_Rate__c FROM Fee__c
                                   WHERE Account_for__c =:idCotizador AND Valid_Until__c>:fechaHoy AND CustomRate__c=true
                                   AND SAP_Service_Type__c=:idServiceType AND Container_Type__c=:idContainerType AND Route__c=:IdRoute limit 1];
         }

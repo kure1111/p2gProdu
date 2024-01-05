@@ -1,8 +1,10 @@
 public class P2G_callsCotizador {
     public static Map<String, Decimal> getCoordinates(String postalCode,String colonia) {
+        String coloniaModif = colonia;
+		coloniaModif = coloniaModif.replaceAll('(\\s+)','+');
         Map<String, Decimal> coordinates = new Map<String, Decimal>();
         String apiKey = 'AIzaSyDkwLqNdoijG5TO8q9JgMdnXz9yHdEwfWc';
-        String url = 'https://maps.googleapis.com/maps/api/geocode/json?address=' + postalCode + '+' + colonia + '&key=' + apiKey;
+        String url = 'https://maps.googleapis.com/maps/api/geocode/json?address=' + postalCode + '+' + coloniaModif + '&key=' + apiKey;
         
         Http http = new Http();
         HttpRequest request = new HttpRequest();
@@ -27,7 +29,7 @@ public class P2G_callsCotizador {
             }
             
         }
-        else System.debug('response: '+response);
+        else System.debug('responseCoordinates: '+response);
         return coordinates;
     }
     
