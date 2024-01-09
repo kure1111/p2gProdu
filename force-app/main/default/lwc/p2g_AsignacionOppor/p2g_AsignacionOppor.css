@@ -1,0 +1,33 @@
+.sticky-header {
+    position: sticky;
+    top: 0;
+    background-color: #f8f8f8; /* Color de fondo opcional */
+    z-index: 2; /* Ajusta el índice z según sea necesario */
+}
+.circle {
+    position: absolute;
+    top: 50%;
+    right: 50%;
+    transform: translate(-50%, 50%); /* Ajusta la posición hacia la izquierda según sea necesario */
+    width: 20px; /* Ajusta el tamaño del círculo según sea necesario */
+    height: 20px;
+    border-radius: 50%; /* Círculo */
+}
+
+.green {
+    background-color: #00ff00;
+}
+
+.red {
+    background-color: #ff0000;
+}
+
+.yellow {
+    background-color: #ffff00;
+}
+
+.custom-card {
+    width: 100%; /* Ancho personalizado (ajusta según sea necesario) */
+    height: 20%; /* Altura personalizada (ajusta según sea necesario) */
+    /* Otros estilos personalizados si es necesario */
+}
