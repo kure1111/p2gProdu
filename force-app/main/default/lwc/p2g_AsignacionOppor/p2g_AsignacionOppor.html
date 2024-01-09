@@ -1,0 +1,454 @@
+<!-- accountListLWC.html -->
+<template>
+    <div class="slds-grid slds-grid_vertical">
+        
+        <!-- Sección 1 -->
+        <div class="slds-p-around_medium slds-section">
+            <!-- Controles de radio -->
+            <div class="slds-form slds-form_inline">
+                <lightning-radio-group
+                    name="radioGroup"
+                    label="Selecciona una opción"
+                    options={radioOptions}
+                    value={selectedRadio}
+                    onchange={handleRadioChange}>
+                </lightning-radio-group>
+            </div>
+            
+            <!-- Filtros en línea -->
+            <div class="slds-grid slds-gutters">
+                <!-- Fecha Inicio -->
+                <div class="slds-col" style="width: 20%;">
+                    <label for="fechaInicio">Fecha Inicio: </label>
+                    <!-- Utiliza lightning-input con type="date" para permitir un rango de fechas -->
+                    <lightning-input type="date" name="startDate" onchange={fechaChangeSec1}></lightning-input>
+                </div>
+
+                <!-- Fecha Fin -->
+                <div class="slds-col" style="width: 20%;">
+                    <label for="fechaFin">Fecha Fin: </label>
+                    <lightning-input type="date" name="endDate" onchange={fechaChangeSec1}></lightning-input>
+                </div>
+
+                <!-- Account -->
+                <div class="slds-col" style="width: 20%;">
+                    <label>Account: </label>
+                    <div onkeyup={searchKeyAccount}>
+                        <lightning-input id="AccountFor" placeholder="Buscar Account for" 
+                            value={searchValueAccount} type="text"></lightning-input>
+                      </div>
+                      <table if:true={showSideAccount} class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_striped">
+                          <thead>
+                             <tr class="slds-line-height_reset">
+                                <th class="" scope="col">
+                                   <div class="slds-truncate" title="First Name">Name</div>
+                                </th>
+                                <th class="" scope="col">
+                                   <div class="slds-truncate" title="First Name">Customer Id</div>
+                                </th>
+                             </tr>
+                          </thead>
+                          <tbody>
+                             <template for:each={sideRecordsAccount} for:item="con">
+                                <tr class="slds-hint-parent" data-id={con.Id} data-sst ={con.Tipo_de_Servicio_TNA__c} key={con.Id} onclick={SideSelectAccount}> 
+                                   <td>
+                                      <div class="slds-truncate">{con.Name}</div>
+                                   </td>
+                                   <td>
+                                    <div class="slds-truncate">{con.Customer_Id__c}</div>
+                                  </td>
+                                </tr>
+  
+                             </template>
+                          </tbody>
+                        </table>
+                    <!-- Utiliza lightning-input con type="date" para permitir un rango de fechas -->
+                </div>
+
+                <!-- Carrier -->
+                <div class="slds-col" style="width: 20%;">
+                    <label>Carrier: </label>
+                    <div onkeyup={searchKeyCarrier}>
+                        <lightning-input
+                            id="Carrier"
+                            placeholder="Buscar Carrier"
+                            value={searchValueCarrier}
+                            type="text">
+                        </lightning-input>
+                    </div>
+                    <table if:true={showSideCarrier} class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_striped">
+                        <thead>
+                            <tr class="slds-line-height_reset">
+                                <th class="" scope="col">
+                                    <div class="slds-truncate" title="Carrier Name">Name</div>
+                                </th>
+                                <!-- Agrega más columnas según sea necesario -->
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <template for:each={sideRecordsCarrier} for:item="carrier">
+                                <tr class="slds-hint-parent" data-id={carrier.Id} key={carrier.Id} onclick={SideSelectCarrier}>
+                                    <td>
+                                        <div class="slds-truncate">{carrier.Name}</div>
+                                    </td>
+                                    <!-- Agrega más celdas según sea necesario -->
+                                </tr>
+                            </template>
+                        </tbody>
+                    </table>
+                </div>
+
+
+                <!-- Ejecutivo de Operaciones -->
+                <div class="slds-col" style="width: 20%;">
+                    <label>Ejecutivo de Operaciones: </label>
+                    <div onkeyup={searchKeyOpExecutive}>
+                        <lightning-input
+                            id="OpExecutive"
+                            placeholder="Buscar Ejecutivo de Operaciones"
+                            value={searchValueOpExecutive}
+                            type="text">
+                        </lightning-input>
+                    </div>
+                    <table if:true={showSideOpExecutive} class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_striped">
+                        <thead>
+                            <tr class="slds-line-height_reset">
+                                <th class="" scope="col">
+                                    <div class="slds-truncate" title="First Name">Name</div>
+                                </th>
+                                <!-- Agrega más columnas según sea necesario -->
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <template for:each={sideRecordsOpExecutive} for:item="executive">
+                                <tr class="slds-hint-parent" data-id={executive.Id} key={executive.Id} onclick={SideSelectOpExecutive}>
+                                    <td>
+                                        <div class="slds-truncate">{executive.Name}</div>
+                                    </td>
+                                    <!-- Agrega más celdas según sea necesario -->
+                                </tr>
+                            </template>
+                        </tbody>
+                    </table>
+                </div>
+
+            </div>
+            <!-- Status -->
+            <div class="slds-col" style="width: 15%;">
+                <label for="status" class="slds-form-element__label slds-p-right_x-small">Status:</label>
+                <div class="slds-form-element">
+                    <div class="slds-form-element__control">
+                        <div class="slds-select_container">
+                            <select id="status" name="status" class="slds-select" onchange={handleStatusAndFechaChange}>
+                                <option value="All">All</option>
+                                <option value="Pending">Pending</option>
+                                <option value="In Progress">In Progress</option>
+                                <option value="Confirmed">Confirmed</option>
+                                <option value="Closed">Closed</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+
+
+        <!-- Sección 2 -->
+        <div class="slds-p-around_medium slds-section" style="overflow-x: auto;">
+            <div class="slds-grid slds-wrap">
+
+                <!-- Columna 2 -->
+                <div class="slds-col slds-size_3-of-12" style="max-height: 70vh; overflow-y: auto;">
+                    <div class="slds-p-bottom_medium sticky-header">
+                        <h3 class="slds-text-heading_small">Pending Sin Asignar</h3>
+                    </div>
+                    <template if:true={isLoading}>
+                        <!-- Muestra el spinner mientras isLoading es verdadero -->
+                        <lightning-spinner alternative-text="Loading" size="small"></lightning-spinner>
+                    </template>
+                    <template if:true={listShipmentsCol2}>
+                        <template for:each={colorCoded2} for:item="account" >
+                            <div class="slds-card" key={account.Id}>
+                                <div class="slds-card__header" style="position: relative;">
+                                    <h3 class="slds-card__title slds-text-heading_small">
+                                        <a href="#" onclick={handleNameClick} data-record-id={account.Id}>
+                                            {account.Name}
+                                        </a>
+                                    </h3>
+                                    <div style="position: absolute; top: 0; right: 0;">
+                                        <template if:true={account.circleClass2}>
+                                            <div class={account.circleClass2}></div>
+                                        </template>
+                                    </div>
+                                </div>
+                                <div class="slds-card__body">
+                                    <p>
+                                        <b>{account.Shipment_Status_Plann__c}</b> <span style="margin-right: 20px;"></span>
+                                        {account.ETD_from_Point_of_Load__c}   /   {account.ETA_Point_of_Discharge__c}
+                                    </p>
+                                    <template if:true={account.Account_for__c}>
+                                        <p>Account: {account.Account_for__r.Name}</p>
+                                    </template>
+                                    <template if:true={account.Operation_Executive__c}>
+                                        <p>{account.Operation_Executive__r.Name}</p>
+                                    </template>
+                                    <template if:true={account.Route__c}>
+                                        <p>{account.Route__r.Name}   /   {account.Total_Services_Std_Buy_Amount__c}</p>
+                                    </template>
+                                    <template if:true={account.Carrier__c}>
+                                        <p>Carrier: {account.Carrier__r.Name}</p>
+                                    </template>
+                                </div>
+                                <button data-id={account.Id} class="slds-button slds-button_brand" style="position: absolute; bottom: 0; right: 0;" onclick={handleTakeButtonClick}>Take</button>
+                            </div>
+                        </template>
+                    </template>
+                    <template if:false={listShipmentsCol2}>
+                        <p>No hay cuentas disponibles.</p>
+                    </template>
+                </div>
+                
+                <!-- Columna 3 -->
+                <div class="slds-col slds-size_3-of-12" style="max-height: 70vh; overflow-y: auto;">
+                    <div class="slds-p-bottom_medium sticky-header">
+                        <h3 class="slds-text-heading_small">Pending Asignadas</h3>
+                    </div>
+                    <template if:true={listShipmentsCol3}>
+                        <template for:each={colorCoded} for:item="account">
+                            <div class="slds-card" key={account.Id}>
+                                <div class="slds-card__header" style="position: relative;">
+                                    <h3 class="slds-card__title slds-text-heading_small">
+                                        <a href="#" onclick={handleNameClick} data-record-id={account.Id}>
+                                            {account.Name}
+                                        </a>
+                                    </h3>
+                                    <div style="position: absolute; top: 0; right: 0;">
+
+                                            <template if:true={account.circleClass}>
+                                                <div class={account.circleClass}></div>
+
+                                        </template>
+                                    </div>
+                                </div>
+                                <div class="slds-card__body">
+                                    <p>
+                                        <b>{account.Shipment_Status_Plann__c}</b> <span style="margin-right: 20px;"></span>
+                                        {account.ETD_from_Point_of_Load__c}   /   {account.ETA_Point_of_Discharge__c}
+                                    </p>
+                                    <template if:true={account.Account_for__c}>
+                                        <p>Account: {account.Account_for__r.Name}</p>
+                                    </template>
+                                    <template if:true={account.Operation_Executive__c}>
+                                        <p>{account.Operation_Executive__r.Name}</p>
+                                    </template>
+                                    <template if:true={account.Route__c}>
+                                        <p>{account.Route__r.Name}   /   {account.Total_Services_Std_Buy_Amount__c}</p>
+                                    </template>
+                                    <template if:true={account.Carrier__c}>
+                                        <p>Carrier: {account.Carrier__r.Name}</p>
+                                    </template>
+                                </div>
+                            </div>
+                        </template>
+                    </template>
+                    <template if:false={listShipmentsCol3}>
+                        <p>No hay cuentas disponibles.</p>
+                    </template>
+                </div>
+
+                <!-- Columna 4 -->
+                <div class="slds-col slds-size_2-of-12" style="max-height: 70vh; overflow-y: auto;">
+                    <div class="slds-p-bottom_medium sticky-header">
+                        <h3 class="slds-text-heading_small">In Progress</h3>
+                    </div>
+                    <template if:true={listShipmentsCol4}>
+                        <template for:each={listShipmentsCol4} for:item="account">
+                            <div class="slds-card" key={account.Id}>
+                                <div class="slds-card__header" style="position: relative;">
+                                    <h3 class="slds-card__title slds-text-heading_small">
+                                        <a href="#" onclick={handleNameClick} data-record-id={account.Id}>
+                                            {account.Name}
+                                        </a>
+                                    </h3>
+                                </div>
+                                <div class="slds-card__body">
+                                    <p>
+                                        <b>{account.Shipment_Status_Plann__c}</b> <span style="margin-right: 20px;"></span>
+                                        {account.ETD_from_Point_of_Load__c}   /   {account.ETA_Point_of_Discharge__c}
+                                    </p>
+                                    <template if:true={account.Account_for__c}>
+                                        <p>Account: {account.Account_for__r.Name}</p>
+                                    </template>
+                                    <template if:true={account.Operation_Executive__c}>
+                                        <p>{account.Operation_Executive__r.Name}</p>
+                                    </template>
+                                    <template if:true={account.Route__c}>
+                                        <p>{account.Route__r.Name}   /   {account.Total_Services_Std_Buy_Amount__c}</p>
+                                    </template>
+                                    <template if:true={account.Carrier__c}>
+                                        <p>Carrier: {account.Carrier__r.Name}</p>
+                                    </template>
+                                </div>
+                            </div>
+                        </template>
+                    </template>
+                    <template if:false={listShipmentsCol4}>
+                        <p>No hay cuentas disponibles.</p>
+                    </template>
+                </div>
+
+                <!-- Columna 5 -->
+                <div class="slds-col slds-size_2-of-12" style="max-height: 70vh; overflow-y: auto;">
+                    <div class="slds-p-bottom_medium sticky-header">
+                        <h3 class="slds-text-heading_small">Confirm</h3>
+                    </div>
+                    <template if:true={listShipmentsCol5}>
+                        <template for:each={listShipmentsCol5} for:item="account">
+                            <div class="slds-card" key={account.Id}>
+                                <div class="slds-card__header" style="position: relative;">
+                                    <h3 class="slds-card__title slds-text-heading_small">
+                                        <a href="#" onclick={handleNameClick} data-record-id={account.Id}>
+                                            {account.Name}
+                                        </a>
+                                    </h3>
+                                </div>
+                                <div class="slds-card__body">
+                                    <p>
+                                        <b>{account.Shipment_Status_Plann__c}</b> <span style="margin-right: 20px;"></span>
+                                        {account.ETD_from_Point_of_Load__c}   /   {account.ETA_Point_of_Discharge__c}
+                                    </p>
+                                    <template if:true={account.Account_for__c}>
+                                        <p>Account: {account.Account_for__r.Name}</p>
+                                    </template>
+                                    <template if:true={account.Operation_Executive__c}>
+                                        <p>{account.Operation_Executive__r.Name}</p>
+                                    </template>
+                                    <template if:true={account.Route__c}>
+                                        <p>{account.Route__r.Name}   /   {account.Total_Services_Std_Buy_Amount__c}</p>
+                                    </template>
+                                    <template if:true={account.Carrier__c}>
+                                        <p>Carrier: {account.Carrier__r.Name}</p>
+                                    </template>
+                                </div>
+                            </div>
+                        </template>
+                    </template>
+                    <template if:false={listShipmentsCol5}>
+                        <p>No hay cuentas disponibles.</p>
+                    </template>
+                </div>
+
+                <!-- Columna 6 -->
+                <div class="slds-col slds-size_2-of-12" style="max-height: 70vh; overflow-y: auto;">
+                    <div class="slds-p-bottom_medium sticky-header">
+                        <h3 class="slds-text-heading_small">Closed</h3>
+                    </div>
+                    <template if:true={listShipmentsCol6}>
+                        <template for:each={listShipmentsCol6} for:item="account">
+                            <div class="slds-card" key={account.Id}>
+                                <div class="slds-card__header" style="position: relative;">
+                                    <h3 class="slds-card__title slds-text-heading_small">
+                                        <a href="#" onclick={handleNameClick} data-record-id={account.Id}>
+                                            {account.Name}
+                                        </a>
+                                    </h3>
+                                </div>
+                                <div class="slds-card__body">
+                                    <p>
+                                        <b>{account.Shipment_Status_Plann__c}</b> <span style="margin-right: 20px;"></span>
+                                        {account.ETD_from_Point_of_Load__c}   /   {account.ETA_Point_of_Discharge__c}
+                                    </p>
+                                    <template if:true={account.Account_for__c}>
+                                        <p>Account: {account.Account_for__r.Name}</p>
+                                    </template>
+                                    <template if:true={account.Operation_Executive__c}>
+                                        <p>{account.Operation_Executive__r.Name}</p>
+                                    </template>
+                                    <template if:true={account.Route__c}>
+                                        <p>{account.Route__r.Name}   /   {account.Total_Services_Std_Buy_Amount__c}</p>
+                                    </template>
+                                    <template if:true={account.Carrier__c}>
+                                        <p>Carrier: {account.Carrier__r.Name}</p>
+                                    </template>
+                                </div>
+                            </div>
+                        </template>
+                    </template>
+                    <template if:false={listShipmentsCol6}>
+                        <p>No hay cuentas disponibles.</p>
+                    </template>
+                </div>
+                
+            </div>
+        </div>
+
+
+
+        <!-- Sección 3 -->
+        <div class="slds-p-around_medium slds-section" style="max-height: 25vh; overflow-y: auto;">
+            <!-- Tabla en la Sección 3 -->
+            <div class="slds-size_1-of-1 slds-p-around_medium">
+                <!-- Contenido de la tercera sección (Tabla) -->
+                <table class="slds-table slds-table_bordered slds-table_cell-buffer" style="width: 100%;">
+                    <thead>
+                        <tr>
+                            <th>Status</th>
+                            <th>Name</th>
+                            <th>Operation</th>
+                            <th>Account</th>
+                            <th>Carrier</th>
+                            <th>Ruta</th>
+                            <th>ETD</th>
+                            <th>ETA</th>
+                            <th>Buy Price</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Itera sobre los datos obtenidos del método Apex seccion3 -->
+                        <template for:each={seccion3Data} for:item="ship">
+                            <tr key={ship.Id}>
+                                <td>{ship.Shipment_Status_Plann__c}</td>
+                                <td>
+                                    <a href="#" onclick={handleNameClick} data-record-id={ship.Id}>
+                                        {ship.Name}
+                                    </a>
+                                </td>
+                                <td>
+                                    <template if:true={ship.Operation_Executive__c}>
+                                        {ship.Operation_Executive__r.Name}
+                                    </template>
+                                </td>
+                                <td>
+                                    <template if:true={ship.Account_for__c}>
+                                        {ship.Account_for__r.Name}
+                                    </template>
+                                </td>
+                                <td>
+                                    <template if:true={ship.Carrier__c}>
+                                        {ship.Carrier__r.Name}
+                                    </template>
+                                </td>
+                                <td>
+                                    <template if:true={ship.Route__c}>
+                                        {ship.Route__r.Name}
+                                    </template>
+                                </td>
+                                <td>{ship.ETD_from_Point_of_Load__c}</td>
+                                <td>{ship.ETA_Point_of_Discharge__c}</td>
+                                <td>{ship.Total_Services_Std_Buy_Amount__c}</td>
+                                
+                            </tr>
+                        </template>
+                        <template if:false={seccion3Data}>
+                            <p>No hay shipments disponibles.</p>
+                        </template>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+
+
+    </div>
+</template>
