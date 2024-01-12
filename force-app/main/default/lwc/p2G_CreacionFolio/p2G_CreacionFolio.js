@@ -19,6 +19,7 @@ import condicionesTarifario from '@salesforce/apex/P2G_CreacionFolios.condicione
 import { refreshApex } from '@salesforce/apex';
 import fileProcess from '@salesforce/apex/P2G_convertCsv.fileProcess';
 import getSapServiceType from '@salesforce/apex/P2G_CreacionCargoLines.getSapServiceType';
+import getSstName from '@salesforce/apex/P2G_CreacionCargoLines.getSstName';
 
 export default class P2G_CreacionFolio extends LightningElement {
     //lista de cargo line
@@ -124,7 +125,7 @@ export default class P2G_CreacionFolio extends LightningElement {
 
     @track recordSST;
     showSST=false;
-    searchSST='FLETE NACIONAL (IC) (FN)';
+    searchSST='SERVICIOS LOGISTICOS NACIONALES FN (IC) (FN)';
     searchKeyIdSST='';
 
 //valores Comercio Exterior
@@ -203,6 +204,25 @@ pushMessage(title, variant, message){
         this.wrapperFolio.idAccount = event.currentTarget.dataset.id;
         this.wrapperCargoLine.idItemSuplienerOwner = event.currentTarget.dataset.id;
         this.wrapperFolio.idReferenceForm='';
+
+        if(event.currentTarget.dataset.sst !== undefined){
+            this.searchKeyIdSST=event.currentTarget.dataset.sst;
+            getSstName({idSst: this.searchKeyIdSST})
+            .then(result => {
+                this.searchSST=result.Name;
+            })
+            .catch(error => {
+                this.pushMessage('Error','getSstName', error.body.message);
+            });
+        }
+        else{
+            this.searchSST = 'SERVICIOS LOGISTICOS NACIONALES FN (IC) (FN)';
+            this.searchKeyIdSST='a1n4T000002JWphQAG'; //prod a1n4T000001XXYCQA4 UAT:a1n0R000001lZceQAE
+
+        }
+        console.log(this.searchKeyIdSST);
+        console.log( this.searchSST);
+        
     }
     searchKeyAccount(event){
         this.searchValueAccount = event.target.value;
@@ -283,6 +303,7 @@ registroCustomer(event){
 }
 registroETD(event){
     this.wrapperFolio.ETD = event.target.value;
+    this.ETD = event.target.value;
 }
 registroETA(event){
     this.wrapperFolio.ETA = event.target.value;
@@ -309,7 +330,7 @@ registrounloadtime(event){
 //Abril Modal Pop flete nacional
 OpenF_NACIONAL(){
     this.isF_NACIONAL = true;
-    this.searchKeySST='FLETE NACIONAL (IC) (FN)';
+    this.searchKeySST='SERVICIOS LOGISTICOS NACIONALES FN (IC) (FN)';
     getWrapper()
             .then(result => {
                 this.wrapperFolio = result;
@@ -375,7 +396,14 @@ cleanClaveUnidadPeso(){
 GeF_NACIONAL(){
     //id por defecto en uat para clave de unidad de peso a3n0R000000ETiqQAG
     //id por defecto en produccion para clave de unidad de peso a3K4T000000SNdIUAW
-
+    if (typeof this.searchValueAccount === 'undefined' || this.searchValueAccount === null || this.searchValueAccount === '' ||
+    typeof this.searchValueLoad === 'undefined' || this.searchValueLoad === null || this.searchValueLoad === '' ||
+    typeof this.searchValueDischarge === 'undefined' || this.searchValueDischarge === null || this.searchValueDischarge === '' ||
+    typeof this.ETD === 'undefined' || this.ETD === null || this.ETD === ''||
+    typeof this.ETD === 'undefined' || this.ETD === null || this.ETD === '') {
+        this.pushMessage('Error','error', 'Se requiere Rate Name');
+        return
+    }
     this.wrapperFolio['recordTypeUnidad'] = this.wrapperFolio.recordTypeUnidad && this.wrapperFolio.recordTypeUnidad.length > 0 ? this.wrapperFolio.recordTypeUnidad : 'a3K4T000000SNdIUAW';
     creaFolios({fleteNacional: this.wrapperFolio, cargoLine: this.wrapperCargoLine})   
     .then(result => {
@@ -385,7 +413,7 @@ GeF_NACIONAL(){
             this.isGeneFolio = true;
             this.cleanClaveUnidadPeso();
             if(this.searchKeyIdSST.length<3){
-                this.searchKeyIdSST='a1n4T000001XXYCQA4'; //prod a1n4T000001XXYCQA4 UAT:a1n0R000001lZceQAE
+                this.searchKeyIdSST='a1n4T000002JWphQAG'; //prod a1n4T000001XXYCQA4 UAT:a1n0R000001lZceQAE
             }
             getIdFolio({listaFolio: this.listaFolios,divisa: this.currency,idConteinerType: this.searchValueIdContainerType,account: this.searchValueIdAccount,idSST:this.searchKeyIdSST})
                 .then(result => {
@@ -456,7 +484,7 @@ GeF_NACIONAL(){
         this.searchValueClaveServicio = null;
         this.quoteSellPrice = 0;
         this.nfolios = 1;
-        this.searchKeyIdSST='a1n4T000001XXYCQA4'; //prod a1n4T000001XXYCQA4 UAT:a1n0R000001lZceQAE
+        this.searchKeyIdSST='a1n4T000002JWphQAG'; //prod a1n4T000001XXYCQA4 UAT:a1n0R000001lZceQAE
     }
     abrirFolio(event){
             this.folioname = event.target.outerText;
