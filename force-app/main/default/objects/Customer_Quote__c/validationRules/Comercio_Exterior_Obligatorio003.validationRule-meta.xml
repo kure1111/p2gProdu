@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Comercio_Exterior_Obligatorio003</fullName>
+    <active>true</active>
+    <description>CE-003 Para Folios CE se requiere agregar Sales Incoterm</description>
+    <errorConditionFormula>AND(
+FolioResume__c = &quot;CE&quot;,
+ISPICKVAL(Comercio_Exterior__c, &quot;Si&quot;),
+ISPICKVAL(Sales_Incoterm__c, &quot;&quot;)
+)</errorConditionFormula>
+    <errorDisplayField>Sales_Incoterm__c</errorDisplayField>
+    <errorMessage>CE-003 Para Folios CE se requiere agregar Sales Incoterm</errorMessage>
+</ValidationRule>

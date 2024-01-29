@@ -15,7 +15,7 @@
         <apex:pageBlock title="Shipment Service Lines">
             <apex:pageBlockButtons location="top" >
                 <apex:commandLink value="new" target="_parent" style="text-decoration:none;padding:4px;"
-                                  styleClass="btn" action="/apex/NEU_OM_ShipFeeLinesPriceListYDiscount?Id={!Shipment.Id}"/>
+                                  styleClass="btn" action="{!$Site.BaseUrl}/lightning/n/Crear_Shipment_Service_Line?c__recordId={!Shipment__c.Id}"/><!-- /apex/NEU_OM_ShipFeeLinesPriceListYDiscount?Id={!Shipment.Id} -->
                 
                 <apex:commandLink value="Desbloquear" style="text-decoration:none;padding:4px;" rendered="true"
                                   styleClass="btn" action="{!Desbloquear}"/>
@@ -28,12 +28,12 @@
                     <apex:commandLink rendered="{!!Lines.SAP__c}" target="_parent" action="/{!Lines.Id}" value="{!Lines.Name}" />
                     <apex:outputField rendered="{!Lines.SAP__c}" value="{!Lines.Name}" />
                 </apex:column>
-                <apex:column value="{!Lines.Service_Rate_Category__c}" />
                 <apex:column value="{!Lines.Service_Rate_Name__r.Name}" />
                 <apex:column value="{!Lines.Carrier__c}" />
-                <apex:column value="{!Lines.Rate_Type__c}" />
                 <apex:column value="{!Lines.Units__c}" />
+                <apex:column value="{!Lines.Sap_Service_Type__c}" />
                 <apex:column value="{!Lines.Sell_Amount__c}" />
+                <apex:column value="{!Lines.Sap_Service_Type_Buy__c}" />
                 <apex:column value="{!Lines.Std_Buy_Amount__c}" />
                 <apex:column value="{!Lines.Service_Std_Profit__c}" />
                 <apex:column value="{!Lines.Service_Rate_Name__r.SAP_Service_Type__r.Code__c}" />

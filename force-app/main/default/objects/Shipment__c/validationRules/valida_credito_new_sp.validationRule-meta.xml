@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>valida_credito_new_sp</fullName>
+    <active>false</active>
+    <description>Valida si la cuenta tiene credito diponible, sps nuevos</description>
+    <errorConditionFormula>AND 
+(
+ISPICKVAL( Account_for__r.Venta_Sap__c , &quot;Credito&quot;), 
+( Account_for__r.Saldo_DisponibleOK__c +  Total_Services_Sell_Amount__c ) &lt;= 0,
+ isnew()
+
+)</errorConditionFormula>
+    <errorMessage>Cliente sin crédito disponible</errorMessage>
+</ValidationRule>

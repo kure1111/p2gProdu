@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Bloq_Prospecto_Vtas</fullName>
+    <active>false</active>
+    <errorConditionFormula>Owner.Profile.Id  &lt;&gt;  &apos;00e0Y000000ZMMv&apos; &amp;&amp; 
+ISCHANGED(  Description   )</errorConditionFormula>
+    <errorMessage>ERROR: You Can&apos;t Modify fields &quot;Account Source&quot;</errorMessage>
+</ValidationRule>

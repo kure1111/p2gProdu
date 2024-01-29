@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Order_Amount_debe_ser_mayor_a_0</fullName>
+    <active>false</active>
+    <description>El campo Total Services Order Amount debe ser mayor a 0 para crear los SP Automaticos cuando el status sea approval</description>
+    <errorConditionFormula>IF(Total_Services_Sell_Amount__c &lt;=0 &amp;&amp; TEXT(Quotation_Status__c) = &apos;Approved as Succesful&apos; ,true,false)</errorConditionFormula>
+    <errorMessage>El campo Total Services Order Amount debe ser mayor a 0</errorMessage>
+</ValidationRule>

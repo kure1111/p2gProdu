@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Annual_Revenue_Flete_Nacional_Terrestre</fullName>
+    <active>false</active>
+    <errorConditionFormula>RecordType.Name = &quot;Customer&quot; &amp;&amp; 
+INCLUDES(Unineg_cta__c, &quot;Flete Nacional Terrestre&quot;) &amp;&amp;
+ISBLANK(Annrevfletnac_cta__c )</errorConditionFormula>
+    <errorDisplayField>Annrevfletnac_cta__c</errorDisplayField>
+    <errorMessage>Para este Cliente Ha seleccionado Unidad de Negocio Flete Nacional Terrestre, debe capturar Annual Revenue Flete Nacional Terrestre.</errorMessage>
+</ValidationRule>

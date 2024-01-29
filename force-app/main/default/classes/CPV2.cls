@@ -45,7 +45,6 @@ public class CPV2 {
                 if(arrTest.size()>0)
                     folio = arrTest[3];
                 //SP-FN-21-23456
-                
                 CP.fecha=dateFormated;
                 CP.serie=datosCPShip.Shipment_Type__c;
                 CP.folio=folio;
@@ -1409,6 +1408,6 @@ if(datosCPShip.Shipment_Type__c == 'FI'||datosCPShip.Shipment_Type__c == 'FN'||d
         public string TipoCambio { get; set; }
         
         public string Confirmacion { get; set; }
-        
+              
     }   
 }

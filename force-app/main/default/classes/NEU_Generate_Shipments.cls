@@ -1285,10 +1285,10 @@ return new PageReference('/apex/NEU_OM_ShipFeeLinesPriceListYDiscount?id='+new_s
         String folioNumber = findFolio[0].Name;
         if(folioNumber.startsWith('CE')){
             //UAT: Carlos -> 0050R000008eNBoQAM || PROD: Edgar Luna -> 0054T000001hx7LQAQ
-            new_shipment.Operation_Executive__c = '0054T000001hx7LQAQ';
+            new_shipment.Operation_Executive__c = '005RQ000000115JYAQ';
         }else if(folioNumber.startsWith('FN')){
             //Id = '0054T000001ju8UQAQ' julio guillen
-            new_shipment.Operation_Executive__c = '0054T000001ju8UQAQ';
+            new_shipment.Operation_Executive__c = '005RQ000000115JYAQ';
         }
          
         insert new_shipment;

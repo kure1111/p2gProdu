@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Validate_Awaiting_Without_Cargo_Lines</fullName>
+    <active>true</active>
+    <description>Sin cargo lines</description>
+    <errorConditionFormula>ISPICKVAL( Quotation_Status__c, &quot;Awaiting costs suppliers&quot;) &amp;&amp; 
+ Total_Items_Units__c = 0 &amp;&amp;
+ Total_Weight_Kg2__c = 0 &amp;&amp;
+ Impak_Request__c = False</errorConditionFormula>
+    <errorDisplayField>Quotation_Status__c</errorDisplayField>
+    <errorMessage>!!ERROR: Capturar &quot;CARGO LINES&quot;</errorMessage>
+</ValidationRule>

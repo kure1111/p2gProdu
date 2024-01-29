@@ -35,7 +35,7 @@ trigger OpportunityName on Opportunity (before insert, before update) {
     //Actualización del Campo    
     for(Opportunity op : Trigger.New){
         if(op.AccountId != null && op.Service_Type__c != null){
-            op.Name = op.Service_Type__c + ' - ' + mapAccount.get(op.AccountId)+ ' - ' + mapOwnerOpp.get(op.OwnerId) + ' - ' + op.Folio_Mkt__c;
+            op.Name = op.Service_Type__c + ' - ' + mapAccount.get(op.AccountId)+ ' - ' + mapOwnerOpp.get(op.OwnerId) + ' - ' + op.Opportunity_Record_Number__c;
         }
     }
 }

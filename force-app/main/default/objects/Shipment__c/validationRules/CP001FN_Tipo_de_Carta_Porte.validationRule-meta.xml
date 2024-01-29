@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>CP001FN_Tipo_de_Carta_Porte</fullName>
+    <active>true</active>
+    <description>Validation Rule, cuando el Shipment sea tipo Flete nacional (FN) / Service Mode = NATIONAL , pida obligatorio el campo Traslado_Ingreso_c</description>
+    <errorConditionFormula>AND
+(
+OR(Shipment_Type__c = &quot;FN&quot;,
+Shipment_Type__c = &quot;FI&quot;,
+Shipment_Type__c = &quot;PTO&quot;
+),
+OR(ISPICKVAL( Shipment_Status_Plann__c,&quot;In Progress&quot; ),
+ISPICKVAL( Shipment_Status_Plann__c,&quot;Confirmed&quot; )),
+ISPICKVAL(Traslado_Ingreso__c, &quot;&quot;),
+  YEAR(DATEVALUE (CreatedDate)) &lt; 2022
+
+)</errorConditionFormula>
+    <errorDisplayField>Traslado_Ingreso__c</errorDisplayField>
+    <errorMessage>CP001: Error /  Must be Choose TIPO CARTA PORTE
+(Debes de capturar el tipo de carta porte)</errorMessage>
+</ValidationRule>

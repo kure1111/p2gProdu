@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Capturar_geolocalizacion</fullName>
+    <active>true</active>
+    <errorConditionFormula>ISBLANK(Address_Coordinates__c)</errorConditionFormula>
+    <errorMessage>Por seguridad, favor de ingresar al perfil del cliente y modificar la dirección en el apartado de Account Addresses (pestaña Related)</errorMessage>
+</ValidationRule>

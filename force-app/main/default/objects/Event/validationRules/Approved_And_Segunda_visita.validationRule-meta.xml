@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Approved_And_Segunda_visita</fullName>
+    <active>true</active>
+    <errorConditionFormula>AND( $User.ProfileId = &quot;2F00e4T000000lL68&quot;,ISPICKVAL(Tipo_Visita__c,&quot;Segunda Visita&quot;),ISPICKVAL(Status_Event__c,&quot;Approved&quot;), Approved__c = False)</errorConditionFormula>
+    <errorDisplayField>Tipo_Visita__c</errorDisplayField>
+    <errorMessage>No Puede ser Segunda Visita sin la Aprobacion de Gerencia o Direccion</errorMessage>
+</ValidationRule>

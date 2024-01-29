@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Status_Planner_Cancel</fullName>
+    <active>true</active>
+    <errorConditionFormula>IF(ISPICKVAL( Shipment_Status_Plann__c,&quot;Cancel&quot;), ISPICKVAL(Cancelled_by__c,&quot;&quot;)  , null)</errorConditionFormula>
+    <errorDisplayField>Cancelled_by__c</errorDisplayField>
+    <errorMessage>ERROR: 
+Choose a reason for cancellation</errorMessage>
+</ValidationRule>

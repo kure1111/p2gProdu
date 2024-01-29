@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>No_solicitar_IEQ</fullName>
+    <active>true</active>
+    <errorConditionFormula>AND(
+ISPICKVAL(Tipo__c , &quot;Quote&quot;),
+  ISNULL(Import_Export_Quote_Order__c)
+)</errorConditionFormula>
+    <errorDisplayField>Import_Export_Quote_Order__c</errorDisplayField>
+    <errorMessage>Import Export Quote debe ir en blanco</errorMessage>
+</ValidationRule>

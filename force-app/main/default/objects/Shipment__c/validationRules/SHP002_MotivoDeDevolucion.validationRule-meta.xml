@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>SHP002_MotivoDeDevolucion</fullName>
+    <active>true</active>
+    <errorConditionFormula>AND(
+
+OR ( ISPICKVAL (Causante_de_Devoluci_n__c, &quot;Cliente&quot; ),
+ISPICKVAL (Causante_de_Devoluci_n__c, &quot;Proveedor&quot;)) ,
+
+TEXT( Motivo_de__c ) &lt;&gt; &quot;Daño de Mercancía&quot; ,
+TEXT(Motivo_de__c) &lt;&gt; &quot;Faltante de Origen&quot; ,
+TEXT(Motivo_de__c) &lt;&gt; &quot;Excedente de Mercancía&quot; ,
+TEXT(Motivo_de__c) &lt;&gt; &quot;Códigos Erróneos&quot; ,
+TEXT(Motivo_de__c) &lt;&gt; &quot;Rechazos&quot;
+
+
+)</errorConditionFormula>
+    <errorDisplayField>Motivo_de__c</errorDisplayField>
+    <errorMessage>SHP002_Falta llenar campo</errorMessage>
+</ValidationRule>

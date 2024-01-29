@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>VALIDATION_ATD</fullName>
+    <active>true</active>
+    <errorConditionFormula>ISPICKVAL( Shipment_Status_Plann__c, &quot;In Progress&quot;) &amp;&amp; 
+ ISBLANK(ATD__c)</errorConditionFormula>
+    <errorDisplayField>ATA__c</errorDisplayField>
+    <errorMessage>Insert ATA and ATD
+Insertar  campos ATA Y ATD</errorMessage>
+</ValidationRule>

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>SinComas</fullName>
+    <active>true</active>
+    <description>Name sin comas</description>
+    <errorConditionFormula>CONTAINS( Name, &quot;,&quot;)</errorConditionFormula>
+    <errorMessage>ERROR- Location no puede tener coma</errorMessage>
+</ValidationRule>

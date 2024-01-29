@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>PTO_Margen_Operativo</fullName>
+    <active>true</active>
+    <errorConditionFormula>IF ( Account_for__r.Order_to_Cash__c = false,
+AND( FolioResume__c = &quot;PTO&quot;,
+ISPICKVAL( Quotation_Status__c , &quot;Approved as Succesful&quot;) , Margen_Operativo__c &lt; $User.PTO_Margen_Operativo__c ),
+NULL)</errorConditionFormula>
+    <errorMessage>MARGEN OPERATIVO ES MENOR A TU LIMITE DE AUTORIZACIÓN PARA &quot;PTO&quot; 
+*Favor de Contactar a la Gerencia o Dirección de Ventas</errorMessage>
+</ValidationRule>

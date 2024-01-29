@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Validate_Pak_Control_Vehicle</fullName>
+    <active>true</active>
+    <errorConditionFormula>ShipmentService__c = &quot;SP-FN&quot; &amp;&amp;
+VERIFY_PAK_CONTROL__c = true  &amp;&amp;    Vehicle__c  = &quot;&quot;</errorConditionFormula>
+    <errorDisplayField>Vehicle__c</errorDisplayField>
+    <errorMessage>ERROR..! Must be select a Vehicle (Vehiculo). Una vez confirmado el vehículo es requerido</errorMessage>
+</ValidationRule>

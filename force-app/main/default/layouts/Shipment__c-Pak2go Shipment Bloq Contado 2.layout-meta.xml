@@ -1516,8 +1516,8 @@
         <fields>Service_Rate_Name__c</fields>
         <fields>Orden_Compra__c</fields>
         <fields>SST_Estatus_orden_compra__c</fields>
+        <fields>Sap_Service_Type__c</fields>
         <fields>Shipment_Sell_Price__c</fields>
-        <fields>Code_SAP__c</fields>
         <fields>Carrier__c</fields>
         <fields>Sap_Service_Type_Buy__c</fields>
         <fields>Shipment_Buy_Price__c</fields>

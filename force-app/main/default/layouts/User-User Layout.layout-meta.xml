@@ -120,6 +120,10 @@
                 <behavior>Edit</behavior>
                 <field>Zone_of_Load__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>P2G_spot__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns/>
         <style>TwoColumnsLeftToRight</style>

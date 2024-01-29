@@ -24,7 +24,7 @@ public  with sharing class P2G_CreacionCargoLines {
     public static list<Catalogo_SAT__c> getClaveSATRecord(String searchKey,String recorType){
         string searchKeyword = '%' + searchKey + '%';
         list<Catalogo_SAT__c> ListClaveSAT = new list<Catalogo_SAT__c>();
-        for(Catalogo_SAT__c sideClaveSAT : [SELECT Id, Name, Clave_SAT__c FROM Catalogo_SAT__c 
+        for(Catalogo_SAT__c sideClaveSAT : [SELECT Id, Name, Clave_SAT__c, Material_PeligrosoCP__c FROM Catalogo_SAT__c 
                                             where Name LIKE : searchKeyword and RecordTypeId =: recorType limit 20]){
                                                 ListClaveSAT.add(sideClaveSAT);
                                             }

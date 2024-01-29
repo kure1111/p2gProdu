@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>CP001MaterialPeligroso</fullName>
+    <active>true</active>
+    <description>Clave producto o servicio 1, pedir obligatorio Embalaje y Tipo de Material Peligroso</description>
+    <errorConditionFormula>AND(
+OR(CONTAINS( Import_Export_Quote__r.FolioResume__c ,&apos;FN&apos;),
+CONTAINS( Import_Export_Quote__r.FolioResume__c ,&apos;FI&apos;),
+CONTAINS( Import_Export_Quote__r.FolioResume__c ,&apos;PTO&apos;)),
+Clave_de_Servicio__r.Material_PeligrosoCP__c = true,
+OR(ISBLANK( Embalaje_Cat__c ),
+ISBLANK( Material_Peligroso_Cat__c ))
+)</errorConditionFormula>
+    <errorDisplayField>Material_Peligroso_Cat__c</errorDisplayField>
+    <errorMessage>ERROR CP-001, El producto o servicio requiere un material peligroso y embalaje</errorMessage>
+</ValidationRule>

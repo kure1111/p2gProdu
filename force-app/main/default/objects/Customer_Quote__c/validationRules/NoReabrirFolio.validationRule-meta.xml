@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NoReabrirFolio</fullName>
+    <active>true</active>
+    <description>La regla evita que el folio se re-abra utilizando el picklist Quotation Status una vez que ya ha sido declinado</description>
+    <errorConditionFormula>AND(
+ OR(
+    ISPICKVAL( Quotation_Status__c, &apos;Quote being prepared&apos;),
+    ISPICKVAL( Quotation_Status__c, &apos;Awaiting costs suppliers&apos;),
+    ISPICKVAL( Quotation_Status__c, &apos;Sent awaiting response&apos;),
+    ISPICKVAL( Quotation_Status__c, &apos;Approved as Succesful&apos;)
+ ),
+ Folio_Declinado__c = True
+)</errorConditionFormula>
+    <errorDisplayField>Quotation_Status__c</errorDisplayField>
+    <errorMessage>FD-002: No es posible re-abrir el folio una vez ha sido pasado al estatus &quot;Quote Declined&quot;.</errorMessage>
+</ValidationRule>

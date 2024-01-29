@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>No_se_acepta_1peso</fullName>
+    <active>true</active>
+    <errorConditionFormula>Quote_Buy_Price__c = 1</errorConditionFormula>
+    <errorMessage>No se puede colocar el valor de $1 en este campo</errorMessage>
+</ValidationRule>

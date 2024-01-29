@@ -106,7 +106,8 @@ public with sharing class NEU_CloneImportExport {
                 newline.ETA__c = null;
                 newline.Pickup_Cartage__c = null;
                 newline.Delivery_Cartage__c = null;
-                newline.Date_Pricing_responded__c = null; 
+                newline.Date_Pricing_responded__c = null;
+                newline.clave_de_lead__c = 'Folio Duplicado';
                 
                 if(newline.Opportunity__c != null){
                     newline.Opportunity__c = null;

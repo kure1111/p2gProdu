@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Import_Export_Service_Type_Control</fullName>
+    <active>false</active>
+    <description>Import-Export Service Type Control</description>
+    <errorConditionFormula>OR(
+AND(TEXT(Freight_Mode__c) == &apos;Road&apos;, OR(TEXT(Service_Mode__c) == &apos;IMPORT&apos;, TEXT(Service_Mode__c) == &apos;EXPORT&apos;, TEXT(Service_Mode__c) == &apos;PORT&apos;), OR(TEXT(Service_Type__c) == &apos;TARIMAS&apos;, TEXT(Service_Type__c) == &apos;FP&apos;, TEXT(Service_Type__c) == &apos;FO&apos;, TEXT(Service_Type__c) == &apos;MAYOREO&apos;))
+,
+AND(TEXT(Freight_Mode__c) == &apos;Air&apos;, OR(
+AND(TEXT(Service_Mode__c) == &apos;IMPORT&apos;, TEXT(Service_Type__c) == &apos;ENVIO NACIONAL&apos;), 
+AND(TEXT(Service_Mode__c) == &apos;NATIONAL&apos;, OR(TEXT(Service_Type__c) == &apos;PAQUETERIA&apos;, TEXT(Service_Type__c) == &apos;CARGA&apos;)), 
+AND(TEXT(Service_Mode__c) == &apos;EXPORT&apos;, TEXT(Service_Type__c) == &apos;ENVIO NACIONAL&apos;) 
+))
+)</errorConditionFormula>
+    <errorDisplayField>Service_Type__c</errorDisplayField>
+    <errorMessage>This Service Type is not compatible with the current Service Mode</errorMessage>
+</ValidationRule>

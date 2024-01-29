@@ -24,7 +24,7 @@ public class PAK_ShipmentBLOQ {
         CargoLines = [Select Id,Name,Item_Name__r.Name,Units_Shipped__c,Unit_of_measure__c,Shipping_Weight_Kg__c,Shipping_Volume_m3__c,Delivered__c,Container_Type__c	
                       From Shipment_Line__c Where Shipment__c=:IdShip];
        	
-        FeeLines = [Select Id,Name,Service_Rate_Name__r.Name,Service_Rate_Category__c,Carrier__c,Rate_Type__c,Container_Type__c,Units__c,Service_Std_Profit__c,Shipment_Sell_Net_Price__c,Std_Buy_Amount__c,Sell_Amount__c,SAP__c, Service_Rate_Name__r.SAP_Service_Type__r.Code__c
+        FeeLines = [Select Id,Name,Service_Rate_Name__r.Name,Carrier__c,SAP_Service_Type__c,SAP_Service_Type_Buy__c,Container_Type__c,Units__c,Service_Std_Profit__c,Shipment_Sell_Net_Price__c,Std_Buy_Amount__c,Sell_Amount__c,SAP__c, Service_Rate_Name__r.SAP_Service_Type__r.Code__c
                     From Shipment_Fee_Line__c Where Shipment__c=:IdShip];
         
         list<Shipment_Fee_Line__c> Feess = [Select Id,Name,Service_Rate_Name__r.Name,Service_Rate_Category__c,Rate_Type__c,Container_Type__c,Units__c,Service_Std_Profit__c,Std_Buy_Amount__c,Shipment_Sell_Net_Price__c,Sell_Amount__c,

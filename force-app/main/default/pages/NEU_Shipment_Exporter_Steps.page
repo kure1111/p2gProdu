@@ -59,8 +59,9 @@
                 <a href="{!$Site.BaseUrl}/apex/NEU_MD_Associated_Documents?id={!Shipment__c.Id}" target="_parent"><li class="li_step {!step_1}">Upload Documents</li></a>
                 <a href="{!$Site.BaseUrl}{!url_createItems}" target="_parent"><li class="li_step {!step_2}">Create Cargo Lines</li></a>
                 <a href="{!$Site.BaseUrl}/apex/NEU_New_Service_Rate_Internal?shipment={!Shipment__c.Id}" target="_parent"><li class="li_step {!step_12}">Freight Rates Management</li></a>
-                <a href="{!$Site.BaseUrl}/apex/NEU_OM_ShipFeeLinesPriceListYDiscount?id={!Shipment__c.Id}" target="_parent" style="display:{!IF(u.New_Shipment_Service_Line__c, 'none', 'block')}"><li class="li_step {!step_3}">Create Service Lines</li></a>
-                <a href="{!$Site.BaseUrl}/apex/NEU_OM_ShipFeeLinesPriceListYDiscount2?id={!Shipment__c.Id}" target="_parent" style="display:{!IF(u.New_Shipment_Service_Line__c, 'block', 'none')}"><li class="li_step {!step_3}">Create Service Lines</li></a>
+                <!--a href="{!$Site.BaseUrl}/apex/NEU_OM_ShipFeeLinesPriceListYDiscount?id={!Shipment__c.Id}" target="_parent" ><li class="li_step step_active">Create Service Lines</li></a> -->
+                <a href="{!$Site.BaseUrl}/lightning/n/Crear_Shipment_Service_Line?c__recordId={!Shipment__c.Id}" target="_parent" ><li class="li_step step_active">Create Service Lines</li></a>
+                <!--a href="{!$Site.BaseUrl}/apex/NEU_OM_ShipFeeLinesPriceListYDiscount2?id={!Shipment__c.Id}" target="_parent" style="display:{!IF(u.New_Shipment_Service_Line__c, 'block', 'none')}"><li class="li_step step_active">Create Service Lines</li></a>-->
 
                 <!-- <a href="{!$Site.BaseUrl}/apex/NEU_OM_Start_Clearance_Shipment?id={!Shipment__c.Id}" target="_parent"><li class="li_step {!step_4}" >Calculate Customs Duties</li></a> -->
                 <!--<a href="{!$Site.BaseUrl}/apex/NEU_Order_Confirmation_Shipment_save_pdf?id={!Shipment__c.Id}" target="_parent"><li class="li_step {!step_5}">6. Generate Order Confirmation</li></a>-->

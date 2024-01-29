@@ -55,6 +55,10 @@
                 <behavior>Edit</behavior>
                 <field>Precio_Sugerido_Venta__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Comentarios__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
@@ -181,8 +185,10 @@
     <multilineLayoutFields>Buy_Price__c</multilineLayoutFields>
     <multilineLayoutFields>Precio_Sugerido_Venta__c</multilineLayoutFields>
     <multilineLayoutFields>UnitPrice</multilineLayoutFields>
+    <multilineLayoutFields>Comentarios__c</multilineLayoutFields>
     <multilineLayoutFields>PROJ_Frecuencia__c</multilineLayoutFields>
     <multilineLayoutFields>PROJ_Unidades_por_frecuencia__c</multilineLayoutFields>
+    <multilineLayoutFields>PROJ_Modalidad__c</multilineLayoutFields>
     <multilineLayoutFields>Quantity</multilineLayoutFields>
     <multilineLayoutFields>PROJ_Tipo_de_mercancia__c</multilineLayoutFields>
     <multilineLayoutFields>PROJ_Peso_de_carga__c</multilineLayoutFields>

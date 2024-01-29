@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>OPP_Agreed_Shipping3</fullName>
+    <active>true</active>
+    <errorConditionFormula>AND(
+ISPICKVAL(StageName, &quot;Agreed Shipping&quot;),
+ISPICKVAL(Tipo__c,&quot;Import-Export Quote/Order&quot;),
+ISPICKVAL(Tipo__c, &quot;Quote&quot;),
+
+IEQ_Status__c &lt;&gt; &quot;Approved as Succesful&quot;
+
+)</errorConditionFormula>
+    <errorMessage>OPP006- Se necesita Folio Aprobado</errorMessage>
+</ValidationRule>

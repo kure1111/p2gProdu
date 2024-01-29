@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Bloquear_Devolucion</fullName>
+    <active>true</active>
+    <description>Evita que el check Devolución se desmarque después de activarse.</description>
+    <errorConditionFormula>OR(
+       AND( Devolucion__c = FALSE,
+            NOT(ISNULL( Inicio_Devolucion_Fecha__c ))
+       ),
+       AND( Devolucion__c = FALSE,
+            ISNULL(PRIORVALUE( Inicio_Devolucion_Fecha__c )) &lt;&gt; TRUE
+       )
+)</errorConditionFormula>
+    <errorDisplayField>Devolucion__c</errorDisplayField>
+    <errorMessage>No puede desmarcarse una vez activado.</errorMessage>
+</ValidationRule>

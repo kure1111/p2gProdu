@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NoAprobarClienteCotizador</fullName>
+    <active>true</active>
+    <description>Evitar que el folio se apruebe si el campo Account for (Customer) tiene asignado al cliente Cotizador</description>
+    <errorConditionFormula>AND(
+ISCHANGED( Quotation_Status__c ),
+ISPICKVAL( Quotation_Status__c, &apos;Approved as Succesful&apos;),
+Account_for__r.Id = &apos;0014T00000EIt8A&apos;
+)</errorConditionFormula>
+    <errorDisplayField>Account_for__c</errorDisplayField>
+    <errorMessage>NACC-001: Para aprobar el folio, el campo Acount for (Customer) no debe ser &quot;Cotizador&quot;.</errorMessage>
+</ValidationRule>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Bloquear_Recuperacion_Mercancia</fullName>
+    <active>true</active>
+    <description>Evita que el check Recuperación de mercancía se desmarque después de activarse.</description>
+    <errorConditionFormula>OR(
+     AND( Recuperacion_de_mercancia__c = FALSE,
+          NOT(ISNULL( Fecha_recuperacion_de_mercancia__c ))
+     ),
+     AND( Recuperacion_de_mercancia__c = FALSE,
+          ISNULL(PRIORVALUE( Fecha_recuperacion_de_mercancia__c )) &lt;&gt; TRUE
+     )
+)</errorConditionFormula>
+    <errorDisplayField>Recuperacion_de_mercancia__c</errorDisplayField>
+    <errorMessage>No puede desmarcarse una vez activado</errorMessage>
+</ValidationRule>

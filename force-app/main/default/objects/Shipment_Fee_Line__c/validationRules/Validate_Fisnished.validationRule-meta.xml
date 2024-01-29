@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Validate_Fisnished</fullName>
+    <active>false</active>
+    <errorConditionFormula>Shipment_Finished__c = true &amp;&amp; Service_Rate_Category__c = &quot;Road Freights&quot; &amp;&amp; $User.ProfileId  &lt;&gt; &quot;2F00e4T000000lKYP&quot; ||
+Shipment_Finished__c = true &amp;&amp; Service_Rate_Category__c = &quot;Sea Freights&quot; &amp;&amp; $User.ProfileId &lt;&gt; &quot;2F00e4T000000lKYP&quot; ||
+Shipment_Finished__c = true &amp;&amp; Service_Rate_Category__c = &quot;Air Freights&quot; &amp;&amp; $User.ProfileId &lt;&gt; &quot;2F00e4T000000lKYP&quot;</errorConditionFormula>
+    <errorMessage>NO SE PUEDE MODIFICAR EN ESTATUS FINISHED</errorMessage>
+</ValidationRule>

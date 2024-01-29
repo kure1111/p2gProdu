@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>AC001_Motivo_de_No_Venta</fullName>
+    <active>true</active>
+    <description>Agregar el motivo de No venta. 
+Seguimiento</description>
+    <errorConditionFormula>AND (
+
+
+ISPICKVAL(SeguimientoProspecto__c,&quot;No Venta&quot;),
+
+ISPICKVAL(Motivo_no_venta__c,&quot;&quot;)
+
+)</errorConditionFormula>
+    <errorDisplayField>Motivo_no_venta__c</errorDisplayField>
+    <errorMessage>AC001_Agregue el Motivo de No Venta</errorMessage>
+</ValidationRule>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>OPP_First_Contact3</fullName>
+    <active>true</active>
+    <description>Validación de esta etapa</description>
+    <errorConditionFormula>AND(
+ISPICKVAL(StageName,&quot;First Contact / Need Analysis&quot;),
+RecordType.Name = &quot;Standar Opportunity&quot;,
+ISPICKVAL(Tipo__c, &quot;Import-Export Quote/Order&quot;),
+
+ ISBLANK( Import_Export_Quote_Order__c )
+)</errorConditionFormula>
+    <errorMessage>OPP003-Para pasar a la siguiente etapa es necesario agregar Folio</errorMessage>
+</ValidationRule>

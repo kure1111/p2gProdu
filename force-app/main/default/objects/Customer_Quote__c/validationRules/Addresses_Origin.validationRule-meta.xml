@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Addresses_Origin</fullName>
+    <active>true</active>
+    <errorConditionFormula>AND(
+FolioResume__c = &quot;FN&quot; ||
+FolioResume__c = &quot;FI&quot; ||
+FolioResume__c = &quot;PT&quot;,
+ISPICKVAL( Quotation_Status__c , &quot;Approved as Succesful&quot;),
+ISNULL(Account_Origin_Address__c)
+)</errorConditionFormula>
+    <errorDisplayField>Account_Origin_Address__c</errorDisplayField>
+    <errorMessage>Seleccionar Account Origin Address</errorMessage>
+</ValidationRule>

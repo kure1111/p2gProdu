@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>OPP_First_Shipment</fullName>
+    <active>false</active>
+    <description>Validación de esta etapa</description>
+    <errorConditionFormula>AND(
+ISPICKVAL(StageName,&quot;First Shipment&quot;),
+RecordType.Name = &quot;Standar Opportunity&quot;,
+ ( IEQ_Status__c  &lt;&gt;   &quot;Shipped&quot;)
+)</errorConditionFormula>
+    <errorMessage>OPP008-Para pasar a la siguiente etapa es necesario Shipment</errorMessage>
+</ValidationRule>

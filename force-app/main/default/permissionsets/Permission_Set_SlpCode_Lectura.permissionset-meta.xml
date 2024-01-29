@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>Permite leer el código Slp del vendedor</description>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>User.SalesEmployer__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <hasActivationRequired>false</hasActivationRequired>
+    <label>Permission Set SlpCode Lectura</label>
+    <license>Salesforce</license>
+</PermissionSet>

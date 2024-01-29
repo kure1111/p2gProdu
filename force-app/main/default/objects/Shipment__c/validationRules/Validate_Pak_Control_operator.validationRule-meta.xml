@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Validate_Pak_Control_operator</fullName>
+    <active>true</active>
+    <errorConditionFormula>ShipmentService__c = &quot;SP-FN&quot; &amp;&amp;
+VERIFY_PAK_CONTROL__c = true  &amp;&amp;   National_Operator__c = &quot;&quot;</errorConditionFormula>
+    <errorDisplayField>National_Operator__c</errorDisplayField>
+    <errorMessage>ERROR..! Must be select a Operator (operador), Una vez confirmado el operador es requerido</errorMessage>
+</ValidationRule>

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>CE_BloqOceanImpoShipmentStatus</fullName>
+    <active>true</active>
+    <description>Regla que bloquea la actualización del campo &apos;Ocean Impo Shipment Status&apos; cuando el campo &apos;Realización CE Status&apos; tiene un valor inferior a &quot;Recolección&quot;</description>
+    <errorConditionFormula>AND(
+ NOT(BEGINS( Name, &apos;SP-CE&apos;)),
+ ISPICKVAL(Freight_Mode__c, &apos;Sea&apos;),
+ OR(
+  ISPICKVAL( Realizacion_CE_Status__c, &apos;Alta Cliente AA&apos;),
+  ISPICKVAL( Realizacion_CE_Status__c, &apos;Clasificación Arancelaria&apos;),
+  ISPICKVAL( Realizacion_CE_Status__c, &apos;Realización de Facturas&apos;)
+ ),
+ OR(
+  ISPICKVAL( Ocean_Shipment_Status__c, &apos;Booking Confirmation&apos;),
+  ISPICKVAL( Ocean_Shipment_Status__c, &apos;Pickup Confirmation&apos;),
+  ISPICKVAL( Ocean_Shipment_Status__c, &apos;Documents&apos;),
+  ISPICKVAL( Ocean_Shipment_Status__c, &apos;ETD&apos;),
+  ISPICKVAL( Ocean_Shipment_Status__c, &apos;ETA-15&apos;),
+  ISPICKVAL( Ocean_Shipment_Status__c, &apos;ETA-10&apos;),
+  ISPICKVAL( Ocean_Shipment_Status__c, &apos;ETA-7&apos;),
+  ISPICKVAL( Ocean_Shipment_Status__c, &apos;ETA-4&apos;),
+  ISPICKVAL( Ocean_Shipment_Status__c, &apos;ETA&apos;),
+  ISPICKVAL( Ocean_Shipment_Status__c, &apos;Telex Confirmation&apos;),
+  ISPICKVAL( Ocean_Shipment_Status__c, &apos;Customs Clearences&apos;),
+  ISPICKVAL( Ocean_Shipment_Status__c, &apos;Final Delivery&apos;),
+  ISPICKVAL( Ocean_Shipment_Status__c, &apos;Finished&apos;),
+  ISPICKVAL( Ocean_Shipment_Status__c, &apos;Pending Information&apos;),
+  ISPICKVAL( Ocean_Shipment_Status__c, &apos;Transport Request&apos;),
+  ISPICKVAL( Ocean_Shipment_Status__c, &apos;Booking Request&apos;)
+ )
+)</errorConditionFormula>
+    <errorDisplayField>Ocean_Shipment_Status__c</errorDisplayField>
+    <errorMessage>CE-OISS-001: No se puede cambiar &quot;Ocean Impo Shipment Status&quot; a esta etapa cuando no se ha confirmado la &apos;Recolección&apos; por Comercio Exterior</errorMessage>
+</ValidationRule>

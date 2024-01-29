@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>CP002_Pedimento_y_Fraccion_Arancelaria</fullName>
+    <active>false</active>
+    <errorConditionFormula>AND(
+OR( Import_Export_Quote__r.FolioResume__c =&apos;FI&apos;,
+   Import_Export_Quote__r.FolioResume__c =&apos;PT&apos;
+),
+OR(
+ISBLANK( Pedimento__c),
+ISBLANK( CP_Fraccion_Arancelaria_IE__c)
+),
+ISPICKVAL( Import_Export_Quote__r.Quotation_Status__c , &quot;Approved as Succesful&quot;) 
+)</errorConditionFormula>
+    <errorDisplayField>Pedimento__c</errorDisplayField>
+    <errorMessage>ERROR CP002 : Favor de agregar Pedimento y Fracción Arancelaria</errorMessage>
+</ValidationRule>

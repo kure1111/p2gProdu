@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>CE_BloqAirShipmentStatus</fullName>
+    <active>true</active>
+    <description>Regla que bloquea la actualización del campo &apos;Air Shipment Status&apos; cuando el campo &apos;Realización CE Status&apos; tiene un valor inferior a &quot;Recolección&quot;</description>
+    <errorConditionFormula>AND(
+ NOT(BEGINS( Name, &apos;SP-CE&apos;)),
+ ISPICKVAL(Freight_Mode__c, &apos;Air&apos;),
+ OR(
+  ISPICKVAL( Realizacion_CE_Status__c, &apos;Alta Cliente AA&apos;),
+  ISPICKVAL( Realizacion_CE_Status__c, &apos;Clasificación Arancelaria&apos;),
+  ISPICKVAL( Realizacion_CE_Status__c, &apos;Realización de Facturas&apos;)
+ ),
+ OR(
+  ISPICKVAL( Air_Shipment_Status__c, &apos;Contact with Origin&apos;),
+  ISPICKVAL( Air_Shipment_Status__c, &apos;Pickup and Delivery to Airline&apos;),
+  ISPICKVAL( Air_Shipment_Status__c, &apos;Documentation&apos;),
+  ISPICKVAL( Air_Shipment_Status__c, &apos;Flight Confirmation&apos;),
+  ISPICKVAL( Air_Shipment_Status__c, &apos;Layover&apos;),
+  ISPICKVAL( Air_Shipment_Status__c, &apos;Arrival Confirmation&apos;),
+  ISPICKVAL( Air_Shipment_Status__c, &apos;Pending with Customs Broker&apos;),
+  ISPICKVAL( Air_Shipment_Status__c, &apos;Final Delivery&apos;),
+  ISPICKVAL( Air_Shipment_Status__c, &apos;Finish&apos;),
+  ISPICKVAL( Air_Shipment_Status__c, &apos;Consigness Notification&apos;)
+ )
+)</errorConditionFormula>
+    <errorDisplayField>Air_Shipment_Status__c</errorDisplayField>
+    <errorMessage>CE-ASS-001: No se puede cambiar &quot;Air Shipment Status&quot; a esta etapa cuando no se ha confirmado la &apos;Recolección&apos; por Comercio Exterior</errorMessage>
+</ValidationRule>

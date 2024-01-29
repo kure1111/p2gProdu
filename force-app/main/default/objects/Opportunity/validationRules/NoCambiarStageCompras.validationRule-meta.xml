@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NoCambiarStageCompras</fullName>
+    <active>true</active>
+    <description>Solo puede cambiar etapa Compras</description>
+    <errorConditionFormula>AND(
+ $Profile.Id &lt;&gt; &quot;00e4T000000zD9C&quot;,
+ $User.Id &lt;&gt; &quot;0054T000000cUcw&quot;,
+
+ISPICKVAL(StageName, &quot;Cotización Compras&quot;),
+ISCHANGED(StageName),
+RecordType.Name = &quot;Proyectos&quot;)</errorConditionFormula>
+    <errorMessage>PROJ003: Solo Compras puede aprobar esta etapa</errorMessage>
+</ValidationRule>

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Obligatorio_TARIFA_ESPERADA</fullName>
+    <active>true</active>
+    <description>No permite guardar o modificar el campo &apos;Declined for&apos; si el campo &apos;¿Qué tarifa esperaba el cliente&apos; no está completado.</description>
+    <errorConditionFormula>AND( ISPICKVAL( Declined_for2__c , &apos;TARIFA ALTA&apos;),
+ISNULL( Que_tarifa_esperaba_el_cliente__c )
+)</errorConditionFormula>
+    <errorDisplayField>Que_tarifa_esperaba_el_cliente__c</errorDisplayField>
+    <errorMessage>ERROR DF-001: Colocar la tarifa esperada por el cliente</errorMessage>
+</ValidationRule>
