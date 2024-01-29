@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>FI_LTL_Margen_Operativo</fullName>
+    <active>true</active>
+    <errorConditionFormula>AND  (Account_for__r.Order_to_Cash__c = False,
+FolioResume__c = &quot;FI&quot;,
+ISPICKVAL(Service_Type__c,&apos;LTL&apos;),
+ISPICKVAL( Quotation_Status__c , &apos;Approved as Succesful&apos;) , Margen_Operativo__c &lt;  $User.FI_LTL_Margen_Operativo__c 
+)</errorConditionFormula>
+    <errorMessage>MARGEN OPERATIVO ES MENOR A TU LIMITE DE AUTORIZACIÓN PARA FOLIO &quot;FI-LTL&quot; 
+*Favor de Contactar a la Gerencia o Dirección de Ventas.</errorMessage>
+</ValidationRule>

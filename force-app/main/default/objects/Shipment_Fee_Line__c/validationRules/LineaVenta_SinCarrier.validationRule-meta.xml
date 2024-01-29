@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>LineaVenta_SinCarrier</fullName>
+    <active>false</active>
+    <description>Regla que detecta cuando se intenta cargar una Shipment Service Line que aún no tiene asignado el carrier en el Rate Name.</description>
+    <errorConditionFormula>ISBLANK( Service_Rate_Name__r.Carrier_Account__c )</errorConditionFormula>
+    <errorMessage>No se puede cargar una línea de venta si aún no tiene asignado el Carrier*</errorMessage>
+</ValidationRule>

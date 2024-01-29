@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Service_Rate_Validation_Rule</fullName>
+    <active>true</active>
+    <description>v c s p</description>
+    <errorConditionFormula>AND(RecordType.Name = &apos;Servicios&apos;,
+OR(
+SAP_Service_Type__r.Code__c= &quot;FTN&quot;,
+SAP_Service_Type__r.Code__c= &quot;FTN02&quot;,
+SAP_Service_Type__r.Code__c= &quot;FCONA&quot;
+)
+)</errorConditionFormula>
+    <errorMessage>Record Type no compatible con SAP Service Type seleccionado.
+
+SOLICITAR ALTA DE TARIFA CON DEPARTAMENTO DE COMPRAS POR MEDIO DE CHATTER</errorMessage>
+</ValidationRule>

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Validate_Pak_Control_Planner</fullName>
+    <active>false</active>
+    <errorConditionFormula>VERIFY_PAK_CONTROL__c = true  &amp;&amp;    Operation_Executive__c  = &quot;&quot;</errorConditionFormula>
+    <errorDisplayField>Operation_Executive__c</errorDisplayField>
+    <errorMessage>ERROR..! Must be select a Planner</errorMessage>
+</ValidationRule>

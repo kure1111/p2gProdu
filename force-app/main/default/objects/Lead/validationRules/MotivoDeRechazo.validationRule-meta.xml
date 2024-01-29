@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>MotivoDeRechazo</fullName>
+    <active>true</active>
+    <errorConditionFormula>AND(
+ $RecordType.DeveloperName = &quot;Lead_Mkt&quot;,
+   ISPICKVAL(Status, &apos;Unqualified&apos;),
+ ISBLANK( TEXT(Motivo_de_rechazo__c) )
+
+)</errorConditionFormula>
+    <errorDisplayField>Motivo_de_rechazo__c</errorDisplayField>
+    <errorMessage>El motivo de rechazo no puede estar vacío si el estatus está en Unqualified.</errorMessage>
+</ValidationRule>

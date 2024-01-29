@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>VH002</fullName>
+    <active>true</active>
+    <errorConditionFormula>AND(
+NOT(ISBLANK(Num_Placa_Tracto__c)),
+
+NOT(REGEX(Num_Placa_Tracto__c, &quot;^[a-zA-Z0-9]+$&quot;))
+
+)</errorConditionFormula>
+    <errorDisplayField>Num_Placa_Tracto__c</errorDisplayField>
+    <errorMessage>VH002 - Solo se pueden poner letras y numeros en la placa.</errorMessage>
+</ValidationRule>

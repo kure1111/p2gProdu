@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>ActivacionAutorizada</fullName>
+    <active>true</active>
+    <errorConditionFormula>AND(
+  Account.ActiveSap__c  = false,
+  RecordType.Name = &quot;Proyectos&quot;,
+ISPICKVAL(StageName, &quot;Activación Cliente&quot;)
+)</errorConditionFormula>
+    <errorDisplayField>Activacion_autorizada__c</errorDisplayField>
+    <errorMessage>PROJ001- Favor de revisar si ya se activó la cuenta.</errorMessage>
+</ValidationRule>

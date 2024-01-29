@@ -4,9 +4,10 @@
     <active>true</active>
     <description>No modificar el campo &apos;Quote Sell Price&apos; si el usuario tiene el perfil de PAK2GO Operaciones</description>
     <errorConditionFormula>AND(
-ISCHANGED( Quote_Sell_Price__c ),
-$Profile.Id = &apos;00e4T000000lL6S&apos;,
-$User.Contado_Mgm__c  = False
+  ISCHANGED(Quote_Sell_Price__c),
+  $Profile.Id = &apos;00e4T000000lL6S&apos;,
+  $User.Contado_Mgm__c = False,
+  $User.P2G_spot__c != &apos;Spot&apos;
 )</errorConditionFormula>
     <errorDisplayField>Quote_Sell_Price__c</errorDisplayField>
     <errorMessage>QSP-001: Usuario no permitido para modificar este campo. Solicitar la modificación del precio a comercial</errorMessage>

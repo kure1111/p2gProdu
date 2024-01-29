@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Validate_Declined_with_reasons_Shipment</fullName>
+    <active>false</active>
+    <errorConditionFormula>ISPICKVAL( Cancelled_by__c, &quot;Operaciones&quot; )&amp;&amp;
+ISPICKVAL( Declined_for__c , &quot;&quot;) &amp;&amp;
+CONTAINS(Name, &quot;FN&quot;)</errorConditionFormula>
+    <errorDisplayField>Declined_for__c</errorDisplayField>
+    <errorMessage>Se debe tener una razón cuando se cancela por operaciones.</errorMessage>
+</ValidationRule>

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>OPP_Proposal</fullName>
+    <active>false</active>
+    <description>Validación de esta etapa</description>
+    <errorConditionFormula>AND(
+ISPICKVAL(StageName,&quot;Proposal&quot;),
+RecordType.Name = &quot;Standar Opportunity&quot;,
+ ISPICKVAL(LeadSource,&quot;&quot;)
+)</errorConditionFormula>
+    <errorDisplayField>LeadSource</errorDisplayField>
+    <errorMessage>OPP004-Para pasar a la siguiente etapa es necesario agregar Lead Source</errorMessage>
+</ValidationRule>

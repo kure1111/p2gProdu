@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>FI_Margen_Operativo</fullName>
+    <active>true</active>
+    <errorConditionFormula>IF ( Account_for__r.Order_to_Cash__c = False,
+AND( FolioResume__c = &quot;FI&quot;,
+NOT( ISPICKVAL(Service_Type__c, &apos;LTL&apos;)), 
+ISPICKVAL( Quotation_Status__c , &quot;Approved as Succesful&quot;) , Margen_Operativo__c &lt; $User.FI_Marg_Op__c ),
+NULL)</errorConditionFormula>
+    <errorMessage>MARGEN OPERATIVO ES MENOR A TU LIMITE DE AUTORIZACIÓN PARA FOLIO &quot;FI&quot; 
+*Favor de Contactar a la Gerencia o Dirección de Ventas.</errorMessage>
+</ValidationRule>

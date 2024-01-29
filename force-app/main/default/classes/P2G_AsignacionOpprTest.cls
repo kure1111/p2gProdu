@@ -9,6 +9,7 @@ public class P2G_AsignacionOpprTest {
         datos.add('2013-12-12');
         datos.add('2013-12-12');
         datos.add('all');
+        datos.add('all');
         P2G_AsignacionOppr.seccion3(datos);
         P2G_AsignacionOppr.columns('a0JRL0000003BBp2AM',datos);
         P2G_AsignacionOppr.searchAccounts('hola');

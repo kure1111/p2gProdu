@@ -25,6 +25,7 @@ global with sharing class PAKCargaProductosController {
         Savepoint sp = Database.setSavepoint();
         try{
             List<csvProducts> lines = (List<csvProducts>)JSON.deserialize(jsn, List<csvProducts>.class);
+            System.debug('las lines son: '+lines);
             if(lines.size() > 0){
                 Set<string> productName = new set<string>();
                 Set<string> paisesName = new set<string>();
@@ -51,14 +52,18 @@ global with sharing class PAKCargaProductosController {
                     update opp;
                 }
                 
-                for( PricebookEntry a : [select id, name, Product2Id  ,isActive  from PricebookEntry where Pricebook2Id =:opp.Pricebook2Id and CreatedDate = TODAY order by CreatedDate desc]){
-                    if(!pentries.containsKey(a.Product2Id))
+                List<PricebookEntry> allEntries = [SELECT Id, Name, Product2Id, IsActive, Pricebook2Id
+                                   FROM PricebookEntry
+                                   WHERE Pricebook2Id IN :new Set<Id>{opp.Pricebook2Id, stdPriceBook.Id}
+                                   ORDER BY CreatedDate DESC LIMIT 49000];
+
+                // Itera sobre los registros recuperados y los filtra en los mapas correspondientes
+                for (PricebookEntry a : allEntries) {
+                    if (a.Pricebook2Id == opp.Pricebook2Id && !pentries.containsKey(a.Product2Id)) {
                         pentries.put(a.Product2Id, a);
-                }
-                
-                for( PricebookEntry a : [select id, name, Product2Id  ,isActive  from PricebookEntry where Pricebook2Id =:stdPriceBook.id and CreatedDate = TODAY order by CreatedDate desc]){
-                    if(!pentriesStdr.containsKey(a.Product2Id))
+                    } else if (a.Pricebook2Id == stdPriceBook.Id && !pentriesStdr.containsKey(a.Product2Id)) {
                         pentriesStdr.put(a.Product2Id, a);
+                    }
                 }
                 
                 //PICKLIST 
@@ -96,25 +101,32 @@ global with sharing class PAKCargaProductosController {
                     ciudadesName.add(l.ciudadOrigen);                    
                 }
                 
-                
-                for(Product2 a :[SELECT Id,Name,Searchable_name__c FROM Product2 WHERE Searchable_name__c IN: productName ]){
-                    if(!products.containsKey(a.name))
+                                
+                List<Product2> productRecords = [SELECT Id, Name, Searchable_name__c FROM Product2 WHERE Searchable_name__c IN :productName LIMIT 49000];
+                List<Country__c> countryRecords = [SELECT Id, Name FROM Country__c WHERE Name IN :paisesName LIMIT 49000];
+                List<State__c> stateRecords = [SELECT Id, Name FROM State__c WHERE Name IN :estadosName LIMIT 49000];
+                List<Location__c> locationRecords = [SELECT Id, Name FROM Location__c WHERE Name IN :ciudadesName LIMIT 49000];
+
+                for (Product2 a : productRecords) {
+                    if (!products.containsKey(a.Searchable_name__c)) {
                         products.put(a.Searchable_name__c, a);
+                    }
+                }
+                for (Country__c a : countryRecords) {
+                    if (!paises.containsKey(a.Name)) {
+                        paises.put(a.Name, a);
+                    }
+                }        
+                for (State__c a : stateRecords) {
+                    if (!estados.containsKey(a.Name)) {
+                        estados.put(a.Name, a);
+                    }
                 }
                 
-                for(Country__c a :[SELECT Id,Name FROM Country__c WHERE name IN: paisesName ]){
-                    if(!paises.containsKey(a.name))
-                        paises.put(a.name, a);
-                }
-                
-                for(State__c a :[SELECT Id,Name FROM State__c WHERE name IN: estadosName ]){
-                    if(!estados.containsKey(a.name))
-                        estados.put(a.name, a);
-                }
-                
-                for(Location__c a :[SELECT Id,Name FROM Location__c WHERE name IN: ciudadesName]){
-                    if(!ciudades.containsKey(a.name))
-                        ciudades.put(a.name, a);
+                for (Location__c a : locationRecords) {
+                    if (!ciudades.containsKey(a.Name)) {
+                        ciudades.put(a.Name, a);
+                    }
                 }
                 
                 integer renglon = 2;
@@ -129,8 +141,9 @@ global with sharing class PAKCargaProductosController {
                         return 'Renglon ('+renglon+') : No se encontró ciudad de origen ' +l.ciudadOrigen;
                     if(String.isBlank(l.paisDestino) || paises.get(l.paisDestino) == null )
                         return 'Renglon ('+renglon+') : No se encontró país de destino ' + l.paisDestino;
-                    if(String.isBlank(l.estadoDestino) || estados.get(l.estadoDestino) == null )
-                        return 'Renglon ('+renglon+') : No se encontró estado de destino ' + l.estadoDestino;
+                    if(String.isBlank(l.estadoDestino) || estados.get(l.estadoDestino) == null ){
+                        System.debug('estado destino: '+l.estadoDestino);
+                        return 'Renglon ('+renglon+') : No se encontró estado de destino ' + l.estadoDestino;}
                     if(String.isBlank(l.ciudadDestino) || ciudades.get(l.ciudadDestino) == null )
                         return 'Renglon ('+renglon+') : No se encontró ciudad de destino ' + l.ciudadDestino;
                     if(l.cantidad == null)
@@ -147,55 +160,57 @@ global with sharing class PAKCargaProductosController {
                     //terminan validaciones
                     Product2 producto = products.get(l.paisOrigen + '-' + l.estadoOrigen + '-' + l.ciudadOrigen + '-' + l.paisDestino+ '-' + l.estadoDestino + '-' + l.ciudadDestino + '-' + l.modalidad);
                     
-                    if(producto == null){
+                    if (producto == null) {
                         Product2 product = new Product2();
                         product.Name = l.ciudadOrigen + ' - ' + l.ciudadDestino;
-                        //product.Name = '.';
-                        product.PROJ_Site_of_discharge__c = ciudades.get(l.ciudadDestino).id;
-                        product.PROJ_Site_of_load__c = ciudades.get(l.ciudadOrigen).id;
-                        
-                        product.PROJ_WTP__c  = false;
-                        product.PROJ_Modalidad__c  = l.modalidad ;
-                        product.Family  = 'Route';
-                        
-                        product.CurrencyIsoCode  = opp.CurrencyIsoCode;//cur.IsoCode ;
-                        product.IsActive  = true;
-                        
+                        // product.Name = '.';
+                        product.PROJ_Site_of_discharge__c = ciudades.get(l.ciudadDestino).Id;
+                        product.PROJ_Site_of_load__c = ciudades.get(l.ciudadOrigen).Id;
+                    
+                        product.PROJ_WTP__c = false;
+                        product.PROJ_Modalidad__c = l.modalidad;
+                        product.Family = 'Route';
+                    
+                        product.CurrencyIsoCode = opp.CurrencyIsoCode; // cur.IsoCode ;
+                        product.IsActive = true;
+                    
                         newProducts.add(product);
-                    }
-                    else if(producto != null){
-                        if(pentriesStdr.get(producto.id) == null){
-                            PricebookEntry newPes = new PricebookEntry();
-                            newPes.Product2Id = producto.id;
-                            newPes.UnitPrice = 0;
-                            newPes.isActive = true;
-                            
-                            if (Test.isRunningTest()){
-                                Id pricebookId = Test.getStandardPricebookId();  
-                                newPes.Pricebook2Id = pricebookId;
+                    } else {
+                        if (producto != null) {
+                            if (pentriesStdr.get(producto.Id) == null) {
+                                PricebookEntry newPes = new PricebookEntry();
+                                newPes.Product2Id = producto.Id;
+                                newPes.UnitPrice = 0;
+                                newPes.IsActive = true;
+                    
+                                if (Test.isRunningTest()) {
+                                    Id pricebookId = Test.getStandardPricebookId();
+                                    newPes.Pricebook2Id = pricebookId;
+                                } else {
+                                    newPes.Pricebook2Id = stdPriceBook.Id;
+                                }
+                                newPEStdr.add(newPes);
                             }
-                            else
-                                newPes.Pricebook2Id = stdPriceBook.id;
-                            newPEStdr.add(newPes);
-                        }
-                        
-                        if(pentries.get(producto.id) == null){
-                            PricebookEntry newPes = new PricebookEntry();
-                            newPes.Product2Id = producto.id;
-                            newPes.UnitPrice = 0;
-                            newPes.isActive = true;
-                            
-                            if (Test.isRunningTest()){
-                                Id pricebookId = Test.getStandardPricebookId();  
-                                newPes.Pricebook2Id = pricebookId;
+                    
+                            if (pentries.get(producto.Id) == null) {
+                                PricebookEntry newPes = new PricebookEntry();
+                                newPes.Product2Id = producto.Id;
+                                newPes.UnitPrice = 0;
+                                newPes.IsActive = true;
+                    
+                                if (Test.isRunningTest()) {
+                                    Id pricebookId = Test.getStandardPricebookId();
+                                    newPes.Pricebook2Id = pricebookId;
+                                } else {
+                                    newPes.Pricebook2Id = opp.Pricebook2Id;
+                                }
+                                newPE.add(newPes);
                             }
-                            else
-                                newPes.Pricebook2Id = opp.Pricebook2Id;
-                            
-                            newPE.add(newPes);
                         }
                     }
-                    renglon++;
+
+
+                    renglon++;              
                 }
                 
                 if(newProducts.size()>0){
@@ -240,12 +255,22 @@ global with sharing class PAKCargaProductosController {
                     insert newPE;
                 
                 
-                
-                Map<string,PricebookEntry> pesMap = new Map<string,PricebookEntry>();
-                for(PricebookEntry pes : [select id, name,Product2Id,Pricebook2Id, Product2.Searchable_name__c from PricebookEntry where Pricebook2Id =: opp.Pricebook2Id  ] ){
-                    if(!pesMap.containsKey(pes.Product2.Searchable_name__c))
+                                
+                // Consulta SOQL para recuperar registros de PricebookEntry
+                List<PricebookEntry> pricebookEntries = [SELECT Id, Name, Product2Id, Pricebook2Id, Product2.Searchable_name__c
+                                                    FROM PricebookEntry
+                                                    WHERE Pricebook2Id = :opp.Pricebook2Id LIMIT 49000];
+
+                // Mapa para almacenar los registros por Product2.Searchable_name__c
+                Map<String, PricebookEntry> pesMap = new Map<String, PricebookEntry>();
+
+                // Itera sobre los registros recuperados y los filtra en el mapa
+                for (PricebookEntry pes : pricebookEntries) {
+                    if (!pesMap.containsKey(pes.Product2.Searchable_name__c)) {
                         pesMap.put(pes.Product2.Searchable_name__c, pes);
-                }                        
+                    }
+                }
+                                        
                 
                 List<OpportunityLineItem> olis = new list<OpportunityLineItem>();
                 
@@ -287,124 +312,11 @@ global with sharing class PAKCargaProductosController {
         }
         catch(Exception e){
             Database.rollback(sp);
-            System.debug('EX: ' +  e.getMessage() + ' - ' + e.getCause() + ' - ' + e.getLineNumber() + ' - ' + e.getStackTraceString()); return e.getMessage() + ' - ' + e.getCause() + ' - ' + e.getLineNumber() + ' - ' + e.getStackTraceString();
+            System.debug('EXSDDSFSF: ' +  e.getMessage() + ' - ' + e.getCause() + ' - ' + e.getLineNumber() + ' - ' + e.getStackTraceString()); return e.getMessage() + ' - ' + e.getCause() + ' - ' + e.getLineNumber() + ' - ' + e.getStackTraceString();
         }
     }
-    
     public static void test(){
         string a = '';
-        a='';
-        a='';
-        a='';
-        a='';
-        a='';
-        a='';
-        a='';
-        a='';
-        a='';
-        a='';
-        a='';
-        a='';
-        a='';
-        a='';
-        a='';
-        a='';
-        a='';
-        a='';
-        a='';
-        a='';
-        a='';
-        a='';
-        a='';
-        a='';
-        a='';
-        a='';
-        a='';
-        a='';
-        a='';
-        a='';
-        a='';
-        a='';
-        a='';
-        a='';
-        a='';
-        a='';
-        a='';
-        a='';
-        a='';
-        a='';
-        a='';
-        a='';
-        a='';
-        a='';
-        a='';
-        a='';
-        a='';
-        a='';
-        a='';
-        a='';
-        a='';
-        a='';
-        a='';
-        a='';
-        a='';
-        a='';
-        a='';
-        a='';
-        a='';
-        a='';
-        a='';
-        a='';
-        a='';
-        a='';
-        a='';
-        a='';
-        a='';
-        a='';
-        a='';
-        a='';
-        a='';
-        a='';
-        a='';
-        a='';
-        a='';
-        a='';
-        a='';
-        a='';
-        a='';
-        a='';
-        a='';
-        a='';
-        a='';
-        a='';
-        a='';
-        a='';
-        a='';
-        a='';
-        a='';
-        a='';
-        a='';
-        a='';
-        a='';
-        a='';
-        a='';
-        a='';
-        a='';
-        a='';
-        a='';
-        a='';
-        a='';
-        a='';
-        a='';
-        a='';
-        a='';
-        a='';
-        a='';
-        a='';
-        a='';
-        a='';
-        a='';
-        a='';
         a='';
         a='';
         a='';

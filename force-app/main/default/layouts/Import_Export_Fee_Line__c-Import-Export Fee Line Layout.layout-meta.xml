@@ -282,6 +282,13 @@
         <fields>Amount_Allocated_Service_Line_Currency__c</fields>
         <relatedList>Import_Export_Service_Line_Disbursement__c.Import_Export_Service_Line__c</relatedList>
     </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
+        <fields>CREATED_DATE</fields>
+        <fields>Fields__c</fields>
+        <fields>User__c</fields>
+        <relatedList>Field_History_Tracking__c.Import_Export_SL_History__c</relatedList>
+    </relatedLists>
     <showEmailCheckbox>false</showEmailCheckbox>
     <showHighlightsPanel>false</showHighlightsPanel>
     <showInteractionLogPanel>false</showInteractionLogPanel>

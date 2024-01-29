@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>AW_Status_Closed</fullName>
+    <active>true</active>
+    <errorConditionFormula>AND(
+Shipment_Type__c = &quot;AW&quot;,
+ISPICKVAL( Air_Shipment_Status__c ,&quot;Closed&quot;),
+
+NOT(
+OR(
+$Profile.Id = &quot;00e4T000000zD9C&quot;,
+$UserRole.Id = &quot;00E4T000000gi4H&quot;,
+$UserRole.Id = &quot;00E4T000000ga5l&quot;,
+$Profile.Id = &quot;0054T000000cUdfQAE&quot;
+)
+),
+OR(
+ISCHANGED(Air_Shipment_Status__c ),
+ISCHANGED(Account_for__c),
+ISCHANGED(Carrier__c),
+ISCHANGED(Total_Services_Std_Buy_Amount_number__c),
+ISCHANGED(Estatus_Cerrado__c ) ,
+ISCHANGED(Total_Services_Sell_Amount_number__c)
+)
+
+)</errorConditionFormula>
+    <errorMessage>Solo Dirección puede realizar cambios en &quot;Closed&quot;</errorMessage>
+</ValidationRule>

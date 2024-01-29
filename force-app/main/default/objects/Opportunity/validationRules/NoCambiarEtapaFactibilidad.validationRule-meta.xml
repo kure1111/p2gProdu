@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NoCambiarEtapaFactibilidad</fullName>
+    <active>true</active>
+    <description>Solo puede cambiar etapa Inteligencia Comercial y Marcos</description>
+    <errorConditionFormula>AND(ISPICKVAL(StageName, &quot;Factibilidad de Proyecto&quot;),
+ISCHANGED(StageName),
+RecordType.Name = &quot;Proyectos&quot;,
+AND(
+NOT($UserRole.Name = &quot;Asesor Comercial &quot;),
+NOT($UserRole.Name = &quot;Cuenta Clave &quot;),
+NOT($UserRole.Name = &quot; Director Comercial&quot;),
+NOT($UserRole.Name = &quot;Gerente Comercial&quot;),
+NOT($UserRole.Name = &quot;Representantes SAC&quot;),
+NOT($UserRole.Name = &quot;OPERACIONES&quot;)
+
+)
+)</errorConditionFormula>
+    <errorMessage>PROJ002_Solo Inteligencia Comercial puede aprobar esta etapa</errorMessage>
+</ValidationRule>

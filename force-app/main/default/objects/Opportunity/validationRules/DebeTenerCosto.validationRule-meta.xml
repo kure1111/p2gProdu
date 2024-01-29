@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>DebeTenerCosto</fullName>
+    <active>true</active>
+    <errorConditionFormula>AND(
+ISPICKVAL(StageName , &quot;VoBo IC&quot;),
+RecordType.Name = &quot;Proyectos&quot;,
+OR(
+Amount = 0,
+ISNULL(Amount)
+)
+)</errorConditionFormula>
+    <errorDisplayField>Amount</errorDisplayField>
+    <errorMessage>PROJ004: Antes de proceder al estatus de VoBo IC, el campo de &quot;Amount&quot; no puede ser 0. Favor de agregar productos.</errorMessage>
+</ValidationRule>

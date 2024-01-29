@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>OPP_Implemented</fullName>
+    <active>false</active>
+    <description>Checkbox cliente capacitado</description>
+    <errorConditionFormula>AND(
+Ciente_Capacitado__c  = false,
+RecordType.Name = &quot;Standar Opportunity&quot;,
+ISPICKVAL(StageName, &quot;Implemented&quot;)
+)</errorConditionFormula>
+    <errorDisplayField>Ciente_Capacitado__c</errorDisplayField>
+    <errorMessage>OPP007- Favor de revisar si se implemento con el cliente</errorMessage>
+</ValidationRule>

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>SP_Delivery_on_Route</fullName>
+    <active>false</active>
+    <description>Regla que impide cambiar el &quot;Shipment Status Planner&quot; al valor &apos;Delivery On Route&apos; en los servicios FN, FI, y PTO. Solo se podrá si el &quot;Shipment Status Monitoreo&quot; tiene seleccionada la opción &apos;Delivery on Route&apos;.</description>
+    <errorConditionFormula>AND(
+ ISPICKVAL(Shipment_Status_Plann__c,&apos;Delivery On Route&apos;),
+ NOT(ISPICKVAL(Shipment_Status_Mon__c, &apos;Delivery on Route_M&apos;))
+)</errorConditionFormula>
+    <errorDisplayField>Shipment_Status_Plann__c</errorDisplayField>
+    <errorMessage>SP-DR-001: No es posible cambiar a &apos;Delivery On Route&apos; hasta que el &quot;Shipment Status Monitoreo&quot; tenga seleccionada la opción &apos;Delivery on Route&apos;.</errorMessage>
+</ValidationRule>

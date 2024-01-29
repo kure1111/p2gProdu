@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Validate_Approved_With_Shipper</fullName>
+    <active>true</active>
+    <description>If Folio = M- &amp;&amp; Status =Approved &amp;&amp; is blank Shipper</description>
+    <errorConditionFormula>AND(FolioResume__c = &quot;M&quot;, ISPICKVAL(Quotation_Status__c,&quot;Approved as Succesful&quot;), Supplier_Account__c = null)</errorConditionFormula>
+    <errorMessage>ERROR: La Cotizacion no puede ser Aprobada sin elegir al Shipper o Conginee</errorMessage>
+</ValidationRule>

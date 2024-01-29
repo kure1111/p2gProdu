@@ -6,7 +6,7 @@ trigger trgCreateServicesLine on Customer_Quote__c (after insert) {
     list<Import_Export_Fee_Line__c> ListaServicesLines = new list<Import_Export_Fee_Line__c>();
     set<string> setAccountId = new set<string>();
     map<string,Account> mapOrderToCash = new  map<string,Account>(); 
-    if(!test.isRunningTest())
+    /*if(!test.isRunningTest())
       {
             servicesRate =  [select id,Name,Fee_Rate__c from Fee__c where Name =:name and Active__c = true ];
             system.debug('servicesRate '+ servicesRate);
@@ -51,7 +51,7 @@ trigger trgCreateServicesLine on Customer_Quote__c (after insert) {
           Insert ListaServicesLines;
         }
         
-    
+    */
    
   
 }

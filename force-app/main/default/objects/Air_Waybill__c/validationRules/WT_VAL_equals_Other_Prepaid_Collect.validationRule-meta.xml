@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>WT_VAL_equals_Other_Prepaid_Collect</fullName>
+    <active>false</active>
+    <errorConditionFormula>TEXT(Prepaid_Collect_WT_VAL__c) &lt;&gt; TEXT(Prepaid_Collect_Other__c)</errorConditionFormula>
+    <errorDisplayField>Prepaid_Collect_WT_VAL__c</errorDisplayField>
+    <errorMessage>Prepaid / Collect (WT / VAL) must be equal to Prepaid / Collect (Other)</errorMessage>
+</ValidationRule>

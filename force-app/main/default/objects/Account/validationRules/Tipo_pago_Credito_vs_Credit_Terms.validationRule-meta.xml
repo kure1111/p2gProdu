@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Tipo_pago_Credito_vs_Credit_Terms</fullName>
+    <active>false</active>
+    <errorConditionFormula>ISPICKVAL(Venta_Sap__c, &quot;Credito&quot;) &amp;&amp;
+ISPICKVAL(Credit_Terms__c, &quot;&quot;)</errorConditionFormula>
+    <errorDisplayField>Credit_Terms__c</errorDisplayField>
+    <errorMessage>Ha seleccionado Tipo de Pago = Credito, debe seleccionar los dias de pago en el campo Credit Terms.</errorMessage>
+</ValidationRule>

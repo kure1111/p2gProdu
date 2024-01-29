@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Validate_Seguro_NO</fullName>
+    <active>true</active>
+    <errorConditionFormula>ISPICKVAL(  Merchandise_Insurance__c  ,&quot;NO REQUIERE&quot;) &amp;&amp;  Motivo__c  = &quot;&quot; &amp;&amp; NOT($Profile.Name = &apos;CUSTOMER COMMUNITY&apos;)</errorConditionFormula>
+    <errorMessage>ERROR: Debe especificar el motivo por el cual el Cliente No Requiere Seguro!!</errorMessage>
+</ValidationRule>

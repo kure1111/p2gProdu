@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>VALIDATION_BUY_AMOUNT_0</fullName>
+    <active>false</active>
+    <errorConditionFormula>AND(ISPICKVAL( Quotation_Status__c ,&quot;Approved as Succesful&quot;),  Total_Services_Std_Buy_Amount__c = 0,  Account_for__r.Order_to_Cash__c = FALSE, 
+OR(
+FolioResume__c = &quot;FN&quot;,
+FolioResume__c = &quot;A&quot;
+)
+)</errorConditionFormula>
+    <errorMessage>Total Services Std. Buy Amount debe ser mayor a 0</errorMessage>
+</ValidationRule>

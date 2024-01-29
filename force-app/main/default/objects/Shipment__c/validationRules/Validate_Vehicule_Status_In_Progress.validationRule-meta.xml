@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Validate_Vehicule_Status_In_Progress</fullName>
+    <active>true</active>
+    <errorConditionFormula>OR(
+ShipmentService__c = &quot;SP-FI&quot;,
+ShipmentService__c = &quot;SP-FN&quot;,
+ShipmentService__c = &quot;SP-PT&quot;
+)&amp;&amp;
+ISPICKVAL( Shipment_Status_Plann__c,&quot;Confirmed&quot; ) &amp;&amp; 
+Country_of_Discharge__c  = &quot;Mexico&quot;  &amp;&amp; 
+Country_of_Load__c = &quot;Mexico&quot;  &amp;&amp;
+ISBLANK(Vehicle__c )</errorConditionFormula>
+    <errorDisplayField>Vehicle__c</errorDisplayField>
+    <errorMessage>ERROR: Must be Choose  OPERATOR, VEHICULE AND CARRIER
+(Debes de capturar el Proveedor, Vehiculo y Conductor)</errorMessage>
+</ValidationRule>

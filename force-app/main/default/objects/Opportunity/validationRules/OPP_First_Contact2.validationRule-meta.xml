@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>OPP_First_Contact2</fullName>
+    <active>true</active>
+    <description>Validación de esta etapa</description>
+    <errorConditionFormula>AND(
+ISPICKVAL(StageName,&quot;First Contact / Need Analysis&quot;),
+RecordType.Name = &quot;Standar Opportunity&quot;,
+ISPICKVAL(Tipo__c, &quot;Quote&quot;),
+
+ PROJ_TotalQuotes__c =  0 
+
+)</errorConditionFormula>
+    <errorMessage>OPP002-Para pasar a la siguiente etapa es necesario agregar  Quotes</errorMessage>
+</ValidationRule>

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Validate_Rating</fullName>
+    <active>true</active>
+    <errorConditionFormula>AND(
+ISPICKVAL( Shipment_Status_Mon__c,&apos;Finished&apos;), 
+ ISPICKVAL( Rating__c ,&apos;&apos;),
+  $Profile.Id = &apos;00e0Y000000ZMMv&apos;
+)</errorConditionFormula>
+    <errorDisplayField>Rating__c</errorDisplayField>
+    <errorMessage>***Si el Embarque esta Finalizado favor de Calificar el Servicio***</errorMessage>
+</ValidationRule>

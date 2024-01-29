@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Bloquear_Asunto_Cita</fullName>
+    <active>true</active>
+    <description>Evita que el check Asunto/Cita se desmarque después de activarse.</description>
+    <errorConditionFormula>OR(
+     AND( Asunto_Cita__c = FALSE,
+          NOT(ISNULL( Fecha_Asunto_Cita__c ))
+     ),
+     AND( Asunto_Cita__c = FALSE,
+          ISNULL(PRIORVALUE( Fecha_Asunto_Cita__c )) &lt;&gt; TRUE
+     )
+)</errorConditionFormula>
+    <errorDisplayField>Asunto_Cita__c</errorDisplayField>
+    <errorMessage>No puede desmarcarse una vez activado.</errorMessage>
+</ValidationRule>

@@ -56,7 +56,8 @@
                 <a href="{!urlCreateItemsLines}" target="_top" class="li_step {!step_1}">1. Create Cargo Lines</a>
                 <!-- <a href="{!$Site.BaseUrl}/apex/NEU_Supplier_Delivery_Schedule?id={!Customer_Quote__c.Id}" target="_top" class="li_step {!step_2}">2. Delivery Schedule</a> -->
                 <a href="{!$Site.BaseUrl}/apex/NEU_New_Service_Rate_Internal?import_export={!Customer_Quote__c.Id}" target="_top" class="li_step {!step_9}">2. Freight Rates Management</a>
-                <a href="{!urlCQLPriceList}" target="_top" class="li_step {!step_3}">3. Create Quote Service Lines</a>
+                <!-- <a href="{!urlCQLPriceList}" target="_top" class="li_step {!step_3}">3. Create Quote Service Lines</a> -->
+                <a href="{!$Site.BaseUrl}/lightning/n/Creaci_n_Quote_Service_Line?c__recordId={!Customer_Quote__c.Id}" target="_top" class="li_step {!step_3}">3. Create Quote Service Lines</a>
                 <!-- <a href="{!$Site.BaseUrl}/apex/NEU_OM_Start_Clearance?id={!Customer_Quote__c.Id}" target="_top" class="li_step {!step_4}">5. Customs Clearance</a> -->
                 <!-- <a href="{!$Site.BaseUrl}/apex/NEU_Aditional_Discounts?id={!Customer_Quote__c.Id}" target="_top" class="li_step {!step_10}" >6. Aditional Discounts</a> -->
                 <a href="{!$Site.BaseUrl}/apex/NEU_Import_Export_Quote_save_pdf?id={!Customer_Quote__c.Id}" target="_top" class="li_step {!step_5}" >4. Generate Quote</a>

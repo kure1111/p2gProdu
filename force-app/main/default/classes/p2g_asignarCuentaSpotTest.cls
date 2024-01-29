@@ -89,7 +89,8 @@ public class p2g_asignarCuentaSpotTest {
         	wrapper1.coloniaOrigen ='LosPinos';
         	wrapper1.cPDestino ='69000';
         	wrapper1.coloniaDestino ='LosPinos';
-        	wrapper1.tarifario = true; 
+        	wrapper1.tarifario = true;
+        	Test.setMock(HttpCalloutMock.class, new P2G_MockHttpResponse(4));
         	p2g_asignarCuentaSpot.guardarDatos(wrapper1);
         	Test.stopTest();
         	wrapper1.tarifario = false;
@@ -111,6 +112,12 @@ public class p2g_asignarCuentaSpotTest {
         		response.Message__c = 'LeadCreadoNo.: CUSTUMID1';
         		response.Type__c = 'CONFIRM';
         	Insert response;
+        Map<String, Decimal> cordenadasOrigen = new Map<String, Decimal>();
+        cordenadasOrigen.put('Latitud', 37.7749);
+		cordenadasOrigen.put('Longitud', -122.4194);
+        
+        p2g_asignarCuentaSpot.crearAccount(wrapper1,cordenadasOrigen,cordenadasOrigen);
+        p2g_asignarCuentaSpot.accountSincronized(quote.Id);
         Test.stopTest();
     }
     

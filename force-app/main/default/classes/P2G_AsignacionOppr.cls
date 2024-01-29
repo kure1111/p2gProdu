@@ -17,15 +17,15 @@ public class P2G_AsignacionOppr {
         			datos[2] = Datetime.now().format('yyyy-MM-dd');
         }
         try {
-            String fechaInicioStr = datos[1] + 'T00:00:00Z';
-            String fechaFinStr = datos[2] + 'T23:59:59Z';
+            String fechaInicioStr = datos[1];// + 'T00:00:00Z';
+            String fechaFinStr = datos[2];// + 'T23:59:59Z';
             
-            String soqlQuery = 'SELECT Id, Name, Shipment_Status_Plann__c, Operation_Executive__c, Operation_Executive__r.Name, ' +
-                'Account_for__c, Account_for__r.Name, CreatedDate,Total_Services_Std_Buy_Amount__c,Route__c,Carrier__c,' +
+            String soqlQuery = 'SELECT Id, Name, Shipment_Status_Plann__c,ETD_Time_from_Point_of_Load__c, Operation_Executive__c, Operation_Executive__r.Name, ' +
+                'Account_for__c, Account_for__r.Name, CreatedDate,Total_Services_Sell_Amount__c,Route__c,Carrier__c,' +
                 'Carrier__r.Name,ETD_from_Point_of_Load__c,ETA_Point_of_Discharge__c,Route__r.Name '+
                 'FROM Shipment__c ' +
-                'WHERE CreatedDate >= ' + fechaInicioStr +
-                ' AND CreatedDate <= ' + fechaFinStr;
+                'WHERE ETD_from_Point_of_Load__c = ' + fechaInicioStr; 
+                //' AND ETD_from_Point_of_Load__c <= ' + fechaFinStr;
             if (datos[0] !='All') {
                 soqlQuery += ' AND Shipment_Status_Plann__c = \'' + datos[0] + '\'';           
         	}
@@ -41,9 +41,11 @@ public class P2G_AsignacionOppr {
             if(datos[6]!=null && datos[6]!=''){
                 soqlQuery += ' AND Operation_Executive__c = \''+ datos[6] +'\'';      
             }
+            if(datos[7]!=null && datos[7]!='All'){
+                soqlQuery += ' AND Shipment_Type__c = \''+ datos[7] +'\'';
+            }     
             
-            
-            System.debug('conuslta: '+soqlQuery);
+            System.debug('consulta seccion3: '+soqlQuery);
             listaShipments = Database.query(soqlQuery);
         } catch (Exception e) {
             System.debug('Error en seccion3: ' + e.getMessage());
@@ -62,16 +64,16 @@ public class P2G_AsignacionOppr {
         }
         
         try {
-            String fechaInicioStr = datos[2] + 'T00:00:00Z';
-            String fechaFinStr = datos[3] + 'T23:59:59Z';
+            String fechaInicioStr = datos[2];// + 'T00:00:00Z';
+            String fechaFinStr = datos[3];// + 'T23:59:59Z';
             
-            String soqlQuery = 'SELECT Id, Name, Shipment_Status_Plann__c, Operation_Executive__c, Operation_Executive__r.Name, ' +
-                'Account_for__c, Account_for__r.Name, CreatedDate,Total_Services_Std_Buy_Amount__c,Route__c,ETD_from_Point_of_Load__c,'+
-                'ETA_Point_of_Discharge__c, LastModifiedDate,Route__r.Name ' +
+            String soqlQuery = 'SELECT Id, Name,Shipment_Type__c,ETD_Time_from_Point_of_Load__c, Shipment_Status_Plann__c, Operation_Executive__c, Operation_Executive__r.Name, ' +
+                'Account_for__c, Account_for__r.Name, CreatedDate,Total_Services_Sell_Amount__c,Route__c,ETD_from_Point_of_Load__c,'+
+                'ETA_Point_of_Discharge__c, LastModifiedDate,Route__r.Name, Shipment_Status_Mon__c ' +
                 'FROM Shipment__c ' +
                 'WHERE Shipment_Status_Plann__c = \'' + datos[1] + '\'' +
-                ' AND CreatedDate >= ' + fechaInicioStr +
-                ' AND CreatedDate <= ' + fechaFinStr;
+                ' AND ETD_from_Point_of_Load__c = ' + fechaInicioStr;
+                //' AND ETD_from_Point_of_Load__c <= ' + fechaFinStr;
             if(datos[4] == 'mios'){
                 soqlQuery += ' AND CreatedById = \''+ idUser +'\'';              
             }
@@ -91,8 +93,13 @@ public class P2G_AsignacionOppr {
             if(!String.isBlank(datos[7])){
                 soqlQuery += ' AND Operation_Executive__c = \''+ datos[7] +'\'';      
             }
-            System.debug('soqlQuery: '+soqlQuery);
-            
+            if(datos[0] == '7'){
+                soqlQuery += ' AND Shipment_Status_Mon__c = \'Delivery on Route_M\'';// prod: Delivery on Route_M
+            }
+            if(datos[8] != 'All'){
+                soqlQuery += ' AND Shipment_Type__c = \''+ datos[8] +'\'';
+            }
+            System.debug('consulta columns' + soqlQuery);
             listaShipments = Database.query(soqlQuery);
         } catch (Exception e) {
             System.debug('Error consulta ' + e.getMessage());
@@ -136,6 +143,7 @@ public class P2G_AsignacionOppr {
         List<Shipment__c> lista4 = new List<Shipment__c>();
         List<Shipment__c> lista5 = new List<Shipment__c>();
         List<Shipment__c> lista6 = new List<Shipment__c>();
+        List<Shipment__c> lista7 = new List<Shipment__c>();
         if(datos[2] == ''){
                     datos[2] = Datetime.now().format('yyyy-MM-dd');
         }
@@ -151,9 +159,13 @@ public class P2G_AsignacionOppr {
         datos[0] = '5';
         datos[1] = 'Confirmed';
         lista5 = getStatus2(datos);
+        datos[0] = '6';
         datos[1] = 'Closed';
         lista6 = getStatus2(datos);
-        return new List<List<Shipment__c>>{lista2, lista3,lista4,lista5,lista6};
+       	datos[0] = '7';
+        datos[1] = 'Confirmed';
+        lista7 = getStatus2(datos);        
+        return new List<List<Shipment__c>>{lista2, lista3,lista4,lista5,lista6,lista7};
             }
     
     @AuraEnabled

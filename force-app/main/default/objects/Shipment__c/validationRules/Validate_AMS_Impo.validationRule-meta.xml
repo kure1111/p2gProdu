@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Validate_AMS_Impo</fullName>
+    <active>true</active>
+    <errorConditionFormula>AND( 
+OR( 
+ISPICKVAL( Ocean_Shipment_Status__c,&quot;ETA-7&quot;), 
+ISPICKVAL( Ocean_Shipment_Status__c,&quot;ETA-4&quot;), 
+ISPICKVAL( Ocean_Shipment_Status__c,&quot;ETA&quot;), 
+ISPICKVAL( Ocean_Shipment_Status__c,&quot;Telex Confirmation&quot;), 
+ISPICKVAL( Ocean_Shipment_Status__c,&quot;Customs Clearance&quot;), 
+ISPICKVAL( Ocean_Shipment_Status__c,&quot;Final Delivery&quot;) 
+), 
+ISBLANK( AMS__c ) )</errorConditionFormula>
+    <errorMessage>AMS field</errorMessage>
+</ValidationRule>

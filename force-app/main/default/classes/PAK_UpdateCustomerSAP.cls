@@ -16,7 +16,7 @@ public class PAK_UpdateCustomerSAP {
              system.debug('Entrando al metodo SendWS: ' + IdAcc);
              RecordType ProspectRt = [Select Id From Recordtype Where DeveloperName='Prospect' limit 1];
             
-             ACC = [Select Id,Name,Inerep_cta__c,Acta_Constitutiva_Poder_Rep_Legal__c,Evidencia_de_Visita_del_Vendedor__c,TAX_ID__c,Owner.Workplace__c,Phone,Requiere_Evidencia__c, WCA_ID__c,NEU_Email__c, Workplace_AccOwner__c,
+             ACC = [Select Id,Name,Tipo_de_Servicio_TNA__r.Name,Inerep_cta__c,Acta_Constitutiva_Poder_Rep_Legal__c,Evidencia_de_Visita_del_Vendedor__c,TAX_ID__c,Owner.Workplace__c,Phone,Requiere_Evidencia__c, WCA_ID__c,NEU_Email__c, Workplace_AccOwner__c,
              Website,Grupo_SAP__c, Tipo_de_Servicio_Prospecto__c, Requiere_Acuse_Sap__c,Tipo_de_Acuse_Sap__c,Requiere_Orden_de_Compra__c,Credit_Terms__c,Monto_Credito_Solicitado__c,Owner.SalesEmployer__c,
              Credit_Limit__c,Tippag_cta__c,Forpag_cta__c,Uso_CFDI__c,Bank_Name_Supplier_Form2__c,Bank_Account_Number__c,Uso_Portal__c,Periodo_de_Facturacion__c,Fecha_Recepcion_Factura__c,BillingAddress,Payment_Method__c,
              Portal_de_Proveedores__c,Usuario__c,Contrasena__c,Account_Status__c,Date_Receive_from_SAP__c,Especificaciones__c,BillingCity,BillingCountry,BillingPostalCode,BillingState,BillingStreet,Estado__c, Enviado_SAP__c,Venta_Sap__c,recordTypeId
@@ -229,11 +229,21 @@ public class PAK_UpdateCustomerSAP {
             String UsoPortal = ACC.Uso_Portal__c == true?'1':'0';
             String PortalProveedores =  ACC.Uso_Portal__c == true?ACC.Portal_de_Proveedores__c:'';
             String Contrasena =  ACC.Uso_Portal__c == true?ACC.Contrasena__c:'';
-           String Usuario =  ACC.Uso_Portal__c == true?'IMPAK':'PGL';
+            String Usuario =  ACC.Uso_Portal__c == true?'IMPAK':'PGL';
             String Fecha = ACC.Fecha_Recepcion_Factura__c != null? ACC.Fecha_Recepcion_Factura__c.format():'';
             String SlpCode = ACC.Owner.SalesEmployer__c;
             String SlpCodeOwner = ACC.Owner.SalesEmployer__c;
+            String espeficicacion = ACC.Tipo_de_Servicio_TNA__r.Name;
+            String resultado='';
             
+            if (espeficicacion != null) {
+                if(espeficicacion.toLowerCase().contains('flete')){
+                    resultado = 'flete';
+                }
+                if(espeficicacion.toLowerCase().contains('logisticos')){
+                    resultado = 'logistica';
+                }        
+            }
             String Body='<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:tem="http://tempuri.org/">'+
                 '<soapenv:Header/>'+
                 '<soapenv:Body>'+
@@ -283,7 +293,7 @@ public class PAK_UpdateCustomerSAP {
                 '<tem:PortalProveedores>'+PortalProveedores+'</tem:PortalProveedores>'+
                 '<tem:Usuario>'+Usuario+'</tem:Usuario>'+
                 '<tem:Contrasena>'+Contrasena+'</tem:Contrasena>'+
-                '<tem:Especificaciones>'+ACC.Especificaciones__c+'</tem:Especificaciones>'+
+                '<tem:Especificaciones>'+resultado+'</tem:Especificaciones>'+
                 '<tem:sfClientId>'+ACC.Id+'</tem:sfClientId>'+
                 '<tem:TipoRegistro>'+ACC.recordtype.name+'</tem:TipoRegistro>'+
                 '<tem:SlpCode>'+SlpCode+'</tem:SlpCode>'+
@@ -352,7 +362,7 @@ public class PAK_UpdateCustomerSAP {
             
             string newBody = Body.replace('&','and');
             Body = newBody;
-            
+            System.debug('Complete: '+Body);
             Http httpProtocol = new Http();
             HttpRequest request = new HttpRequest();
             request.setEndpoint('http://35.169.18.187/pakws92/WsAltaClientes.asmx');
@@ -360,6 +370,8 @@ public class PAK_UpdateCustomerSAP {
             request.setHeader('Content-Type', 'text/xml;charset=utf-8');
             request.setHeader('SOAPAction', 'http://tempuri.org/InsertarCliente');
             request.setBody(Body);
+            
+            //HttpResponse response;
             HttpResponse response = httpProtocol.send(request);
             
              System.debug('Encabezado : sap ');

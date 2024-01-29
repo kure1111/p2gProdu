@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Obligatorio_FECHA_ESPERADA</fullName>
+    <active>true</active>
+    <description>No permite guardar o modificar el campo &apos;Declined for&apos; con el valor INTINERARIOS, si el campo &apos;¿Qué fecha esperaba el cliente?&apos; no está completado.</description>
+    <errorConditionFormula>AND( ISPICKVAL( Declined_for2__c , &apos;INTINERARIOS&apos;),
+ISNULL( Que_fecha_esperaba_el_cliente__c )
+)</errorConditionFormula>
+    <errorDisplayField>Que_fecha_esperaba_el_cliente__c</errorDisplayField>
+    <errorMessage>ERROR DF-002: Colocar la fecha esperada por el cliente</errorMessage>
+</ValidationRule>
