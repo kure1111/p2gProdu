@@ -1,0 +1,232 @@
+<template>
+<lightning-modal-body>
+<div>
+    <template if:true={isLoading}>
+        <!-- Muestra el spinner mientras isLoading es verdadero -->
+        <lightning-spinner alternative-text="Loading" size="small"></lightning-spinner>
+    </template>
+    <template if:true={showWarning}>
+        <div class={warningClass}>
+            <div class="slds-notify_container slds-is-absolute">
+                <div class="slds-notify slds-notify_toast slds-theme_warning" role="status">
+                    <span class="slds-assistive-text">warning</span>
+                    <span class="slds-icon_container slds-icon-utility-warning slds-m-right_small slds-no-flex slds-align-top" title="Description of icon when needed">
+                        <lightning-icon icon-name="utility:warning" size="small"></lightning-icon>
+                    </span>
+                    <div class="slds-notify__content">
+                        <h2 class="slds-text-heading_small">{warningMessage}</h2>
+                    </div>
+                    <div class="slds-notify__close">
+                        <button class="slds-button slds-button_icon slds-button_icon-inverse" title="Close" onclick={closeMessage}>
+                            <lightning-icon icon-name="utility:close" size="small"></lightning-icon>
+                            <span class="slds-assistive-text">Close</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </template>
+    <template if:true={showSuccess}>
+        <div class={successClass}>
+            <div class="slds-notify_container slds-is-absolute">
+                <div class="slds-notify slds-notify_toast slds-theme_success" role="status">
+                    <span class="slds-assistive-text">success</span>
+                    <span class="slds-icon_container slds-icon-utility-success slds-m-right_small slds-no-flex slds-align-top" title="Description of icon when needed">
+                        <lightning-icon icon-name="utility:success" size="small"></lightning-icon>
+                    </span>
+                    <div class="slds-notify__content">
+                        <h2 class="slds-text-heading_small">{successMessage}</h2>
+                    </div>
+                    <div class="slds-notify__close">
+                        <button class="slds-button slds-button_icon slds-button_icon-inverse" title="Close" onclick={closeMessage}>
+                            <lightning-icon icon-name="utility:close" size="small"></lightning-icon>
+                            <span class="slds-assistive-text">Close</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </template>
+    <template if:true={showError}>
+        <div class={errorClass}>
+            <div class="slds-notify_container slds-is-absolute">
+                <div class="slds-notify slds-notify_toast slds-theme_error" role="status">
+                    <span class="slds-assistive-text">error</span>
+                    <span class="slds-icon_container slds-icon-utility-error slds-m-right_small slds-no-flex slds-align-top" title="Description of icon when needed">
+                        <lightning-icon icon-name="utility:error" size="small"></lightning-icon>
+                    </span>
+                    <div class="slds-notify__content">
+                        <h2 class="slds-text-heading_small">{errorMessage}</h2>
+                    </div>
+                    <div class="slds-notify__close">
+                        <button class="slds-button slds-button_icon slds-button_icon-inverse" title="Close" onclick={closeMessage}>
+                            <lightning-icon icon-name="utility:close" size="small"></lightning-icon>
+                            <span class="slds-assistive-text">Close</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </template>
+    <lightning-card  title="Asignar o Crear Folio">
+        <br><br>
+        <template if:true={pag1}>
+            <div class="slds-grid slds-gutters slds-grid_vertical">
+                <div class="slds-col slds-align-middle">
+                    <lightning-button label="Asignar un Folio" onclick={clickAsignarFolio}></lightning-button>
+                </div>
+                <br><br>
+                <div class="slds-col slds-align-middle">
+                    <lightning-button label="Crear Folio" onclick={clickCrearFolio}></lightning-button>
+                </div>
+            </div>
+        </template>
+        <template if:true={asignarFolio}>
+            <div class="slds-grid slds-gutters">
+                <div class="slds-col" style="margin-left: 20px;">
+                    <p>Favor de buscar el folio que requiere agregar a la oportunidad</p><br><br>
+                </div>
+            </div>
+            <div class="slds-grid slds-grid_align-center">
+                <div class="slds-col slds-size_6-of-12">
+                    <div onkeyup={searchKeyAsignaFolio}>
+                        <lightning-input label="Buscar folio:" placeholder="Buscar un folio..." 
+                        value={searchValueAsignaFolio} type="search"></lightning-input>
+                    </div>
+                    <table if:true={showSideAsignaFolio} class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_striped">
+                        <thead>
+                            <tr class="slds-line-height_reset">
+                                <th class="" scope="col">
+                                    <div class="slds-truncate" title="First Name">Numero Folio</div>
+                                </th>
+                                <th class="" scope="col">
+                                    <div class="slds-truncate" title="First Name">Ruta</div>
+                                </th>
+                                <th class="" scope="col">
+                                    <div class="slds-truncate" title="First Name">Quotation Status</div>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <template for:each={sideRecordsAsignaFolio} for:item="con">
+                                <tr class="slds-hint-parent" data-id={con.Id} key={con.Id} onclick={SideSelectAsignaFolio}> 
+                                    <td>
+                                        <div class="slds-truncate">{con.Name}</div>
+                                    </td>
+                                    <td>
+                                        <div class="slds-truncate">{con.Route__r.Name}</div>
+                                    </td>
+                                    <td>
+                                        <div class="slds-truncate">{con.Quotation_Status__c}</div>
+                                    </td>
+                                </tr>
+                            </template>
+                        </tbody>
+                    </table>
+                    <br><br>
+                </div>
+            </div>
+            <div class="slds-grid slds-grid_align-center">
+                <div class="slds-col">
+                    <lightning-button label="Asignar Folio" onclick={guardarFolio}></lightning-button>
+                </div>
+            </div>
+        </template>
+        <template if:true={creacionFolio}>
+            <div class="container">
+                <div class="slds-grid slds-gutters slds-grid_vertical">
+                    <div class="slds-col  slds-align-middle">
+                        <h1 class="slds-text-heading_medium slds-hyphenate">Creacion de Folios</h1>
+                        <h3>Rutas cotizadas en la oportunidad</h3>
+                    </div>
+                    <hr/><br>
+                    <div class="slds-col"  style="margin-left: 20px;">
+                        <h4>Seleccione las rutas para crear un folio:</h4>
+                        <br>
+                        <h4>Nota: Las primeras 5 rutas seleccionadas se crear en unos segundos. Pero los demas seleccionados tardaran unos munutos, cuando esten creados le llegara un correo</h4>
+                        <br>
+                    </div>
+                </div>
+                <br>
+                <div class="slds-grid slds-gutters slds-align-middle"  style="margin-left: 20px;">
+                    <div class="slds-col slds-scrollable_x">
+                        <table class="slds-table slds-table_bordered" style="width:90%">
+                            <thead>
+                                <tr class="slds-line-height_reset">
+                                    <th class="" scope="col">
+                                    <div class="slds-truncate" style="width: 45px;">Route</div>
+                                    </th>
+                                    <th class="" scope="col">
+                                    <div class="slds-truncate">Container Type</div>
+                                    </th>
+                                    <th class="" scope="col">
+                                    <div class="slds-truncate">Buy Price</div>
+                                    </th>
+                                    <th class="" scope="col">
+                                    <div class="slds-truncate">Sell Price</div>
+                                    </th>
+                                    <th class="" scope="col">
+                                    <div class="slds-truncate">Clave Servicio</div>
+                                    </th>
+                                    <th class="" scope="col">
+                                    <div class="slds-truncate">Moneda</div>
+                                    </th>
+                                    <th class="" scope="col">
+                                    <div class="slds-truncate">Se Crea?</div>
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <template lwc:if={listRutas} for:each={listRutas} for:item="con">
+                                    <tr class="slds-hint-parent" data-id={con.id} key={con.id}> 
+                                        <td>
+                                           <div class="slds-truncate" style="width: 145px;">{con.nameRoute}</div>
+                                        </td>
+                                        <td>
+                                         <div class="slds-truncate">{con.nameConteinerType}</div>
+                                        </td>
+                                        <td>
+                                            <div class="slds-truncate">{con.buyPrice}</div>
+                                        </td>
+                                        <td>
+                                            <div class="slds-truncate">{con.sellPrice}</div>
+                                        </td>
+                                        <td>
+                                            <div class="slds-truncate">{con.extencionItemName}</div>
+                                        </td>
+                                        <td>
+                                            <div class="slds-truncate">{con.currencyIsoCode}</div>
+                                        </td>
+                                        <td>
+                                            <div class="slds-truncate">
+                                                <lightning-input type="checkbox" checked={con.seCrea} onchange={clicSeCrea}></lightning-input>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </template>
+                            </tbody>
+                        </table>
+                        <br>
+                    </div>
+                </div>
+                <div  class="slds-grid slds-gutters slds-grid_align-center">
+                    <br><br>
+                    <lightning-button variant="Brand" label="Crear Folios" onclick={clicCrearFolios}></lightning-button>
+                </div>
+            </div>
+        </template>
+        <br><br>
+        <div class="slds-grid slds-gutters slds-grid_align-end" slot="footer">
+            <div class="slds-col">
+                <template if:false={pag1}>
+                    <lightning-button label="Atras" onclick={clicAtras}></lightning-button>
+                </template>
+            </div>
+            <div class="slds-col">
+                <lightning-button label="Cerrar" onclick={clicCerrar}></lightning-button>
+            </div>
+        </div>
+    </lightning-card>
+</div>
+</lightning-modal-body>
+</template>

@@ -1,5 +1,6 @@
 public class P2G_loadProducts {
     public class csvProduct {
+        @AuraEnabled public String Name { get; set; }
         @AuraEnabled public String origen { get; set; }
         @AuraEnabled public String destino { get; set; }
         @AuraEnabled public String origenId { get; set; }
@@ -167,9 +168,9 @@ public class P2G_loadProducts {
     public static List<csvProduct> getOpportunityLineItems(String opportunityId) {
         List<csvProduct> csvProductsList = new List<csvProduct>();
         if (String.isNotBlank(opportunityId)) {
-            List<OpportunityLineItem> opportunityLineItems = [SELECT Id, Quantity, PROJ_Peso_de_carga__c, PROJ_Unidades_por_frecuencia__c, 
+            List<OpportunityLineItem> opportunityLineItems = [SELECT Id,Ruta__c,Name, Quantity, PROJ_Peso_de_carga__c, PROJ_Unidades_por_frecuencia__c, 
                     PROJ_Tipo_de_mercancia__c, PROJ_Frecuencia__c, PROJ_Tiempo_de_carga__c, 
-                    PROJ_Tiempo_de_descarga__c, PROJ_Modalidad__c, PROJ_Direccion_de_carga__c, 
+                    PROJ_Tiempo_de_descarga__c, PROJ_Modalidad__c, PROJ_Direccion_de_carga__c,
                     PROJ_Direccion_de_descarga__c, TotalPrice,Comentarios__c,Buy_Price__c,UnitPrice
                     FROM OpportunityLineItem
                     WHERE OpportunityId = :opportunityId];
@@ -184,6 +185,7 @@ public class P2G_loadProducts {
     
     public static csvProduct rellenagetItems(OpportunityLineItem oli){
         csvProduct product = new csvProduct();
+        product.Name = oli.Ruta__c;
         product.origen = oli.PROJ_Direccion_de_carga__c;
         product.destino = oli.PROJ_Direccion_de_descarga__c;
         product.cantidad = String.valueOf(oli.Quantity);
@@ -215,23 +217,28 @@ public class P2G_loadProducts {
         update Olis;
     }
     
-    public static OpportunityLineItem rellenaOpporLi(csvProduct productInfo){
-        OpportunityLineItem oli = new OpportunityLineItem();
-        oli.Id = productInfo.IdOli;
-        oli.Quantity =  Integer.valueOf(productInfo.cantidad);
-        oli.PROJ_Peso_de_carga__c = Decimal.valueOf(productInfo.pesoDeCarga);
-        oli.PROJ_Unidades_por_frecuencia__c = productInfo.unidadPorFrecuencia;
-        oli.PROJ_Tipo_de_mercancia__c = productInfo.tipoMercancia;
-        oli.PROJ_Frecuencia__c = productInfo.frecuencia; 
-        oli.PROJ_Tiempo_de_carga__c = Decimal.valueOF(productInfo.tiempoCarga);
-        oli.PROJ_Tiempo_de_descarga__c = Decimal.ValueOF(productInfo.tiempoDescarga);
-        oli.PROJ_Modalidad__c =  productInfo.modalidad;
-        oli.PROJ_Direccion_de_carga__c = productInfo.direccionCarga;
-        oli.PROJ_Direccion_de_descarga__c = productInfo.direccionDescarga;
-        oli.Comentarios__c = productInfo.comentarios;
-        oli.Buy_Price__c = Decimal.ValueOf(productInfo.buyPrice);
-        return oli;
-    }
+    public static OpportunityLineItem rellenaOpporLi(csvProduct productInfo) {
+    OpportunityLineItem oli = new OpportunityLineItem();
+    oli.Id = productInfo.IdOli;
+
+    // Comprobaciones antes de la conversión
+    oli.Quantity = !String.isBlank(productInfo.cantidad) ? Integer.valueOf(productInfo.cantidad) : null;
+    oli.PROJ_Peso_de_carga__c = !String.isBlank(productInfo.pesoDeCarga) ? Decimal.valueOf(productInfo.pesoDeCarga) : null;
+    oli.PROJ_Unidades_por_frecuencia__c = productInfo.unidadPorFrecuencia;
+    oli.PROJ_Tipo_de_mercancia__c = productInfo.tipoMercancia;
+    oli.PROJ_Frecuencia__c = productInfo.frecuencia; 
+    oli.PROJ_Tiempo_de_carga__c = !String.isBlank(productInfo.tiempoCarga) ? Decimal.valueOF(productInfo.tiempoCarga) : null;
+    oli.PROJ_Tiempo_de_descarga__c = !String.isBlank(productInfo.tiempoDescarga) ? Decimal.ValueOF(productInfo.tiempoDescarga) : null;
+    oli.PROJ_Modalidad__c =  productInfo.modalidad;
+    oli.PROJ_Direccion_de_carga__c = productInfo.direccionCarga;
+    oli.PROJ_Direccion_de_descarga__c = productInfo.direccionDescarga;
+    oli.Comentarios__c = productInfo.comentarios;
+    oli.Buy_Price__c = !String.isBlank(productInfo.buyPrice) ? Decimal.ValueOf(productInfo.buyPrice) : null;
+
+    return oli;
+}
+
+    
     public static void quitar(){
         csvProduct product = new csvProduct();
         product.origen = '';
