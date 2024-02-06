@@ -1,0 +1,23 @@
+.section-card {
+    margin-bottom: 20px;
+    border: 1px solid #d8dde6;
+    border-radius: 4px;
+    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1);
+}
+
+.slds-card__body {
+    padding: 1rem;
+}
+
+.scrollable-section {
+    overflow-x: auto;
+}
+
+.horizontal-scroll-container {
+    white-space: nowrap;
+}
+
+.slds-notify .slds-icon_container,
+.slds-notify__close .slds-button_icon-inverse {
+    color: #ffffff; /* Cambia el color según tu preferencia, en este caso blanco */
+}
