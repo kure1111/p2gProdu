@@ -1,34 +1,34 @@
 @isTest(seeAllData=true)
 public class PAKCargaProductosControllerTEST {
     @isTest static void testA(){
-        String jsn = '{\n' +
-            '"paisOrigen":["Mexico"],' +
-            '"estadoOrigen":["Tamaulipas"],' +
-            '"ciudadOrigen":["Altamira"],' +
-            '"paisDestino":["Mexico"],' +
-            '"estadoDestino":["Nuevo Leon"],' +
-            '"ciudadDestino":["Rayones"],' +
-            '"cantidad":["1"],' +
-            '"frecuencia":["Diario"],'+
-            '"modalidad":["Rabon"],' +
-            '"unidadPorFrecuencia":["Desc"],' +
-            '"tipoDeMercancia":["na"],' +
-            '"pesoDeCarga":["5000"],' +
-            '"tiempoDeCarga":["24"],' +
-            '"tiempoDeDescarga":["12"],' +
-            '"direccionDeCarga":["AV. HIDALGO"],\n' +
-            '"direccionDeDescarga":["CALZ COAH"]' +
-            '}';
-		
+    List<PAKCargaProductosController.csvProducts> jsonList = new List<PAKCargaProductosController.csvProducts>();
+    PAKCargaProductosController.csvProducts prod = new PAKCargaProductosController.csvProducts();
+    prod.paisOrigen = 'Mexico';
+    prod.estadoOrigen = 'Tamaulipas';
+    prod.ciudadOrigen = 'Altamira';
+    prod.paisDestino = 'Mexico';
+    prod.estadoDestino = 'Nuevo Leon';
+    prod.ciudadDestino = 'Rayones';
+    prod.cantidad = 1;
+    prod.frecuencia = 'Diario';
+    prod.modalidad = 'Rabon';
+    prod.unidadPorFrecuencia = 'Desc';
+    prod.tipoDeMercancia = 'na';
+    prod.pesoDeCarga = 500;
+    prod.tiempoDeCarga = 24;
+    prod.tiempoDeDescarga = 12;   
+    prod.direccionDeCarga = 'dri';
+    prod.direccionDeDescarga = 'dir';
+    jsonList.add(prod);
         Opportunity opp = [SELECT Id FROM Opportunity LIMIT 1];
         Test.startTest();
-        PAKCargaProductosController.cargarTarifario(jsn, opp.Id);
+        String resul = PAKCargaProductosController.cargarTarifario(JSON.serialize(jsonList), opp.Id);
         Test.stopTest();
     }
     
     @isTest static void testB(){
         Test.startTest();
-        PAKCargaProductosController.test();
+        
         PAKCargaProductosController.CsvProducts product = new PAKCargaProductosController.CsvProducts();
         product.paisOrigen = 'Origen';
         product.estadoOrigen = 'EstadoOrigen';
