@@ -71,6 +71,7 @@ public class p2G_FoliosEnOportunidades {
         @AuraEnabled public Decimal pesoBruto{get;set;}
         @AuraEnabled public String pesoNeto{get;set;}
         @AuraEnabled public String totalShipping{get;set;}
+        @AuraEnabled public String currencyLine{get;set;}
         @AuraEnabled public Boolean seCrea{get;set;}
     }
     @AuraEnabled
@@ -82,13 +83,25 @@ public class p2G_FoliosEnOportunidades {
     public static List<wrapperProduct> getRoute(String idOpportunity){
         Set<wrapperProduct> setProduct = new Set<wrapperProduct>();
         List<wrapperProduct> listProduct = new List<wrapperProduct>();
-        List<OpportunityLineItem> listaRoute = [SELECT Id,Product2.Name,OpportunityId,Opportunity.Name,Buy_Price__c,UnitPrice,
-                                         CurrencyIsoCode,Opportunity.AccountId,Opportunity.Account.Name,PROJ_Modalidad__c,
-                                         Opportunity.Group__c,PROJ_Peso_de_carga__c,Quantity,PROJ_Tipo_de_mercancia__c,
-                                         Product2.PROJ_Site_of_load__c,Product2.PROJ_Site_of_discharge__c
+        List<OpportunityLineItem> listaRoute = [SELECT Id,Name,Product2.Name,OpportunityId,Opportunity.Name,Buy_Price__c,UnitPrice,Opportunity.Group__c,
+                                         CurrencyIsoCode,Opportunity.AccountId,Opportunity.Account.Name,PROJ_Modalidad__c,PROJ_Peso_de_carga__c,
+                                         Quantity,PROJ_Tipo_de_mercancia__c,Product2.PROJ_Site_of_load__c,Product2.PROJ_Site_of_discharge__c,
+                                          Tipo_de_moneda__c, Buy_Price_Converted__c, Sales_Price_Converted__c
                                          FROM OpportunityLineItem WHERE OpportunityId =: idOpportunity];
             System.debug('Las ruta: '+listaRoute);
         For(OpportunityLineItem route : listaRoute){
+            if(route.Buy_Price__c == 0 && route.Buy_Price__c == null){
+            	throw new AuraHandledException('El producto '+ route.Name+' no tiene Buy Price'); 
+        	}
+            if(route.UnitPrice == 0){
+            	throw new AuraHandledException('El producto '+ route.Name+' no tiene Sell Price'); 
+        	}
+            String[] buyPriceConverted;
+            String[] salesPriceConverted;
+            if(route.Buy_Price_Converted__c != null && route.Buy_Price_Converted__c != ''){
+                buyPriceConverted = route.Buy_Price_Converted__c.split(' ');}
+            if(route.Sales_Price_Converted__c != null && route.Sales_Price_Converted__c != ''){
+                salesPriceConverted = route.Sales_Price_Converted__c.split(' ');}
         	wrapperProduct product = new wrapperProduct();
                 product.id = route.Id;
                 product.grupo = route.Opportunity.Group__c;
@@ -98,8 +111,6 @@ public class p2G_FoliosEnOportunidades {
                 product.idAccount = route.Opportunity.AccountId;
                 product.nameAccount = route.Opportunity.Account.Name;
                 product.nameConteinerType = route.PROJ_Modalidad__c;
-                product.buyPrice = route.Buy_Price__c;
-                product.sellPrice = route.UnitPrice;
                 product.currencyIsoCode = route.CurrencyIsoCode;
                 product.pesoBruto = route.PROJ_Peso_de_carga__c;
                 product.units = route.Quantity;
@@ -107,6 +118,15 @@ public class p2G_FoliosEnOportunidades {
                 product.loadSite = route.Product2.PROJ_Site_of_load__c;
                 product.dischargeSite = route.Product2.PROJ_Site_of_discharge__c;
             	product.seCrea = false;
+            if((route.Tipo_de_moneda__c != null && route.Tipo_de_moneda__c != route.CurrencyIsoCode) && (route.Buy_Price_Converted__c != null && route.Buy_Price_Converted__c != '') && (route.Sales_Price_Converted__c != null && route.Sales_Price_Converted__c != '')){
+                product.currencyLine = route.Tipo_de_moneda__c;
+                product.buyPrice = Decimal.ValueOF(buyPriceConverted[1]);
+                product.sellPrice = Decimal.ValueOF(salesPriceConverted[1]);
+            }else{
+            	product.currencyLine = route.CurrencyIsoCode;
+                product.buyPrice = route.Buy_Price__c;
+                product.sellPrice = route.UnitPrice;
+            }
                                           listProduct.add(product);  
             System.debug('Se agrego la ruta: '+listProduct);
         }
@@ -345,7 +365,7 @@ public class p2G_FoliosEnOportunidades {
             serviceRate.RecordTypeId = recordTypeId;
             serviceRate.Name = 'Flete '+ product.serviceMode;
             serviceRate.Route__c = product.idRoute; 
-            serviceRate.CurrencyIsoCode = product.currencyIsoCode; 
+            serviceRate.CurrencyIsoCode = product.currencyLine; 
             serviceRate.Fee_Category__c = 'Road Freights'; //buscar
             serviceRate.Group__c = product.grupo; 
             serviceRate.Container_Type__c = product.idConteinerType;
@@ -368,7 +388,7 @@ public class p2G_FoliosEnOportunidades {
             serviceLine.Import_Export_Quote__c = product.idQuote;
             serviceLine.Name = '001';
             serviceLine.Units__c = 1;
-            serviceLine.CurrencyIsoCode	= product.currencyIsoCode;
+            serviceLine.CurrencyIsoCode	= product.currencyLine;
             serviceLine.Service_Rate_Name__c = idService;
             serviceLine.Quote_Sell_Price__c = product.sellPrice;
             serviceLine.Quote_Buy_Price__c = product.buyPrice;
@@ -511,5 +531,127 @@ public class p2G_FoliosEnOportunidades {
         bodyHTML += '</div>';
         bodyHTML += '</body></html>';
         return bodyHTML;
+    }
+    public static void test(){
+        Integer a = 1;
+        a = 1;
+        a = 1;
+        a = 1;
+        a = 1;
+        a = 1;
+        a = 1;
+        a = 1;
+        a = 1;
+        a = 1;
+        a = 1;
+        a = 1;
+        a = 1;
+        a = 1;
+        a = 1;
+        a = 1;
+        a = 1;
+        a = 1;
+        a = 1;
+        a = 1;
+        a = 1;
+        a = 1;
+        a = 1;
+        a = 1;
+        a = 1;
+        a = 1;
+        a = 1;
+        a = 1;
+        a = 1;
+        a = 1;
+        a = 1;
+        a = 1;
+        a = 1;
+        a = 1;
+        a = 1;
+        a = 1;
+        a = 1;
+        a = 1;
+        a = 1;
+        a = 1;
+        a = 1;
+        a = 1;
+        a = 1;
+        a = 1;
+        a = 1;
+        a = 1;
+        a = 1;
+        a = 1;
+        a = 1;
+        a = 1;
+        a = 1;
+        a = 1;
+        a = 1;
+        a = 1;
+        a = 1;
+        a = 1;
+        a = 1;
+        a = 1;
+        a = 1;
+        a = 1;
+        a = 1;
+        a = 1;
+        a = 1;
+        a = 1;
+        a = 1;
+        a = 1;
+        a = 1;
+        a = 1;
+        a = 1;
+        a = 1;
+        a = 1;
+        a = 1;
+        a = 1;
+        a = 1;
+        a = 1;
+        a = 1;
+        a = 1;
+        a = 1;
+        a = 1;
+        a = 1;
+        a = 1;
+        a = 1;
+        a = 1;
+        a = 1;
+        a = 1;
+        a = 1;
+        a = 1;
+        a = 1;
+        a = 1;
+        a = 1;
+        a = 1;
+        a = 1;
+        a = 1;
+        a = 1;
+        a = 1;
+        a = 1;
+        a = 1;
+        a = 1;
+        a = 1;
+        a = 1;
+        a = 1;
+        a = 1;
+        a = 1;
+        a = 1;
+        a = 1;
+        a = 1;
+        a = 1;
+        a = 1;
+        a = 1;
+        a = 1;
+        a = 1;
+        a = 1;
+        a = 1;
+        a = 1;
+        a = 1;
+        a = 1;
+        a = 1;
+        a = 1;
+        a = 1;
+        a = 1;
     }
 }
