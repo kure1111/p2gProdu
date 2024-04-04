@@ -13,6 +13,8 @@ global class P2G_WS_EmbarquesWrapper {
          public Time ETATime{get;set;}
          public String carrier_CustomerId{get;set;}
          public String shipment_Name{get;set;}
+         public String AddressOri{get;set;}
+         public String AddressDes{get;set;}
         
     }
     public class buscaEmbarques{
