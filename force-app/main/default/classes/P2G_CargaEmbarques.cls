@@ -8,6 +8,8 @@ public class P2G_CargaEmbarques {
                                 Operation_Executive__r.Name, National_Operator__r.Name, Account_Origin_Address__c, ETD_from_Point_of_Load__c, 
                                 ETD_Time_from_Point_of_Load__c, ETA_Point_of_Discharge__c, ETA_Time_Point_of_Discharge__c,
                                 Account_for__c,Account_for__r.Name, Account_Shipment_Reference__c, Account_Destination_Address__c,
+                                Account_Origin_Address__r.Direcci_n__c,Account_Destination_Address__r.Direcci_n__c,Account_Origin_Address__r.Name,
+                                Account_Destination_Address__r.Name,
                                 Vehicle__c,Carrier__r.Customer_Id__c FROM Shipment__c WHERE id =: shipId];
             P2G_WS_EmbarquesWrapper.Requerido requerido = new P2G_WS_EmbarquesWrapper.Requerido();
             requerido.vehicle_NumPlacaTracto = ship.Vehicle__r.Num_Placa_Tracto__c;
@@ -23,6 +25,8 @@ public class P2G_CargaEmbarques {
             requerido.ETATime = ship.ETA_Time_Point_of_Discharge__c;
             requerido.carrier_CustomerId = ship.Carrier__r.Customer_Id__c;
             requerido.shipment_Name = ship.Name;
+            requerido.AddressOri = ship.Account_Origin_Address__r.Direcci_n__c;
+            requerido.AddressDes = ship.Account_Destination_Address__r.Direcci_n__c;
             String nulos = checkFields(requerido);
             if(nulos == null){
                 String stringETD = String.valueOf(ship.ETD_from_Point_of_Load__c);
@@ -46,6 +50,8 @@ public class P2G_CargaEmbarques {
                 CargaEmbarques.source.planning.plan = new List<P2G_WS_EmbarquesWrapper.Plan>();
                 P2G_WS_EmbarquesWrapper.Plan plan = new P2G_WS_EmbarquesWrapper.Plan();
                 plan.code = new P2G_WS_EmbarquesWrapper.Code();
+                P2G_WS_EmbarquesWrapper.Plan plan2 = new P2G_WS_EmbarquesWrapper.Plan();
+                plan2.code = new P2G_WS_EmbarquesWrapper.Code();
                 CargaEmbarques.Product = new P2G_WS_EmbarquesWrapper.Product();
                 CargaEmbarques.destinies = new P2G_WS_EmbarquesWrapper.Destinies();
                 CargaEmbarques.destinies.destiny = new List<P2G_WS_EmbarquesWrapper.Destiny>();
@@ -55,30 +61,37 @@ public class P2G_CargaEmbarques {
                 CargaEmbarques.trailers = new P2G_WS_EmbarquesWrapper.trailers();
                 CargaEmbarques.Transline = new P2G_WS_EmbarquesWrapper.Transline();
                 CargaEmbarques.truck.plate = ship.Vehicle__r.Num_Placa_Tracto__c;//obligatorio
-                CargaEmbarques.Driver.aux_2 = ship.National_Operator__r.Name;//agregado
-                CargaEmbarques.Driver.name = ship.National_Operator__r.Name;//agregado
+                //CargaEmbarques.Driver.aux_2 = ship.National_Operator__r.Name;//agregado
+                //CargaEmbarques.Driver.name = ship.National_Operator__r.Name;//agregado
                 CargaEmbarques.Source.aux_1 = ship.Operation_Executive__r.Name;//obligatorio
-                CargaEmbarques.Source.aux_2 = ship.National_Operator__r.Name;//obligatorio(operador rcontrol)
-                CargaEmbarques.Source.equiv = ship.Account_Origin_Address__c;//obligatorio
-                plan.dateti = fechaOrigen;
+                CargaEmbarques.Source.aux_2 = ship.National_Operator__r.Id_Recurso_Confiable__c;
+                CargaEmbarques.Source.description = ship.Account_Origin_Address__r.Name;//'PRUEBAS REPARTO';
+                CargaEmbarques.Source.address = ship.Account_Origin_Address__r.Direcci_n__c;//'calle 2,prueba 2,Oaxaca,Mexico';
+                if(CargaEmbarques.Source.aux_2 == '' || CargaEmbarques.Source.aux_2 == null) {
+                   CargaEmbarques.Source.aux_2 = ship.National_Operator__r.Name;
+                }//obligatorio(operador rcontrol)
+                CargaEmbarques.Source.equiv = ship.Account_Origin_Address__c;//'a0H0R000009RuiOUAS';//'a0H4T000003d2JQ';//ship.Account_Origin_Address__c;//obligatorio
+                plan.dateti = fechaOrigen;//'2024-02-07 18:00';//fechaOrigen;
                 plan.name = 'ENTRANCE';//obligatorio
                 plan.code.value = 'ENTRANCE';
                 CargaEmbarques.source.planning.plan.add(plan);//obligatorio
-                destino.aux_2 = ship.Account_for__r.Name; //obligatirio
-                destino.aux_3 = ship.Account_Shipment_Reference__c; //obligatirio
-                destino.equiv = ship.Account_Destination_Address__c;//obligatorio
-                plan.dateti = fechaDestino;//obligatorio
-                plan.name = 'ENTRANCE';//obligatorio
-                plan.code.value = 'ENTRANCE';
-                destino.planning.plan.add(plan);
+                destino.aux_2 = ship.Account_for__r.Name; //obligatorio
+                destino.aux_3 = ship.Account_Shipment_Reference__c; //obligatorio
+                destino.equiv = ship.Account_Destination_Address__c;//'a0H0R000009S3PHUA0';//'a0H4T000002OyrO';//ship.Account_Destination_Address__c;//obligatorio
+                destino.description = ship.Account_Destination_Address__r.Name;//'5KDA - TOLUCA';
+                destino.address = ship.Account_Destination_Address__r.Direcci_n__c;//'CRISTOBAL COLON, 11534-, Chihuahua 2000 I Etapa, 31136, 02 Chihuahua, 019 Chihuahua, CHH Chihuahua, MEX';
+                plan2.dateti = fechaDestino;//'2024-02-09 18:00';//fechaDestino;//obligatorio
+                plan2.name = 'ENTRANCE';//obligatorio
+                plan2.code.value = 'ENTRANCE';
+                destino.planning.plan.add(plan2);
                 CargaEmbarques.destinies.destiny.add(destino);
                 CargaEmbarques.Transline.equiv = ship.Carrier__r.Customer_Id__c;//obligatorio'RECO';//
                 CargaEmbarques.shipment = ship.Name;//obligatorio
                 CargaEmbarques.trailers.order = 1;
                 listaJson ='['+Json.serialize(CargaEmbarques)+']';
-                String jsonModi = listaJson.replace('dateti','datetime');
+                //String jsonModi = listaJson.replace('dateti','datetime');
                 jsonModificado = listaJson.replace('null','""');
-                system.debug('-----Trabajo Listo :) -----: '+ jsonModificado);
+                jsonModificado = jsonModificado.replace('dateti','datetime');
             }else{
                 jsonModificado = 'Campo Faltante: '+nulos;
             }
