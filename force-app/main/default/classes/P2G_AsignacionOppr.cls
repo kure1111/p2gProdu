@@ -21,7 +21,7 @@ public class P2G_AsignacionOppr {
             String fechaFinStr = datos[2];// + 'T23:59:59Z';
             
             String soqlQuery = 'SELECT Id, Name, Shipment_Status_Plann__c,ETD_Time_from_Point_of_Load__c, Operation_Executive__c, Operation_Executive__r.Name, ' +
-                'Account_for__c, Account_for__r.Name, CreatedDate,Total_Services_Sell_Amount__c,Route__c,Carrier__c,' +
+                'Account_for__c, Account_for__r.Name, CreatedDate,Total_Services_Sell_Amount__c,Route__c,Total_Services_Std_Buy_Amount__c,Carrier__c,' +
                 'Carrier__r.Name,ETD_from_Point_of_Load__c,ETA_Point_of_Discharge__c,Route__r.Name '+
                 'FROM Shipment__c ' +
                 'WHERE ETD_from_Point_of_Load__c = ' + fechaInicioStr; 
@@ -81,9 +81,11 @@ public class P2G_AsignacionOppr {
                 soqlQuery += ' AND (Operation_Executive__c = null OR Operation_Executive__c = \'' +idGenerico +'\')';         
             }
             if(datos[0] == '3'){
-                soqlQuery += ' AND Operation_Executive__c != null';       
+                soqlQuery += ' AND Operation_Executive__c != null AND Operation_Executive__c != \'' +idGenerico +'\'';  
             }
-            
+            if(datos[0] == '5'){
+                soqlQuery += ' AND Shipment_Status_Mon__c != \'Delivery on Route_M\'';   
+            }
 			if(!String.isBlank(datos[5])){
                 soqlQuery += ' AND Account_for__c = \''+ datos[5] +'\'';    
             }
@@ -109,24 +111,24 @@ public class P2G_AsignacionOppr {
     }
     
     @AuraEnabled
-    public static  List<List<Shipment__c>> updateExecute(String shipmentId,list<String> datos) {
+    public static void updateExecute(String shipmentId,list<String> datos) {
         List<Shipment__c> lista1 = new List<Shipment__c>();
         List<Shipment__c> lista2 = new List<Shipment__c>();
         NEU_StaticVariableHelper.setBoolean1(true);
         P2G_llamadoWebHelper.setWebServiceUpdate(true);
         Shipment__c shipmentToUpdate = new Shipment__c();
         shipmentToUpdate.Id = shipmentId;
+        shipmentToUpdate.Shipment_Status_Plann__c = 'In Progress';
         shipmentToUpdate.Operation_Executive__c = UserInfo.getUserId();
+        if(datos[1]!='No'){
+            shipmentToUpdate.Operation_Executive__c = datos[1];
+        }
         if (!Test.isRunningTest()){
             update shipmentToUpdate;
         }
         NEU_StaticVariableHelper.setBoolean1(false);
         P2G_llamadoWebHelper.setWebServiceUpdate(false);
-        lista1 = getStatus2(datos);
-        datos[0] = '3';
-        lista2 = getStatus2(datos);
-        return new List<List<Shipment__c>>{lista1, lista2};
-            }
+    }
     
     @AuraEnabled
     public static  List<List<Shipment__c>> columns(String shipmentId,list<String> datos) {
@@ -164,7 +166,7 @@ public class P2G_AsignacionOppr {
         lista6 = getStatus2(datos);
        	datos[0] = '7';
         datos[1] = 'Confirmed';
-        lista7 = getStatus2(datos);        
+        lista7 = getStatus2(datos);
         return new List<List<Shipment__c>>{lista2, lista3,lista4,lista5,lista6,lista7};
             }
     
@@ -172,7 +174,7 @@ public class P2G_AsignacionOppr {
     public static List<Account> searchAccounts(String search) {
         if (String.isNotBlank(search) && search.length() >= 3) {
             search = '%' + search + '%';
-            return [SELECT Id, Name FROM Account WHERE Name LIKE :search LIMIT 10];
+            return [SELECT Id, Name, Customer_Id__c FROM Account WHERE Name LIKE :search LIMIT 10];
         } else {
             return new List<Account>();
         }

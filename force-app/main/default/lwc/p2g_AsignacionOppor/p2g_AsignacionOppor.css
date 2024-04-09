@@ -26,6 +26,10 @@
     background-color: #ffff00;
 }
 
+.black {
+    background-color: #000000;
+}
+
 .custom-card {
     width: 100%; /* Ancho personalizado (ajusta según sea necesario) */
     height: 20%; /* Altura personalizada (ajusta según sea necesario) */

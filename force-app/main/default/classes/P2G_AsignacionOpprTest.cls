@@ -14,6 +14,7 @@ public class P2G_AsignacionOpprTest {
         P2G_AsignacionOppr.columns('a0JRL0000003BBp2AM',datos);
         P2G_AsignacionOppr.searchAccounts('hola');
         P2G_AsignacionOppr.searchOpExecutive('hola');
+        datos[1]='No';
         P2G_AsignacionOppr.updateExecute('a0JRL0000006w4X2AQ',datos);
         Test.stopTest();
     }
