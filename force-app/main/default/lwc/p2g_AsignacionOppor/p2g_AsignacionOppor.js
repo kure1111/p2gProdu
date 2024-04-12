@@ -132,7 +132,7 @@ export default class P2g_AsignacionOppor extends LightningElement {
     @track sideRecordsOpExecutiveA;
     @track searchValueOpExecutiveA = '';
     @track showSideOpExecutiveA = false;
-    @track searchValueIdOpExecutiveA;
+    @track searchValueIdOpExecutiveA = 'No';
 
     searchKeyOpExecutiveA(event) {
         this.searchValueOpExecutiveA = event.target.value;
@@ -214,7 +214,7 @@ export default class P2g_AsignacionOppor extends LightningElement {
             this.listShipmentsCol7 = result[5];
         })
         .catch(error => {
-            console.error('Error al llamar a updateExecute:', error);
+            console.error('Error al llamar a updatecolumns:', error);
         });         
     }
 
@@ -264,6 +264,22 @@ export default class P2g_AsignacionOppor extends LightningElement {
             });        
     }
 
+    handleTakeButtonAsignar(event) {
+        const shipmentId = event.currentTarget.dataset.id;
+        event.preventDefault();
+        this.isLoading = true;
+        updateExecute({ shipmentId: shipmentId, datos: ['2', this.searchValueIdOpExecutiveA, this.startDate, this.endDate,this.selectedRadio]})
+            .then(result => {
+                this.updateColumns();
+            })
+            .catch(error => {
+                console.error('Error al llamar a updateExecute:', error);
+            })
+            .finally(() => {
+                this.isLoading = false;
+            }); 
+    }
+
     showToast(title, message, variant) {
         const event = new ShowToastEvent({
             title: title,
@@ -275,105 +291,196 @@ export default class P2g_AsignacionOppor extends LightningElement {
 
     get colorCoded2() {
         return this.listShipmentsCol2.map(account => {
-            const etdTimeMillis = account.ETD_Time_from_Point_of_Load__c;
-            const fechaString = account.ETD_from_Point_of_Load__c;
-            const fechaParts = fechaString.split('-'); 
-            // Convertir milisegundos a minutos
-            const etdMinutes = etdTimeMillis / (1000 * 60);
-    
             const now = new Date();
-            const nowMinutes = now.getHours() * 60 + now.getMinutes(); // Convertir la hora actual a minutos
+            const dateString = account.ETD_from_Point_of_Load__c; // "2024-04-05"
+            
+            const etdTimeMillis = account.ETD_Time_from_Point_of_Load__c;
+            // Convertir milisegundos en horas y minutos
+            const etdHours = Math.floor((etdTimeMillis / (1000 * 60 * 60)) % 24);
+            const etdMinutes = Math.floor((etdTimeMillis / (1000 * 60)) % 60);
+            const timeString = etdHours + ':' + (etdMinutes < 10 ? '0' + etdMinutes : etdMinutes);
+            
+            const [year, monthIndex, day] = dateString.split('-');
     
-            const differenceInMinutes = etdMinutes - nowMinutes;
-    
+            // Crear una nueva instancia de Date con la fecha y hora especificadas
+            const etdDate = new Date(year, monthIndex - 1, day, etdHours, etdMinutes);
+        
             let circleClass = '';
     
-            if (differenceInMinutes > 360) { // Más de 6 horas
-                circleClass = 'circle green';
-            } else if (differenceInMinutes >= 240 && differenceInMinutes <= 360) { // Entre 4 y 6 horas
-                circleClass = 'circle yellow';
-            } else if (differenceInMinutes >= 0 && differenceInMinutes < 240) { // Menos de 4 horas
-                circleClass = 'circle red';
-            } else { // Negativo (pasado)
-                circleClass = 'circle black';
-            }
-            if (parseInt(fechaParts[0]) <= now.getFullYear() && parseInt(fechaParts[1]) <= now.getMonth() + 1 && parseInt(fechaParts[2]) < now.getDate()) {
-                circleClass = 'circle black';
+            // Comparar solo las fechas (sin tener en cuenta la hora)
+            const etdDateWithoutTime = new Date(etdDate.getFullYear(), etdDate.getMonth(), etdDate.getDate());
+            const nowWithoutTime = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+
+            if (etdDateWithoutTime < nowWithoutTime) {
+                circleClass = 'circle black'; // Evento pasado
+            } else if (etdDateWithoutTime > nowWithoutTime) {
+                circleClass = 'circle green'; // Evento futuro
+            } else {
+                // Evento hoy, comparar los minutos
+                const etdTotalMinutes = etdHours * 60 + etdMinutes;
+                const nowTotalMinutes = now.getHours() * 60 + now.getMinutes();
+                const differenceInMinutes = etdTotalMinutes - nowTotalMinutes;
+                if (differenceInMinutes > 360) {
+                    circleClass = 'circle green'; // Más de 6 horas
+                } else if (differenceInMinutes >= 240) {
+                    circleClass = 'circle yellow'; // Entre 4 y 6 horas
+                } else if (differenceInMinutes >= 0) {
+                    circleClass = 'circle red'; // Menos de 4 horas
+                } else {
+                    circleClass = 'circle black'; // Evento pasado
+                }
             }
     
             return {
                 ...account,
                 circleClass2: circleClass,
+                Account_Shipment_Reference__c: timeString,
             };
         });
     }
 
-    get colorCoded4() {
-        return this.listShipmentsCol4.map(account => {
-            const etdTimeMillis = account.ETD_Time_from_Point_of_Load__c;
-            const fechaString = account.ETD_from_Point_of_Load__c;
-            const fechaParts = fechaString.split('-'); 
-            // Convertir milisegundos a minutos
-            const etdMinutes = etdTimeMillis / (1000 * 60);
-    
+    get colorCoded3() {
+        return this.listShipmentsCol3.map(account => {
             const now = new Date();
-            const nowMinutes = now.getHours() * 60 + now.getMinutes(); // Convertir la hora actual a minutos
+            const etdTimeMillis = account.ETD_Time_from_Point_of_Load__c;
+            const dateString = account.ETD_from_Point_of_Load__c; // "2024-04-05"
+            
+            // Convertir milisegundos en horas y minutos
+            const etdHours = Math.floor((etdTimeMillis / (1000 * 60 * 60)) % 24);
+            const etdMinutes = Math.floor((etdTimeMillis / (1000 * 60)) % 60);
+            const timeString = etdHours + ':' + (etdMinutes < 10 ? '0' + etdMinutes : etdMinutes);
+            const [year, monthIndex, day] = dateString.split('-');
     
-            const differenceInMinutes = etdMinutes - nowMinutes;
-    
+            // Crear una nueva instancia de Date con la fecha y hora especificadas
+            const etdDate = new Date(year, monthIndex - 1, day, etdHours, etdMinutes);
             let circleClass = '';
     
-            if (differenceInMinutes > 360) { // Más de 6 horas
-                circleClass = 'circle green';
-            } else if (differenceInMinutes >= 240 && differenceInMinutes <= 360) { // Entre 4 y 6 horas
-                circleClass = 'circle yellow';
-            } else if (differenceInMinutes >= 0 && differenceInMinutes < 240) { // Menos de 4 horas
-                circleClass = 'circle red';
-            } else { // Negativo (pasado)
-                circleClass = 'circle black';
-            }
-            if (parseInt(fechaParts[0]) <= now.getFullYear() && parseInt(fechaParts[1]) <= now.getMonth() + 1 && parseInt(fechaParts[2]) < now.getDate()) {
-                circleClass = 'circle black';
-            }
+            // Comparar solo las fechas (sin tener en cuenta la hora)
+            const etdDateWithoutTime = new Date(etdDate.getFullYear(), etdDate.getMonth(), etdDate.getDate());
+            const nowWithoutTime = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+
+            if (etdDateWithoutTime < nowWithoutTime) {
+                circleClass = 'circle black'; // Evento pasado
+            } else if (etdDateWithoutTime > nowWithoutTime) {
+                circleClass = 'circle green'; // Evento futuro
+            } else {
+                // Evento hoy, comparar los minutos
+                const etdTotalMinutes = etdHours * 60 + etdMinutes;
+                const nowTotalMinutes = now.getHours() * 60 + now.getMinutes();
+                const differenceInMinutes = etdTotalMinutes - nowTotalMinutes;
     
+                if (differenceInMinutes > 360) {
+                    circleClass = 'circle green'; // Más de 6 horas
+                } else if (differenceInMinutes >= 240) {
+                    circleClass = 'circle yellow'; // Entre 4 y 6 horas
+                } else if (differenceInMinutes >= 0) {
+                    circleClass = 'circle red'; // Menos de 4 horas
+                } else {
+                    circleClass = 'circle black'; // Evento pasado
+                }
+            }
+
+            return {
+                ...account,
+                circleClass2: circleClass,
+                Account_Shipment_Reference__c: timeString,
+            };
+        });
+    }
+    
+    get colorCoded4() {
+        return this.listShipmentsCol4.map(account => {
+
+            const now = new Date();
+            const etdTimeMillis = account.ETD_Time_from_Point_of_Load__c;
+            const dateString = account.ETD_from_Point_of_Load__c; // "2024-04-05"
+            
+            // Convertir milisegundos en horas y minutos
+            const etdHours = Math.floor((etdTimeMillis / (1000 * 60 * 60)) % 24);
+            const etdMinutes = Math.floor((etdTimeMillis / (1000 * 60)) % 60);
+            const timeString = etdHours + ':' + (etdMinutes < 10 ? '0' + etdMinutes : etdMinutes);
+            const [year, monthIndex, day] = dateString.split('-');
+    
+            // Crear una nueva instancia de Date con la fecha y hora especificadas
+            const etdDate = new Date(year, monthIndex - 1, day, etdHours, etdMinutes);
+
+            let circleClass = '';
+    
+            // Comparar solo las fechas (sin tener en cuenta la hora)
+            const etdDateWithoutTime = new Date(etdDate.getFullYear(), etdDate.getMonth(), etdDate.getDate());
+            const nowWithoutTime = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+
+            if (etdDateWithoutTime < nowWithoutTime) {
+                circleClass = 'circle black'; // Evento pasado
+            } else if (etdDateWithoutTime > nowWithoutTime) {
+                circleClass = 'circle green'; // Evento futuro
+            } else {
+                // Evento hoy, comparar los minutos
+                const etdTotalMinutes = etdHours * 60 + etdMinutes;
+                const nowTotalMinutes = now.getHours() * 60 + now.getMinutes();
+                const differenceInMinutes = etdTotalMinutes - nowTotalMinutes;
+
+                if (differenceInMinutes > 360) {
+                    circleClass = 'circle green'; // Más de 6 horas
+                } else if (differenceInMinutes >= 240) {
+                    circleClass = 'circle yellow'; // Entre 4 y 6 horas
+                } else if (differenceInMinutes >= 0) {
+                    circleClass = 'circle red'; // Menos de 4 horas
+                } else {
+                    circleClass = 'circle black'; // Evento pasado
+                }
+            }
             return {
                 ...account,
                 circleClass: circleClass,
+                Account_Shipment_Reference__c: timeString,
             };
         });
     }
     
     get colorCoded5() {
         return this.listShipmentsCol5.map(account => {
-            const etdTimeMillis = account.ETD_Time_from_Point_of_Load__c;
-            const fechaString = account.ETD_from_Point_of_Load__c;
-            const fechaParts = fechaString.split('-'); 
-            // Convertir milisegundos a minutos
-            const etdMinutes = etdTimeMillis / (1000 * 60);
-    
             const now = new Date();
-            const nowMinutes = now.getHours() * 60 + now.getMinutes(); // Convertir la hora actual a minutos
+            const etdTimeMillis = account.ETD_Time_from_Point_of_Load__c;
+            const dateString = account.ETD_from_Point_of_Load__c; // "2024-04-05"
+            
+            // Convertir milisegundos en horas y minutos
+            const etdHours = Math.floor((etdTimeMillis / (1000 * 60 * 60)) % 24);
+            const etdMinutes = Math.floor((etdTimeMillis / (1000 * 60)) % 60);
+            const timeString = etdHours + ':' + (etdMinutes < 10 ? '0' + etdMinutes : etdMinutes);
+            const [year, monthIndex, day] = dateString.split('-');
     
-            const differenceInMinutes = etdMinutes - nowMinutes;
-    
+            // Crear una nueva instancia de Date con la fecha y hora especificadas
+            const etdDate = new Date(year, monthIndex - 1, day, etdHours, etdMinutes);        
             let circleClass = '';
-    
-            if (differenceInMinutes > 360) { // Más de 6 horas
-                circleClass = 'circle green';
-            } else if (differenceInMinutes >= 240 && differenceInMinutes <= 360) { // Entre 4 y 6 horas
-                circleClass = 'circle yellow';
-            } else if (differenceInMinutes >= 0 && differenceInMinutes < 240) { // Menos de 4 horas
-                circleClass = 'circle red';
-            } else { // Negativo (pasado)
-                circleClass = 'circle black';
+            // Comparar solo las fechas (sin tener en cuenta la hora)
+            const etdDateWithoutTime = new Date(etdDate.getFullYear(), etdDate.getMonth(), etdDate.getDate());
+            const nowWithoutTime = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+
+            if (etdDateWithoutTime < nowWithoutTime) {
+                circleClass = 'circle black'; // Evento pasado
+            } else if (etdDateWithoutTime > nowWithoutTime) {
+                circleClass = 'circle green'; // Evento futuro
+            } else {
+                // Evento hoy, comparar los minutos
+                const etdTotalMinutes = etdHours * 60 + etdMinutes;
+                const nowTotalMinutes = now.getHours() * 60 + now.getMinutes();
+                const differenceInMinutes = etdTotalMinutes - nowTotalMinutes;
+
+                if (differenceInMinutes > 360) {
+                    circleClass = 'circle green'; // Más de 6 horas
+                } else if (differenceInMinutes >= 240) {
+                    circleClass = 'circle yellow'; // Entre 4 y 6 horas
+                } else if (differenceInMinutes >= 0) {
+                    circleClass = 'circle red'; // Menos de 4 horas
+                } else {
+                    circleClass = 'circle black'; // Evento pasado
+                }
             }
-            if (parseInt(fechaParts[0]) <= now.getFullYear() && parseInt(fechaParts[1]) <= now.getMonth() + 1 && parseInt(fechaParts[2]) < now.getDate()) {
-                circleClass = 'circle black';
-            }
-    
             return {
                 ...account,
                 circleClass: circleClass,
+                Account_Shipment_Reference__c: timeString,
             };
         });
     }
@@ -395,13 +502,24 @@ handleTipoServicio(event){
 refreshData() {
     seccion3({datos:[this.status,this.startDate,this.endDate,this.selectedRadio,this.searchValueIdAccount,this.searchValueIdCarrier,this.searchValueIdOpExecutive,this.tipoServicio]})
         .then(result => {
-            this.seccion3Data = result;
+            if (result && result.length > 0) {
+                // Recorrer cada elemento de result
+                result.forEach(account => {
+                    const etdTimeMillis = account.ETD_Time_from_Point_of_Load__c;
+                    // Convertir milisegundos en horas y minutos
+                    const etdHours = Math.floor((etdTimeMillis / (1000 * 60 * 60)) % 24);
+                    const etdMinutes = Math.floor((etdTimeMillis / (1000 * 60)) % 60);
+                    const timeString = etdHours + ':' + (etdMinutes < 10 ? '0' + etdMinutes : etdMinutes);
+                    account.Account_Shipment_Reference__c = timeString;
+                });
+
+                // Asignar el resultado modificado a seccion3Data
+                this.seccion3Data = result;
+            }
         })
         .catch(error => {
             console.error('Error al llamar a refreshData:', error);
         });
 }
-
-
 
 }

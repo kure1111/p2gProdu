@@ -75,7 +75,7 @@ public class P2G_AsignacionOppr {
                 ' AND ETD_from_Point_of_Load__c = ' + fechaInicioStr;
                 //' AND ETD_from_Point_of_Load__c <= ' + fechaFinStr;
             if(datos[4] == 'mios'){
-                soqlQuery += ' AND CreatedById = \''+ idUser +'\'';              
+                soqlQuery += ' AND Operation_Executive__c = \''+ idUser +'\'';              
             }
             if(datos[0] == '2'){
                 soqlQuery += ' AND (Operation_Executive__c = null OR Operation_Executive__c = \'' +idGenerico +'\')';         
@@ -112,8 +112,6 @@ public class P2G_AsignacionOppr {
     
     @AuraEnabled
     public static void updateExecute(String shipmentId,list<String> datos) {
-        List<Shipment__c> lista1 = new List<Shipment__c>();
-        List<Shipment__c> lista2 = new List<Shipment__c>();
         NEU_StaticVariableHelper.setBoolean1(true);
         P2G_llamadoWebHelper.setWebServiceUpdate(true);
         Shipment__c shipmentToUpdate = new Shipment__c();
@@ -121,6 +119,7 @@ public class P2G_AsignacionOppr {
         shipmentToUpdate.Shipment_Status_Plann__c = 'In Progress';
         shipmentToUpdate.Operation_Executive__c = UserInfo.getUserId();
         if(datos[1]!='No'){
+            shipmentToUpdate.Shipment_Status_Plann__c = 'Pending';
             shipmentToUpdate.Operation_Executive__c = datos[1];
         }
         if (!Test.isRunningTest()){

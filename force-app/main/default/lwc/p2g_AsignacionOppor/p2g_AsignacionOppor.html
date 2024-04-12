@@ -246,6 +246,7 @@
                                         <b>{account.Shipment_Status_Plann__c}</b> <span style="margin-right: 20px;"></span>
                                         {account.ETD_from_Point_of_Load__c}   /   {account.ETA_Point_of_Discharge__c}
                                     </p>
+                                    <p> Time: {account.Account_Shipment_Reference__c} hrs</p>
                                     <template if:true={account.Account_for__c}>
                                         <p>Account: {account.Account_for__r.Name}</p>
                                     </template>
@@ -267,7 +268,7 @@
                                 
                                 <!-- Botón 2: Opcional - Solo si necesitas un segundo botón -->
                                 <template if:false={showButton}>
-                                    <button data-id={account.Id} class="slds-button slds-button_brand" style="position: absolute; bottom: 0; right: 0;" onclick={handleTakeButtonClick}>Asignar</button>
+                                    <button data-id={account.Id} class="slds-button slds-button_brand" style="position: absolute; bottom: 0; right: 0;" onclick={handleTakeButtonAsignar}>Asignar</button>
                                 </template>
                             </div>
                         </template>
@@ -276,9 +277,60 @@
                         <p>No hay cuentas disponibles.</p>
                     </template>
                 </div>
+
+                <!-- Columna 3 -->
+                <div class="slds-col slds-size_2-of-12" style="max-height: 70vh; overflow-y: auto;">
+                    <div class="slds-p-bottom_medium sticky-header">
+                        <h3 class="slds-text-heading_small">Pending Asignado</h3>
+                    </div>
+                    <template if:true={isLoading}>
+                        <!-- Muestra el spinner mientras isLoading es verdadero -->
+                        <lightning-spinner alternative-text="Loading" size="small"></lightning-spinner>
+                    </template>
+                    <template if:true={listShipmentsCol3}>
+                        <template for:each={colorCoded3} for:item="account" >
+                            <div class="slds-card" key={account.Id}>
+                                <div class="slds-card__header" style="position: relative;">
+                                    <h3 class="slds-card__title slds-text-heading_small">
+                                        <a href="#" onclick={handleNameClick} data-record-id={account.Id}>
+                                            {account.Name}
+                                        </a>
+                                    </h3>
+                                    <div style="position: absolute; top: 0; right: 0;">
+                                        <template if:true={account.circleClass2}>
+                                            <div class={account.circleClass2}></div>
+                                        </template>
+                                    </div>
+                                </div>
+                                <div class="slds-card__body">
+                                    <p>
+                                        <b>{account.Shipment_Status_Plann__c}</b> <span style="margin-right: 20px;"></span>
+                                        {account.ETD_from_Point_of_Load__c}   /   {account.ETA_Point_of_Discharge__c}
+                                    </p>
+                                    <p> Time: {account.Account_Shipment_Reference__c} hrs</p>
+                                    <template if:true={account.Account_for__c}>
+                                        <p>Account: {account.Account_for__r.Name}</p>
+                                    </template>
+                                    <template if:true={account.Operation_Executive__c}>
+                                        <p>{account.Operation_Executive__r.Name}</p>
+                                    </template>
+                                    <template if:true={account.Route__c}>
+                                        <p>{account.Route__r.Name}   /   SellPrice: {account.Total_Services_Sell_Amount__c}</p>
+                                    </template>
+                                    <template if:true={account.Carrier__c}>
+                                        <p>Carrier: {account.Carrier__r.Name}</p>
+                                    </template>
+                                </div>
+                            </div>
+                        </template>
+                    </template>
+                    <template if:false={listShipmentsCol3}>
+                        <p>No hay cuentas disponibles.</p>
+                    </template>
+                </div>
                 
                 <!-- Columna 4 -->
-                <div class="slds-col slds-size_3-of-12" style="max-height: 70vh; overflow-y: auto;">
+                <div class="slds-col slds-size_2-of-12" style="max-height: 70vh; overflow-y: auto;">
                     <div class="slds-p-bottom_medium sticky-header">
                         <h3 class="slds-text-heading_small">In Progress</h3>
                     </div>
@@ -302,6 +354,7 @@
                                         <b>{account.Shipment_Status_Plann__c}</b> <span style="margin-right: 20px;"></span>
                                         {account.ETD_from_Point_of_Load__c}   /   {account.ETA_Point_of_Discharge__c}
                                     </p>
+                                    <p> Time: {account.Account_Shipment_Reference__c} hrs</p>
                                     <template if:true={account.Account_for__c}>
                                         <p>Account: {account.Account_for__r.Name}</p>
                                     </template>
@@ -309,7 +362,7 @@
                                         <p>{account.Operation_Executive__r.Name}</p>
                                     </template>
                                     <template if:true={account.Route__c}>
-                                        <p>{account.Route__r.Name}   /   SellPrice: {account.Total_Services_Std_Buy_Amount__c}</p>
+                                        <p>{account.Route__r.Name}   /   SellPrice: {account.Total_Services_Sell_Amount__c}</p>
                                     </template>
                                     <template if:true={account.Carrier__c}>
                                         <p>Carrier: {account.Carrier__r.Name}</p>
@@ -348,6 +401,7 @@
                                         <b>{account.Shipment_Status_Plann__c}</b> <span style="margin-right: 20px;"></span>
                                         {account.ETD_from_Point_of_Load__c}   /   {account.ETA_Point_of_Discharge__c}
                                     </p>
+                                    <p> Time: {account.Account_Shipment_Reference__c} hrs</p>
                                     <template if:true={account.Account_for__c}>
                                         <p>Account: {account.Account_for__r.Name}</p>
                                     </template>
@@ -355,7 +409,7 @@
                                         <p>{account.Operation_Executive__r.Name}</p>
                                     </template>
                                     <template if:true={account.Route__c}>
-                                        <p>{account.Route__r.Name}   /   SellPrice: {account.Total_Services_Std_Buy_Amount__c}</p>
+                                        <p>{account.Route__r.Name}   /   SellPrice: {account.Total_Services_Sell_Amount__c}</p>
                                     </template>
                                     <template if:true={account.Carrier__c}>
                                         <p>Carrier: {account.Carrier__r.Name}</p>
@@ -395,6 +449,7 @@
                                             <b>{account.Shipment_Status_Plann__c}</b> <span style="margin-right: 20px;"></span>
                                             {account.ETD_from_Point_of_Load__c}   /   {account.ETA_Point_of_Discharge__c}
                                         </p>
+                                        <p> Time: {account.Account_Shipment_Reference__c} hrs</p>
                                         <template if:true={account.Account_for__c}>
                                             <p>Account: {account.Account_for__r.Name}</p>
                                         </template>
@@ -402,7 +457,7 @@
                                             <p>{account.Operation_Executive__r.Name}</p>
                                         </template>
                                         <template if:true={account.Route__c}>
-                                            <p>{account.Route__r.Name}   /   SellPrice: {account.Total_Services_Std_Buy_Amount__c}</p>
+                                            <p>{account.Route__r.Name}   /   SellPrice: {account.Total_Services_Sell_Amount__c}</p>
                                         </template>
                                         <template if:true={account.Carrier__c}>
                                             <p>Carrier: {account.Carrier__r.Name}</p>
@@ -418,7 +473,7 @@
                 </div>
 
                 <!-- Columna closed-->
-                <div class="slds-col slds-size_2-of-12" style="max-height: 70vh; overflow-y: auto;">
+                <div class="slds-col slds-size_1-of-12" style="max-height: 70vh; overflow-y: auto;">
                     <div class="slds-p-bottom_medium sticky-header">
                         <h3 class="slds-text-heading_small">Closed</h3>
                     </div>
@@ -443,6 +498,7 @@
                                             <b>{account.Shipment_Status_Plann__c}</b> <span style="margin-right: 20px;"></span>
                                             {account.ETD_from_Point_of_Load__c}   /   {account.ETA_Point_of_Discharge__c}
                                         </p>
+                                        <p> Time: {account.Account_Shipment_Reference__c} hrs</p>
                                         <template if:true={account.Account_for__c}>
                                             <p>Account: {account.Account_for__r.Name}</p>
                                         </template>
@@ -450,7 +506,7 @@
                                             <p>{account.Operation_Executive__r.Name}</p>
                                         </template>
                                         <template if:true={account.Route__c}>
-                                            <p>{account.Route__r.Name}   /   SellPrice: {account.Total_Services_Std_Buy_Amount__c}</p>
+                                            <p>{account.Route__r.Name}   /   SellPrice: {account.Total_Services_Sell_Amount__c}</p>
                                         </template>
                                         <template if:true={account.Carrier__c}>
                                             <p>Carrier: {account.Carrier__r.Name}</p>
@@ -485,7 +541,7 @@
                             <th>ETD</th>
                             <th>ETA</th>
                             <th>Buy Price</th>
-                            <th>Buy Sell</th>
+                            <th>Sell Price</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -518,7 +574,7 @@
                                         {ship.Route__r.Name}
                                     </template>
                                 </td>
-                                <td>{ship.ETD_from_Point_of_Load__c}</td>
+                                <td>{ship.ETD_from_Point_of_Load__c} {ship.Account_Shipment_Reference__c} </td>
                                 <td>{ship.ETA_Point_of_Discharge__c}</td>
                                 <td>{ship.Total_Services_Std_Buy_Amount__c}</td>
                                 <td>{ship.Total_Services_Sell_Amount__c}</td>
