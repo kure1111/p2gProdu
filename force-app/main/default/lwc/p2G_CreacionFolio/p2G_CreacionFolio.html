@@ -476,11 +476,12 @@
                         <lightning-textarea label="Descripción de producto (pak2go):" placeholder="Describir el producto "
                         onchange={registroDescripcionProducto}></lightning-textarea>
                       </div>
-                      <div class="slds-col slds-size_1-of-1"><br></div> 
+                      <template if:true={materialPeligroso}>
+                      <div class="slds-col slds-size_1-of-1" style="color: red;"><br><p>Nota: La clave de servicio corresponde a un material peligroso es necesario llenar los campos "Material Peligroso" y "Embalaje".</p><br></div> 
                       <div class="slds-col slds-size_6-of-12">
                         <div onkeyup={searchKeyMaterialPeligroso}>
                           <lightning-input id="MaterialPeligroso" label="Material Peligroso:" placeholder="Buscar material peligroso" 
-                              value={searchValueMaterialPeligroso} type="search"></lightning-input>
+                              value={searchValueMaterialPeligroso} type="search" required=""></lightning-input>
                         </div>
                         <table if:true={showSideMaterialPeligroso} class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_striped">
                           <thead>
@@ -504,13 +505,13 @@
                                 </td>
                                </tr>
                             </template>
-                         </tbody>
-                          </table>
-                        </div>
+                          </tbody>
+                        </table>
+                      </div>
                       <div class="slds-col slds-size_6-of-12">
                         <div onkeyup={searchKeyEmbalaje}>
                           <lightning-input id="Embalaje" label="Embalaje:" placeholder="Buscar embalaje en el SAT" 
-                              value={searchValueEmbalaje} type="search"></lightning-input>
+                              value={searchValueEmbalaje} type="search" required=""></lightning-input>
                         </div>
                         <table if:true={showSideEmbalaje} class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_striped">
                             <thead>
@@ -537,6 +538,7 @@
                             </tbody>
                           </table>
                         </div>
+                      </template>
                         <div class="slds-col slds-size_1-of-1"><br></div> 
                       <div class="slds-col slds-size_1-of-12">
                         <lightning-input id="Units" label="Units:" required=""

@@ -22,6 +22,7 @@ global class P2G_CreacionFoliosWrapper {
         @AuraEnabled public String idAccount{get;set;}
         @AuraEnabled public String idReferenceForm{get;set;}
         @AuraEnabled public String recordTypeUnidad{get;set;}
+        @AuraEnabled public String idConteinerType{get;set;}//
     }
     global class cargoLine{
         @AuraEnabled public String idQuote{get;set;}
