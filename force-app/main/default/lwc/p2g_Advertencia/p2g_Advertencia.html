@@ -1,0 +1,41 @@
+<template>
+    <div if:true={showApprovalSection} class="approval-overlay">
+        <template if:true={warningMessage2}>
+            <div style="position: fixed; top: 10%; width: 100%; z-index: 10000;">
+                <lightning-toast title="Advertencia" message='Se requiere aprobacion' variant="warning"></lightning-toast>
+            </div>
+        </template>
+
+        <div class="approval-box">
+            <div class="description">
+                <p class="description-text">Se necesita aprobación debido a que sobrepasa el precio del tarifario.</p>
+            </div>
+
+            <table class="approval-info-table">
+                <tbody>
+                    <tr>
+                        <td>Shipment: </td>
+                        <td><span style="color: blue;">{recordName}</span></td>
+                    </tr>
+                    <tr>
+                        <td>Monto Maximo</td>
+                        <td>{datos.montoMaximo__c}</td>
+                    </tr>
+                    <tr>
+                        <td>Monto por Aprobar:</td>
+                        <td>{datos.montoPorAprobar__c}</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="input-section">
+                <label>Motivo de aprobación:</label>
+                <textarea class="reason-input" placeholder="Escriba el motivo de la aprobación" onchange={handleReasonChange}></textarea>
+            </div>
+
+            <div class="button-section">
+                <lightning-button label="Enviar" onclick={handleApprove} variant="brand"></lightning-button>
+            </div>
+        </div>
+    </div>
+</template>
