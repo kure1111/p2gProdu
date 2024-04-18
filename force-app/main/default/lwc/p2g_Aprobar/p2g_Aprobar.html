@@ -1,0 +1,58 @@
+<template>
+    <div class="container">
+        <table class="approval-info-table">
+            <tbody>
+                <tr>
+                    <td>Solicitud de Aprobación:</td>
+                    <td><span style="color: blue;">{spName}</span></td>
+                </tr>
+                <tr>
+                    <td>Planner:</td>
+                    <td>{operationExe}</td>
+                </tr>
+                <tr>
+                    <td>ETD:</td>
+                    <td>{etd}</td>
+                </tr>
+                <tr>
+                    <td>Motivo de Aprobación:</td>
+                    <td>{motivo}</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <table class="custom-table">
+            <thead>
+                <tr>
+                    <th>Service Line Name</th>
+                    <th>Carrier</th>
+                    <th>Rate Name</th>
+                    <th>Route</th>
+                    <th>ContainerType</th>
+                    <th>Buy Rate</th>
+                    <th>Buy Rate Max</th>
+                    <th>Sell Rate</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Loop through your data to populate the rows -->
+                <template for:each={data} for:item="item">
+                    <tr key={item.id}>
+                        <td>{item.ServiceLineName}</td>
+                        <td>{item.Carrier}</td>
+                        <td>{item.RateName}</td>
+                        <td>{item.Route}</td>
+                        <td>{item.ContainerType}</td>
+                        <td>{item.BuyAmount}</td>
+                        <td>{item.BuyRateMax}</td>
+                        <td>{item.sellRate}</td>
+                    </tr>
+                </template>
+            </tbody>
+        </table>
+        <div class="button-container">
+            <lightning-button variant="destructive" label="Rechazar" onclick={handleApprove} class="approval-button"></lightning-button>
+            <lightning-button variant="neutral" label="Aprobar" onclick={handleApprove} style="background-color: green;"></lightning-button>
+        </div>
+    </div>
+</template>
