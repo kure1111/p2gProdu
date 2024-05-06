@@ -20,7 +20,7 @@ public class P2G_AsignacionOppr {
             String fechaInicioStr = datos[1];// + 'T00:00:00Z';
             String fechaFinStr = datos[2];// + 'T23:59:59Z';
             
-            String soqlQuery = 'SELECT Id, Name, Shipment_Status_Plann__c,ETD_Time_from_Point_of_Load__c, Operation_Executive__c, Operation_Executive__r.Name, ' +
+            String soqlQuery = 'SELECT Id, Monitoreo_Recepci_n_Acuse__c,Name, Shipment_Status_Plann__c,ETD_Time_from_Point_of_Load__c, Operation_Executive__c, Operation_Executive__r.Name, ' +
                 'Account_for__c, Account_for__r.Name, CreatedDate,Total_Services_Sell_Amount__c,Route__c,Total_Services_Std_Buy_Amount__c,Carrier__c,' +
                 'Carrier__r.Name,ETD_from_Point_of_Load__c,ETA_Point_of_Discharge__c,Route__r.Name '+
                 'FROM Shipment__c ' +
@@ -44,7 +44,7 @@ public class P2G_AsignacionOppr {
             if(datos[7]!=null && datos[7]!='All'){
                 soqlQuery += ' AND Shipment_Type__c = \''+ datos[7] +'\'';
             }     
-            
+            soqlQuery += ' ORDER BY ETD_Time_from_Point_of_Load__c ASC';
             System.debug('consulta seccion3: '+soqlQuery);
             listaShipments = Database.query(soqlQuery);
         } catch (Exception e) {
@@ -67,7 +67,7 @@ public class P2G_AsignacionOppr {
             String fechaInicioStr = datos[2];// + 'T00:00:00Z';
             String fechaFinStr = datos[3];// + 'T23:59:59Z';
             
-            String soqlQuery = 'SELECT Id, Name,Shipment_Type__c,ETD_Time_from_Point_of_Load__c, Shipment_Status_Plann__c, Operation_Executive__c, Operation_Executive__r.Name, ' +
+            String soqlQuery = 'SELECT Id,Monitoreo_Recepci_n_Acuse__c, Name,Shipment_Type__c,ETD_Time_from_Point_of_Load__c, Shipment_Status_Plann__c, Operation_Executive__c, Operation_Executive__r.Name, ' +
                 'Account_for__c, Account_for__r.Name, CreatedDate,Total_Services_Sell_Amount__c,Route__c,ETD_from_Point_of_Load__c,'+
                 'ETA_Point_of_Discharge__c, LastModifiedDate,Route__r.Name, Shipment_Status_Mon__c ' +
                 'FROM Shipment__c ' +
@@ -101,6 +101,7 @@ public class P2G_AsignacionOppr {
             if(datos[8] != 'All'){
                 soqlQuery += ' AND Shipment_Type__c = \''+ datos[8] +'\'';
             }
+            soqlQuery += ' ORDER BY ETD_Time_from_Point_of_Load__c ASC';
             System.debug('consulta columns' + soqlQuery);
             listaShipments = Database.query(soqlQuery);
         } catch (Exception e) {

@@ -30,7 +30,7 @@ export default class P2g_AsignacionOppor extends LightningElement {
     @track seccion3Data;
 
     @track valorCheckbox = true;
-
+    @track semaforo = 'all';
 
     radioOptions = [
         { label: 'All shipments', value: 'all' },
@@ -235,7 +235,7 @@ export default class P2g_AsignacionOppor extends LightningElement {
         if (fieldName === 'startDate' || fieldName === 'endDate') {
             const august2023 = new Date('2023-08-01');
             const selectedDate = new Date(value);
-    
+            
             if (selectedDate < august2023) {
                 const formattedAugust2023 = august2023.toISOString().split('T')[0];
                 value = formattedAugust2023;
@@ -291,6 +291,7 @@ export default class P2g_AsignacionOppor extends LightningElement {
 
     get colorCoded2() {
         return this.listShipmentsCol2.map(account => {
+            let showSemaforo = true;
             const now = new Date();
             const dateString = account.ETD_from_Point_of_Load__c; // "2024-04-05"
             
@@ -330,17 +331,39 @@ export default class P2g_AsignacionOppor extends LightningElement {
                     circleClass = 'circle black'; // Evento pasado
                 }
             }
-    
+            showSemaforo = this.filterSemaforo(circleClass);
             return {
                 ...account,
                 circleClass2: circleClass,
                 Account_Shipment_Reference__c: timeString,
+                Monitoreo_Recepci_n_Acuse__c:showSemaforo,
             };
         });
     }
 
+    semaforoChance(event){
+        const value = event.target.value;
+        this.semaforo = value;
+        //this.updateColumns();
+    }
+
+    filterSemaforo(semaforo) {
+        if(this.semaforo === 'all'){
+            return true;
+        }
+
+        else{
+            if(this.semaforo === semaforo){
+                return true;
+            }
+            else return false;
+        }
+
+    }
+
     get colorCoded3() {
         return this.listShipmentsCol3.map(account => {
+            let showSemaforo = true;
             const now = new Date();
             const etdTimeMillis = account.ETD_Time_from_Point_of_Load__c;
             const dateString = account.ETD_from_Point_of_Load__c; // "2024-04-05"
@@ -379,18 +402,19 @@ export default class P2g_AsignacionOppor extends LightningElement {
                     circleClass = 'circle black'; // Evento pasado
                 }
             }
-
+            showSemaforo = this.filterSemaforo(circleClass);
             return {
                 ...account,
                 circleClass2: circleClass,
                 Account_Shipment_Reference__c: timeString,
+                Monitoreo_Recepci_n_Acuse__c:showSemaforo,
             };
         });
     }
     
     get colorCoded4() {
         return this.listShipmentsCol4.map(account => {
-
+            let showSemaforo = true;
             const now = new Date();
             const etdTimeMillis = account.ETD_Time_from_Point_of_Load__c;
             const dateString = account.ETD_from_Point_of_Load__c; // "2024-04-05"
@@ -430,16 +454,19 @@ export default class P2g_AsignacionOppor extends LightningElement {
                     circleClass = 'circle black'; // Evento pasado
                 }
             }
+            showSemaforo = this.filterSemaforo(circleClass);
             return {
                 ...account,
                 circleClass: circleClass,
                 Account_Shipment_Reference__c: timeString,
+                Monitoreo_Recepci_n_Acuse__c:showSemaforo,
             };
         });
     }
     
     get colorCoded5() {
         return this.listShipmentsCol5.map(account => {
+            let showSemaforo = true;
             const now = new Date();
             const etdTimeMillis = account.ETD_Time_from_Point_of_Load__c;
             const dateString = account.ETD_from_Point_of_Load__c; // "2024-04-05"
@@ -477,10 +504,12 @@ export default class P2g_AsignacionOppor extends LightningElement {
                     circleClass = 'circle black'; // Evento pasado
                 }
             }
+            showSemaforo = this.filterSemaforo(circleClass);
             return {
                 ...account,
                 circleClass: circleClass,
                 Account_Shipment_Reference__c: timeString,
+                Monitoreo_Recepci_n_Acuse__c:showSemaforo,
             };
         });
     }
@@ -490,6 +519,7 @@ export default class P2g_AsignacionOppor extends LightningElement {
 handleStatusAndFechaChange(event){
     const value = event.target.value;
     this.status = value;
+    this.updateColumns();
     this.refreshData();
 }
 handleTipoServicio(event){
@@ -514,8 +544,8 @@ refreshData() {
                 });
 
                 // Asignar el resultado modificado a seccion3Data
-                this.seccion3Data = result;
             }
+            this.seccion3Data = result;
         })
         .catch(error => {
             console.error('Error al llamar a refreshData:', error);
