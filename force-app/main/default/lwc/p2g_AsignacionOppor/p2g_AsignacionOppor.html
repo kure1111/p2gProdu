@@ -226,6 +226,24 @@
                         </table>
 
                 </div>
+
+                <!--Filtro zona -->
+                <div class="slds-col" style="flex: 0 0 15%;">
+                    <label for="status" class="slds-form-element__label slds-p-right_x-small" style="margin-bottom: 5%;">Zona:</label>
+                    <div class="slds-form-element">
+                        <div class="slds-form-element__control">
+                            <div class="slds-select_container">
+                                <select id="zona" name="zona" class="slds-select" onchange={handlezona}>
+                                    <option value="All">All</option>
+                                    <option value="Noroeste">Noroeste</option>
+                                    <option value="GDL">GDL</option>
+                                    <option value="PAC-SUR">PAC-SUR</option>
+                                    <option value="Centro-Norte">Centro-Norte</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
   
             </div>
         </div>
@@ -277,6 +295,7 @@
                                         <template if:true={account.Carrier__c}>
                                             <p>Carrier: {account.Carrier__r.Name}</p>
                                         </template>
+                                        <p>Zona: {account.Seguimiento_de_devolucion_comentarios__c}</p>
                                     </div>
                                     
                                     
@@ -342,6 +361,7 @@
                                     <template if:true={account.Carrier__c}>
                                         <p>Carrier: {account.Carrier__r.Name}</p>
                                     </template>
+                                    <p>Zona: {account.Seguimiento_de_devolucion_comentarios__c}</p>
                                 </div>
                             </div>
                         </template>
@@ -391,6 +411,7 @@
                                     <template if:true={account.Carrier__c}>
                                         <p>Carrier: {account.Carrier__r.Name}</p>
                                     </template>
+                                    <p>Zona: {account.Seguimiento_de_devolucion_comentarios__c}</p>
                                 </div>
                             </div>
                         </template>
@@ -440,6 +461,7 @@
                                     <template if:true={account.Carrier__c}>
                                         <p>Carrier: {account.Carrier__r.Name}</p>
                                     </template>
+                                    <p>Zona: {account.Seguimiento_de_devolucion_comentarios__c}</p>
                                 </div>
                             </div>
                         </template>
@@ -490,6 +512,7 @@
                                         <template if:true={account.Carrier__c}>
                                             <p>Carrier: {account.Carrier__r.Name}</p>
                                         </template>
+                                        <p>Zona: {account.Seguimiento_de_devolucion_comentarios__c}</p>
                                     </div>
                                 </div>
                             </template>
@@ -541,6 +564,7 @@
                                         <template if:true={account.Carrier__c}>
                                             <p>Carrier: {account.Carrier__r.Name}</p>
                                         </template>
+                                        <p>Zona: {account.Seguimiento_de_devolucion_comentarios__c}</p>
                                     </div>
                                 </div>
                             </template>

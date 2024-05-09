@@ -38,6 +38,7 @@ export default class P2g_AsignacionOppor extends LightningElement {
     ];
 
     @track showButton = true;
+    @track zona = 'All';
 
     handleNameClick(event) {
         event.preventDefault(); // Previene la acción predeterminada del enlace
@@ -116,6 +117,7 @@ export default class P2g_AsignacionOppor extends LightningElement {
         } else {
             this.showSideOpExecutive = false;
             this.updateColumns();
+            this.refreshData();
         }
     }
 
@@ -204,7 +206,7 @@ export default class P2g_AsignacionOppor extends LightningElement {
 
     //------------ seccion 2
     updateColumns() {
-        getColumns({datos: ['2', 'Pending', this.startDate, this.endDate,this.selectedRadio,this.searchValueIdAccount,this.searchValueIdCarrier,this.searchValueIdOpExecutive,this.tipoServicio]})
+        getColumns({datos: ['2', 'Pending', this.startDate, this.endDate,this.selectedRadio,this.searchValueIdAccount,this.searchValueIdCarrier,this.searchValueIdOpExecutive,this.tipoServicio,this.zona]})
         .then(result => {
             this.listShipmentsCol2 = result[0];
             this.listShipmentsCol3 = result[1];
@@ -466,34 +468,30 @@ export default class P2g_AsignacionOppor extends LightningElement {
     
     get colorCoded5() {
         return this.listShipmentsCol5.map(account => {
-            let showSemaforo = true;
             const now = new Date();
-            const etdTimeMillis = account.ETD_Time_from_Point_of_Load__c;
-            const dateString = account.ETD_from_Point_of_Load__c; // "2024-04-05"
-            
-            // Convertir milisegundos en horas y minutos
-            const etdHours = Math.floor((etdTimeMillis / (1000 * 60 * 60)) % 24);
-            const etdMinutes = Math.floor((etdTimeMillis / (1000 * 60)) % 60);
-            const timeString = etdHours + ':' + (etdMinutes < 10 ? '0' + etdMinutes : etdMinutes);
-            const [year, monthIndex, day] = dateString.split('-');
+            const equipPlacedDate = new Date(account.Equip_Placed__c); // Obtener la fecha de equipPlacedDate
     
-            // Crear una nueva instancia de Date con la fecha y hora especificadas
-            const etdDate = new Date(year, monthIndex - 1, day, etdHours, etdMinutes);        
+            let showSemaforo = true;
+            const etdHours = equipPlacedDate.getHours();
+            const etdMinutes = equipPlacedDate.getMinutes();
+            const timeString = etdHours + ':' + (etdMinutes < 10 ? '0' + etdMinutes : etdMinutes);
+    
             let circleClass = '';
+    
             // Comparar solo las fechas (sin tener en cuenta la hora)
-            const etdDateWithoutTime = new Date(etdDate.getFullYear(), etdDate.getMonth(), etdDate.getDate());
+            const equipPlacedDateWithoutTime = new Date(equipPlacedDate.getFullYear(), equipPlacedDate.getMonth(), equipPlacedDate.getDate());
             const nowWithoutTime = new Date(now.getFullYear(), now.getMonth(), now.getDate());
-
-            if (etdDateWithoutTime < nowWithoutTime) {
+    
+            if (equipPlacedDateWithoutTime < nowWithoutTime) {
                 circleClass = 'circle black'; // Evento pasado
-            } else if (etdDateWithoutTime > nowWithoutTime) {
+            } else if (equipPlacedDateWithoutTime > nowWithoutTime) {
                 circleClass = 'circle green'; // Evento futuro
             } else {
                 // Evento hoy, comparar los minutos
                 const etdTotalMinutes = etdHours * 60 + etdMinutes;
                 const nowTotalMinutes = now.getHours() * 60 + now.getMinutes();
                 const differenceInMinutes = etdTotalMinutes - nowTotalMinutes;
-
+    
                 if (differenceInMinutes > 360) {
                     circleClass = 'circle green'; // Más de 6 horas
                 } else if (differenceInMinutes >= 240) {
@@ -504,15 +502,18 @@ export default class P2g_AsignacionOppor extends LightningElement {
                     circleClass = 'circle black'; // Evento pasado
                 }
             }
+    
             showSemaforo = this.filterSemaforo(circleClass);
+    
             return {
                 ...account,
                 circleClass: circleClass,
                 Account_Shipment_Reference__c: timeString,
-                Monitoreo_Recepci_n_Acuse__c:showSemaforo,
+                Monitoreo_Recepci_n_Acuse__c: showSemaforo,
             };
         });
     }
+    
 ///-------------------------secicon 3----------
 
 
@@ -522,6 +523,14 @@ handleStatusAndFechaChange(event){
     this.updateColumns();
     this.refreshData();
 }
+
+handlezona(event){
+    const value = event.target.value;
+    this.zona = value;
+    this.updateColumns();
+    this.refreshData();
+}
+
 handleTipoServicio(event){
     const value = event.target.value;
     this.tipoServicio = value;
@@ -530,7 +539,7 @@ handleTipoServicio(event){
 }
 
 refreshData() {
-    seccion3({datos:[this.status,this.startDate,this.endDate,this.selectedRadio,this.searchValueIdAccount,this.searchValueIdCarrier,this.searchValueIdOpExecutive,this.tipoServicio]})
+    seccion3({datos:[this.status,this.startDate,this.endDate,this.selectedRadio,this.searchValueIdAccount,this.searchValueIdCarrier,this.searchValueIdOpExecutive,this.tipoServicio,this.zona]})
         .then(result => {
             if (result && result.length > 0) {
                 // Recorrer cada elemento de result
