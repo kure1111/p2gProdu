@@ -35,3 +35,27 @@
     height: 20%; /* Altura personalizada (ajusta según sea necesario) */
     /* Otros estilos personalizados si es necesario */
 }
+
+.circle-container {
+    position: absolute;
+    top: 0;
+    right: 0; /* Ajustar a un valor negativo para mover hacia la izquierda */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 8%; /* Ancho del 10% del contenedor principal */
+    height: 80%; /* Altura del 10% del contenedor principal */
+    background-color: #0070d2;
+    border-radius: 50%;
+    color: white;
+    font-size: 100%; /* Tamaño de fuente del 4% del contenedor principal */
+    font-weight: bold;
+}
+
+.circle-badge {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+}

@@ -256,7 +256,10 @@
                 <!-- Columna 2 -->
                 <div class="slds-col slds-size_3-of-12" style="max-height: 70vh; overflow-y: auto;">
                     <div class="slds-p-bottom_medium sticky-header">
-                        <h3 class="slds-text-heading_small">Pending Sin Asignar</h3>
+                        <div>
+                            <h3 class="slds-text-heading_small">Pending Sin Asignar</h3>
+                        </div>
+
                     </div>
                     <template if:true={isLoading}>
                         <!-- Muestra el spinner mientras isLoading es verdadero -->
@@ -265,7 +268,6 @@
                     <template if:true={listShipmentsCol2}>
                         <template for:each={colorCoded2} for:item="account" >
                             <template if:true={account.Monitoreo_Recepci_n_Acuse__c}>
-
                                 <div class="slds-card" key={account.Id}>
                                     <div class="slds-card__header" style="position: relative;">
                                         <h3 class="slds-card__title slds-text-heading_small">
@@ -295,7 +297,9 @@
                                         <template if:true={account.Carrier__c}>
                                             <p>Carrier: {account.Carrier__r.Name}</p>
                                         </template>
-                                        <p>Zona: {account.Seguimiento_de_devolucion_comentarios__c}</p>
+                                        <template if:true={account.Route__c}>
+                                            <p>Zona: {account.Route__r.Zona__c}</p>
+                                        </template>
                                     </div>
                                     
                                     
@@ -361,7 +365,9 @@
                                     <template if:true={account.Carrier__c}>
                                         <p>Carrier: {account.Carrier__r.Name}</p>
                                     </template>
-                                    <p>Zona: {account.Seguimiento_de_devolucion_comentarios__c}</p>
+                                    <template if:true={account.Route__c}>
+                                        <p>Zona: {account.Route__r.Zona__c}</p>
+                                    </template>
                                 </div>
                             </div>
                         </template>
@@ -411,7 +417,9 @@
                                     <template if:true={account.Carrier__c}>
                                         <p>Carrier: {account.Carrier__r.Name}</p>
                                     </template>
-                                    <p>Zona: {account.Seguimiento_de_devolucion_comentarios__c}</p>
+                                    <template if:true={account.Route__c}>
+                                        <p>Zona: {account.Route__r.Zona__c}</p>
+                                    </template>
                                 </div>
                             </div>
                         </template>
@@ -461,7 +469,9 @@
                                     <template if:true={account.Carrier__c}>
                                         <p>Carrier: {account.Carrier__r.Name}</p>
                                     </template>
-                                    <p>Zona: {account.Seguimiento_de_devolucion_comentarios__c}</p>
+                                    <template if:true={account.Route__c}>
+                                        <p>Zona: {account.Route__r.Zona__c}</p>
+                                    </template>
                                 </div>
                             </div>
                         </template>
@@ -512,7 +522,9 @@
                                         <template if:true={account.Carrier__c}>
                                             <p>Carrier: {account.Carrier__r.Name}</p>
                                         </template>
-                                        <p>Zona: {account.Seguimiento_de_devolucion_comentarios__c}</p>
+                                        <template if:true={account.Route__c}>
+                                            <p>Zona: {account.Route__r.Zona__c}</p>
+                                        </template>
                                     </div>
                                 </div>
                             </template>
@@ -564,7 +576,9 @@
                                         <template if:true={account.Carrier__c}>
                                             <p>Carrier: {account.Carrier__r.Name}</p>
                                         </template>
-                                        <p>Zona: {account.Seguimiento_de_devolucion_comentarios__c}</p>
+                                        <template if:true={account.Route__c}>
+                                            <p>Zona: {account.Route__r.Zona__c}</p>
+                                        </template>
                                     </div>
                                 </div>
                             </template>

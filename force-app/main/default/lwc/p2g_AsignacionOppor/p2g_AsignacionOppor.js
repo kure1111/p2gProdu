@@ -17,6 +17,8 @@ export default class P2g_AsignacionOppor extends LightningElement {
     @track listShipmentsCol6;
     @track listShipmentsCol7;
 
+    @track sizecol2;
+
     //seccion 1 ----------
     @track selectedGroup = '';
     @track selectedRadio = 'all';
@@ -54,7 +56,7 @@ export default class P2g_AsignacionOppor extends LightningElement {
         setInterval(() => {
             this.updateColumns();
             this.refreshData();
-        }, 60000); // 30 segundos
+        }, 60000); // 60 segundos
     }
 
     chanceVerTodo(event) {
@@ -214,6 +216,8 @@ export default class P2g_AsignacionOppor extends LightningElement {
             this.listShipmentsCol5 = result[3];
             this.listShipmentsCol6 = result[4];
             this.listShipmentsCol7 = result[5];
+
+            this.countGreenCircleElements();
         })
         .catch(error => {
             console.error('Error al llamar a updatecolumns:', error);
@@ -343,17 +347,26 @@ export default class P2g_AsignacionOppor extends LightningElement {
         });
     }
 
-    semaforoChance(event){
+    semaforoChance(event) {
         const value = event.target.value;
         this.semaforo = value;
-        //this.updateColumns();
+        this.countGreenCircleElements();
+    }
+    
+    countGreenCircleElements() {
+        if (this.semaforo === 'all') {
+            this.sizecol2 = this.colorCoded2.length;
+        } else {
+            this.sizecol2 = this.colorCoded2.filter(item => {
+                return item.circleClass2 === this.semaforo;
+            }).length;
+        }
     }
 
     filterSemaforo(semaforo) {
         if(this.semaforo === 'all'){
             return true;
         }
-
         else{
             if(this.semaforo === semaforo){
                 return true;
@@ -527,6 +540,7 @@ handleStatusAndFechaChange(event){
 handlezona(event){
     const value = event.target.value;
     this.zona = value;
+    console.log('Zona: ',this.zona);
     this.updateColumns();
     this.refreshData();
 }
