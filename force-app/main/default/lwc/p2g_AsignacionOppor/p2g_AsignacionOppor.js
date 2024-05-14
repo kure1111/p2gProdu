@@ -18,6 +18,12 @@ export default class P2g_AsignacionOppor extends LightningElement {
     @track listShipmentsCol7;
 
     @track sizecol2;
+    @track sizecol3;
+    @track sizecol4;
+    @track sizecol5;
+    @track sizecol6;
+    @track sizecol7;
+    @track sizecol8;
 
     //seccion 1 ----------
     @track selectedGroup = '';
@@ -340,7 +346,7 @@ export default class P2g_AsignacionOppor extends LightningElement {
             showSemaforo = this.filterSemaforo(circleClass);
             return {
                 ...account,
-                circleClass2: circleClass,
+                circleClass: circleClass,
                 Account_Shipment_Reference__c: timeString,
                 Monitoreo_Recepci_n_Acuse__c:showSemaforo,
             };
@@ -354,12 +360,31 @@ export default class P2g_AsignacionOppor extends LightningElement {
     }
     
     countGreenCircleElements() {
+        this.sizecol6 = this.listShipmentsCol6.length;
+        this.sizecol7 = this.listShipmentsCol7.length;
         if (this.semaforo === 'all') {
             this.sizecol2 = this.colorCoded2.length;
+            this.sizecol3 = this.colorCoded3.length;
+            this.sizecol4 = this.colorCoded4.length;
+            this.sizecol5 = this.colorCoded5.length;
         } else {
             this.sizecol2 = this.colorCoded2.filter(item => {
-                return item.circleClass2 === this.semaforo;
+                return item.circleClass === this.semaforo;
             }).length;
+
+            this.sizecol3 = this.colorCoded3.filter(item => {
+                return item.circleClass === this.semaforo;
+            }).length;
+
+            this.sizecol4 = this.colorCoded4.filter(item => {
+                return item.circleClass === this.semaforo;
+            }).length;
+
+            this.sizecol5 = this.colorCoded5.filter(item => {
+                return item.circleClass === this.semaforo;
+            }).length;
+
+
         }
     }
 
@@ -420,7 +445,7 @@ export default class P2g_AsignacionOppor extends LightningElement {
             showSemaforo = this.filterSemaforo(circleClass);
             return {
                 ...account,
-                circleClass2: circleClass,
+                circleClass: circleClass,
                 Account_Shipment_Reference__c: timeString,
                 Monitoreo_Recepci_n_Acuse__c:showSemaforo,
             };

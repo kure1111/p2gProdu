@@ -256,10 +256,12 @@
                 <!-- Columna 2 -->
                 <div class="slds-col slds-size_3-of-12" style="max-height: 70vh; overflow-y: auto;">
                     <div class="slds-p-bottom_medium sticky-header">
+                        <div class="circle-container">
+                            <div class="circle-badge">{sizecol2}</div>
+                        </div>
                         <div>
                             <h3 class="slds-text-heading_small">Pending Sin Asignar</h3>
                         </div>
-
                     </div>
                     <template if:true={isLoading}>
                         <!-- Muestra el spinner mientras isLoading es verdadero -->
@@ -276,7 +278,7 @@
                                             </a>
                                         </h3>
                                         <div style="position: absolute; top: 0; right: 0;">
-                                            <div class={account.circleClass2}></div>
+                                            <div class={account.circleClass}></div>
                                         </div>
                                     </div>
                                     <div class="slds-card__body">
@@ -325,7 +327,12 @@
                 <!-- Columna 3 -->
                 <div class="slds-col slds-size_2-of-12" style="max-height: 70vh; overflow-y: auto;">
                     <div class="slds-p-bottom_medium sticky-header">
-                        <h3 class="slds-text-heading_small">Pending Asignado</h3>
+                        <div>
+                            <h3 class="slds-text-heading_small">Pending Asignado</h3>
+                        </div>
+                        <div class="circle-container2">
+                            <div class="circle-badge">{sizecol3}</div>
+                        </div>
                     </div>
                     <template if:true={isLoading}>
                         <!-- Muestra el spinner mientras isLoading es verdadero -->
@@ -342,8 +349,8 @@
                                         </a>
                                     </h3>
                                     <div style="position: absolute; top: 0; right: 0;">
-                                        <template if:true={account.circleClass2}>
-                                            <div class={account.circleClass2}></div>
+                                        <template if:true={account.circleClass}>
+                                            <div class={account.circleClass}></div>
                                         </template>
                                     </div>
                                 </div>
@@ -381,7 +388,12 @@
                 <!-- Columna 4 -->
                 <div class="slds-col slds-size_2-of-12" style="max-height: 70vh; overflow-y: auto;">
                     <div class="slds-p-bottom_medium sticky-header">
-                        <h3 class="slds-text-heading_small">In Progress</h3>
+                        <div>
+                            <h3 class="slds-text-heading_small">In Progress</h3>
+                        </div>
+                        <div class="circle-container2">
+                            <div class="circle-badge">{sizecol4}</div>
+                        </div>
                     </div>
                     <template if:true={listShipmentsCol4}>
                         <template for:each={colorCoded4} for:item="account">
@@ -433,7 +445,12 @@
                 <!-- Columna 5 -->
                 <div class="slds-col slds-size_2-of-12" style="max-height: 70vh; overflow-y: auto;">
                     <div class="slds-p-bottom_medium sticky-header">
-                        <h3 class="slds-text-heading_small">Confirm</h3>
+                        <div>
+                            <h3 class="slds-text-heading_small">Confirm</h3>
+                        </div>
+                        <div class="circle-container2">
+                            <div class="circle-badge">{sizecol5}</div>
+                        </div>
                     </div>
                     <template if:true={listShipmentsCol5}>
                         <template for:each={colorCoded5} for:item="account">
@@ -485,7 +502,12 @@
                 <!-- Columna 7 -->
                 <div class="slds-col slds-size_2-of-12" style="max-height: 70vh; overflow-y: auto;">
                     <div class="slds-p-bottom_medium sticky-header">
-                        <h3 class="slds-text-heading_small">Delivery On Route</h3>
+                        <div>
+                            <h3 class="slds-text-heading_small">Delivery On Route</h3>
+                        </div>
+                        <div class="circle-container2">
+                            <div class="circle-badge">{sizecol7}</div>
+                        </div>
                     </div>
                     <template if:true={valorCheckbox}>
                         <template if:true={listShipmentsCol7}>
@@ -539,7 +561,12 @@
                 <!-- Columna closed-->
                 <div class="slds-col slds-size_1-of-12" style="max-height: 70vh; overflow-y: auto;">
                     <div class="slds-p-bottom_medium sticky-header">
-                        <h3 class="slds-text-heading_small">Closed</h3>
+                        <div>
+                            <h3 class="slds-text-heading_small">Closed</h3>
+                        </div>
+                        <div class="circle-container3">
+                            <div class="circle-badge">{sizecol6}</div>
+                        </div>
                     </div>
                     <template if:true={valorCheckbox}>
                         <template if:true={listShipmentsCol6}>
