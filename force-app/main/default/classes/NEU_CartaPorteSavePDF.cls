@@ -167,8 +167,8 @@ public with sharing class NEU_CartaPorteSavePDF
             doc.load(response.getBody());
             Dom.XMLNode root = doc.getRootElement();
             root = root.getChildElement('Body','http://schemas.xmlsoap.org/soap/envelope/');
-            root = root.getChildElement('CartaPorteTraslado40Response','http://tempuri.org/');
-            root = root.getChildElement('CartaPorteTraslado40Result','http://tempuri.org/');
+            root = root.getChildElement('CartaPorteTraslado43Response','http://tempuri.org/');
+            root = root.getChildElement('CartaPorteTraslado43Result','http://tempuri.org/');
             boolean error = Boolean.valueOf(root.getChildElement('Error','http://tempuri.org/').getText());
             
             system.debug('Contiene error la respuesta -> ' +  error);
@@ -235,13 +235,13 @@ system.debug(' cadenaOriginalTFD -> ' +  cadenaOriginalTFD);*/
             if([SELECT IsSandbox FROM Organization LIMIT 1].IsSandbox)
                 request.setEndpoint('http://35.169.18.187/pakws/WSCartaPorte2.asmx'); 
             else
-            request.setEndpoint('http://35.169.18.187/pakws92/wscartaporte40.asmx');
+            request.setEndpoint('http://35.169.18.187/pakws92/WSCartaPorte43.asmx');
                 //request.setEndpoint('http://35.169.18.187/pakws92/WSCartaPorte2.asmx');
             
             request.setMethod('POST');
             request.setTimeout(120000);
             request.setHeader('Content-Type', 'text/xml;charset=utf-8');
-            request.setHeader('SOAPAction', 'http://tempuri.org/CartaPorteTraslado40');
+            request.setHeader('SOAPAction', 'http://tempuri.org/CartaPorteTraslado43');
             request.setBody(body);
             HttpResponse response = httpProtocol.send(request);
             return response;
@@ -273,9 +273,9 @@ system.debug(' cadenaOriginalTFD -> ' +  cadenaOriginalTFD);*/
             body = '<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:tem="http://tempuri.org/">'+
                 '<soapenv:Header/>'+
                 '<soapenv:Body>'+
-                '<tem:CartaPorteTraslado40>'+
+                '<tem:CartaPorteTraslado43>'+
                 '<tem:json>'+ jsonCP+ '</tem:json>'+
-                '</tem:CartaPorteTraslado40>'+
+                '</tem:CartaPorteTraslado43>'+
                 '</soapenv:Body>'+
                 '</soapenv:Envelope>';
               return body;
