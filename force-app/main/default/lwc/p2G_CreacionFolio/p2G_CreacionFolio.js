@@ -76,6 +76,7 @@ export default class P2G_CreacionFolio extends LightningElement {
     searchValueIdClaveServicio ='';
     showSideClaveServicio = false;
     
+    materialPeligroso = false;
     @track sideRecordsMaterialPeligroso;
     searchValueMaterialPeligroso ='';
     searchValueIdMaterialPeligroso ='';
@@ -92,7 +93,7 @@ export default class P2G_CreacionFolio extends LightningElement {
     showSideContainerType = false;
 
     @track sideRecordsClaveUnidadPeso;
-    searchValueClaveUnidadPeso ='';
+    searchValueClaveUnidadPeso ='Pallet';
     searchValueIdClaveUnidadPeso ='';
     showSideClaveUnidadPeso = false;
 
@@ -387,7 +388,7 @@ AgregarItemPrice(){
 }
 
 cleanClaveUnidadPeso(){
-    this.searchValueClaveUnidadPeso = '';
+    this.searchValueClaveUnidadPeso = 'Pallet';
     this.showSideClaveUnidadPeso = false;
     this.searchValueIdClaveUnidadPeso = '';
     this.wrapperFolio.recordTypeUnidad = '';
@@ -400,8 +401,14 @@ GeF_NACIONAL(){
     typeof this.searchValueLoad === 'undefined' || this.searchValueLoad === null || this.searchValueLoad === '' ||
     typeof this.searchValueDischarge === 'undefined' || this.searchValueDischarge === null || this.searchValueDischarge === '' ||
     typeof this.ETD === 'undefined' || this.ETD === null || this.ETD === ''||
-    typeof this.ETD === 'undefined' || this.ETD === null || this.ETD === '') {
-        this.pushMessage('Error','error', 'Se requiere Rate Name');
+    typeof this.wrapperFolio.ETA === 'undefined' || this.wrapperFolio.ETA === null || this.wrapperFolio.ETA === '' ||
+    typeof this.searchValueContainerType === 'undefined' || this.searchValueContainerType === null || this.searchValueContainerType === '' ||
+    typeof this.searchValueClaveServicio === 'undefined' || this.searchValueClaveServicio === null || this.searchValueClaveServicio === '' ||
+    typeof this.units === 'undefined' || this.units === null || this.units === '' ||
+    typeof this.pesoBruto === 'undefined' || this.pesoBruto === null || this.pesoBruto === '' ||
+    typeof this.pesoNeto === 'undefined' || this.pesoNeto === null || this.pesoNeto === '' ||
+    typeof this.totalShipping === 'undefined' || this.totalShipping === null || this.totalShipping === '') {
+        this.pushMessage('Campos Faltantes','error', 'Favor de llenar todos campos requeridos indicados con *');
         return
     }
     this.wrapperFolio['recordTypeUnidad'] = this.wrapperFolio.recordTypeUnidad && this.wrapperFolio.recordTypeUnidad.length > 0 ? this.wrapperFolio.recordTypeUnidad : 'a3K4T000000SNdIUAW';
@@ -482,6 +489,7 @@ GeF_NACIONAL(){
         this.searchValueEmbalaje = null;
         this.searchValueMaterialPeligroso = null;
         this.searchValueClaveServicio = null;
+        this.materialPeligroso = false;
         this.quoteSellPrice = 0;
         this.nfolios = 1;
         this.searchKeyIdSST='a1n4T000002JWphQAG'; //prod a1n4T000001XXYCQA4 UAT:a1n0R000001lZceQAE
@@ -500,11 +508,18 @@ GeF_NACIONAL(){
     
 // buscador ClaveServicio
 SideSelectClaveServicio(event){
+    this.materialPeligroso = false;
     this.searchValueClaveServicio = event.target.outerText;
     this.showSideClaveServicio = false;
     this.searchValueIdClaveServicio = event.currentTarget.dataset.id;
     this.wrapperCargoLine.idClaveSat = event.currentTarget.dataset.id;
     this.wrapperCargoLine.extencionItemName = event.target.outerText;
+    for (let i in this.sideRecordsClaveServicio){
+        if(this.searchValueIdClaveServicio == this.sideRecordsClaveServicio[i].Id && this.sideRecordsClaveServicio[i].Material_PeligrosoCP__c === true){
+            this.materialPeligroso = true;
+            console.log('es un material peligroso '+this.sideRecordsClaveServicio[i].Material_PeligrosoCP__c);
+        }
+    }
 }
 searchKeyClaveServicio(event){
     this.searchValueClaveServicio = event.target.value;

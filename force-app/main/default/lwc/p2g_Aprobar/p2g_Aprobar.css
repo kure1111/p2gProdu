@@ -1,0 +1,32 @@
+/* customTable.css */
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.custom-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.custom-table th, .custom-table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: center;
+}
+
+.custom-table th {
+    font-weight: bold;
+}
+
+.button-container {
+    margin-top: 2%;
+    text-align: right;
+}
+.approval-button {
+    margin-right: 5%; /* Puedes ajustar el valor según sea necesario */
+}
+
+:host(.custom-green-button) .slds-button {
+    background-color: green !important;
+}

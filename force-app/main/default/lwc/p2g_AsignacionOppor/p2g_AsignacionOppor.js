@@ -17,6 +17,21 @@ export default class P2g_AsignacionOppor extends LightningElement {
     @track listShipmentsCol6;
     @track listShipmentsCol7;
 
+    @track sizecol2;
+    @track sizecol3;
+    @track sizecol4;
+    @track sizecol5;
+    @track sizecol6;
+    @track sizecol7;
+    @track sizecol8;
+
+    @track totalCol2;
+    @track totalCol3;
+    @track totalCol4;
+    @track totalCol5;
+    @track totalCol6;
+    @track totalCol7;
+
     //seccion 1 ----------
     @track selectedGroup = '';
     @track selectedRadio = 'all';
@@ -30,7 +45,7 @@ export default class P2g_AsignacionOppor extends LightningElement {
     @track seccion3Data;
 
     @track valorCheckbox = true;
-
+    @track semaforo = 'all';
 
     radioOptions = [
         { label: 'All shipments', value: 'all' },
@@ -38,6 +53,7 @@ export default class P2g_AsignacionOppor extends LightningElement {
     ];
 
     @track showButton = true;
+    @track zona = 'All';
 
     handleNameClick(event) {
         event.preventDefault(); // Previene la acción predeterminada del enlace
@@ -53,7 +69,7 @@ export default class P2g_AsignacionOppor extends LightningElement {
         setInterval(() => {
             this.updateColumns();
             this.refreshData();
-        }, 60000); // 30 segundos
+        }, 60000); // 60 segundos
     }
 
     chanceVerTodo(event) {
@@ -116,6 +132,7 @@ export default class P2g_AsignacionOppor extends LightningElement {
         } else {
             this.showSideOpExecutive = false;
             this.updateColumns();
+            this.refreshData();
         }
     }
 
@@ -204,7 +221,7 @@ export default class P2g_AsignacionOppor extends LightningElement {
 
     //------------ seccion 2
     updateColumns() {
-        getColumns({datos: ['2', 'Pending', this.startDate, this.endDate,this.selectedRadio,this.searchValueIdAccount,this.searchValueIdCarrier,this.searchValueIdOpExecutive,this.tipoServicio]})
+        getColumns({datos: ['2', 'Pending', this.startDate, this.endDate,this.selectedRadio,this.searchValueIdAccount,this.searchValueIdCarrier,this.searchValueIdOpExecutive,this.tipoServicio,this.zona]})
         .then(result => {
             this.listShipmentsCol2 = result[0];
             this.listShipmentsCol3 = result[1];
@@ -212,6 +229,8 @@ export default class P2g_AsignacionOppor extends LightningElement {
             this.listShipmentsCol5 = result[3];
             this.listShipmentsCol6 = result[4];
             this.listShipmentsCol7 = result[5];
+
+            this.countGreenCircleElements();
         })
         .catch(error => {
             console.error('Error al llamar a updatecolumns:', error);
@@ -235,7 +254,7 @@ export default class P2g_AsignacionOppor extends LightningElement {
         if (fieldName === 'startDate' || fieldName === 'endDate') {
             const august2023 = new Date('2023-08-01');
             const selectedDate = new Date(value);
-    
+            
             if (selectedDate < august2023) {
                 const formattedAugust2023 = august2023.toISOString().split('T')[0];
                 value = formattedAugust2023;
@@ -291,8 +310,15 @@ export default class P2g_AsignacionOppor extends LightningElement {
 
     get colorCoded2() {
         return this.listShipmentsCol2.map(account => {
+            let showSemaforo = true;
             const now = new Date();
             const dateString = account.ETD_from_Point_of_Load__c; // "2024-04-05"
+
+            const equipPlacedDate = new Date(account.Equip_Placed__c); // Obtener la fecha de equipPlacedDate
+    
+            const etdHoursPT = equipPlacedDate.getHours();
+            const etdMinutesPT = equipPlacedDate.getMinutes();
+            const timeStringPT = etdHoursPT + ':' + (etdMinutesPT < 10 ? '0' + etdMinutesPT : etdMinutesPT);
             
             const etdTimeMillis = account.ETD_Time_from_Point_of_Load__c;
             // Convertir milisegundos en horas y minutos
@@ -330,20 +356,110 @@ export default class P2g_AsignacionOppor extends LightningElement {
                     circleClass = 'circle black'; // Evento pasado
                 }
             }
-    
+            showSemaforo = this.filterSemaforo(circleClass);
             return {
                 ...account,
-                circleClass2: circleClass,
+                circleClass: circleClass,
                 Account_Shipment_Reference__c: timeString,
+                Monitoreo_Recepci_n_Acuse__c:showSemaforo,
+                Reason_for_declined__c:timeStringPT,
+
             };
         });
     }
 
+    semaforoChance(event) {
+        const value = event.target.value;
+        this.semaforo = value;
+        this.countGreenCircleElements();
+    }
+    
+    countGreenCircleElements() {
+        // Obtener el tamaño de las listas col6 y col7
+        this.sizecol6 = this.listShipmentsCol6.length;
+        this.sizecol7 = this.listShipmentsCol7.length;
+        this.totalCol6 = this.sumField(this.listShipmentsCol6, 'Total_Services_Sell_Amount__c');
+        // Sumar el campo Total_Services_Sell_Amount__c para listShipmentsCol7
+        this.totalCol7 = this.sumField(this.listShipmentsCol7, 'Total_Services_Sell_Amount__c');
+        // Si semaforo es 'all', obtener el tamaño de las listas sin filtrar
+        if (this.semaforo === 'all') {
+            this.sizecol2 = this.colorCoded2.length;
+            this.sizecol3 = this.colorCoded3.length;
+            this.sizecol4 = this.colorCoded4.length;
+            this.sizecol5 = this.colorCoded5.length;
+
+            this.totalCol2 = this.sumField(this.listShipmentsCol2, 'Total_Services_Sell_Amount__c');
+            this.totalCol3 = this.sumField(this.listShipmentsCol3, 'Total_Services_Sell_Amount__c');
+            this.totalCol4 = this.sumField(this.listShipmentsCol4, 'Total_Services_Sell_Amount__c');
+            this.totalCol5 = this.sumField(this.listShipmentsCol5, 'Total_Services_Sell_Amount__c');
+
+        } else {
+            // Filtrar y contar elementos según el semaforo para colorCoded2
+            this.sizecol2 = this.getCountByCircleClass(this.colorCoded2, this.semaforo);
+            // Filtrar y contar elementos según el semaforo para colorCoded3
+            this.sizecol3 = this.getCountByCircleClass(this.colorCoded3, this.semaforo);
+            // Filtrar y contar elementos según el semaforo para colorCoded4
+            this.sizecol4 = this.getCountByCircleClass(this.colorCoded4, this.semaforo);
+            // Filtrar y contar elementos según el semaforo para colorCoded5
+            this.sizecol5 = this.getCountByCircleClass(this.colorCoded5, this.semaforo);
+            // Sumar el campo Total_Services_Sell_Amount__c para colorCoded2 filtrado por semaforo
+            this.totalCol2 = this.sumFieldByCircleClass(this.colorCoded2, 'Total_Services_Sell_Amount__c', this.semaforo);
+            // Sumar el campo Total_Services_Sell_Amount__c para colorCoded3 filtrado por semaforo
+            this.totalCol3 = this.sumFieldByCircleClass(this.colorCoded3, 'Total_Services_Sell_Amount__c', this.semaforo);
+            // Sumar el campo Total_Services_Sell_Amount__c para colorCoded4 filtrado por semaforo
+            this.totalCol4 = this.sumFieldByCircleClass(this.colorCoded4, 'Total_Services_Sell_Amount__c', this.semaforo);
+            // Sumar el campo Total_Services_Sell_Amount__c para colorCoded5 filtrado por semaforo
+            this.totalCol5 = this.sumFieldByCircleClass(this.colorCoded5, 'Total_Services_Sell_Amount__c', this.semaforo);
+            }
+    }
+    
+    // Función para contar elementos filtrados por circleClass
+    getCountByCircleClass(list, circleClass) {
+        return list.filter(item => item.circleClass === circleClass).length;
+    }
+    
+    // Función para sumar el valor de un campo filtrado por circleClass
+    sumFieldByCircleClass(list, fieldName, circleClass) {
+        return list.reduce((total, item) => {
+            if (item.circleClass === circleClass) {
+                return total + (item[fieldName] || 0);
+            }
+            return total;
+        }, 0);
+    }
+    sumField(list, fieldName) {
+        return list.reduce((total, item) => {
+            // Convertir el valor del campo a número (si es un string numérico) y sumarlo al total
+            return total + (item[fieldName] || 0);
+        }, 0);
+    }
+    
+
+    filterSemaforo(semaforo) {
+        if(this.semaforo === 'all'){
+            return true;
+        }
+        else{
+            if(this.semaforo === semaforo){
+                return true;
+            }
+            else return false;
+        }
+
+    }
+
     get colorCoded3() {
         return this.listShipmentsCol3.map(account => {
+            let showSemaforo = true;
             const now = new Date();
             const etdTimeMillis = account.ETD_Time_from_Point_of_Load__c;
             const dateString = account.ETD_from_Point_of_Load__c; // "2024-04-05"
+
+            const equipPlacedDate = new Date(account.Equip_Placed__c); // Obtener la fecha de equipPlacedDate
+    
+            const etdHoursPT = equipPlacedDate.getHours();
+            const etdMinutesPT = equipPlacedDate.getMinutes();
+            const timeStringPT = etdHoursPT + ':' + (etdMinutesPT < 10 ? '0' + etdMinutesPT : etdMinutesPT);
             
             // Convertir milisegundos en horas y minutos
             const etdHours = Math.floor((etdTimeMillis / (1000 * 60 * 60)) % 24);
@@ -379,21 +495,28 @@ export default class P2g_AsignacionOppor extends LightningElement {
                     circleClass = 'circle black'; // Evento pasado
                 }
             }
-
+            showSemaforo = this.filterSemaforo(circleClass);
             return {
                 ...account,
-                circleClass2: circleClass,
+                circleClass: circleClass,
                 Account_Shipment_Reference__c: timeString,
+                Monitoreo_Recepci_n_Acuse__c:showSemaforo,
+                Reason_for_declined__c:timeStringPT,
             };
         });
     }
     
     get colorCoded4() {
         return this.listShipmentsCol4.map(account => {
-
+            let showSemaforo = true;
             const now = new Date();
             const etdTimeMillis = account.ETD_Time_from_Point_of_Load__c;
             const dateString = account.ETD_from_Point_of_Load__c; // "2024-04-05"
+
+            const equipPlacedDate = new Date(account.Equip_Placed__c); // Obtener la fecha de equipPlacedDate
+            const etdHoursPT = equipPlacedDate.getHours();
+            const etdMinutesPT = equipPlacedDate.getMinutes();
+            const timeStringPT = etdHoursPT + ':' + (etdMinutesPT < 10 ? '0' + etdMinutesPT : etdMinutesPT);
             
             // Convertir milisegundos en horas y minutos
             const etdHours = Math.floor((etdTimeMillis / (1000 * 60 * 60)) % 24);
@@ -430,10 +553,13 @@ export default class P2g_AsignacionOppor extends LightningElement {
                     circleClass = 'circle black'; // Evento pasado
                 }
             }
+            showSemaforo = this.filterSemaforo(circleClass);
             return {
                 ...account,
                 circleClass: circleClass,
                 Account_Shipment_Reference__c: timeString,
+                Monitoreo_Recepci_n_Acuse__c:showSemaforo,
+                Reason_for_declined__c:timeStringPT,
             };
         });
     }
@@ -441,57 +567,82 @@ export default class P2g_AsignacionOppor extends LightningElement {
     get colorCoded5() {
         return this.listShipmentsCol5.map(account => {
             const now = new Date();
-            const etdTimeMillis = account.ETD_Time_from_Point_of_Load__c;
-            const dateString = account.ETD_from_Point_of_Load__c; // "2024-04-05"
-            
-            // Convertir milisegundos en horas y minutos
-            const etdHours = Math.floor((etdTimeMillis / (1000 * 60 * 60)) % 24);
-            const etdMinutes = Math.floor((etdTimeMillis / (1000 * 60)) % 60);
+            const equipPlacedDate = new Date(account.Equip_Placed__c); // Obtener la fecha de equipPlacedDate
+            const dateString = account.ETD_from_Point_of_Load__c; // "2024-04-05" fecha etd
+            let showSemaforo = true;
+            const etdHours = equipPlacedDate.getHours();
+            const etdMinutes = equipPlacedDate.getMinutes();
+            const dia = equipPlacedDate.getMonth()+1;
             const timeString = etdHours + ':' + (etdMinutes < 10 ? '0' + etdMinutes : etdMinutes);
+            const timeFechaPlace = equipPlacedDate.getFullYear() +'-'+ (dia < 10 ? '0' + dia : dia) +'-'+(equipPlacedDate.getDate() < 10 ? '0' + equipPlacedDate.getDate() : equipPlacedDate.getDate());
+            let circleClass = '';
+            console.log('dia', dia);
+
+            //
+            const etdTimeMillisETD = account.ETD_Time_from_Point_of_Load__c;
+            // Convertir milisegundos en horas y minutos
+            const etdHoursETD = Math.floor((etdTimeMillisETD / (1000 * 60 * 60)) % 24);
+            const etdMinutesETD = Math.floor((etdTimeMillisETD / (1000 * 60)) % 60);
+            const timeStringETD = etdHoursETD + ':' + (etdMinutesETD < 10 ? '0' + etdMinutesETD : etdMinutesETD);
             const [year, monthIndex, day] = dateString.split('-');
     
             // Crear una nueva instancia de Date con la fecha y hora especificadas
-            const etdDate = new Date(year, monthIndex - 1, day, etdHours, etdMinutes);        
-            let circleClass = '';
+            const etdDate = new Date(year, monthIndex - 1, day, etdHours, etdMinutes);
+            const etdWithoutTime = new Date(etdDate.getFullYear(), etdDate.getMonth(), etdDate.getDate());
             // Comparar solo las fechas (sin tener en cuenta la hora)
-            const etdDateWithoutTime = new Date(etdDate.getFullYear(), etdDate.getMonth(), etdDate.getDate());
-            const nowWithoutTime = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+            const equipPlacedDateWithoutTime = new Date(equipPlacedDate.getFullYear(), equipPlacedDate.getMonth(), equipPlacedDate.getDate());
 
-            if (etdDateWithoutTime < nowWithoutTime) {
-                circleClass = 'circle black'; // Evento pasado
-            } else if (etdDateWithoutTime > nowWithoutTime) {
-                circleClass = 'circle green'; // Evento futuro
+            const etdTotalMinutes = etdHours * 60 + etdMinutes;
+            const etdTotalMinutesETD = etdHoursETD * 60 + etdMinutesETD;
+
+            if (equipPlacedDateWithoutTime < etdWithoutTime) {
+                circleClass = 'circle green'; // Evento pasado
+            } else if (equipPlacedDateWithoutTime > etdWithoutTime) {
+                circleClass = 'circle red'; // Evento futuro
             } else {
                 // Evento hoy, comparar los minutos
-                const etdTotalMinutes = etdHours * 60 + etdMinutes;
-                const nowTotalMinutes = now.getHours() * 60 + now.getMinutes();
-                const differenceInMinutes = etdTotalMinutes - nowTotalMinutes;
-
-                if (differenceInMinutes > 360) {
-                    circleClass = 'circle green'; // Más de 6 horas
-                } else if (differenceInMinutes >= 240) {
-                    circleClass = 'circle yellow'; // Entre 4 y 6 horas
-                } else if (differenceInMinutes >= 0) {
-                    circleClass = 'circle red'; // Menos de 4 horas
-                } else {
-                    circleClass = 'circle black'; // Evento pasado
+                if(etdTotalMinutes <= etdTotalMinutesETD){
+                    circleClass = 'circle green';
+                }
+                else{
+                    circleClass = 'circle red';
                 }
             }
+            if (!account.Equip_Placed__c) {
+                circleClass = 'circle black';
+            }
+    
+            showSemaforo = this.filterSemaforo(circleClass);
+    
             return {
                 ...account,
                 circleClass: circleClass,
-                Account_Shipment_Reference__c: timeString,
+                Account_Shipment_Reference__c: timeString, //placed
+                Monitoreo_Recepci_n_Acuse__c: showSemaforo,
+                Reason_for_declined__c:timeStringETD, //etd
+                Status_Observations__c:timeFechaPlace,
             };
         });
     }
+    
 ///-------------------------secicon 3----------
 
 
 handleStatusAndFechaChange(event){
     const value = event.target.value;
     this.status = value;
+    this.updateColumns();
     this.refreshData();
 }
+
+handlezona(event){
+    const value = event.target.value;
+    this.zona = value;
+    console.log('Zona: ',this.zona);
+    this.updateColumns();
+    this.refreshData();
+}
+
 handleTipoServicio(event){
     const value = event.target.value;
     this.tipoServicio = value;
@@ -500,7 +651,7 @@ handleTipoServicio(event){
 }
 
 refreshData() {
-    seccion3({datos:[this.status,this.startDate,this.endDate,this.selectedRadio,this.searchValueIdAccount,this.searchValueIdCarrier,this.searchValueIdOpExecutive,this.tipoServicio]})
+    seccion3({datos:[this.status,this.startDate,this.endDate,this.selectedRadio,this.searchValueIdAccount,this.searchValueIdCarrier,this.searchValueIdOpExecutive,this.tipoServicio,this.zona]})
         .then(result => {
             if (result && result.length > 0) {
                 // Recorrer cada elemento de result
@@ -514,8 +665,8 @@ refreshData() {
                 });
 
                 // Asignar el resultado modificado a seccion3Data
-                this.seccion3Data = result;
             }
+            this.seccion3Data = result;
         })
         .catch(error => {
             console.error('Error al llamar a refreshData:', error);

@@ -142,6 +142,24 @@
                         </div>
                     </div>
                 </div>
+
+                <!-- filtro semaforo -->
+                <div class="slds-col" style="flex: 0 0 15%;">
+                    <label for="status" class="slds-form-element__label slds-p-right_x-small" style="margin-bottom: 5%;">Semaforo:</label>
+                    <div class="slds-form-element">
+                        <div class="slds-form-element__control">
+                            <div class="slds-select_container">
+                                <select id="semaforo" name="semaforopickList" class="slds-select" onchange={semaforoChance}>
+                                    <option value="all">Todo</option>
+                                    <option value="circle green">Verde</option>
+                                    <option value="circle yellow">Amarillo</option>
+                                    <option value="circle red">Rojo</option>
+                                    <option value="circle black">Negro</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             
                 <!-- Filtro por servicio -->
                 <div class="slds-col" style="flex: 0 0 15%;">
@@ -208,6 +226,24 @@
                         </table>
 
                 </div>
+
+                <!--Filtro zona -->
+                <div class="slds-col" style="flex: 0 0 15%;">
+                    <label for="status" class="slds-form-element__label slds-p-right_x-small" style="margin-bottom: 5%;">Zona:</label>
+                    <div class="slds-form-element">
+                        <div class="slds-form-element__control">
+                            <div class="slds-select_container">
+                                <select id="zona" name="zona" class="slds-select" onchange={handlezona}>
+                                    <option value="All">All</option>
+                                    <option value="Noroeste">Noroeste</option>
+                                    <option value="GDL">GDL</option>
+                                    <option value="PAC-SUR">PAC-SUR</option>
+                                    <option value="Centro-Norte">Centro-Norte</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
   
             </div>
         </div>
@@ -220,57 +256,68 @@
                 <!-- Columna 2 -->
                 <div class="slds-col slds-size_3-of-12" style="max-height: 70vh; overflow-y: auto;">
                     <div class="slds-p-bottom_medium sticky-header">
-                        <h3 class="slds-text-heading_small">Pending Sin Asignar</h3>
+                        <div class="circle-container">
+                            <div class="circle-badge">{sizecol2}</div>
+                        </div>
+                        <div>
+                            <h3 class="slds-text-heading_small">Pending Sin Asignar</h3>
+                        </div>
                     </div>
+                    <div>Total: {totalCol2}</div>
                     <template if:true={isLoading}>
                         <!-- Muestra el spinner mientras isLoading es verdadero -->
                         <lightning-spinner alternative-text="Loading" size="small"></lightning-spinner>
                     </template>
                     <template if:true={listShipmentsCol2}>
                         <template for:each={colorCoded2} for:item="account" >
-                            <div class="slds-card" key={account.Id}>
-                                <div class="slds-card__header" style="position: relative;">
-                                    <h3 class="slds-card__title slds-text-heading_small">
-                                        <a href="#" onclick={handleNameClick} data-record-id={account.Id}>
-                                            {account.Name}
-                                        </a>
-                                    </h3>
-                                    <div style="position: absolute; top: 0; right: 0;">
-                                        <template if:true={account.circleClass2}>
-                                            <div class={account.circleClass2}></div>
+                            <template if:true={account.Monitoreo_Recepci_n_Acuse__c}>
+                                <div class="slds-card" key={account.Id}>
+                                    <div class="slds-card__header" style="position: relative;">
+                                        <h3 class="slds-card__title slds-text-heading_small">
+                                            <a href="#" onclick={handleNameClick} data-record-id={account.Id}>
+                                                {account.Name}
+                                            </a>
+                                        </h3>
+                                        <div style="position: absolute; top: 0; right: 0;">
+                                            <div class={account.circleClass}></div>
+                                        </div>
+                                    </div>
+                                    <div class="slds-card__body">
+                                        <p>
+                                            <b>{account.Shipment_Status_Plann__c}</b> <span style="margin-right: 20px;"></span>
+                                            {account.ETD_from_Point_of_Load__c}   /   {account.ETA_Point_of_Discharge__c}
+                                        </p>
+                                        <p> Time: {account.Account_Shipment_Reference__c} hrs / {account.Reason_for_declined__c} hrs</p>
+                                        <template if:true={account.Account_for__c}>
+                                            <p>Account: {account.Account_for__r.Name}</p>
+                                        </template>
+                                        <template if:true={account.Operation_Executive__c}>
+                                            <p>{account.Operation_Executive__r.Name}</p>
+                                        </template>
+                                        <template if:true={account.Route__c}>
+                                            <p>{account.Route__r.Name}   /   SellPrice: {account.Total_Services_Sell_Amount__c}</p>
+                                        </template>
+                                        <template if:true={account.Carrier__c}>
+                                            <p>Carrier: {account.Carrier__r.Name}</p>
+                                        </template>
+                                        <template if:true={account.Route__c}>
+                                            <p>Zona: {account.Route__r.Zona__c}</p>
                                         </template>
                                     </div>
-                                </div>
-                                <div class="slds-card__body">
-                                    <p>
-                                        <b>{account.Shipment_Status_Plann__c}</b> <span style="margin-right: 20px;"></span>
-                                        {account.ETD_from_Point_of_Load__c}   /   {account.ETA_Point_of_Discharge__c}
-                                    </p>
-                                    <p> Time: {account.Account_Shipment_Reference__c} hrs</p>
-                                    <template if:true={account.Account_for__c}>
-                                        <p>Account: {account.Account_for__r.Name}</p>
+                                    
+                                    
+                                    <template if:true={showButton}>
+                                        <button data-id={account.Id} class="slds-button slds-button_brand" style="position: absolute; bottom: 0; right: 0;" onclick={handleTakeButtonClick}>Take</button>
                                     </template>
-                                    <template if:true={account.Operation_Executive__c}>
-                                        <p>{account.Operation_Executive__r.Name}</p>
-                                    </template>
-                                    <template if:true={account.Route__c}>
-                                        <p>{account.Route__r.Name}   /   SellPrice: {account.Total_Services_Sell_Amount__c}</p>
-                                    </template>
-                                    <template if:true={account.Carrier__c}>
-                                        <p>Carrier: {account.Carrier__r.Name}</p>
+                                    
+                                    <!-- Botón 2: Opcional - Solo si necesitas un segundo botón -->
+                                    <template if:false={showButton}>
+                                        <button data-id={account.Id} class="slds-button slds-button_brand" style="position: absolute; bottom: 0; right: 0;" onclick={handleTakeButtonAsignar}>Asignar</button>
                                     </template>
                                 </div>
-                                
-                                
-                                <template if:true={showButton}>
-                                    <button data-id={account.Id} class="slds-button slds-button_brand" style="position: absolute; bottom: 0; right: 0;" onclick={handleTakeButtonClick}>Take</button>
-                                </template>
-                                
-                                <!-- Botón 2: Opcional - Solo si necesitas un segundo botón -->
-                                <template if:false={showButton}>
-                                    <button data-id={account.Id} class="slds-button slds-button_brand" style="position: absolute; bottom: 0; right: 0;" onclick={handleTakeButtonAsignar}>Asignar</button>
-                                </template>
-                            </div>
+
+                            </template>
+
                         </template>
                     </template>
                     <template if:false={listShipmentsCol2}>
@@ -281,14 +328,21 @@
                 <!-- Columna 3 -->
                 <div class="slds-col slds-size_2-of-12" style="max-height: 70vh; overflow-y: auto;">
                     <div class="slds-p-bottom_medium sticky-header">
-                        <h3 class="slds-text-heading_small">Pending Asignado</h3>
+                        <div>
+                            <h3 class="slds-text-heading_small">Pending Asignado</h3>
+                        </div>
+                        <div class="circle-container2">
+                            <div class="circle-badge">{sizecol3}</div>
+                        </div>
                     </div>
+                    <div>Total: {totalCol3}</div>
                     <template if:true={isLoading}>
                         <!-- Muestra el spinner mientras isLoading es verdadero -->
                         <lightning-spinner alternative-text="Loading" size="small"></lightning-spinner>
                     </template>
                     <template if:true={listShipmentsCol3}>
                         <template for:each={colorCoded3} for:item="account" >
+                            <template if:true={account.Monitoreo_Recepci_n_Acuse__c}>
                             <div class="slds-card" key={account.Id}>
                                 <div class="slds-card__header" style="position: relative;">
                                     <h3 class="slds-card__title slds-text-heading_small">
@@ -297,8 +351,8 @@
                                         </a>
                                     </h3>
                                     <div style="position: absolute; top: 0; right: 0;">
-                                        <template if:true={account.circleClass2}>
-                                            <div class={account.circleClass2}></div>
+                                        <template if:true={account.circleClass}>
+                                            <div class={account.circleClass}></div>
                                         </template>
                                     </div>
                                 </div>
@@ -307,7 +361,7 @@
                                         <b>{account.Shipment_Status_Plann__c}</b> <span style="margin-right: 20px;"></span>
                                         {account.ETD_from_Point_of_Load__c}   /   {account.ETA_Point_of_Discharge__c}
                                     </p>
-                                    <p> Time: {account.Account_Shipment_Reference__c} hrs</p>
+                                    <p> Time: {account.Account_Shipment_Reference__c} hrs / {account.Reason_for_declined__c} hrs</p>
                                     <template if:true={account.Account_for__c}>
                                         <p>Account: {account.Account_for__r.Name}</p>
                                     </template>
@@ -320,9 +374,13 @@
                                     <template if:true={account.Carrier__c}>
                                         <p>Carrier: {account.Carrier__r.Name}</p>
                                     </template>
+                                    <template if:true={account.Route__c}>
+                                        <p>Zona: {account.Route__r.Zona__c}</p>
+                                    </template>
                                 </div>
                             </div>
                         </template>
+                    </template>
                     </template>
                     <template if:false={listShipmentsCol3}>
                         <p>No hay cuentas disponibles.</p>
@@ -332,10 +390,17 @@
                 <!-- Columna 4 -->
                 <div class="slds-col slds-size_2-of-12" style="max-height: 70vh; overflow-y: auto;">
                     <div class="slds-p-bottom_medium sticky-header">
-                        <h3 class="slds-text-heading_small">In Progress</h3>
+                        <div>
+                            <h3 class="slds-text-heading_small">In Progress</h3>
+                        </div>
+                        <div class="circle-container2">
+                            <div class="circle-badge">{sizecol4}</div>
+                        </div>
                     </div>
+                    <div>Total: {totalCol4}</div>
                     <template if:true={listShipmentsCol4}>
                         <template for:each={colorCoded4} for:item="account">
+                            <template if:true={account.Monitoreo_Recepci_n_Acuse__c}>
                             <div class="slds-card" key={account.Id}>
                                 <div class="slds-card__header" style="position: relative;">
                                     <h3 class="slds-card__title slds-text-heading_small">
@@ -354,7 +419,7 @@
                                         <b>{account.Shipment_Status_Plann__c}</b> <span style="margin-right: 20px;"></span>
                                         {account.ETD_from_Point_of_Load__c}   /   {account.ETA_Point_of_Discharge__c}
                                     </p>
-                                    <p> Time: {account.Account_Shipment_Reference__c} hrs</p>
+                                    <p> Time: {account.Account_Shipment_Reference__c} hrs / {account.Reason_for_declined__c} hrs</p>
                                     <template if:true={account.Account_for__c}>
                                         <p>Account: {account.Account_for__r.Name}</p>
                                     </template>
@@ -367,9 +432,13 @@
                                     <template if:true={account.Carrier__c}>
                                         <p>Carrier: {account.Carrier__r.Name}</p>
                                     </template>
+                                    <template if:true={account.Route__c}>
+                                        <p>Zona: {account.Route__r.Zona__c}</p>
+                                    </template>
                                 </div>
                             </div>
                         </template>
+                    </template>
                     </template>
                     <template if:false={listShipmentsCol4}>
                         <p>No hay cuentas disponibles.</p>
@@ -379,10 +448,17 @@
                 <!-- Columna 5 -->
                 <div class="slds-col slds-size_2-of-12" style="max-height: 70vh; overflow-y: auto;">
                     <div class="slds-p-bottom_medium sticky-header">
-                        <h3 class="slds-text-heading_small">Confirm</h3>
+                        <div>
+                            <h3 class="slds-text-heading_small">Confirm</h3>
+                        </div>
+                        <div class="circle-container2">
+                            <div class="circle-badge">{sizecol5}</div>
+                        </div>
                     </div>
+                    <div>Total: {totalCol5}</div>
                     <template if:true={listShipmentsCol5}>
                         <template for:each={colorCoded5} for:item="account">
+                            <template if:true={account.Monitoreo_Recepci_n_Acuse__c}>
                             <div class="slds-card" key={account.Id}>
                                 <div class="slds-card__header" style="position: relative;">
                                     <h3 class="slds-card__title slds-text-heading_small">
@@ -399,9 +475,9 @@
                                 <div class="slds-card__body">
                                     <p>
                                         <b>{account.Shipment_Status_Plann__c}</b> <span style="margin-right: 20px;"></span>
-                                        {account.ETD_from_Point_of_Load__c}   /   {account.ETA_Point_of_Discharge__c}
+                                        {account.ETD_from_Point_of_Load__c}   /   {account.Status_Observations__c}
                                     </p>
-                                    <p> Time: {account.Account_Shipment_Reference__c} hrs</p>
+                                    <p> Time: {account.Reason_for_declined__c} hrs / {account.Account_Shipment_Reference__c} hrs</p>
                                     <template if:true={account.Account_for__c}>
                                         <p>Account: {account.Account_for__r.Name}</p>
                                     </template>
@@ -414,9 +490,13 @@
                                     <template if:true={account.Carrier__c}>
                                         <p>Carrier: {account.Carrier__r.Name}</p>
                                     </template>
+                                    <template if:true={account.Route__c}>
+                                        <p>Zona: {account.Route__r.Zona__c}</p>
+                                    </template>
                                 </div>
                             </div>
                         </template>
+                    </template>
                     </template>
                     <template if:false={listShipmentsCol5}>
                         <p>No hay cuentas disponibles.</p>
@@ -426,8 +506,14 @@
                 <!-- Columna 7 -->
                 <div class="slds-col slds-size_2-of-12" style="max-height: 70vh; overflow-y: auto;">
                     <div class="slds-p-bottom_medium sticky-header">
-                        <h3 class="slds-text-heading_small">Delivery On Route</h3>
+                        <div>
+                            <h3 class="slds-text-heading_small">Delivery On Route</h3>
+                        </div>
+                        <div class="circle-container2">
+                            <div class="circle-badge">{sizecol7}</div>
+                        </div>
                     </div>
+                    <div>Total: {totalCol7}</div>
                     <template if:true={valorCheckbox}>
                         <template if:true={listShipmentsCol7}>
                             <template for:each={listShipmentsCol7} for:item="account">
@@ -449,7 +535,7 @@
                                             <b>{account.Shipment_Status_Plann__c}</b> <span style="margin-right: 20px;"></span>
                                             {account.ETD_from_Point_of_Load__c}   /   {account.ETA_Point_of_Discharge__c}
                                         </p>
-                                        <p> Time: {account.Account_Shipment_Reference__c} hrs</p>
+                                        <p> Time: {account.Account_Shipment_Reference__c} hrs / {account.Reason_for_declined__c} hrs</p>
                                         <template if:true={account.Account_for__c}>
                                             <p>Account: {account.Account_for__r.Name}</p>
                                         </template>
@@ -462,6 +548,9 @@
                                         <template if:true={account.Carrier__c}>
                                             <p>Carrier: {account.Carrier__r.Name}</p>
                                         </template>
+                                        <template if:true={account.Route__c}>
+                                            <p>Zona: {account.Route__r.Zona__c}</p>
+                                        </template>
                                     </div>
                                 </div>
                             </template>
@@ -472,11 +561,17 @@
                     </template>
                 </div>
 
-                <!-- Columna closed-->
+                <!-- Columna 6 closed-->
                 <div class="slds-col slds-size_1-of-12" style="max-height: 70vh; overflow-y: auto;">
                     <div class="slds-p-bottom_medium sticky-header">
-                        <h3 class="slds-text-heading_small">Closed</h3>
+                        <div>
+                            <h3 class="slds-text-heading_small">Closed</h3>
+                        </div>
+                        <div class="circle-container3">
+                            <div class="circle-badge">{sizecol6}</div>
+                        </div>
                     </div>
+                    <div>Total: {totalCol6}</div>
                     <template if:true={valorCheckbox}>
                         <template if:true={listShipmentsCol6}>
                             <template for:each={listShipmentsCol6} for:item="account">
@@ -498,7 +593,7 @@
                                             <b>{account.Shipment_Status_Plann__c}</b> <span style="margin-right: 20px;"></span>
                                             {account.ETD_from_Point_of_Load__c}   /   {account.ETA_Point_of_Discharge__c}
                                         </p>
-                                        <p> Time: {account.Account_Shipment_Reference__c} hrs</p>
+                                        <p> Time: {account.Account_Shipment_Reference__c} hrs / {account.Reason_for_declined__c} hrs</p>
                                         <template if:true={account.Account_for__c}>
                                             <p>Account: {account.Account_for__r.Name}</p>
                                         </template>
@@ -511,9 +606,13 @@
                                         <template if:true={account.Carrier__c}>
                                             <p>Carrier: {account.Carrier__r.Name}</p>
                                         </template>
+                                        <template if:true={account.Route__c}>
+                                            <p>Zona: {account.Route__r.Zona__c}</p>
+                                        </template>
                                     </div>
                                 </div>
                             </template>
+
                         </template>
                         <template if:false={listShipmentsCol6}>
                             <p>No hay cuentas disponibles.</p>

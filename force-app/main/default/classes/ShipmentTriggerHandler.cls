@@ -42,11 +42,11 @@ public class ShipmentTriggerHandler extends TriggerHandler {
     }
     
     public override void afterUpdate() {
-        system.debug('lo que contiene Trigger.new: '+Trigger.new);
-        if (P2G_llamadoWebHelper.getWebServiceUpdate()) {
-            return;
-        }
+        //if (P2G_llamadoWebHelper.getWebServiceUpdate()) {
+        //     return;
+        //}
         List <Shipment__c> SPobj = (list<Shipment__c>)Trigger.new;
+        //--------------------------------
         List<Shipment__c> updatedShipments = new List<Shipment__c>();    
         for (Shipment__c shipment : SPobj) {
             Shipment__c oldShip = (Shipment__c)Trigger.oldMap.get(shipment.id);
@@ -54,11 +54,12 @@ public class ShipmentTriggerHandler extends TriggerHandler {
                 updatedShipments.add(shipment);
             }
         }
+        //--------------------------
         if(SPobj.size()>0){
             API_send_SP_to_PakControl.send_SP(SPobj[0].Id);
         }
-        if (!updatedShipments.isEmpty()) {
-            //try{P2G_creacionFolioWs.callSerCon(updatedShipments[0].Id);}catch(Exception e){System.debug('Error updatedShipments: '+e.getLineNumber());}      
+        if (!updatedShipments.isEmpty()){
+            try{P2G_creacionFolioWs.callSerCon(updatedShipments[0].Id);}catch(Exception e){System.debug('Error P2G_creacionFolioWs.callSerCon: '+e.getLineNumber());}      
         }
         if(NEU_StaticVariableHelper.getBoolean1() || System.IsBatch() || System.isFuture()||test.isRunningTest())
             return;
