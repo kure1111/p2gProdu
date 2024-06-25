@@ -25,6 +25,13 @@ export default class P2g_AsignacionOppor extends LightningElement {
     @track sizecol7;
     @track sizecol8;
 
+    @track totalCol2;
+    @track totalCol3;
+    @track totalCol4;
+    @track totalCol5;
+    @track totalCol6;
+    @track totalCol7;
+
     //seccion 1 ----------
     @track selectedGroup = '';
     @track selectedRadio = 'all';
@@ -306,6 +313,12 @@ export default class P2g_AsignacionOppor extends LightningElement {
             let showSemaforo = true;
             const now = new Date();
             const dateString = account.ETD_from_Point_of_Load__c; // "2024-04-05"
+
+            const equipPlacedDate = new Date(account.Equip_Placed__c); // Obtener la fecha de equipPlacedDate
+    
+            const etdHoursPT = equipPlacedDate.getHours();
+            const etdMinutesPT = equipPlacedDate.getMinutes();
+            const timeStringPT = etdHoursPT + ':' + (etdMinutesPT < 10 ? '0' + etdMinutesPT : etdMinutesPT);
             
             const etdTimeMillis = account.ETD_Time_from_Point_of_Load__c;
             // Convertir milisegundos en horas y minutos
@@ -349,6 +362,8 @@ export default class P2g_AsignacionOppor extends LightningElement {
                 circleClass: circleClass,
                 Account_Shipment_Reference__c: timeString,
                 Monitoreo_Recepci_n_Acuse__c:showSemaforo,
+                Reason_for_declined__c:timeStringPT,
+
             };
         });
     }
@@ -360,33 +375,65 @@ export default class P2g_AsignacionOppor extends LightningElement {
     }
     
     countGreenCircleElements() {
+        // Obtener el tamaño de las listas col6 y col7
         this.sizecol6 = this.listShipmentsCol6.length;
         this.sizecol7 = this.listShipmentsCol7.length;
+        this.totalCol6 = this.sumField(this.listShipmentsCol6, 'Total_Services_Sell_Amount__c');
+        // Sumar el campo Total_Services_Sell_Amount__c para listShipmentsCol7
+        this.totalCol7 = this.sumField(this.listShipmentsCol7, 'Total_Services_Sell_Amount__c');
+        // Si semaforo es 'all', obtener el tamaño de las listas sin filtrar
         if (this.semaforo === 'all') {
             this.sizecol2 = this.colorCoded2.length;
             this.sizecol3 = this.colorCoded3.length;
             this.sizecol4 = this.colorCoded4.length;
             this.sizecol5 = this.colorCoded5.length;
+
+            this.totalCol2 = this.sumField(this.listShipmentsCol2, 'Total_Services_Sell_Amount__c');
+            this.totalCol3 = this.sumField(this.listShipmentsCol3, 'Total_Services_Sell_Amount__c');
+            this.totalCol4 = this.sumField(this.listShipmentsCol4, 'Total_Services_Sell_Amount__c');
+            this.totalCol5 = this.sumField(this.listShipmentsCol5, 'Total_Services_Sell_Amount__c');
+
         } else {
-            this.sizecol2 = this.colorCoded2.filter(item => {
-                return item.circleClass === this.semaforo;
-            }).length;
-
-            this.sizecol3 = this.colorCoded3.filter(item => {
-                return item.circleClass === this.semaforo;
-            }).length;
-
-            this.sizecol4 = this.colorCoded4.filter(item => {
-                return item.circleClass === this.semaforo;
-            }).length;
-
-            this.sizecol5 = this.colorCoded5.filter(item => {
-                return item.circleClass === this.semaforo;
-            }).length;
-
-
-        }
+            // Filtrar y contar elementos según el semaforo para colorCoded2
+            this.sizecol2 = this.getCountByCircleClass(this.colorCoded2, this.semaforo);
+            // Filtrar y contar elementos según el semaforo para colorCoded3
+            this.sizecol3 = this.getCountByCircleClass(this.colorCoded3, this.semaforo);
+            // Filtrar y contar elementos según el semaforo para colorCoded4
+            this.sizecol4 = this.getCountByCircleClass(this.colorCoded4, this.semaforo);
+            // Filtrar y contar elementos según el semaforo para colorCoded5
+            this.sizecol5 = this.getCountByCircleClass(this.colorCoded5, this.semaforo);
+            // Sumar el campo Total_Services_Sell_Amount__c para colorCoded2 filtrado por semaforo
+            this.totalCol2 = this.sumFieldByCircleClass(this.colorCoded2, 'Total_Services_Sell_Amount__c', this.semaforo);
+            // Sumar el campo Total_Services_Sell_Amount__c para colorCoded3 filtrado por semaforo
+            this.totalCol3 = this.sumFieldByCircleClass(this.colorCoded3, 'Total_Services_Sell_Amount__c', this.semaforo);
+            // Sumar el campo Total_Services_Sell_Amount__c para colorCoded4 filtrado por semaforo
+            this.totalCol4 = this.sumFieldByCircleClass(this.colorCoded4, 'Total_Services_Sell_Amount__c', this.semaforo);
+            // Sumar el campo Total_Services_Sell_Amount__c para colorCoded5 filtrado por semaforo
+            this.totalCol5 = this.sumFieldByCircleClass(this.colorCoded5, 'Total_Services_Sell_Amount__c', this.semaforo);
+            }
     }
+    
+    // Función para contar elementos filtrados por circleClass
+    getCountByCircleClass(list, circleClass) {
+        return list.filter(item => item.circleClass === circleClass).length;
+    }
+    
+    // Función para sumar el valor de un campo filtrado por circleClass
+    sumFieldByCircleClass(list, fieldName, circleClass) {
+        return list.reduce((total, item) => {
+            if (item.circleClass === circleClass) {
+                return total + (item[fieldName] || 0);
+            }
+            return total;
+        }, 0);
+    }
+    sumField(list, fieldName) {
+        return list.reduce((total, item) => {
+            // Convertir el valor del campo a número (si es un string numérico) y sumarlo al total
+            return total + (item[fieldName] || 0);
+        }, 0);
+    }
+    
 
     filterSemaforo(semaforo) {
         if(this.semaforo === 'all'){
@@ -407,6 +454,12 @@ export default class P2g_AsignacionOppor extends LightningElement {
             const now = new Date();
             const etdTimeMillis = account.ETD_Time_from_Point_of_Load__c;
             const dateString = account.ETD_from_Point_of_Load__c; // "2024-04-05"
+
+            const equipPlacedDate = new Date(account.Equip_Placed__c); // Obtener la fecha de equipPlacedDate
+    
+            const etdHoursPT = equipPlacedDate.getHours();
+            const etdMinutesPT = equipPlacedDate.getMinutes();
+            const timeStringPT = etdHoursPT + ':' + (etdMinutesPT < 10 ? '0' + etdMinutesPT : etdMinutesPT);
             
             // Convertir milisegundos en horas y minutos
             const etdHours = Math.floor((etdTimeMillis / (1000 * 60 * 60)) % 24);
@@ -448,6 +501,7 @@ export default class P2g_AsignacionOppor extends LightningElement {
                 circleClass: circleClass,
                 Account_Shipment_Reference__c: timeString,
                 Monitoreo_Recepci_n_Acuse__c:showSemaforo,
+                Reason_for_declined__c:timeStringPT,
             };
         });
     }
@@ -458,6 +512,11 @@ export default class P2g_AsignacionOppor extends LightningElement {
             const now = new Date();
             const etdTimeMillis = account.ETD_Time_from_Point_of_Load__c;
             const dateString = account.ETD_from_Point_of_Load__c; // "2024-04-05"
+
+            const equipPlacedDate = new Date(account.Equip_Placed__c); // Obtener la fecha de equipPlacedDate
+            const etdHoursPT = equipPlacedDate.getHours();
+            const etdMinutesPT = equipPlacedDate.getMinutes();
+            const timeStringPT = etdHoursPT + ':' + (etdMinutesPT < 10 ? '0' + etdMinutesPT : etdMinutesPT);
             
             // Convertir milisegundos en horas y minutos
             const etdHours = Math.floor((etdTimeMillis / (1000 * 60 * 60)) % 24);
@@ -500,6 +559,7 @@ export default class P2g_AsignacionOppor extends LightningElement {
                 circleClass: circleClass,
                 Account_Shipment_Reference__c: timeString,
                 Monitoreo_Recepci_n_Acuse__c:showSemaforo,
+                Reason_for_declined__c:timeStringPT,
             };
         });
     }
@@ -508,37 +568,48 @@ export default class P2g_AsignacionOppor extends LightningElement {
         return this.listShipmentsCol5.map(account => {
             const now = new Date();
             const equipPlacedDate = new Date(account.Equip_Placed__c); // Obtener la fecha de equipPlacedDate
-    
+            const dateString = account.ETD_from_Point_of_Load__c; // "2024-04-05" fecha etd
             let showSemaforo = true;
             const etdHours = equipPlacedDate.getHours();
             const etdMinutes = equipPlacedDate.getMinutes();
+            const dia = equipPlacedDate.getMonth()+1;
             const timeString = etdHours + ':' + (etdMinutes < 10 ? '0' + etdMinutes : etdMinutes);
-    
+            const timeFechaPlace = equipPlacedDate.getFullYear() +'-'+ (dia < 10 ? '0' + dia : dia) +'-'+(equipPlacedDate.getDate() < 10 ? '0' + equipPlacedDate.getDate() : equipPlacedDate.getDate());
             let circleClass = '';
+            console.log('dia', dia);
+
+            //
+            const etdTimeMillisETD = account.ETD_Time_from_Point_of_Load__c;
+            // Convertir milisegundos en horas y minutos
+            const etdHoursETD = Math.floor((etdTimeMillisETD / (1000 * 60 * 60)) % 24);
+            const etdMinutesETD = Math.floor((etdTimeMillisETD / (1000 * 60)) % 60);
+            const timeStringETD = etdHoursETD + ':' + (etdMinutesETD < 10 ? '0' + etdMinutesETD : etdMinutesETD);
+            const [year, monthIndex, day] = dateString.split('-');
     
+            // Crear una nueva instancia de Date con la fecha y hora especificadas
+            const etdDate = new Date(year, monthIndex - 1, day, etdHours, etdMinutes);
+            const etdWithoutTime = new Date(etdDate.getFullYear(), etdDate.getMonth(), etdDate.getDate());
             // Comparar solo las fechas (sin tener en cuenta la hora)
             const equipPlacedDateWithoutTime = new Date(equipPlacedDate.getFullYear(), equipPlacedDate.getMonth(), equipPlacedDate.getDate());
-            const nowWithoutTime = new Date(now.getFullYear(), now.getMonth(), now.getDate());
-    
-            if (equipPlacedDateWithoutTime < nowWithoutTime) {
-                circleClass = 'circle black'; // Evento pasado
-            } else if (equipPlacedDateWithoutTime > nowWithoutTime) {
-                circleClass = 'circle green'; // Evento futuro
+
+            const etdTotalMinutes = etdHours * 60 + etdMinutes;
+            const etdTotalMinutesETD = etdHoursETD * 60 + etdMinutesETD;
+
+            if (equipPlacedDateWithoutTime < etdWithoutTime) {
+                circleClass = 'circle green'; // Evento pasado
+            } else if (equipPlacedDateWithoutTime > etdWithoutTime) {
+                circleClass = 'circle red'; // Evento futuro
             } else {
                 // Evento hoy, comparar los minutos
-                const etdTotalMinutes = etdHours * 60 + etdMinutes;
-                const nowTotalMinutes = now.getHours() * 60 + now.getMinutes();
-                const differenceInMinutes = etdTotalMinutes - nowTotalMinutes;
-    
-                if (differenceInMinutes > 360) {
-                    circleClass = 'circle green'; // Más de 6 horas
-                } else if (differenceInMinutes >= 240) {
-                    circleClass = 'circle yellow'; // Entre 4 y 6 horas
-                } else if (differenceInMinutes >= 0) {
-                    circleClass = 'circle red'; // Menos de 4 horas
-                } else {
-                    circleClass = 'circle black'; // Evento pasado
+                if(etdTotalMinutes <= etdTotalMinutesETD){
+                    circleClass = 'circle green';
                 }
+                else{
+                    circleClass = 'circle red';
+                }
+            }
+            if (!account.Equip_Placed__c) {
+                circleClass = 'circle black';
             }
     
             showSemaforo = this.filterSemaforo(circleClass);
@@ -546,8 +617,10 @@ export default class P2g_AsignacionOppor extends LightningElement {
             return {
                 ...account,
                 circleClass: circleClass,
-                Account_Shipment_Reference__c: timeString,
+                Account_Shipment_Reference__c: timeString, //placed
                 Monitoreo_Recepci_n_Acuse__c: showSemaforo,
+                Reason_for_declined__c:timeStringETD, //etd
+                Status_Observations__c:timeFechaPlace,
             };
         });
     }

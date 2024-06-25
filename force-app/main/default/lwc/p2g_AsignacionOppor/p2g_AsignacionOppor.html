@@ -263,6 +263,7 @@
                             <h3 class="slds-text-heading_small">Pending Sin Asignar</h3>
                         </div>
                     </div>
+                    <div>Total: {totalCol2}</div>
                     <template if:true={isLoading}>
                         <!-- Muestra el spinner mientras isLoading es verdadero -->
                         <lightning-spinner alternative-text="Loading" size="small"></lightning-spinner>
@@ -286,7 +287,7 @@
                                             <b>{account.Shipment_Status_Plann__c}</b> <span style="margin-right: 20px;"></span>
                                             {account.ETD_from_Point_of_Load__c}   /   {account.ETA_Point_of_Discharge__c}
                                         </p>
-                                        <p> Time: {account.Account_Shipment_Reference__c} hrs</p>
+                                        <p> Time: {account.Account_Shipment_Reference__c} hrs / {account.Reason_for_declined__c} hrs</p>
                                         <template if:true={account.Account_for__c}>
                                             <p>Account: {account.Account_for__r.Name}</p>
                                         </template>
@@ -334,6 +335,7 @@
                             <div class="circle-badge">{sizecol3}</div>
                         </div>
                     </div>
+                    <div>Total: {totalCol3}</div>
                     <template if:true={isLoading}>
                         <!-- Muestra el spinner mientras isLoading es verdadero -->
                         <lightning-spinner alternative-text="Loading" size="small"></lightning-spinner>
@@ -359,7 +361,7 @@
                                         <b>{account.Shipment_Status_Plann__c}</b> <span style="margin-right: 20px;"></span>
                                         {account.ETD_from_Point_of_Load__c}   /   {account.ETA_Point_of_Discharge__c}
                                     </p>
-                                    <p> Time: {account.Account_Shipment_Reference__c} hrs</p>
+                                    <p> Time: {account.Account_Shipment_Reference__c} hrs / {account.Reason_for_declined__c} hrs</p>
                                     <template if:true={account.Account_for__c}>
                                         <p>Account: {account.Account_for__r.Name}</p>
                                     </template>
@@ -395,6 +397,7 @@
                             <div class="circle-badge">{sizecol4}</div>
                         </div>
                     </div>
+                    <div>Total: {totalCol4}</div>
                     <template if:true={listShipmentsCol4}>
                         <template for:each={colorCoded4} for:item="account">
                             <template if:true={account.Monitoreo_Recepci_n_Acuse__c}>
@@ -416,7 +419,7 @@
                                         <b>{account.Shipment_Status_Plann__c}</b> <span style="margin-right: 20px;"></span>
                                         {account.ETD_from_Point_of_Load__c}   /   {account.ETA_Point_of_Discharge__c}
                                     </p>
-                                    <p> Time: {account.Account_Shipment_Reference__c} hrs</p>
+                                    <p> Time: {account.Account_Shipment_Reference__c} hrs / {account.Reason_for_declined__c} hrs</p>
                                     <template if:true={account.Account_for__c}>
                                         <p>Account: {account.Account_for__r.Name}</p>
                                     </template>
@@ -452,6 +455,7 @@
                             <div class="circle-badge">{sizecol5}</div>
                         </div>
                     </div>
+                    <div>Total: {totalCol5}</div>
                     <template if:true={listShipmentsCol5}>
                         <template for:each={colorCoded5} for:item="account">
                             <template if:true={account.Monitoreo_Recepci_n_Acuse__c}>
@@ -471,9 +475,9 @@
                                 <div class="slds-card__body">
                                     <p>
                                         <b>{account.Shipment_Status_Plann__c}</b> <span style="margin-right: 20px;"></span>
-                                        {account.ETD_from_Point_of_Load__c}   /   {account.ETA_Point_of_Discharge__c}
+                                        {account.ETD_from_Point_of_Load__c}   /   {account.Status_Observations__c}
                                     </p>
-                                    <p> Time: {account.Account_Shipment_Reference__c} hrs</p>
+                                    <p> Time: {account.Reason_for_declined__c} hrs / {account.Account_Shipment_Reference__c} hrs</p>
                                     <template if:true={account.Account_for__c}>
                                         <p>Account: {account.Account_for__r.Name}</p>
                                     </template>
@@ -509,10 +513,10 @@
                             <div class="circle-badge">{sizecol7}</div>
                         </div>
                     </div>
+                    <div>Total: {totalCol7}</div>
                     <template if:true={valorCheckbox}>
                         <template if:true={listShipmentsCol7}>
                             <template for:each={listShipmentsCol7} for:item="account">
-                                <template if:true={account.Monitoreo_Recepci_n_Acuse__c}>
                                 <div class="slds-card" key={account.Id}>
                                     <div class="slds-card__header" style="position: relative;">
                                         <h3 class="slds-card__title slds-text-heading_small">
@@ -531,7 +535,7 @@
                                             <b>{account.Shipment_Status_Plann__c}</b> <span style="margin-right: 20px;"></span>
                                             {account.ETD_from_Point_of_Load__c}   /   {account.ETA_Point_of_Discharge__c}
                                         </p>
-                                        <p> Time: {account.Account_Shipment_Reference__c} hrs</p>
+                                        <p> Time: {account.Account_Shipment_Reference__c} hrs / {account.Reason_for_declined__c} hrs</p>
                                         <template if:true={account.Account_for__c}>
                                             <p>Account: {account.Account_for__r.Name}</p>
                                         </template>
@@ -551,14 +555,13 @@
                                 </div>
                             </template>
                         </template>
-                        </template>
                         <template if:false={listShipmentsCol7}>
                             <p>No hay cuentas disponibles.</p>
                         </template>
                     </template>
                 </div>
 
-                <!-- Columna closed-->
+                <!-- Columna 6 closed-->
                 <div class="slds-col slds-size_1-of-12" style="max-height: 70vh; overflow-y: auto;">
                     <div class="slds-p-bottom_medium sticky-header">
                         <div>
@@ -568,10 +571,10 @@
                             <div class="circle-badge">{sizecol6}</div>
                         </div>
                     </div>
+                    <div>Total: {totalCol6}</div>
                     <template if:true={valorCheckbox}>
                         <template if:true={listShipmentsCol6}>
                             <template for:each={listShipmentsCol6} for:item="account">
-                                <template if:true={account.Monitoreo_Recepci_n_Acuse__c}>
                                 <div class="slds-card" key={account.Id}>
                                     <div class="slds-card__header" style="position: relative;">
                                         <h3 class="slds-card__title slds-text-heading_small">
@@ -590,7 +593,7 @@
                                             <b>{account.Shipment_Status_Plann__c}</b> <span style="margin-right: 20px;"></span>
                                             {account.ETD_from_Point_of_Load__c}   /   {account.ETA_Point_of_Discharge__c}
                                         </p>
-                                        <p> Time: {account.Account_Shipment_Reference__c} hrs</p>
+                                        <p> Time: {account.Account_Shipment_Reference__c} hrs / {account.Reason_for_declined__c} hrs</p>
                                         <template if:true={account.Account_for__c}>
                                             <p>Account: {account.Account_for__r.Name}</p>
                                         </template>
@@ -609,7 +612,7 @@
                                     </div>
                                 </div>
                             </template>
-                        </template>
+
                         </template>
                         <template if:false={listShipmentsCol6}>
                             <p>No hay cuentas disponibles.</p>
