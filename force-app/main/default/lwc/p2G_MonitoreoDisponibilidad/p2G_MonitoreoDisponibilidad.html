@@ -1,0 +1,380 @@
+<template>
+    <div class="table-container">
+        <table class="slds-table slds-table_cell-buffer slds-table_bordered">
+            <!-- Encabezado de la tabla -->
+            <thead>
+                <tr>
+                    <th>Aplicar</th>
+                    <th>Ruta</th>
+                    <th>Fecha Creación</th>
+                    <th>Fecha Vigencia</th>
+                    <th>No.</th>
+                    <th>Container Type</th>
+                    <th>Ticket Prom</th>
+                    <th>Venta Sugerida</th>
+                    <th>Carrier</th>
+                    <th>Planner</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <template for:each={data} for:item="item" for:index="index">
+                    <tr key={item.id} class={item.bandera}>
+                        <td>
+                            <template if:false={item.tomado}>
+                                <!-- Botón "Take" para abrir el modal -->
+                                <lightning-button 
+                                    label="Take" 
+                                    variant="brand" 
+                                    value={item.id} 
+                                    onclick={handleTakeClick}
+                                ></lightning-button>
+                            </template>
+                            <template if:true={item.tomado}>
+                                <!-- Botón "Take" deshabilitado -->
+                                <lightning-button 
+                                    label="Hold" 
+                                    variant="brand" 
+                                    value={item.id} 
+                                    onclick={handleTakeClick}
+                                    disabled
+                                ></lightning-button>
+                            </template>
+                        </td>
+                        <!-- Mostrar los datos en cada columna -->
+                        <td>{item.route}</td>
+                        <td>{item.fechaCreacion}</td>
+                        <td class={item.bgColor}>{item.fechaVigencia}</td>
+                        <td class="slds-grid slds-wrap slds-align_absolute-center">
+                            <div class="slds-col slds-size_1-of-2 slds-grid_vertical-align-center">
+                                {item.noRutas}
+                            </div>
+                            <div class="slds-col slds-size_1-of-2 slds-grid_vertical-align-center slds-text-align_right">
+                                <lightning-icon icon-name="utility:edit" data-id={item.id} onclick={openInputModal} alternative-text="Editar" size="x-small" class="slds-m-right_x-small"></lightning-icon>
+                                <!-- Agrega más iconos aquí si es necesario -->
+                            </div>
+                        </td>
+                    
+                        <!-- Modal para input flotante -->
+                        <template if:true={isInputModalOpen}>
+                            <section role="dialog" tabindex="-1" aria-labelledby="input-modal-heading" aria-modal="true"
+                                aria-describedby="input-modal-content" class="slds-modal slds-fade-in-open">
+                                <div class="slds-modal__container">
+                                    <header class="slds-modal__header">
+                                        <h2 class="slds-text-heading_medium">Editar Valor</h2>
+                                    </header>
+                                    <div class="slds-modal__content slds-p-around_medium" >
+                                        <lightning-input label="Nuevo Valor" value={inputValue} onchange={handleInputChange}></lightning-input>
+                                    </div>
+                                    <footer class="slds-modal__footer">
+                                        <lightning-button variant="brand" label="Guardar" onclick={handleSave}></lightning-button>
+                                        <lightning-button variant="neutral" label="Cancelar" onclick={closeInputModal}></lightning-button>
+                                    </footer>
+                                </div>
+                            </section>
+                            <div class="slds-backdrop slds-backdrop_open"></div>
+                        </template>
+                        
+                        <td>{item.containerType}</td>
+                        <td>{item.ticketPromedio}</td>
+                        <td>{item.venta}</td>
+                        <td>{item.carrier}</td>
+                        <td>{item.planner}</td>
+                        <td>
+                            <template if:false={item.tomado}>
+                                <lightning-button 
+                                label="Eliminar" 
+                                variant="destructive" 
+                                value={item.id} 
+                                onclick={handleDelete}
+                                ></lightning-button>
+                            </template>
+                            <template if:true={item.tomado}>
+                                <lightning-button 
+                                label="Eliminar" 
+                                variant="destructive" 
+                                value={item.id} 
+                                onclick={handleDelete}
+                                disabled
+                                ></lightning-button>
+                            </template>
+                        </td>
+                         <!--
+                        <td>
+                            <a href="#" onclick={handleNameClick} data-record-id={item.folio}>
+                                {item.folioName}
+                            </a>
+                        </td>
+                         -->
+                    </tr>
+                </template>
+            </tbody>
+        </table>
+
+       <!-- Modal pop-up -->
+       <template if:true={showModal}>
+        <div class="slds-backdrop slds-backdrop_open"></div>
+        <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true"
+            aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open slds-modal_large">
+            <div class="slds-modal__container slds-modal__container_large">
+                <header class="slds-modal__header">
+                    <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">Datos Requeridos</h2>
+                </header>
+                <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                    <!-- Contenido del modal con las tablas y funcionalidades -->
+                    <div class="slds-grid slds-wrap slds-gutters">
+
+                        <div class="slds-col slds-size_6-of-12">
+                            <div onkeyup={searchKeyAccount}>
+                              <lightning-input id="AccountFor" label="Account For:" placeholder="Buscar Account for" 
+                                  required="" value={searchValueAccount} type="search"></lightning-input>
+                            </div>
+                            <table if:true={listAccounts} class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_striped">
+                                <thead>
+                                   <tr class="slds-line-height_reset">
+                                      <th class="" scope="col">
+                                         <div class="slds-truncate" title="First Name">Name</div>
+                                      </th>
+                                      <th class="" scope="col">
+                                         <div class="slds-truncate" title="First Name">Customer Id</div>
+                                      </th>
+                                   </tr>
+                                </thead>
+                                <tbody>
+                                   <template for:each={listAccounts} for:item="con">
+                                      <tr class="slds-hint-parent" data-id={con.Id} data-sst ={con.Tipo_de_Servicio_TNA__c} key={con.Id} onclick={SideSelectAccount}> 
+                                         <td>
+                                            <div class="slds-truncate">{con.Name}</div>
+                                         </td>
+                                         <td>
+                                          <div class="slds-truncate">{con.Customer_Id__c}</div>
+                                        </td>
+                                      </tr>
+        
+                                   </template>
+                                </tbody>
+                              </table>
+                        </div>
+                        <!--
+                        <div class="slds-col slds-size_6-of-12">
+                            <div onkeyup={searchKeyContainerType}>
+                                <lightning-input id="ContainerType" label="Container Type:"
+                                    placeholder="Buscar container type" value={searchValueConteiner} type="search"
+                                    required=""></lightning-input>
+                            </div>
+                            <table if:true={listContainers}
+                                class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_striped">
+                                <thead>
+                                    <tr class="slds-line-height_reset">
+                                        <th class="" scope="col">
+                                            <div class="slds-truncate">Container Type</div>
+                                        </th>
+                                        <th class="" scope="col">
+                                            <div class="slds-truncate">Cargo Weight (Kg)</div>
+                                        </th>
+                                        <th class="" scope="col">
+                                            <div class="slds-truncate">Cargo Volume (m3)</div>
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <template for:each={listContainers} for:item="con">
+                                        <tr class="slds-hint-parent" data-id={con.Id} key={con.Id}
+                                            onclick={SideSelectContainerType}>
+                                            <td>
+                                                <div class="slds-truncate">{con.Name}</div>
+                                            </td>
+                                            <td>
+                                                <div class="slds-truncate">{con.Cargo_Weight_Kg__c}</div>
+                                            </td>
+                                            <td>
+                                                <div class="slds-truncate">{con.Cargo_Volume_m3__c}</div>
+                                            </td>
+                                        </tr>
+                                    </template>
+                                </tbody>
+                            </table>
+                        </div>
+                        -->
+                        <div class="slds-col slds-size_6-of-12">
+                            <div onkeyup={searchKeyClaveUnidadPeso}>
+                                <lightning-input id="ClaveUnidadPeso" label="Clave de unidad de Peso:"
+                                    placeholder="Pallet" value={searchValueClaveUnidadPeso} type="search"
+                                    required=""></lightning-input>
+                            </div>
+                            <table if:true={ListClavesUnidad}
+                                class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_striped">
+                                <!-- Encabezado de la segunda tabla -->
+                                <thead>
+                                    <tr class="slds-line-height_reset">
+                                        <th class="" scope="col">
+                                            <div class="slds-truncate">Nombre</div>
+                                        </th>
+                                        <th class="" scope="col">
+                                            <div class="slds-truncate">Clave Sat</div>
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <!-- Cuerpo de la segunda tabla -->
+                                <tbody>
+                                    <template for:each={ListClavesUnidad} for:item="con">
+                                        <tr class="slds-hint-parent" data-id={con.Id} key={con.Id}
+                                            onclick={SideSelectClaveUnidadPeso}>
+                                            <td>
+                                                <div class="slds-truncate">{con.Name}</div>
+                                            </td>
+                                            <td>
+                                                <div class="slds-truncate">{con.Clave_SAT__c}</div>
+                                            </td>
+                                        </tr>
+                                    </template>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div class="slds-col slds-size_6-of-12">
+                            <div onkeyup={searchKeyClaveServicio}>
+                              <lightning-input id="ClaveServicio" label="Clave de Servicio:" placeholder="Buscar clave en el SAT" 
+                                  value={searchValueClaveServicio} type="search" required=""></lightning-input>
+                            </div>
+                            <table if:true={ListClaveServicio} class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_striped">
+                                <thead>
+                                   <tr class="slds-line-height_reset">
+                                      <th class="" scope="col">
+                                         <div class="slds-truncate" title="First Name">Clave de Servicio</div>
+                                      </th>
+                                      <th class="" scope="col">
+                                         <div class="slds-truncate" title="First Name">Nombre</div>
+                                      </th>
+                                   </tr>
+                                </thead>
+                                <tbody>
+                                   <template for:each={ListClaveServicio} for:item="con">
+                                      <tr class="slds-hint-parent" data-id={con.Id} key={con.Id} onclick={SideSelectClaveServicio}> 
+                                         <td>
+                                            <div class="slds-truncate">{con.Clave_SAT__c}</div>
+                                         </td>
+                                         <td>
+                                          <div class="slds-truncate">{con.Name}</div>
+                                       </td>
+                                      </tr>
+                                   </template>
+                                </tbody>
+                              </table>
+                        </div>
+
+                        <template if:true={materialPeligroso}>
+                            <div class="slds-col slds-size_1-of-1" style="color: red;"><br><p>Nota: La clave de servicio corresponde a un material peligroso es necesario llenar los campos "Material Peligroso" y "Embalaje".</p><br></div> 
+                            <div class="slds-col slds-size_6-of-12">
+                              <div onkeyup={searchKeyMaterialPeligroso}>
+                                <lightning-input id="MaterialPeligroso" label="Material Peligroso:" placeholder="Buscar material peligroso" 
+                                    value={searchValueMaterialPeligroso} type="search" required=""></lightning-input>
+                              </div>
+                              <table if:true={showSideMaterialPeligroso} class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_striped">
+                                <thead>
+                                  <tr class="slds-line-height_reset">
+                                     <th class="" scope="col">
+                                        <div class="slds-truncate" title="First Name">Clave de Servicio</div>
+                                     </th>
+                                     <th class="" scope="col">
+                                        <div class="slds-truncate" title="First Name">Nombre</div>
+                                     </th>
+                                  </tr>
+                               </thead>
+                               <tbody>
+                                  <template for:each={sideRecordsMaterialPeligroso} for:item="con">
+                                     <tr class="slds-hint-parent" data-id={con.Id} key={con.Id} onclick={SideSelectMaterialPeligroso}> 
+                                        <td>
+                                           <div class="slds-truncate">{con.Clave_SAT__c}</div>
+                                        </td>
+                                        <td>
+                                         <div class="slds-truncate">{con.Name}</div>
+                                      </td>
+                                     </tr>
+                                  </template>
+                                </tbody>
+                              </table>
+                            </div>
+                            <div class="slds-col slds-size_6-of-12">
+                              <div onkeyup={searchKeyEmbalaje}>
+                                <lightning-input id="Embalaje" label="Embalaje:" placeholder="Buscar embalaje en el SAT" 
+                                    value={searchValueEmbalaje} type="search" required=""></lightning-input>
+                              </div>
+                              <table if:true={showSideEmbalaje} class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_striped">
+                                  <thead>
+                                     <tr class="slds-line-height_reset">
+                                      <th class="" scope="col">
+                                        <div class="slds-truncate" title="First Name">Clave de Servicio</div>
+                                     </th>
+                                     <th class="" scope="col">
+                                        <div class="slds-truncate" title="First Name">Nombre</div>
+                                     </th>
+                                  </tr>
+                               </thead>
+                               <tbody>
+                                  <template for:each={sideRecordsEmbalaje} for:item="con">
+                                     <tr class="slds-hint-parent" data-id={con.Id} key={con.Id} onclick={SideSelectEmbalaje}> 
+                                        <td>
+                                           <div class="slds-truncate">{con.Clave_SAT__c}</div>
+                                        </td>
+                                        <td>
+                                         <div class="slds-truncate">{con.Name}</div>
+                                      </td>
+                                     </tr>
+                                     </template>
+                                  </tbody>
+                                </table>
+                              </div>
+                        </template>
+
+                        <div class="slds-col slds-size_6-of-12">
+                            <lightning-textarea label="Descripción de producto (pak2go):" placeholder="Describir el producto "
+                            onkeyup={handleDescriptionChange}></lightning-textarea>
+                        </div>
+
+                        <div class="slds-col slds-size_3-of-12">
+                          <lightning-input id="Units" label="Units:" required=""
+                          onkeyup={handleUnitsChange} type="number"></lightning-input>
+                        </div>
+
+                        <div class="slds-col slds-size_3-of-12">
+                            <lightning-input id="PesoBruto" label="Peso Bruto (KG):" required=""
+                            onkeyup={handlePesoBrutoChange} type="number" step="0.01"></lightning-input>
+                        </div>
+
+                        <div class="slds-col slds-size_3-of-12">
+                            <lightning-input id="PesoNeto" label="Peso Neto (KG):" required=""
+                            onkeyup={handlePesoNetoChange} type="number" step="0.01"></lightning-input>
+                        </div>
+
+                        <div class="slds-col slds-size_3-of-12">
+                          <div class="slds-form-element">
+                            <label class="slds-form-element__label" for="text-input-id-51">Currency:</label>
+                            <div class="slds-form-element__control">
+                              <div class="slds-select_container">
+                                <select class="slds-select" id="Currency" onchange={registroCurrency}>
+                                  <option value="MXN">MXN</option>
+                                  <option value="EUR">EUR</option>
+                                  <option value="USD">USD</option>
+                                </select>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div class="slds-col slds-size_2-of-12">
+                            <lightning-input id="TotalShippingVolume" label="Total Shipping Volume (m3):" required=""
+                            onkeyup={registroTotalShippingVolume} type="number" step="0.01"></lightning-input>
+                        </div>
+
+                    </div>
+                </div>
+                <footer class="slds-modal__footer">
+                    <lightning-button label="Save" variant="brand" onclick={save}></lightning-button>
+                    <lightning-button label="Cancel" variant="neutral" onclick={handleCancel}></lightning-button>
+                </footer>
+            </div>
+        </section>
+    </template>
+    </div>
+</template>
