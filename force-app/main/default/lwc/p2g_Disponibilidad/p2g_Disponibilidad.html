@@ -1,6 +1,6 @@
 <template>
     <lightning-button-group>
-        <lightning-button label="Agregar Ruta" onclick={openModal}></lightning-button>
+        <lightning-button label="Publicar Ruta" onclick={openModal}></lightning-button>
         <lightning-button label="Carga Masiva" onclick={openMassiveModal}></lightning-button>
     </lightning-button-group>
     <!-- Modal para Carga Manual-->
@@ -155,7 +155,7 @@
                             <!-- Fecha y Hora -->
                             <div style="width: 100%;">
                                 <div>
-                                    <label for="fechaHora">Fecha de vigenciag:</label>
+                                    <label for="fechaHora">Fecha de vigencia:</label>
                                     <div>
                                         <input id="fechaHora" style="margin-top: 3%;" type="datetime-local" value={time} oninput={handleDateTimeChange} required />
                                     </div>
@@ -220,12 +220,6 @@
                             <div style="width: 100%;">
                                 <lightning-input id="TicketProm" label="Ticket Prom:" required=""
                                 onkeyup={handletikectPromChange} type="number" step="0.01"></lightning-input>
-                            </div>
-
-                            <!-- Venta -->
-                            <div style="width: 100%;">
-                                <lightning-input id="venta" label="Venta :" required=""
-                                onkeyup={handleVentaChange} type="number" step="0.01"></lightning-input>
                             </div>
 
                             <!-- Búsqueda de Carrier -->                 
@@ -335,7 +329,7 @@
                 </div>
             </div>
             <footer class="slds-modal__footer slds-modal__footer_directional slds-text-align_center">
-                <lightning-button variant="neutral" label="Cargar Archivo" onclick={triggerFileUpload}></lightning-button>
+                <lightning-button variant="brand" label="Cargar Archivo" onclick={triggerFileUpload}></lightning-button>
                 <lightning-button variant="neutral" label="Descargar Plantilla" onclick={downloadTemplate}></lightning-button>
             </footer>
         </div>
