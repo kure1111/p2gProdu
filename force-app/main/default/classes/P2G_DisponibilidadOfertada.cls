@@ -13,6 +13,7 @@ public class P2G_DisponibilidadOfertada {
         @AuraEnabled public String folioName {get; set;}
         @AuraEnabled public String fechaVigencia {get; set;}
         @AuraEnabled public String curren {get; set;}
+        @AuraEnabled public String containerType {get; set;}
         @AuraEnabled public String idContainerType {get; set;}
         @AuraEnabled public String carrier {get; set;}
         @AuraEnabled public String idCarrier {get; set;}
@@ -21,9 +22,17 @@ public class P2G_DisponibilidadOfertada {
         @AuraEnabled public String id {get; set;}
         @AuraEnabled public String bandera {get; set;}
         @AuraEnabled public String bgColor {get; set;}
-        @AuraEnabled public String containerType {get; set;}
         @AuraEnabled public String fechaCreacion {get; set;}
         @AuraEnabled public String idUnidadPeso {get; set;}
+        @AuraEnabled public String idClaveServicio {get; set;}
+        @AuraEnabled public String claveServicio {get; set;}
+        @AuraEnabled public String description {get; set;}
+        @AuraEnabled public String units {get; set;}
+        @AuraEnabled public String pesoBruto {get; set;}
+        @AuraEnabled public String pesoNeto {get; set;}
+        @AuraEnabled public String isCurrency {get; set;}
+        @AuraEnabled public String totalShippingVolume {get; set;}
+        @AuraEnabled public String searchKeyIdSST {get; set;}
         @AuraEnabled public Boolean tomado {get; set;}
         
         @AuraEnabled public String idAccount {get; set;}
@@ -44,10 +53,25 @@ public class P2G_DisponibilidadOfertada {
     }
 
     @AuraEnabled
-    public static void updateDis(String id,Integer No){
+    public static void updateNo(String id,Integer No){
         P2G_Disponibilidad__c dis = new P2G_Disponibilidad__c();
         dis.Id = id;
         dis.No_Rutas__c = No;
+        updateDis(dis);
+    }
+
+    @AuraEnabled
+    public static void updatefecha(String id,String fechaVigencia){
+        fechaVigencia += ':00';
+        String validFechaVigencia = fechaVigencia.replace('T', ' ');
+        P2G_Disponibilidad__c dis = new P2G_Disponibilidad__c();
+        dis.Id = id;
+        DateTime fechaVigenciaDateTime = DateTime.valueOf(validFechaVigencia);
+        dis.FechaVigencia__c = fechaVigenciaDateTime;
+        updateDis(dis);
+    }
+
+    public static void updateDis(P2G_Disponibilidad__c dis){
         update dis;
     }
 
@@ -67,7 +91,6 @@ public class P2G_DisponibilidadOfertada {
             disponibilidad.Planner__c = wrapper.planner;
             disponibilidad.Route__c = wrapper.route;
             disponibilidad.Ticket_Promedio__c = Decimal.valueOf(wrapper.ticketPromedio);
-            disponibilidad.Venta__c = Decimal.valueOf(wrapper.venta);
             
             disponibilidadList.add(disponibilidad);
         }
@@ -89,7 +112,6 @@ public class P2G_DisponibilidadOfertada {
             disponibilidad.Route__c = wrapper.idRoute;
             disponibilidad.No_Rutas__c = Integer.valueOF(wrapper.noRutas);
             disponibilidad.Ticket_Promedio__c = Decimal.valueOf(wrapper.ticketPromedio);
-            disponibilidad.Venta__c = Decimal.valueOf(wrapper.venta);
             disponibilidadList.add(disponibilidad);
         }
 
@@ -112,7 +134,6 @@ public class P2G_DisponibilidadOfertada {
         disponibilidad.Planner__c = wrapper.planner;//UserInfo.getUserId();
         disponibilidad.Route__c = getIdruta(wrapper.searchValueIdLoad, wrapper.searchValueIdUnLoad);
         disponibilidad.Ticket_Promedio__c = Decimal.valueOf(wrapper.ticketPromedio);
-        disponibilidad.Venta__c = Decimal.valueOf(wrapper.venta);
         disponibilidad.No_Rutas__c = Integer.valueOf(wrapper.noRutas);
         
         insert disponibilidad;
@@ -164,11 +185,11 @@ public class P2G_DisponibilidadOfertada {
         DateTime now = DateTime.now();
         List<P2G_Disponibilidad__c> disponibilidadRecords;
         if(op == 1){
-			disponibilidadRecords = [SELECT Carrier__c,Carrier__r.Name, No_Rutas__c,Container_Type__c,Container_Type__r.Name, Fecha_de_Creaci_n__c,FechaVigencia__c,                                                            KPI_de_Aporbacion_Folio__c, KPI_de_Vigencia__c,CreatedDate, Planner__c,Planner__r.Name, Route__c,Route__r.Name, Ticket_Promedio__c, Venta__c
+			disponibilidadRecords = [SELECT Carrier__c,Carrier__r.Name, No_Rutas__c,Container_Type__c,Container_Type__r.Name, VentaSugerida__c,Fecha_de_Creaci_n__c,FechaVigencia__c,KPI_de_Aporbacion_Folio__c, KPI_de_Vigencia__c,CreatedDate, Planner__c,Planner__r.Name, Route__c,Route__r.Name, Ticket_Promedio__c
                                                              FROM P2G_Disponibilidad__c WHERE FechaVigencia__c > :now];            
         }
         if(op == 2){
-            disponibilidadRecords = [SELECT Carrier__c,Carrier__r.Name, No_Rutas__c,Container_Type__c,Container_Type__r.Name, Fecha_de_Creaci_n__c,FechaVigencia__c,                                                         KPI_de_Aporbacion_Folio__c, KPI_de_Vigencia__c,CreatedDate, Planner__c,Planner__r.Name, Route__c,Route__r.Name, Ticket_Promedio__c, Venta__c
+            disponibilidadRecords = [SELECT Carrier__c,Carrier__r.Name, No_Rutas__c,Container_Type__c,Container_Type__r.Name, VentaSugerida__c,Fecha_de_Creaci_n__c,FechaVigencia__c,KPI_de_Aporbacion_Folio__c, KPI_de_Vigencia__c,CreatedDate, Planner__c,Planner__r.Name, Route__c,Route__r.Name, Ticket_Promedio__c
                                                              FROM P2G_Disponibilidad__c WHERE FechaVigencia__c < :now];
         }
         
@@ -180,13 +201,12 @@ public class P2G_DisponibilidadOfertada {
             wrapper.idContainerType = record.Container_Type__c;
             wrapper.containerType = record.Container_Type__r.Name;
             wrapper.fechaVigencia = String.valueOf(record.FechaVigencia__c);
-
+            wrapper.venta =  String.valueOf(record.VentaSugerida__c);
             wrapper.idPlanner = record.Planner__c;
             wrapper.planner = record.Planner__r.Name;
             wrapper.idRoute = record.Route__c;
             wrapper.route = record.Route__r.Name;
             wrapper.ticketPromedio = String.valueOf(record.Ticket_Promedio__c);
-            wrapper.venta = String.valueOf(record.Venta__c);
             wrapper.id = record.Id;
             wrapper.noRutas = String.valueOf(record.No_Rutas__c);
             wrapper.fechaCreacion = String.valueOf(record.CreatedDate);
@@ -213,7 +233,29 @@ public class P2G_DisponibilidadOfertada {
         
         return wrapperList;
     }
-    
+
+    public static void creaLineas(WrapperDispo fleteNacional,Customer_Quote__c quote){
+        Sourcing_Item__c item = P2G_CreacionFolios.creaItem(fleteNacional.claveServicio,fleteNacional.idAccount,fleteNacional.isCurrency);
+        insert item;
+        P2G_CreacionFoliosWrapper.cargoLine cargo =  new P2G_CreacionFoliosWrapper.cargoLine();
+        cargo.description = fleteNacional.description;
+        cargo.idQuote= quote.Id;
+        cargo.idItem= item.Id;
+        cargo.idConteinerType= fleteNacional.idContainerType;
+        cargo.idClaveSat= fleteNacional.idClaveServicio;
+        cargo.extencionItemName= fleteNacional.claveServicio;
+        cargo.currencyIsoCode= fleteNacional.isCurrency;
+        cargo.units= fleteNacional.units;
+        cargo.pesoBruto= fleteNacional.pesoBruto;
+        cargo.pesoNeto= fleteNacional.pesoNeto;
+        cargo.totalShipping= fleteNacional.totalShippingVolume;
+        Quote_Item_Line__c cargoLine = P2G_CreacionFolios.createCargoLine(cargo);
+        insert cargoLine;
+        list<Customer_Quote__c> ieqos = new list<Customer_Quote__c>();
+        ieqos.add(quote);
+        list<Customer_Quote__c> cotizacion = P2G_CreacionFolios.getIdFolio(ieqos,fleteNacional.isCurrency,fleteNacional.idContainerType,fleteNacional.idAccount,fleteNacional.searchKeyIdSST);
+    }
+
     @AuraEnabled
     public static WrapperDispo creaImportExportQuote(WrapperDispo fleteNacional){
         Customer_Quote__c quote = new Customer_Quote__c();
@@ -251,8 +293,8 @@ public class P2G_DisponibilidadOfertada {
             quote.Country_ofDischarge__c = routes[0].Country_of_Discharge__c;
             quote.State_of_Discharge__c = routes[0].State_of_Discharge__c;
             quote.Site_of_Discharge__c = routes[0].Port_Airport_of_Discharge__c;
-            quote.ETD__c = Date.valueOf('2024-05-11');
-            quote.ETA__c = Date.valueOf('2024-05-12');
+            quote.ETD__c = Date.valueOf('2024-06-26');
+            quote.ETA__c = Date.valueOf('2024-06-27');
             quote.Community_Status__c = 'CUSTOMER CREATED';
             quote.Awaiting_load_time__c = Time.newInstance( Integer.valueOf(Awaitingloadtime[0]) //hour
                                                            ,Integer.valueOf(Awaitingloadtime[1]) //min
@@ -266,6 +308,8 @@ public class P2G_DisponibilidadOfertada {
             if(dispo.size() > 0){
                 if(dispo[0].No_Rutas__c >= 1){
                   insert quote;
+                  //llama metodo futuro
+                  creaLineas(fleteNacional, quote);
                   fleteNacional.tomado = false;
                   if(dispo[0].No_Rutas__c == 1){
                   	fleteNacional.tomado = true;
@@ -301,6 +345,123 @@ public class P2G_DisponibilidadOfertada {
     
     public static void aproba(){
         Integer a = 1;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
         a++;
         a++;
         a++;

@@ -8,7 +8,8 @@ import getClaveSAT from '@salesforce/apex/P2G_CreacionCargoLines.getClaveSAT';
 import obtenerDisponibilidades from '@salesforce/apex/P2G_DisponibilidadOfertada.obtenerDisponibilidades';
 import creaImportExportQuote from '@salesforce/apex/P2G_DisponibilidadOfertada.creaImportExportQuote';
 import deleteDis from '@salesforce/apex/P2G_DisponibilidadOfertada.deleteDis';
-import updateDis from '@salesforce/apex/P2G_DisponibilidadOfertada.updateDis';
+import updateNo from '@salesforce/apex/P2G_DisponibilidadOfertada.updateNo';
+import updatefecha from '@salesforce/apex/P2G_DisponibilidadOfertada.updatefecha';
 
 export default class P2G_MonitoreoDisponibilidad extends LightningElement {
     @track data;
@@ -80,11 +81,21 @@ export default class P2G_MonitoreoDisponibilidad extends LightningElement {
 
     }
 
-    save() {
+    Save() {
         this.showModal = false;
         const itemToSave = this.data.find(item => item.id === this.itemId);
         itemToSave.idUnidadPeso = this.searchValueIdClaveUnidadPeso;
+        itemToSave.idClaveServicio = this.searchValueIdClaveServicio;
+        itemToSave.claveServicio = this.searchValueClaveServicio;
+        itemToSave.description = this.descripcionProducto;
         itemToSave.idAccount = this.idAccount;
+        itemToSave.units = this.units;
+        itemToSave.pesoBruto = this.pesoBruto;
+        itemToSave.pesoNeto = this.pesoNeto;
+        itemToSave.currency = this.currency;
+        itemToSave.totalShippingVolume = this.totalShippingVolume;
+        itemToSave.searchKeyIdSST = this.searchKeyIdSST;
+
         if (itemToSave) {
             this.procesarElementoEncontrado(itemToSave);
         } else {
@@ -121,6 +132,7 @@ export default class P2G_MonitoreoDisponibilidad extends LightningElement {
     @track searchValueAccount;
     @track idAccount;
     @track listAccounts;
+    @track searchKeyIdSST;
     SideSelectAccount(event){
         this.searchValueAccount = event.target.outerText;
         this.idAccount = event.currentTarget.dataset.id;
@@ -138,13 +150,11 @@ export default class P2G_MonitoreoDisponibilidad extends LightningElement {
         }
         else{
             this.searchSST = 'SERVICIOS LOGISTICOS NACIONALES FN (IC) (FN)';
-            this.searchKeyIdSST='a1n4T000002JWphQAG'; //prod a1n4T000001XXYCQA4 UAT:a1n0R000001lZceQAE
+            this.searchKeyIdSST='a1n4T000002JWphQAG'; //prod flete nacional a1n4T000001XXYCQA4 servicio logisticos a1n4T000002JWphQAG,  UAT:a1n0R000001lZceQAE
 
         }
-        console.log(this.searchKeyIdSST);
-        console.log( this.searchSST);
-        
     }
+    
     searchKeyAccount(event){
         this.searchValueAccount = event.target.value;
         this.idAccount='';
@@ -192,7 +202,7 @@ export default class P2G_MonitoreoDisponibilidad extends LightningElement {
 
     //Clave unidad de Peso
     @track searchValueClaveUnidadPeso = '';
-    @track searchValueIdClaveUnidadPeso = 'a3K4T000000SNdIUAW'; //prod a3K4T000000SNdIUAW,, uat a3n0R000000ETiqQAG,
+    @track searchValueIdClaveUnidadPeso = 'a3K4T000000SNdIUAW'; //prod a3K4T000000SNdIUAW, uat a3n0R000000ETiqQAG,
     @track ListClavesUnidad;
     SideSelectClaveUnidadPeso(event){
         this.searchValueClaveUnidadPeso = event.target.outerText;
@@ -307,32 +317,63 @@ export default class P2G_MonitoreoDisponibilidad extends LightningElement {
         this.dispatchEvent(event);
     }
 
-        @track isInputModalOpen = false;
-        @track idUpdate;
-        inputValue = '';
-    
-        openInputModal(event) {
-            this.isInputModalOpen = true;
-            this.idUpdate = event.target.dataset.id;
-        }
-    
-        closeInputModal() {
-            this.isInputModalOpen = false;
-        }
-    
-        handleInputChange(event) {
-            this.inputValue = event.target.value;
-        }
-    
-        handleSave() {
-            updateDis({id: this.idUpdate, No:this.inputValue})
-            .then(result => {
-                this.pushMessage('Exitoso!','success','se actualizo con éxito!');
-                this.obtenerDisponibilidades();
-            })
-            .catch(error => {
-                this.pushMessage('Error','error', error.body.message);
-            });
-            this.closeInputModal();
-        }
+    @track isInputModalOpen = false;
+    @track idUpdate;
+    inputValue = '';
+
+    openInputModal(event) {
+        this.isInputModalOpen = true;
+        this.idUpdate = event.target.dataset.id;
+    }
+
+    closeInputModal() {
+        this.isInputModalOpen = false;
+    }
+
+    handleInputChange(event) {
+        this.inputValue = event.target.value;
+    }
+
+    handleSave() {
+        updateNo({id: this.idUpdate, No:this.inputValue})
+        .then(result => {
+            this.pushMessage('Exitoso!','success','se actualizo con éxito!');
+            this.obtenerDisponibilidades();
+        })
+        .catch(error => {
+            this.pushMessage('Error','error', error.body.message);
+        });
+        this.closeInputModal();
+    }
+
+
+    //fecha
+    @track isModalFechaOpen = false;
+    inputValueFecha = '';
+
+    openModalFecha(event) {
+        this.isModalFechaOpen = true;
+        this.idUpdate = event.target.dataset.id;
+    }
+
+    closeModalFecha() {
+        this.isModalFechaOpen = false;
+    }
+
+    handleInputFecha(event) {
+        this.inputValueFecha = event.target.value;
+        console.log('fecha es: ',this.inputValueFecha);
+    }
+
+    handleSaveFecha() {
+        updatefecha({id: this.idUpdate, fechaVigencia:this.inputValueFecha})
+        .then(result => {
+            this.pushMessage('Exitoso!','success','se actualizo con éxito!');
+            this.obtenerDisponibilidades();
+        })
+        .catch(error => {
+            this.pushMessage('Error','error', error.body.message);
+        });
+        this.closeModalFecha();
+    }
 }

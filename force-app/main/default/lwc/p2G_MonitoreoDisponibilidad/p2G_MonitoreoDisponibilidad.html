@@ -44,14 +44,25 @@
                         <!-- Mostrar los datos en cada columna -->
                         <td>{item.route}</td>
                         <td>{item.fechaCreacion}</td>
-                        <td class={item.bgColor}>{item.fechaVigencia}</td>
-                        <td class="slds-grid slds-wrap slds-align_absolute-center">
-                            <div class="slds-col slds-size_1-of-2 slds-grid_vertical-align-center">
-                                {item.noRutas}
+                        <td class={item.bgColor} style="height: 100%;">
+                            <div class="slds-col slds-grid slds-align_absolute-center" style="width: 100%; height: 100%;">
+                                <div class="slds-col" style="width: 95%; height: 100%; display: flex; align-items: center;">
+                                    {item.fechaVigencia}
+                                </div>
+                                <div class="slds-col" style="width: 5%; height: 100%; text-align: right; display: flex; align-items: center;">
+                                    <lightning-icon icon-name="utility:edit" data-id={item.id} onclick={openModalFecha} alternative-text="Editar" size="x-small" class="slds-m-right_x-small"></lightning-icon>
+                                </div>
                             </div>
-                            <div class="slds-col slds-size_1-of-2 slds-grid_vertical-align-center slds-text-align_right">
-                                <lightning-icon icon-name="utility:edit" data-id={item.id} onclick={openInputModal} alternative-text="Editar" size="x-small" class="slds-m-right_x-small"></lightning-icon>
-                                <!-- Agrega más iconos aquí si es necesario -->
+                        </td>
+
+                        <td style="height: 100%;">
+                            <div class="slds-col slds-grid slds-align_absolute-center" style="width: 100%; height: 100%;">
+                                <div class="slds-col" style="width: 60%; height: 100%; display: flex; align-items: center;">
+                                    {item.noRutas}
+                                </div>
+                                <div class="slds-col" style="width: 40%; height: 100%; text-align: right; display: flex; align-items: center;">
+                                    <lightning-icon icon-name="utility:edit" data-id={item.id} onclick={openInputModal} alternative-text="Editar" size="x-small" class="slds-m-right_x-small"></lightning-icon>
+                                </div>
                             </div>
                         </td>
                     
@@ -61,7 +72,7 @@
                                 aria-describedby="input-modal-content" class="slds-modal slds-fade-in-open">
                                 <div class="slds-modal__container">
                                     <header class="slds-modal__header">
-                                        <h2 class="slds-text-heading_medium">Editar Valor</h2>
+                                        <h2 class="slds-text-heading_medium">Editar No. Rutas</h2>
                                     </header>
                                     <div class="slds-modal__content slds-p-around_medium" >
                                         <lightning-input label="Nuevo Valor" value={inputValue} onchange={handleInputChange}></lightning-input>
@@ -69,6 +80,26 @@
                                     <footer class="slds-modal__footer">
                                         <lightning-button variant="brand" label="Guardar" onclick={handleSave}></lightning-button>
                                         <lightning-button variant="neutral" label="Cancelar" onclick={closeInputModal}></lightning-button>
+                                    </footer>
+                                </div>
+                            </section>
+                            <div class="slds-backdrop slds-backdrop_open"></div>
+                        </template>
+
+                        <!-- Modal para input flotante fecha -->
+                        <template if:true={isModalFechaOpen}>
+                            <section role="dialog" tabindex="-1" aria-labelledby="input-modal-heading" aria-modal="true"
+                                aria-describedby="input-modal-content" class="slds-modal slds-fade-in-open">
+                                <div class="slds-modal__container">
+                                    <header class="slds-modal__header">
+                                        <h2 class="slds-text-heading_medium">Editar Fecha Vigencia</h2>
+                                    </header>
+                                    <div class="slds-modal__content slds-p-around_medium" style="display: flex; justify-content: center; align-items: center;">
+                                        <input type="datetime-local" value={time} oninput={handleInputFecha}/>
+                                    </div>
+                                    <footer class="slds-modal__footer">
+                                        <lightning-button variant="brand" label="Guardar" onclick={handleSaveFecha}></lightning-button>
+                                        <lightning-button variant="neutral" label="Cancelar" onclick={closeModalFecha}></lightning-button>
                                     </footer>
                                 </div>
                             </section>
@@ -83,7 +114,7 @@
                         <td>
                             <template if:false={item.tomado}>
                                 <lightning-button 
-                                label="Eliminar" 
+                                label="Despublicar"
                                 variant="destructive" 
                                 value={item.id} 
                                 onclick={handleDelete}
@@ -91,7 +122,7 @@
                             </template>
                             <template if:true={item.tomado}>
                                 <lightning-button 
-                                label="Eliminar" 
+                                label="Despublicar" 
                                 variant="destructive" 
                                 value={item.id} 
                                 onclick={handleDelete}
@@ -370,7 +401,7 @@
                     </div>
                 </div>
                 <footer class="slds-modal__footer">
-                    <lightning-button label="Save" variant="brand" onclick={save}></lightning-button>
+                    <lightning-button label="Save" variant="brand" onclick={Save}></lightning-button>
                     <lightning-button label="Cancel" variant="neutral" onclick={handleCancel}></lightning-button>
                 </footer>
             </div>
