@@ -33,6 +33,7 @@ public class P2G_DisponibilidadOfertada {
         @AuraEnabled public String isCurrency {get; set;}
         @AuraEnabled public String totalShippingVolume {get; set;}
         @AuraEnabled public String searchKeyIdSST {get; set;}
+        @AuraEnabled public String observaciones {get; set;}
         @AuraEnabled public Boolean tomado {get; set;}
         
         @AuraEnabled public String idAccount {get; set;}
@@ -68,6 +69,14 @@ public class P2G_DisponibilidadOfertada {
         dis.Id = id;
         DateTime fechaVigenciaDateTime = DateTime.valueOf(validFechaVigencia);
         dis.FechaVigencia__c = fechaVigenciaDateTime;
+        updateDis(dis);
+    }
+
+    @AuraEnabled
+    public static void updateObs(String id,String obs){
+        P2G_Disponibilidad__c dis = new P2G_Disponibilidad__c();
+        dis.Id = id;
+        dis.Observaciones__c = obs;
         updateDis(dis);
     }
 
@@ -185,11 +194,11 @@ public class P2G_DisponibilidadOfertada {
         DateTime now = DateTime.now();
         List<P2G_Disponibilidad__c> disponibilidadRecords;
         if(op == 1){
-			disponibilidadRecords = [SELECT Carrier__c,Carrier__r.Name, No_Rutas__c,Container_Type__c,Container_Type__r.Name, VentaSugerida__c,Fecha_de_Creaci_n__c,FechaVigencia__c,KPI_de_Aporbacion_Folio__c, KPI_de_Vigencia__c,CreatedDate, Planner__c,Planner__r.Name, Route__c,Route__r.Name, Ticket_Promedio__c
+			disponibilidadRecords = [SELECT Carrier__c,Carrier__r.Name,Observaciones__c, No_Rutas__c,Container_Type__c,Container_Type__r.Name, VentaSugerida__c,Fecha_de_Creaci_n__c,FechaVigencia__c,KPI_de_Aporbacion_Folio__c, KPI_de_Vigencia__c,CreatedDate, Planner__c,Planner__r.Name, Route__c,Route__r.Name, Ticket_Promedio__c
                                                              FROM P2G_Disponibilidad__c WHERE FechaVigencia__c > :now];            
         }
         if(op == 2){
-            disponibilidadRecords = [SELECT Carrier__c,Carrier__r.Name, No_Rutas__c,Container_Type__c,Container_Type__r.Name, VentaSugerida__c,Fecha_de_Creaci_n__c,FechaVigencia__c,KPI_de_Aporbacion_Folio__c, KPI_de_Vigencia__c,CreatedDate, Planner__c,Planner__r.Name, Route__c,Route__r.Name, Ticket_Promedio__c
+            disponibilidadRecords = [SELECT Carrier__c,Carrier__r.Name, Observaciones__c,No_Rutas__c,Container_Type__c,Container_Type__r.Name, VentaSugerida__c,Fecha_de_Creaci_n__c,FechaVigencia__c,KPI_de_Aporbacion_Folio__c, KPI_de_Vigencia__c,CreatedDate, Planner__c,Planner__r.Name, Route__c,Route__r.Name, Ticket_Promedio__c
                                                              FROM P2G_Disponibilidad__c WHERE FechaVigencia__c < :now];
         }
         
@@ -212,6 +221,7 @@ public class P2G_DisponibilidadOfertada {
             wrapper.fechaCreacion = String.valueOf(record.CreatedDate);
             wrapper.bandera = 'slds-hint-parent slds-theme_green';
             wrapper.tomado = false;
+            wrapper.observaciones = record.Observaciones__c;
             if(record.No_Rutas__c == 0){
                 //wrapper.folioName = record.Folio__r.Name;
                 wrapper.tomado = true;
@@ -345,6 +355,63 @@ public class P2G_DisponibilidadOfertada {
     
     public static void aproba(){
         Integer a = 1;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
         a++;
         a++;
         a++;

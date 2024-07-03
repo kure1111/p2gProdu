@@ -13,6 +13,7 @@
                     <th>Ticket Prom</th>
                     <th>Venta Sugerida</th>
                     <th>Carrier</th>
+                    <th>Observaciones</th>
                     <th>Planner</th>
                     <th></th>
                 </tr>
@@ -110,6 +111,35 @@
                         <td>{item.ticketPromedio}</td>
                         <td>{item.venta}</td>
                         <td>{item.carrier}</td>
+                        <td class="slds-text-align_center">
+                            <lightning-button 
+                                label="Ver" 
+                                variant="brand" 
+                                value={item.id}
+                                onclick={openModalObs}
+                            ></lightning-button>
+                        </td>                        
+                        <!-- Modal para Observaciones -->
+                        <template if:true={isModalObsOpen}>
+                            <section role="dialog" tabindex="-1" aria-labelledby="input-modal-heading" aria-modal="true"
+                                aria-describedby="input-modal-content" class="slds-modal slds-fade-in-open">
+                                <div class="slds-modal__container">
+                                    <header class="slds-modal__header">
+                                        <h2 class="slds-text-heading_medium">Observaciones</h2>
+                                    </header>
+                                    <div class="slds-modal__content slds-p-around_medium" style="display: flex; justify-content: center; align-items: center;">
+                                        <lightning-textarea value={item.observaciones}
+                                            onkeyup={handleObsChange}
+                                            style="width: 100%; height: 100%;"></lightning-textarea>
+                                    </div>
+                                    <footer class="slds-modal__footer">
+                                        <lightning-button variant="brand" label="Guardar" onclick={handleSaveObs}></lightning-button>
+                                        <lightning-button variant="neutral" label="Cancelar" onclick={closeModalObs}></lightning-button>
+                                    </footer>
+                                </div>
+                            </section>
+                            <div class="slds-backdrop slds-backdrop_open"></div>
+                        </template>
                         <td>{item.planner}</td>
                         <td>
                             <template if:false={item.tomado}>

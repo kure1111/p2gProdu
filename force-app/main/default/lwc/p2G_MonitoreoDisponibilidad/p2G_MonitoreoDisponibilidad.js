@@ -10,6 +10,8 @@ import creaImportExportQuote from '@salesforce/apex/P2G_DisponibilidadOfertada.c
 import deleteDis from '@salesforce/apex/P2G_DisponibilidadOfertada.deleteDis';
 import updateNo from '@salesforce/apex/P2G_DisponibilidadOfertada.updateNo';
 import updatefecha from '@salesforce/apex/P2G_DisponibilidadOfertada.updatefecha';
+import updateObs from '@salesforce/apex/P2G_DisponibilidadOfertada.updateObs';
+
 
 export default class P2G_MonitoreoDisponibilidad extends LightningElement {
     @track data;
@@ -375,5 +377,34 @@ export default class P2G_MonitoreoDisponibilidad extends LightningElement {
             this.pushMessage('Error','error', error.body.message);
         });
         this.closeModalFecha();
+    }
+
+    //
+    @track isModalObsOpen = false;
+    observaciones = '';
+
+    openModalObs(event) {
+        this.isModalObsOpen = true;
+        this.idUpdate = event.target.value;
+    }
+
+    handleObsChange(event) {
+        this.observaciones = event.target.value;
+    }
+
+    closeModalObs() {
+        this.isModalObsOpen = false;
+    }
+
+    handleSaveObs() {
+        updateObs({id: this.idUpdate, obs:this.observaciones})
+        .then(result => {
+            this.pushMessage('Exitoso!','success','se actualizo con éxito!');
+            this.obtenerDisponibilidades();
+        })
+        .catch(error => {
+            this.pushMessage('Error','error', error.body.message);
+        });
+        this.closeModalObs();
     }
 }

@@ -18,6 +18,7 @@ export default class P2g_Disponibilidad extends LightningElement {
 
     openModal() {
         this.isModalOpen = true;
+        this.disponibilidades();
     }
 
     openMassiveModal() {
@@ -294,7 +295,7 @@ export default class P2g_Disponibilidad extends LightningElement {
     }
 
     downloadTemplate() {
-        const url = 'https://pak2gologistics--uat.sandbox.my.salesforce.com/sfc/p/0R000000MBcG/a/RL000000Q9fZ/H2yGUjy0HN5HjUbS.4st7jrxk1xfaibeWmgUjoaAKHQ'; // Reemplaza esto con la URL de tu plantilla
+        const url = 'https://pak2gologistics.my.salesforce.com/sfc/p/4T000000DybZ/a/RQ000004DV8Y/p2MdFw9mCoufYoUKKQCP57t276LrVqzQxXPdJaFuxOM';
         const link = document.createElement('a');
         link.href = url;
         link.setAttribute('download', 'plantilla.csv'); // Nombre del archivo para descargar
