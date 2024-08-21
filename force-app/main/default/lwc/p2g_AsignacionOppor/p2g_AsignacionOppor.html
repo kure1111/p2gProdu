@@ -180,6 +180,24 @@
                     </div>
                 </div>
 
+                <!--Filtro zona -->
+                <div class="slds-col" style="flex: 0 0 15%;">
+                    <label for="status" class="slds-form-element__label slds-p-right_x-small" style="margin-bottom: 5%;">Zona:</label>
+                    <div class="slds-form-element">
+                        <div class="slds-form-element__control">
+                            <div class="slds-select_container">
+                                <select id="zona" name="zona" class="slds-select" onchange={handlezona}>
+                                    <option value="All">All</option>
+                                    <option value="Noroeste">Noroeste</option>
+                                    <option value="GDL">GDL</option>
+                                    <option value="PAC-SUR">PAC-SUR</option>
+                                    <option value="Centro-Norte">Centro-Norte</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
                 <!-- check box -->
                 <div class="slds-col" style="flex: 0 0 7%;">
                     <label for="verTodo" class="slds-form-element__label slds-p-right_x-small" style="margin-bottom: 10%;">Ver todo:</label>
@@ -196,7 +214,7 @@
                 </div>
 
                 <!--Asignar a -->
-                <div style="flex: 0 0 15%;">
+                <div style="flex: 0 0 15%;" class="slds-m-right_medium">
                     <label for="OpExecutive" style="margin-bottom: -2%;">Asignar a: </label>
                         <div onkeyup={searchKeyOpExecutiveA}>
                             <lightning-input
@@ -227,22 +245,36 @@
 
                 </div>
 
-                <!--Filtro zona -->
-                <div class="slds-col" style="flex: 0 0 15%;">
-                    <label for="status" class="slds-form-element__label slds-p-right_x-small" style="margin-bottom: 5%;">Zona:</label>
-                    <div class="slds-form-element">
-                        <div class="slds-form-element__control">
-                            <div class="slds-select_container">
-                                <select id="zona" name="zona" class="slds-select" onchange={handlezona}>
-                                    <option value="All">All</option>
-                                    <option value="Noroeste">Noroeste</option>
-                                    <option value="GDL">GDL</option>
-                                    <option value="PAC-SUR">PAC-SUR</option>
-                                    <option value="Centro-Norte">Centro-Norte</option>
-                                </select>
-                            </div>
+                <!--Ejecutivo SAC -->
+                <div style="flex: 0 0 15%;">
+                    <label for="OpExecutive" style="margin-bottom: -2%;">Buscar Ejecutivo SAC</label>
+                        <div onkeyup={searchKeyOpExecutiveSAC}>
+                            <lightning-input
+                                id="sac"
+                                placeholder="Buscar Ejecutivo SAC"
+                                value={searchValueOpExecutiveSAC}
+                                type="text">
+                            </lightning-input>
                         </div>
-                    </div>
+                        <table if:true={showSideOpExecutiveSAC} class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_striped">
+                            <thead>
+                                <tr class="slds-line-height_reset">
+                                    <th class="" scope="col">
+                                        <div class="slds-truncate" title="First Name">Name</div>
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <template for:each={sideRecordsOpExecutiveSAC} for:item="executive">
+                                    <tr class="slds-hint-parent" data-email ={executive.Email} data-id={executive.Id} key={executive.Id} onclick={SideSelectOpExecutiveSAC}>
+                                        <td>
+                                            <div class="slds-truncate">{executive.Name}</div>
+                                        </td>
+                                    </tr>
+                                </template>
+                            </tbody>
+                        </table>
+
                 </div>
   
             </div>
