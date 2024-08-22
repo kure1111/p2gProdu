@@ -1,0 +1,971 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <apiVersion>55.0</apiVersion>
+    <choices>
+        <description>Valor: No contesto al contactarlo nuevamente
+Campo: ¿Por qué canceló el cliente?</description>
+        <name>NoContestoAlContactarloNuevamente</name>
+        <choiceText>No contesto al contactarlo nuevamente</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>No contesto al contactarlo nuevamente</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <description>Valor: Para oportunidad futura
+Campo: ¿Por qué canceló el cliente?</description>
+        <name>ParaOportunidadFutura</name>
+        <choiceText>Para oportunidad futura</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Para oportunidad futura</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <description>Valores: Esta realizando benchmark/investigacion
+Campo: ¿Por qué canceló el cliente?</description>
+        <name>RealizandoBenchmarkInvestigacion</name>
+        <choiceText>Esta realizando benchmark/investigacion</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Esta realizando benchmark/investigacion</stringValue>
+        </value>
+    </choices>
+    <decisions>
+        <description>Consulta el motivo de declinación del folio</description>
+        <name>Motivo_de_Declinacion</name>
+        <label>Motivo de Declinación</label>
+        <locationX>1898</locationX>
+        <locationY>278</locationY>
+        <defaultConnector>
+            <targetReference>Otros_Motivos_Update</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Otros motivos</defaultConnectorLabel>
+        <rules>
+            <name>Tarifa_Alta</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Motivos_de_declinacion</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>TARIFA ALTA</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Tarifa_Alta_Update</targetReference>
+            </connector>
+            <label>Tarifa Alta</label>
+        </rules>
+        <rules>
+            <name>Intinerarios</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Motivos_de_declinacion</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>INTINERARIOS</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Intinerarios_Update</targetReference>
+            </connector>
+            <label>Intinerarios</label>
+        </rules>
+        <rules>
+            <name>Servicio_Proyecto_cancelado_por_cliente</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Motivos_de_declinacion</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>SERVICIO/PROYECTO CANCELADO POR CLIENTE</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Cancelado_por_Cliente</targetReference>
+            </connector>
+            <label>Servicio / Proyecto cancelado por cliente</label>
+        </rules>
+        <rules>
+            <name>Nivel_de_servicio</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Motivos_de_declinacion</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>NIVEL DE SERVICIO</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Nivel_de_Servicio_Update</targetReference>
+            </connector>
+            <label>Nivel de servicio</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>Consulta si el cliente canceló por una oportunidad futura u otra razón</description>
+        <name>Porque_cancelo</name>
+        <label>¿Porqué canceló?</label>
+        <locationX>1898</locationX>
+        <locationY>518</locationY>
+        <defaultConnector>
+            <targetReference>Update_Opp_3</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Otra motivo</defaultConnectorLabel>
+        <rules>
+            <name>Oportunidad_Futura</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Por_que_cancelo_el_cliente</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <elementReference>ParaOportunidadFutura</elementReference>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Future_Opportunity</targetReference>
+            </connector>
+            <label>Oportunidad Futura</label>
+        </rules>
+    </decisions>
+    <description>Flujo con el proceso para declinar folios</description>
+    <dynamicChoiceSets>
+        <description>Conjunto de valores del listado Declined for del objeto Import-Export Quote/Order</description>
+        <name>DeclinedFor</name>
+        <dataType>Picklist</dataType>
+        <displayField xsi:nil="true"/>
+        <object xsi:nil="true"/>
+        <picklistField>Declined_for2__c</picklistField>
+        <picklistObject>Customer_Quote__c</picklistObject>
+    </dynamicChoiceSets>
+    <environments>Default</environments>
+    <interviewLabel>PAK Motivos Declinación {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>PAK Motivos Declinación</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>Flow</processType>
+    <recordUpdates>
+        <description>Actualiza el folio que desencadena el flujo. Le asigna el motivo de declinación &quot;Servicio / Proyecto cancelado por el cliente&quot;</description>
+        <name>Cancelado_por_Cliente</name>
+        <label>Cancelado por Cliente</label>
+        <locationX>1898</locationX>
+        <locationY>398</locationY>
+        <connector>
+            <targetReference>Porque_cancelo</targetReference>
+        </connector>
+        <faultConnector>
+            <targetReference>Cancelado_Error</targetReference>
+        </faultConnector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>recordId</elementReference>
+            </value>
+        </filters>
+        <inputAssignments>
+            <field>Declined_for2__c</field>
+            <value>
+                <stringValue>SERVICIO/PROYECTO CANCELADO POR CLIENTE</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Folio_Declinado__c</field>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Quotation_Status__c</field>
+            <value>
+                <stringValue>Quote Declined</stringValue>
+            </value>
+        </inputAssignments>
+        <object>Customer_Quote__c</object>
+    </recordUpdates>
+    <recordUpdates>
+        <description>Actualiza la razón por la que se cerró la oportunidad, su fecha de cierre, y se cierra la oportunidad</description>
+        <name>Future_Opportunity</name>
+        <label>Future Opportunity</label>
+        <locationX>1634</locationX>
+        <locationY>638</locationY>
+        <connector>
+            <targetReference>Mensaje_Final</targetReference>
+        </connector>
+        <faultConnector>
+            <targetReference>Future_Error</targetReference>
+        </faultConnector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Import_Export_Quote_Order__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>recordId</elementReference>
+            </value>
+        </filters>
+        <inputAssignments>
+            <field>CloseDate</field>
+            <value>
+                <elementReference>Cual_es_la_fecha_futura_del_cliente</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Loss_Reason__c</field>
+            <value>
+                <elementReference>Por_que_cancelo_el_cliente</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>StageName</field>
+            <value>
+                <stringValue>Closed Lost</stringValue>
+            </value>
+        </inputAssignments>
+        <object>Opportunity</object>
+    </recordUpdates>
+    <recordUpdates>
+        <description>Si es intinerarios, se actualiza el campo ¿Qué fecha esperaba el cliente?</description>
+        <name>Intinerarios_Update</name>
+        <label>Intinerarios Update</label>
+        <locationX>842</locationX>
+        <locationY>398</locationY>
+        <connector>
+            <targetReference>Update_Opp_2</targetReference>
+        </connector>
+        <faultConnector>
+            <targetReference>Intinerarios_Error</targetReference>
+        </faultConnector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>recordId</elementReference>
+            </value>
+        </filters>
+        <inputAssignments>
+            <field>Declined_for2__c</field>
+            <value>
+                <stringValue>INTINERARIOS</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Folio_Declinado__c</field>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Que_fecha_esperaba_el_cliente__c</field>
+            <value>
+                <elementReference>Que_fecha_esperaba_el_cliente</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Quotation_Status__c</field>
+            <value>
+                <stringValue>Quote Declined</stringValue>
+            </value>
+        </inputAssignments>
+        <object>Customer_Quote__c</object>
+    </recordUpdates>
+    <recordUpdates>
+        <description>Actualiza el folio que desencadena el flujo. El motivo de declinación se asigna el valor NIVEL DE SERVICIO</description>
+        <name>Nivel_de_Servicio_Update</name>
+        <label>Nivel de Servicio Update</label>
+        <locationX>2954</locationX>
+        <locationY>398</locationY>
+        <connector>
+            <targetReference>Update_Opp_4</targetReference>
+        </connector>
+        <faultConnector>
+            <targetReference>Nivel_de_servicio_Error</targetReference>
+        </faultConnector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>recordId</elementReference>
+            </value>
+        </filters>
+        <inputAssignments>
+            <field>Declined_for2__c</field>
+            <value>
+                <stringValue>NIVEL DE SERVICIO</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Folio_Declinado__c</field>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Quotation_Status__c</field>
+            <value>
+                <stringValue>Quote Declined</stringValue>
+            </value>
+        </inputAssignments>
+        <object>Customer_Quote__c</object>
+    </recordUpdates>
+    <recordUpdates>
+        <description>Actualiza el folio al motivo de declinación Tardanza en cotizar ó Fuera de WTP.</description>
+        <name>Otros_Motivos_Update</name>
+        <label>Otros Motivos Update</label>
+        <locationX>3746</locationX>
+        <locationY>398</locationY>
+        <connector>
+            <targetReference>Update_Opp_5</targetReference>
+        </connector>
+        <faultConnector>
+            <targetReference>Otros_Motivos_Error</targetReference>
+        </faultConnector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>recordId</elementReference>
+            </value>
+        </filters>
+        <inputAssignments>
+            <field>Declined_for2__c</field>
+            <value>
+                <elementReference>Motivos_de_declinacion</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Folio_Declinado__c</field>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Quotation_Status__c</field>
+            <value>
+                <stringValue>Quote Declined</stringValue>
+            </value>
+        </inputAssignments>
+        <object>Customer_Quote__c</object>
+    </recordUpdates>
+    <recordUpdates>
+        <description>Si es tarifa alta, se actualiza el campo ¿Qué tarifa esperaba el cliente?</description>
+        <name>Tarifa_Alta_Update</name>
+        <label>Tarifa Alta Update</label>
+        <locationX>50</locationX>
+        <locationY>398</locationY>
+        <connector>
+            <targetReference>Update_Opp_1</targetReference>
+        </connector>
+        <faultConnector>
+            <targetReference>Tarifa_Alta_Error</targetReference>
+        </faultConnector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>recordId</elementReference>
+            </value>
+        </filters>
+        <inputAssignments>
+            <field>Declined_for2__c</field>
+            <value>
+                <stringValue>TARIFA ALTA</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Folio_Declinado__c</field>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Que_tarifa_esperaba_el_cliente__c</field>
+            <value>
+                <elementReference>Que_tarifa_esperaba_el_cliente</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Quotation_Status__c</field>
+            <value>
+                <stringValue>Quote Declined</stringValue>
+            </value>
+        </inputAssignments>
+        <object>Customer_Quote__c</object>
+    </recordUpdates>
+    <recordUpdates>
+        <description>Actualiza la oportunidad relacionada al folio que desencadena el flujo</description>
+        <name>Update_Opp_1</name>
+        <label>Update Opp 1</label>
+        <locationX>50</locationX>
+        <locationY>518</locationY>
+        <connector>
+            <targetReference>Mensaje_Final</targetReference>
+        </connector>
+        <faultConnector>
+            <targetReference>Opp1_Error</targetReference>
+        </faultConnector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Import_Export_Quote_Order__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>recordId</elementReference>
+            </value>
+        </filters>
+        <inputAssignments>
+            <field>Loss_Reason__c</field>
+            <value>
+                <stringValue>Declinado por el folio</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>StageName</field>
+            <value>
+                <stringValue>Closed Lost</stringValue>
+            </value>
+        </inputAssignments>
+        <object>Opportunity</object>
+    </recordUpdates>
+    <recordUpdates>
+        <description>Actualiza la oportunidad relacionada al folio que desencadena el flujo</description>
+        <name>Update_Opp_2</name>
+        <label>Update Opp 2</label>
+        <locationX>842</locationX>
+        <locationY>518</locationY>
+        <connector>
+            <targetReference>Mensaje_Final</targetReference>
+        </connector>
+        <faultConnector>
+            <targetReference>Opp2_Error</targetReference>
+        </faultConnector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Import_Export_Quote_Order__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>recordId</elementReference>
+            </value>
+        </filters>
+        <inputAssignments>
+            <field>Loss_Reason__c</field>
+            <value>
+                <stringValue>Declinado por el folio</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>StageName</field>
+            <value>
+                <stringValue>Closed Lost</stringValue>
+            </value>
+        </inputAssignments>
+        <object>Opportunity</object>
+    </recordUpdates>
+    <recordUpdates>
+        <description>Actualiza la oportunidad relacionada al folio que desencadena el flujo. El stage es Closed Lost y la razón de perdida es definida por la pregunta ¿Por qué canceló el cliente?</description>
+        <name>Update_Opp_3</name>
+        <label>Update Opp 3</label>
+        <locationX>2162</locationX>
+        <locationY>638</locationY>
+        <connector>
+            <targetReference>Mensaje_Final</targetReference>
+        </connector>
+        <faultConnector>
+            <targetReference>Opp3_Error</targetReference>
+        </faultConnector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Import_Export_Quote_Order__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>recordId</elementReference>
+            </value>
+        </filters>
+        <inputAssignments>
+            <field>Loss_Reason__c</field>
+            <value>
+                <elementReference>Por_que_cancelo_el_cliente</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>StageName</field>
+            <value>
+                <stringValue>Closed Lost</stringValue>
+            </value>
+        </inputAssignments>
+        <object>Opportunity</object>
+    </recordUpdates>
+    <recordUpdates>
+        <description>Actualiza la oportunidad relacionada al folio que desencadena el flujo. El stage es Closed Lost, y se agrega por cual proveedor se cambió el cliente</description>
+        <name>Update_Opp_4</name>
+        <label>Update Opp 4</label>
+        <locationX>2954</locationX>
+        <locationY>518</locationY>
+        <connector>
+            <targetReference>Mensaje_Final</targetReference>
+        </connector>
+        <faultConnector>
+            <targetReference>Opp4_Error</targetReference>
+        </faultConnector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Import_Export_Quote_Order__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>recordId</elementReference>
+            </value>
+        </filters>
+        <inputAssignments>
+            <field>Loss_Reason__c</field>
+            <value>
+                <stringValue>Declinado por el folio</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Por_cual_proveedor_cambio_el_cliente__c</field>
+            <value>
+                <elementReference>Con_cual_proveedor_se_cambio_el_cliente</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>StageName</field>
+            <value>
+                <stringValue>Closed Lost</stringValue>
+            </value>
+        </inputAssignments>
+        <object>Opportunity</object>
+    </recordUpdates>
+    <recordUpdates>
+        <description>Actualiza la oportunidad relacionada al folio que desencadena el flujo. El stage es Closed Lost</description>
+        <name>Update_Opp_5</name>
+        <label>Update Opp 5</label>
+        <locationX>3746</locationX>
+        <locationY>518</locationY>
+        <connector>
+            <targetReference>Mensaje_Final</targetReference>
+        </connector>
+        <faultConnector>
+            <targetReference>Opp5_Error</targetReference>
+        </faultConnector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Import_Export_Quote_Order__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>recordId</elementReference>
+            </value>
+        </filters>
+        <inputAssignments>
+            <field>Loss_Reason__c</field>
+            <value>
+                <stringValue>Declinado por el folio</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>StageName</field>
+            <value>
+                <stringValue>Closed Lost</stringValue>
+            </value>
+        </inputAssignments>
+        <object>Opportunity</object>
+    </recordUpdates>
+    <screens>
+        <name>Cancelado_Error</name>
+        <label>Cancelado Error</label>
+        <locationX>2690</locationX>
+        <locationY>518</locationY>
+        <allowBack>false</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <fields>
+            <name>msg003</name>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;{!$Flow.FaultMessage}&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
+        <name>Future_Error</name>
+        <label>Future Error</label>
+        <locationX>1898</locationX>
+        <locationY>758</locationY>
+        <allowBack>false</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <fields>
+            <name>msg003_1</name>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;{!$Flow.FaultMessage}&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
+        <description>Error al intentar actualizar el folio que desencadena el flujo</description>
+        <name>Intinerarios_Error</name>
+        <label>Intinerarios Error</label>
+        <locationX>1370</locationX>
+        <locationY>518</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <fields>
+            <name>msg002</name>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;{!$Flow.FaultMessage}&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
+        <name>Mensaje_Final</name>
+        <label>Mensaje Final</label>
+        <locationX>1898</locationX>
+        <locationY>1214</locationY>
+        <allowBack>false</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <fields>
+            <name>msgFinal</name>
+            <fieldText>&lt;p style=&quot;text-align: center;&quot;&gt;&lt;strong style=&quot;color: rgb(234, 20, 20); font-size: 24px;&quot;&gt;&lt;em&gt;FOLIO Y OPORTUNIDAD DECLINADA&lt;/em&gt;&lt;/strong&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
+        <description>Ventana con el proceso de motivos declinación</description>
+        <name>Motivos_Declinacion</name>
+        <label>Motivos de Declinación</label>
+        <locationX>1898</locationX>
+        <locationY>158</locationY>
+        <allowBack>false</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <connector>
+            <targetReference>Motivo_de_Declinacion</targetReference>
+        </connector>
+        <fields>
+            <name>Motivos_Declinacion_Section1</name>
+            <fieldType>RegionContainer</fieldType>
+            <fields>
+                <name>Motivos_Declinacion_Section1_Column1</name>
+                <fieldType>Region</fieldType>
+                <fields>
+                    <name>Motivos_de_declinacion</name>
+                    <choiceReferences>DeclinedFor</choiceReferences>
+                    <dataType>String</dataType>
+                    <fieldText>Motivos de declinación</fieldText>
+                    <fieldType>DropdownBox</fieldType>
+                    <isRequired>true</isRequired>
+                </fields>
+                <fields>
+                    <name>msgMotivos</name>
+                    <fieldText>&lt;p&gt;&lt;span style=&quot;font-size: 14px; color: rgb(65, 131, 255);&quot;&gt;No es necesario proporcionar otro dato.&lt;/span&gt;&lt;/p&gt;</fieldText>
+                    <fieldType>DisplayText</fieldType>
+                    <visibilityRule>
+                        <conditionLogic>or</conditionLogic>
+                        <conditions>
+                            <leftValueReference>Motivos_de_declinacion</leftValueReference>
+                            <operator>EqualTo</operator>
+                            <rightValue>
+                                <stringValue>TARDANZA EN COTIZAR</stringValue>
+                            </rightValue>
+                        </conditions>
+                        <conditions>
+                            <leftValueReference>Motivos_de_declinacion</leftValueReference>
+                            <operator>EqualTo</operator>
+                            <rightValue>
+                                <stringValue>CLIENTE FUERA DE WTP</stringValue>
+                            </rightValue>
+                        </conditions>
+                    </visibilityRule>
+                </fields>
+                <inputParameters>
+                    <name>width</name>
+                    <value>
+                        <stringValue>12</stringValue>
+                    </value>
+                </inputParameters>
+                <isRequired>false</isRequired>
+            </fields>
+            <isRequired>false</isRequired>
+            <regionContainerType>SectionWithoutHeader</regionContainerType>
+        </fields>
+        <fields>
+            <name>Motivos_Declinacion_Section2</name>
+            <fieldType>RegionContainer</fieldType>
+            <fields>
+                <name>Motivos_Declinacion_Section2_Column1</name>
+                <fieldType>Region</fieldType>
+                <fields>
+                    <name>Que_tarifa_esperaba_el_cliente</name>
+                    <dataType>Number</dataType>
+                    <fieldText>¿Qué tarifa esperaba el cliente?</fieldText>
+                    <fieldType>InputField</fieldType>
+                    <isRequired>true</isRequired>
+                    <scale>2</scale>
+                    <visibilityRule>
+                        <conditionLogic>and</conditionLogic>
+                        <conditions>
+                            <leftValueReference>Motivos_de_declinacion</leftValueReference>
+                            <operator>EqualTo</operator>
+                            <rightValue>
+                                <stringValue>TARIFA ALTA</stringValue>
+                            </rightValue>
+                        </conditions>
+                    </visibilityRule>
+                </fields>
+                <fields>
+                    <name>Que_fecha_esperaba_el_cliente</name>
+                    <dataType>Date</dataType>
+                    <fieldText>¿Qué fecha esperaba el cliente?</fieldText>
+                    <fieldType>InputField</fieldType>
+                    <isRequired>true</isRequired>
+                    <visibilityRule>
+                        <conditionLogic>and</conditionLogic>
+                        <conditions>
+                            <leftValueReference>Motivos_de_declinacion</leftValueReference>
+                            <operator>EqualTo</operator>
+                            <rightValue>
+                                <stringValue>INTINERARIOS</stringValue>
+                            </rightValue>
+                        </conditions>
+                    </visibilityRule>
+                </fields>
+                <fields>
+                    <name>Por_que_cancelo_el_cliente</name>
+                    <choiceReferences>NoContestoAlContactarloNuevamente</choiceReferences>
+                    <choiceReferences>RealizandoBenchmarkInvestigacion</choiceReferences>
+                    <choiceReferences>ParaOportunidadFutura</choiceReferences>
+                    <dataType>String</dataType>
+                    <fieldText>¿Por qué canceló el cliente?</fieldText>
+                    <fieldType>DropdownBox</fieldType>
+                    <isRequired>true</isRequired>
+                    <visibilityRule>
+                        <conditionLogic>and</conditionLogic>
+                        <conditions>
+                            <leftValueReference>Motivos_de_declinacion</leftValueReference>
+                            <operator>EqualTo</operator>
+                            <rightValue>
+                                <stringValue>SERVICIO/PROYECTO CANCELADO POR CLIENTE</stringValue>
+                            </rightValue>
+                        </conditions>
+                    </visibilityRule>
+                </fields>
+                <fields>
+                    <name>Cual_es_la_fecha_futura_del_cliente</name>
+                    <dataType>Date</dataType>
+                    <fieldText>¿Cuál es la fecha futura del cliente?</fieldText>
+                    <fieldType>InputField</fieldType>
+                    <isRequired>true</isRequired>
+                    <visibilityRule>
+                        <conditionLogic>and</conditionLogic>
+                        <conditions>
+                            <leftValueReference>Por_que_cancelo_el_cliente</leftValueReference>
+                            <operator>EqualTo</operator>
+                            <rightValue>
+                                <stringValue>Para oportunidad futura</stringValue>
+                            </rightValue>
+                        </conditions>
+                    </visibilityRule>
+                </fields>
+                <fields>
+                    <name>Con_cual_proveedor_se_cambio_el_cliente</name>
+                    <dataType>String</dataType>
+                    <fieldText>¿Con cuál proveedor se cambió el cliente?</fieldText>
+                    <fieldType>InputField</fieldType>
+                    <isRequired>true</isRequired>
+                    <visibilityRule>
+                        <conditionLogic>and</conditionLogic>
+                        <conditions>
+                            <leftValueReference>Motivos_de_declinacion</leftValueReference>
+                            <operator>EqualTo</operator>
+                            <rightValue>
+                                <stringValue>NIVEL DE SERVICIO</stringValue>
+                            </rightValue>
+                        </conditions>
+                    </visibilityRule>
+                </fields>
+                <inputParameters>
+                    <name>width</name>
+                    <value>
+                        <stringValue>12</stringValue>
+                    </value>
+                </inputParameters>
+                <isRequired>false</isRequired>
+            </fields>
+            <isRequired>false</isRequired>
+            <regionContainerType>SectionWithoutHeader</regionContainerType>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
+        <name>Nivel_de_servicio_Error</name>
+        <label>Nivel de servicio Error</label>
+        <locationX>3482</locationX>
+        <locationY>518</locationY>
+        <allowBack>false</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <fields>
+            <name>msg003_0</name>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;{!$Flow.FaultMessage}&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
+        <description>Error al intentar actualizar la oportunidad relacionada al folio que desencadena el flujo</description>
+        <name>Opp1_Error</name>
+        <label>Opp1 Error</label>
+        <locationX>314</locationX>
+        <locationY>638</locationY>
+        <allowBack>false</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <fields>
+            <name>msg001_1</name>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;{!$Flow.FaultMessage}&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
+        <description>Error al intentar actualizar la oportunidad relacionada al folio que desencadena el flujo</description>
+        <name>Opp2_Error</name>
+        <label>Opp2 Error</label>
+        <locationX>1106</locationX>
+        <locationY>638</locationY>
+        <allowBack>false</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <fields>
+            <name>msg001_1_0</name>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;{!$Flow.FaultMessage}&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
+        <name>Opp3_Error</name>
+        <label>Opp3 Error</label>
+        <locationX>2426</locationX>
+        <locationY>758</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <fields>
+            <name>msg003_2</name>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;{!$Flow.FaultMessage}&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
+        <name>Opp4_Error</name>
+        <label>Opp4 Error</label>
+        <locationX>3218</locationX>
+        <locationY>638</locationY>
+        <allowBack>false</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <fields>
+            <name>msg003_0_0</name>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;{!$Flow.FaultMessage}&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
+        <name>Opp5_Error</name>
+        <label>Opp5 Error</label>
+        <locationX>4010</locationX>
+        <locationY>638</locationY>
+        <allowBack>false</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <fields>
+            <name>msg003_0_0_0_0</name>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;{!$Flow.FaultMessage}&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
+        <name>Otros_Motivos_Error</name>
+        <label>Otros Motivos Error</label>
+        <locationX>4274</locationX>
+        <locationY>518</locationY>
+        <allowBack>false</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <fields>
+            <name>msg003_0_0_0</name>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;{!$Flow.FaultMessage}&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
+        <description>Error al intentar actualizar el folio que desencadena el flujo</description>
+        <name>Tarifa_Alta_Error</name>
+        <label>Tarifa Alta Error</label>
+        <locationX>578</locationX>
+        <locationY>518</locationY>
+        <allowBack>false</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <fields>
+            <name>msg001</name>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;{!$Flow.FaultMessage}&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <start>
+        <locationX>1772</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Motivos_Declinacion</targetReference>
+        </connector>
+    </start>
+    <status>Active</status>
+    <variables>
+        <description>ID del folio que desencadena el flujo</description>
+        <name>recordId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+</Flow>

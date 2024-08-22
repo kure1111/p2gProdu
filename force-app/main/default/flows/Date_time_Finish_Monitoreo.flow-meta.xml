@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>54.0</apiVersion>
+    <description>Actualiza campo date time finish monitoreo en el Shipment</description>
+    <formulas>
+        <description>Hoy</description>
+        <name>Today</name>
+        <dataType>DateTime</dataType>
+        <expression>NOW()</expression>
+    </formulas>
+    <interviewLabel>Date time Finish Monitoreo {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Date time Finish Monitoreo</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordUpdates>
+        <description>Actualiza el campo date time finish monitoreo</description>
+        <name>Actualiza_Date_Finish</name>
+        <label>Actualiza Date Finish</label>
+        <locationX>176</locationX>
+        <locationY>335</locationY>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Shipment_Status_Mon__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Finished_M</stringValue>
+            </value>
+        </filters>
+        <inputAssignments>
+            <field>Date_time_FN_Finished__c</field>
+            <value>
+                <elementReference>Today</elementReference>
+            </value>
+        </inputAssignments>
+        <inputReference>$Record</inputReference>
+    </recordUpdates>
+    <start>
+        <locationX>50</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Actualiza_Date_Finish</targetReference>
+        </connector>
+        <doesRequireRecordChangedToMeetCriteria>true</doesRequireRecordChangedToMeetCriteria>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Shipment_Status_Mon__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Finished_M</stringValue>
+            </value>
+        </filters>
+        <object>Shipment__c</object>
+        <recordTriggerType>Update</recordTriggerType>
+        <triggerType>RecordAfterSave</triggerType>
+    </start>
+    <status>Obsolete</status>
+</Flow>

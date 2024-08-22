@@ -3,8 +3,8 @@
     <actionCalls>
         <name>Create_new_Shipment</name>
         <label>Create new Shipment</label>
-        <locationX>50</locationX>
-        <locationY>575</locationY>
+        <locationX>314</locationX>
+        <locationY>539</locationY>
         <actionName>NEU_Generate_Shipments</actionName>
         <actionType>apex</actionType>
         <connector>
@@ -21,11 +21,76 @@
         <versionSegment>1</versionSegment>
     </actionCalls>
     <apiVersion>54.0</apiVersion>
+    <constants>
+        <name>IdLider1_Noroeste_GDL</name>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>005RQ000000115JYAQ</stringValue>
+        </value>
+    </constants>
+    <constants>
+        <name>IdLider2_PACSUR_CentroNorte</name>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>0054T000001jpXoQAI</stringValue>
+        </value>
+    </constants>
+    <decisions>
+        <name>Definicion_de_Zona</name>
+        <label>Definicion de Zona</label>
+        <locationX>314</locationX>
+        <locationY>863</locationY>
+        <defaultConnectorLabel>Sin Zona</defaultConnectorLabel>
+        <rules>
+            <name>Zona_Noroeste_y_GDL</name>
+            <conditionLogic>or</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Route__r.Zona__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>GDL</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Route__r.Zona__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Noroeste</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Lider1</targetReference>
+            </connector>
+            <label>Zona Noroeste y GDL</label>
+        </rules>
+        <rules>
+            <name>Zona_PAC_SUR_y_Centro_Norte1</name>
+            <conditionLogic>or</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Route__r.Zona__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>PAC-SUR</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Route__r.Zona__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Centro-Norte</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Copy_2_of_UpdateShipmentLider1</targetReference>
+            </connector>
+            <label>Zona PAC-SUR y Centro-Norte</label>
+        </rules>
+    </decisions>
     <decisions>
         <name>status_approved_y_Operation_Executive_null</name>
         <label>status approved y Operation Executive null</label>
-        <locationX>380</locationX>
-        <locationY>335</locationY>
+        <locationX>842</locationX>
+        <locationY>323</locationY>
         <defaultConnectorLabel>No cumple con las condiciones</defaultConnectorLabel>
         <rules>
             <name>Cumple_con_las_condiciones</name>
@@ -53,8 +118,8 @@
     <decisions>
         <name>Verificar_si_ETD_es_menor_a_24_horas</name>
         <label>Verificar si ETD es menor a 24 horas</label>
-        <locationX>182</locationX>
-        <locationY>455</locationY>
+        <locationX>578</locationX>
+        <locationY>431</locationY>
         <defaultConnectorLabel>Es mayor a 24 hrs</defaultConnectorLabel>
         <rules>
             <name>ETD_es_menor_a_24_hrs</name>
@@ -72,6 +137,7 @@
             <label>ETD es menor a 24 hrs</label>
         </rules>
     </decisions>
+    <description>Updare Lider en Shipment en campo Operation Executive</description>
     <environments>Default</environments>
     <formulas>
         <name>ETDMenor24hrs</name>
@@ -102,8 +168,8 @@
     <recordLookups>
         <name>Get_Shipment</name>
         <label>Get Shipment</label>
-        <locationX>50</locationX>
-        <locationY>695</locationY>
+        <locationX>314</locationX>
+        <locationY>647</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Actualizar_folio</targetReference>
@@ -123,8 +189,11 @@
     <recordUpdates>
         <name>Actualizar_folio</name>
         <label>Actualizar folio</label>
-        <locationX>50</locationX>
-        <locationY>815</locationY>
+        <locationX>314</locationX>
+        <locationY>755</locationY>
+        <connector>
+            <targetReference>Definicion_de_Zona</targetReference>
+        </connector>
         <inputAssignments>
             <field>Last_Shipment__c</field>
             <value>
@@ -139,8 +208,50 @@
         </inputAssignments>
         <inputReference>$Record</inputReference>
     </recordUpdates>
+    <recordUpdates>
+        <name>Copy_2_of_UpdateShipmentLider1</name>
+        <label>UpdateShipmentLider1</label>
+        <locationX>314</locationX>
+        <locationY>971</locationY>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>Get_Shipment.Id</elementReference>
+            </value>
+        </filters>
+        <inputAssignments>
+            <field>Operation_Executive__c</field>
+            <value>
+                <elementReference>IdLider2_PACSUR_CentroNorte</elementReference>
+            </value>
+        </inputAssignments>
+        <object>Shipment__c</object>
+    </recordUpdates>
+    <recordUpdates>
+        <name>Lider1</name>
+        <label>UpdateShipmentLider1</label>
+        <locationX>50</locationX>
+        <locationY>971</locationY>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>Get_Shipment.Id</elementReference>
+            </value>
+        </filters>
+        <inputAssignments>
+            <field>Operation_Executive__c</field>
+            <value>
+                <elementReference>IdLider1_Noroeste_GDL</elementReference>
+            </value>
+        </inputAssignments>
+        <object>Shipment__c</object>
+    </recordUpdates>
     <start>
-        <locationX>254</locationX>
+        <locationX>716</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>status_approved_y_Operation_Executive_null</targetReference>

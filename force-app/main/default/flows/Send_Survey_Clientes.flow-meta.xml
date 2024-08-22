@@ -1,52 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <actionCalls>
-        <name>Confirmaci_n_Email_Encuesta</name>
-        <label>Confirmación Email Encuesta</label>
-        <locationX>314</locationX>
-        <locationY>1392</locationY>
-        <actionName>emailSimple</actionName>
-        <actionType>emailSimple</actionType>
-        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
-        <inputParameters>
-            <name>emailAddresses</name>
-            <value>
-                <stringValue>alberto.garcia@2gologistics.com, carlos.martinez@2gologistics.com</stringValue>
-            </value>
-        </inputParameters>
-        <inputParameters>
-            <name>senderAddress</name>
-        </inputParameters>
-        <inputParameters>
-            <name>recipientId</name>
-            <value>
-                <elementReference>IdUsusarioconfirmarEnvioEncuesta</elementReference>
-            </value>
-        </inputParameters>
-        <inputParameters>
-            <name>emailTemplateId</name>
-            <value>
-                <stringValue>00XRQ000001Gtkj2AC</stringValue>
-            </value>
-        </inputParameters>
-        <nameSegment>emailSimple</nameSegment>
-        <versionSegment>1</versionSegment>
-    </actionCalls>
-    <actionCalls>
         <name>Email_Encuesta1</name>
         <label>Email Encuesta</label>
-        <locationX>578</locationX>
-        <locationY>1008</locationY>
+        <locationX>182</locationX>
+        <locationY>792</locationY>
         <actionName>emailSimple</actionName>
         <actionType>emailSimple</actionType>
-        <connector>
-            <targetReference>Account</targetReference>
-        </connector>
         <flowTransactionModel>CurrentTransaction</flowTransactionModel>
         <inputParameters>
             <name>emailAddresses</name>
             <value>
-                <elementReference>Accounts.NEU_Email__c</elementReference>
+                <elementReference>$Record.NEU_Email__c</elementReference>
             </value>
         </inputParameters>
         <inputParameters>
@@ -71,52 +36,11 @@
         <versionSegment>1</versionSegment>
     </actionCalls>
     <apiVersion>61.0</apiVersion>
-    <assignments>
-        <name>Account</name>
-        <label>Account - Email Enviado</label>
-        <locationX>578</locationX>
-        <locationY>1116</locationY>
-        <assignmentItems>
-            <assignToReference>IdsAccount</assignToReference>
-            <operator>Add</operator>
-            <value>
-                <elementReference>Accounts.Id</elementReference>
-            </value>
-        </assignmentItems>
-        <connector>
-            <targetReference>Loop_1</targetReference>
-        </connector>
-    </assignments>
-    <decisions>
-        <name>Cuenta_ya_encontrada</name>
-        <label>Encuesta Enviada</label>
-        <locationX>490</locationX>
-        <locationY>900</locationY>
-        <defaultConnector>
-            <targetReference>Email_Encuesta1</targetReference>
-        </defaultConnector>
-        <defaultConnectorLabel>Yes</defaultConnectorLabel>
-        <rules>
-            <name>Yes</name>
-            <conditionLogic>or</conditionLogic>
-            <conditions>
-                <leftValueReference>IdsAccount</leftValueReference>
-                <operator>Contains</operator>
-                <rightValue>
-                    <elementReference>Accounts.Id</elementReference>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Loop_1</targetReference>
-            </connector>
-            <label>No</label>
-        </rules>
-    </decisions>
     <decisions>
         <name>Dias_10_al_13</name>
         <label>Dias 10 al 13</label>
-        <locationX>578</locationX>
-        <locationY>252</locationY>
+        <locationX>479</locationX>
+        <locationY>468</locationY>
         <defaultConnectorLabel>No</defaultConnectorLabel>
         <rules>
             <name>Yes2</name>
@@ -145,9 +69,9 @@
         <name>Lunes_13</name>
         <label>Lunes 13</label>
         <locationX>50</locationX>
-        <locationY>468</locationY>
+        <locationY>684</locationY>
         <defaultConnector>
-            <targetReference>Get_Shipment</targetReference>
+            <targetReference>Email_Encuesta1</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>No</defaultConnectorLabel>
         <rules>
@@ -173,8 +97,8 @@
     <decisions>
         <name>Lunes_o_Viernes</name>
         <label>Lunes o Viernes</label>
-        <locationX>314</locationX>
-        <locationY>360</locationY>
+        <locationX>248</locationX>
+        <locationY>576</locationY>
         <defaultConnectorLabel>No</defaultConnectorLabel>
         <rules>
             <name>Yes_2</name>
@@ -199,7 +123,30 @@
             <label>Yes</label>
         </rules>
     </decisions>
-    <description>Envio automatizado de Encuesta - Con Decisiones</description>
+    <decisions>
+        <description>Shipment operado el mes pasado encontrado</description>
+        <name>Record_Found</name>
+        <label>Record Found</label>
+        <locationX>726</locationX>
+        <locationY>360</locationY>
+        <defaultConnectorLabel>No</defaultConnectorLabel>
+        <rules>
+            <name>Yes</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_Shipment.Id</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Dias_10_al_13</targetReference>
+            </connector>
+            <label>Yes</label>
+        </rules>
+    </decisions>
+    <description>Envio automatizado de Encuesta - Clientes</description>
     <environments>Default</environments>
     <formulas>
         <name>Body_Formua</name>
@@ -249,22 +196,8 @@
   &apos;Otro&apos;
 )</expression>
     </formulas>
-    <interviewLabel>Send Surv {!$Flow.CurrentDateTime}</interviewLabel>
-    <label>Send Survey</label>
-    <loops>
-        <name>Loop_1</name>
-        <label>Loop 1</label>
-        <locationX>314</locationX>
-        <locationY>684</locationY>
-        <collectionReference>Get_Shipment</collectionReference>
-        <iterationOrder>Asc</iterationOrder>
-        <nextValueConnector>
-            <targetReference>Accounts</targetReference>
-        </nextValueConnector>
-        <noMoreValuesConnector>
-            <targetReference>Confirmaci_n_Email_Encuesta</targetReference>
-        </noMoreValuesConnector>
-    </loops>
+    <interviewLabel>Send Survey - Clientes {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Send Survey - Clientes</label>
     <processMetadataValues>
         <name>BuilderType</name>
         <value>
@@ -285,34 +218,13 @@
     </processMetadataValues>
     <processType>AutoLaunchedFlow</processType>
     <recordLookups>
-        <name>Accounts</name>
-        <label>Accounts</label>
-        <locationX>490</locationX>
-        <locationY>792</locationY>
-        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
-        <connector>
-            <targetReference>Cuenta_ya_encontrada</targetReference>
-        </connector>
-        <filterLogic>and</filterLogic>
-        <filters>
-            <field>Id</field>
-            <operator>EqualTo</operator>
-            <value>
-                <elementReference>Loop_1.Account_for__r.Id</elementReference>
-            </value>
-        </filters>
-        <getFirstRecordOnly>true</getFirstRecordOnly>
-        <object>Account</object>
-        <storeOutputAutomatically>true</storeOutputAutomatically>
-    </recordLookups>
-    <recordLookups>
         <name>Get_Shipment</name>
         <label>Get Shipment</label>
-        <locationX>314</locationX>
-        <locationY>576</locationY>
+        <locationX>726</locationX>
+        <locationY>252</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Loop_1</targetReference>
+            <targetReference>Record_Found</targetReference>
         </connector>
         <filterLogic>(1 AND 2) AND (3 AND 4) AND (5 OR 6) AND (7 OR 8 OR 9)</filterLogic>
         <filters>
@@ -378,24 +290,47 @@
                 <stringValue>Finished_M</stringValue>
             </value>
         </filters>
-        <getFirstRecordOnly>false</getFirstRecordOnly>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
         <object>Shipment__c</object>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <start>
-        <locationX>452</locationX>
+        <locationX>600</locationX>
         <locationY>0</locationY>
         <connector>
-            <targetReference>Dias_10_al_13</targetReference>
+            <targetReference>Get_Shipment</targetReference>
         </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Record_Type_Name__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Customer</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>ActiveSap__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </filters>
+        <filters>
+            <field>TAX_ID__c</field>
+            <operator>NotEqualTo</operator>
+            <value>
+                <stringValue></stringValue>
+            </value>
+        </filters>
+        <object>Account</object>
         <schedule>
             <frequency>Daily</frequency>
             <startDate>2024-07-31</startDate>
-            <startTime>12:00:00.000Z</startTime>
+            <startTime>14:15:00.000Z</startTime>
         </schedule>
         <triggerType>Scheduled</triggerType>
     </start>
-    <status>Obsolete</status>
+    <status>Active</status>
     <textTemplates>
         <name>BodyTemplate</name>
         <isViewedAsPlainText>false</isViewedAsPlainText>
