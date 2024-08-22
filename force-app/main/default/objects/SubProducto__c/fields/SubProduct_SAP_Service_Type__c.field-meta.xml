@@ -17,6 +17,7 @@
     <relationshipLabel>SubProductos</relationshipLabel>
     <relationshipName>SubProductos</relationshipName>
     <required>true</required>
+    <trackFeedHistory>false</trackFeedHistory>
     <trackTrending>false</trackTrending>
     <type>Lookup</type>
 </CustomField>

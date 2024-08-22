@@ -4,6 +4,7 @@
     <externalId>false</externalId>
     <label>Grupo Oportunidad</label>
     <required>true</required>
+    <trackFeedHistory>false</trackFeedHistory>
     <trackTrending>false</trackTrending>
     <type>Picklist</type>
     <valueSet>

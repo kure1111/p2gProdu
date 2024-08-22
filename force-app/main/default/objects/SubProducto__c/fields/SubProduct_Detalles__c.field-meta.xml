@@ -4,6 +4,7 @@
     <externalId>false</externalId>
     <label>Detalles</label>
     <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
     <trackTrending>false</trackTrending>
     <type>TextArea</type>
 </CustomField>
