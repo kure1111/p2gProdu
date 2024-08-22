@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Service_Type__c</fullName>
+    <externalId>false</externalId>
+    <label>Service Type</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>FN</fullName>
+                <default>true</default>
+                <label>FN - Flete Nacional</label>
+            </value>
+            <value>
+                <fullName>FI</fullName>
+                <default>false</default>
+                <label>FI - Flete Internacional</label>
+            </value>
+            <value>
+                <fullName>PQ</fullName>
+                <default>false</default>
+                <label>PQ - Paqueterias</label>
+            </value>
+            <value>
+                <fullName>T</fullName>
+                <default>false</default>
+                <label>T - Tarimas</label>
+            </value>
+            <value>
+                <fullName>M</fullName>
+                <default>false</default>
+                <label>M - Maritimo</label>
+            </value>
+            <value>
+                <fullName>A</fullName>
+                <default>false</default>
+                <label>A - Aereo</label>
+            </value>
+            <value>
+                <fullName>WH</fullName>
+                <default>false</default>
+                <label>WH - Almacenajes</label>
+            </value>
+            <value>
+                <fullName>Aduanas</fullName>
+                <default>false</default>
+                <label>CE - Aduanas</label>
+            </value>
+            <value>
+                <fullName>Seguros</fullName>
+                <default>false</default>
+                <label>Seguros</label>
+            </value>
+            <value>
+                <fullName>PTO - Puerto</fullName>
+                <default>false</default>
+                <label>PTO - Puerto</label>
+            </value>
+            <value>
+                <fullName>R - Global Routing</fullName>
+                <default>false</default>
+                <label>R - Global Routing</label>
+            </value>
+            <value>
+                <fullName>PQI - Paquertería Internacional</fullName>
+                <default>false</default>
+                <label>PQI - Paquertería Internacional</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

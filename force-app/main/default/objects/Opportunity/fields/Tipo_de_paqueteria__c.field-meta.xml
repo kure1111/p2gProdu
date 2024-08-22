@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Tipo_de_paqueteria__c</fullName>
+    <externalId>false</externalId>
+    <label>Tipo de paquetería</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Aéreo</fullName>
+                <default>false</default>
+                <label>Aéreo</label>
+            </value>
+            <value>
+                <fullName>Terrestre</fullName>
+                <default>false</default>
+                <label>Terrestre</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

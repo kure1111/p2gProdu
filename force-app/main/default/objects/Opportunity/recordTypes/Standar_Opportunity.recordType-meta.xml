@@ -1,0 +1,691 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RecordType xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Standar_Opportunity</fullName>
+    <active>true</active>
+    <businessProcess>Standar Opportunity</businessProcess>
+    <label>Standar Opportunity</label>
+    <picklistValues>
+        <picklist>Activacion_autorizada__c</picklist>
+        <values>
+            <fullName>No</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Si</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>ForecastCategoryName</picklist>
+        <values>
+            <fullName>Best Case</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Closed</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Commit</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Omitted</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Pipeline</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Group__c</picklist>
+        <values>
+            <fullName>SP-A-AEREO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>SP-AW-GLOBAL AEREO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>SP-CE-COMERCIO EXT</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>SP-EX-SEGUROS</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>SP-FI-FLETE INTER</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>SP-FN-FLETE NACIONAL</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>SP-M-MARITIMO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>SP-PQ-PAQUETERIA</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>SP-PTO-PUERTOS</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>SP-R-GLOBAL ROUTING</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>SP-SL-SERV LOGISTICO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>SP-T-CONSOLIDADO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>SP-W-GLOBAL MARITIMO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>SP-WH-ALMACENAJE</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>LeadSource</picklist>
+        <values>
+            <fullName>Advertisement</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Base de datos</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Cambaceo</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Correo masivo</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Customer Event</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Employee Referral</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>External Referral</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Google AdWords</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Internet</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MKT - Email</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MKT - Llamada entrante</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MKT - Otros</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MKT - Promociones</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MKT - Redes sociales</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MKT - SPOT</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MKT - Web - Chat</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MKT - Wsapp</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MKT Expo</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Other</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Partner</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Public Relations</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Purchased List</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Recomendación</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Seminar - Internal</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Seminar - Partner</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Trade Show</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Webinar</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Website</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>WebtoLead</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Word of mouth</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>ePak</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Loss_Reason__c</picklist>
+        <values>
+            <fullName>Declinado por el folio</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Esta realizando benchmark%2Finvestigacion</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Falta de crédito</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Falta de disponibilidad</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Falta de seguimiento a oportunidad</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Fuera de word to place</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Lost to Competitor</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>No Budget %2F Lost Funding</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>No Decision %2F Non-Responsive</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>No contesto al contactarlo nuevamente</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>No le interesa</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Oportunidad duplicada</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Other</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Para oportunidad futura</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Price</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Modalidad__c</picklist>
+        <values>
+            <fullName>Consumo</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Prepago</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Recompra</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Tarimas</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Numero_de_guias__c</picklist>
+        <values>
+            <fullName>%3C10</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>%3C100</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>%3E100</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>1</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>PROJ_Service_Mode__c</picklist>
+        <values>
+            <fullName>A</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CE</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>FI</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>FN</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>M</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>PTO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Pq</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>R</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>T</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>WH</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Peso__c</picklist>
+        <values>
+            <fullName>1-5 Kg</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>11-15 Kg</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>16-20 Kg</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>6-10 Kg</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Mas de 20 Kg</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Sobre</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Proveedor__c</picklist>
+        <values>
+            <fullName>AM PM</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>DHL</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Estafeta</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Paquete Express</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Red Pack</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Requerimientos_especialesNew__c</picklist>
+        <values>
+            <fullName>Alarma de reversa%2E</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Certificado</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ctpat%2E</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>EPP %28Botas%2C chalecos%2C cascos%2C guantes lentes%2C mascarilla%2C COVID%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Estibable</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Extintor</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>GPS en tracto y Caja</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Gafas</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Granel</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Otro</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Personal con restricción de edad</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>R-control</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Riel logístico</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>SUA %28IMSS%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>entarimado</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Requerimientos_especiales__c</picklist>
+        <values>
+            <fullName>Alarma de reversa%2E</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Certificado</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ctpat%2E</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>EPP %28Botas%2C chalecos%2C cascos%2C guantes lentes%2C mascarilla%2C COVID%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Estibable</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Extintor</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>GPS en tracto y Caja</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Gafas</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Granel</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Personal con restricción de edad</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>R-control</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Riel logístico</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>SUA %28IMSS%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>entarimado</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Service_Type__c</picklist>
+        <values>
+            <fullName>A</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Aduanas</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>FI</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>FN</fullName>
+            <default>true</default>
+        </values>
+        <values>
+            <fullName>M</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>PQ</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>PQI - Paquertería Internacional</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>PTO - Puerto</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>R - Global Routing</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Seguros</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>T</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>WH</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Tienda_online__c</picklist>
+        <values>
+            <fullName>No</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Si</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Tiene_alguna_otra_plataforma_de_envios__c</picklist>
+        <values>
+            <fullName>No</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Si</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Tipo__c</picklist>
+        <values>
+            <fullName>Import-Export Quote%2FOrder</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Quote</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Tipo_de_Oportunidad__c</picklist>
+        <values>
+            <fullName>Acquisition</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Cross selling</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>One off %2F Seasonal</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Up-selling</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Tipo_de_industria__c</picklist>
+        <values>
+            <fullName>Documentos</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Equipo medico</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Joyería</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ropa</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Zapatos</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Tipo_de_paqueteria__c</picklist>
+        <values>
+            <fullName>Aéreo</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Terrestre</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Type</picklist>
+        <values>
+            <fullName>Existing Business</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>New Business</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+</RecordType>

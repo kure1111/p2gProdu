@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>SubProduct_Ruta_Producto__c</fullName>
+    <externalId>false</externalId>
+    <formula>SubProduct_Opportunity_Product__r.Ruta__c &amp; &apos; Service Type: &apos; &amp; SubProduct_SAP_Service_Type__r.Name</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <label>Ruta Producto</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

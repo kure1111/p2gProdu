@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<BusinessProcess xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Standar Opportunity</fullName>
+    <isActive>true</isActive>
+    <values>
+        <fullName>Agreed Shipping</fullName>
+        <default>false</default>
+    </values>
+    <values>
+        <fullName>Closed Lost</fullName>
+        <default>false</default>
+    </values>
+    <values>
+        <fullName>First Contact %2F Need Analysis</fullName>
+        <default>false</default>
+    </values>
+    <values>
+        <fullName>First Shipment</fullName>
+        <default>false</default>
+    </values>
+    <values>
+        <fullName>Future Opportunity</fullName>
+        <default>false</default>
+    </values>
+    <values>
+        <fullName>Implemented</fullName>
+        <default>false</default>
+    </values>
+    <values>
+        <fullName>Potencial</fullName>
+        <default>false</default>
+    </values>
+    <values>
+        <fullName>Proposal</fullName>
+        <default>false</default>
+    </values>
+    <values>
+        <fullName>Ship to Profile</fullName>
+        <default>false</default>
+    </values>
+</BusinessProcess>

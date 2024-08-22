@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>check_stage__c</fullName>
+    <defaultValue>false</defaultValue>
+    <description>trampa stage</description>
+    <externalId>false</externalId>
+    <label>check stage</label>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackTrending>false</trackTrending>
+    <type>Checkbox</type>
+</CustomField>

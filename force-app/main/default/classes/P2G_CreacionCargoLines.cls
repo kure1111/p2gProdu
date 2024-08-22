@@ -13,9 +13,11 @@ public  with sharing class P2G_CreacionCargoLines {
         if(record == '3'){
             recordTypeId = Schema.SObjectType.Catalogo_SAT__c.getRecordTypeInfosByName().get('Tipo de Embalaje').getRecordTypeId();
         }
-        
         if(record == '4'){
             recordTypeId = Schema.SObjectType.Catalogo_SAT__c.getRecordTypeInfosByName().get('Unidad Peso').getRecordTypeId();
+        }
+        if(record == '5'){
+            recordTypeId = Schema.SObjectType.Catalogo_SAT__c.getRecordTypeInfosByName().get('Fraccion Arancelaria').getRecordTypeId();
         }
         ListClaveSAT = getClaveSATRecord(sat,recordTypeId);    
         return  ListClaveSAT;
@@ -25,7 +27,7 @@ public  with sharing class P2G_CreacionCargoLines {
         string searchKeyword = '%' + searchKey + '%';
         list<Catalogo_SAT__c> ListClaveSAT = new list<Catalogo_SAT__c>();
         for(Catalogo_SAT__c sideClaveSAT : [SELECT Id, Name, Clave_SAT__c, Material_PeligrosoCP__c FROM Catalogo_SAT__c 
-                                            where Name LIKE : searchKeyword and RecordTypeId =: recorType limit 20]){
+                                            where Name LIKE : searchKeyword and RecordTypeId =: recorType limit 10]){
                                                 ListClaveSAT.add(sideClaveSAT);
                                             }
         
@@ -40,7 +42,7 @@ public  with sharing class P2G_CreacionCargoLines {
         string searchKeyword = '%' + Container + '%';
         list<Container_Type__c> ListContainerType = new list<Container_Type__c>();
         for(Container_Type__c sideContainerType : [SELECT Id, Name , Cargo_Weight_Kg__c, Cargo_Volume_m3__c 
-                                                   FROM Container_Type__c where Name LIKE : searchKeyword limit 20]){
+                                                   FROM Container_Type__c where Name LIKE : searchKeyword limit 10]){
                                                        ListContainerType.add(sideContainerType);
                                                    }
         
@@ -122,7 +124,7 @@ public  with sharing class P2G_CreacionCargoLines {
         string searchKeyword = '%' + country + '%';
         list<Location__c> contactListRecord = new list<Location__c>();
         for(Location__c sideCountry : [SELECT Id, Name, Country__r.Name, State__r.Name FROM Location__c
-                                       WHERE name LIKE : searchKeyword]){
+                                       WHERE name LIKE : searchKeyword limit 10]){
                                            contactListRecord.add(sideCountry);
                                        }
         
@@ -148,7 +150,7 @@ public  with sharing class P2G_CreacionCargoLines {
     public static list<Account_Address__c> getAccountAddress(string address, string account){
         string searchKeyword = '%' + address + '%';
         list<Account_Address__c> addressListRecord = new list<Account_Address__c>();
-        for(Account_Address__c addressSearch : [SELECT Id, Name FROM Account_Address__c
+        for(Account_Address__c addressSearch : [SELECT Id, Name, Municipio_Cat2__c, Codigo_Postal_CP__r.Name, Colonia_cp__r.Name FROM Account_Address__c
                                                 WHERE Name LIKE : searchKeyword AND Account__c =: account limit 20]){
                                                     addressListRecord.add(addressSearch);
                                                 }
@@ -164,7 +166,6 @@ public  with sharing class P2G_CreacionCargoLines {
         for(SAP_Service_Type__c sapService : [SELECT Id, Name FROM SAP_Service_Type__c where Name LIKE : searchKeyword AND Group__c='SP-FN-FLETE NACIONAL' limit 20]){
             ListSapServiceT.add(sapService);
         }
-        
         if(ListSapServiceT.size() == 0){
             throw new AuraHandledException('No Record Found..'); 
         }

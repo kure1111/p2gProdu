@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Razon_del_rechazo</fullName>
+    <active>true</active>
+    <errorConditionFormula>if(
+OR(
+ISPICKVAL(Status__c,&quot;No Cotizada&quot;),
+ISPICKVAL(Status__c,&quot;Rechazada&quot;)
+),
+
+Razon_del_rechazo__c = &apos;&apos;, null
+)</errorConditionFormula>
+    <errorDisplayField>Razon_del_rechazo__c</errorDisplayField>
+    <errorMessage>PROJ 001: Favor de ingresar un motivo o razón, por lo que no se cotizo o porque se rechazo.</errorMessage>
+</ValidationRule>

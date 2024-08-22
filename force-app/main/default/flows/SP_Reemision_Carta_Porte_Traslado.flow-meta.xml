@@ -1,0 +1,265 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionCalls>
+        <name>NewTask</name>
+        <label>NewTask</label>
+        <locationX>50</locationX>
+        <locationY>755</locationY>
+        <actionName>NewTask</actionName>
+        <actionType>quickAction</actionType>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>contextId</name>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>Subject</name>
+            <value>
+                <stringValue>Generar Nueva Carta Porte</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>OwnerId</name>
+            <value>
+                <elementReference>$Record.Operation_Executive__c</elementReference>
+            </value>
+        </inputParameters>
+        <nameSegment>NewTask</nameSegment>
+        <versionSegment>1</versionSegment>
+    </actionCalls>
+    <actionCalls>
+        <name>Post_Update_Files_Shipment</name>
+        <label>Post - Update Files Shipment</label>
+        <locationX>182</locationX>
+        <locationY>431</locationY>
+        <actionName>chatterPost</actionName>
+        <actionType>chatterPost</actionType>
+        <connector>
+            <targetReference>Mensaje</targetReference>
+        </connector>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>text</name>
+            <value>
+                <elementReference>PostBoddy</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>subjectNameOrId</name>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </inputParameters>
+        <nameSegment>chatterPost</nameSegment>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+        <versionSegment>1</versionSegment>
+    </actionCalls>
+    <apiVersion>61.0</apiVersion>
+    <assignments>
+        <name>Mensaje</name>
+        <label>Mensaje</label>
+        <locationX>182</locationX>
+        <locationY>539</locationY>
+        <assignmentItems>
+            <assignToReference>BoddyPost</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>PostBoddy</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Record_Found</targetReference>
+        </connector>
+    </assignments>
+    <decisions>
+        <name>Record_Found</name>
+        <label>Record Found</label>
+        <locationX>182</locationX>
+        <locationY>647</locationY>
+        <defaultConnectorLabel>No</defaultConnectorLabel>
+        <rules>
+            <name>Yes</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Carta_Porte_Traslado</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>NewTask</targetReference>
+            </connector>
+            <label>Yes</label>
+        </rules>
+    </decisions>
+    <description>Valida si en el shipmet se realizaron cambios en los campos Carrier, Operador, Vehicle, Account Origin Address, Account Destination Address, cuando ya se tiene una Carta Porte de Traslado Asociada al Shipment, para reemision de Carta Porte con los nuevos atributos, imprime los cambios realizados en el Chatter del Shipment</description>
+    <environments>Default</environments>
+    <formulas>
+        <name>PostBoddy</name>
+        <dataType>String</dataType>
+        <expression>&quot;Cambios realizados en el Shipment:&quot; &amp; 
+
+IF(ISCHANGED({!$Record.National_Operator__r.Name}), 
+    BR() &amp; BR() &amp; &quot;Operador:&quot; &amp; BR() &amp; 
+    &quot;Valor Anterior: &quot; &amp; PRIORVALUE({!$Record.National_Operator__r.Name}) &amp; 
+    &quot; - Valor Nuevo: &quot; &amp; {!$Record.National_Operator__r.Name}, 
+    &quot;&quot;
+) &amp; 
+
+IF(ISCHANGED({!$Record.Vehicle__r.Name}), 
+    BR() &amp; BR() &amp; &quot;Vehículo:&quot; &amp; BR() &amp; 
+    &quot;Valor Anterior: &quot; &amp; PRIORVALUE({!$Record.Vehicle__r.Name}) &amp; 
+    &quot; - Valor Nuevo: &quot; &amp; {!$Record.Vehicle__r.Name}, 
+    &quot;&quot;
+) &amp; 
+
+IF(ISCHANGED({!$Record.Account_Origin_Address__r.Name}), 
+    BR() &amp; BR() &amp; &quot;Dirección de Origen:&quot; &amp; BR() &amp; 
+    &quot;Valor Anterior: &quot; &amp; PRIORVALUE({!$Record.Account_Origin_Address__r.Name}) &amp; 
+    &quot; - Valor Nuevo: &quot; &amp; {!$Record.Account_Origin_Address__r.Name}, 
+    &quot;&quot;
+) &amp; 
+
+IF(ISCHANGED({!$Record.Carrier__r.Name}), 
+    BR() &amp; BR() &amp; &quot;Transportista:&quot; &amp; BR() &amp; 
+    &quot;Valor Anterior: &quot; &amp; PRIORVALUE({!$Record.Carrier__r.Name}) &amp; 
+    &quot; - Valor Nuevo: &quot; &amp; {!$Record.Carrier__r.Name}, 
+    &quot;&quot;
+) &amp; 
+
+IF(ISCHANGED({!$Record.Account_Destination_Address__r.Name}), 
+    BR() &amp; BR() &amp; &quot;Dirección de Destino:&quot; &amp; BR() &amp; 
+    &quot;Valor Anterior: &quot; &amp; PRIORVALUE({!$Record.Account_Destination_Address__r.Name}) &amp; 
+    &quot; - Valor Nuevo: &quot; &amp; {!$Record.Account_Destination_Address__r.Name}, 
+    &quot;&quot;
+) &amp; 
+
+IF(NOT(ISBLANK({!$Record.Operation_Executive__r.FirstName})), 
+    BR() &amp; BR() &amp; &quot;@&quot; &amp; {!$Record.Operation_Executive__r.FirstName}, 
+    &quot;&quot;
+)</expression>
+    </formulas>
+    <interviewLabel>SP-Reemi {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>SP-Reemision Carta Porte Traslado</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordLookups>
+        <name>Carta_Porte_Traslado</name>
+        <label>Carta Porte Traslado</label>
+        <locationX>182</locationX>
+        <locationY>323</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Post_Update_Files_Shipment</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Shipment__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>Tipo__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Traslado</stringValue>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Carta_Porte__c</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <start>
+        <locationX>56</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Carta_Porte_Traslado</targetReference>
+        </connector>
+        <filterLogic>or</filterLogic>
+        <filters>
+            <field>Carrier__c</field>
+            <operator>IsChanged</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </filters>
+        <filters>
+            <field>Account_Destination_Address__c</field>
+            <operator>IsChanged</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </filters>
+        <filters>
+            <field>Account_Origin_Address__c</field>
+            <operator>IsChanged</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </filters>
+        <filters>
+            <field>Vehicle__c</field>
+            <operator>IsChanged</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </filters>
+        <filters>
+            <field>National_Operator__c</field>
+            <operator>IsChanged</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </filters>
+        <object>Shipment__c</object>
+        <recordTriggerType>Update</recordTriggerType>
+        <triggerType>RecordAfterSave</triggerType>
+    </start>
+    <status>Draft</status>
+    <variables>
+        <name>BoddyPost</name>
+        <dataType>String</dataType>
+        <isCollection>true</isCollection>
+        <isInput>false</isInput>
+        <isOutput>true</isOutput>
+    </variables>
+    <variables>
+        <name>IdRecordShipment</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <value>
+            <elementReference>$Record.Id</elementReference>
+        </value>
+    </variables>
+    <variables>
+        <name>listaIdSP</name>
+        <dataType>String</dataType>
+        <isCollection>true</isCollection>
+        <isInput>true</isInput>
+        <isOutput>true</isOutput>
+    </variables>
+</Flow>

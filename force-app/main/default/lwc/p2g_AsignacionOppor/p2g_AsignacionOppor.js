@@ -183,6 +183,40 @@ export default class P2g_AsignacionOppor extends LightningElement {
         this.refreshData();
     }
 
+    //Ejecutivo SAC
+    @track sideRecordsOpExecutiveSAC;
+    @track searchValueOpExecutiveSAC = '';
+    @track showSideOpExecutiveSAC = false;
+    @track searchValueEmail = '';
+
+    searchKeyOpExecutiveSAC(event) {
+        this.searchValueOpExecutiveSAC = event.target.value;
+    
+        if (this.searchValueOpExecutiveSAC.length >= 3) {
+            this.showSideOpExecutiveSAC = true;
+            // Llama a tu método Apex para buscar ejecutivos de operaciones
+            getOpeExe({ search: this.searchValueOpExecutiveSAC })
+                .then(result => {
+                    this.sideRecordsOpExecutiveSAC = result;
+                })
+                .catch(error => {
+                    this.pushMessage('Error', 'error', 'utut');
+                    this.sideRecordsOpExecutiveSAC = null;
+                });
+        } else {
+            this.searchValueEmail = '';
+            this.showSideOpExecutiveSAC = false;
+        }
+    }
+
+    SideSelectOpExecutiveSAC(event) {
+        this.searchValueOpExecutiveSAC = event.target.outerText;
+        this.showSideOpExecutiveSAC = false;
+        this.searchValueEmail = event.currentTarget.dataset.email;
+        this.updateColumns();
+        this.refreshData();
+    }
+
     //   Carrierr
     @track searchValueCarrier = '';
     @track showSideCarrier = false;
@@ -221,7 +255,7 @@ export default class P2g_AsignacionOppor extends LightningElement {
 
     //------------ seccion 2
     updateColumns() {
-        getColumns({datos: ['2', 'Pending', this.startDate, this.endDate,this.selectedRadio,this.searchValueIdAccount,this.searchValueIdCarrier,this.searchValueIdOpExecutive,this.tipoServicio,this.zona]})
+        getColumns({datos: ['2', 'Pending', this.startDate, this.endDate,this.selectedRadio,this.searchValueIdAccount,this.searchValueIdCarrier,this.searchValueIdOpExecutive,this.tipoServicio,this.zona,this.searchValueEmail]})
         .then(result => {
             this.listShipmentsCol2 = result[0];
             this.listShipmentsCol3 = result[1];
@@ -576,9 +610,7 @@ export default class P2g_AsignacionOppor extends LightningElement {
             const timeString = etdHours + ':' + (etdMinutes < 10 ? '0' + etdMinutes : etdMinutes);
             const timeFechaPlace = equipPlacedDate.getFullYear() +'-'+ (dia < 10 ? '0' + dia : dia) +'-'+(equipPlacedDate.getDate() < 10 ? '0' + equipPlacedDate.getDate() : equipPlacedDate.getDate());
             let circleClass = '';
-            console.log('dia', dia);
 
-            //
             const etdTimeMillisETD = account.ETD_Time_from_Point_of_Load__c;
             // Convertir milisegundos en horas y minutos
             const etdHoursETD = Math.floor((etdTimeMillisETD / (1000 * 60 * 60)) % 24);
@@ -638,7 +670,6 @@ handleStatusAndFechaChange(event){
 handlezona(event){
     const value = event.target.value;
     this.zona = value;
-    console.log('Zona: ',this.zona);
     this.updateColumns();
     this.refreshData();
 }
@@ -651,7 +682,7 @@ handleTipoServicio(event){
 }
 
 refreshData() {
-    seccion3({datos:[this.status,this.startDate,this.endDate,this.selectedRadio,this.searchValueIdAccount,this.searchValueIdCarrier,this.searchValueIdOpExecutive,this.tipoServicio,this.zona]})
+    seccion3({datos:[this.status,this.startDate,this.endDate,this.selectedRadio,this.searchValueIdAccount,this.searchValueIdCarrier,this.searchValueIdOpExecutive,this.tipoServicio,this.zona,this.searchValueEmail]})
         .then(result => {
             if (result && result.length > 0) {
                 // Recorrer cada elemento de result

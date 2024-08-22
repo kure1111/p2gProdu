@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>SubProduct_Grupo_Oportunidad__c</fullName>
+    <externalId>false</externalId>
+    <label>Grupo Oportunidad</label>
+    <required>true</required>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>SP-FN-FLETE NACIONAL</fullName>
+                <default>false</default>
+                <label>SP-FN-FLETE NACIONAL</label>
+            </value>
+            <value>
+                <fullName>SP-FI-FLETE INTER</fullName>
+                <default>false</default>
+                <label>SP-FI-FLETE INTER</label>
+            </value>
+            <value>
+                <fullName>SP-A-AEREO</fullName>
+                <default>false</default>
+                <label>SP-A-AEREO</label>
+            </value>
+            <value>
+                <fullName>SP-CE-COMERCIO EXT</fullName>
+                <default>false</default>
+                <label>SP-CE-COMERCIO EXT</label>
+            </value>
+            <value>
+                <fullName>SP-M-MARITIMO</fullName>
+                <default>false</default>
+                <label>SP-M-MARITIMO</label>
+            </value>
+            <value>
+                <fullName>SP-PTO-PUERTOS</fullName>
+                <default>false</default>
+                <label>SP-PTO-PUERTOS</label>
+            </value>
+            <value>
+                <fullName>SP-R-GLOBAL ROUTING</fullName>
+                <default>false</default>
+                <label>SP-R-GLOBAL ROUTING</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

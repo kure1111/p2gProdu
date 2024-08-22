@@ -1,0 +1,342 @@
+<template>
+    <lightning-button-group>
+        <lightning-button label="Publicar Ruta" onclick={openModal}></lightning-button>
+        <lightning-button label="Carga Masiva" onclick={openMassiveModal}></lightning-button>
+    </lightning-button-group>
+    <!-- Modal para Carga Manual-->
+    <template if:true={isModalOpen}>
+        <div class="slds-backdrop slds-backdrop_open"></div>
+        
+        <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true"
+            aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open slds-modal_large">
+            <div class="slds-modal__container">
+
+                <header class="slds-modal__header">
+                    <button class="slds-button slds-button_icon slds-modal__close" title="Close" onclick={closeModal}>
+                        <lightning-icon icon-name="utility:close" alternative-text="Close" variant="inverse"></lightning-icon>
+                        <span class="slds-assistive-text">Close</span>
+                    </button>
+                    <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">Agregar Rutas</h2>
+                </header>
+
+                <div class="table-container" style="overflow: auto; max-height: 400px;">
+                    <table class="slds-table slds-table_cell-buffer slds-table_bordered">
+                        <thead>
+                            <tr>
+                                <th>Aplicar</th>
+                                <th>Ruta</th>
+                                <th>Fecha Creación</th>
+                                <th>Fecha Vigencia</th>
+                                <th>No.</th>
+                                <th>Container Type</th>
+                                <th>Ticket Prom</th>
+                                <th>Venta</th>
+                                <th>Carrier</th>
+                                <th>Planner</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <template for:each={data} for:item="item" for:index="index">
+                                <tr key={item.id}>
+                                    <td>
+                                        <lightning-input type="checkbox" 
+                                                            checked={item.isSelected} 
+                                                            onchange={handleCheckboxChange} 
+                                                            data-index={index}>
+                                        </lightning-input>
+                                    </td>
+                                    <td>{item.route}</td>
+                                    <td>{item.fechaCreacion}</td>
+                                    <td>{item.fechaVigencia}</td>
+                                    <td>{item.noRutas}</td>
+                                    <td>{item.containerType}</td>
+                                    <td>{item.ticketPromedio}</td>
+                                    <td>{item.venta}</td>
+                                    <td>{item.carrier}</td>
+                                    <td>{item.planner}</td>
+                                </tr>
+                            </template>
+                        </tbody>
+                    </table>
+                    
+                </div>
+                
+                <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                    <lightning-button label="Agregar rutas" onclick={rutasVencidas}></lightning-button>
+                    <div class="slds-card__body">
+                        <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px;">
+
+                            <!-- Búsqueda de Location Ori -->
+                            <div style="width: 100%;">
+                                <div onkeyup={searchKeyLoad}>
+                                    <lightning-input id="SiteofLoad" label="Locacion de origen" placeholder="Buscar Origen" 
+                                        required="" value={searchValueLoad} type="search"></lightning-input>
+                                  </div>
+                                  <table if:true={sideRecordsLoad} class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_striped">
+                                      <thead>
+                                         <tr class="slds-line-height_reset">
+                                            <th scope="col">
+                                               <div class="slds-truncate" title="First Name">Name</div>
+                                            </th>
+                                            <th scope="col">
+                                               <div class="slds-truncate" title="Last Name">Country</div>
+                                            </th>
+                                            <th scope="col">
+                                               <div class="slds-truncate" title="Last Name">State</div>
+                                            </th>
+                                         </tr>
+                                      </thead>
+                                      <tbody>
+                                         <template for:each={sideRecordsLoad} for:item="con">
+                                            <tr class="slds-hint-parent" data-id={con.Id} key={con.Id} onclick={SideSelectLoad}> 
+                                               <td>
+                                                  <div class="slds-truncate">{con.Name}</div>
+                                               </td>
+                                               <template lwc:if={con.Country__c}>
+                                                <td>
+                                                    <div class="slds-truncate">{con.Country__r.Name}</div>
+                                                </td>
+                                              </template>
+        
+                                               <template lwc:if={con.State__c}>
+                                                   <td>
+                                                       <div class="slds-truncate">{con.State__r.Name}</div>
+                                                   </td>
+                                               </template>
+                                            </tr>
+                                         </template>
+                                      </tbody>
+                                  </table>
+                            </div>
+
+                            <!-- Búsqueda de Location Des -->
+                            <div style="width: 100%;">
+                                <div onkeyup={searchKeyUnLoad}>
+                                    <lightning-input id="SiteofDischarge" label="Locacion de destino" placeholder="Buscar Destino" 
+                                        required="" value={searchValueUnLoad} type="search"></lightning-input>
+                                  </div>
+                                  <table if:true={sideRecordsUnLoad} class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_striped">
+                                      <thead>
+                                         <tr class="slds-line-height_reset">
+                                            <th scope="col">
+                                               <div class="slds-truncate" title="First Name">Name</div>
+                                            </th>
+                                            <th scope="col">
+                                               <div class="slds-truncate" title="Last Name">Country</div>
+                                            </th>
+                                            <th scope="col">
+                                               <div class="slds-truncate" title="Last Name">State</div>
+                                            </th>
+                                         </tr>
+                                      </thead>
+                                      <tbody>
+                                         <template for:each={sideRecordsUnLoad} for:item="con">
+                                            <tr class="slds-hint-parent" data-id={con.Id} key={con.Id} onclick={SideSelectUnLoad}> 
+                                               <td>
+                                                  <div class="slds-truncate">{con.Name}</div>
+                                               </td>
+                                               <template lwc:if={con.Country__c}>
+                                                <td>
+                                                    <div class="slds-truncate">{con.Country__r.Name}</div>
+                                                </td>
+                                              </template>
+        
+                                               <template lwc:if={con.State__c}>
+                                                   <td>
+                                                       <div class="slds-truncate">{con.State__r.Name}</div>
+                                                   </td>
+                                               </template>
+                                            </tr>
+                                         </template>
+                                      </tbody>
+                                  </table>
+                            </div>
+
+                            <!-- Fecha y Hora -->
+                            <div style="width: 100%;">
+                                <div>
+                                    <label for="fechaHora">Fecha de vigencia:</label>
+                                    <div>
+                                        <input id="fechaHora" style="margin-top: 3%;" type="datetime-local" value={time} oninput={handleDateTimeChange} required />
+                                    </div>
+                                    
+                                </div>
+                            </div>
+
+                            <!-- Numero Rutas -->
+                            <div style="width: 100%;">
+                                <lightning-input id="Units" label="Número Rutas:" required=""
+                                onkeyup={handleUnitsChange} type="number"></lightning-input>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <div class="slds-card__body">
+                        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px;">
+
+                            <!-- Búsqueda de Container -->                 
+                            <div style="width: 100%;">
+                                <div onkeyup={searchKeyContainerType}>
+                                    <lightning-input id="ContainerType" label="Container Type:"
+                                        placeholder="Buscar container type" value={searchValueConteiner} type="search"
+                                        required=""></lightning-input>
+                                </div>
+                                <table if:true={listContainers}
+                                    class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_striped">
+                                    <thead>
+                                        <tr class="slds-line-height_reset">
+                                            <th class="" scope="col">
+                                                <div class="slds-truncate">Container Type</div>
+                                            </th>
+                                            <th class="" scope="col">
+                                                <div class="slds-truncate">Cargo Weight (Kg)</div>
+                                            </th>
+                                            <th class="" scope="col">
+                                                <div class="slds-truncate">Cargo Volume (m3)</div>
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <template for:each={listContainers} for:item="con">
+                                            <tr class="slds-hint-parent" data-id={con.Id} key={con.Id}
+                                                onclick={SideSelectContainerType}>
+                                                <td>
+                                                    <div class="slds-truncate">{con.Name}</div>
+                                                </td>
+                                                <td>
+                                                    <div class="slds-truncate">{con.Cargo_Weight_Kg__c}</div>
+                                                </td>
+                                                <td>
+                                                    <div class="slds-truncate">{con.Cargo_Volume_m3__c}</div>
+                                                </td>
+                                            </tr>
+                                        </template>
+                                    </tbody>
+                                </table>
+                            </div>
+
+                            <!-- Ticket Prom -->
+                            <div style="width: 100%;">
+                                <lightning-input id="TicketProm" label="Ticket Prom:" required=""
+                                onkeyup={handletikectPromChange} type="number" step="0.01"></lightning-input>
+                            </div>
+
+                            <!-- Búsqueda de Carrier -->                 
+                            <div style="width: 100%;">
+                                <div onkeyup={searchKeyCarrier}>
+                                    <lightning-input id="Carrier" label="Carrier:"
+                                        placeholder="Buscar Carrier" value={searchValueCarrier} type="search"
+                                        required=""></lightning-input>
+                                </div>
+                                <table if:true={sideRecordsCarrier}
+                                    class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_striped">
+                                    <thead>
+                                        <tr class="slds-line-height_reset">
+                                            <th class="" scope="col">
+                                                <div class="slds-truncate">Container Type</div>
+                                            </th>
+                                            <th class="" scope="col">
+                                                <div class="slds-truncate">Cargo Weight (Kg)</div>
+                                            </th>
+                                            <th class="" scope="col">
+                                                <div class="slds-truncate">Cargo Volume (m3)</div>
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <template for:each={sideRecordsCarrier} for:item="con">
+                                            <tr class="slds-hint-parent" data-id={con.Id} key={con.Id}
+                                                onclick={SideSelectCarrier}>
+                                                <td>
+                                                    <div class="slds-truncate">{con.Name}</div>
+                                                </td>
+                                                <td>
+                                                    <div class="slds-truncate">{con.Cargo_Weight_Kg__c}</div>
+                                                </td>
+                                                <td>
+                                                    <div class="slds-truncate">{con.Cargo_Volume_m3__c}</div>
+                                                </td>
+                                            </tr>
+                                        </template>
+                                    </tbody>
+                                </table>
+                            </div>
+
+                            <!-- Búsqueda de Planner -->                 
+                            <div style="width: 100%;">
+                                <div onkeyup={searchKeyOpExecutive}>
+                                    <lightning-input id="Planner" label="Planner:"
+                                        placeholder="Buscar Carrier" value={searchValueOpExecutive} type="search"
+                                        required=""></lightning-input>
+                                </div>
+                                <table if:true={sideRecordsOpExecutive}
+                                    class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_striped">
+                                    <thead>
+                                        <tr class="slds-line-height_reset">
+                                            <th scope="col">
+                                                <div class="slds-truncate" title="First Name">Name</div>
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <template for:each={sideRecordsOpExecutive} for:item="executive">
+                                            <tr class="slds-hint-parent" data-id={executive.Id} key={executive.Id} onclick={SideSelectOpExecutive}>
+                                                <td>
+                                                    <div class="slds-truncate">{executive.Name}</div>
+                                                </td>
+                                            </tr>
+                                        </template>
+                                    </tbody>
+                                </table>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div style="display: flex; justify-content: right;">
+                        <lightning-button label="Crear Ruta" variant="outline-brand" onclick={agregar}></lightning-button>
+                    </div>
+
+                </div>
+
+            </div>
+        </section>
+
+    </template>
+
+<!-- Modal para Carga Masiva -->
+<template if:true={isMassiveModalOpen}>
+    <div class="slds-backdrop slds-backdrop_open"></div>
+    <section role="dialog" tabindex="-1" aria-labelledby="massive-modal-heading" aria-modal="true"
+        aria-describedby="massive-modal-content" class="slds-modal slds-fade-in-open slds-modal_large">
+        <div class="slds-modal__container">
+            <header class="slds-modal__header">
+                <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse"
+                    title="Close" onclick={closeMassiveModal}>
+                    <lightning-icon icon-name="utility:close" alternative-text="Close"></lightning-icon>
+                    <span class="slds-assistive-text">Close</span>
+                </button>
+                <h2 id="massive-modal-heading" class="slds-text-heading_medium slds-hyphenate slds-text-align_center">
+                    Carga Masiva
+                </h2>
+            </header>
+            <div class="slds-modal__content slds-p-around_medium" id="massive-modal-content">
+                <div class="slds-form-element slds-text-align_center">
+                    <label class="slds-form-element__label" for="file-upload">Selecciona un archivo CSV para cargar</label>
+                    <div class="slds-form-element__control">
+                        <input class="slds-input" type="file" accept=".csv" onchange={handleFileChange} style="display:none" id="file-upload"/>
+                    </div>
+                </div>
+            </div>
+            <footer class="slds-modal__footer slds-modal__footer_directional slds-text-align_center">
+                <lightning-button variant="brand" label="Cargar Archivo" onclick={triggerFileUpload}></lightning-button>
+                <lightning-button variant="neutral" label="Descargar Plantilla" onclick={downloadTemplate}></lightning-button>
+            </footer>
+        </div>
+    </section>
+</template>
+
+
+
+    
+</template>

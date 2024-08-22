@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>SubProduct_SAP_Service_Type__c</fullName>
+    <deleteConstraint>Restrict</deleteConstraint>
+    <externalId>false</externalId>
+    <label>SAP Service Type</label>
+    <lookupFilter>
+        <active>true</active>
+        <filterItems>
+            <field>$Source.SubProduct_Grupo_Oportunidad__c</field>
+            <operation>equals</operation>
+            <valueField>SAP_Service_Type__c.Group__c</valueField>
+        </filterItems>
+        <isOptional>false</isOptional>
+    </lookupFilter>
+    <referenceTo>SAP_Service_Type__c</referenceTo>
+    <relationshipLabel>SubProductos</relationshipLabel>
+    <relationshipName>SubProductos</relationshipName>
+    <required>true</required>
+    <trackTrending>false</trackTrending>
+    <type>Lookup</type>
+</CustomField>

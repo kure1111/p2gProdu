@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Por_cual_proveedor_cambio_el_cliente__c</fullName>
+    <description>Se proporciona el nombre del proveedor que escoge el cliente cuando la cotización se cancela por el Nivel de servicio</description>
+    <externalId>false</externalId>
+    <label>¿Por cuál proveedor cambió el cliente?</label>
+    <length>255</length>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>
