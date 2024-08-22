@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Tipo_de_Oportunidad__c</fullName>
+    <description>Describe el tipo de Oportunidad</description>
+    <externalId>false</externalId>
+    <label>Tipo de Oportunidad</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Acquisition</fullName>
+                <default>false</default>
+                <label>Acquisition</label>
+            </value>
+            <value>
+                <fullName>Up-selling</fullName>
+                <default>false</default>
+                <label>Up-selling</label>
+            </value>
+            <value>
+                <fullName>Cross selling</fullName>
+                <default>false</default>
+                <label>Cross selling</label>
+            </value>
+            <value>
+                <fullName>One off / Seasonal</fullName>
+                <default>false</default>
+                <label>One off / Seasonal</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

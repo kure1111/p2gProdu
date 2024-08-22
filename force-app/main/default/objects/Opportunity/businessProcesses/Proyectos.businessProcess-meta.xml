@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<BusinessProcess xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Proyectos</fullName>
+    <isActive>true</isActive>
+    <values>
+        <fullName>Closed Lost</fullName>
+        <default>false</default>
+    </values>
+    <values>
+        <fullName>Construir</fullName>
+        <default>false</default>
+    </values>
+    <values>
+        <fullName>Cotizar</fullName>
+        <default>false</default>
+    </values>
+    <values>
+        <fullName>Cultivar</fullName>
+        <default>false</default>
+    </values>
+    <values>
+        <fullName>Explorar</fullName>
+        <default>false</default>
+    </values>
+    <values>
+        <fullName>Implementar</fullName>
+        <default>false</default>
+    </values>
+    <values>
+        <fullName>Presentar</fullName>
+        <default>false</default>
+    </values>
+    <values>
+        <fullName>Prospectar</fullName>
+        <default>false</default>
+    </values>
+</BusinessProcess>
