@@ -85,7 +85,8 @@
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
-                <emptySpace>true</emptySpace>
+                <behavior>Readonly</behavior>
+                <field>Zona__c</field>
             </layoutItems>
             <layoutItems>
                 <emptySpace>true</emptySpace>

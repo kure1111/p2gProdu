@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Estado_Negociacion__c</fullName>
+    <externalId>false</externalId>
+    <formula>IF((SLA_Negociacion__c != null)||(SLA_Negociacion__c != &apos;&apos;), &quot;Paso a la siguiente etapa Ejecución fecha &quot; &amp; TEXT(DATEVALUE(Data_Time_Ejecucion__c)) &amp; &quot; &quot; &amp; TEXT(TIMEVALUE(Data_Time_Ejecucion__c - (6/24))), 
+   IF(FLOOR((NOW() - Data_Time_Negociacion__c) * 24 * 60) &lt; 10, IMAGE(&apos;/resource/relojVerde&apos;, &apos;relojVerde&apos;, 50, 50)  &amp; &quot; Tiempo trascurrido en la etapa &quot; &amp; TEXT(FLOOR(NOW() - Data_Time_Negociacion__c)) &amp; &quot; Días &quot; &amp; TEXT( ROUND(((FLOOR((NOW() - Data_Time_Negociacion__c) * 24 * 60)) - (FLOOR(NOW() - Data_Time_Negociacion__c) * 1440)) / 60, 2)) &amp; &quot; Horas&quot;,
+      IF(FLOOR((NOW() - Data_Time_Negociacion__c) * 24 * 60) &lt; 30, IMAGE(&apos;/resource/relojNaranja&apos;, &apos;relojNaranja&apos;, 50, 50)  &amp; &quot; Tiempo trascurrido en la etapa &quot; &amp; TEXT(FLOOR(NOW() - Data_Time_Negociacion__c)) &amp; &quot; Días &quot; &amp; TEXT( ROUND(((FLOOR((NOW() - Data_Time_Negociacion__c) * 24 * 60)) - (FLOOR(NOW() - Data_Time_Negociacion__c) * 1440)) / 60, 2)) &amp; &quot; Horas&quot;,
+         IF(FLOOR((NOW() - Data_Time_Negociacion__c) * 24 * 60) &gt; 30, IMAGE(&apos;/resource/relojRojo&apos;, &apos;relojRojo&apos;, 50, 50) &amp; &quot; Tiempo trascurrido en la etapa &quot; &amp; TEXT(FLOOR(NOW() - Data_Time_Negociacion__c)) &amp; &quot; Días &quot; &amp; TEXT( ROUND(((FLOOR((NOW() - Data_Time_Negociacion__c) * 24 * 60)) - (FLOOR(NOW() - Data_Time_Negociacion__c) * 1440)) / 60, 2)) &amp; &quot; Horas&quot;, &quot;&quot;
+         )
+      )
+   )
+)</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <label>Estado Negociación</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

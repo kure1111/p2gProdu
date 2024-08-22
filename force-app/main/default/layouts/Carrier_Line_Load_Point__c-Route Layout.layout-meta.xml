@@ -64,6 +64,10 @@
                 <behavior>Readonly</behavior>
                 <field>Tiempo_de_viaje__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Zona__c</field>
+            </layoutItems>
         </layoutColumns>
         <style>TwoColumnsTopToBottom</style>
     </layoutSections>

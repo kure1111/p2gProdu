@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CompactLayout xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Catalogo_SAT</fullName>
+    <fields>Name</fields>
+    <fields>Clave_SAT__c</fields>
+    <fields>RecordTypeId</fields>
+    <label>Catalogo SAT</label>
+</CompactLayout>

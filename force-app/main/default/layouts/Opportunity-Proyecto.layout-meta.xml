@@ -44,18 +44,26 @@
                 <behavior>Edit</behavior>
                 <field>Por_cual_proveedor_cambio_el_cliente__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Total_Amount_Aceptada__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>RecordTypeId</field>
+                <field>CampaignId</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Pricebook2Id</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Edit</behavior>
+                <behavior>Readonly</behavior>
+                <field>Cuenta_Recuperada__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
                 <field>Folio_Mkt__c</field>
             </layoutItems>
             <layoutItems>
@@ -102,6 +110,10 @@
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>PROJ_TotalQuotes__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Total_IEQO__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
@@ -198,39 +210,44 @@
             <sortOrder>2</sortOrder>
         </platformActionListItems>
         <platformActionListItems>
-            <actionName>Opportunity.cargaProducto</actionName>
+            <actionName>NewTask</actionName>
             <actionType>QuickAction</actionType>
             <sortOrder>3</sortOrder>
         </platformActionListItems>
         <platformActionListItems>
-            <actionName>LogACall</actionName>
+            <actionName>NewEvent</actionName>
             <actionType>QuickAction</actionType>
             <sortOrder>4</sortOrder>
         </platformActionListItems>
         <platformActionListItems>
-            <actionName>NewTask</actionName>
+            <actionName>SendEmail</actionName>
             <actionType>QuickAction</actionType>
             <sortOrder>5</sortOrder>
         </platformActionListItems>
         <platformActionListItems>
-            <actionName>NewEvent</actionName>
+            <actionName>Opportunity.cargaProducto</actionName>
             <actionType>QuickAction</actionType>
             <sortOrder>6</sortOrder>
         </platformActionListItems>
         <platformActionListItems>
-            <actionName>FeedItem.ContentNote</actionName>
+            <actionName>LogACall</actionName>
             <actionType>QuickAction</actionType>
             <sortOrder>7</sortOrder>
         </platformActionListItems>
         <platformActionListItems>
-            <actionName>FeedItem.TextPost</actionName>
+            <actionName>FeedItem.ContentNote</actionName>
             <actionType>QuickAction</actionType>
             <sortOrder>8</sortOrder>
         </platformActionListItems>
         <platformActionListItems>
-            <actionName>FeedItem.ContentPost</actionName>
+            <actionName>FeedItem.TextPost</actionName>
             <actionType>QuickAction</actionType>
             <sortOrder>9</sortOrder>
+        </platformActionListItems>
+        <platformActionListItems>
+            <actionName>FeedItem.ContentPost</actionName>
+            <actionType>QuickAction</actionType>
+            <sortOrder>10</sortOrder>
         </platformActionListItems>
     </platformActionList>
     <quickActionList>
@@ -294,10 +311,20 @@
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
-        <fields>Account_for__c</fields>
         <fields>Account_for_Customer_Name_del__c</fields>
+        <fields>Route__c</fields>
         <fields>Customer_Reference__c</fields>
         <relatedList>Customer_Quote__c.Opportunity__c</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
+        <fields>SubProduct_Ruta_Producto__c</fields>
+        <fields>SubProduct_Buy_Price__c</fields>
+        <fields>SubProduct_Sell_Price__c</fields>
+        <fields>SubProduct_SAP_Service_Type__c</fields>
+        <fields>SubProduct_Detalles__c</fields>
+        <fields>SubProduct_Units__c</fields>
+        <relatedList>SubProducto__c.SubProduct_Opportunity__c</relatedList>
     </relatedLists>
     <relatedLists>
         <relatedList>RelatedNoteList</relatedList>

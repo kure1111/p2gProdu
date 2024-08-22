@@ -61,6 +61,10 @@
         <label>Totals</label>
         <layoutColumns>
             <layoutItems>
+                <behavior>Edit</behavior>
+                <field>CurrencyIsoCode</field>
+            </layoutItems>
+            <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>Subtotal</field>
             </layoutItems>

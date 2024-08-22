@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Status__c</fullName>
+    <externalId>false</externalId>
+    <label>Status</label>
+    <required>true</required>
+    <trackFeedHistory>true</trackFeedHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Cotizada</fullName>
+                <default>false</default>
+                <label>Cotizada</label>
+            </value>
+            <value>
+                <fullName>No Cotizada</fullName>
+                <default>false</default>
+                <label>No Cotizada</label>
+            </value>
+            <value>
+                <fullName>Pendiente por Cotizar</fullName>
+                <default>true</default>
+                <label>Pendiente por Cotizar</label>
+            </value>
+            <value>
+                <fullName>Rechazada</fullName>
+                <default>false</default>
+                <label>Rechazada</label>
+            </value>
+            <value>
+                <fullName>Aceptada</fullName>
+                <default>false</default>
+                <label>Aceptada</label>
+            </value>
+            <value>
+                <fullName>Negociación con cliente</fullName>
+                <default>false</default>
+                <label>Negociación con cliente</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

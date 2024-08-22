@@ -3,7 +3,9 @@
     <customButtons>Update_SAP</customButtons>
     <customButtons>Send_Attachment</customButtons>
     <customButtons>New_Associated_Document</customButtons>
-    <excludeButtons>DataDotComClean</excludeButtons>
+    <excludeButtons>ChangeRecordType</excludeButtons>
+    <excludeButtons>DataDotComAccountInsights</excludeButtons>
+    <excludeButtons>DataDotComCompanyHierarchy</excludeButtons>
     <excludeButtons>Submit</excludeButtons>
     <layoutSections>
         <customLabel>true</customLabel>
@@ -130,11 +132,19 @@
                 <behavior>Edit</behavior>
                 <field>RegFiscal_SAP__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Monitoreo_Recurso_Confiable__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>Record_Type_Name__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Folio_Mkt__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
@@ -244,7 +254,7 @@
         <customLabel>true</customLabel>
         <detailHeading>true</detailHeading>
         <editHeading>true</editHeading>
-        <label>Dirección Carta Porte</label>
+        <label>Dirección Fiscal para Facturación y Carta Porte</label>
         <layoutColumns>
             <layoutItems>
                 <behavior>Required</behavior>
@@ -870,32 +880,32 @@
             <sortOrder>5</sortOrder>
         </platformActionListItems>
         <platformActionListItems>
-            <actionName>LogACall</actionName>
+            <actionName>SendEmail</actionName>
             <actionType>QuickAction</actionType>
             <sortOrder>6</sortOrder>
         </platformActionListItems>
         <platformActionListItems>
-            <actionName>FeedItem.TextPost</actionName>
+            <actionName>LogACall</actionName>
             <actionType>QuickAction</actionType>
             <sortOrder>7</sortOrder>
         </platformActionListItems>
         <platformActionListItems>
-            <actionName>FeedItem.ContentPost</actionName>
+            <actionName>FeedItem.TextPost</actionName>
             <actionType>QuickAction</actionType>
             <sortOrder>8</sortOrder>
         </platformActionListItems>
         <platformActionListItems>
-            <actionName>Delete</actionName>
-            <actionType>StandardButton</actionType>
+            <actionName>FeedItem.ContentPost</actionName>
+            <actionType>QuickAction</actionType>
             <sortOrder>9</sortOrder>
         </platformActionListItems>
         <platformActionListItems>
-            <actionName>AccountAddToCampaign</actionName>
+            <actionName>Delete</actionName>
             <actionType>StandardButton</actionType>
             <sortOrder>10</sortOrder>
         </platformActionListItems>
         <platformActionListItems>
-            <actionName>ChangeRecordType</actionName>
+            <actionName>AccountAddToCampaign</actionName>
             <actionType>StandardButton</actionType>
             <sortOrder>11</sortOrder>
         </platformActionListItems>
@@ -986,7 +996,7 @@
         <fields>Total_Amount__c</fields>
         <fields>OPPORTUNITY.CLOSE_DATE</fields>
         <fields>OPPORTUNITY.AMOUNT</fields>
-        <fields>Folio_Mkt__c</fields>
+        <fields>Folio_Mkt2__c</fields>
         <fields>OPPORTUNITY.RECORDTYPE</fields>
         <relatedList>RelatedOpportunityList</relatedList>
     </relatedLists>
@@ -1028,8 +1038,6 @@
     <relatedLists>
         <excludeButtons>New</excludeButtons>
         <fields>NAME</fields>
-        <fields>RECORDTYPE</fields>
-        <fields>Mode__c</fields>
         <fields>Route__c</fields>
         <fields>ETD_from_Point_of_Load__c</fields>
         <fields>ETA_Point_of_Discharge__c</fields>
@@ -1037,6 +1045,8 @@
         <fields>Total_Weight_Kg__c</fields>
         <fields>SUM_Destination_Amount__c</fields>
         <fields>Shipment_Status_Plann__c</fields>
+        <fields>Traslado_Ingreso__c</fields>
+        <fields>Operation_Executive__c</fields>
         <relatedList>Shipment__c.Account_for__c</relatedList>
         <sortField>NAME</sortField>
         <sortOrder>Desc</sortOrder>

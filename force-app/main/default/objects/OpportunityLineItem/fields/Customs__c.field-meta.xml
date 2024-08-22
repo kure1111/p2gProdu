@@ -1,0 +1,254 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Customs__c</fullName>
+    <externalId>false</externalId>
+    <label>Customs</label>
+    <required>false</required>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Agua Prieta</fullName>
+                <default>false</default>
+                <label>Agua Prieta</label>
+            </value>
+            <value>
+                <fullName>Ciudad Acuña</fullName>
+                <default>false</default>
+                <label>Ciudad Acuña</label>
+            </value>
+            <value>
+                <fullName>Ciudad Camargo</fullName>
+                <default>false</default>
+                <label>Ciudad Camargo</label>
+            </value>
+            <value>
+                <fullName>Ciudad Juárez</fullName>
+                <default>false</default>
+                <label>Ciudad Juárez</label>
+            </value>
+            <value>
+                <fullName>Ciudad Miguel Alemán</fullName>
+                <default>false</default>
+                <label>Ciudad Miguel Alemán</label>
+            </value>
+            <value>
+                <fullName>Ciudad Reynosa</fullName>
+                <default>false</default>
+                <label>Ciudad Reynosa</label>
+            </value>
+            <value>
+                <fullName>Colombia</fullName>
+                <default>false</default>
+                <label>Colombia</label>
+            </value>
+            <value>
+                <fullName>Matamoros</fullName>
+                <default>false</default>
+                <label>Matamoros</label>
+            </value>
+            <value>
+                <fullName>Mexicali</fullName>
+                <default>false</default>
+                <label>Mexicali</label>
+            </value>
+            <value>
+                <fullName>Naco</fullName>
+                <default>false</default>
+                <label>Naco</label>
+            </value>
+            <value>
+                <fullName>Nogales</fullName>
+                <default>false</default>
+                <label>Nogales</label>
+            </value>
+            <value>
+                <fullName>Nuevo Laredo</fullName>
+                <default>false</default>
+                <label>Nuevo Laredo</label>
+            </value>
+            <value>
+                <fullName>Ojinaga</fullName>
+                <default>false</default>
+                <label>Ojinaga</label>
+            </value>
+            <value>
+                <fullName>Piedras Negras</fullName>
+                <default>false</default>
+                <label>Piedras Negras</label>
+            </value>
+            <value>
+                <fullName>Puerto Palomas</fullName>
+                <default>false</default>
+                <label>Puerto Palomas</label>
+            </value>
+            <value>
+                <fullName>San Luis Río Colorado</fullName>
+                <default>false</default>
+                <label>San Luis Río Colorado</label>
+            </value>
+            <value>
+                <fullName>Sonoyta</fullName>
+                <default>false</default>
+                <label>Sonoyta</label>
+            </value>
+            <value>
+                <fullName>Tecate</fullName>
+                <default>false</default>
+                <label>Tecate</label>
+            </value>
+            <value>
+                <fullName>Tijuana</fullName>
+                <default>false</default>
+                <label>Tijuana</label>
+            </value>
+            <value>
+                <fullName>Ciudad Hidalgo</fullName>
+                <default>false</default>
+                <label>Ciudad Hidalgo</label>
+            </value>
+            <value>
+                <fullName>Subteniente López</fullName>
+                <default>false</default>
+                <label>Subteniente López</label>
+            </value>
+            <value>
+                <fullName>Acapulco</fullName>
+                <default>false</default>
+                <label>Acapulco</label>
+            </value>
+            <value>
+                <fullName>Altamira</fullName>
+                <default>false</default>
+                <label>Altamira</label>
+            </value>
+            <value>
+                <fullName>Cancún</fullName>
+                <default>false</default>
+                <label>Cancún</label>
+            </value>
+            <value>
+                <fullName>Ciudad del Carmen</fullName>
+                <default>false</default>
+                <label>Ciudad del Carmen</label>
+            </value>
+            <value>
+                <fullName>Coatzacoalcos</fullName>
+                <default>false</default>
+                <label>Coatzacoalcos</label>
+            </value>
+            <value>
+                <fullName>Dos Bocas</fullName>
+                <default>false</default>
+                <label>Dos Bocas</label>
+            </value>
+            <value>
+                <fullName>Ensenada</fullName>
+                <default>false</default>
+                <label>Ensenada</label>
+            </value>
+            <value>
+                <fullName>Guaymas</fullName>
+                <default>false</default>
+                <label>Guaymas</label>
+            </value>
+            <value>
+                <fullName>La Paz</fullName>
+                <default>false</default>
+                <label>La Paz</label>
+            </value>
+            <value>
+                <fullName>Lázaro Cárdenas</fullName>
+                <default>false</default>
+                <label>Lázaro Cárdenas</label>
+            </value>
+            <value>
+                <fullName>Manzanillo</fullName>
+                <default>false</default>
+                <label>Manzanillo</label>
+            </value>
+            <value>
+                <fullName>Mazatlán</fullName>
+                <default>false</default>
+                <label>Mazatlán</label>
+            </value>
+            <value>
+                <fullName>Progreso</fullName>
+                <default>false</default>
+                <label>Progreso</label>
+            </value>
+            <value>
+                <fullName>Salina Cruz</fullName>
+                <default>false</default>
+                <label>Salina Cruz</label>
+            </value>
+            <value>
+                <fullName>Tampico</fullName>
+                <default>false</default>
+                <label>Tampico</label>
+            </value>
+            <value>
+                <fullName>Tuxpan</fullName>
+                <default>false</default>
+                <label>Tuxpan</label>
+            </value>
+            <value>
+                <fullName>Veracruz</fullName>
+                <default>false</default>
+                <label>Veracruz</label>
+            </value>
+            <value>
+                <fullName>Aguascalientes</fullName>
+                <default>false</default>
+                <label>Aguascalientes</label>
+            </value>
+            <value>
+                <fullName>Chihuahua</fullName>
+                <default>false</default>
+                <label>Chihuahua</label>
+            </value>
+            <value>
+                <fullName>Guadalajara</fullName>
+                <default>false</default>
+                <label>Guadalajara</label>
+            </value>
+            <value>
+                <fullName>Guanajuato</fullName>
+                <default>false</default>
+                <label>Guanajuato</label>
+            </value>
+            <value>
+                <fullName>México</fullName>
+                <default>false</default>
+                <label>México</label>
+            </value>
+            <value>
+                <fullName>Monterrey</fullName>
+                <default>false</default>
+                <label>Monterrey</label>
+            </value>
+            <value>
+                <fullName>Puebla</fullName>
+                <default>false</default>
+                <label>Puebla</label>
+            </value>
+            <value>
+                <fullName>Querétaro</fullName>
+                <default>false</default>
+                <label>Querétaro</label>
+            </value>
+            <value>
+                <fullName>Toluca</fullName>
+                <default>false</default>
+                <label>Toluca</label>
+            </value>
+            <value>
+                <fullName>Torreón</fullName>
+                <default>false</default>
+                <label>Torreón</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>
