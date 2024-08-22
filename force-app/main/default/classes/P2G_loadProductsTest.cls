@@ -2,45 +2,6 @@
 public class P2G_loadProductsTest {
     @isTest
     public static void load(){
-        /*
-        Account a = new Account();
-        a.Name = 'test';
-        insert a;
-        
-        Opportunity op = new Opportunity();
-        op.AccountId = a.Id;
-        op.Name = 'Test OP';
-        op.Service_Type__c = 'FN';
-        op.StageName = 'Prospecting';
-        op.CloseDate = date.today() + 3;
-        insert op;
-        
-        // Crea un producto para el OpportunityLineItem
-        Product2 testProduct = new Product2(
-            Name = 'Test Product'
-        );
-        insert testProduct;
-        
-        // Crea una entrada en el libro de precios para el producto
-        PricebookEntry testPricebookEntry = new PricebookEntry(
-            Product2Id = testProduct.Id,
-            UnitPrice = 100,  // Puedes ajustar el precio según sea necesario
-            IsActive = true,
-            Pricebook2Id = Test.getStandardPricebookId()
-        );
-        insert testPricebookEntry;
-        
-        // Crea el OpportunityLineItem asociado al Opportunity y PricebookEntry
-        OpportunityLineItem testOpportunityLineItem = new OpportunityLineItem(
-            OpportunityId = op.Id,
-            Product2Id = testProduct.Id,
-            PricebookEntryId = testPricebookEntry.Id,
-            Quantity = 1,
-            Precio_Sugerido__c = 1.0
-        );
-        insert testOpportunityLineItem;
-		*/
-        
         P2G_loadProducts.csvProduct csv = P2G_loadProducts.getCsv();
         csv.origen = 'ori';
         csv.destino = 'dest';
@@ -83,6 +44,7 @@ public class P2G_loadProductsTest {
         P2G_loadProducts.csvProduct csv2 = P2G_loadProducts.rellenagetItems(oliop);
         OpportunityLineItem oli2 = P2G_loadProducts.rellenaOpporLi(csv);
         OpportunityLineItem oli = P2G_loadProducts.createOpporLi('006RL0000046t18YAA','006RL0000046t18YAA','006RL0000046t18YAA',csv);
+        List<P2G_loadProducts.csvProduct> getOpportunityLineItems = P2G_loadProducts.getOpportunityLineItems('006RL0000046t18YAA');
         P2G_loadProducts.quitar();
     }
 

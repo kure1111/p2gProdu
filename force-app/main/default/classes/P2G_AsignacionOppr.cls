@@ -217,7 +217,7 @@ public class P2G_AsignacionOppr {
     public static List<Account> searchAccounts(String search) {
         if (String.isNotBlank(search) && search.length() >= 3) {
             search = '%' + search + '%';
-            return [SELECT Id, Name, Customer_Id__c FROM Account WHERE Name LIKE :search LIMIT 10];
+            return [SELECT Id, Name, Customer_Id__c FROM Account WHERE Name LIKE :search AND Customer_Id__c != null LIMIT 10];
         } else {
             return new List<Account>();
         }

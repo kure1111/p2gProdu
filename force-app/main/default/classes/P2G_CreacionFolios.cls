@@ -9,6 +9,7 @@ public with sharing class P2G_CreacionFolios {
             string name = cargoLine.extencionItemName;
             string account = fleteNacional.idAccount;
             string divisa = cargoLine.currencyIsoCode;
+            fleteNacional.idConteinerType = cargoLine.idConteinerType;
             for(Integer i = 0; i<fleteNacional.numFoliosCrear; i++){
                 listaFolios.add(creaImportExportQuote(fleteNacional));
                 listItem.add(creaItem(name, account, divisa));       
@@ -82,6 +83,7 @@ public with sharing class P2G_CreacionFolios {
             if(fleteNacional.AccountDestinAddress != '' && fleteNacional.AccountDestinAddress != null){
                 quote.Account_Destination_Address__c = fleteNacional.AccountDestinAddress;}
             quote.Pricing_Executive__c = UserInfo.getUserId();//0054T000001UCLL
+            quote.Container_Type__c = fleteNacional.idConteinerType;
             return quote;
         }
         catch(Exception e){
@@ -314,7 +316,7 @@ public with sharing class P2G_CreacionFolios {
         list<Fee__c> tarifarioCotizador = new list<Fee__c>();
         Date fechaHoy = Date.today();        
         try{
-            tarifarioExiste = [SELECT Id,Name,RecordTypeId,CurrencyIsoCode,SAP_Service_Type__c,Container_Type__c,TT_Days__c,Rate_Type__c,Active__c,Fee_Category__c,Group__c, Account_for__c,Route__c, CustomRate__c, Valid_Until__c, Fee_Rate__c, Buy_Rate__c FROM Fee__c
+            tarifarioExiste = [SELECT Id,Name,RecordTypeId,CurrencyIsoCode,SAP_Service_Type__c,Container_Type__c,TT_Days__c,Rate_Type__c,Active__c,Fee_Category__c,Group__c, Account_for__c,Route__c, CustomRate__c, Valid_Until__c, Fee_Rate__c, Buy_Rate__c,BuyPriceMax__c FROM Fee__c
                                WHERE Account_for__c =:idAccount AND Valid_Until__c>:fechaHoy AND CustomRate__c=true
                                AND SAP_Service_Type__c=:idServiceType AND Container_Type__c=:idContainerType AND Route__c=:IdRoute limit 1];  
         }
@@ -323,7 +325,7 @@ public with sharing class P2G_CreacionFolios {
         }
         try{
             String idCotizador=[SELECT Id, Name FROM Account Where Name = 'Cotizador' limit 1].Id;
-            tarifarioCotizador = [SELECT Id,Name,RecordTypeId,CurrencyIsoCode,SAP_Service_Type__c,Container_Type__c,TT_Days__c,Rate_Type__c,Active__c,Fee_Category__c,Group__c, Account_for__c,Route__c, CustomRate__c, Valid_Until__c, Fee_Rate__c, Buy_Rate__c FROM Fee__c
+            tarifarioCotizador = [SELECT Id,Name,RecordTypeId,CurrencyIsoCode,SAP_Service_Type__c,Container_Type__c,TT_Days__c,Rate_Type__c,Active__c,Fee_Category__c,Group__c, Account_for__c,Route__c, CustomRate__c, Valid_Until__c, Fee_Rate__c, Buy_Rate__c,BuyPriceMax__c FROM Fee__c
                                   WHERE Account_for__c =:idCotizador AND Valid_Until__c>:fechaHoy AND CustomRate__c=true
                                   AND SAP_Service_Type__c=:idServiceType AND Container_Type__c=:idContainerType AND Route__c=:IdRoute limit 1];
         }

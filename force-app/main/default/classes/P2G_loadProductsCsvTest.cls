@@ -36,7 +36,7 @@ public class P2G_loadProductsCsvTest {
         elemento.tipoMercancia='Papel higiénico';
         elemento.unidadPorFrecuencia='1';      
         lista.add(elemento);
-        P2G_loadProductsCsv.handleProduct(IdOportunidad,JSON.serialize(lista));
+        P2G_loadProductsCsv.handleProduct(IdOportunidad,JSON.serialize(lista),'MXN');
         
     }    
     

@@ -10,18 +10,6 @@ public class p2g_CreateServiceLineShipmentTest {
         account_test.Segment__c='Nuevo';
         account_test.Workplace__c=null;
         insert account_test;
-        Account carrier_test = new Account();
-        String recordCarrier = Schema.SObjectType.Account.getRecordTypeInfosByName().get('Supply Chain Partner').getRecordTypeId();
-        carrier_test.RecordTypeId = recordCarrier;
-        carrier_test.Name = 'Carrier de Test';
-        carrier_test.TAX_ID__c = 'FLD120217NW5';
-        carrier_test.Credit_Limit__c = 1000000;
-        carrier_test.Venta_Sap__c='Credito';
-        carrier_test.Segment__c='Nuevo';
-        carrier_test.Workplace__c=null;
-        carrier_test.Customer_Id__c ='P005153';
-        carrier_test.ActiveSap__c = TRUE;
-        insert carrier_test;
         User userT = [select id,managerId, userRole.Name  from user where id =: UserInfo.getUserId() limit 1];
         Rol_Margen__c rolMargen = TestDataFactory.createRolMargen(userT.userRole.Name);//Director Comercial ,Director Regional
         Country__c country = new Country__c(Name='Mxico');
@@ -91,7 +79,9 @@ public class p2g_CreateServiceLineShipmentTest {
         serviceRate.TT_Days__c = '1';
         serviceRate.Rate_Type__c = 'Fixed';
         serviceRate.Account_for__c = account_test.Id;
-        serviceRate.Active__c=true;
+        serviceRate.Active__c= True;
+        serviceRate.Valid_Until__c = system.today();
+        serviceRate.CustomRate__c = True;
         serviceRate.Fee_Rate__c = 5000;
         serviceRate.Buy_Rate__c = 4000;
         insert serviceRate;
@@ -104,26 +94,27 @@ public class p2g_CreateServiceLineShipmentTest {
         serviceLine.Shipment_Sell_Price__c = 2000;
         serviceLine.Shipment_Buy_Price__c = 3000;
         insert serviceLine;
-        /*Shipment_Line__c cargo = new Shipment_Line__c();
-        cargo.Shipment__c = new_shipment.id;
-        cargo.Name='002';
-        cargo.Container_Type__c= container.id;
-        cargo.CurrencyIsoCode='MXN';
-        cargo.Units_Shipped__c=1;
-       	insert cargo;*/
     }
     @isTest
     static void prueba(){
+        Test.startTest();
         String json = '{"0":{"Account":"HENKEL","AccountId":"0010R000019aZF8QAM","Activo":true,"BuyRate":"10355.00","CarrierId":"0014T00000EI8xsQAD","CarrierName":"FLETES LUEDAN DEL DESIERTO SA DE CV","ContainerType":"Caja 53 FT","ContainerTypeId":"a0F4T000000R9qxUAC","FeeCategory":"Road Freights","Grou":"SP-FN-FLETE NACIONAL","Id":"a0KDV000005NiGQ2A0","IdQuote":"a0JDV000003wqrh2AA","Moneda":"MXN","SapServiceType":"SERVICIOS LOGISTICOS FN (IC) (FN)","SapServiceTypeBuy":"FLETE NACIONAL (IC) (FN)","SapServiceTypeBuyId":"a1n0R000001lZceQAE","SapServiceTypeId":"a1n0R000001lZckQAE","SellRate":"0.00","seModifica":true,"ServiceRateName":"Flete Nacional","ShipmentId":"2.00","ShipmentName":"2.0000","ShipmentRouteId":"a0EDV0000049aX72AI","ShipmentRouteName":"ZM de Acapulco - ZM de Acayucan","Tarifario":true,"ValidUntil":"2023-12-31"}}';
-        Customer_Quote__c quote =[SELECT Id FROM Customer_Quote__c limit 1];
-        Shipment_Fee_Line__c serviceLine =[SELECT Id, Shipment__c FROM Shipment_Fee_Line__c limit 1]; 
+        Shipment_Fee_Line__c serviceLine =[SELECT Id, Shipment__c, Import_Export_Quote__c, Service_Rate_Name__r.Container_Type__c FROM Shipment_Fee_Line__c limit 1]; 
+        Shipment_Line__c cargoLine = new Shipment_Line__c();
+        cargoLine.Import_Export_Quote__c = serviceLine.Import_Export_Quote__c;
+        cargoLine.Name='002';
+        cargoLine.Container_Type__c= serviceLine.Service_Rate_Name__r.Container_Type__c;
+        cargoLine.CurrencyIsoCode='MXN';
+        cargoLine.Conversion_Rate_to_Currency_Header__c=1;
+        cargoLine.Shipment__c = serviceLine.Shipment__c;
+       	insert cargoLine;
+        System.debug('el service line'+serviceLine);
         P2G_UpdateShipmentServiceLine.shipmentFeeLineWrapper wrapper = new P2G_UpdateShipmentServiceLine.shipmentFeeLineWrapper();
-        wrapper.IdQuote=quote.Id;
+        wrapper.IdQuote=serviceLine.Import_Export_Quote__c;
         wrapper.Moneda='MXN';
         wrapper.ServiceRateId='a0K0R000004R6aAUAS';
         wrapper.SellRate='12';
         wrapper.BuyRate='12';
-        Test.startTest();
         Fee__c aux = p2g_CreateServiceLineShipment.updateRate(wrapper); 
         Shipment_Fee_Line__c shipmentserviceLine = new Shipment_Fee_Line__c();
         shipmentserviceLine.Name = '00';
@@ -132,12 +123,13 @@ public class p2g_CreateServiceLineShipmentTest {
         shipmentserviceLine.Shipment_Sell_Price__c = 12.5;
         shipmentserviceLine.Shipment_Buy_Price__c = 12.4;
         P2G_UpdateShipmentServiceLine.shipmentFeeLineWrapper complementoWrapperLine = p2g_CreateServiceLineShipment.completeFieldsShowLine(wrapper,shipmentserviceLine,aux);
-        P2G_UpdateShipmentServiceLine.shipmentFeeLineWrapper line = new P2G_UpdateShipmentServiceLine.shipmentFeeLineWrapper();
+        Customer_Quote__c quote = new Customer_Quote__c();
         quote.Last_Shipment__c = serviceLine.Shipment__c;
-        quote.Id = quote.Id;
+        quote.Id = serviceLine.Import_Export_Quote__c;
         Update quote;
+        P2G_UpdateShipmentServiceLine.shipmentFeeLineWrapper line = new P2G_UpdateShipmentServiceLine.shipmentFeeLineWrapper();
         Shipment_Fee_Line__c serviceLinee = p2g_CreateServiceLineShipment.CreateServiceLine(5,wrapper);
-        Integer inte = p2g_CreateServiceLineShipment.CalculoNombreLine(quote.Id);
+        Integer inte = p2g_CreateServiceLineShipment.CalculoNombreLine(serviceLine.Import_Export_Quote__c);
         List<p2g_CreateServiceLineQuote.quoteFeeLineWrapper> quoteFeeLines = p2g_CreateServiceLineShipment.getLineShip(serviceLine.Shipment__c);
         List<P2G_UpdateShipmentServiceLine.shipmentFeeLineWrapper> lsit = p2g_CreateServiceLineShipment.getRateTarifario(serviceLine.Shipment__c);
         Fee__c fee = new Fee__c();
@@ -146,15 +138,15 @@ public class p2g_CreateServiceLineShipmentTest {
             fee.CustomRate__c= true;
             fee.Container_Type__c='a0F4T000000R9qQUAS';
             fee.Account_for__c='a0E0R000003e3hIUAQ';
-            fee.SAP_Service_Type__c='a1n0R000001lZceQAE';
+            fee.SAP_Service_Type__c='a1n4T000001XXYCQA4';
             fee.Fee_Rate__c=12.4;
             fee.Carrier_Account__c='0010R000019aZF8QAM';
-            fee.SAP_Service_Type_Buy__c='a1n0R000001lZceQAE';
+            fee.SAP_Service_Type_Buy__c='a1n4T000001XXYCQA4';
             fee.Buy_Rate__c=12.4;
             fee.Active__c=true;
             fee.CurrencyIsoCode='MXN';
             fee.Fee_Category__c='Road';
-        Customer_Quote__c ship = new Customer_Quote__c();
+        Shipment_Line__c ship = new Shipment_Line__c();
         P2G_UpdateShipmentServiceLine.shipmentFeeLineWrapper wrappeFee = p2g_CreateServiceLineShipment.rellenaFee(fee,ship);
         Import_Export_Fee_Line__c serviceLineQuote = new Import_Export_Fee_Line__c();
         serviceLineQuote.Quote_Sell_Price__c=12.5;
@@ -165,6 +157,7 @@ public class p2g_CreateServiceLineShipmentTest {
         P2G_UpdateShipmentServiceLine.shipmentFeeLineWrapper wraper4 = p2g_CreateServiceLineShipment.rellena4(shipmentLine,2,'Idsasa');
         List<P2G_UpdateShipmentServiceLine.shipmentFeeLineWrapper> CrearLineTarifario = p2g_CreateServiceLineShipment.CrearLineTarifario(json,0);
         //P2G_UpdateShipmentServiceLine.shipmentFeeLineWrapper create = p2g_CreateServiceLineShipment.Create(wraper4);
+        //p2g_CreateServiceLineShipment.getSapServiceTypeShipment('SERVICIOS', serviceLine.Shipment__c);
         Test.stopTest();
     }
 }

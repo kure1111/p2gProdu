@@ -111,21 +111,23 @@ public class p2g_CreateServiceLineQuoteTest {
     @isTest
     static void createServiceLineQuoteTest() {
         String json = '{"0":{"Account":"HENKEL","ContainerType":"53-FT Tractor Trailer","Id":"a1yDV000001LGZPYA4","Name":"2","SapServiceType":"FLETE NACIONAL (IC) (FN)","seModifica":true,"ServiceRateId":"a0KDV000005VK7c2AG","ServiceRateName":"Flete Nacional","ShipmentBuyPrice":"5600","ShipmentId":"a0JDV000003sbGc2AI","ShipmentName":"SP-FN-23-000783","ShipmentRouteName":"ZM de Chihuahua - Centro","ShipmentSellPrice":"20","Tarifario":false,"TotalVolumen":"80.01999999999999999999999999999996","TotalWeight":"22132.300000000000000000000000000011","AccountId":"0010R000019aZF8QAM","CarrierId":"0014T00000BHiFVQA1"},"1":{"Account":"HENKEL","ContainerType":"53-FT Tractor Trailer","Id":"a1yDV000001LH4OYAW","Name":"3","SapServiceType":"FLETE NACIONAL (IC) (FN)","seModifica":true,"ServiceRateId":"a0KDV000005VK7c2AG","ServiceRateName":"Flete Nacional","ShipmentBuyPrice":"5400","ShipmentId":"a0JDV000003sbGc2AI","ShipmentName":"SP-FN-23-000783","ShipmentRouteName":"ZM de Chihuahua - Centro","ShipmentSellPrice":"42","Tarifario":false,"TotalVolumen":"80.01999999999999999999999999999996","TotalWeight":"22132.300000000000000000000000000011","AccountId":"0010R000019aZF8QAM","CarrierId":"0014T00000BHiFVQA1"},"2":{"Account":"HENKEL","CarrierName":"ALEJANDRO MARTINEZ RAMIREZ","ContainerType":"Caja 53 FT","Id":"a1yDV000001aKTVYA2","Name":"003","SapServiceType":"SERVICIOS LOGISTICOS FN (IC) (FN)","seModifica":true,"ServiceRateId":"a0KDV000005VMo92AG","ServiceRateName":"Flete Nacional","ShipmentBuyPrice":"6000.0000","ShipmentId":"a0JDV000003sbGc2AI","ShipmentName":"SP-FN-23-000783","ShipmentRouteName":"ZM de Chihuahua - Centro","ShipmentSellPrice":"12345.00","Tarifario":true,"TotalVolumen":"80.01999999999999999999999999999996","TotalWeight":"22132.300000000000000000000000000011"}}';
-        Customer_Quote__c quote = [SELECT Id, name, Route__c,Account_for__c, FolioResume__c,Total_Volume_m3_2__c,Total_Weight_Kg2__c FROM Customer_Quote__c limit 1];
+        Quote_Item_Line__c quote = [SELECT Import_Export_Quote__c, Import_Export_Quote__r.Name, Import_Export_Quote__r.Route__c,
+                                    Import_Export_Quote__r.Account_for__c, Import_Export_Quote__r.FolioResume__c,Import_Export_Quote__r.Total_Volume_m3_2__c,
+                                    Import_Export_Quote__r.Total_Weight_Kg2__c, Container_Type__c FROM Quote_Item_Line__c limit 1];
 
         List<Fee__c> feeList = [SELECT Id, Name, Route__r.Name, CustomRate__c, Container_Type__r.Name,CurrencyIsoCode,Fee_Category__c,Group__c,
                                        Account_for__r.Name, SAP_Service_Type__r.Name, Fee_Rate__c, Carrier_Account__r.Name,
                                        SAP_Service_Type_Buy__r.Name, Buy_Rate__c, Valid_Until__c, Active__c FROM Fee__c];
         Test.startTest();
-        List<P2G_UpdateShipmentServiceLine.shipmentFeeLineWrapper> tarifario = p2g_CreateServiceLineQuote.getRateTarifario(quote.id);
+        List<P2G_UpdateShipmentServiceLine.shipmentFeeLineWrapper> tarifario = p2g_CreateServiceLineQuote.getRateTarifario(quote.Import_Export_Quote__c);
  		P2G_UpdateShipmentServiceLine.shipmentFeeLineWrapper rateTarifario = p2g_CreateServiceLineQuote.llenadoTarifario(feeList[0], quote);
-        List<P2G_UpdateShipmentServiceLine.shipmentFeeLineWrapper> lines = p2g_CreateServiceLineQuote.getCreaLine(quote.Id);
-        List<p2g_CreateServiceLineQuote.quoteFeeLineWrapper> lineQuote = p2g_CreateServiceLineQuote.getLineQuote(quote.Id);
-        Integer linea = p2g_CreateServiceLineQuote.CalculoNombreLine(quote.Id);
+        List<P2G_UpdateShipmentServiceLine.shipmentFeeLineWrapper> lines = p2g_CreateServiceLineQuote.getCreaLine(quote.Import_Export_Quote__c);
+        List<p2g_CreateServiceLineQuote.quoteFeeLineWrapper> lineQuote = p2g_CreateServiceLineQuote.getLineQuote(quote.Import_Export_Quote__c);
+        Integer linea = p2g_CreateServiceLineQuote.CalculoNombreLine(quote.Import_Export_Quote__c);
         p2g_CreateServiceLineQuote.quoteFeeLineWrapper quoteFeeLineWrapper = p2g_CreateServiceLineQuote.Create(lines[0]);
         p2g_CreateServiceLineQuote.quoteFeeLineWrapper quoteFeeLineWrapper2 = p2g_CreateServiceLineQuote.rellenaSeccion(lines[0]);
         Fee__c rate = p2g_CreateServiceLineQuote.CreateServiceRate(lines[0]);
-        p2g_CreateServiceLineQuote.getSapServiceTypeQuote('SERVICIOS', quote.Id);
+        p2g_CreateServiceLineQuote.getSapServiceTypeQuote('SERVICIOS', quote.Import_Export_Quote__c);
         //p2g_CreateServiceLineQuote.quoteFeeLineWrapper response = p2g_CreateServiceLineQuote.CrearLineTarifario(json, 0);
        	Test.stopTest();
     }

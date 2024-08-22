@@ -9,10 +9,10 @@ public class P2G_AdvertenciaTest {
         P2G_Advertencia.getShipmentFeeLines(sp.Id);
 
         update sp;
-        P2G_Advertencia.proceso(sp.Id);
-        P2G_Advertencia.creaLogAprobacion(sp.Id,12,12);
+        P2G_Advertencia.proceso(sp.Id,'prueba@gmail.com');
+        Log_Aprobacion__c log = P2G_Advertencia.creaLogAprobacion(sp.Id,12,12,12);
         P2G_Advertencia.approveShipment(sp.Id, 'Aprobada');
-        P2G_Advertencia.sendShipmentLink(sp.Id,'prueba@gmail.com');
+        P2G_Advertencia.sendShipmentLink('prueba','prueba@gmail.com',log);
         P2G_Advertencia.mostrarAdvertencia(sp.Id);
         P2G_Advertencia.updateRate(lineas);
         test.stopTest();

@@ -13,5 +13,7 @@ public class OpportunityNameTest {
         op.StageName = 'Prospecting';
         op.CloseDate = date.today() + 3;
         insert op;
+        op.StageName = 'Cultivar';
+        update op;
     }
 }

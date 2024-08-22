@@ -108,6 +108,7 @@ public with sharing class P2G_crearQuotePDF {
         pdf += '</th></tr></thead>';
         if(listaQuoteLine.size() > 0){
             pdf += '<tbody>';
+            Integer recordCount = 0;
             for(QuoteLineItem quoteLine : listaQuoteLine){
                 pdf += '<tr><td class="bordeInferiror"><div>'+quoteLine.Product2.Name+'</div>';
                 pdf += '</td><td class="bordeInferiror"><div>'+quoteLine.Tipo_de_Linea__c+'</div>';
@@ -117,6 +118,43 @@ public with sharing class P2G_crearQuotePDF {
                 pdf += '</td><td class="bordeInferiror"><div>'+quoteLine.Discount+'</div>';
                 pdf += '</td><td class="bordeInferiror"><div>'+quote.CurrencyIsoCode+' $'+quoteLine.TotalPrice.format()+'</div>';
                 pdf += '</td></tr>';
+                recordCount++; 
+                Integer quotient = recordCount / 7;
+            System.debug('valor del record: '+recordCount);
+                if ((quotient * 7) == recordCount) {
+            System.debug('entra al if: '+recordCount / 7);
+                    pdf += '<div style="page-break-before:always;></div>';
+        			//inicia header
+                    pdf += '	<div class="header">';
+                    pdf += '		<div class="slds-grid slds-grid slds-gutters textChico">';
+                    pdf += '			<div class="slds-col slds-size_6-of-12 margenLogo">';
+                    //pdf += '<div><img src="/resource/1711730610000/logoQuote"/></div>';
+                    pdf += '				<div><img class="logoTamaño" src="/resource/'+logoQuote.SystemModStamp.getTime()+'/'+(logoQuote.NamespacePrefix != null && logoQuote.NamespacePrefix != '' ? logoQuote.NamespacePrefix+ '__' : '')+'logoQuote"/></div>';
+                    pdf += '			</div>';
+                    pdf += '			<div class="slds-col slds-size_6-of-12 textDerecho">';
+                    pdf += '				<span>Calle Argentina no. 205-1 Col. Industrial Martel</span><br>';
+                    pdf += '		  		<span>de Santa Catarina, N.L. México, C.P. 66367</span>';
+                    pdf += '				<p>Tel. 01 800 APOYO 06</p><p class="titulos">www.2gologistics.com</p>';
+                    pdf += '			</div>';
+                    pdf += '		</div>';
+                    pdf += '	</div><br><br>';
+                    //fin header
+                    pdf += '<thead><tr><th class="bordeInferiror azulAmarillo">';
+                    pdf += '<br><br><div>Product</div>';
+                    pdf += '</th><th class="bordeInferiror azulAmarillo">';
+                    pdf += '<div>Tipo de Linea</div>';
+                    pdf += '</th><th class="bordeInferiror azulAmarillo">';
+                    pdf += '<div>Sales Price</div>';
+                    pdf += '</th><th class="bordeInferiror azulAmarillo" scope="col">';
+                    pdf += '<div>Sales Price Converted</div>';
+                    pdf += '</th><th class="bordeInferiror azulAmarillo">';
+                    pdf += '<div>Quantity</div>';
+                    pdf += '</th><th class="bordeInferiror azulAmarillo" scope="col">';
+                    pdf += '<div>Discount (Percentage)</div>';
+                    pdf += '</th><th class="bordeInferiror azulAmarillo" scope="col">';
+                    pdf += '<div>Total Price</div>';
+                    pdf += '</th></tr></thead>';
+                }
             }
             pdf += '</tbody>';
         }

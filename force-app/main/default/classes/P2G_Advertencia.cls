@@ -17,20 +17,20 @@ public class P2G_Advertencia {
                 }
             }
             else{
-                Decimal necesitaAprobacion = proceso(shipment.Id);
+                Decimal necesitaAprobacion = proceso(shipment.Id,EmailAprobador);
                 if(necesitaAprobacion != 0){
                     shipment.Shipment_Status_Plann__c=statusOld;
-                    sendShipmentLink(shipment.Id,EmailAprobador);
                 }
             }   
         }
         
     }
     
-    public static Decimal proceso(String idShip){
+    public static Decimal proceso(String idShip,String EmailAprobador){
         Map<Id, Fee__c> tarifarios = new Map<Id, Fee__c>();
+        String Name;
         Map<Id, Shipment_Fee_Line__c> feeLinesMap = new Map<Id, Shipment_Fee_Line__c>();
-        List<Shipment_Fee_Line__c> feeLines = [SELECT Id, Service_Rate_Name__r.Buy_Rate__c,Name,Service_Rate_Name__r.Account_for__c, Shipment__c, Service_Rate_Name__r.Route__c,
+        List<Shipment_Fee_Line__c> feeLines = [SELECT Id,Service_Rate_Name__r.Fee_Rate__c, Service_Rate_Name__r.Buy_Rate__c,Name,Service_Rate_Name__r.Account_for__c, Shipment__c,Shipment__r.Name, Service_Rate_Name__r.Route__c,
                                                Service_Rate_Name__r.SAP_Service_Type__c, Service_Rate_Name__r.Container_Type__c 
                                                FROM Shipment_Fee_Line__c 
                                                WHERE Shipment__c = :idShip];
@@ -47,6 +47,7 @@ public class P2G_Advertencia {
         Decimal maximoGeneral = 0;
         Decimal precioMax = 0;
         Decimal precioLinea = 0;
+        Decimal sellRate = 0;
         for (Id feeId : tarifarios.keySet()) {
             Fee__c fee = tarifarios.get(feeId);
             Shipment_Fee_Line__c serviceLine = feeLinesMap.get(feeId);
@@ -62,6 +63,7 @@ public class P2G_Advertencia {
                 maximoGeneral = max - buySell;
                 precioMax = max;
                 precioLinea = buySell;
+                sellRate = serviceLine.Service_Rate_Name__r.Fee_Rate__c;
             }
             /*if(margen(buySell, max) > maximoGeneral){
 maximoGeneral = margen(buySell, max);
@@ -106,45 +108,77 @@ orderedEmails.add(userEmailsByRoleId.get(roleId));
 }
 }
 //crea objecto
-creaLogAprobacion(idShip);
 //Envia correo
-//sendShipmentLink(shipment.Id,orderedEmails[0]);
 
-}*/
-            creaLogAprobacion(idShip,precioMax,precioLinea);
+}*/         Name = feeLines[0].Shipment__r.Name;
+            Log_Aprobacion__c log  = creaLogAprobacion(idShip,precioMax,precioLinea, sellRate);
+            sendShipmentLink(Name, EmailAprobador, log);
         }
         return maximoGeneral;
         
     }
     
-    public static void creaLogAprobacion(id shipment, Decimal precio1, Decimal precio2){
+    public static Log_Aprobacion__c creaLogAprobacion(id shipment, Decimal precio1, Decimal precio2, Decimal sellRate){
         Log_Aprobacion__c aprobacion = new Log_Aprobacion__c();
         aprobacion.Status__c = 'Solicitud Enviada';
         aprobacion.SolicitadoPor__c = userinfo.getUserId();
         aprobacion.Shipment__c = shipment;
         aprobacion.montoMaximo__c = precio1;
         aprobacion.montoPorAprobar__c = precio2;
+        aprobacion.sellRate__c = sellRate;
         insert aprobacion;
-        
+        return aprobacion;
     }
     
-    public static void sendShipmentLink(String idShipment, String emailAddress) {
+    public static void sendShipmentLink(String Name,String emailAddress, Log_Aprobacion__c log) {
+        String shipmentLink = URL.getOrgDomainUrl().toExternalForm() + '/lightning/r/Shipment__c/' + log.Shipment__c + '/view';
         //String shipmentLink = URL.getOrgDomainUrl().toExternalForm() + '/lightning/n/AprobacionMargenes?c__recordId=' + idShipment;
-        String shipmentLink = URL.getOrgDomainUrl().toExternalForm() + '/lightning/action/quick/Shipment__c.Aprobar?objectApiName&context=RECORD_DETAIL&recordId=' + idShipment;
-        // Crear el contenido del correo electrónico
-        String emailSubject = 'Enlace al objeto de envío';
-        String emailBody = 'Shipment en Espera de Aprobacion: ' + shipmentLink;
-        
-        // Crear el correo electrónico
+        //String shipmentLink = URL.getOrgDomainUrl().toExternalForm() + '/lightning/action/quick/Shipment__c.Aprobar?objectApiName&context=RECORD_DETAIL&recordId=' + log.Shipment__c;
+
+        String emailSubject = 'Shipment en Espera de Aprobacion';
+        String emailBody = '<!DOCTYPE html>'
+            + '<html lang="en">'
+            + '<head>'
+            + '<meta charset="UTF-8">'
+            + '<meta name="viewport" content="width=device-width, initial-scale=1.0">'
+            + '<title>Información</title>'
+            + '</head>'
+            + '<body style="font-family: Arial, sans-serif; padding: 20px;">'
+            + '<h2 style="color: #333333;">Solicitud de Aprobación para el Shipment: ' + Name + '</h2>'
+            + '<h3 style="color: #666666;">Datos de la Solicitud</h3>'
+            + '<table border="1" cellspacing="0" cellpadding="8" style="width: 100%; border-collapse: collapse;">'
+            + '<tr>'
+            + '<th style="background-color: #f2f2f2; text-align: left;">Nombre</th>'
+            + '<th style="background-color: #f2f2f2; text-align: left;">Buy Rate</th>'
+            + '<th style="background-color: #f2f2f2; text-align: left;">Sell Rate</th>'
+            + '<th style="background-color: #f2f2f2; text-align: left;">Buy Rate Max</th>'
+            + '<th style="background-color: #f2f2f2; text-align: left;">Status</th>'
+            + '<th style="background-color: #f2f2f2; text-align: left;">Solicitado por</th>'
+            + '</tr>'
+            + '<tr>'
+            + '<td>' + Name + '</td>'
+            + '<td>$' + log.montoPorAprobar__c + '</td>'
+            + '<td>$' + log.sellRate__c + '</td>'
+            + '<td>$' + log.montoMaximo__c + '</td>'
+            + '<td>' + log.Status__c + '</td>'
+            + '<td>' + UserInfo.getName() + '</td>'
+            + '</tr>'
+            + '</table>'
+            + '<p style="margin-top: 10px; margin-bottom: 0;">' // Reduce el margen superior y elimina el margen inferior
+            + '<a href="' + shipmentLink + '" style="display: inline-block; padding: 20px 40px; background-color: #4CAF50; color: white; text-decoration: none; border-radius: 10px; font-weight: bold; font-size: 24px; border: 1px solid #000000;">'
+            + 'Aprobar'
+            + '</a>'
+            + '</p>'
+            + '</body>'
+            + '</html>';
+
         Messaging.SingleEmailMessage email = new Messaging.SingleEmailMessage();
         email.setToAddresses(new String[]{ emailAddress , 'alberto.garcia@pak2go.com', 'carlos.martinez@2gologistics.com'});
         email.setSubject(emailSubject);
-        email.setPlainTextBody(emailBody);
+        email.setHtmlBody(emailBody);
         
         // Enviar el correo electrónico
         Messaging.SendEmailResult[] sendResults = Messaging.sendEmail(new Messaging.SingleEmailMessage[]{ email });
-        
-        // Verificar los resultados del envío del correo electrónico
         if (sendResults[0].isSuccess()) {
             System.debug('Correo electrónico enviado con éxito a ' + emailAddress);
         } else {

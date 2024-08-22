@@ -27,7 +27,7 @@ public  with sharing class P2G_CreacionCargoLines {
         string searchKeyword = '%' + searchKey + '%';
         list<Catalogo_SAT__c> ListClaveSAT = new list<Catalogo_SAT__c>();
         for(Catalogo_SAT__c sideClaveSAT : [SELECT Id, Name, Clave_SAT__c, Material_PeligrosoCP__c FROM Catalogo_SAT__c 
-                                            where Name LIKE : searchKeyword and RecordTypeId =: recorType limit 10]){
+                                            where Name LIKE : searchKeyword and RecordTypeId =: recorType limit 30]){
                                                 ListClaveSAT.add(sideClaveSAT);
                                             }
         
@@ -42,7 +42,7 @@ public  with sharing class P2G_CreacionCargoLines {
         string searchKeyword = '%' + Container + '%';
         list<Container_Type__c> ListContainerType = new list<Container_Type__c>();
         for(Container_Type__c sideContainerType : [SELECT Id, Name , Cargo_Weight_Kg__c, Cargo_Volume_m3__c 
-                                                   FROM Container_Type__c where Name LIKE : searchKeyword limit 10]){
+                                                   FROM Container_Type__c where Name LIKE : searchKeyword limit 20]){
                                                        ListContainerType.add(sideContainerType);
                                                    }
         
@@ -83,7 +83,7 @@ public  with sharing class P2G_CreacionCargoLines {
         list<Customer_Quote__c> CustomerListRecord = new list<Customer_Quote__c>();
         for(Customer_Quote__c customerSearch : [SELECT Id, Name FROM Customer_Quote__c 
                                                 WHERE Account_for__c = :Customer and name LIKE : searchKeyword 
-                                                order by name desc LIMIT 10]){
+                                                order by name desc LIMIT 20]){
                                                     CustomerListRecord.add(customerSearch);
                                                 }
         if(CustomerListRecord.size() == 0){
@@ -124,7 +124,7 @@ public  with sharing class P2G_CreacionCargoLines {
         string searchKeyword = '%' + country + '%';
         list<Location__c> contactListRecord = new list<Location__c>();
         for(Location__c sideCountry : [SELECT Id, Name, Country__r.Name, State__r.Name FROM Location__c
-                                       WHERE name LIKE : searchKeyword limit 10]){
+                                       WHERE name LIKE : searchKeyword limit 30]){
                                            contactListRecord.add(sideCountry);
                                        }
         
@@ -138,7 +138,7 @@ public  with sharing class P2G_CreacionCargoLines {
         string searchKeyword = '%' + account + '%';
         list<Account> AccountListRecord = new list<Account>();
         for(Account accountSearch : [SELECT Id, Name, Customer_Id__c,Tipo_de_Servicio_TNA__c,Tipo_de_Servicio_TNA__r.Name FROM Account
-                                     WHERE Name LIKE : searchKeyword limit 10]){
+                                     WHERE Name LIKE : searchKeyword limit 20]){
                                          AccountListRecord.add(accountSearch);
                                      }
         if(AccountListRecord.size() == 0){

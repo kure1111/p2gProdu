@@ -1,7 +1,7 @@
 public class P2G_creacionFolioWs{
     @Future(callout=true)
     public static Void callSerCon(String id) {
-        P2G_llamadoWebHelper.setWebServiceUpdate(true);
+        //P2G_llamadoWebHelper.setWebServiceUpdate(true);
         List<Response__c> listaErrores = new List<Response__c>();
         String listaJson = P2G_CargaEmbarques.mapeoCargaEmbarque(id);
         String error;
@@ -16,7 +16,7 @@ public class P2G_creacionFolioWs{
             listaErrores.add(createSapResponse('ERROR',error,Id));
             updateStatus(id, 'error');           
         }else{
-            listaErrores.add(createSapResponse('CONFIRM','Se inicio el monitoreo en recurso confiable',Id));
+            listaErrores.add(createSapResponse('CONFIRM','Carga correcta en recurso confiable',Id));
             updateStatus(id, 'success');
         }
         insert listaErrores;
@@ -83,7 +83,7 @@ public class P2G_creacionFolioWs{
                 ship.Shipment_Status_Plann__c='In Progress';
                 ship.Shipment_Status_Mon__c= 'Error en Monitoreo_M';
             }
-            update ship;
+            //update ship; ya no cambiamos status lo hara Contrl room
         }
         catch(Exception e){
             message = e.getMessage()+ ' '+e.getLineNumber();

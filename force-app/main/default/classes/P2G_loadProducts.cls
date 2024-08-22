@@ -21,6 +21,7 @@ public class P2G_loadProducts {
         @AuraEnabled public String sellPrice  { get; set; }
         @AuraEnabled public String IdOli  { get; set; }
         @AuraEnabled public Boolean showFila  { get; set; }
+        @AuraEnabled public String currencyOli  { get; set; }
     }
     
     @AuraEnabled
@@ -31,14 +32,12 @@ public class P2G_loadProducts {
     
     @AuraEnabled
     public static void handleProduct(String opportunityId,String jsonProduct) {
+        System.debug('jsonProduct: '+jsonProduct);
        	P2G_loadProducts.csvProduct productInfo = (P2G_loadProducts.csvProduct)JSON.deserialize(jsonProduct, P2G_loadProducts.csvProduct.class);
-
-        
-        System.debug('productInfo: '+productInfo);
         String productName = productInfo.origen + ' - ' + productInfo.destino;
         //Savepoint sp = Database.setSavepoint();
         	
-            Opportunity opp = [SELECT Id, Name, Pricebook2Id FROM Opportunity WHERE Id = :opportunityId LIMIT 1];
+            Opportunity opp = [SELECT Id, Name, Pricebook2Id, CurrencyIsoCode FROM Opportunity WHERE Id = :opportunityId LIMIT 1];
             if (opp.Pricebook2Id == null) {
                 // Si no tiene un libro de precios, crea uno automáticamente
                 Pricebook2 pb = new Pricebook2(Name = opp.Name + ' Pricebook', IsActive = true, Description = 'Auto-Generado');
@@ -54,6 +53,7 @@ public class P2G_loadProducts {
                 FROM PricebookEntry
                 WHERE Pricebook2Id = :opp.Pricebook2Id
                 AND Product2.Name = :productName
+                AND CurrencyIsoCode = :opp.CurrencyIsoCode
                 LIMIT 1
             ];
             
@@ -71,6 +71,7 @@ public class P2G_loadProducts {
                         FROM PricebookEntry
                         WHERE Pricebook2.IsStandard = true
                         AND Product2.Name = :productName
+                		AND CurrencyIsoCode = :opp.CurrencyIsoCode
                         LIMIT 1
                     ];
                 
@@ -83,7 +84,8 @@ public class P2G_loadProducts {
                         Product2Id = standardEntries[0].Product2Id,
                         UnitPrice = standardEntries[0].UnitPrice,
                         IsActive = true,
-                        Pricebook2Id = opportunityPricebook.Id
+                        Pricebook2Id = opportunityPricebook.Id,
+                        CurrencyIsoCode = opp.CurrencyIsoCode
                     );
                     
                     insert newOpportunityEntry;
@@ -100,7 +102,9 @@ public class P2G_loadProducts {
                         PROJ_Site_of_load__c = productInfo.origenId,
                         PROJ_Site_of_discharge__c = productInfo.destinoId,
                         PROJ_Modalidad__c = productInfo.modalidad,
-                        Family = 'Route'
+                        Family = 'Route',
+                        IsActive = True,
+                        CurrencyIsoCode = opp.CurrencyIsoCode
                     );
                     insert newProduct;
                     
@@ -108,7 +112,8 @@ public class P2G_loadProducts {
                         Product2Id = newProduct.Id,
                         UnitPrice = 0,
                         IsActive = true,
-                        Pricebook2Id = standardPricebook.Id
+                        Pricebook2Id = standardPricebook.Id,
+                        CurrencyIsoCode = opp.CurrencyIsoCode
                     );
                     insert newStandardEntry;
                     
@@ -120,7 +125,8 @@ public class P2G_loadProducts {
                         Product2Id = newProduct.Id,
                         UnitPrice = 100,  // Puedes ajustar el precio según sea necesario
                         IsActive = true,
-                        Pricebook2Id = opportunityPricebook.Id
+                        Pricebook2Id = opportunityPricebook.Id,
+                        CurrencyIsoCode = opp.CurrencyIsoCode
                     );
                     
                     insert newOpportunityEntry;
@@ -159,6 +165,7 @@ public class P2G_loadProducts {
         rellena.PROJ_Direccion_de_carga__c = productInfo.direccionCarga;
         rellena.PROJ_Direccion_de_descarga__c = productInfo.direccionDescarga;
         rellena.Comentarios__c = productInfo.comentarios;
+        rellena.Tipo_de_moneda__c = productInfo.currencyOli;
         
         rellena.TotalPrice = 0;
         return rellena;
@@ -170,7 +177,7 @@ public class P2G_loadProducts {
         if (String.isNotBlank(opportunityId)) {
             List<OpportunityLineItem> opportunityLineItems = [SELECT Id,Ruta__c,Name, Quantity, PROJ_Peso_de_carga__c, PROJ_Unidades_por_frecuencia__c, 
                     PROJ_Tipo_de_mercancia__c, PROJ_Frecuencia__c, PROJ_Tiempo_de_carga__c, 
-                    PROJ_Tiempo_de_descarga__c, PROJ_Modalidad__c, PROJ_Direccion_de_carga__c,
+                    PROJ_Tiempo_de_descarga__c, PROJ_Modalidad__c, PROJ_Direccion_de_carga__c, 
                     PROJ_Direccion_de_descarga__c, TotalPrice,Comentarios__c,Buy_Price__c,UnitPrice
                     FROM OpportunityLineItem
                     WHERE OpportunityId = :opportunityId];

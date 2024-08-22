@@ -25,27 +25,4 @@ public class PAKCargaProductosControllerTEST {
         String resul = PAKCargaProductosController.cargarTarifario(JSON.serialize(jsonList), opp.Id);
         Test.stopTest();
     }
-    
-    @isTest static void testB(){
-        Test.startTest();
-        
-        PAKCargaProductosController.CsvProducts product = new PAKCargaProductosController.CsvProducts();
-        product.paisOrigen = 'Origen';
-        product.estadoOrigen = 'EstadoOrigen';
-        product.ciudadOrigen = 'CiudadOrigen';
-        product.paisDestino = 'Destino';
-        product.estadoDestino = 'EstadoDestino';
-        product.ciudadDestino = 'CiudadDestino';
-        product.cantidad = 10.0;
-        product.frecuencia = 'Frecuencia';
-        product.modalidad = 'Modalidad';
-        product.unidadPorFrecuencia = 'Unidad';
-        product.tipoDeMercancia = 'TipoMercancia';
-        product.pesoDeCarga = 100.0;
-        product.tiempoDeCarga = 5;
-        product.tiempoDeDescarga = 3;
-        product.direccionDeCarga = 'Carga';
-        product.direccionDeDescarga = 'Descarga';
-        Test.stopTest();
-    }
 }

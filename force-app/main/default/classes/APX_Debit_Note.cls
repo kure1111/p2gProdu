@@ -1074,7 +1074,7 @@ public with sharing class APX_Debit_Note {
             }                       
 
             List<Invoice_Line__c> lines = [Select Name, Invoice__r.Name,Concept__c, Units__c, Unit_Price__c, Amount__c, VAT__c, Total_VAT__c, 
-            Total_Incl_VAT__c,Shipment_Service_Line__r.Name, Shipment_Service_Line__r.Sap_Service_Type__c, createdDate from Invoice_Line__c where Invoice__c =: invs];
+            Total_Incl_VAT__c,Shipment_Service_Line__r.Service_Rate_Name__r.Name, Shipment_Service_Line__r.Sap_Service_Type__c, createdDate from Invoice_Line__c where Invoice__c =: invs];
 
             for(Invoice_Line__c line : lines){
                 subTotal = subTotal + (line.Amount__c != null ? line.Amount__c : 0);

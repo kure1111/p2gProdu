@@ -1,6 +1,6 @@
 public class P2G_loadProductsCsv {
     
-    public static void handleProduct(String opportunityId, String jsonProduct) {
+    public static void handleProduct(String opportunityId, String jsonProduct, String currencyCode) {
         
             List<P2G_loadProducts.csvProduct> productsInfo = (List<P2G_loadProducts.csvProduct>)JSON.deserialize(jsonProduct, List<P2G_loadProducts.csvProduct>.class);
             
@@ -16,7 +16,8 @@ public class P2G_loadProductsCsv {
             for (PricebookEntry entry : [SELECT Id, Product2Id, Product2.Name
                                          FROM PricebookEntry
                                          WHERE Pricebook2.IsActive = true
-                                         AND Product2.Name IN :productNames]) {
+                                         AND Product2.Name IN :productNames
+                                         AND CurrencyIsoCode = :currencyCode]) {
                                              existingProducts.put(entry.Product2.Name, entry);
                                          }
             
@@ -27,16 +28,16 @@ public class P2G_loadProductsCsv {
             }
             
             // 2. Con la lista de productos que ya están
-            method1(opportunityId, existingProducts);
+            method1(opportunityId, existingProducts,currencyCode);
             
             // 3. Con la lista de productos que no están
-            method2(opportunityId, missingProducts);
+            method2(opportunityId, missingProducts,currencyCode);
             
             //4.- Crea las OLi
-            createOpportunityLineItems(opportunityId,productsInfo);
+            createOpportunityLineItems(opportunityId,productsInfo,currencyCode);
     }
     
-    public static void method1(String opportunityId, Map<String, PricebookEntry> existingProductEntries) {
+    public static void method1(String opportunityId, Map<String, PricebookEntry> existingProductEntries,String currencyCode) {
         System.debug('Entra en metodo 1: '+existingProductEntries);
         // Obtener el ID del Pricebook de la oportunidad
         Id opportunityPricebookId = getOpportunityPricebookId(opportunityId);
@@ -46,7 +47,8 @@ public class P2G_loadProductsCsv {
         Set<String> existingProductNames = new Set<String>();
         for (PricebookEntry entry : [SELECT Product2.Name 
                                      FROM PricebookEntry 
-                                     WHERE Pricebook2Id = :opportunityPricebookId]) {
+                                     WHERE Pricebook2Id = :opportunityPricebookId
+                                     AND CurrencyIsoCode = :currencyCode]) {
                                          existingProductNames.add(entry.Product2.Name);
                                      }
         
@@ -74,7 +76,8 @@ public class P2G_loadProductsCsv {
                 Product2Id = existingEntry.Product2Id,
                 UnitPrice = 10, // Precio inicial
                 IsActive = true,
-                Pricebook2Id = opportunityPricebookId // ID del Pricebook de la oportunidad
+                Pricebook2Id = opportunityPricebookId, // ID del Pricebook de la oportunidad
+                CurrencyIsoCode = currencyCode
             );
             
             newOpportunityEntries.add(newOpportunityEntry);
@@ -92,7 +95,7 @@ public class P2G_loadProductsCsv {
         return productNameToIdMap;
     }
     
-    public static void method2(String opportunityId, Map<String, P2G_loadProducts.csvProduct> missingProducts) {
+    public static void method2(String opportunityId, Map<String, P2G_loadProducts.csvProduct> missingProducts, String currencyCode) {
         System.debug('Entra en metodo 2: '+missingProducts);
         Id idPriceStandar = getStandardPricebookId();
         Id idPriceOpor = getOpportunityPricebookId(opportunityId);
@@ -116,7 +119,9 @@ public class P2G_loadProductsCsv {
                 PROJ_Site_of_load__c = productInfo.origenId,
                 PROJ_Site_of_discharge__c = productInfo.destinoId,
                 PROJ_Modalidad__c = productInfo.modalidad,
-                Family = 'Route'
+                Family = 'Route',
+                IsActive = True,
+                CurrencyIsoCode = currencyCode
             );
             newProducts.add(newProduct);
         }
@@ -136,7 +141,8 @@ public class P2G_loadProductsCsv {
                 Product2Id = productIds.get(productName),
                 UnitPrice = 51, // Precio inicial en 0 (ajustar según necesidades)
                 IsActive = true,
-                Pricebook2Id = idPriceStandar // Obtener el ID del Pricebook estándar
+                Pricebook2Id = idPriceStandar, // Obtener el ID del Pricebook estándar
+                CurrencyIsoCode = currencyCode
             );
             newStandardEntries.add(newStandardEntry);
             
@@ -145,7 +151,8 @@ public class P2G_loadProductsCsv {
                 Product2Id = productIds.get(productName),
                 UnitPrice = 0, // Precio inicial en 100 (ajustar según necesidades)
                 IsActive = true,
-                Pricebook2Id = idPriceOpor // Obtener el ID del Pricebook de la oportunidad
+                Pricebook2Id = idPriceOpor, // Obtener el ID del Pricebook de la oportunidad
+                CurrencyIsoCode = currencyCode
             );
             newOpportunityEntries.add(newOpportunityEntry);
         }
@@ -168,7 +175,7 @@ public class P2G_loadProductsCsv {
         return [SELECT Pricebook2Id FROM Opportunity WHERE Id = :opportunityId LIMIT 1].Pricebook2Id;
     }
     
-    public static void createOpportunityLineItems(String opportunityId, List<P2G_loadProducts.csvProduct> productsInfo) {
+    public static void createOpportunityLineItems(String opportunityId, List<P2G_loadProducts.csvProduct> productsInfo,String currencyCode) {
         // Paso 1: Obtener todos los nombres de los productos
         Set<String> productNames = new Set<String>();
         for (P2G_loadProducts.csvProduct productInfo : productsInfo) {
@@ -181,7 +188,8 @@ public class P2G_loadProductsCsv {
         for (PricebookEntry entry : [SELECT Id, Product2Id, Product2.Name
                                      FROM PricebookEntry
                                      WHERE Pricebook2Id = :opportunityPricebookId
-                                     AND Product2.Name IN :productNames]) {
+                                     AND Product2.Name IN :productNames
+                                     AND CurrencyIsoCode = :currencyCode]) {
                                          productNameToEntryMap.put(entry.Product2.Name, entry);
                                      }
         // Paso 3: Recorrer la lista de productos y crear las OLIs
