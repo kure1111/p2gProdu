@@ -1,0 +1,12 @@
+<apex:page standardController="Quote" extensions="P2G_guardarQuotePDF" showheader="false" sidebar="false" lightningStylesheets="false">
+    <apex:form id="form">
+        <apex:pageBlock >
+            <apex:pageBlockButtons >  
+                <apex:commandButton action="{!savePdf}" value="Guardar PDF"/>
+            </apex:pageBlockButtons>
+            <apex:outputPanel >
+                <iframe scrolling="auto" id="EN" src="/apex/P2G_crearQuotePDF?id={!Quote.Id}" width= "100%" height="900px"/>
+            </apex:outputPanel>
+        </apex:pageBlock>
+    </apex:form>
+</apex:page>
