@@ -597,62 +597,61 @@ export default class P2g_AsignacionOppor extends LightningElement {
             };
         });
     }
-    
+
     get colorCoded5() {
         return this.listShipmentsCol5.map(account => {
-            const now = new Date();
-            const equipPlacedDate = new Date(account.Equip_Placed__c); // Obtener la fecha de equipPlacedDate
-            const dateString = account.ETD_from_Point_of_Load__c; // "2024-04-05" fecha etd
             let showSemaforo = true;
-            const etdHours = equipPlacedDate.getHours();
-            const etdMinutes = equipPlacedDate.getMinutes();
-            const dia = equipPlacedDate.getMonth()+1;
-            const timeString = etdHours + ':' + (etdMinutes < 10 ? '0' + etdMinutes : etdMinutes);
-            const timeFechaPlace = equipPlacedDate.getFullYear() +'-'+ (dia < 10 ? '0' + dia : dia) +'-'+(equipPlacedDate.getDate() < 10 ? '0' + equipPlacedDate.getDate() : equipPlacedDate.getDate());
-            let circleClass = '';
+            const now = new Date();
+            const etdTimeMillis = account.ETD_Time_from_Point_of_Load__c;
+            const dateString = account.ETD_from_Point_of_Load__c; // "2024-04-05"
 
-            const etdTimeMillisETD = account.ETD_Time_from_Point_of_Load__c;
+            const equipPlacedDate = new Date(account.Equip_Placed__c); // Obtener la fecha de equipPlacedDate
+            const etdHoursPT = equipPlacedDate.getHours();
+            const etdMinutesPT = equipPlacedDate.getMinutes();
+            const timeStringPT = etdHoursPT + ':' + (etdMinutesPT < 10 ? '0' + etdMinutesPT : etdMinutesPT);
+            
             // Convertir milisegundos en horas y minutos
-            const etdHoursETD = Math.floor((etdTimeMillisETD / (1000 * 60 * 60)) % 24);
-            const etdMinutesETD = Math.floor((etdTimeMillisETD / (1000 * 60)) % 60);
-            const timeStringETD = etdHoursETD + ':' + (etdMinutesETD < 10 ? '0' + etdMinutesETD : etdMinutesETD);
+            const etdHours = Math.floor((etdTimeMillis / (1000 * 60 * 60)) % 24);
+            const etdMinutes = Math.floor((etdTimeMillis / (1000 * 60)) % 60);
+            const timeString = etdHours + ':' + (etdMinutes < 10 ? '0' + etdMinutes : etdMinutes);
             const [year, monthIndex, day] = dateString.split('-');
     
             // Crear una nueva instancia de Date con la fecha y hora especificadas
             const etdDate = new Date(year, monthIndex - 1, day, etdHours, etdMinutes);
-            const etdWithoutTime = new Date(etdDate.getFullYear(), etdDate.getMonth(), etdDate.getDate());
+
+            let circleClass = '';
+    
             // Comparar solo las fechas (sin tener en cuenta la hora)
-            const equipPlacedDateWithoutTime = new Date(equipPlacedDate.getFullYear(), equipPlacedDate.getMonth(), equipPlacedDate.getDate());
+            const etdDateWithoutTime = new Date(etdDate.getFullYear(), etdDate.getMonth(), etdDate.getDate());
+            const nowWithoutTime = new Date(now.getFullYear(), now.getMonth(), now.getDate());
 
-            const etdTotalMinutes = etdHours * 60 + etdMinutes;
-            const etdTotalMinutesETD = etdHoursETD * 60 + etdMinutesETD;
-
-            if (equipPlacedDateWithoutTime < etdWithoutTime) {
-                circleClass = 'circle green'; // Evento pasado
-            } else if (equipPlacedDateWithoutTime > etdWithoutTime) {
-                circleClass = 'circle red'; // Evento futuro
+            if (etdDateWithoutTime < nowWithoutTime) {
+                circleClass = 'circle black'; // Evento pasado
+            } else if (etdDateWithoutTime > nowWithoutTime) {
+                circleClass = 'circle green'; // Evento futuro
             } else {
                 // Evento hoy, comparar los minutos
-                if(etdTotalMinutes <= etdTotalMinutesETD){
-                    circleClass = 'circle green';
-                }
-                else{
-                    circleClass = 'circle red';
+                const etdTotalMinutes = etdHours * 60 + etdMinutes;
+                const nowTotalMinutes = now.getHours() * 60 + now.getMinutes();
+                const differenceInMinutes = etdTotalMinutes - nowTotalMinutes;
+
+                if (differenceInMinutes > 360) {
+                    circleClass = 'circle green'; // Más de 6 horas
+                } else if (differenceInMinutes >= 240) {
+                    circleClass = 'circle yellow'; // Entre 4 y 6 horas
+                } else if (differenceInMinutes >= 0) {
+                    circleClass = 'circle red'; // Menos de 4 horas
+                } else {
+                    circleClass = 'circle black'; // Evento pasado
                 }
             }
-            if (!account.Equip_Placed__c) {
-                circleClass = 'circle black';
-            }
-    
             showSemaforo = this.filterSemaforo(circleClass);
-    
             return {
                 ...account,
                 circleClass: circleClass,
-                Account_Shipment_Reference__c: timeString, //placed
-                Monitoreo_Recepci_n_Acuse__c: showSemaforo,
-                Reason_for_declined__c:timeStringETD, //etd
-                Status_Observations__c:timeFechaPlace,
+                Account_Shipment_Reference__c: timeString,
+                Monitoreo_Recepci_n_Acuse__c:showSemaforo,
+                Reason_for_declined__c:timeStringPT,
             };
         });
     }

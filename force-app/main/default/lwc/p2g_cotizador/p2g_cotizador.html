@@ -1,5 +1,5 @@
 <template>
-    <lightning-card title="Realiza tu Cotizacion">
+    <lightning-card title="Cotización Spot">
         <template if:true={showSection1}>
             <div>
                 <div class="slds-grid slds-grid_vertical slds-grid_align-center">
@@ -61,7 +61,7 @@
                                     <div class="slds-truncate" title="First Name">Name</div>
                                 </th>
                                 <th class="" scope="col">
-                                    <div class="slds-truncate" title="Last Name">Country Name</div>
+                                    <div class="slds-truncate" title="Last Name">State</div>
                                 </th>
                                 </tr>
                             </thead>
@@ -71,9 +71,11 @@
                                     <td>
                                         <div class="slds-truncate">{con.Name}</div>
                                     </td>
-                                    <td>
-                                        <div class="slds-truncate">{con.Country_Name__c}</div>
-                                    </td>
+                                    <template lwc:if={con.State__c}>
+                                        <td>
+                                            <div class="slds-truncate">{con.State__r.Name}</div>
+                                        </td>
+                                    </template>
                                 </tr>
                                 </template>
                             </tbody>
@@ -91,7 +93,7 @@
                                     <div class="slds-truncate" title="First Name">Name</div>
                                 </th>
                                 <th class="" scope="col">
-                                    <div class="slds-truncate" title="Last Name">Country Name</div>
+                                    <div class="slds-truncate" title="Last Name">State</div>
                                 </th>
                                 </tr>
                             </thead>
@@ -101,9 +103,11 @@
                                     <td>
                                         <div class="slds-truncate">{con.Name}</div>
                                     </td>
-                                    <td>
-                                        <div class="slds-truncate">{con.Country_Name__c}</div>
-                                    </td>
+                                    <template lwc:if={con.State__c}>
+                                        <td>
+                                            <div class="slds-truncate">{con.State__r.Name}</div>
+                                        </td>
+                                    </template>
                                 </tr>
                                 </template>
                             </tbody>
@@ -177,7 +181,7 @@
                     </table>
                 </div><br>
                 <div class="slds-grid slds-grid_align-end" style="padding-right: 30px;">
-                    <lightning-button variant="neutral" label="Cotizar" onclick={abrirSection2}></lightning-button>
+                    <lightning-button variant="neutral" label="Cotizar" disabled={cotizarDisabled} onclick={abrirSection2}></lightning-button>
                 </div>
             </div>
         </template>
@@ -185,6 +189,8 @@
             <div>
                 <template if:true={returncotizador.tarifario}>
                     <div class="slds-col slds-size_11-of-12 margenCampos textoTamaño">
+                        <p>Se ha creado la cotización</p>
+                        <p onclick={abrirQuote} class="textoNegritas"> {returncotizador.quoteName}</p><br>
                         <lightning-card  variant="Narrow"  title="Datos del Cliente">
                             <p class="textoNegritas">Nombre del Cliente:</p>
                             <p>{returncotizador.nameCliente}</p>
@@ -206,14 +212,15 @@
                         <lightning-card  variant="Narrow"  title="Cotizacion">
                             <div class="slds-grid slds-grid_vertical slds-grid_align-center">
                                 <div class="slds-col slds-size_11-of-12 margenCampos">
-                                    <p>Costo sugerido: <lightning-formatted-number value={returncotizador.costo} format-style="currency" currency-code="MXN"></lightning-formatted-number></p><br>
-                                    <p>Costo Buy Rate: <lightning-formatted-number value={returncotizador.buyRate} format-style="currency" currency-code="MXN"></lightning-formatted-number></p><br>
-                                    <lightning-input label="Costo:" required="" type="money"
+                                    <p>Precio Máximo: <lightning-formatted-number value={returncotizador.costoMax} format-style="currency" currency-code="MXN"></lightning-formatted-number></p>
+                                    <p>Precio Sugerido: <lightning-formatted-number value={returncotizador.costoSug} format-style="currency" currency-code="MXN"></lightning-formatted-number></p>
+                                    <p>Precio Mínimo: <lightning-formatted-number value={returncotizador.costoMin} format-style="currency" currency-code="MXN"></lightning-formatted-number></p><br>
+                                    <lightning-input label="Precio:" required="" type="money"
                                     value={returncotizador.costo} onchange={costo}></lightning-input>
                                 </div>
                                 <template if:true={costoMenor}>
                                     <div class="slds-col slds-size_11-of-12 margenCampos">
-                                        <p class="textoTamaño" style="color: red;">Coloque un costo mayor a {returncotizador.buyRate}</p>
+                                        <p class="textoTamaño" style="color: red;">Coloque un precio mayor a {returncotizador.buyRate}</p>
                                     </div>
                                 </template><br>
                                 <div class="slds-col slds-size_10-of-12 margenCampos">
@@ -221,7 +228,7 @@
                                     title='Actualizar Costo' onclick={AgregarCosto} stretch></lightning-button>
                                 </div>
                             </div><br><br>
-                            <p class="textoCentrado">Descargar PDF de cotizacion para cliente <span class="textoNegritas" onclick={quotePDF}>Aqui</span></p>
+                            <p class="textoCentrado">Descargar PDF de cotizacion <span onclick={abrirQuote}> {returncotizador.quoteName}</span> para el cliente <span class="textoNegritas" onclick={quotePDF}>Aqui</span></p>
                         </lightning-card>
                     </div><br><br>
                     <div class="slds-grid slds-grid_align-space">
@@ -237,14 +244,14 @@
                     <br><br><br>
                     <div class="slds-grid slds-grid_vertical slds-grid_align-center">
                         <div class="slds-col slds-size_11-of-12 margenCampos textoCentrado">
-                            <p>La ruta no cuenta con tarifario / Esperar costo por parte del pricer</p>
+                            <p>La ruta <span class="textoNegritas">{returncotizador.ruta}</span> no cuenta con tarifario / Esperar costo por parte del pricer</p>
                             <br><br>
                             <p>Se ha creado el IEQO</p>
-                            <p onclick={abrirQuote}> {returncotizador.quoteName}</p>
+                            <p onclick={abrirQuote} class="textoNegritas"> {returncotizador.quoteName}</p>
                             <br><br>
                             <!--Produ   https://pak2gologistics.lightning.force.com/lightning/o/Customer_Quote__c/list?filterName=00BRQ000000DBIb2AO
                                 uat     https://pak2gologistics--uat.sandbox.lightning.force.com/lightning/o/Customer_Quote__c/list?filterName=Recent -->
-                            <p>Nota: Las cotizaciones pendientes les puedes dar seguimiento <lightning-formatted-url value="https://pak2gologistics.lightning.force.com/lightning/o/Customer_Quote__c/list?filterName=00BRQ000000DBIb2AO" label=" Aqui " target="_blank"></lightning-formatted-url></p>
+                            <p>Nota: Las cotizaciones pendientes les puedes dar seguimiento <lightning-formatted-url class="textoNegritas" value="https://pak2gologistics.lightning.force.com/lightning/o/Customer_Quote__c/list?filterName=00BRQ000000DBIb2AO" label=" Aqui " target="_blank"></lightning-formatted-url></p>
                             <br><br><br>
                             <lightning-button variant="neutral" label="Crear Nueva Cotizacion" onclick={abrirSection1}></lightning-button>
                         </div>
@@ -257,21 +264,134 @@
                 <template if:true={aprobar}>
                     <div class="slds-grid slds-grid_vertical slds-grid_align-center">
                         <h1 class="titulos">Datos del Cliente</h1>
-                        <div class="slds-col slds-size_11-of-12 margenCampos">
-                            <lightning-input type="texto" onchange={RFCCustomer} label="RFC:" required=""></lightning-input>
-                        </div>
-                        <div class="slds-col slds-size_11-of-12 margenCampos">
-                            <lightning-input type="tel" onchange={razonSocialCustomer} label="Razon Social:" required=""></lightning-input>
-                        </div>
-                        <div class="slds-col slds-size_11-of-12 margenCampos">
-                            <lightning-combobox name="Banco" label="Banco:" value=""
-                            placeholder="Seleccione un Banco" options={optionBanco} onchange={bancoSeleccionado} required
-                            ></lightning-combobox>
-                        </div>
-                        <div class="slds-col slds-size_11-of-12 margenCampos">
-                            <lightning-input type="tel" onchange={numCuenta} label="Numero de Cuenta:" required=""></lightning-input>
-                        </div>
+                        <template if:true={conCuenta}>
+                            <div class="slds-col slds-size_11-of-12 margenCampos">
+                                <lightning-input type="texto" onchange={RFCCustomer} label="RFC:" value={returncotizador.rfc} required=""></lightning-input>
+                            </div>
+                        </template>
+                        <template if:false={conCuenta}>
+                            <div class="slds-col slds-size_11-of-12 margenCampos">		
+                                <lightning-input type="texto" onchange={RFCCustomer} label="RFC:" required=""></lightning-input>
+                            </div>
+                        </template>
+                        <template if:true={conCuenta}>
+                            <div class="slds-col slds-size_11-of-12 margenCampos">
+                                <lightning-input type="tel" onchange={razonSocialCustomer} label="Razon Social:" value={returncotizador.razonSocial} required=""></lightning-input>
+                            </div>
+                        </template>
+                        <template if:false={conCuenta}>
+                            <div class="slds-col slds-size_11-of-12 margenCampos">
+                                <lightning-input type="tel" onchange={razonSocialCustomer} label="Razon Social:" required=""></lightning-input>
+                            </div>
+                        </template>
+                        <template if:true={conCuenta}>
+                            <div class="slds-col slds-size_11-of-12 margenCampos">
+                                <lightning-combobox name="Banco" label="Banco:" value={returncotizador.banco}
+                                placeholder="Seleccione un Banco" options={optionBanco} onchange={bancoSeleccionado} required
+                                ></lightning-combobox>
+                            </div>
+                        </template>
+                        <template if:false={conCuenta}>
+                            <div class="slds-col slds-size_11-of-12 margenCampos">
+                                <lightning-combobox name="Banco" label="Banco:" value=""
+                                placeholder="Seleccione un Banco" options={optionBanco} onchange={bancoSeleccionado} required
+                                ></lightning-combobox>
+                            </div>
+                        </template>
+                        <template if:true={conCuenta}>
+                            <div class="slds-col slds-size_11-of-12 margenCampos">
+                                <lightning-input type="tel" onchange={numCuenta} label="Numero de Cuenta:" value={returncotizador.numeroCuenta} required=""></lightning-input>
+                            </div>
+                        </template>
+                        <template if:false={conCuenta}>
+                            <div class="slds-col slds-size_11-of-12 margenCampos">
+                                <lightning-input type="tel" onchange={numCuenta} label="Numero de Cuenta:" required=""></lightning-input>
+                            </div>
+                        </template>
                         
+                    </div><br>
+                    <div class="slds-grid slds-grid_vertical slds-grid_align-center">
+                        <h1 class="titulos">Dirección Fiscal</h1>
+                        <template if:true={conCuenta}>
+                            <div class="slds-col slds-size_11-of-12 margenCampos">
+                                <lightning-input type="texto" onchange={calleFiscal} label="Calle:" required="" value={returncotizador.calleFiscal}></lightning-input>
+                                <lightning-input type="number" onchange={interiorFiscal} label="Numero Interior:" value={returncotizador.interiorFiscal}></lightning-input>
+                                <lightning-input type="number" onchange={exteriorFiscal} label="Numero Exterior:" required="" value={returncotizador.exteriorFiscal}></lightning-input>
+                            </div>
+                        </template>
+                        <template if:false={conCuenta}>
+                            <div class="slds-col slds-size_11-of-12 margenCampos">		
+                                <lightning-input type="texto" onchange={calleFiscal} label="Calle:" required=""></lightning-input>
+                                <lightning-input type="number" onchange={interiorFiscal} label="Numero Interior:"></lightning-input>
+                                <lightning-input type="number" onchange={exteriorFiscal} label="Numero Exterior:" required=""></lightning-input>
+                            </div>
+                        </template>
+                        <div class="slds-col slds-size_11-of-12 margenCampos">
+                            <div onkeyup={searchKeyCPFis}>
+                                <template if:true={conCuenta}>
+                                    <lightning-input label="Codigo Postal:" placeholder="Buscar un codigo postal"
+                                        required="" value={returncotizador.cPFiscal} type="search"></lightning-input>
+                                </template>
+                                <template if:false={conCuenta}>
+                                    <lightning-input label="Codigo Postal:" placeholder="Buscar un codigo postal"
+                                        required="" value={searchValueCPFis} type="search"></lightning-input>
+                                </template>
+                            </div>
+                            <table if:true={showSideCPFis} class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_striped">
+                                <thead>
+                                    <tr class="slds-line-height_reset">
+                                    <th class="" scope="col">
+                                        <div class="slds-truncate" title="First Name">Codigo Postal</div>
+                                    </th>
+                                    <th class="" scope="col">
+                                        <div class="slds-truncate" title="First Name">Pais</div>
+                                    </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <template for:each={sideRecordsCPFis} for:item="con">
+                                    <tr class="slds-hint-parent" data-id={con.Id} key={con.Id} onclick={SideSelectCPFis}> 
+                                        <td>
+                                            <div class="slds-truncate">{con.Name}</div>
+                                        </td>
+                                        <td>
+                                            <div class="slds-truncate">{con.Pais_RefCP__r.Name}</div>
+                                        </td>
+                                    </tr>
+                                    </template>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="slds-col slds-size_11-of-12 margenCampos">
+                            <div onkeyup={searchKeyColoniaFis}>
+                                <template if:true={conCuenta}>
+                                    <lightning-input label="Colonia:" placeholder="Buscar una colonia"
+                                        required="" value={returncotizador.coloniaFiscal} type="search"></lightning-input>
+                                </template>
+                                <template if:false={conCuenta}>
+                                    <lightning-input label="Colonia:" placeholder="Buscar una colonia"
+                                        required="" value={searchValueColoniaFis} type="search"></lightning-input>
+                                </template>
+                            </div>
+                            <table if:true={showSideColoniaFis} class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_striped">
+                                <thead>
+                                    <tr class="slds-line-height_reset">
+                                    <th class="" scope="col">
+                                        <div class="slds-truncate" title="First Name">Colonia</div>
+                                    </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <template for:each={sideRecordsColoniaFis} for:item="con">
+                                    <tr class="slds-hint-parent" data-id={con.Id} key={con.Id} onclick={SideSelectColoniaFis}> 
+                                        <td>
+                                            <div class="slds-truncate">{con.Name}</div>
+                                        </td>
+                                    </tr>
+                                    </template>
+                                </tbody>
+                            </table>
+                        </div>
                     </div><br>
                     <div class="slds-grid slds-grid_vertical slds-grid_align-center">
                         <h1 class="titulos">Dirección de Origen</h1>
@@ -407,7 +527,7 @@
                             <lightning-button variant="neutral" label="Declinar" onclick={showDeclinarAprova}></lightning-button>
                         </div>
                         <div class="slds-col">
-                            <lightning-button variant="neutral" label="Generar Embarque" onclick={generaEmbarque}></lightning-button>
+                            <lightning-button variant="neutral" label="Generar Embarque" disabled={embarqueDisabled} onclick={generaEmbarque}></lightning-button>
                         </div>
                     </div>
                 </template>

@@ -26,6 +26,7 @@ export default class P2g_cargaProducto extends LightningModal {
     @track timeUnload;
     @track comentarios;
     @track buyPrice;
+    @track selectedMoneda;
 
     frecuenciaOptions = [
         { label: 'Diario', value: 'Diario' },
@@ -37,6 +38,17 @@ export default class P2g_cargaProducto extends LightningModal {
     handleFrecuenciaChange(event) {
         this.selectedFrecuencia = event.detail.value;
         this.obj.frecuencia = event.detail.value;
+    }
+    
+    monedaOptions = [
+        { label: 'MXN', value: 'MXN' },
+        { label: 'USD', value: 'USD' },
+        { label: 'EUR', value: 'EUR' }
+    ];
+    
+    handleMonedaChange(event) {
+        this.selectedMoneda = event.detail.value;
+        this.obj.currencyOli = event.detail.value;
     }
 
     connectedCallback() {
@@ -167,7 +179,7 @@ export default class P2g_cargaProducto extends LightningModal {
         this.showOrigen = false;
         this.OrigenId = event.currentTarget.dataset.id;
         this.obj.origenId = event.currentTarget.dataset.id;
-        this.obj.origen = event.target.outerText;
+        this.obj.origen = event.currentTarget.dataset.name;
     }
     searchKeyOrigen(event){
         this.searchOrigen = event.target.value;
@@ -213,7 +225,7 @@ export default class P2g_cargaProducto extends LightningModal {
         this.showDestino = false;
         this.destinoId = event.currentTarget.dataset.id;
         this.obj.destinoId = event.currentTarget.dataset.id;
-        this.obj.destino = event.target.outerText;
+        this.obj.destino = event.currentTarget.dataset.name;
     }
 
     //ContainerType
@@ -225,7 +237,7 @@ export default class P2g_cargaProducto extends LightningModal {
         this.searchModalidad = event.currentTarget.dataset.name;
         this.showModalidad = false;
         this.modalidadId = event.currentTarget.dataset.id;
-        this.obj.modalidad = event.target.outerText;
+        this.obj.modalidad = event.currentTarget.dataset.name;
     }
 
     searchKeyModalidad(event){
@@ -316,6 +328,7 @@ export default class P2g_cargaProducto extends LightningModal {
             this.timeUnload='';
             this.comentarios='';
             this.buyPrice='';
+            this.selectedMoneda = '';
             this.rellenaLista();
             this.showToast('Éxito', 'Operación completada exitosamente.', 'success');
         })
@@ -340,7 +353,8 @@ export default class P2g_cargaProducto extends LightningModal {
             this.unloadingAddress,
             this.quantity,
             this.timeLoad,
-            this.timeUnload
+            this.timeUnload,
+            this.selectedMoneda
         ];
     
         // Verifica si alguno de los campos requeridos es nulo o vacío

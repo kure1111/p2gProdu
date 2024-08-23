@@ -42,6 +42,9 @@ aprobar = false;
 sideclino = false;
 pantallaresumen = false;
 creoEmbarque = false;
+conCuenta = false;
+cotizarDisabled = false;
+embarqueDisabled = false;
 
 @track sideRecordsLoad;
 searchValueLoad ='';
@@ -65,10 +68,20 @@ showSideContainerType = false;
 
 @track sideRecordsSST;
 showSideSST = false;
-searchValueSST ='FLETE NACIONAL (IC) (FN)';//'SERVICIOS LOGISTICOS NACIONALES FN (IC) (FN)';
-searchValueIdSST ='a1n0R000001lZceQAE';//'a1n4T000002JWphQAG';
+searchValueSST ='SERVICIOS LOGISTICOS NACIONALES FN (IC) (FN)';
+searchValueIdSST ='a1n4T000002JWphQAG';
 searchValueSST ='';
 searchValueIdSST ='';
+
+@track sideRecordsCPFis;
+searchValueCPFis ='';
+searchValueIdCPFis ='';
+showSideCPFis = false;
+
+@track sideRecordsColoniaFis;
+searchValueColoniaFis ='';
+searchValueIdColoniaFis ='';
+showSideColoniaFis = false;
 
 @track sideRecordsCPOr;
 searchValueCPOr ='';
@@ -180,8 +193,12 @@ abrirSection1(){
     this.searchValueIdColoniaDes ='';
     this.costoMenor = false;
     this.costoEntrada = 0;
+    this.conCuenta = false;
+    this.cotizarDisabled = false;
+    this.embarqueDisabled = false;
 }
 abrirSection2(){
+    this.cotizarDisabled = true;
     console.log('lo que se envia: ',this.wrapper);
     cotizador({cotizador: this.wrapper,ban: 1})
         .then(result => {
@@ -191,6 +208,7 @@ abrirSection2(){
             this.showSection2 = true;
         })
         .catch(error => {
+            this.cotizarDisabled = false;
             this.pushMessage('Error','error', error.body.message);
             this.sideRecordsCustomer = null;
         });
@@ -201,6 +219,9 @@ resumenSection2(){
 }
 correoEnviado;
 showAprobar(){
+    if(this.returncotizador.conCuenta === true){
+        this.conCuenta = true;
+    }
     this.declinar = false;
     this.aprobar = true;
     this.showSection1 = false;
@@ -259,6 +280,7 @@ abrirCuenta(){
 }
 
 generaEmbarque(){
+    this.embarqueDisabled = true;
     crearEmbarque({cotizador: this.returncotizador})
         .then(result => {
             this.resultEmbarque = result;
@@ -266,6 +288,7 @@ generaEmbarque(){
             this.aprobar = false;
         })
         .catch(error => {
+            this.embarqueDisabled = false;
             this.pushMessage('Error','error', error.body.message);
             this.sideRecordsContainerType = null;
         });
@@ -477,6 +500,68 @@ bancoSeleccionado(event){
 }
 numCuenta(event){
     this.returncotizador.numeroCuenta = event.detail.value;
+}
+calleFiscal(event){
+    this.returncotizador.calleFiscal = event.detail.value;
+}
+interiorFiscal(event){
+    this.returncotizador.interiorFiscal = event.detail.value;
+}
+exteriorFiscal(event){
+    this.returncotizador.exteriorFiscal = event.detail.value;
+}
+SideSelectCPFis(event){
+    this.searchValueCPFis = event.target.outerText;
+    this.showSideCPFis = false;
+    this.searchValueIdCPFis = event.currentTarget.dataset.id;
+    this.returncotizador.cPFiscalId = event.currentTarget.dataset.id;
+    this.returncotizador.cPFiscal = event.target.outerText;
+    console.log('se guardo id cp Fis: ',this.searchValueIdCPFis,' name: ',this.searchValueCPFis);
+}
+searchKeyCPFis(event){
+    this.searchValueCPFis = event.target.value;
+    this.searchValueIdCPFis='';
+    if (this.searchValueCPFis.length >= 3) {
+        this.showSideCPFis = true;
+        codigoPostal({search: this.searchValueCPFis, op: 1, Idcp: ''})
+            .then(result => {
+                this.sideRecordsCPFis = result;
+            })
+            .catch(error => {
+                this.pushMessage('Error','error', error.body.message);
+                this.sideRecordsCPFis = null;
+            });
+    }
+    else{
+        this.showSideCPFis = false;
+    }
+}
+SideSelectColoniaFis(event){
+    this.searchValueColoniaFis = event.target.outerText;
+    this.showSideColoniaFis = false;
+    this.searchValueIdColoniaFis = event.currentTarget.dataset.id;
+    this.returncotizador.coloniaFiscalId = event.currentTarget.dataset.id;
+    this.returncotizador.coloniaFiscal = event.target.outerText;
+    console.log('se guardo id colonia Fis: ',this.searchValueIdColoniaFis,' name: ',this.searchValueColoniaFis);
+}
+searchKeyColoniaFis(event){
+    this.searchValueColoniaFis = event.target.value;
+    this.searchValueIdColoniaFis='';
+    if (this.searchValueColoniaFis.length >= 3) {
+        this.showSideColoniaFis = true;
+        console.log('lo que se envia: ',this.searchValueColoniaFis,' name: ',this.searchValueIdCPFis);
+        codigoPostal({search: this.searchValueColoniaFis, op: 2, Idcp: this.searchValueIdCPFis})
+            .then(result => {
+                this.sideRecordsColoniaFis = result;
+            })
+            .catch(error => {
+                this.pushMessage('Error','error', error.body.message);
+                this.sideRecordsColoniaFis = null;
+            });
+    }
+    else{
+        this.showSideColoniaFis = false;
+    }
 }
 calleOrigen(event){
     this.returncotizador.calleOrigen = event.detail.value;

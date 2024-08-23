@@ -422,6 +422,17 @@
                         </div>
 
                         <div style="width: 100%;">
+                            <div style="width: 100%;">
+                                <lightning-combobox required
+                                    label="Tipo de Moneda"
+                                    value={selectedMoneda}
+                                    options={monedaOptions}
+                                    onchange={handleMonedaChange}>
+                                </lightning-combobox>
+                            </div>
+                        </div>
+
+                        <div style="width: 100%;">
                             <lightning-input label="Comentarios: " value={comentarios} data-fieldname="comentarios" onchange={handleChange}></lightning-input>
                         </div>
 

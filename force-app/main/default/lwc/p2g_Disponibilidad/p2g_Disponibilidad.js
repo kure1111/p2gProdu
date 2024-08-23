@@ -8,6 +8,7 @@ import mapeoWrapperObj from '@salesforce/apex/P2G_DisponibilidadOfertada.crearDi
 import getWrapper from '@salesforce/apex/P2G_DisponibilidadOfertada.getWrapper';
 import obtenerDisponibilidades from '@salesforce/apex/P2G_DisponibilidadOfertada.obtenerDisponibilidades';
 import rutasVencidasApex from '@salesforce/apex/P2G_DisponibilidadOfertada.rutasVencidas';
+import cargaLineas from '@salesforce/apex/P2G_cargaDisponibilidad.cargaLineas';
 
 export default class P2g_Disponibilidad extends LightningElement {
     @track isModalOpen = false;
@@ -239,7 +240,7 @@ export default class P2g_Disponibilidad extends LightningElement {
         this.wrapper.venta = this.venta;
         this.wrapper.carrier = this.searchValueIdCarrier;
         this.wrapper.planner = this.searchValueIdOpExecutive;
-        console.log('wrapper ',  this.wrapper);
+        console.log('fechaVigencia ',  this.fechaVigencia);
         mapeoWrapperObj({ wrapper: this.wrapper })
         .then(result => {
             this.wrapper = null;
@@ -270,38 +271,90 @@ export default class P2g_Disponibilidad extends LightningElement {
         });
         this.dispatchEvent(event);
     }
-
-    //
-    handleFileChange(event) {
-        const file = event.target.files[0];
-        if (file) {
-            const reader = new FileReader();
-            reader.onload = () => {
-                const csv = reader.result;
-                this.processCSV(csv);
-            };
-            reader.readAsText(file);
-        }
-    }
     
     triggerFileUpload() {
         this.template.querySelector('input[type="file"]').click();
     }
 
-
-    handleFileChange(event) {
-        const file = event.target.files[0];
-        // Manejar la carga del archivo aquí
-    }
-
     downloadTemplate() {
-        const url = 'https://pak2gologistics.my.salesforce.com/sfc/p/4T000000DybZ/a/RQ000004DV8Y/p2MdFw9mCoufYoUKKQCP57t276LrVqzQxXPdJaFuxOM';
+        const url = 'https://pak2gologistics.my.salesforce.com/sfc/p/4T000000DybZ/a/RQ000004PspJ/WK8lindKYVM4aUGaw6rtjP2_tHxX2NMyg10Pch.nHjc';
         const link = document.createElement('a');
         link.href = url;
         link.setAttribute('download', 'plantilla.csv'); // Nombre del archivo para descargar
         document.body.appendChild(link);
         link.click();
         document.body.removeChild(link);
+    }
+
+    
+    handleFileChange(event) {
+        const file = event.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = () => {
+                const csv = reader.result;
+                const json = this.csvToJson(csv);
+                this.csvData = json;
+                this.processCSV(json);
+            };
+            reader.readAsText(file, 'UTF-8');
+        }
+        
+    }
+
+    csvToJson(csv) {
+        const lines = csv.split("\n");
+        const result = [];
+        const headers = lines[0].split(",");
+    
+        for (let i = 1; i < lines.length; i++) {
+            const currentline = lines[i].trim();
+    
+            // Saltar líneas vacías
+            if (currentline === "") {
+                continue;
+            }
+    
+            const obj = {};
+            const data = currentline.split(",");
+    
+            for (let j = 0; j < headers.length; j++) {
+                obj[headers[j].trim()] = data[j] ? data[j].trim() : null;
+            }
+    
+            result.push(obj);
+        }
+    
+        return result;
+    }
+    
+
+    mapCsvToWrapperDispo(data) {
+        return data.map(item => {
+            return {
+                carrier: item["Carrier"],
+                idContainerType: item["Container Type"],
+                fechaVigencia: item["Fecha de vigencia"] +" "+item["Hora de vencimiento (hrs)"] + ":00",
+                planner: item["Planner"],
+                searchValueIdLoad: item["Locacion de origen"],
+                searchValueIdUnLoad: item["Locacion de destino"],
+                ticketPromedio: item["Ticket Prom"],
+                noRutas: item["No rutas"]
+            };
+        });
+    }
+
+    processCSV(data) {
+        console.log('Processing CSV data');
+        const mappedData = this.mapCsvToWrapperDispo(data);
+        console.log('Mapped data:', mappedData);
+        cargaLineas({ csvData: JSON.stringify(mappedData) })
+            .then(result => {
+                this.pushMessage('Exitoso!', 'success', 'Datos cargados con éxito!');
+            })
+            .catch(error => {
+                this.pushMessage('Error', 'error', error.body.message);
+            });
     }
 
         

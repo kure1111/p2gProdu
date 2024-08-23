@@ -7,14 +7,15 @@ import { CloseActionScreenEvent } from 'lightning/actions'
 
 
 export default class P2g_Aprobar extends LightningElement {
-    @track recordId;
+    //@track recordId;
     @track data = [];
     motivo = '';
     spName = '';
     etd = '';
     operationExe = '';
     deApi = true;
-    
+    @api recordId
+    /*
     // Obtener el c__recordId de la URL utilizando @wire
     @wire(CurrentPageReference)
     wiredPageRef(pageRef) {
@@ -26,7 +27,13 @@ export default class P2g_Aprobar extends LightningElement {
             }
         }
         this.loadData(); // Llamar al método loadData después de que se establezca recordId
+    }*/
+
+    connectedCallback(){
+        this.loadData();
     }
+
+    
 
     // Método para cargar los datos de la tabla
     loadData() {
