@@ -1,8 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <Package xmlns="http://soap.sforce.com/2006/04/metadata">
 	<types>
-		<members>*</members>
-		<name>LightningComponentBundle</name>
+		<members>Case.Support Process Certificación Proveedores</members>
+		<members>Lead.Lead</members>
+		<members>Lead.Lead Mkt</members>
+		<members>Lead.ePaklead</members>
+		<members>Opportunity.Proyectos</members>
+		<members>Opportunity.Standar Opportunity</members>
+		<name>BusinessProcess</name>
 	</types>
 	<version>60.0</version>
 </Package>
