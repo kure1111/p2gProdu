@@ -24,12 +24,12 @@ trigger UpdateOppAmmount on Customer_Quote__c (after update) {
                         FROM Customer_Quote__c 
                         WHERE Opportunity__c IN: setOpp];
             
-            for(Opportunity op : [SELECT Id, Amount FROM Opportunity WHERE Id IN:setOpp]){
-                Double amount = 0;
+            for(Opportunity op : [SELECT Id, Total_IEQO__c FROM Opportunity WHERE Id IN:setOpp]){
+                Double TotalIEQO = 0;
                 for(Customer_Quote__c cq : lstQuotes){
-                    if(cq.Opportunity__c == op.Id){amount += cq.Total_Services_Sell_Amount_number__c;}
+                    if(cq.Opportunity__c == op.Id){TotalIEQO += cq.Total_Services_Sell_Amount_number__c;}
                 }
-                op.Amount = amount;
+                op.Total_IEQO__c = TotalIEQO;
                 lstOpps.add(op);
             }
             System.debug('UpdateOppAmmount - lstOpps: ' + lstOpps.size());

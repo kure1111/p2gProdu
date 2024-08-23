@@ -32,10 +32,37 @@ trigger OpportunityName on Opportunity (before insert, before update) {
         mapOwnerOpp.put(b.Id, b.Name);
     }
     
-    //Actualización del Campo    
+    //Actualización del Campo
     for(Opportunity op : Trigger.New){
         if(op.AccountId != null && op.Service_Type__c != null){
-            op.Name = op.Service_Type__c + ' - ' + mapAccount.get(op.AccountId)+ ' - ' + mapOwnerOpp.get(op.OwnerId) + ' - ' + op.Opportunity_Record_Number__c;
+    		String elGrupo = getGroup (op.Service_Type__c);
+           	op.Name = op.Service_Type__c + ' - ' + mapAccount.get(op.AccountId)+ ' - ' + mapOwnerOpp.get(op.OwnerId) + ' - ' + op.Opportunity_Record_Number__c;
+        	op.Group__c = elGrupo;
         }
+    }
+    public static String getGroup(string serviceType){
+        System.debug('service Type: '+serviceType);
+        String grupo = 'SP-'+serviceType+'-';
+        String elGrupo;
+        Schema.DescribeFieldResult cober = Opportunity.Group__c.getDescribe();
+        List<Schema.PicklistEntry> values = cober.getPicklistValues();
+        for(Schema.PicklistEntry item:values){
+            if(item.getValue().CONTAINS(grupo)){
+                elGrupo = item.getValue();
+                System.debug('Grupo: '+item.getValue());
+            }
+        }
+        return elGrupo;
+    }
+    if (Trigger.isUpdate) {
+        if (Trigger.isBefore) {
+            for(Opportunity op : Trigger.New){
+                if(trigger.oldMap.get(op.Id).StageName != 'Cultivar' && op.StageName == 'Cultivar'){
+                op.CloseDate = System.Today();
+                }
+            }
+        } else if (Trigger.isAfter) {
+            
+        }  
     }
 }

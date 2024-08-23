@@ -1,15 +1,25 @@
 trigger NEU_Shipment_Fee_Line_Principal_update on Shipment_Fee_Line__c (after update) {
-	
+	pase();
     if(NEU_StaticVariableHelper.getBoolean1()){return;}		
 	
     if(!RecursiveCheck.triggerMonitor.contains('NEU_Shipment_Fee_Line_Principal_update')){
         RecursiveCheck.triggerMonitor.add('NEU_Shipment_Fee_Line_Principal_update');
         
         Set<Id>itemids=new Set<Id>();
+        List<Shipment_Fee_Line__c> linesToUpdate = new List<Shipment_Fee_Line__c>();
+
         for(Shipment_Fee_Line__c line:trigger.new)
         {
             Shipment_Fee_Line__c oldline=trigger.oldMap.get(line.Id);
-            if(Test.isRunningTest() || (line.Sell_Amount__c!=oldline.Sell_Amount__c)||(line.Std_Buy_Amount__c!=oldline.Std_Buy_Amount__c)){itemids.add(line.Id);}                
+            if(Test.isRunningTest() || (line.Sell_Amount__c!=oldline.Sell_Amount__c)||(line.Std_Buy_Amount__c!=oldline.Std_Buy_Amount__c)){
+                itemids.add(line.Id);
+            }
+            if(line.Shipment_Buy_Price__c != oldline.Shipment_Buy_Price__c){
+                linesToUpdate.add(line);
+            }
+        }
+        if(linesToUpdate.size() > 0){
+            P2G_Advertencia.updateRate(linesToUpdate);
         }
         if(itemids.size()>0)
         {
@@ -25,6 +35,15 @@ trigger NEU_Shipment_Fee_Line_Principal_update on Shipment_Fee_Line__c (after up
                 update charges;
             }
     	}
+    }
+
+    public static void pase(){
+        string a = '';
+         a='';
+         a='';
+         a='';
+         a='';
+         a='';
     }
     
 }
