@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>ACC003_Owner_whit_SlpCode</fullName>
+    <active>true</active>
+    <errorConditionFormula>AND (
+ISBLANK(Owner.SalesEmployer__c ),
+(RecordType.DeveloperName= &apos;Customer&apos;),
+NOT(Name = &apos;Cotizador&apos;)
+)</errorConditionFormula>
+    <errorMessage>ACC003 - Los propietarios de las cuentas deben ser usuarios con código SlpCode activo.</errorMessage>
+</ValidationRule>

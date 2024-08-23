@@ -3,14 +3,9 @@
     <fullName>Declined_for_requerido</fullName>
     <active>true</active>
     <description>Solicita un valor para el campo Declined for, cuando el campo Cancelled by tiene seleccionada cualquiera de sus opciones.</description>
-    <errorConditionFormula>AND(
- OR(
- ISPICKVAL( Cancelled_by__c, &apos;Operaciones&apos;),
- ISPICKVAL( Cancelled_by__c, &apos;Ventas&apos;),
- ISPICKVAL( Cancelled_by__c, &apos;Por el Cliente&apos;) 
- ),
-
- ISPICKVAL(Declined_for__c, &apos;&apos;)
+    <errorConditionFormula>if(
+ISPICKVAL( Shipment_Status_Plann__c, &apos;Cancel&apos;),
+ISPICKVAL(Declined_for__c, &apos;&apos;), null
 )</errorConditionFormula>
     <errorDisplayField>Declined_for__c</errorDisplayField>
     <errorMessage>ERROR CB-001: Es necesario seleccionar un motivo de declinación</errorMessage>

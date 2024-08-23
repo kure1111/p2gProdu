@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Reason_for_declined_requerido</fullName>
+    <active>true</active>
+    <description>Solicita un valor para el campo Reason for declined, cuando el campo Declined_for__c tiene seleccionada cualquiera de sus opciones.</description>
+    <errorConditionFormula>if(
+ OR(
+ ISPICKVAL( Declined_for__c, &apos;Disponibilidad&apos;),
+ ISPICKVAL( Declined_for__c, &apos;Falla operativa&apos;),
+ ISPICKVAL( Declined_for__c, &apos;Error de captura&apos;),
+ ISPICKVAL( Declined_for__c, &apos;Cancelación de cliente&apos;) 
+ ),
+
+ Reason_for_declined__c = &apos;&apos;, null
+)</errorConditionFormula>
+    <errorDisplayField>Reason_for_declined__c</errorDisplayField>
+    <errorMessage>ERROR: Es necesario colocar la razón por la cual se declinó</errorMessage>
+</ValidationRule>
