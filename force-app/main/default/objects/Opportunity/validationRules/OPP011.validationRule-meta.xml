@@ -3,18 +3,24 @@
     <fullName>OPP011</fullName>
     <active>true</active>
     <errorConditionFormula>AND(
-(RecordType.DeveloperName= &apos;Proyecto&apos;),
-				AND(
-OR( 
-ISPICKVAL(StageName, &quot;Construir&quot;),
-ISPICKVAL(StageName, &quot;Cotizar&quot;),
-ISPICKVAL(StageName, &quot;Presentar&quot;),
-ISPICKVAL(StageName, &quot;Implementar&quot;),
-ISPICKVAL(StageName, &quot;Cultivar&quot;)),
-    
-       
-
-ISBLANK(TotalOpportunityQuantity)
-				))</errorConditionFormula>
-    <errorMessage>OPP011 - La Oportunidad debe contener productos cargados para poder cambiar de etapa</errorMessage>
+    RecordType.Name = &apos;Proyecto&apos;,
+    NOT(
+        OR(
+            ISPICKVAL(Group__c, &quot;SP-PQ-PAQUETERIA&quot;),
+            ISPICKVAL(Group__c, &quot;SP-T-CONSOLIDADO&quot;),
+            ISPICKVAL(Group__c, &quot;SP-WH-ALMACENAJE&quot;)
+        )
+    ),
+    AND(
+        OR(            
+            ISPICKVAL(StageName, &quot;Negociación&quot;),
+            ISPICKVAL(StageName, &quot;Ejecución&quot;)
+        ),
+        OR(
+            Total_Buy_Price2__c = 0,
+            Amount = 0
+        )
+    )
+)</errorConditionFormula>
+    <errorMessage>OPP011 - Los productos deben tener un costo de Buy Price y Sell Price para poder cambiar de etapa</errorMessage>
 </ValidationRule>

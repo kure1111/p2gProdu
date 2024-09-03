@@ -13,6 +13,7 @@ public class P2G_guardarQuotePDFTest {
             Blob body = Blob.valueOf('24314');
         	P2G_guardarQuotePDF guardar = new P2G_guardarQuotePDF(sc);
         	guardar.savePdf();
+        	guardar.redirectToEmailQuote();
          Test.stopTest();
     }
 }

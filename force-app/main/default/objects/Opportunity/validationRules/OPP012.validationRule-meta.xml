@@ -1,17 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>OPP012</fullName>
-    <active>false</active>
+    <active>true</active>
     <errorConditionFormula>AND(
-(RecordType.DeveloperName= &apos;Proyecto&apos;),
-				AND(
-				OR(
-ISPICKVAL(StageName, &quot;Cotizar&quot;),
-ISPICKVAL(StageName, &quot;Presentar&quot;),
-ISPICKVAL(StageName, &quot;Implementar&quot;),
-ISPICKVAL(StageName, &quot;Cultivar&quot;)),
-
-(PROJ_TotalQuotes__c  &gt; 0 )
-))</errorConditionFormula>
-    <errorMessage>OPP012 - Los Productos relacionados a la Oportunidad den tener precio cargado (Sales Price) para poder pasar a la etapa de Cotizar.</errorMessage>
+    RecordType.Name = &apos;Proyecto&apos;,
+    NOT(
+        OR(
+            ISPICKVAL(Group__c, &quot;SP-PQ-PAQUETERIA&quot;),
+            ISPICKVAL(Group__c, &quot;SP-T-CONSOLIDADO&quot;),
+            ISPICKVAL(Group__c, &quot;SP-WH-ALMACENAJE&quot;)
+        )
+    ),
+    AND(
+        OR(
+            ISPICKVAL(StageName, &quot;Ejecución&quot;)
+        ),
+        OR(
+            Realizacion_de_Kickoff__c = false
+        )
+    )
+)</errorConditionFormula>
+    <errorMessage>OPP012 - Para pasar a la etapa ejecución se requiere activar el campo Realización de Kikoff</errorMessage>
 </ValidationRule>

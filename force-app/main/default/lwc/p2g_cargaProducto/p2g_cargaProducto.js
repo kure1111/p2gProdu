@@ -8,11 +8,15 @@ import getContainerType from '@salesforce/apex/P2G_CreacionCargoLines.getContain
 import getCsv from '@salesforce/apex/P2G_loadProducts.getCsv';
 import updateItems from '@salesforce/apex/P2G_loadProducts.updateOli';
 import getClaveSAT from '@salesforce/apex/P2G_CreacionCargoLines.getClaveSAT';
+import infoGrupo from '@salesforce/apex/P2G_loadProducts.infoGrupo';
+import getCp from '@salesforce/apex/P2G_loadProducts.getCp';
+import uploadFile from '@salesforce/apex/P2G_loadProducts.uploadFile';
 import LightningModal from 'lightning/modal';
 
 export default class P2g_cargaProducto extends LightningModal {
     @api recordId;
     @track isLoading = false;
+    @track noEjecucion = true;
 
     @track obj;
     @track selectedFrecuencia;
@@ -28,6 +32,49 @@ export default class P2g_cargaProducto extends LightningModal {
     @track buyPrice;
     @track selectedMoneda;
 
+    //variables extras
+    @track inforGrupo;
+    @track grupo;
+    @track selectedUnidadPeso;
+    @track target;
+    @track selectedIncoterm;
+    @track selectedTipoServicio;
+    @track selectedTipoRuta;
+    @track selectedServicioEspecial;
+    @track selectedservicioAdicional;
+    @track selectedTipoContenedor;
+    @track selectedHazmat;
+    @track selectedCertificaciones;
+    @track selectedAeropuertoSalidaArribo;
+    @track selectedTipoSeguro;
+    @track selectedTipoServicioEmbarque;
+    @track selectedBorder;
+    @track selectedCustomsNorte;
+    @track selectedCustomsSur;
+    @track selectedCustomsMaritimas;
+    @track selectedCustomsInteriores;
+    @track vistaPMFC = false;
+    @track vistaPMFAC = false;
+    @track vistaPM = false;
+    @track vistaPMFA = false;
+    @track vistaFA = false;
+    @track vistaF = false;
+    @track vistaAC = false;
+    @track vistaC = false;
+    @track vistaS = false;
+    @track opPM = false;
+    @track opF = false;
+    @track opC = false;
+    @track siservicioEspecial = false;
+    @track sihazmat = false;
+    @track opCustomsNorte = false;
+    @track opCustomsSur = false;
+    @track opCustomsMaritimas = false;
+    @track opCustomsInteriores = false;
+    @track fileServicioEspecialData;
+    @track fileHazmatData;
+    @track inicioWrapper = false;
+
     frecuenciaOptions = [
         { label: 'Diario', value: 'Diario' },
         { label: 'Semanal', value: 'Semanal' },
@@ -38,6 +85,9 @@ export default class P2g_cargaProducto extends LightningModal {
     handleFrecuenciaChange(event) {
         this.selectedFrecuencia = event.detail.value;
         this.obj.frecuencia = event.detail.value;
+        if(this.unitPerFrequency != null){
+            this.calculoVolumenMensual(this.unitPerFrequency);
+        }
     }
     
     monedaOptions = [
@@ -50,11 +100,316 @@ export default class P2g_cargaProducto extends LightningModal {
         this.selectedMoneda = event.detail.value;
         this.obj.currencyOli = event.detail.value;
     }
+    
+    UnidadPesoOptions = [
+        { label: 'Kg', value: 'Kg' },
+        { label: 'Lb', value: 'Lb' }
+    ];
+
+    handleUnidadPesoChange(event) {
+        this.selectedUnidadPeso = event.detail.value;
+        this.obj.unidadPeso = event.detail.value;
+    }
+
+    incotermOptions = [
+        { label: 'CFR', value: 'CFR' },
+        { label: 'CIF', value: 'CIF' },
+        { label: 'CIP', value: 'CIP' },
+        { label: 'CPT', value: 'CPT' },
+        { label: 'DAP', value: 'DAP' },
+        { label: 'DAT', value: 'DAT' },
+        { label: 'DDP', value: 'DDP' },
+        { label: 'EXW', value: 'EXW' },
+        { label: 'FCA', value: 'FCA' },
+        { label: 'FOB', value: 'FOB' }
+    ];
+    handleIncotermChange(event) {
+        this.selectedIncoterm = event.detail.value;
+        this.obj.incoterm = event.detail.value;
+    }
+    
+    OptionsTipoServicioPM = [
+        { label: 'Full', value: 'Full' },
+        { label: 'Sencillo', value: 'Sencillo' },
+        { label: 'Door to Dooor', value: 'Door to Dooor' },
+        { label: 'Door to Port', value: 'Door to Port' },
+        { label: 'Port to Door', value: 'Port to Door' },
+        { label: 'Port to Port', value: 'Port to Port' }
+    ];
+    OptionsTipoServicioF = [
+        { label: 'FTL', value: 'FTL' },
+        { label: 'LTL', value: 'LTL' },
+        { label: 'Door to Dooor', value: 'Door to Dooor' },
+        { label: 'Door to Port', value: 'Door to Port' },
+        { label: 'Port to Door', value: 'Port to Door' },
+        { label: 'Port to Port', value: 'Port to Port' }
+    ];
+    OptionsTipoServicioC = [
+        { label: 'A', value: 'A' },
+        { label: 'B', value: 'B' },
+        { label: 'C', value: 'C' },
+        { label: 'Door to Dooor', value: 'Door to Dooor' },
+        { label: 'Door to Port', value: 'Door to Port' },
+        { label: 'Port to Door', value: 'Port to Door' },
+        { label: 'Port to Port', value: 'Port to Port' }
+    ];
+    handleTipoServicioChange(event) {
+        this.selectedTipoServicio = event.detail.value;
+        this.obj.tipoServicio = event.detail.value;
+    }
+
+    tipoRutaOptions = [
+        { label: 'Impo', value: 'Impo' },
+        { label: 'Expo', value: 'Expo' }
+    ];
+    handleTipoRutaChange(event) {
+        this.selectedTipoRuta = event.detail.value;
+        this.obj.tipoRuta = event.detail.value;
+    }
+    servicioEspecialOptions = [
+        { label: 'Sobrepeso', value: 'Sobrepeso' },
+        { label: 'Sobredimensión', value: 'Sobredimensión' }
+    ];
+    handleServicioEspecialChange(event) {
+        this.selectedServicioEspecial = event.detail.value;
+        this.obj.servicioEspecial = event.detail.value;
+        this.siservicioEspecial = true;
+    }
+    handleFileServicioEspecialChange(event){
+        const file = event.target.files[0]
+        if (file) {
+        console.log('lo que se carga '+ file);
+        var reader = new FileReader()
+        reader.onload = () => {
+            var base64 = reader.result.split(',')[1]
+            this.fileServicioEspecialData = {
+                'filename': file.name,
+                'base64': base64,
+                'recordId': this.recordId,
+                'tipo' : 'ServicioEspecial'
+            }
+            console.log(this.fileServicioEspecialData)
+        }
+        reader.readAsDataURL(file)
+        }
+    }
+    handleServicioEspecialUpload() {
+        if (this.fileServicioEspecialData) {
+            const {base64, filename, recordId, tipo} = this.fileServicioEspecialData
+            uploadFile({ base64, filename, recordId, tipo }).then(result=>{
+                    this.fileServicioEspecialData = null
+                    this.showToast('Success', 'El archivo de Servicio Especial se subio con exito '+result, 'success');
+                })
+                .catch(error => {
+                    this.showToast('Error', 'Error al cargar el archivo '+error.body.message, 'error');
+                });
+        }
+    }
+    servicioAdicionalOptions = [
+        { label: 'Custodio', value: 'Custodio' },
+        { label: 'Permisos', value: 'Permisos' }
+    ];
+    handleServicioAdicionalChange(event) {
+        this.selectedservicioAdicional = event.detail.value;
+        this.obj.servicioAdicional = event.detail.value;
+    }
+    tipoContenedorOptions = [
+        { label: '20', value: '20' },
+        { label: '40', value: '40' },
+        { label: 'OT', value: 'OT' },
+        { label: 'FR', value: 'FR' }
+    ];
+    handleTipoContenedorChange(event) {
+        this.selectedTipoContenedor = event.detail.value;
+        this.obj.tipoContenedor = event.detail.value;
+    }
+    optionsSiNo = [
+        { label: 'Si', value: 'Si' },
+        { label: 'No', value: 'No' }
+    ];
+    handleHazmatChange(event) {
+        console.log('se dio clic '+event.detail.value);
+        this.selectedHazmat = event.detail.value;
+        if(this.selectedHazmat === 'Si'){
+            this.obj.hazmat = true;
+            this.sihazmat = true;
+        }else{
+            this.obj.hazmat = false;
+            this.sihazmat = false;
+        }
+    }
+    handleFileHazmatChange(event){
+        const file = event.target.files[0]
+        if (file) {
+        console.log('lo que se carga '+ file);
+        var reader = new FileReader()
+        reader.onload = () => {
+            var base64 = reader.result.split(',')[1]
+            this.fileHazmatData = {
+                'filename': file.name,
+                'base64': base64,
+                'recordId': this.recordId,
+                'tipo': 'Hazmat'
+            }
+            console.log(this.fileHazmatData)
+        }
+        reader.readAsDataURL(file)
+        }
+    }
+    handleHazmatUpload() {
+        if (this.fileHazmatData) {
+            const {base64, filename, recordId, tipo} = this.fileHazmatData
+            uploadFile({ base64, filename, recordId, tipo }).then(result=>{
+                    this.fileHazmatData = null
+                    this.showToast('Success', 'El archivo de Servicio Especial se subio con exito '+result, 'success');
+                })
+                .catch(error => {
+                    this.showToast('Error', 'Error al cargar el archivo '+error.body.message, 'error');
+                });
+        }
+    }
+
+    certificacionesOptions = [
+        { label: 'CTPAT', value: 'CTPAT' },
+        { label: 'OEA', value: 'OEA' }
+    ];
+    handleCertificacionesChange(event) {
+        this.selectedCertificaciones = event.detail.value;
+        this.obj.certificaciones = event.detail.value;
+    }
+    
+    aeropuertoSalidaArriboOptions = [
+        { label: 'NLU', value: 'NLU' },
+        { label: 'LHR', value: 'LHR' },
+        { label: 'JFK', value: 'JFK' }
+    ];
+    handleAeropuertoSalidaArriboChange(event) {
+        this.selectedAeropuertoSalidaArribo = event.detail.value;
+        this.obj.aeropuertoSalidaArribo = event.detail.value;
+    }
+
+    tipoSeguroOptions = [
+        { label: 'Mercancia', value: 'Mercancia' },
+        { label: 'Contenedor', value: 'Contenedor' }
+    ];
+    handleTipoSeguroChange(event) {
+        this.selectedTipoSeguro = event.detail.value;
+        this.obj.tipoSeguro = event.detail.value;
+    }
+    
+    tipoServicioEmbarqueOptions = [
+        { label: 'AEREO', value: 'AEREO' },
+        { label: 'TERRESTRE', value: 'TERRESTRE' },
+        { label: 'MARITIMO', value: 'MARITIMO' }
+    ];
+    handleTipoServicioEmbarqueChange(event) {
+        this.selectedTipoServicioEmbarque = event.detail.value;
+        this.obj.tipoServicioEmbarque = event.detail.value;
+    }
+
+    handleTransbordoChange(event) {
+        this.selectedTransbordo = event.detail.value;
+        if(this.selectedTransbordo === 'Si'){
+            this.obj.transbordo = true;
+        }
+    }
+    borderOptions = [
+        { label: 'Norte', value: 'Norte' },
+        { label: 'Sur', value: 'Sur' },
+        { label: 'Marítimas', value: 'Marítimas' },
+        { label: 'Interiores', value: 'Interiores' }
+    ];
+    handleBorderChange(event) {
+        this.selectedBorder = event.detail.value;
+        this.obj.border = event.detail.value;
+        if(this.selectedBorder === 'Norte'){
+            this.opCustomsNorte = true;
+            this.opCustomsSur = false;
+            this.opCustomsMaritimas = false;
+            this.opCustomsInteriores = false;
+        }else if(this.selectedBorder === 'Sur'){
+            this.opCustomsNorte = false;
+            this.opCustomsSur = true;
+            this.opCustomsMaritimas = false;
+            this.opCustomsInteriores = false;
+        }else if(this.selectedBorder === 'Marítimas'){
+            this.opCustomsNorte = false;
+            this.opCustomsSur = false;
+            this.opCustomsMaritimas = true;
+            this.opCustomsInteriores = false;
+        }else if(this.selectedBorder === 'Interiores'){
+            this.opCustomsNorte = false;
+            this.opCustomsSur = false;
+            this.opCustomsMaritimas = false;
+            this.opCustomsInteriores = true;
+        }
+    }
+    OptionsCustomsNorte = [
+        { label: 'Agua Prieta', value: 'Agua Prieta' },
+        { label: 'Ciudad Acuña', value: 'Ciudad Acuña' },
+        { label: 'Ciudad Camargo', value: 'Ciudad Camargo' },
+        { label: 'Ciudad Juárez', value: 'Ciudad Juárez' },
+        { label: 'Ciudad Miguel Alemán', value: 'Ciudad Miguel Alemán' },
+        { label: 'Ciudad Reynosa', value: 'Ciudad Reynosa' },
+        { label: 'Colombia', value: 'Colombia' },
+        { label: 'Matamoros', value: 'Matamoros' },
+        { label: 'Mexicali', value: 'Mexicali' },
+        { label: 'Naco', value: 'Naco' },
+        { label: 'Nogales', value: 'Nogales' },
+        { label: 'Nuevo Laredo', value: 'Nuevo Laredo' },
+        { label: 'Ojinaga', value: 'Ojinaga' },
+        { label: 'Piedras Negras', value: 'Piedras Negras' },
+        { label: 'Puerto Palomas', value: 'Puerto Palomas' },
+        { label: 'San Luis Río Colorado', value: 'San Luis Río Colorado' },
+        { label: 'Sonoyta', value: 'Sonoyta' },
+        { label: 'Tecate', value: 'Tecate' },
+        { label: 'Tijuana', value: 'Tijuana' }
+    ];
+    OptionsCustomsSur = [
+        { label: 'Ciudad Hidalgo', value: 'Ciudad Hidalgo' },
+        { label: 'Subteniente López', value: 'Subteniente López' }
+    ];
+    OptionsCustomsMaritimas = [
+        { label: 'Acapulco', value: 'Acapulco' },
+        { label: 'Altamira', value: 'Altamira' },
+        { label: 'Cancún', value: 'Cancún' },
+        { label: 'Ciudad del Carmen', value: 'Ciudad del Carmen' },
+        { label: 'Coatzacoalcos', value: 'Coatzacoalcos' },
+        { label: 'Dos Bocas', value: 'Dos Bocas' },
+        { label: 'Ensenada', value: 'Ensenada' },
+        { label: 'Guaymas', value: 'Guaymas' },
+        { label: 'La Paz', value: 'La Paz' },
+        { label: 'Lázaro Cárdenas', value: 'Lázaro Cárdenas' },
+        { label: 'Manzanillo', value: 'Manzanillo' },
+        { label: 'Mazatlán', value: 'Mazatlán' },
+        { label: 'Progreso', value: 'Progreso' },
+        { label: 'Salina Cruz', value: 'Salina Cruz' },
+        { label: 'Tampico', value: 'Tampico' },
+        { label: 'Tuxpan', value: 'Tuxpan' },
+        { label: 'Veracruz', value: 'Veracruz' }
+    ];
+    OptionsCustomsInteriores = [
+        { label: 'Aguascalientes', value: 'Aguascalientes' },
+        { label: 'Chihuahua', value: 'Chihuahua' },
+        { label: 'Guadalajara', value: 'Guadalajara' },
+        { label: 'Guanajuato', value: 'Guanajuato' },
+        { label: 'México', value: 'México' },
+        { label: 'Monterrey', value: 'Monterrey' },
+        { label: 'Puebla', value: 'Puebla' },
+        { label: 'Querétaro', value: 'Querétaro' },
+        { label: 'Toluca', value: 'Toluca' },
+        { label: 'Torreón', value: 'Torreón' }
+    ];
+    handleCustomsChange(event) {
+        this.selectedCustoms = event.detail.value;
+        this.obj.customs = event.detail.value;
+    }
 
     connectedCallback() {
         getCsv()
             .then(result => {
                 this.obj = result;
+                this.inicioWrapper = true;
             })
             .catch(csvError => {
                 console.error('Error al cargar csv');
@@ -62,6 +417,65 @@ export default class P2g_cargaProducto extends LightningModal {
             setTimeout(() => {
                 this.rellenaLista();
             }, 400);
+        infoGrupo({idOppo: this.recordId})
+            .then(result => {
+                this.inforGrupo = result;
+                this.grupo = this.inforGrupo.Group__c;
+                this.tipogrupo(this.grupo);
+                if(this.inforGrupo.StageName === 'Ejecución'){
+                   this.noEjecucion = false; 
+                }
+                console.log('la etapa es: ', this.inforGrupo.StageName);
+            })
+            .catch(error => {
+                this.showToast('Error al cargar informacion del Producto','error', error.body.message);
+            });
+    }
+
+    tipogrupo(grupo){
+        switch (grupo) {
+            case 'SP-PTO-PUERTOS':
+                this.vistaPMFC = true;
+                this.vistaPMFAC = true;
+                this.vistaPM = true;
+                this.vistaPMFA = true;
+                this.opPM = true;
+                break;
+            case 'SP-M-MARITIMO':
+                this.vistaPMFC = true;
+                this.vistaPMFAC = true;
+                this.vistaPM = true;
+                this.vistaPMFA = true;
+                this.opPM = true;
+                break;
+            case 'SP-FI-FLETE INTER':
+                this.vistaPMFC = true;
+                this.vistaPMFAC = true;
+                this.vistaPMFA = true;
+                this.vistaFA = true;
+                this.vistaF = true;
+                this.opF = true;
+                break;
+            case 'SP-A-AEREO':
+                this.vistaPMFAC = true;
+                this.vistaPMFA = true;
+                this.vistaFA = true;
+                this.vistaAC = true;
+                break;
+            case 'SP-CE-COMERCIO EXT':
+                this.vistaPMFC = true;
+                this.vistaPMFAC = true;
+                this.vistaAC = true;
+                this.vistaC = true;
+                this.opC = true;
+                break;
+            case 'SP-EX-SEGUROS':
+                this.vistaS = true;
+                break;
+            default:
+                // Tratar variantes desconocidas
+                break;
+        }
     }
 
     rellenaLista(){
@@ -141,7 +555,7 @@ export default class P2g_cargaProducto extends LightningModal {
         }
     }
 
-
+    
     updateItems(event){
         this.isLoading = true;
         const itemsToModify = this.opportunityLineItems.filter(oli => oli.modificar);
@@ -191,7 +605,7 @@ export default class P2g_cargaProducto extends LightningModal {
                     this.listOrige = result;
                 })
                 .catch(error => {
-                    this.pushMessage('Error','error', error.body.message);
+                    this.showToast('Error','error', error.body.message);
                     this.listOrige = null;
                 });
         }
@@ -284,9 +698,141 @@ export default class P2g_cargaProducto extends LightningModal {
             }
         }
 
+    // guardar Registro extras
+    //CpOrigen
+    @track searchCpOrigen = '';
+    @track CpOrigenId = '';
+    @track showCpOrigen = false;
+
+    cpOrigenSelect(event){
+        this.searchCpOrigen = event.currentTarget.dataset.name;
+        this.showCpOrigen = false;
+        this.CpOrigenId = event.currentTarget.dataset.id;
+        this.obj.idCpOrigen  = event.currentTarget.dataset.id;
+        this.obj.direccionCarga = event.currentTarget.dataset.name;
+    }
+    searchKeyCpOrigen(event){
+        this.searchCpOrigen = event.target.value;
+        this.CpOrigenId='';
+        if (this.searchCpOrigen.length >= 3) {
+            this.showCpOrigen = true;
+            getCp({cp: this.searchCpOrigen})
+                .then(result => {
+                    this.listCpOrigen = result;
+                })
+                .catch(error => {
+                    this.showToast('Error','error', error.body.message);
+                    this.listCpOrigen = null;
+                });
+        }
+        else{
+            this.showCpOrigen = false;
+        }
+    }
+
+    @track searchCpDestino = '';
+    @track CpDestinoId = '';
+    @track showCpDestino = false;
+
+    searchKeyCpDestino(event){
+        this.searchCpDestino = event.target.value;
+        this.CpDestinoId = '';
+        if (this.searchCpDestino.length >= 3) {
+            this.showCpDestino = true;
+            getCp({cp: this.searchCpDestino })
+                .then(result => {
+                    this.listCpDestino = result;
+                })
+                .catch(error => {
+                    this.showToast('Error','error', error.body.message);
+                    this.listCpDestino = null;
+                });
+        } else {
+            this.showCpDestino = false;
+        }
+    }
+    cpDestinoSelect(event){
+        this.searchCpDestino = event.currentTarget.dataset.name;
+        this.showCpDestino = false;
+        this.cpDestinoId = event.currentTarget.dataset.id;
+        this.obj.idCpDestino = event.currentTarget.dataset.id;
+        this.obj.direccionDescarga = event.currentTarget.dataset.name;
+    }
+    handleUnitPerFrequencyChange(event){
+        this.unitPerFrequency = event.target.value;
+        console.log('entra a unidad de frecuencia ',this.unitPerFrequency);
+        this.calculoVolumenMensual(this.unitPerFrequency);
+    }
+    @track valueVolumenMensual;
+    calculoVolumenMensual(unitFrequency){
+        console.log('entra a calculo mensual ',unitFrequency,' La frecuencia: ',this.selectedFrecuencia);
+        var calculo = 0;
+        const frecuencia = +unitFrequency;
+        console.log(' La frecuencia: ',frecuencia);
+        switch (this.selectedFrecuencia) {
+            case 'Diario':
+                calculo = frecuencia * 30;
+                console.log('tipo de frecuencia Diario: ', calculo);
+                break;
+            case 'Semanal':
+                calculo = frecuencia * 4;
+                console.log('tipo de frecuencia Semanal: ', calculo);
+                break;
+            case 'Mensual':
+                calculo = frecuencia;
+                console.log('tipo de frecuencia Mensual: ', calculo);
+                break;
+            case 'Anual':
+                calculo = frecuencia / 12;
+                console.log('tipo de frecuencia Anual: ', calculo);
+                break;
+            default:
+                // Tratar variantes desconocidas
+                break;
+        }
+        console.log('el calculo: ', calculo);
+        this.valueVolumenMensual = calculo;
+    }
+    handleVolumenMensualChange(event){
+        this.obj.volumenMensual = event.target.value;
+        this.valueVolumenMensual = event.target.value;
+    }
+    handlePuertoSalidaChange(event){
+        this.obj.puertoSalidaArribo = event.target.value;
+    }
+    handleAccesorialesChange(event){
+        this.obj.accesoriales = event.target.value;
+    }
+    handleItemHeightChange(event){
+        this.obj.itemHeight = event.target.value;
+    }
+    handleItemWidthChange(event){
+        this.obj.itemWidth = event.target.value;
+    }
+    handleItemLenghtChange(event){
+        this.obj.itemLenght = event.target.value;
+    }
+    handleFronteraCruceChange(event){
+        this.obj.fronteraCruce = event.target.value;
+    }
+    handleFechaInicioEmbarqueChange(event){
+        this.obj.fechaInicioEmbarque = event.target.value;
+    }
+    handleFechaFinEmbarqueChange(event){
+        this.obj.fechaFinEmbarque = event.target.value;
+    }
+    handleRazonSocialEmbarcadorChange(event){
+        this.obj.razonSocialEmbarcador = event.target.value;
+    }
+    handleRazonSocialImportadorChange(event){
+        this.obj.razonSocialImportador = event.target.value;
+    }
+    handlePiezasChange(event){
+        this.obj.piezas = event.target.value;
+    }
+
     //Es para agregar un nuevo producto
     aceptar() {
-
         if (!this.isValid()) {
             // Si no son válidos, muestra un mensaje de advertencia
             this.showToast('Error', 'Faltan campos requeridos','error');
@@ -297,12 +843,11 @@ export default class P2g_cargaProducto extends LightningModal {
         this.obj.unidadPorFrecuencia = this.unitPerFrequency;
         this.obj.tipoMercancia = this.searchMercancia;
         this.obj.pesoDeCarga = this.weight;
-        this.obj.direccionCarga = this.loadingAddress;
-        this.obj.direccionDescarga = this.unloadingAddress;
-        this.obj.cantidad = this.quantity;
+        this.obj.cantidad = this.unitPerFrequency;
         this.obj.tiempoCarga = this.timeLoad;
         this.obj.tiempoDescarga = this.timeUnload;
         this.obj.comentarios = this.comentarios;
+        this.obj.target = this.target;
         const serializedObj = JSON.stringify(this.obj);
 
         createProduct({opportunityId: this.recordId, jsonProduct: serializedObj})
@@ -312,33 +857,22 @@ export default class P2g_cargaProducto extends LightningModal {
                     this.obj[key] = '';  // o cualquier valor predeterminado
                 }
             }
-
-            this.searchOrigen='';
-            this.searchDestino='';
-            this.selectedFrecuencia = '';
-            this.searchModalidad = '';
-            
-            this.unitPerFrequency ='';
-            this.searchMercancia = '';
-            this.weight='';
-            this.loadingAddress='';
-            this.unloadingAddress='';
-            this.quantity='';
-            this.timeLoad='';
-            this.timeUnload='';
-            this.comentarios='';
-            this.buyPrice='';
-            this.selectedMoneda = '';
+            this.limpiar();
             this.rellenaLista();
+            if(this.siservicioEspecial === true){
+                this.handleServicioEspecialUpload();
+            }
+            if(this.sihazmat === true){
+                this.handleHazmatUpload();
+            }
             this.showToast('Éxito', 'Operación completada exitosamente.', 'success');
         })
         .catch(error => {
-            this.showToast('Error', 'No se pudo crear Contacte a su Administrador: ' + error.body.message, 'error');
+            this.showToast('Error', 'No se pudo crear Contacte a su Administrador: ', 'error');
         })
         .finally(() => {
             this.isLoading = false;
-        }); 
-        
+        });
     }
 
     isValid() {
@@ -349,9 +883,9 @@ export default class P2g_cargaProducto extends LightningModal {
             this.unitPerFrequency,
             this.searchMercancia,
             this.weight,
-            this.loadingAddress,
-            this.unloadingAddress,
-            this.quantity,
+            //this.cpOrigenId,
+            //this.cpDestinoId,
+            //this.quantity,
             this.timeLoad,
             this.timeUnload,
             this.selectedMoneda
@@ -361,10 +895,60 @@ export default class P2g_cargaProducto extends LightningModal {
         return requiredFields.every(field => field !== undefined && field !== '' && field !== null);
     }
     
-
+    limpiar(){
+        this.searchOrigen='';
+        this.searchDestino='';
+        this.selectedFrecuencia = '';
+        this.searchModalidad = '';
+        this.unitPerFrequency ='';
+        this.searchMercancia = '';
+        this.weight='';
+        this.cpDestinoId='';
+        this.cpOrigenId='';
+        this.quantity='';
+        this.timeLoad='';
+        this.timeUnload='';
+        this.comentarios='';
+        this.target='';
+        this.selectedIncoterm='';
+        this.buyPrice='';
+        this.selectedMoneda = '';
+        this.searchCpOrigen = '';
+        this.searchCpDestino = '';
+        this.selectedUnidadPeso = '';
+        this.selectedTipoServicio = '';
+        this.selectedTipoRuta = '';
+        this.selectedServicioEspecial = '';
+        this.siservicioEspecial = false;
+        this.fileServicioEspecialData = false;
+        this.selectedServicioAdicional = '';
+        this.selectedTipoContenedor = '';
+        this.selectedHazmat = '';
+        this.sihazmat = false;
+        this.fileHazmatData = false;
+        this.selectedCertificaciones = '';
+        this.selectedTransbordo = '';
+        this.selectedTipoSeguro = '';
+        this.selectedTipoServicioEmbarque = '';
+        this.valueVolumenMensual = '';
+        this.obj.puertoSalidaArribo = '';
+        this.obj.accesoriales = '';
+        this.obj.itemHeight = '';
+        this.obj.itemWidth = '';
+        this.obj.itemLenght = '';
+        this.obj.fronteraCruce = '';
+        this.obj.fechaInicioEmbarque = '';
+        this.obj.fechaFinEmbarque = '';
+        this.obj.razonSocialEmbarcador = '';
+        this.obj.razonSocialImportador = '';
+        this.obj.piezas = '';
+        this.selectedBorder = '';
+        this.selectedCustoms = '';
+    }
 
     cerrar(){
         this.close('close');
+        location.reload();
         //history.back();
         //this.dispatchEvent(new CloseActionScreenEvent());
     }

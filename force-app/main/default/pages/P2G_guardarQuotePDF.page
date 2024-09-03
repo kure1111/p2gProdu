@@ -3,6 +3,7 @@
         <apex:pageBlock >
             <apex:pageBlockButtons >  
                 <apex:commandButton action="{!savePdf}" value="Guardar PDF"/>
+        		<apex:commandButton value="Guardar y Enviar Quote" action="{!redirectToEmailQuote}" id="sendEmailButton" />
             </apex:pageBlockButtons>
             <apex:outputPanel >
                 <iframe scrolling="auto" id="EN" src="/apex/P2G_crearQuotePDF?id={!Quote.Id}" width= "100%" height="900px"/>

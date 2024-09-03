@@ -22,6 +22,7 @@ public class P2G_convertCurrencyOppoProductTest {
         subProducto.SubProduct_Opportunity_Product__c = oli.Id;
         subProducto.SubProduct_Grupo_Oportunidad__c = 'SP-FN-FLETE NACIONAL';
         subProducto.SubProduct_SAP_Service_Type__c = 'a1n4T000001XXY6QAO';//UAT a1n0R000001lZcYQAU  Prod a1n4T000001XXY6QAO
+        subProducto.SAP_Service_Type_Buy__c = 'a1n4T000001XXY6QAO';
         subProducto.CurrencyIsoCode = 'EUR';
         subProducto.SubProduct_Buy_Price__c = 23;
         subProducto.SubProduct_Sell_Price__c = 23;

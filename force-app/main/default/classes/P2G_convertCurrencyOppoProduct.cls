@@ -38,7 +38,7 @@ public class P2G_convertCurrencyOppoProduct {
         cantidadRound = cantidad.setScale(2, System.RoundingMode.HALF_UP);
         return cantidadRound;
     }
-    public static SubProducto__c convertirBuySubProducto(Decimal costo, String tipoCurrency, String opCurrency){
+      public static SubProducto__c convertirBuySubProducto(Decimal costo, String tipoCurrency, String opCurrency){
         SubProducto__c subProducto = new SubProducto__c();
         List<CurrencyType> tasaDeCambio = [SELECT ConversionRate,IsoCode,LastModifiedDate FROM CurrencyType WHERE IsoCode = :opCurrency or IsoCode = :tipoCurrency ORDER BY LastModifiedDate desc LIMIT 2];
         Decimal cantidadModificada;
@@ -57,7 +57,6 @@ public class P2G_convertCurrencyOppoProduct {
         System.debug('cantidad Modificada: '+cantidadModificada+' costo: '+costo);
         subProducto.SubProduct_Buy_Price__c = cantidadModificada;
         subProducto.SubProduct_Buy_Price_Converted__c = tipoCurrency+' '+ costo;
-        
         return subProducto;
     }
     public static SubProducto__c convertirSellSubProducto(Decimal costo, String tipoCurrency, String opCurrency){

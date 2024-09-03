@@ -1,6 +1,11 @@
 trigger UpdateOppAmmount on Customer_Quote__c (after update) {
-    
-   System.debug('UpdateOppAmmount IN');
+    System.debug('UpdateOppAmmount IN');
+    Set<Customer_Quote__c> listaIeqo = new Set<Customer_Quote__c>();
+    for(Customer_Quote__c q : Trigger.New){
+        if(q.Opportunity__r.RecordType.Name == 'Proyecto'){
+            setOpp.add(q.Opportunity__c);
+        }
+    }
         Set<Id> setOpp = new Set<Id>();
         List<Customer_Quote__c> lstQuotes = new List<Customer_Quote__c>();
         List<Opportunity> lstOpps = new List<Opportunity>();
@@ -35,7 +40,6 @@ trigger UpdateOppAmmount on Customer_Quote__c (after update) {
             System.debug('UpdateOppAmmount - lstOpps: ' + lstOpps.size());
             
             if(lstOpps.size()>0){update lstOpps;} 
-            
             if(Test.isRunningTest()){
                 integer a= 1;
                 a= a+1;

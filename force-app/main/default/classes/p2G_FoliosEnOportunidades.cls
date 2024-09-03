@@ -59,6 +59,7 @@ public class p2G_FoliosEnOportunidades {
         @AuraEnabled public String salesIncoterm{get;set;}
         @AuraEnabled public String loadSite{get;set;}
         @AuraEnabled public String dischargeSite{get;set;}
+        @AuraEnabled public Boolean warehouseService{get;set;}
         //para la cargoline
         @AuraEnabled public String id{get;set;}
         @AuraEnabled public String idQuote{get;set;}
@@ -85,10 +86,10 @@ public class p2G_FoliosEnOportunidades {
         Set<wrapperProduct> setProduct = new Set<wrapperProduct>();
         List<wrapperProduct> listProduct = new List<wrapperProduct>();
         List<OpportunityLineItem> listaRoute = [SELECT Id,Name,Product2.Name,OpportunityId,Opportunity.Name,Buy_Price__c,UnitPrice,Opportunity.Group__c,
-                                         CurrencyIsoCode,Opportunity.AccountId,Opportunity.Account.Name,PROJ_Modalidad__c,PROJ_Peso_de_carga__c,
-                                         Quantity,PROJ_Tipo_de_mercancia__c,Product2.PROJ_Site_of_load__c,Product2.PROJ_Site_of_discharge__c,
-                                          Tipo_de_moneda__c, Buy_Price_Converted__c, Sales_Price_Converted__c
-                                         FROM OpportunityLineItem WHERE OpportunityId =: idOpportunity];
+                                         CurrencyIsoCode,Opportunity.AccountId,Opportunity.Account.Name,PROJ_Modalidad__c,PROJ_Peso_de_carga__c, Incoterm__c,
+                                         Quantity,PROJ_Tipo_de_mercancia__c,Product2.PROJ_Site_of_load__c,Product2.PROJ_Site_of_discharge__c,Tipo_de_servicio__c,
+                                          Tipo_de_moneda__c, Buy_Price_Converted__c, Sales_Price_Converted__c, Tipo_de_ruta__c, Customs__c, Border__c
+                                         FROM OpportunityLineItem WHERE OpportunityId =: idOpportunity  AND (Status__c = 'Cotizada' OR Status__c = 'Aceptada' OR Status__c = 'Negociación con cliente')];
             System.debug('Las ruta: '+listaRoute);
         For(OpportunityLineItem route : listaRoute){
             if(!Test.isRunningTest()){
@@ -178,11 +179,13 @@ public class p2G_FoliosEnOportunidades {
             nameClaveServicio.add(product.extencionItemName);
         }
         List<SAP_Service_Type__c> sapServiceType = [SELECT Id, Name FROM SAP_Service_Type__c where Group__c =: wrapperProduct[0].grupo];
-        Catalogo_SAT__c recordTypeUnidad = [SELECT 	Id, Name FROM Catalogo_SAT__c WHERE Name = 'Pallet' limit : 1];
+        System.debug('lista de service type: '+ sapServiceType);
+        Catalogo_SAT__c recordTypeUnidad = [SELECT	Id, Name FROM Catalogo_SAT__c WHERE Name = 'Pallet' limit : 1];
         String recordTypeId = Schema.SObjectType.Catalogo_SAT__c.getRecordTypeInfosByName().get('Productos y Servicios cP').getRecordTypeId();
         List<Catalogo_SAT__c> claveServicio = [SELECT Id, Name, RecordTypeId FROM Catalogo_SAT__c WHERE Name IN: nameClaveServicio and RecordTypeId =: recordTypeId ORDER BY CreatedDate DESC];
         List<Location__c> location = [SELECT Id, Name, Country__c, State__c FROM Location__c WHERE id IN: idLocationLoadSite OR id IN: idLocationDischargeSite];
         List<Container_Type__c> container = [SELECT Id, Name FROM Container_Type__c WHERE Name IN: nameConteinerType];
+        List<String> idOppo = new List<String>();
         try{
             for(wrapperProduct product : wrapperProduct){
                 Customer_Quote__c iEQO = new Customer_Quote__c();
@@ -194,6 +197,7 @@ public class p2G_FoliosEnOportunidades {
                     item = creaItem(product.extencionItemName, product.idAccount, product.currencyIsoCode);
                     creaItem.add(item);
                 }
+                idOppo.add(product.idOpportunity);
             }
             insert creaIEQO;
             System.debug('el IEQO creado: '+creaIEQO);
@@ -274,7 +278,10 @@ public class p2G_FoliosEnOportunidades {
                 }
                 insert CreateServiceLineSub;
             }
-
+            Opportunity oppo =[SELECT id, Name, Total_IEQO_Creados__c FROM Opportunity WHERE id IN: idOppo LIMIT 1];
+                Integer totalI = IEQO.size();
+                oppo.Total_IEQO_Creados__c = totalI;
+            update oppo;
             return mensaje;
         }
         catch(Exception e){
@@ -320,6 +327,8 @@ public class p2G_FoliosEnOportunidades {
                 product.freighMode = 'Air';
                 product.serviceMode = 'IMPORT';// dato no fijo
                 product.servicetype = 'CARGA';//fijo
+                product.border = 'Norte'; // dato no fijo
+                product.customs = 'Agua Prieta'; // dato no fijo
             }
             when 'SP-CE-COMERCIO EXT' {
                 product.quotationStatus = 'Sent awaiting response';
@@ -328,10 +337,11 @@ public class p2G_FoliosEnOportunidades {
                 product.comercioExterior = 'Si';
                 product.freighMode = 'Air';
                 product.serviceMode = 'IMPORT';// dato no fijo
-                product.servicetype = 'CARGA';// dato no fijo
-                product.border = 'Marítimas'; // dato no fijo
+                product.servicetype = 'CARGA';//fijo
+                product.border = 'Norte'; // dato no fijo
+                product.customs = 'Agua Prieta'; // dato no fijo
                 product.impak = 'Si';// dato no fijo
-                product.servicioIMPAK = 'A';// dato no fijo
+                product.servicioIMPAK ='A';// dato no fijo
                 product.salesIncoterm = 'CFR';// dato no fijo
             }
             when 'SP-M-MARITIMO' {
@@ -342,6 +352,8 @@ public class p2G_FoliosEnOportunidades {
                 product.freighMode = 'Sea';
                 product.serviceMode = 'IMPORT';// dato no fijo
                 product.servicetype = 'LCL';// dato no fijo
+                product.border = 'Norte'; // dato no fijo
+                product.customs = 'Agua Prieta'; // dato no fijo
             }
             when 'SP-PTO-PUERTOS' {
                 product.quotationStatus = 'Sent awaiting response';
@@ -361,6 +373,41 @@ public class p2G_FoliosEnOportunidades {
                 product.serviceMode = 'IMPORT';// dato no fijo
                 product.servicetype = 'FCL';// dato no fijo
             }
+            when 'SP-EX-SEGUROS' {
+                product.quotationStatus = 'Sent awaiting response';
+                product.CommunityStatus = 'CUSTOMER CREATED';
+                product.team = 'P2G';
+                product.comercioExterior = 'No';
+                product.freighMode = 'Road';
+                product.serviceMode = 'NATIONAL';
+                product.servicetype = 'Extras';
+            }
+            when 'SP-PQ-PAQUETERIA' {
+                product.quotationStatus = 'Sent awaiting response';
+                product.CommunityStatus = 'CUSTOMER CREATED';
+                product.team = 'P2G';
+                product.comercioExterior = 'No';
+                product.freighMode = 'Road';
+                product.serviceMode = 'NATIONAL';
+                product.servicetype = 'MAYOREO';
+            }
+            when 'SP-WH-ALMACENAJE' {
+                product.quotationStatus = 'Sent awaiting response';
+                product.CommunityStatus = 'CUSTOMER CREATED';
+                product.team = 'P2G';
+                product.comercioExterior = 'No';
+                product.freighMode = 'Road';
+                product.warehouseService = true;
+            }
+            when 'SP-T-CONSOLIDADO' {
+                product.quotationStatus = 'Sent awaiting response';
+                product.CommunityStatus = 'CUSTOMER CREATED';
+                product.team = 'P2G';
+                product.comercioExterior = 'No';
+                product.freighMode = 'Road';
+                product.serviceMode = 'NATIONAL';
+                product.servicetype = 'TARIMAS';
+            }
             when else {
                 System.debug('No hay grupo');
             }
@@ -377,7 +424,7 @@ public class p2G_FoliosEnOportunidades {
             quote.Account_for__c = product.idAccount;
             quote.Team__c = product.team;
             quote.Quotation_Status__c = product.quotationStatus;
-            quote.Customer_Reference__c = 'Cotizado desde Oportunidad Nuevos Negocion';
+            quote.clave_de_lead__c = 'Cotizado desde Oportunidad Nuevos Negocion';
             quote.Opportunity__c = product.idOpportunity;
             quote.Valid_From__c = system.today();
             quote.Valid_Until__c = system.today();
@@ -424,14 +471,23 @@ public class p2G_FoliosEnOportunidades {
             if(product.salesIncoterm != '' && product.salesIncoterm != null){
 	            quote.Sales_Incoterm__c = product.salesIncoterm;
             }
+        	if(product.warehouseService != null){
+            	quote.Only_Warehouse_Service__c = product.warehouseService;
+            }
             return quote;
         
     }
     public static Fee__c CreateServiceRate(wrapperProduct product, List<SAP_Service_Type__c> sapServiceType, String nameSST){
+            System.debug('Service type: '+sapServiceType);
+            System.debug('El grupo es: '+product.grupo);
         String recordTypeId = Schema.SObjectType.Fee__c.getRecordTypeInfosByName().get('Sea/Ground Freight').getRecordTypeId();
         Fee__c serviceRate = new Fee__c();
             serviceRate.RecordTypeId = recordTypeId;
+        if(nameSST == 'CARGOS ADICIONALES SERVICIOS'){
+            serviceRate.Name = nameSST;
+        }else{
             serviceRate.Name = 'Flete '+ product.serviceMode;
+        }
             serviceRate.Route__c = product.idRoute; 
             serviceRate.CurrencyIsoCode = product.currencyLine; 
             serviceRate.Fee_Category__c = 'Road Freights'; //buscar
@@ -446,9 +502,32 @@ public class p2G_FoliosEnOportunidades {
             if(product.idSST != null && product.idSST != ''){
                 serviceRate.SAP_Service_Type__c = product.idSST;
             }else{
-                for(SAP_Service_Type__c sST : sapServiceType){
-                    if(sST.Name.contains(nameSST)){
-                        serviceRate.SAP_Service_Type__c = sST.Id;
+                if(product.grupo == 'SP-PQ-PAQUETERIA'){
+                    for(SAP_Service_Type__c sST : sapServiceType){
+                        if(sST.Name == 'PREPAGO GLOBAL PAQUETERIAS (IC)(PQ)'){
+                            serviceRate.SAP_Service_Type__c = sST.Id;
+                        }
+                    }
+            		serviceRate.Name = 'Flete Paqueteria';
+                }else if(product.grupo == 'SP-WH-ALMACENAJE'){
+                    for(SAP_Service_Type__c sST : sapServiceType){
+                        if(sST.Name == 'SERVICIOS DE ALMACENAJE (IC) (WH)'){
+                            serviceRate.SAP_Service_Type__c = sST.Id;
+                        }
+                    }
+            		serviceRate.Name = 'Flete Almacenaje';
+                }else if(product.grupo == 'SP-T-CONSOLIDADO'){
+                    for(SAP_Service_Type__c sST : sapServiceType){
+                        if(sST.Name.contains('SERVICIO LOGISTICO')){
+                            serviceRate.SAP_Service_Type__c = sST.Id;
+                        }
+                    }
+            		serviceRate.Name = 'Flete Tarimas';
+                }else{
+                    for(SAP_Service_Type__c sST : sapServiceType){
+                        if(sST.Name.contains(nameSST)){
+                            serviceRate.SAP_Service_Type__c = sST.Id;
+                        }
                     }
                 }
             }
@@ -670,6 +749,7 @@ public class p2G_FoliosEnOportunidades {
             sub.grupo = product.grupo; 
             sub.idConteinerType = product.idConteinerType;
             sub.idAccount = product.idAccount;
+        System.debug('El converted buy price: '+subProductos.SubProduct_Buy_Price_Converted__c);
         if(subProductos.SubProduct_Buy_Price_Converted__c != null && subProductos.SubProduct_Buy_Price_Converted__c != ''){
             buyConverted = subProductos.SubProduct_Buy_Price_Converted__c.split(' ');
         	sub.buyPrice = Decimal.ValueOF(buyConverted[1]);
@@ -678,16 +758,16 @@ public class p2G_FoliosEnOportunidades {
             sub.buyPrice = subProductos.SubProduct_Buy_Price__c;
             sub.currencyLine = subProductos.CurrencyIsoCode;
         }
+        System.debug('El converted sell price: '+subProductos.SubProduct_Sell_Price_Converted__c);
         if(subProductos.SubProduct_Sell_Price_Converted__c != null && subProductos.SubProduct_Sell_Price_Converted__c != ''){
             sellConverted = subProductos.SubProduct_Sell_Price_Converted__c.split(' ');
-        	sub.sellPrice = Decimal.ValueOF(buyConverted[1]);
+        	sub.sellPrice = Decimal.ValueOF(sellConverted[1]);
         }else{
             sub.sellPrice = subProductos.SubProduct_Sell_Price__c;
         }
         if(subProductos.SubProduct_SAP_Service_Type__c != null){
             sub.idSST = subProductos.SubProduct_SAP_Service_Type__c;
         }
-            
         return sub;
     }
 }

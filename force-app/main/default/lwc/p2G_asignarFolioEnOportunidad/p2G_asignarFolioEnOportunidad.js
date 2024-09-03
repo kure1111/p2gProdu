@@ -6,6 +6,8 @@ import folioAsignado from '@salesforce/apex/p2G_FoliosEnOportunidades.asignarFol
 import getRutas from '@salesforce/apex/p2G_FoliosEnOportunidades.getRoute';
 import getWrapper from '@salesforce/apex/p2G_FoliosEnOportunidades.getWrapper';
 import foliosACrear from '@salesforce/apex/p2G_FoliosEnOportunidades.foliosACrear';
+import getSide from '@salesforce/apex/P2G_CreacionCargoLines.getSideCountry';
+import getClaveSAT from '@salesforce/apex/P2G_CreacionCargoLines.getClaveSAT';
 import LightningModal from 'lightning/modal';
 
 export default class P2G_asignarFolioEnOportunidad extends LightningModal {
@@ -15,16 +17,34 @@ export default class P2G_asignarFolioEnOportunidad extends LightningModal {
     asignarFolio = false;
     resFolioAsignado;
     creacionFolio = false;
+    crearPqWhT = false;
     listRutas;
     wrapper;
     foliosParaCrear = 0;
     folioCreado;
     isLoading = false;
+    grupo;
 
     @track sideRecordsAsignaFolio;
     searchValueAsignaFolio ='';
     searchValueIdAsignaFolio ='';
     showSideAsignaFolio = false;
+    
+    //para site load
+    @track sideRecordsLoad;
+    searchValueLoad ='';
+    searchValueIdLoad ='';
+    showSideLoad = false;
+    //para site dicharge
+    @track sideRecordsDischarge;
+    searchValueDischarge ='';
+    searchValueIdDischarge ='';
+    showSideDischarge = false;
+    //para clave de servicio
+    @track sideRecordsClaveServicio;
+    searchValueClaveServicio ='';
+    searchValueIdClaveServicio ='';
+    showSideClaveServicio = false;
 
 //botones
     clickAsignarFolio(){
@@ -39,6 +59,7 @@ export default class P2G_asignarFolioEnOportunidad extends LightningModal {
         getRutas({idOpportunity: this.recordId})
                 .then(result => {
                     this.listRutas = result;
+                    this.grupo = this.listRutas[0].grupo;
                 })
                 .catch(error => {
                     this.showToast('Error','error', error.body.message);
@@ -53,20 +74,25 @@ export default class P2G_asignarFolioEnOportunidad extends LightningModal {
                 this.wrapper = null;
             });
     }
+    idProducto;
     clicSeCrea(event){
-        const idProducto = event.target.closest('tr').dataset.id; 
+        this.idProducto = event.target.closest('tr').dataset.id; 
         const seCrea = event.target.checked;
         //numero de rutas seleccionadas
         if(seCrea === true){
             this.foliosParaCrear = this.foliosParaCrear + 1;
+            if((this.grupo === 'SP-PQ-PAQUETERIA') || (this.grupo === 'SP-WH-ALMACENAJE') || (this.grupo === 'SP-T-CONSOLIDADO')){
+                console.log('Entra en el if de grupo');
+                this.crearPqWhT = true;
+            }
         }else{
             this.foliosParaCrear = this.foliosParaCrear - 1;
         }
         console.log('El valor del check es: ', seCrea, ' folios Para Crear:',this.foliosParaCrear);
         //modificar registro
         const updatedlistRutas = this.listRutas.map( (item) => { 
-            console.log('El item id: ', item.id ,' el producto ', idProducto);
-            if (item.id === idProducto) { 
+            console.log('El item id: ', item.id ,' el producto ', this.idProducto);
+            if (item.id === this.idProducto) { 
                 return {...item, seCrea: seCrea, };
             } 
             return item; });
@@ -79,9 +105,35 @@ export default class P2G_asignarFolioEnOportunidad extends LightningModal {
             this.showToast('Advertencia','warning', 'La ruta seleccionada se creara despues de unos minitos, le llegara un correo de confirmación');
         }
     }
+    agregarDirecciones(){
+        console.log('Lo que llega: ', this.idProducto);
+        //modificar registro
+        const updatedlistRutas = this.listRutas.map( (item) => { 
+            console.log('El item id: ', item.id ,' el producto ', this.idProducto);
+            if (item.id === this.idProducto) { 
+                return {...item, loadSite: this.searchValueIdLoad, dischargeSite: this.searchValueIdDischarge, extencionItemName: this.searchValueClaveServicio,};
+            } 
+            return item; });
+            this.listRutas = updatedlistRutas;
+            console.log('la lista mod: ', this.listRutas);
+        this.searchValueIdLoad ='';
+        this.searchValueLoad ='';
+        this.searchValueIdDischarge ='';
+        this.searchValueDischarge ='';
+        this.searchValueClaveServicio = '';
+        this.searchValueIdClaveServicio = '';
+        this.idProducto = '';
+        this.crearPqWhT = false;
+    }
     clicCrearFolios(){
         if(this.foliosParaCrear > 0){
             this.isLoading = true;
+            console.log('el wrapper es: ', this.wrapper);
+            if(this.wrapper != null){
+                this.wrapper.splice(0);
+                console.log('el wrapper con if: ', this.wrapper);
+            }
+            console.log('el wrapper sin if: ', this.wrapper);
             for (let posicion in this.listRutas){
                 if(this.listRutas[posicion].seCrea === true){
                     this.wrapper.push(this.listRutas[posicion]);
@@ -151,6 +203,79 @@ export default class P2G_asignarFolioEnOportunidad extends LightningModal {
                 });
     }
 
+    // buscador Site of Load
+    SideSelectLoad(event){
+        this.searchValueIdLoad = event.currentTarget.dataset.id;
+        this.searchValueLoad = event.currentTarget.dataset.name;
+        this.showSideLoad = false;
+    }
+    searchKeyLoad(event){
+        this.searchValueLoad = event.target.value;
+        this.searchValueIdLoad='';
+        if (this.searchValueLoad.length >= 3) {
+            this.showSideLoad = true;
+            getSide({country: this.searchValueLoad})
+                .then(result => {
+                    this.sideRecordsLoad = result;
+                })
+                .catch(error => {
+                    this.showToast('Error','error', error.body.message);
+                    this.sideRecordsLoad = null;
+                });
+        }
+        else{
+            this.showSideLoad = false;
+        }
+    }
+    // buscador Site of Discharge
+    SideSelectDischarge(event){
+        this.searchValueIdDischarge = event.currentTarget.dataset.id;
+        this.searchValueDischarge = event.currentTarget.dataset.name;
+        this.showSideDischarge = false;
+    }
+    // buscador ClaveServicio
+    SideSelectClaveServicio(event){
+        this.searchValueIdClaveServicio = event.currentTarget.dataset.id;
+        this.searchValueClaveServicio = event.currentTarget.dataset.name;
+        this.showSideClaveServicio = false;
+    }
+    searchKeyClaveServicio(event){
+        this.searchValueClaveServicio = event.target.value;
+        this.searchValueIdClaveServicio='';
+        if (this.searchValueClaveServicio.length >= 3) {
+            this.showSideClaveServicio = true;
+            getClaveSAT({sat: this.searchValueClaveServicio,record: '1'})
+                .then(result => {
+                    this.sideRecordsClaveServicio = result;
+                })
+                .catch(error => {
+                    this.showToast('Error','error', error.body.message);
+                    this.sideRecordsClaveServicio = null;
+                });
+        }
+        else{
+            this.showSideClaveServicio = false;
+        }
+    }
+
+    searchKeyDischarge(event){
+        this.searchValueDischarge = event.target.value;
+        this.searchValueIdDischarge='';
+        if (this.searchValueDischarge.length >= 3) {
+            this.showSideDischarge = true;
+            getSide({country: this.searchValueDischarge})
+                .then(result => {
+                    this.sideRecordsDischarge = result;
+                })
+                .catch(error => {
+                    this.showToast('Error','error', error.body.message);
+                    this.sideRecordsDischarge = null;
+                });
+        }
+        else{
+            this.showSideDischarge = false;
+        }
+    }
 //Buscar Folio
     SideSelectAsignaFolio(event){
         this.searchValueAsignaFolio = event.target.outerText;
@@ -218,5 +343,10 @@ export default class P2G_asignarFolioEnOportunidad extends LightningModal {
     
     closeMessage() {
         this.showSuccess = this.showWarning = this.showError = false;
+    }
+
+    //para crear los tipos PQ, WH, T
+    cerrarDirecciones(){
+        this.crearPqWhT = false;
     }
 }

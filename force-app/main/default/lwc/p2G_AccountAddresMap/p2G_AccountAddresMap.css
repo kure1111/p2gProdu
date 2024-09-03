@@ -1,0 +1,75 @@
+.section {
+    border: 1px solid #000; /* Borde temporal */
+}
+
+.subsection {
+    border: 1px solid #000; /* Borde temporal */
+}
+
+.subsubsection {
+    border: 1px solid #000; /* Borde temporal */
+}
+
+.subsubsection-inner {
+    border: 1px solid #000; /* Borde temporal */
+}
+
+.section-one {
+    display: flex;
+    flex-direction: column;
+    height: 50vh;
+}
+
+.subsection-one-top {
+    display: flex;
+    flex: 1 1 20%;
+}
+
+.subsubsection {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.subsubsection-inner {
+    flex: 1;
+}
+
+.subsection-one-bottom {
+    flex: 1 1 80%;
+}
+
+.section-two {
+    height: 50vh;
+}
+
+.border-guide {
+    border: 1px dashed #ccc; /* Borde guía temporal */
+}
+
+/*para modal*/
+
+.slds-modal__container {
+    width: 50rem; /* Ajusta el ancho del modal según sea necesario */
+    max-width: 90%;
+}
+
+.modal-body {
+    display: flex;
+    height: 100%;
+}
+
+.left-section, .right-section {
+    flex: 1;
+    padding: 1rem;
+}
+
+.left-section {
+    border-right: 1px solid #d8dde6;
+}
+
+.map-container {
+    width: 100%;
+    height: 300px; /* Ajusta la altura según tus necesidades */
+}
+

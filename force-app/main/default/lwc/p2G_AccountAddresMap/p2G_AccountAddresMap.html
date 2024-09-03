@@ -1,0 +1,234 @@
+<template>
+    <!-- Sección 1 -->
+    <div class="section section-one border-guide">
+        <!-- Subsección 1 - Encabezado -->
+        <div class="subsection subsection-one-top border-guide">
+            <!-- Subsección 1 - Encabezado Izquierdo -->
+            <div class="subsubsection border-guide">
+                
+                <!-- Búsqueda por name -->   
+                <div class="subsubsection-inner border-guide">              
+                    <div style="width: 100%;">
+                        <div onkeyup={searchKeyAddress}>
+                            <lightning-input id="Planner" label="Nombre Account Address:"
+                                placeholder="Buscar Account" value={searchValueAddress} type="search"
+                                required=""></lightning-input>
+                        </div>
+                        <table if:true={sideRecordsAddress}
+                            class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_striped">
+                            <thead>
+                                <tr class="slds-line-height_reset">
+                                    <th scope="col">
+                                        <div class="slds-truncate" title="First Name">Name</div>
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <template for:each={sideRecordsAddress} for:item="addres">
+                                    <tr class="slds-hint-parent" data-id={addres.Id} key={addres.Id} onclick={SideSelectAddress}>
+                                        <td>
+                                            <div class="slds-truncate">{addres.Name}</div>
+                                        </td>
+                                    </tr>
+                                </template>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Búsqueda por cp -->  
+                <div class="subsubsection-inner border-guide">      
+                    <div style="width: 100%;">
+                        <div onkeyup={searchKeyCp}>
+                            <lightning-input id="codigoCP" label="Codigo postal"
+                                placeholder="Buscar Account por cp" value={searchValueCp} type="search"
+                                required=""></lightning-input>
+                        </div>
+                        <table if:true={sideRecordsCp}
+                            class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_striped">
+                            <thead>
+                                <tr class="slds-line-height_reset">
+                                    <th scope="col">
+                                        <div class="slds-truncate" title="First Name">Codigo Postal</div>
+                                    </th>
+                                    <th scope="col">
+                                        <div class="slds-truncate" title="First Name">Estado</div>
+                                    </th>
+                                    <th scope="col">
+                                        <div class="slds-truncate" title="First Name">Municipio</div>
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <template for:each={sideRecordsCp} for:item="addres">
+                                    <tr class="slds-hint-parent" data-id={addres.Id} key={addres.Id} onclick={SideSelectCp}>
+                                        <td>
+                                            <div class="slds-truncate">{addres.Name}</div>
+                                        </td>
+                                        <template if:true={addres.Clave_Relacion_SAT__c}>
+                                            <td>
+                                                <div class="slds-truncate">{addres.Clave_Relacion_SAT__r.Name}</div>
+                                            </td>
+                                        </template>
+                                        <template if:true={addres.Localidad_Ref_CP__c}>
+                                            <td>
+                                                <div class="slds-truncate">{addres.Localidad_Ref_CP__r.Name}</div>
+                                            </td>
+                                        </template>
+                                    </tr>
+                                </template>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Subsección 1 - Encabezado Derecho -->
+            <div class="subsubsection border-guide">
+                <div class="subsubsection border-guide">
+                    <lightning-button label="Create Account Address" onclick={openModal}></lightning-button>
+                </div>
+
+                <!-- Modal Pop-up 1 -->
+                <template if:true={isModalOpen}>
+                    <section role="dialog" tabindex="-1" class="slds-modal slds-fade-in-open slds-modal_large"> 
+                        <div class="slds-modal__container slds-modal_large">
+                            <!-- Modal/Popup Header -->
+                            <header class="slds-modal__header">
+                                <lightning-button-icon icon-name="utility:close" alternative-text="Close" class="slds-modal__close" onclick={closeModal}></lightning-button-icon>
+                                <h2 class="slds-text-heading_medium">Creación de Account Address</h2>
+                            </header>
+
+                            <!-- Modal/Popup Body -->
+                            <div class="slds-modal__content slds-p-around_medium">
+                                <div class="modal-body">
+                                    <!-- Sección Izquierda -->
+                                    <div class="left-section">
+                                        <!-- Mapa de Google -->
+                                        <div id="map" class="map-container" lwc:dom="manual"></div>
+                                    </div>
+
+                                    <!-- Sección Derecha -->
+                                    <div class="right-section border-guide">
+                                        <!-- Contenido de la sección derecha en línea -->
+                                        <div class="input-group">
+                                            <label for="calle" class="input-label">Calle:</label>
+                                            <lightning-input type="text" name="calle" value ={calle} class="input-text"></lightning-input>
+                                        </div>
+                                        <div class="input-group">
+                                            <label for="numero" class="input-label">Número:</label>
+                                            <lightning-input type="text" name="numero" class="input-text"></lightning-input>
+                                        </div>
+                                        <div class="input-group">
+                                            <label for="colonia" class="input-label">Colonia:</label>
+                                            <lightning-input type="text" name="colonia" class="input-text"></lightning-input>
+                                        </div>
+                                        <div class="input-group">
+                                            <label for="codigoPostal" class="input-label">Código Postal:</label>
+                                            <lightning-input type="text" name="codigoPostal" class="input-text"></lightning-input>
+                                        </div>
+                                        <div class="input-group">
+                                            <label for="municipio" class="input-label">Municipio:</label>
+                                            <lightning-input type="text" name="municipio" class="input-text"></lightning-input>
+                                        </div>
+                                        <div class="input-group">
+                                            <label for="localidad" class="input-label">Localidad:</label>
+                                            <lightning-input type="text" name="localidad" class="input-text"></lightning-input>
+                                        </div>
+                                        <div class="input-group">
+                                            <label for="estado" class="input-label">Estado:</label>
+                                            <lightning-input type="text" name="estado" class="input-text"></lightning-input>
+                                        </div>
+                                        <div class="input-group">
+                                            <label for="pais" class="input-label">País:</label>
+                                            <lightning-input type="text" name="pais" class="input-text"></lightning-input>
+                                        </div>
+                                    </div>
+                                    
+                                </div>
+                            </div>
+
+                            <!-- Modal/Popup Footer -->
+                            <footer class="slds-modal__footer">
+                                <lightning-button label="Cancel" onclick={closeModal}></lightning-button>
+                                <lightning-button variant="brand" label="Siguiente" onclick={handleNext}></lightning-button>
+                            </footer>
+                        </div>
+                    </section>
+                    <div class="slds-backdrop slds-backdrop_open"></div>
+                </template>
+
+                <!-- Modal Pop-up 2 para verOp1 -->
+                <template if:true={isModalOpenVerOp1}>
+                    <section role="dialog" tabindex="-1" class="slds-modal slds-fade-in-open">
+                        <div class="slds-modal__container slds-modal_large">
+                            <header class="slds-modal__header">
+                                <lightning-button-icon icon-name="utility:close" alternative-text="Close" class="slds-modal__close" onclick={closeModal}></lightning-button-icon>
+                                <h2 class="slds-text-heading_medium">Account Address Creada</h2>
+                            </header>
+                            <div class="slds-modal__content slds-p-around_medium">
+                            </div>
+                            <footer class="slds-modal__footer">
+                                <lightning-button label="Close" onclick={closeModal}></lightning-button>
+                            </footer>
+                        </div>
+                    </section>
+                    <div class="slds-backdrop slds-backdrop_open"></div>
+                </template>
+
+                <!-- Modal Pop-up 3 para verOp2 -->
+                <template if:true={isModalOpenVerOp2}>
+                    <section role="dialog" tabindex="-1" class="slds-modal slds-fade-in-open">
+                        <div class="slds-modal__container slds-modal_large">
+                            <header class="slds-modal__header">
+                                <lightning-button-icon icon-name="utility:close" alternative-text="Close" class="slds-modal__close" onclick={closeModal}></lightning-button-icon>
+                                <h2 class="slds-text-heading_medium">Account Address Duplicada</h2>
+                            </header>
+                            <div class="slds-modal__content slds-p-around_medium">
+                            </div>
+                            <footer class="slds-modal__footer">
+                                <lightning-button label="Close" onclick={closeModal}></lightning-button>
+                            </footer>
+                        </div>
+                    </section>
+                    <div class="slds-backdrop slds-backdrop_open"></div>
+                </template>
+
+                <!-- Modal Pop-up 4 para verOp3 -->
+                <template if:true={isModalOpenVerOp3}>
+                    <section role="dialog" tabindex="-1" class="slds-modal slds-fade-in-open">
+                        <div class="slds-modal__container slds-modal_large">
+                            <header class="slds-modal__header">
+                                <lightning-button-icon icon-name="utility:close" alternative-text="Close" class="slds-modal__close" onclick={closeModal}></lightning-button-icon>
+                                <h2 class="slds-text-heading_medium">Discrepancias en las Direcciones</h2>
+                            </header>
+                            <div class="slds-modal__content slds-p-around_medium">
+                            </div>
+                            <footer class="slds-modal__footer">
+                                <lightning-button label="Close" onclick={closeModal}></lightning-button>
+                            </footer>
+                        </div>
+                    </section>
+                    <div class="slds-backdrop slds-backdrop_open"></div>
+                </template>
+
+            </div>
+        </div>
+
+        <!-- Subsección 2 - Mapa -->
+        <div class="subsection subsection-one-bottom border-guide">
+            <lightning-map 
+                map-markers={mapMarkers} 
+                zoom-level="12" 
+                center-latitude="25.6866" 
+                center-longitude="-100.3161">
+            </lightning-map>
+        </div>
+    </div>
+
+    <!-- Sección 2 -->
+    <div class="section section-two border-guide">
+        <p>Sección 2</p>
+    </div>
+</template>

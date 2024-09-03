@@ -6,8 +6,8 @@ public with sharing class P2G_crearQuotePDF {
         con = stdController;
         System.debug('id ->' + con.getRecord().Id);
         
-        quote = [select Id, ExpirationDate, QuoteNumber, Contact.Name, Phone, Email, BillingName, ShippingName,CurrencyIsoCode,
-                		Subtotal, Discount, TotalPrice, GrandTotal from Quote where Id =: con.getRecord().Id];
+        quote = [select Id, ExpirationDate, QuoteNumber, Contact.Name, Phone, Email, BillingName, ShippingName,CurrencyIsoCode, Opportunity.Account.Name,
+                		Subtotal, Discount, TotalPrice, GrandTotal, Opportunity.Group__c, Consideraciones_del_Servicio__c from Quote where Id =: con.getRecord().Id];
         StaticResource logoQuote = [SELECT Id, Name, Body, SystemModStamp, NamespacePrefix FROM StaticResource WHERE Name = 'logoQuote'];
         StaticResource piePaginaQuote = [SELECT Id, Name, Body, SystemModStamp, NamespacePrefix FROM StaticResource WHERE Name = 'piePaginaQuote' Limit 1];
         Organization orAddress = [SELECT Country FROM Organization LIMIT 1];
@@ -16,65 +16,113 @@ public with sharing class P2G_crearQuotePDF {
                                               Sales_Price_Converted__c,Quantity,Discount,TotalPrice
                                               FROM QuoteLineItem WHERE QuoteId =: quote.Id];
         String pdf;
-        pdf = '<div class="formatoText"><div>';
+        pdf += '<div class="formatoText">';
         //inicia header
-        pdf += '<div class="slds-grid slds-grid slds-gutters textChico">';
-        pdf += '<div class="slds-col slds-size_6-of-12 margenLogo">';
-        //pdf += '<div><img src="/resource/1711730610000/logoQuote"/></div>';
-        pdf += '<div><img class="logoTamaño" src="/resource/'+logoQuote.SystemModStamp.getTime()+'/'+(logoQuote.NamespacePrefix != null && logoQuote.NamespacePrefix != '' ? logoQuote.NamespacePrefix+ '__' : '')+'logoQuote"/></div>';
-        pdf += '</div><div class="slds-col slds-size_6-of-12 textDerecho">';
-		pdf += '<span>Calle Argentina no. 205-1 Col. Industrial Martel</span><br>';
-		pdf += '<span>de Santa Catarina, N.L. México, C.P. 66367</span>';
-		pdf += '<p>Tel. 01 800 APOYO 06</p><p class="titulos">www.2gologistics.com</p>';
-        pdf += '</div></div>';
+        pdf += header(pdf, logoQuote);
         //fin header
+        //inicia footer
+        pdf += '	<div id="footer">';
+        pdf += '		<div class="formatoText"><div class="vline"></div>';
+        //cotizacion incluye
+        pdf += '			<div><span>Grand Total</span><br>';
+        pdf += '				<span class="textGrande titulos">'+quote.CurrencyIsoCode+' $'+quote.GrandTotal.format()+'</span><br>';
+        if(quote.Opportunity.Group__c == 'SP-FN-FLETE NACIONAL'){
+            pdf += '			<span style="font-weight: bold;">Tu cotización incluye:</span><br>';
+            pdf += '			<ul>';
+            pdf += '				<li>Control Room 24/7</li>';
+            pdf += '				<li>Atención Personalizada</li>';
+            pdf += '				<li>Asesoría Legal</li>';
+            pdf += '				<li>Equipo Dedicado</li>';
+            pdf += '			</ul>';
+        }else{
+            pdf += '			<span style="font-weight: bold;">Las consideraciones del servicio se encuentran el la siguiente pagina</span><br>';
+            pdf += '			<ul>';
+            pdf += '				<li>. </li>';
+            pdf += '				<li>. </li>';
+            pdf += '				<li>. </li>';
+            pdf += '				<li>. </li>';
+            pdf += '			</ul>';
+        }
+        //pdf += '<div><img src="/resource/1712067590000/piePaginaQuote"/></div>';
+        pdf += '				<img src="/resource/'+piePaginaQuote.SystemModStamp.getTime()+'/'+(piePaginaQuote.NamespacePrefix != null && piePaginaQuote.NamespacePrefix != '' ? piePaginaQuote.NamespacePrefix+ '__' : '')+'piePaginaQuote"/>';
+        pdf += '				<div class="line"><hr></div>';
+        pdf += '				<div class="pieRecuadro"></div>';
+        pdf += '			</div>';
+        pdf += '		</div>';
+        pdf += '	</div>';
+        //fin footer
         //Inicia Cuerpo
-        pdf += '<br><br>';
+        pdf += '	<div class="body">';
+        pdf += '		<div class="formatoText">';
+        pdf += '			<br><br>';
 		//Company Address
-        pdf += '<table class="slds-table">';
-  		pdf += '<tbody><tr>';
-      	pdf += '<td class="borderTabla" style="width:20%;">';
-        pdf += '<div class="slds-truncate titulos">Company Address</div>';
-      	pdf += '</td><td class="borderTabla" style="width:80%">';
-        pdf += '<div class="slds-truncate">'+orAddress.Country+'</div>';
-      	pdf += '</td></tr>';
-  		pdf += '</tbody></table>';
-        pdf += '<br><br>';
+        pdf += '			<table class="slds-table">';
+  		pdf += '				<tbody>';
+  		pdf += '					<tr>';
+      	pdf += '						<td class="borderTabla" style="width:20%;">';
+        pdf += '							<div class="slds-truncate titulos">Company Address</div>';
+      	pdf += '						</td>';
+      	pdf += '						<td class="borderTabla" style="width:80%">';
+        pdf += '							<div class="slds-truncate">'+orAddress.Country+'</div>';
+      	pdf += '						</td>';
+      	pdf += '					</tr>';
+  		pdf += '				</tbody>';
+  		pdf += '			</table>';
+  		pdf += '			<br><br>';
 		//Fechas
-        pdf += '<table class="slds-table">';
-  		pdf += '<tbody><tr class="slds-line-height_reset">';
-      	pdf += '<td class="azulAmarillo" style="width:16%">';
-        pdf += '<div class="slds-truncate">Created Date</div>';
-      	pdf += '</td><td class="borderTabla" style="width:16%">';
-        pdf += '<div class="slds-truncate">'+System.today()+'</div>';
-      	pdf += '</td><td class="borderTabla azulAmarillo"  style="width:16%">';
-        pdf += '<div class="slds-truncate">Expiration Date</div>';
-      	pdf += '</td><td class="borderTabla" style="width:16%">';
-        pdf += '<div class="slds-truncate">'+quote.ExpirationDate+'</div>';//2024-05-02</div>';//--------------------------
-      	pdf += '</td><td class="borderTabla azulAmarillo"  style="width:16%">';
-        pdf += '<div class="slds-truncate">Quote Number</div>';
-      	pdf += '</td><td class="borderTabla" style="width:16%">';
-        pdf += '<div class="slds-truncate">'+quote.QuoteNumber+'</div>';
-      	pdf += '</td></tr>';
-  		pdf += '</tbody></table>';
-        pdf += '<br><br>';
+        pdf += '			<table class="slds-table">';
+  		pdf += '				<tbody>';
+  		pdf += '					<tr class="slds-line-height_reset">';
+      	pdf += '						<td class="azulAmarillo" style="width:16%">';
+        pdf += '							<div class="slds-truncate">Created Date</div>';
+      	pdf += '						</td>';
+      	pdf += '						<td class="borderTabla" style="width:16%">';
+        pdf += '							<div class="slds-truncate">'+System.today()+'</div>';
+      	pdf += '						</td>';
+      	pdf += '						<td class="borderTabla azulAmarillo"  style="width:16%">';
+        pdf += '							<div class="slds-truncate">Expiration Date</div>';
+      	pdf += '						</td>';
+      	pdf += '						<td class="borderTabla" style="width:16%">';
+        pdf += '							<div class="slds-truncate">'+quote.ExpirationDate+'</div>';//2024-05-02</div>';
+      	pdf += '						</td>';
+      	pdf += '						<td class="borderTabla azulAmarillo"  style="width:16%">';
+        pdf += '							<div class="slds-truncate">Quote Number</div>';
+      	pdf += '						</td>';
+      	pdf += '						<td class="borderTabla" style="width:16%">';
+        pdf += '							<div class="slds-truncate">'+quote.QuoteNumber+'</div>';
+      	pdf += '						</td>';
+      	pdf += '					</tr>';
+  		pdf += '				</tbody>';
+  		pdf += '			</table>';
+        pdf += '			<br><br>';
 		//info vendedor/cliente
-		pdf += '<table class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_col-bordered">';
-        pdf += '<tbody><tr>';
-        pdf += '<td class="borderTabla"><div class="slds-truncate titulos">Preparede By</div>';
-        pdf += '</td><td class="borderTabla"><div class="slds-truncate">'+user.Name+'</div>';
-        pdf += '</td><td class="borderTabla"><div class="slds-truncate titulos">Contact Name</div>';
-        pdf += '</td><td class="borderTabla"><div class="slds-truncate">'+quote.Contact.Name+'</div>';//Rafael Hernandez Cruz</div>';//--------------------------
-        pdf += '</td></tr><tr>';
-        pdf += '<td class="borderTabla"><div class="slds-truncate titulos">Email</div>';
+		pdf += '			<table class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_col-bordered">';
+        pdf += '				<tbody>';
+        pdf += '					<tr>';
+        pdf += '						<td class="borderTabla">';
+        pdf += '							<div class="slds-truncate titulos">Preparede By</div>';
+        pdf += '						</td>';
+        pdf += '						<td class="borderTabla">';
+        pdf += '							<div class="slds-truncate">'+user.Name+'</div>';
+        pdf += '						</td>';
+        pdf += '						<td class="borderTabla">';
+        pdf += '							<div class="slds-truncate titulos">Contact Name</div>';
+        pdf += '						</td>';
+        pdf += '						<td class="borderTabla">';
+        pdf += '							<div class="slds-truncate">'+quote.Contact.Name+'</div>';//Rafael Hernandez Cruz</div>';
+        pdf += '						</td>';
+        pdf += '					</tr>';
+        pdf += '					<tr>';
+        pdf += '						<td class="borderTabla">';
+        pdf += '							<div class="slds-truncate titulos">Email</div>';
         pdf += '</td><td class="borderTabla"><div class="slds-truncate">'+user.Email+'</div>';
         pdf += '</td><td class="borderTabla"><div class="slds-truncate titulos">Phone</div>';
-        pdf += '</td><td class="borderTabla"><div class="slds-truncate">'+quote.Phone+'</div>';//56489235697</div>';//-------------------------
+        pdf += '</td><td class="borderTabla"><div class="slds-truncate">'+quote.Phone+'</div>';//56489235697</div>';
         pdf += '</td></tr><tr>';
         pdf += '<td class="borderTabla"><div class="slds-truncate titulos"></div>';
         pdf += '</td><td class="borderTabla"><div class="slds-truncate"></div>';
         pdf += '</td><td class="borderTabla"><div class="slds-truncate titulos">Email</div>';
-        pdf += '</td><td class="borderTabla"><div class="slds-truncate">'+quote.Email+'</div>';//rafael.Hernandez@uncorreo.com</div>';//--------
+        pdf += '</td><td class="borderTabla"><div class="slds-truncate">'+quote.Email+'</div>';//rafael.Hernandez@uncorreo.com</div>';
         pdf += '</td></tr>';
 		pdf += '</tbody>';
 		pdf += '</table>';
@@ -82,9 +130,9 @@ public with sharing class P2G_crearQuotePDF {
 		pdf += '<table class="slds-table slds-table_cell-buffer slds-no-row-hover slds-table_bordered">';
         pdf += '<tbody><tr>';
         pdf += '<td class="borderTabla"><div class="slds-truncate titulos">Bill To Name</div>';
-        pdf += '</td><td class="borderTabla"><div class="slds-truncate">'+quote.BillingName+'</div>';//ZHEJIANG TALENTS INTERNATIONAL LOGISTICS CO., LTD</div>';//------------
+        pdf += '</td><td class="borderTabla"><div class="slds-truncate">'+quote.Opportunity.Account.Name+'</div>';//ZHEJIANG TALENTS INTERNATIONAL LOGISTICS CO., LTD</div>';//------------
         pdf += '</td><td class="borderTabla"><div class="slds-truncate titulos">Ship To Name</div>';
-        pdf += '</td><td class="borderTabla"><div class="slds-truncate">'+quote.ShippingName+'</div>';//ZHEJIANG TALENTS INTERNATIONAL LOGISTICS CO., LTD</div>';//-----------
+        pdf += '</td><td class="borderTabla"><div class="slds-truncate">'+quote.Opportunity.Account.Name+'</div>';//ZHEJIANG TALENTS INTERNATIONAL LOGISTICS CO., LTD</div>';//-----------
         pdf += '</td></tr>';
 		pdf += '</tbody>';
 		pdf += '</table>';
@@ -107,6 +155,7 @@ public with sharing class P2G_crearQuotePDF {
         pdf += '<div>Total Price</div>';
         pdf += '</th></tr></thead>';
         if(listaQuoteLine.size() > 0){
+            System.debug('numero de lineas: '+listaQuoteLine.size());
             pdf += '<tbody>';
             Integer recordCount = 0;
             for(QuoteLineItem quoteLine : listaQuoteLine){
@@ -161,7 +210,7 @@ public with sharing class P2G_crearQuotePDF {
 		pdf += '</table>';
         pdf += '<br><br>';
         //totales
-        pdf += '<table class="slds-table tablaDerecha" style="width:30%">';
+        pdf += '<table class="slds-table" ALIGN="right" style="width:30%">';
   		pdf += '<tbody><tr>';
       	pdf += '<td class="borderTabla">';
         pdf += '<div class="slds-truncate">Subtotal</div>';
@@ -185,29 +234,49 @@ public with sharing class P2G_crearQuotePDF {
       	pdf += '</td></tr>';
   		pdf += '</tbody></table>';
 		pdf += '</div>';
-        pdf += '</div></div>';
-        
-        //inicia footer
-        pdf += '<div class="footer formatoText">';
-        //cotizacion incluye
-        pdf += '<div class="vline"></div>';
-        pdf += '<div><span>Grand Total</span><br>';
-        pdf += '<span class="textGrande titulos">'+quote.CurrencyIsoCode+' $'+quote.GrandTotal.format()+'</span><br>';
-		pdf += '<span style="font-weight: bold;">Tu cotización incluye:</span><br>';
-		pdf += '<ul>';
-        pdf += '<li>Control Room 24/7</li>';
-        pdf += '<li>Atención Personalizada</li>';
-        pdf += '<li>Asesoría Legal</li>';
-        pdf += '<li>Equipo Dedicado</li>';
-    	pdf += '</ul>';
-        //pdf += '<div><img src="/resource/1712067590000/piePaginaQuote"/></div>';
-        pdf += '<img src="/resource/'+piePaginaQuote.SystemModStamp.getTime()+'/'+(piePaginaQuote.NamespacePrefix != null && piePaginaQuote.NamespacePrefix != '' ? piePaginaQuote.NamespacePrefix+ '__' : '')+'piePaginaQuote"/>';
-        pdf += '<div class="line"><hr></div>';
-        pdf += '<div class="pieRecuadro"></div>';
+        pdf += '</div></div></div>';
+        if(quote.Opportunity.Group__c != 'SP-FN-FLETE NACIONAL'){
+            pdf += '<div style="page-break-before:always;></div>';
+        	//inicia header
+            pdf += '	<div class="header">';
+            pdf += '		<div class="slds-grid slds-grid slds-gutters textChico">';
+            pdf += '			<div class="slds-col slds-size_6-of-12 margenLogo">';
+            //pdf += '<div><img src="/resource/1711730610000/logoQuote"/></div>';
+            pdf += '				<div><img class="logoTamaño" src="/resource/'+logoQuote.SystemModStamp.getTime()+'/'+(logoQuote.NamespacePrefix != null && logoQuote.NamespacePrefix != '' ? logoQuote.NamespacePrefix+ '__' : '')+'logoQuote"/></div>';
+            pdf += '			</div>';
+            pdf += '			<div class="slds-col slds-size_6-of-12 textDerecho">';
+            pdf += '				<span>Calle Argentina no. 205-1 Col. Industrial Martel</span><br>';
+            pdf += '		  		<span>de Santa Catarina, N.L. México, C.P. 66367</span>';
+            pdf += '				<p>Tel. 01 800 APOYO 06</p><p class="titulos">www.2gologistics.com</p>';
+            pdf += '			</div>';
+            pdf += '		</div>';
+            pdf += '	</div><br><br>';
+            //fin header
+            pdf += '<span style="font-weight: bold;">Las consideraciones del servicio son:</span><br>';
+            pdf += '<span>'+quote.Consideraciones_del_Servicio__c+'</p>';
+        }
         pdf += '</div>';
-        //fin footer
         
         String sinfecha = pdf.replace('00:00:00',' ');
         pdfFinal = sinfecha.replace('null',' ');
+        
+    }
+    public static String header(String pdf, StaticResource logoQuote){
+        //inicia header
+        pdf += '	<div class="header">';
+        pdf += '		<div class="slds-grid slds-grid slds-gutters textChico">';
+        pdf += '			<div class="slds-col slds-size_6-of-12 margenLogo">';
+        //pdf += '<div><img src="/resource/1711730610000/logoQuote"/></div>';
+        pdf += '				<div><img class="logoTamaño" src="/resource/'+logoQuote.SystemModStamp.getTime()+'/'+(logoQuote.NamespacePrefix != null && logoQuote.NamespacePrefix != '' ? logoQuote.NamespacePrefix+ '__' : '')+'logoQuote"/></div>';
+        pdf += '			</div>';
+        pdf += '			<div class="slds-col slds-size_6-of-12 textDerecho">';
+		pdf += '				<span>Calle Argentina no. 205-1 Col. Industrial Martel</span><br>';
+		pdf += '		  		<span>de Santa Catarina, N.L. México, C.P. 66367</span>';
+		pdf += '				<p>Tel. 01 800 APOYO 06</p><p class="titulos">www.2gologistics.com</p>';
+        pdf += '			</div>';
+        pdf += '		</div>';
+        pdf += '	</div>';
+        //fin header
+        return pdf;
     }
 }
