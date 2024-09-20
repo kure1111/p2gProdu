@@ -1,0 +1,83 @@
+<apex:page id="page" standardController="Account_Address__c" showHeader="false" sidebar="false" docType="html-5.0" applyBodyTag="False" applyHtmlTag="False">
+    <head>
+        <apex:includeScript value="{!$Resource.neu_jquery}"/> 
+        <apex:includeScript value="{!$Resource.jquery_1_10_2}"/> 
+        <apex:includeScript value="{!$Resource.jquery_ui_1_10_3}"/>
+        <apex:includeScript value="{!$Resource.neurored_jquery}"/> 
+        <script type="text/javascript" src="https://maps.google.com/maps/api/js?key=AIzaSyDkwLqNdoijG5TO8q9JgMdnXz9yHdEwfWc"></script>
+        
+        <apex:stylesheet value="{!URLFOR($Resource.jquery_ui_1_10_3_css,'jquery-ui-1.10.3.min.css')}"/>
+        <script>
+            $(document).ready(function () {
+                initializeMap();
+            });
+
+            var map;
+            var geocoder;
+            var marker;
+
+            function initializeMap() {
+                var initialPosition = new google.maps.LatLng(25.6866, -100.3161); // Coordenadas fijas, ejemplo: Monterrey, México.
+                var mapOptions = {
+                    zoom: 12,
+                    center: initialPosition
+                };
+                
+                map = new google.maps.Map(document.getElementById('map_canvas'), mapOptions);
+                geocoder = new google.maps.Geocoder();
+
+                // Crear el marcador en la posición inicial
+                marker = new google.maps.Marker({
+                    position: initialPosition,
+                    map: map,
+                    title: "Ubicación Inicial",
+                    draggable: true, // Permite mover el marcador
+                    animation: google.maps.Animation.DROP
+                });
+
+                // Listener para actualizar las coordenadas al mover el marcador
+                google.maps.event.addListener(marker, 'dragend', function() {
+                    updateMarkerPosition(marker.getPosition());
+                });
+
+                // Listener para actualizar el marcador al hacer clic en el mapa
+                google.maps.event.addListener(map, 'click', function(e) {
+                    updateMarkerPosition(e.latLng);
+                    marker.setPosition(e.latLng);
+                    map.panTo(marker.getPosition());
+                });
+            }
+
+            // Listener para recibir mensajes del LWC
+            window.addEventListener('message', function(event) {
+                console.log('Mensaje recibido en VF Page:', event.data); // Agregar este log
+                if (event.origin === '*' || event.origin.includes('pak2gologistics')) {
+                    if (event.data.lat && event.data.lng) {
+                        // Actualiza la posición del marcador sin reinicializar el mapa
+                        var newPosition = new google.maps.LatLng(event.data.lat, event.data.lng);
+                        marker.setPosition(newPosition);
+                        map.panTo(newPosition);
+                    }
+                }
+            });
+
+            function updateMarkerPosition(position) {
+                // Imprimir las coordenadas en la consola para verificar
+                console.debug("Latitud: " + position.lat() + ", Longitud: " + position.lng());
+
+                // Enviar las coordenadas al LWC padre usando postMessage
+                window.parent.postMessage({
+                    lat: position.lat(),
+                    lng: position.lng()
+                }, '*'); // Puedes cambiar '*' por el dominio de Salesforce para mayor seguridad
+            }
+        </script>
+    </head> 
+
+    <apex:form id="form">
+        <apex:pageMessages id="pagemessages"/>
+        
+        <!-- Sección del Mapa -->
+        <div id="map_canvas" style="width:100%; height: 500px;"></div>
+    </apex:form>
+</apex:page>
