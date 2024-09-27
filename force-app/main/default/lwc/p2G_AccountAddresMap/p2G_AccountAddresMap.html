@@ -1,4 +1,5 @@
 <template>
+    <p style="text-align: justify;">1. Para buscar una ubicación, ingresa el nombre o código postal en el campo correspondiente. Si no encuentras la ubicación deseada, puedes crear una nueva haciendo clic en el botón "Crear Ubicación". Puedes expandir la sección inferior para ver más detalles y al hacer clic en una ubicación, serás redirigido al registro asociado.</p>
     <lightning-accordion allow-multiple-sections-open active-section-name="section1">
     <!-- Sección 1 -->
     <lightning-accordion-section name="section1" label="Creación de Ubicaciones">
@@ -8,7 +9,7 @@
             <div class="subsubsection border-guide">
                 
                 <!-- Búsqueda por name -->   
-                <div class="subsubsection-inner border-guide">              
+                <div>              
                     <div style="width: 100%;">
                         <div onkeyup={searchKeyAddress}>
                             <lightning-input id="Planner" label="Buscar Ubicación"
@@ -37,7 +38,7 @@
                 </div>
 
                 <!-- Búsqueda por cp -->  
-                <div class="subsubsection-inner border-guide">      
+                <div>      
                     <div style="width: 100%;">
                         <div onkeyup={searchKeyCp}>
                             <lightning-input id="codigoCP" label="Buscar ubicacion por CP"
@@ -97,6 +98,8 @@
                             <header class="slds-modal__header">
                                 <lightning-button-icon icon-name="utility:close" alternative-text="Close" class="slds-modal__close" onclick={closeModal}></lightning-button-icon>
                                 <h2 class="slds-text-heading_medium">Creación de Account Address</h2>
+                                <p style="text-align: justify;">Para ingresar una ubicación, primero escribe el Código Postal o Ubicación en el campo de la izquierda y presiona "Buscar". Luego, fija la posición con el botón "Fijar", completa los campos necesarios en el formulario o cámbialos si es necesario, y haz clic en "Siguiente" para continuar el proceso.</p>
+
                             </header>
 
                             <!-- Modal/Popup Body -->
@@ -178,33 +181,6 @@
                     <div class="slds-backdrop slds-backdrop_open"></div>
                 </template>
 
-                <!-- Modal de Instrucciones -->
-                <template if:true={showInstructions}>
-                    <section role="dialog" tabindex="-1" class="slds-modal slds-fade-in-open slds-modal_small">
-                        <div class="slds-modal__container">
-                            <!-- Header del modal de instrucciones -->
-                            <header class="slds-modal__header">
-                                <h2 class="slds-text-heading_medium">Instrucciones</h2>
-                            </header>
-
-                            <!-- Cuerpo del modal de instrucciones -->
-                            <div class="slds-modal__content slds-p-around_medium">
-                                <p><strong>Paso 1:</strong> Ingresa el Código Postal o ubicación en el campo de la izquierda.</p>
-                                <p><strong>Paso 2:</strong> Haz clic en "Buscar" para encontrar la ubicación.</p>
-                                <p><strong>Paso 3:</strong> Fija la posición utilizando el botón "Fijar".</p>
-                                <p><strong>Paso 4:</strong> Completa los campos a la derecha con la información de la dirección.</p>
-                                <p><strong>Paso 5:</strong> Haz clic en "Siguiente" para continuar con el proceso.</p>
-                            </div>
-
-                            <!-- Footer del modal de instrucciones -->
-                            <footer class="slds-modal__footer">
-                                <lightning-button variant="brand" label="OK" onclick={closeInstructions}></lightning-button>
-                            </footer>
-                        </div>
-                    </section>
-                    <div class="slds-backdrop slds-backdrop_open"></div>
-                </template>
-
                 <!-- Modal Pop-up para verOp1 -->
                 <template if:true={isModalOpenVerOp1}>
                     <section role="dialog" tabindex="-1" class="slds-modal slds-fade-in-open slds-modal_large">
@@ -215,29 +191,52 @@
                                 <h2 class="slds-text-heading_medium">Account Address Creada</h2>
                             </header>
 
-                            <!-- Modal Body -->
-                            <div class="slds-modal__content slds-p-around_medium">
-                                <div class="slds-grid slds-wrap">
-                                    <!-- Left Section (Name and Address) -->
-                                    <div class="slds-col slds-size_1-of-5 slds-p-around_medium">
-                                        <div class="section-1">
-                                            <p><strong>Nombre:</strong> {nombre}</p>                                            
-                                            <p><strong>Calle:</strong> {calle} <strong>Número:</strong> {numero}</p>
-                                            <p><strong>Colonia:</strong> {colonia}</p>
-                                            <p><strong>Código Postal:</strong> {codigoPostal}</p>
-                                            <p><strong>Localidad:</strong> {localidad}</p>
-                                            <p><strong>Estado:</strong> {estado}</p>
-                                            <p><strong>País:</strong> {pais}</p>
-                                        </div>
+                            <!-- Body div -->
+                            <div class="slds-modal__content slds-p-around_medium" style="height: 100vh; display: flex; flex-direction: row; overflow: hidden;">
+
+                                <!-- First div (1/5 of the width) -->
+                                <div style="flex: 1; display: flex; flex-direction: column;">
+                                    <!-- Content for the first div -->
+                                    <div class="slds-box slds-theme_default slds-m-bottom_x-small">
+                                        <p class="slds-text-body_regular"><strong>Nombre:</strong></p>
+                                        <p>{nombre}</p>
                                     </div>
-                                    <!-- Right Section (Map) -->
-                                    <div class="slds-col slds-size_4-of-5 slds-p-around_medium">
-                                            <lightning-map 
-                                                map-markers={direccion} 
-                                                zoom-level="14">
-                                            </lightning-map>
+                                    <div class="slds-box slds-theme_default slds-m-bottom_x-small">
+                                        <p class="slds-text-body_regular"><strong>Calle:</strong></p>
+                                        <p>{calle} <strong>Número:</strong> {numero}</p>
+                                    </div>
+                                    <div class="slds-box slds-theme_default slds-m-bottom_x-small">
+                                        <p class="slds-text-body_regular"><strong>Colonia:</strong></p>
+                                        <p>{colonia}</p>
+                                    </div>
+                                    <div class="slds-box slds-theme_default slds-m-bottom_x-small">
+                                        <p class="slds-text-body_regular"><strong>Código Postal:</strong></p>
+                                        <p>{codigoPostal}</p>
+                                    </div>
+                                    <div class="slds-box slds-theme_default slds-m-bottom_x-small">
+                                        <p class="slds-text-body_regular"><strong>Localidad:</strong></p>
+                                        <p>{localidad}</p>
+                                    </div>
+                                    <div class="slds-box slds-theme_default slds-m-bottom_x-small">
+                                        <p class="slds-text-body_regular"><strong>Estado:</strong></p>
+                                        <p>{estado}</p>
+                                    </div>
+                                    <div class="slds-box slds-theme_default">
+                                        <p class="slds-text-body_regular"><strong>País:</strong></p>
+                                        <p>{pais}</p>
                                     </div>
                                 </div>
+
+                                <!-- Second div (4/5 of the width) -->
+                                <div style="flex: 4; display: flex; justify-content: center; align-items: center; height: 100%; overflow: hidden;">
+                                    <!-- Lightning Map -->
+                                    <lightning-map 
+                                        map-markers={direccion}
+                                        zoom-level="14" 
+                                        style="height: 100%; width: 100%;">
+                                    </lightning-map>
+                                </div>
+
                             </div>
 
                             <!-- Modal Footer -->
@@ -257,42 +256,58 @@
                             <!-- Modal Header -->
                             <header class="slds-modal__header">
                                 <lightning-button-icon icon-name="utility:close" alternative-text="Close" class="slds-modal__close" onclick={closeModal}></lightning-button-icon>
-                                <h2 class="slds-text-heading_medium">Ubicacion Duplicada</h2>
+                                <h2 class="slds-text-heading_medium">Posible ubicación duplicada</h2>
                             </header>
 
-                            <!-- Modal Body -->
-                            <div class="slds-modal__content slds-p-around_medium">
-                                <div class="slds-grid slds-wrap">
-
-                                    <!-- First Section (20% width) -->
-                                    <div class="slds-col slds-size_1-of-5 slds-p-around_medium">
-                                        <div class="section-1">
-                                            <h2 style="font-weight: bold; font-size: 1.2em;">Ubicacion a Crear: </h2>
-                                            <p style="font-weight: bold; font-size: 1.2em;">Dirección</p>
-                                            <p><strong>Nombre:</strong> {nombre}</p>                                            
-                                            <p><strong>Calle:</strong> {calle} <strong>Número:</strong> {numero}</p>
-                                            <p><strong>Colonia:</strong> {colonia}</p>
-                                            <p><strong>Código Postal:</strong> {codigoPostal}</p>
-                                            <p><strong>Localidad:</strong> {localidad}</p>
-                                            <p><strong>Estado:</strong> {estado}</p>
-                                            <p><strong>País:</strong> {pais}</p>
-                                        </div>
+                            <!-- Body div -->
+                            <div class="slds-modal__content slds-p-around_medium" style="height: 100vh; display: flex; flex-direction: row; overflow: hidden;">
+                                <!-- one div (4/5 of the width) -->
+                                <div style="flex: 1; display: flex; flex-direction: column;">
+                                    <div class="slds-box slds-theme_default slds-m-bottom_small" style="text-align: center;">
+                                        <h2 class="slds-text-heading_medium slds-text-bold">Ubicación a Crear:</h2>
                                     </div>
-
-                                    <div class="subsection subsection-one-bottom border-guide">
-                                        <h2 style="font-weight: bold; font-size: 1.2em; text-align: center;">Ubicaciones Encontradas</h2>
-                                        <lightning-map 
-                                            map-markers={direcciones} 
-                                            zoom-level="15" 
-                                            center-latitude="25.6866" 
-                                            center-longitude="-100.3161">
-                                        </lightning-map>
+                                    <!-- Content for the first div -->
+                                    <div class="slds-box slds-theme_default slds-m-bottom_x-small">
+                                        <p class="slds-text-body_regular"><strong>Nombre:</strong></p>
+                                        <p>{nombre}</p>
                                     </div>
-
+                                    <div class="slds-box slds-theme_default slds-m-bottom_x-small">
+                                        <p class="slds-text-body_regular"><strong>Calle:</strong></p>
+                                        <p>{calle} <strong>Número:</strong> {numero}</p>
+                                    </div>
+                                    <div class="slds-box slds-theme_default slds-m-bottom_x-small">
+                                        <p class="slds-text-body_regular"><strong>Colonia:</strong></p>
+                                        <p>{colonia}</p>
+                                    </div>
+                                    <div class="slds-box slds-theme_default slds-m-bottom_x-small">
+                                        <p class="slds-text-body_regular"><strong>Código Postal:</strong></p>
+                                        <p>{codigoPostal}</p>
+                                    </div>
+                                    <div class="slds-box slds-theme_default slds-m-bottom_x-small">
+                                        <p class="slds-text-body_regular"><strong>Localidad:</strong></p>
+                                        <p>{localidad}</p>
+                                    </div>
+                                    <div class="slds-box slds-theme_default slds-m-bottom_x-small">
+                                        <p class="slds-text-body_regular"><strong>Estado:</strong></p>
+                                        <p>{estado}</p>
+                                    </div>
+                                    <div class="slds-box slds-theme_default">
+                                        <p class="slds-text-body_regular"><strong>País:</strong></p>
+                                        <p>{pais}</p>
+                                    </div>
                                 </div>
+
+                                <!-- Second div (4/5 of the width) -->
+                                <div style="flex: 4; display: flex; justify-content: center; align-items: center; height: 100%; overflow: hidden;">
+                                    <!-- Lightning Map -->
+                                    <lightning-map 
+                                        map-markers={direcciones}
+                                        zoom-level="14" 
+                                        style="height: 100%; width: 100%;">
+                                    </lightning-map>
+                                </div>
+
                             </div>
-
-
                             <!-- Modal Footer -->
                             <footer class="slds-modal__footer">
                                 <p style="margin: 0; padding-right: 10px; color: red; font-size: 1.2rem; font-weight: bold;">
@@ -318,9 +333,6 @@
                 onmarkerclick={handleMarkerClick}>
             </lightning-map>
         </div>
-    </div>
-
-    
 
     </lightning-accordion-section>
 
@@ -399,6 +411,7 @@
                 </template>
             </tbody>
         </table>
+        
     </lightning-accordion-section>
 </lightning-accordion>
 </template>

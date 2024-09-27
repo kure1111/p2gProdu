@@ -128,11 +128,9 @@ export default class P2G_AccountAddresMap extends LightningElement {
 
     // Para el modal principal
     isModalOpen = false;
-    showInstructions = false;
 
     openModal() {
         this.isModalOpen = true;
-        this.showInstructions = true;
     }
 
     closeModal() {
@@ -140,13 +138,6 @@ export default class P2G_AccountAddresMap extends LightningElement {
         this.isModalOpenVerOp1 = false;
         this.isModalOpenVerOp2 = false;
         this.isModalOpenVerOp3 = false;
-
-        this.showInstructions = false;
-
-    }
-
-    closeInstructions() {
-        this.showInstructions = false; // Cierra solo el modal de instrucciones
     }
 
     // Manejo de los otros modales
