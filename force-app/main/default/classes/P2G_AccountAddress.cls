@@ -220,7 +220,7 @@ public class P2G_AccountAddress {
                                          ];
         
         if(listAddress.size() > 0){
-            //duplicada, mostrar ubis en mapaa y pregutar si aun asi quiere continuar 
+            //duplicada, mostrar ubis en mapaa y pregutar si aun asi quiere continuarr
             val = 'duplicado';
             
         }
@@ -241,8 +241,8 @@ public class P2G_AccountAddress {
                 newAddress.EstadoEspejo__c = lista[0].Clave_Relacion_SAT__c;//estado;
                 newAddress.PaisEspejo__c = lista[0].Pais_RefCP__c;//pais
             
-            	newAddress.Codigo_Postal_CP__c = lista[0].Id; //poner condicion
-            	if(listaColExiste.size() > 0){
+            	newAddress.Codigo_Postal_CP__c = lista[0].Id; //poner condicion 
+                            	if(listaColExiste.size() > 0){
                     newAddress.Colonia_cp__c = listaColExiste[0].Id;
                 }
                 else {
