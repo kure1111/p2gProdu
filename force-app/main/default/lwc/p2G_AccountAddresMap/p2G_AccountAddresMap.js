@@ -138,6 +138,7 @@ export default class P2G_AccountAddresMap extends LightningElement {
         this.isModalOpenVerOp1 = false;
         this.isModalOpenVerOp2 = false;
         this.isModalOpenVerOp3 = false;
+        this.resetFields();
     }
 
     // Manejo de los otros modales
@@ -213,8 +214,18 @@ export default class P2G_AccountAddresMap extends LightningElement {
     @track direccion;
 
     handleNext() {
+
+        if(!this.lat){
+            this.showToast('Fijar', 'Por favor, lee las instrucciones, Fijar ubicacion es necesario', 'warning');
+            return;
+        }
+
+        if(this.nombre ===''){
+            this.showToast('Nombre Necesario', 'Por favor, lee las instrucciones, Darle nombre y datos', 'warning');
+            return;
+        }
         const stringList = this.createStringList();
-    
+        
         addressOption({ direccion: stringList })
         .then(result => {
             this.valor = result;
@@ -387,4 +398,21 @@ export default class P2G_AccountAddresMap extends LightningElement {
         console.log('URL: ',recordUrl);
         window.open(recordUrl, '_blank');
     }
+
+    resetFields() {
+        this.nombre = '';
+        this.calle = '';
+        this.numero = '';
+        this.colonia = '';
+        this.codigoPostal = '';
+        this.localidad = '';
+        this.municipio = '';
+        this.estado = '';
+        this.pais = '';
+        this.address = ''; // Campo general de dirección
+        this.valor = null; // Valor puede ser null o '' según el uso
+        this.lat = null; // Puedes dejar lat y lng como null o '' dependiendo de tus validaciones
+        this.lng = null;
+    }
+    
 }

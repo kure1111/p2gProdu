@@ -429,12 +429,13 @@
                                             </td>
                                             <td>
                                                 <div class="slds-truncate">
-                                                    <template if:true={address.esValidado}>
+                                                    <lightning-input type="radio" name="selection" value={address.seleccion} onchange={selectAddress}></lightning-input>
+                                                    <!--template if:true={address.esValidado}>
                                                         <lightning-input type="radio" name="selection" value={address.seleccion} onchange={selectAddress}></lightning-input>
                                                     </template>
                                                     <template if:false={address.esValidado}>
                                                         <p style="color: #C4C909;">Pendiente de Validar</p>
-                                                    </template>
+                                                    </template-->
                                                 </div>
                                             </td>
                                         </tr>
