@@ -5,7 +5,8 @@ public class P2G_AccountAddress {
         //String recordCarrier = Schema.SObjectType.Account.getRecordTypeInfosByName().get('Supply Chain Partner').getRecordTypeId();
         list<Account_Address__c> AccountListRecord = new list<Account_Address__c>();
         for(Account_Address__c accountSearch : [SELECT Id, Name FROM Account_Address__c
-                                                WHERE status__c = 'Validado'AND Active__c = true AND Name LIKE : searchKeyword limit 15]){
+        //WHERE status__c = 'Validado'AND Active__c = true AND Name LIKE : searchKeyword limit 15]){
+        WHERE Name LIKE : searchKeyword limit 15]){
                                                     AccountListRecord.add(accountSearch);
                                                 }
         if(AccountListRecord.size() == 0){
@@ -204,23 +205,22 @@ public class P2G_AccountAddress {
           //                             AND Clave_Relacion_SAT__r.Name =:estado];
         
         List<Catalogo_SAT__c> lista = [SELECT Id,Name,Pais_RefCP__c,Localidad_Ref_CP__c,Clave_Relacion_SAT__c FROM Catalogo_SAT__c WHERE Name =:codigoPostal
-                                       AND Pais_RefCP__r.Name =:paisConAcento];
-        
-        
+                                       AND Pais_RefCP__r.Name =:paisConAcento limit 1];
+         
         for(Catalogo_SAT__c item:lista){
             listaIds.add(item.Id); 
         }
-
-        List<Catalogo_SAT__c> listaColExiste = [SELECT Id, Name,Codigo_Postal__c FROM Catalogo_SAT__c WHERE (Name =:colonia AND Codigo_Postal__c IN: listaIds)
+        System.debug('listaIds:'+ lista);
+        List<Catalogo_SAT__c> listaColExiste = [SELECT Id, Name,Codigo_Postal__c ,Clave_Relacion_SAT__c FROM Catalogo_SAT__c WHERE (Name =:colonia AND Clave_Relacion_SAT__c IN: listaIds)
         AND recordTypeId ='0124T000000Q3D0QAK' 
        ];
-        
-        List<Catalogo_SAT__c> listaCol = [SELECT Id, Name,Codigo_Postal__c FROM Catalogo_SAT__c WHERE Codigo_Postal__c ='a3K4T000000R0f6UAC'
+       System.debug('listaColExiste:'+ listaColExiste);
+        List<Catalogo_SAT__c> listaCol = [SELECT Id, Name,Codigo_Postal__c,Clave_Relacion_SAT__c FROM Catalogo_SAT__c WHERE (Clave_Relacion_SAT__c IN: listaIds)
                                           AND recordTypeId ='0124T000000Q3D0QAK' 
                                          ];
-        
+        System.debug('listaCol:'+ listaCol);
         if(listAddress.size() > 0){
-            //duplicada, mostrar ubis en mapaa y pregutar si aun asi quiere continuarr
+            //duplicada, mostrar ubis en mapaa y pregutar si aun asi quiere continuar 
             val = 'duplicado';
             
         }
@@ -241,8 +241,8 @@ public class P2G_AccountAddress {
                 newAddress.EstadoEspejo__c = lista[0].Clave_Relacion_SAT__c;//estado;
                 newAddress.PaisEspejo__c = lista[0].Pais_RefCP__c;//pais
             
-            	newAddress.Codigo_Postal_CP__c = lista[0].Id; //poner condicion 
-                            	if(listaColExiste.size() > 0){
+            	newAddress.Codigo_Postal_CP__c = lista[0].Id; //poner condicion
+            	if(listaColExiste.size() > 0){
                     newAddress.Colonia_cp__c = listaColExiste[0].Id;
                 }
                 else {
@@ -294,18 +294,18 @@ public class P2G_AccountAddress {
         
         
         List<Catalogo_SAT__c> lista = [SELECT Id,Name,Pais_RefCP__c,Localidad_Ref_CP__c,Clave_Relacion_SAT__c FROM Catalogo_SAT__c WHERE Name =:codigoPostal
-                                       AND Pais_RefCP__r.Name =:paisConAcento];
+                                       AND Pais_RefCP__r.Name =:paisConAcento limit 1];
         
         
         for(Catalogo_SAT__c item:lista){
             listaIds.add(item.Id); 
         }
 
-        List<Catalogo_SAT__c> listaColExiste = [SELECT Id, Name,Codigo_Postal__c FROM Catalogo_SAT__c WHERE (Name =:colonia AND Codigo_Postal__c IN: listaIds)
+        List<Catalogo_SAT__c> listaColExiste = [SELECT Id, Name,Codigo_Postal__c,Clave_Relacion_SAT__c FROM Catalogo_SAT__c WHERE (Name =:colonia AND Clave_Relacion_SAT__c IN: listaIds)
         AND recordTypeId ='0124T000000Q3D0QAK' 
        ];
        
-        List<Catalogo_SAT__c> listaCol = [SELECT Id, Name,Codigo_Postal__c FROM Catalogo_SAT__c WHERE (Name =:colonia OR Codigo_Postal__c IN: listaIds)
+        List<Catalogo_SAT__c> listaCol = [SELECT Id, Name,Codigo_Postal__c,Clave_Relacion_SAT__c FROM Catalogo_SAT__c WHERE (Clave_Relacion_SAT__c IN: listaIds)
                                           AND recordTypeId ='0124T000000Q3D0QAK'
                                          ];
         
@@ -339,6 +339,9 @@ public class P2G_AccountAddress {
                 newAddress.Numero_Ext_cp__c = numero;
                 newAddress.Calle_cat__c = calle;
 
+                System.debug('listaIds:'+ lista);
+                System.debug('listaColExiste:'+ listaColExiste);
+                System.debug('listaCol:'+ listaCol);
             	insert newAddress;
             	sendAccountCR(newAddress.Id);
             	val = newAddress.Id;      
