@@ -4,23 +4,26 @@ import getAddress from '@salesforce/apex/P2G_AccountAddress.getAddress';
 import getCP from '@salesforce/apex/P2G_AccountAddress.getCP';
 import getMarkets from '@salesforce/apex/P2G_AccountAddress.getMapMarkers'; 
 import getMarketsName from '@salesforce/apex/P2G_AccountAddress.getMapMarkersByName';
+import getMapMarkersByUser from '@salesforce/apex/P2G_AccountAddress.getMapMarkersByUser';
 import getAddressGoogle from '@salesforce/apex/P2G_GeoLocationService.getAddress';
 import getAddressGoogleCp from '@salesforce/apex/P2G_GeoLocationService.getAddressCp';
 import addressOption from '@salesforce/apex/P2G_AccountAddress.createAddress';
 import addressOptionD from '@salesforce/apex/P2G_AccountAddress.createAddressD';
 import getResume from '@salesforce/apex/P2G_AccountAddress.getResume';
 import getDuplicates from '@salesforce/apex/P2G_AccountAddress.getDuplicates';
+import addressEdit from '@salesforce/apex/P2G_AccountAddress.addressEdit';
+
 
 export default class P2G_AccountAddresMap extends LightningElement {
     iframeSrc = '/apex/mapGoogle';
-
+    valorrr = 6;
     @track nombre = '';
     @track calle = '';
     @track numero = '';
     @track colonia = '';
     @track codigoPostal = '';
     @track localidad = '';
-    @track municipio='';
+    //@track municipio='';
     @track estado = '';
     @track pais = '';
     @track address = ''; // Si necesitas manejar un campo general de dirección
@@ -29,22 +32,26 @@ export default class P2G_AccountAddresMap extends LightningElement {
 
     @track lat;
     @track lng;
+    latProvisional = 25.6866;
+    lonProvisional = -100.3161;
     @track mapMarkers = [
         {
             location: {
-                Latitude: 25.6866,
-                Longitude: -100.3161
+                Latitude: this.latProvisional,
+                Longitude: this.lonProvisional
             },
             title: 'Monterrey, México',
         }
     ];
+
+    @track showResumen = false;
+    @track showResumenEdit = false;
 
     handleInputChange(event) {
         const fieldName = event.target.name;
         this[fieldName] = event.target.value;
     }
 
-    //@track mapMarkers;
     // addres busqueda
     @track searchValueAddress;
     @track searchValueIdAdress;
@@ -57,6 +64,9 @@ export default class P2G_AccountAddresMap extends LightningElement {
             getAddress({ address: this.searchValueAddress })
                 .then(result => {
                     this.sideRecordsAddress = result;
+                    if(this.sideRecordsAddress.length === 0){
+                        this.showToast('Error', 'Sin registros validados encontrados', 'error');
+                    }
                 })
                 .catch(error => {
                     console.log('Error: ', error);
@@ -128,6 +138,7 @@ export default class P2G_AccountAddresMap extends LightningElement {
 
     // Para el modal principal
     isModalOpen = false;
+    isModalOpenEdit = false;
 
     openModal() {
         this.isModalOpen = true;
@@ -137,14 +148,20 @@ export default class P2G_AccountAddresMap extends LightningElement {
         this.isModalOpen = false;
         this.isModalOpenVerOp1 = false;
         this.isModalOpenVerOp2 = false;
-        this.isModalOpenVerOp3 = false;
+        this.location2User();
+        this.resetFields();
+    }
+
+    closeModalEdit() {
+        this.isModalOpenEdit = false;
+        this.modalEdit = false;
+        this.location2User();
         this.resetFields();
     }
 
     // Manejo de los otros modales
     @track isModalOpenVerOp1 = false;
     @track isModalOpenVerOp2 = false;
-    @track isModalOpenVerOp3 = false;
 
     createStringList() {
         const stringList = [
@@ -165,52 +182,6 @@ export default class P2G_AccountAddresMap extends LightningElement {
         return stringList;
     }
 
-    handleNextOri() {
-        const stringList = this.createStringList();
-        let verOp;
-        let valor;
-        //this.showToast('Error', 'Error Al crear Direccion', 'Error');
-        // Declarar la variable verOp y realizar los cálculos
-
-        addressOption({ direccion: stringList })
-        .then(result => {
-            valor = result;
-            console.log('valor: ',valor);
-        })
-        .catch(error => {
-            console.log('Error: ', error);
-            valor = 'no';
-        });
-        
-        switch (valor) {
-            case 'no':
-                // Código para el caso 'no'
-                verOp = 3;
-                break;
-
-            case 'duplicado':
-                // Código para el caso 'duplicado'
-                verOp = 2;
-                break;
-
-            default:
-                // regreso el id
-                verOp = 1;
-                break;
-        }
-
-        // Lógica para mostrar el modal correspondiente
-        this.isModalOpen = false; // Cerrar el modal principal
-
-        if (verOp === 1) {
-            this.isModalOpenVerOp1 = true;
-        } else if (verOp === 2) {
-            this.isModalOpenVerOp2 = true;
-        } else if (verOp === 3) {
-            this.isModalOpenVerOp3 = true;
-        }
-    }
-
     @track direccion;
 
     handleNext() {
@@ -220,10 +191,37 @@ export default class P2G_AccountAddresMap extends LightningElement {
             return;
         }
 
-        if(this.nombre ===''){
-            this.showToast('Nombre Necesario', 'Por favor, lee las instrucciones, Darle nombre y datos', 'warning');
+        if (this.validateFields()) {
+            this.showToast('Datos necesarios', 'Por favor, lee las instrucciones, faltan datos necesarios', 'warning');
             return;
         }
+        this.showResumen = true;
+        //this.isModalOpen = false;
+    }
+
+    handleNextEdit() {
+
+        if(!this.lat){
+            this.showToast('Mover', 'Para editar es necesario mover el marker y fijar de nuevo', 'warning');
+            return;
+        }
+
+        if (this.validateFields()) {
+            this.showToast('Datos necesarios', 'Por favor, lee las instrucciones, faltan datos necesarios', 'warning');
+            return;
+        }
+        this.showResumenEdit = true;
+    }
+
+    handleCancel() {
+        // Lógica para cerrar el modal o cancelar
+        this.showResumen = false;
+        this.showResumenEdit = false;
+        //this.isModalOpen = true;
+    }
+
+    handleAccept() {
+        this.showResumen = false;
         const stringList = this.createStringList();
         
         addressOption({ direccion: stringList })
@@ -252,6 +250,52 @@ export default class P2G_AccountAddresMap extends LightningElement {
             }
 
         });
+
+    }
+
+    handleEdit() {
+        this.showResumenEdit = false;
+        const stringList = this.createStringList();
+        stringList.push(this.idEdit);
+        addressEdit({ direccion: stringList })
+        .then(result => {
+            this.valor = result;
+            this.getAddresEdit();
+            this.modalEdit = true;
+        })
+        .catch(error => {
+            console.log('Error: ', error);
+            this.modalEdit = false;
+            this.showToast('Error', 'Ocurrió un error al editar', 'error');
+
+        })
+        .finally(() => {
+            this.location2User();
+        });
+
+    }
+
+    // Función para validar los campos obligatorios
+    validateFields() {
+        const inputGroups = this.template.querySelectorAll('.input-group');
+        let hasError = false;
+
+        inputGroups.forEach(group => {
+            const input = group.querySelector('lightning-input');
+            if (input && (input.name === 'nombre' || input.name === 'calle' || input.name === 'numero' || input.name === 'colonia')) {
+                // Comprobar si el valor está vacío o solo contiene espacios
+                if (!input.value || input.value.trim() === '') {
+                    // Añadir clase de error al contenedor
+                    group.classList.add('input-error');  
+                    hasError = true;
+                } else {
+                    // Remover clase de error si el campo está lleno
+                    group.classList.remove('input-error');  
+                }
+            }
+        });
+
+        return hasError;
     }
 
     @track dire;
@@ -263,20 +307,38 @@ export default class P2G_AccountAddresMap extends LightningElement {
         .then(result => {
             this.direccion = result;
             this.dire = this.direccion[0];
-            console.log('direccion: ',this.direccion[0]);
+            this.isModalOpenEdit = false;
             this.isModalOpenVerOp1 = true;
-            this.isModalOpenVerOp2 = false;
-            this.isModalOpenVerOp3 = false;
+            this.isModalOpenVerOp2 =false;
+            this.showResumen = false;
+
         })
         .catch(error => {
             console.log('Error: ', error);
             this.direccion = null;
+            this.modalEdit = false;
+        })
+    }
+
+    getAddresEdit() {
+        getResume({ idAddress: this.valor })
+        .then(result => {
+            this.direccion = result;
+            this.dire = this.direccion[0];
+            this.isModalOpenEdit = false;
+            this.modalEdit = true;
+            this.showResumenEdit = false;
+
+        })
+        .catch(error => {
+            console.log('Error: ', error);
+            this.direccion = null;
+            this.modalEdit = false;
         })
     }
 
     clickDupli() {
         const stringList = this.createStringList();
-    
         addressOptionD({ direccion: stringList })
         .then(result => {
             this.valor = result;
@@ -289,6 +351,7 @@ export default class P2G_AccountAddresMap extends LightningElement {
 
         })
         .finally(() => {
+            
 
         });
     }
@@ -300,17 +363,18 @@ export default class P2G_AccountAddresMap extends LightningElement {
             this.direcciones = result;
             this.isModalOpenVerOp1 = false;
             this.isModalOpenVerOp2 = true;
-            this.isModalOpenVerOp3 = false;
         })
         .catch(error => {
             console.log('Error: ', error);
             this.direccion = null;
+            this.isModalOpenVerOp2 = false;
         })
     }
 
     connectedCallback() {
         // Agregar listener para recibir mensajes desde el iframe
         window.addEventListener('message', this.handleMessage.bind(this));
+        this.location2User();
     }
 
     disconnectedCallback() {
@@ -319,18 +383,12 @@ export default class P2G_AccountAddresMap extends LightningElement {
     }
 
     handleMessage(event) {
-        // Validar origen del mensaje si es necesario
-        // if (event.origin !== 'https://your-salesforce-domain.com') return;
-
         const { lat, lng } = event.data;
 
         // Verificar si los datos son válidos
         if (lat && lng) {
             this.lat = lat;
             this.lng = lng;
-            console.debug(`Latitud recibida: ${lat}, Longitud recibida: ${lng}`);
-
-            // Aquí puedes agregar lógica para guardar estos valores o usarlos como desees
         }
     }
 
@@ -355,7 +413,6 @@ export default class P2G_AccountAddresMap extends LightningElement {
     }
 
     searchCodigoPostal() {
-        console.log('Clickkk',this.codigoPostal);
         getAddressGoogleCp({postalCode:this.codigoPostal})
         .then(result => {
             const { pais, estado, municipio, localidad, colonia, calle, numero, codigo_postal, address, lat, lng} = result;
@@ -396,8 +453,49 @@ export default class P2G_AccountAddresMap extends LightningElement {
         const baseUrl = window.location.origin;
         const recordUrl = `${baseUrl}/lightning/r/Account_Address__c/${markerId}/view`;
         console.log('URL: ',recordUrl);
-        window.open(recordUrl, '_blank');
+        window.open(recordUrl, '_blank');      
     }
+    @track idEdit = '';
+
+    handleButtonClick(event) {
+        this.isModalOpenEdit = true;
+        const markerId = event.currentTarget.dataset.id;
+        console.log('clickkk ',markerId);
+        this.idEdit = markerId;
+        getResume({ idAddress: markerId })
+            .then(result => {
+                this.direccion = result;
+                this.dire = this.direccion[0];
+                // Obtener latitud y longitud desde el campo 'location'
+                const lat = this.dire.location.Latitude;
+                const lon = this.dire.location.Longitude;
+                this.nombre = this.dire.title;
+                this.calle = this.dire.calle;
+                this.numero = this.dire.numero;
+                this.colonia = this.dire.colonia;
+                this.codigoPostal = this.dire.codigoPostal;
+                this.localidad = this.dire.localidad;
+                this.estado = this.dire.estado;
+                this.pais = this.dire.pais;
+                this.address = this.dire.description; 
+                // Esperar un pequeño tiempo para asegurarse de que el iframe está cargado
+                setTimeout(() => {
+                    const iframe = this.template.querySelector('iframe');
+                    if (iframe) {
+                        iframe.contentWindow.postMessage({
+                            lat: lat,
+                            lng: lon
+                        }, '*');  // Puedes ajustar '*' por el dominio seguro de Salesforce
+                    }
+                }, 3000); // Ajusta el tiempo si es necesario
+            })
+            .catch(error => {
+                console.log('Error edicion: ', error);
+                this.direccion = null;
+                this.idEdit = '';
+            });
+    }
+    
 
     resetFields() {
         this.nombre = '';
@@ -413,6 +511,61 @@ export default class P2G_AccountAddresMap extends LightningElement {
         this.valor = null; // Valor puede ser null o '' según el uso
         this.lat = null; // Puedes dejar lat y lng como null o '' dependiendo de tus validaciones
         this.lng = null;
+        this.idEdit = '';
     }
+
+    @track mapMarkerperUser;
+    @track selectedStatus = 'Todos';
+    
+    location2User() {
+        getMapMarkersByUser()
+        .then(result => {
+            // Filtrar los resultados si el filtro no es "todos"
+            let filteredMarkers = result;
+            if (this.selectedStatus !== 'Todos') {
+                filteredMarkers = result.filter(marker => marker.status === this.selectedStatus);
+            }
+    
+            // Mapear los resultados para agregar las clases de color según el estado
+            this.mapMarkerperUser = filteredMarkers.map(marker => {
+                let rowClass;
+                let isRechazado = false;  // Nueva propiedad para indicar si el estado es 'Rechazado'
+    
+                if (marker.status === 'Pendiente') {
+                    rowClass = 'yellow-background';
+                } else if (marker.status === 'Validado') {
+                    rowClass = 'green-background';
+                } else if (marker.status === 'Rechazado') {
+                    rowClass = 'red-background';
+                    isRechazado = true; // Si es Rechazado, esta propiedad será true
+                }
+    
+                return { 
+                    ...marker, 
+                    rowClass,  // Añadir la clase CSS
+                    isRechazado // Añadir la propiedad booleana
+                };
+            });
+        })
+        .catch(error => {
+            console.error('Error location2User: ', error);
+            this.mapMarkerperUser = null;
+        });
+    }
+    
+
+    @track statusOptions = [
+        { label: 'Todos', value: 'Todos' },
+        { label: 'Validado', value: 'Validado' },
+        { label: 'Pendiente', value: 'Pendiente' },
+        { label: 'Rechazado', value: 'Rechazado' }
+    ];
+
+    // Maneja el cambio en el picklist
+    handlePicklistChange(event) {
+        this.selectedStatus = event.detail.value;
+        this.location2User();
+    }
+    
     
 }

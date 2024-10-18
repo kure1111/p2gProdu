@@ -43,26 +43,23 @@ public class P2G_asignarAccountAddressMap {
                                  CodigoPostalEspejo__r.Name, Colonia_espejo__c, Municipio_Cat2__c, LocalidadEspejo__r.Name, EstadoEspejo__r.Name,
                                  PaisEspejo__r.Name, Folio_Origen_Destino2__c,Address_Coordinates__Latitude__s,Address_Coordinates__Longitude__s,
                                  EstadoEspejo__r.Clave_SAT__c, status__c
-                                // FROM Account_Address__c WHERE (status__c = 'Validado' OR status__c = 'Pendiente') AND Codigo_Postal_CP__c =: cp];
-                                FROM Account_Address__c WHERE Codigo_Postal_CP__c =: cp];
+                                 FROM Account_Address__c WHERE (status__c = 'Validado' OR status__c = 'Pendiente') AND Codigo_Postal_CP__c =: cp];
         }else if((ciudad != null) && (ciudad != '')){
             String searchMunicipio = '%' + ciudad + '%';
         	AccountListRecord = [SELECT Id, Name, CalleEspejo__c, Numero_Ext_cp__c, Numero_Int_cat__c, CodigoPostalEspejo__c,
                                  CodigoPostalEspejo__r.Name, Colonia_espejo__c, Municipio_Cat2__c, LocalidadEspejo__r.Name, EstadoEspejo__r.Name,
                                  PaisEspejo__r.Name, Folio_Origen_Destino2__c,Address_Coordinates__Latitude__s,Address_Coordinates__Longitude__s,
                                  EstadoEspejo__r.Clave_SAT__c, status__c
-                                 /*FROM Account_Address__c WHERE (status__c = 'Validado' OR status__c = 'Pendiente') AND (Municipio_Cat2__c LIKE : searchMunicipio OR  
-                                 Localidad_Cat2__c LIKE : searchMunicipio OR  LocalidadEspejo__r.Name LIKE : searchMunicipio)];*/
-                                 FROM Account_Address__c WHERE Municipio_Cat2__c LIKE : searchMunicipio OR  
-                                 Localidad_Cat2__c LIKE : searchMunicipio OR  LocalidadEspejo__r.Name LIKE : searchMunicipio];
+                                 FROM Account_Address__c WHERE (status__c = 'Validado' OR status__c = 'Pendiente') AND (Municipio_Cat2__c LIKE : searchMunicipio OR  
+                                 Localidad_Cat2__c LIKE : searchMunicipio OR  LocalidadEspejo__r.Name LIKE : searchMunicipio)];
         }else{
-            String searchAddress = '%' + address + '%';
+            Account_Address__c direccion = [SELECT Name, Municipio_Cat2__c, Localidad_Cat2__c,LocalidadEspejo__r.Name FROM Account_Address__c WHERE Id =: address];
             AccountListRecord = [SELECT Id, Name, CalleEspejo__c, Numero_Ext_cp__c, Numero_Int_cat__c, CodigoPostalEspejo__c,
                                  CodigoPostalEspejo__r.Name, Colonia_espejo__c, Municipio_Cat2__c, LocalidadEspejo__r.Name, EstadoEspejo__r.Name,
                                  PaisEspejo__r.Name, Folio_Origen_Destino2__c,Address_Coordinates__Latitude__s,Address_Coordinates__Longitude__s,
                                  EstadoEspejo__r.Clave_SAT__c, status__c
-                                 //FROM Account_Address__c WHERE (status__c = 'Validado' OR status__c = 'Pendiente') AND Name LIKE: searchAddress];
-                                 FROM Account_Address__c WHERE Name LIKE: searchAddress];
+                                 FROM Account_Address__c WHERE (status__c = 'Validado' OR status__c = 'Pendiente') AND Name =: direccion.Name AND (Municipio_Cat2__c LIKE : direccion.Municipio_Cat2__c OR  
+                                 Localidad_Cat2__c LIKE : direccion.Localidad_Cat2__c OR  LocalidadEspejo__r.Name LIKE : direccion.LocalidadEspejo__r.Name)];
         }
         if((address == null || address == '') && (ciudad == null || ciudad == '') && (cp == null || cp == '')){
             throw new AuraHandledException('No se coloco ningun valor de busqueda. Favor de colocar un valor de busqueda (Nombre de dirección, Ciudad, Codigo Postal)');

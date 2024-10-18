@@ -97,3 +97,13 @@
 .yellow-background {
     background-color: #f9f871; /* Color amarillo */
 }
+
+.red-background {
+    background-color: #d43d3d; /* Color amarillo */
+}
+
+.input-error {
+    border: 2px solid red; /* Aplica un borde rojo al contenedor */
+    padding: 4px; /* Opcional: agrega un poco de espacio interno */
+    border-radius: 4px; /* Opcional: agrega esquinas redondeadas */
+}

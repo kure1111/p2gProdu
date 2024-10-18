@@ -47,7 +47,10 @@
                                                 <th class="" scope="col">
                                                     <div class="slds-truncate">Account Address Origen</div>
                                                 </th>
-                                                <!--th class="" scope="col">
+                                                <th class="" scope="col">
+                                                    <div class="slds-truncate">Estado</div>
+                                                </th>
+                                                <th class="" scope="col">
                                                     <div class="slds-truncate">Municipio</div>
                                                 </th>
                                                 <th class="" scope="col">
@@ -55,7 +58,7 @@
                                                 </th>
                                                 <th class="" scope="col">
                                                     <div class="slds-truncate">Codigo Postal</div>
-                                                </th-->
+                                                </th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -64,15 +67,18 @@
                                                     <td>
                                                     <div class="slds-truncate">{con.Name}</div>
                                                     </td>
-                                                    <!--td>
+                                                    <td>
+                                                        <div class="slds-truncate">{con.Estado_cat2__c}</div>
+                                                    </td>
+                                                    <td>
                                                     <div class="slds-truncate">{con.Municipio_Cat2__c}</div>
                                                     </td>
                                                     <td>
-                                                    <div class="slds-truncate">{con.Colonia_cp__r.Name}</div>
+                                                    <div class="slds-truncate">{con.Colonia_espejo__c}</div>
                                                     </td>
                                                     <td>
                                                     <div class="slds-truncate">{con.Codigo_Postal_CP__r.Name}</div>
-                                                    </td -->
+                                                    </td>
                                                 </tr>
                                             </template>
                                         </tbody>
@@ -95,7 +101,10 @@
                                         <th class="" scope="col">
                                             <div class="slds-truncate">Account Address Destino</div>
                                         </th>
-                                        <!--th class="" scope="col">
+                                        <th class="" scope="col">
+                                            <div class="slds-truncate">Estado</div>
+                                        </th>
+                                        <th class="" scope="col">
                                             <div class="slds-truncate">Municipio</div>
                                         </th>
                                         <th class="" scope="col">
@@ -103,7 +112,7 @@
                                         </th>
                                         <th class="" scope="col">
                                             <div class="slds-truncate">Codigo Postal</div>
-                                        </th -->
+                                        </th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -112,15 +121,18 @@
                                                 <td>
                                                 <div class="slds-truncate">{con.Name}</div>
                                                 </td>
-                                                <!--td>
+                                                <td>
+                                                    <div class="slds-truncate">{con.Estado_cat2__c}</div>
+                                                </td>
+                                                <td>
                                                 <div class="slds-truncate">{con.Municipio_Cat2__c}</div>
                                                 </td>
                                                 <td>
-                                                <div class="slds-truncate">{con.Colonia_cp__r.Name}</div>
+                                                <div class="slds-truncate">{con.Colonia_espejo__c}</div>
                                                 </td>
                                                 <td>
                                                 <div class="slds-truncate">{con.Codigo_Postal_CP__r.Name}</div>
-                                                </td -->
+                                                </td>
                                             </tr>
                                         </template>
                                     </tbody>
@@ -429,13 +441,12 @@
                                             </td>
                                             <td>
                                                 <div class="slds-truncate">
-                                                    <lightning-input type="radio" name="selection" value={address.seleccion} onchange={selectAddress}></lightning-input>
-                                                    <!--template if:true={address.esValidado}>
+                                                    <template if:true={address.esValidado}>
                                                         <lightning-input type="radio" name="selection" value={address.seleccion} onchange={selectAddress}></lightning-input>
                                                     </template>
                                                     <template if:false={address.esValidado}>
                                                         <p style="color: #C4C909;">Pendiente de Validar</p>
-                                                    </template-->
+                                                    </template>
                                                 </div>
                                             </td>
                                         </tr>

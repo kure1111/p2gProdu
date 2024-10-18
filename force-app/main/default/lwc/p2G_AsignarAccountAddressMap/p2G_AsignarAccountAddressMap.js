@@ -202,7 +202,7 @@ export default class P2G_AsignarAccountAddressMap extends LightningElement {
         this.showSideLoad = false;
         this.searchValueIdLoad = event.currentTarget.dataset.id;
         this.CpOrigenId = '';
-        this.searchValueAddressOrigen = '';
+        this.searchValueIdAddressOrigen = '';
     }
     searchKeyLoad(event){
         this.searchValueLoad = event.target.value;
@@ -227,7 +227,7 @@ export default class P2G_AsignarAccountAddressMap extends LightningElement {
         this.searchValueDischarge = event.target.outerText;
         this.showSideDischarge = false;
         this.searchValueIdDischarge = event.currentTarget.dataset.id;
-        this.searchValueAddressDestino = '';
+        this.searchValueIdAddressDestino = '';
         this.CpDestinoId = '';
     }
     searchKeyDischarge(event){
@@ -254,7 +254,7 @@ export default class P2G_AsignarAccountAddressMap extends LightningElement {
         this.searchCpOrigen = event.currentTarget.dataset.name;
         this.showCpOrigen = false;
         this.searchValueLoad = '';
-        this.searchValueAddressOrigen = '';
+        this.searchValueIdAddressOrigen = '';
     }
     searchKeyCpOrigen(event){
         this.searchCpOrigen = event.target.value;
@@ -279,7 +279,7 @@ export default class P2G_AsignarAccountAddressMap extends LightningElement {
         this.searchCpDestino = event.currentTarget.dataset.name;
         this.CpDestinoId = event.currentTarget.dataset.id;
         this.showCpDestino = false;
-        this.searchValueAddressDestino = '';
+        this.searchValueIdAddressDestino = '';
         this.searchValueDischarge = '';
     }
     searchKeyCpDestino(event){
@@ -302,7 +302,7 @@ export default class P2G_AsignarAccountAddressMap extends LightningElement {
     //llenar marke de origen
     llenarMarcadorOrigen(lista){
         this.mapMarkers = lista.map( (location) => {
-            //if(location.status === 'Validado'){
+            if(location.status === 'Validado'){
                 return {
                         location: {
                         Latitude: location.latitud,
@@ -322,14 +322,13 @@ export default class P2G_AsignarAccountAddressMap extends LightningElement {
                     },
                     title: location.nameAddress,
                     value: location.idAddress,
-                    /*description: '<p><b><h1>'+location.nameAddress+'</h1></b></p><p><b>Informacion de la direccion</b></p><p><b>Pais</b>: '+location.pais+'  <b>Estado</b>: '+location.estado+
+                    description: '<p><b><h1>'+location.nameAddress+'</h1></b></p><p><b>Informacion de la direccion</b></p><p><b>Pais</b>: '+location.pais+'  <b>Estado</b>: '+location.estado+
                     '</p><p><b>Municipio</b>: '+location.municipio+'</p><p><b>Localidad</b>: '+location.localidad+
                     '</p><p><b>Codigo Postal</b>: '+location.codigoPostal+'<p><b>Colonia</b>: '+location.colonia+
                     '</p><p><b>Calle</b>: '+location.calle+'</p><p><b>Numero Exterior</b>: '+location.numeroExterior+
-                    ' <b>Numero Interior</b>: '+location.numeroInterior+'</p><p><b>Folio Address</b>: '+location.folioAddress+' <b>Status</b>: '+location.status+'</p>',*/
-                    description: '<p><b><h1>'+location.nameAddress+'</h1></b></p><p><b>Folio Address</b>: '+location.folioAddress+' </p>'
+                    ' <b>Numero Interior</b>: '+location.numeroInterior+'</p><p><b>Folio Address</b>: '+location.folioAddress+' <b>Status</b>: '+location.status+'</p>',
                 };
-            /*}
+            }
             if(location.status === 'Pendiente'){
                 return {
                         location: {
@@ -350,20 +349,19 @@ export default class P2G_AsignarAccountAddressMap extends LightningElement {
                     },
                     title: location.nameAddress,
                     value: location.idAddress,
-                    /*description: '<p><b><h1>'+location.nameAddress+'</h1></b></p><p><b>Informacion de la direccion</b></p><p><b>Pais</b>: '+location.pais+'  <b>Estado</b>: '+location.estado+
+                    description: '<p><b><h1>'+location.nameAddress+'</h1></b></p><p><b>Informacion de la direccion</b></p><p><b>Pais</b>: '+location.pais+'  <b>Estado</b>: '+location.estado+
                     '</p><p><b>Municipio</b>: '+location.municipio+'</p><p><b>Localidad</b>: '+location.localidad+
                     '</p><p><b>Codigo Postal</b>: '+location.codigoPostal+'<p><b>Colonia</b>: '+location.colonia+
                     '</p><p><b>Calle</b>: '+location.calle+'</p><p><b>Numero Exterior</b>: '+location.numeroExterior+
-                    '<b> Numero Interior</b>: '+location.numeroInterior+'</p><p><b>Folio Address</b>: '+location.folioAddress+' <b>Status</b>: '+location.status+'</p>',*/
-            /*       description: '<p><b><h1>'+location.nameAddress+'</h1></b></p><p><b>Folio Address</b>: '+location.folioAddress+' </p>'
+                    '<b> Numero Interior</b>: '+location.numeroInterior+'</p><p><b>Folio Address</b>: '+location.folioAddress+' <b>Status</b>: '+location.status+'</p>',
                 };
-            }*/
+            }
         });
     }
     //llenar marke de destino
     llenarMarcadorDestino(lista){
         this.mapMarkers = lista.map( (location) => {
-            //if(location.status === 'Validado'){
+            if(location.status === 'Validado'){
                 return {
                         location: {
                         Latitude: location.latitud,
@@ -387,14 +385,13 @@ export default class P2G_AsignarAccountAddressMap extends LightningElement {
                     },
                     title: location.nameAddress,
                     value: location.idAddress,
-                    /*description: '<p><b><h1>'+location.nameAddress+'</h1></b></p><p><b>Informacion de la direccion</b></p><p><b>Pais</b>: '+location.pais+'  <b>Estado</b>: '+location.estado+
+                    description: '<p><b><h1>'+location.nameAddress+'</h1></b></p><p><b>Informacion de la direccion</b></p><p><b>Pais</b>: '+location.pais+'  <b>Estado</b>: '+location.estado+
                     '</p><p><b>Municipio</b>: '+location.municipio+'</p><p><b>Localidad</b>: '+location.localidad+
                     '</p><p><b>Codigo Postal</b>: '+location.codigoPostal+'<p><b>Colonia</b>: '+location.colonia+
                     '</p><p><b>Calle</b>: '+location.calle+'</p><p><b>Numero Exterior</b>: '+location.numeroExterior+
-                    ' <b>Numero Interior</b>: '+location.numeroInterior+'</p><p><b>Folio Address</b>: '+location.folioAddress+' <b>Status</b>: '+location.status+'</p>',*/
-                    description: '<p><b><h1>'+location.nameAddress+'</h1></b></p><p><b>Folio Address</b>: '+location.folioAddress+' </p>'
+                    ' <b>Numero Interior</b>: '+location.numeroInterior+'</p><p><b>Folio Address</b>: '+location.folioAddress+' <b>Status</b>: '+location.status+'</p>',
                 };
-            /*}
+            }
             if(location.status === 'Pendiente'){
                 return {
                         location: {
@@ -419,21 +416,20 @@ export default class P2G_AsignarAccountAddressMap extends LightningElement {
                     },
                     title: location.nameAddress,
                     value: location.idAddress,
-                    /*description: '<p><b><h1>'+location.nameAddress+'</h1></b></p><p><b>Informacion de la direccion</b></p><p><b>Pais</b>: '+location.pais+'  <b>Estado</b>: '+location.estado+
+                    description: '<p><b><h1>'+location.nameAddress+'</h1></b></p><p><b>Informacion de la direccion</b></p><p><b>Pais</b>: '+location.pais+'  <b>Estado</b>: '+location.estado+
                     '</p><p><b>Municipio</b>: '+location.municipio+'</p><p><b>Localidad</b>: '+location.localidad+
                     '</p><p><b>Codigo Postal</b>: '+location.codigoPostal+'<p><b>Colonia</b>: '+location.colonia+
                     '</p><p><b>Calle</b>: '+location.calle+'</p><p><b>Numero Exterior</b>: '+location.numeroExterior+
-                    ' <b>Numero Interior</b>: '+location.numeroInterior+'</p><p><b>Folio Address</b>: '+location.folioAddress+' <b>Status</b>: '+location.status+'</p>',*/
-            /*        description: '<p><b><h1>'+location.nameAddress+'</h1></b></p>'
+                    ' <b>Numero Interior</b>: '+location.numeroInterior+'</p><p><b>Folio Address</b>: '+location.folioAddress+' <b>Status</b>: '+location.status+'</p>',
                 };
-            }*/
+            }
         });
     }
     //seleccionar direccion de origen
     direccionOrigen(){
         console.log('se dio clic en direccion de origen ', this.searchValueAddressOrigen, this.searchValueLoad, this.CpOrigenId);
         this.guardaDirecion = false;
-        buscarAccountAddress({ address: this.searchValueAddressOrigen, ciudad: this.searchValueLoad, cp: this.CpOrigenId})
+        buscarAccountAddress({ address: this.searchValueIdAddressOrigen, ciudad: this.searchValueLoad, cp: this.CpOrigenId})
         .then(result => {
             console.log('lista address ', result);
             this.listaAddress = result;
@@ -458,7 +454,7 @@ export default class P2G_AsignarAccountAddressMap extends LightningElement {
         this.listaAddress = '';
         this.mapMarkers = [];
         console.log('se dio clic en direccion de destino');
-        buscarAccountAddress({ address: this.searchValueAddressDestino, ciudad: this.searchValueDischarge, cp: this.CpDestinoId})
+        buscarAccountAddress({ address: this.searchValueIdAddressDestino, ciudad: this.searchValueDischarge, cp: this.CpDestinoId})
         .then(result => {
             console.log('lista address ', result);
             this.listaAddress = result;

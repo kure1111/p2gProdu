@@ -25,7 +25,7 @@ public class P2G_asignarAccountAddressMapTest {
                                  FROM Customer_Quote__c WHERE Account_for__r.Name LIKE: '%ejemplo%' LIMIT 1];
         P2G_asignarAccountAddressMap.address address = new P2G_asignarAccountAddressMap.address();
         list<Catalogo_SAT__c> getcp = P2G_asignarAccountAddressMap.getCP('93340');
-        list<P2G_asignarAccountAddressMap.address> getBuscaAddress = P2G_asignarAccountAddressMap.getBuscaAddress(ubicacion[0].Name, '', '');
+        list<P2G_asignarAccountAddressMap.address> getBuscaAddress = P2G_asignarAccountAddressMap.getBuscaAddress(ubicacion[0].Id, '', '');
         list<P2G_asignarAccountAddressMap.address> getBuscaAddressSite = P2G_asignarAccountAddressMap.getBuscaAddress('','Monterrey', '');
         list<P2G_asignarAccountAddressMap.address> getBuscaAddressCP = P2G_asignarAccountAddressMap.getBuscaAddress('', '', ubicacion[0].Codigo_Postal_CP__c);
 		list<P2G_asignarAccountAddressMap.address> llenarAddress = P2G_asignarAccountAddressMap.llenarAddress(ubicacion);
@@ -33,5 +33,6 @@ public class P2G_asignarAccountAddressMapTest {
         P2G_asignarAccountAddressMap.getAddressWrapper getAddress = P2G_asignarAccountAddressMap.getAddress(direccion.Id);
         P2G_asignarAccountAddressMap.getAddressWrapper llenarGetAddress = P2G_asignarAccountAddressMap.llenarGetAddress(direccion);
         String quitarAcentos = P2G_asignarAccountAddressMap.quitarAcentos('cadená');
+        String agregarDireccion = P2G_asignarAccountAddressMap.agregarDireccion(direccion.Id, ubicacion[0].Id, ubicacion[0].Id, direccion.Site_of_Load__c, direccion.Site_of_Discharge__c);
     }
 }
