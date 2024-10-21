@@ -3,18 +3,18 @@
     <fullName>OPP010</fullName>
     <active>true</active>
     <errorConditionFormula>AND(
-   (RecordType.DeveloperName= &apos;Proyecto&apos;),
-				AND(
-OR(    ISPICKVAL(StageName, &quot;Explorar&quot;),
-ISPICKVAL(StageName, &quot;Construir&quot;),
-ISPICKVAL(StageName, &quot;Cotizar&quot;),
-ISPICKVAL(StageName, &quot;Presentar&quot;),
-ISPICKVAL(StageName, &quot;Implementar&quot;),
-ISPICKVAL(StageName, &quot;Cultivar&quot;)),
-    OR(
-        ISBLANK(Requerimientos_especialesNew__c),
-        ISBLANK(Total_Amount_del__c)
+    RecordType.Name = &apos;Proyecto&apos;,
+    AND(
+        OR(
+            ISPICKVAL(StageName, &quot;Cotización&quot;),
+            ISPICKVAL(StageName, &quot;Negociación&quot;),
+            ISPICKVAL(StageName, &quot;Ejecución&quot;)
+        ),
+        OR(
+            TotalOpportunityQuantity = 0,
+            ISBLANK(TotalOpportunityQuantity)
+        )
     )
-))</errorConditionFormula>
-    <errorMessage>OPP010 - Debes de especificar los Requeriminetos Especiales y el Total Amount para cambiar de etapa.</errorMessage>
+)</errorConditionFormula>
+    <errorMessage>OPP010 - Debes de Cargar Productos para poder cambiar de etapa.</errorMessage>
 </ValidationRule>

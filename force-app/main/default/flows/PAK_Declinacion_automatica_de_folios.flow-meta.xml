@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>56.0</apiVersion>
+    <decisions>
+        <description>Revisa el conteo de días para saber cuanto tiempo ha pasado desde la creación del folio, y en base a eso tomar la decisión para la siguiente acción</description>
+        <name>Dias_Transcurridos</name>
+        <label>Días Transcurridos</label>
+        <locationX>182</locationX>
+        <locationY>276</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>X30_Dias</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>DiasTranscurridos</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <numberValue>30.0</numberValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Closed_Lost_Opportunity</targetReference>
+            </connector>
+            <label>30 Días</label>
+        </rules>
+    </decisions>
+    <description>Flujo que declina de manera automática los folios que no han sido aprobados en un periodo de 30 días</description>
+    <environments>Default</environments>
+    <formulas>
+        <description>Fecha actual en la que se ejecuta este flujo y se cumplan las condiciones para la declinación del folio.</description>
+        <name>closeDate</name>
+        <dataType>Date</dataType>
+        <expression>TODAY()</expression>
+    </formulas>
+    <formulas>
+        <description>Variable que hace el cálculo de los días transcurridos desde el momento que crea el folio hasta la fecha actual</description>
+        <name>DiasTranscurridos</name>
+        <dataType>Number</dataType>
+        <expression>TODAY() - DATEVALUE({!$Record.CreatedDate})</expression>
+        <scale>0</scale>
+    </formulas>
+    <interviewLabel>PAK Declinación automática de folios {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>PAK Declinación automática de folios</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordUpdates>
+        <description>La oportunidad que se genera con el folio, se pondrá automáticamente en el status Closed Lost, y la razón de pérdida como Falta de seguimiento a oportunidad.</description>
+        <name>Closed_Lost_Opportunity</name>
+        <label>Closed Lost Opportunity</label>
+        <locationX>50</locationX>
+        <locationY>396</locationY>
+        <connector>
+            <targetReference>Falta_de_Seguimiento_a_oportunidad</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>$Record.Opportunity__c</elementReference>
+            </value>
+        </filters>
+        <inputAssignments>
+            <field>CloseDate</field>
+            <value>
+                <elementReference>closeDate</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Loss_Reason__c</field>
+            <value>
+                <stringValue>Falta de seguimiento a oportunidad</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>StageName</field>
+            <value>
+                <stringValue>Closed Lost</stringValue>
+            </value>
+        </inputAssignments>
+        <object>Opportunity</object>
+    </recordUpdates>
+    <recordUpdates>
+        <description>Actualiza el folio que desencadeno el flujo. Se declina con el asunto &quot;Falta de Seguimiento a oportunidad&quot;</description>
+        <name>Falta_de_Seguimiento_a_oportunidad</name>
+        <label>Falta de Seguimiento a oportunidad</label>
+        <locationX>50</locationX>
+        <locationY>516</locationY>
+        <inputAssignments>
+            <field>Declined_for2__c</field>
+            <value>
+                <stringValue>FALTA DE SEGUIMIENTO A OPORTUNIDAD</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Folio_Declinado__c</field>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Quotation_Status__c</field>
+            <value>
+                <stringValue>Quote Declined</stringValue>
+            </value>
+        </inputAssignments>
+        <inputReference>$Record</inputReference>
+    </recordUpdates>
+    <start>
+        <locationX>56</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Dias_Transcurridos</targetReference>
+        </connector>
+        <filterLogic>or</filterLogic>
+        <filters>
+            <field>Quotation_Status__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Quote being prepared</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>Quotation_Status__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Awaiting costs suppliers</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>Quotation_Status__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Sent awaiting response</stringValue>
+            </value>
+        </filters>
+        <object>Customer_Quote__c</object>
+        <schedule>
+            <frequency>Daily</frequency>
+            <startDate>2023-02-01</startDate>
+            <startTime>00:00:00.000Z</startTime>
+        </schedule>
+        <triggerType>Scheduled</triggerType>
+    </start>
+    <status>Active</status>
+</Flow>

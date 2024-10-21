@@ -20,6 +20,17 @@ import { refreshApex } from '@salesforce/apex';
 import fileProcess from '@salesforce/apex/P2G_convertCsv.fileProcess';
 import getSapServiceType from '@salesforce/apex/P2G_CreacionCargoLines.getSapServiceType';
 import getSstName from '@salesforce/apex/P2G_CreacionCargoLines.getSstName';
+import folioA from "c/p2G_creacionFolioAereo";
+import folioWHAlma from "c/p2G_creacionFolioWhAlmacenaje";
+import folioT from "c/p2G_creacionFolioTConsolidado";
+import folioFI from "c/p2G_creacionFolioFleteInter";
+import folioM from "c/p2G_creacionFolioMaritimo";
+import folioPTO from "c/p2G_creacionFolioPuertos";
+import folioEX from "c/p2G_creacionFolioSeguros";
+import folioW from "c/p2G_creacionFolioGlobalMaritimo";
+import folioR from "c/p2G_creacionFolioGlobalRouting";
+import folioAW from "c/p2G_creacionFolioGlobalAereo";
+import folioCE from "c/p2G_creacionFolioComercioExterior";
 
 export default class P2G_CreacionFolio extends LightningElement {
     //lista de cargo line
@@ -420,7 +431,7 @@ GeF_NACIONAL(){
             this.isGeneFolio = true;
             this.cleanClaveUnidadPeso();
             if(this.searchKeyIdSST.length<3){
-                this.searchKeyIdSST='a1n4T000002JWphQAG'; //prod a1n4T000001XXYCQA4 UAT:a1n0R000001lZceQAE
+                this.searchKeyIdSST='a3K4T000000SNdIUAW'; //prod a3K4T000000SNdIUAW UAT:a1n0R000001lZceQAE
             }
             getIdFolio({listaFolio: this.listaFolios,divisa: this.currency,idConteinerType: this.searchValueIdContainerType,account: this.searchValueIdAccount,idSST:this.searchKeyIdSST})
                 .then(result => {
@@ -749,5 +760,125 @@ openCargaMasiva(){
                 });
         };
         reader.readAsText(this.csvFile);
+    }
+    async folioAereo() {
+        console.log('id es: ', this.recordId);
+        const result = await folioA.open({
+            size: 'medium',
+            description: 'Modal para cargar',
+            recordId: this.recordId,
+            label: 'Modal Heading'
+        });
+        console.log(result);
+    }
+    async folioWH() {
+        console.log('id es: ', this.recordId);
+        const result = await folioWHAlma.open({
+            size: 'medium',
+            description: 'Modal para cargar',
+            recordId: this.recordId,
+            label: 'Modal Heading'
+        });
+        console.log(result);
+    }
+    async folioTarimas() {
+        console.log('id es: ', this.recordId);
+        const result = await folioT.open({
+            size: 'medium',
+            description: 'Modal para cargar',
+            recordId: this.recordId,
+            label: 'Modal Heading'
+        });
+        console.log(result);
+    }
+    /*async folioFleteNacional() {
+        console.log('id es: ', this.recordId);
+        const result = await .open({
+            size: 'medium',
+            description: 'Modal para cargar',
+            recordId: this.recordId,
+            label: 'Modal Heading'
+        });
+        console.log(result);
+    }*/
+    async folioFleteInter() {
+        console.log('id es: ', this.recordId);
+        const result = await folioFI.open({
+            size: 'medium',
+            description: 'Modal para cargar',
+            recordId: this.recordId,
+            label: 'Modal Heading'
+        });
+        console.log(result);
+    }
+    async folioMaritimo() {
+        console.log('id es: ', this.recordId);
+        const result = await folioM.open({
+            size: 'medium',
+            description: 'Modal para cargar',
+            recordId: this.recordId,
+            label: 'Modal Heading'
+        });
+        console.log(result);
+    }
+    async folioPuertos() {
+        console.log('id es: ', this.recordId);
+        const result = await folioPTO.open({
+            size: 'medium',
+            description: 'Modal para cargar',
+            recordId: this.recordId,
+            label: 'Modal Heading'
+        });
+        console.log(result);
+    }
+    async folioSeguros() {
+        console.log('id es: ', this.recordId);
+        const result = await folioEX.open({
+            size: 'medium',
+            description: 'Modal para cargar',
+            recordId: this.recordId,
+            label: 'Modal Heading'
+        });
+        console.log(result);
+    }
+    async folioGlobalMaritimo() {
+        console.log('id es: ', this.recordId);
+        const result = await folioW.open({
+            size: 'medium',
+            description: 'Modal para cargar',
+            recordId: this.recordId,
+            label: 'Modal Heading'
+        });
+        console.log(result);
+    }
+    async folioGlobalRouting() {
+        console.log('id es: ', this.recordId);
+        const result = await folioR.open({
+            size: 'medium',
+            description: 'Modal para cargar',
+            recordId: this.recordId,
+            label: 'Modal Heading'
+        });
+        console.log(result);
+    }
+    async folioGlobalAereo() {
+        console.log('id es: ', this.recordId);
+        const result = await folioAW.open({
+            size: 'medium',
+            description: 'Modal para cargar',
+            recordId: this.recordId,
+            label: 'Modal Heading'
+        });
+        console.log(result);
+    }
+    async folioComercioExterior() {
+        console.log('id es: ', this.recordId);
+        const result = await folioCE.open({
+            size: 'medium',
+            description: 'Modal para cargar',
+            recordId: this.recordId,
+            label: 'Modal Heading'
+        });
+        console.log(result);
     }
 }

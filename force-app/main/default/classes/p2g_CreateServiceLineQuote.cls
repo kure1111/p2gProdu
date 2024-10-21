@@ -87,16 +87,18 @@ public with sharing class p2g_CreateServiceLineQuote {
     //Seccion 2 Inicia
     @AuraEnabled(cacheable=true)
     public static List<P2G_UpdateShipmentServiceLine.shipmentFeeLineWrapper> getRateTarifario(String Id) {
-        Customer_Quote__c quote = [SELECT Id, Account_for__c, Route__c, FolioResume__c,Total_Volume_m3_2__c,Total_Weight_Kg2__c
-                                   FROM Customer_Quote__c WHERE Id =: Id];
+        Quote_Item_Line__c quote = [SELECT Import_Export_Quote__c,Import_Export_Quote__r.Account_for__c,Container_Type__c,
+                                    Import_Export_Quote__r.Route__c, Import_Export_Quote__r.Total_Volume_m3_2__c,
+                                    Import_Export_Quote__r.FolioResume__c, Import_Export_Quote__r.Total_Weight_Kg2__c
+                                   FROM Quote_Item_Line__c WHERE Import_Export_Quote__c =: Id];
         Date fechaHoy = Date.today();
         List<P2G_UpdateShipmentServiceLine.shipmentFeeLineWrapper> feeWrapper = new List<P2G_UpdateShipmentServiceLine.shipmentFeeLineWrapper>();        
-        List<Fee__c> feeList = [SELECT Id, Name, Route__r.Name, CustomRate__c, Container_Type__r.Name,CurrencyIsoCode,Fee_Category__c,Group__c,
-                                Account_for__r.Name, SAP_Service_Type__r.Name, Fee_Rate__c, Carrier_Account__r.Name,
-                                SAP_Service_Type_Buy__r.Name, Buy_Rate__c, Valid_Until__c, Active__c FROM Fee__c 
-                                WHERE (Account_for__c =: quote.Account_for__c OR Account_for__r.Name =: 'Cotizador') 
-                                AND Route__c =: quote.Route__c AND CustomRate__c = True AND Active__c = True 
-                                AND Valid_Until__c>=:fechaHoy];
+        List<Fee__c> feeList = [SELECT Id, Name, Route__r.Name, CustomRate__c, Container_Type__r.Name,CurrencyIsoCode,
+                                Account_for__r.Name, SAP_Service_Type__r.Name, Fee_Rate__c, Carrier_Account__r.Name,Container_Type__c,
+                                SAP_Service_Type_Buy__r.Name, Buy_Rate__c, Valid_Until__c, Active__c,Fee_Category__c,Group__c
+                                FROM Fee__c WHERE (Account_for__c =: quote.Import_Export_Quote__r.Account_for__c OR Account_for__r.Name =: 'Cotizador') 
+                                AND Route__c =: quote.Import_Export_Quote__r.Route__c AND CustomRate__c = True AND Active__c = True 
+                                AND Container_Type__c =: quote.Container_Type__c AND Valid_Until__c>=:fechaHoy];
         for (Fee__c fee : feeList) {
             P2G_UpdateShipmentServiceLine.shipmentFeeLineWrapper wrapper = llenadoTarifario(fee, quote);
             if(fee.Account_for__r.Name != 'Cotizador'){
@@ -108,7 +110,7 @@ public with sharing class p2g_CreateServiceLineQuote {
         return feeWrapper;
     }
     
-    public static P2G_UpdateShipmentServiceLine.shipmentFeeLineWrapper llenadoTarifario(Fee__c fee,Customer_Quote__c quote ){
+    public static P2G_UpdateShipmentServiceLine.shipmentFeeLineWrapper llenadoTarifario(Fee__c fee,Quote_Item_Line__c quote ){
         P2G_UpdateShipmentServiceLine.shipmentFeeLineWrapper wrapper = new P2G_UpdateShipmentServiceLine.shipmentFeeLineWrapper();
         wrapper.Id = fee.Id;
         wrapper.ServiceRateName = fee.Name;
@@ -130,12 +132,12 @@ public with sharing class p2g_CreateServiceLineQuote {
         wrapper.ValidUntil = fee.Valid_Until__c;
         wrapper.Activo = fee.Active__c;
         wrapper.seModifica = false;
-        wrapper.idQuote = quote.Id;
+        wrapper.idQuote = quote.Import_Export_Quote__c;
         wrapper.Moneda = fee.CurrencyIsoCode;
         wrapper.FeeCategory = fee.Fee_Category__c;
         wrapper.Grou = fee.Group__c;
-        wrapper.TotalVolume = String.valueOf(quote.Total_Volume_m3_2__c);
-        wrapper.TotalWeight = String.valueOf(quote.Total_Weight_Kg2__c);
+        wrapper.TotalVolume = String.valueOf(quote.Import_Export_Quote__r.Total_Volume_m3_2__c);
+        wrapper.TotalWeight = String.valueOf(quote.Import_Export_Quote__r.Total_Weight_Kg2__c);
         return wrapper;
     }
     

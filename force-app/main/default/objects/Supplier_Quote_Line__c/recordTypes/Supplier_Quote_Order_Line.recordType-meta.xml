@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RecordType xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Supplier_Quote_Order_Line</fullName>
+    <active>true</active>
+    <label>Supplier Quote/Order Line</label>
+</RecordType>

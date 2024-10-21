@@ -1,0 +1,564 @@
+<template>
+    <template if:true={isLoading}>
+        <!-- Muestra el spinner mientras isLoading es verdadero -->
+        <lightning-spinner alternative-text="Loading" size="small"></lightning-spinner>
+    </template>
+    <template if:true={conoceDireccion}>
+        <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+            <div class="slds-modal__container">
+            <div class="">
+                <header class="slds-modal__header">
+                    <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close" onclick={closeModal}>
+                        <lightning-icon icon-name="utility:close"
+                            alternative-text="close"
+                            size="small" ></lightning-icon>
+                        <span class="slds-assistive-text">Close</span>
+                    </button>
+                    <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">Agregar Account Address</h2>
+                </header>
+                <div class="slds-modal__content slds-p-around_medium">
+                    <template if:true={formaBusqueda}>
+                        <div class="scrollable slds-grid slds-wrap slds-gutters slds-grid_align-center">
+                            <div class="slds-col slds-size_1-of-1"><br></div>
+                            <div class="slds-col slds-size_1-of-1">
+                                <p class="titulo">Instrucciones para realizar una búsqueda exitosa de direcciones</p>
+                                <p class="titulo"><b>1. Buscar la dirección de origen</b></p>
+                                <p class="cuerpo">Tiene varias opciones para realizar la búsqueda:</p>
+                                <p class="cuerpo">* <b>Por nombre:</b> Si conoce el nombre de la dirección, ingréselo en el campo "Account Address Origen" y seleccione la opción correcta del listado desplegable.</p>
+                                <p class="cuerpo">* <b>Por ciudad:</b> Ingrese el nombre de la ciudad de origen en el campo correspondiente y seleccione la opción adecuada de la lista desplegable.</p>
+                                <p class="cuerpo">* <b>Por código postal:</b> Ingrese el Código Postal de origen y seleccione el código correcto del listado desplegable.</p>
+                                <p class="titulo"><b>2. Realizar la búsqueda</b></p>
+                                <p class="cuerpo">Una vez elegido el tipo de búsqueda e ingresado el valor correspondiente, haga clic en el botón "Buscar Dirección Origen".</p>
+                                <p class="titulo"><b>3. Seleccionar dirección</b></p>
+                                <p class="cuerpo">Seleccione la dirección correcta de la tabla que aparece debajo del mapa.</p>
+                                <p class="titulo"><b>4. Buscar la dirección de destino</b></p>
+                                <p class="cuerpo">Repita el mismo procedimiento para realizar la búsqueda de la dirección de destino.</p>
+                            </div>
+                            <div class="slds-col slds-size_1-of-1"><br></div>
+                            <div class="slds-col slds-size_6-of-12">
+                                <template if:true={guardaOrigen}>
+                                    <div onkeyup={searchKeyAddressOrigen}>
+                                        <lightning-input label="Account Address Origen:" placeholder="Buscar Account Address Origen"
+                                            value={searchValueAddressOrigen} type="search"></lightning-input>
+                                    </div>
+                                    <table if:true={showSideAddressOrigen} class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_striped">
+                                        <thead>
+                                            <tr class="slds-line-height_reset">
+                                                <th class="" scope="col">
+                                                    <div class="slds-truncate">Account Address Origen</div>
+                                                </th>
+                                                <th class="" scope="col">
+                                                    <div class="slds-truncate">Estado</div>
+                                                </th>
+                                                <th class="" scope="col">
+                                                    <div class="slds-truncate">Municipio</div>
+                                                </th>
+                                                <th class="" scope="col">
+                                                    <div class="slds-truncate">Colonia</div>
+                                                </th>
+                                                <th class="" scope="col">
+                                                    <div class="slds-truncate">Codigo Postal</div>
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <template for:each={sideRecordsAddressOrigen} for:item="con">
+                                                <tr class="slds-hint-parent" data-id={con.Id} key={con.Id} onclick={SideSelectAddressOrigen} data-name={con.Name}>
+                                                    <td>
+                                                    <div class="slds-truncate">{con.Name}</div>
+                                                    </td>
+                                                    <td>
+                                                        <div class="slds-truncate">{con.Estado_cat2__c}</div>
+                                                    </td>
+                                                    <td>
+                                                    <div class="slds-truncate">{con.Municipio_Cat2__c}</div>
+                                                    </td>
+                                                    <td>
+                                                    <div class="slds-truncate">{con.Colonia_espejo__c}</div>
+                                                    </td>
+                                                    <td>
+                                                    <div class="slds-truncate">{con.Codigo_Postal_CP__r.Name}</div>
+                                                    </td>
+                                                </tr>
+                                            </template>
+                                        </tbody>
+                                    </table>
+                                </template>
+                                <template if:false={guardaOrigen}>
+                                    <lightning-input label="Account Address Origen:"
+                                        value={nameOrigen} type="search" disabled></lightning-input>
+                                </template>
+                            </div>
+                            <div class="slds-col slds-size_6-of-12">
+                                <template if:true={guardaDestino}>
+                                    <div onkeyup={searchKeyAddressDestino}>
+                                        <lightning-input label="Account Address Destino:" placeholder="Buscar Account Address Destino"
+                                        value={searchValueAddressDestino} type="search"></lightning-input>
+                                    </div>
+                                    <table if:true={showSideAddressDestino} class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_striped">
+                                    <thead>
+                                        <tr class="slds-line-height_reset">
+                                        <th class="" scope="col">
+                                            <div class="slds-truncate">Account Address Destino</div>
+                                        </th>
+                                        <th class="" scope="col">
+                                            <div class="slds-truncate">Estado</div>
+                                        </th>
+                                        <th class="" scope="col">
+                                            <div class="slds-truncate">Municipio</div>
+                                        </th>
+                                        <th class="" scope="col">
+                                            <div class="slds-truncate">Colonia</div>
+                                        </th>
+                                        <th class="" scope="col">
+                                            <div class="slds-truncate">Codigo Postal</div>
+                                        </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <template for:each={sideRecordsAddressDestino} for:item="con">
+                                            <tr class="slds-hint-parent" data-id={con.Id} key={con.Id} onclick={SideSelectAddressDestino} data-name={con.Name}>
+                                                <td>
+                                                <div class="slds-truncate">{con.Name}</div>
+                                                </td>
+                                                <td>
+                                                    <div class="slds-truncate">{con.Estado_cat2__c}</div>
+                                                </td>
+                                                <td>
+                                                <div class="slds-truncate">{con.Municipio_Cat2__c}</div>
+                                                </td>
+                                                <td>
+                                                <div class="slds-truncate">{con.Colonia_espejo__c}</div>
+                                                </td>
+                                                <td>
+                                                <div class="slds-truncate">{con.Codigo_Postal_CP__r.Name}</div>
+                                                </td>
+                                            </tr>
+                                        </template>
+                                    </tbody>
+                                    </table>
+                                </template>
+                                <template if:false={guardaDestino}>
+                                    <lightning-input label="Account Address Destino:"
+                                        value={nameDestino} type="search" disabled></lightning-input>
+                                </template>
+                            </div>
+                            <div class="slds-col slds-size_1-of-1"><br></div>
+                            <div class="slds-col slds-size_6-of-12">
+                                <template if:true={guardaOrigen}>
+                                    <div onkeyup={searchKeyLoad}>
+                                        <lightning-input id="SiteofLoad" label="Site of Load:" placeholder="Buscar Site of Load" 
+                                        value={searchValueLoad} type="search"></lightning-input>
+                                    </div>
+                                    <table if:true={showSideLoad} class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_striped">
+                                    <thead>
+                                        <tr class="slds-line-height_reset">
+                                            <th class="" scope="col">
+                                            <div class="slds-truncate" title="First Name">Name</div>
+                                            </th>
+                                            <th class="" scope="col">
+                                            <div class="slds-truncate" title="Last Name">Country</div>
+                                            </th>
+                                            <th class="" scope="col">
+                                            <div class="slds-truncate" title="Last Name">State</div>
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <template for:each={sideRecordsLoad} for:item="con">
+                                            <tr class="slds-hint-parent" data-id={con.Id} key={con.Id} onclick={SideSelectLoad}> 
+                                            <td>
+                                                <div class="slds-truncate">{con.Name}</div>
+                                            </td>
+                                            <template lwc:if={con.Country__c}>
+                                                <td>
+                                                    <div class="slds-truncate">{con.Country__r.Name}</div>
+                                                </td>
+                                            </template>
+
+                                            <template lwc:if={con.State__c}>
+                                                <td>
+                                                    <div class="slds-truncate">{con.State__r.Name}</div>
+                                                </td>
+                                            </template>
+                                            </tr>
+                                        </template>
+                                    </tbody>
+                                    </table>
+                                </template>
+                                <template if:false={guardaOrigen}>
+                                    <lightning-input label="Site of Load:"
+                                      disabled value={nameSiteOrigen} type="search"></lightning-input>
+                                </template>
+                            </div>
+                            <div class="slds-col slds-size_6-of-12">
+                                <template if:true={guardaDestino}>
+                                    <div onkeyup={searchKeyDischarge}>
+                                        <lightning-input id="SiteofDischarge" label="Site of Discharge:" placeholder="Buscar Site of Discharge" 
+                                        value={searchValueDischarge} type="search"></lightning-input>
+                                    </div>
+                                    <table if:true={showSideDischarge} class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_striped">
+                                    <thead>
+                                    <tr class="slds-line-height_reset">
+                                        <th class="" scope="col">
+                                            <div class="slds-truncate" title="First Name">Name</div>
+                                        </th>
+                                        <th class="" scope="col">
+                                            <div class="slds-truncate" title="Last Name">Country</div>
+                                        </th>
+                                        <th class="" scope="col">
+                                            <div class="slds-truncate" title="Last Name">State</div>
+                                        </th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <template for:each={sideRecordsDischarge} for:item="con">
+                                        <tr class="slds-hint-parent" data-id={con.Id} key={con.Id} onclick={SideSelectDischarge}> 
+                                            <td>
+                                                <div class="slds-truncate">{con.Name}</div>
+                                            </td>
+                                            <template lwc:if={con.Country__c}>
+                                            <td>
+                                                <div class="slds-truncate">{con.Country__r.Name}</div>
+                                            </td>
+                                        </template>
+                                            <template lwc:if={con.State__c}>
+                                                <td>
+                                                    <div class="slds-truncate">{con.State__r.Name}</div>
+                                                </td>
+                                            </template>
+                                        </tr>
+                                    </template>
+                                    </tbody>
+                                    </table>
+                                </template>
+                                <template if:false={guardaDestino}>
+                                    <lightning-input label="Site of Discharge:"
+                                      disabled value={nameSiteDestino} type="search"></lightning-input>
+                                </template>
+                            </div>
+                            <div class="slds-col slds-size_1-of-1"><br></div>
+                            <div class="slds-col slds-size_6-of-12">
+                                <template if:true={guardaOrigen}>
+                                    <div onkeyup={searchKeyCpOrigen}>
+                                        <lightning-input label="CP Origen" id="CpOrigen" placeholder="Buscar Cp Origen" 
+                                            value={searchCpOrigen} type="text"></lightning-input>
+                                    </div>
+                                    <table if:true={showCpOrigen} class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_striped">
+                                        <thead>
+                                        <tr class="slds-line-height_reset">
+                                            <th scope="col">
+                                                <div class="slds-truncate">Codigo Postal</div>
+                                            </th>
+                                            <th scope="col">
+                                                <div class="slds-truncate">Municipio</div>
+                                            </th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <template for:each={listCpOrigen} for:item="itemCpOrigen">
+                                            <tr class="slds-hint-parent" data-id={itemCpOrigen.Id} data-name={itemCpOrigen.Name} key={itemCpOrigen.Id} onclick={cpOrigenSelect}> 
+                                                <td>
+                                                    <div class="slds-truncate">{itemCpOrigen.Name}</div>
+                                                </td>
+                                                <td>
+                                                    <template if:true={itemCpOrigen.Municipio_Ref_CP__c}>
+                                                    <div class="slds-truncate">{itemCpOrigen.Municipio_Ref_CP__r.Name}</div>
+                                                    </template>
+                                                </td>
+                                            </tr>
+                                        </template>
+                                        </tbody>
+                                    </table>
+                                </template>
+                                <template if:false={guardaOrigen}>
+                                    <lightning-input label="Codigo Postal Origen:"
+                                      disabled value={codigoPostalOrigen} type="search"></lightning-input>
+                                </template>
+                            </div>
+                            <div class="slds-col slds-size_6-of-12">
+                                <template if:true={guardaDestino}>
+                                    <div onkeyup={searchKeyCpDestino}>
+                                        <lightning-input label="CP Destino" placeholder="Buscar Cp Destino" 
+                                            value={searchCpDestino} type="text"></lightning-input>
+                                    </div>
+                                    <br>
+                                    <table if:true={showCpDestino} class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_striped">
+                                        <thead>
+                                        <tr class="slds-line-height_reset">
+                                            <th scope="col">
+                                                <div class="slds-truncate" title="First Name">Codigo Postal</div>
+                                            </th>
+                                            <th scope="col">
+                                                <div class="slds-truncate" title="First Name">Municipio</div>
+                                            </th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <template for:each={listCpDestino} for:item="itemCpDestino">
+                                            <tr class="slds-hint-parent" data-id={itemCpDestino.Id} data-name={itemCpDestino.Name} key={itemCpDestino.Id} onclick={cpDestinoSelect}> 
+                                                <td>
+                                                    <div class="slds-truncate">{itemCpDestino.Name}</div>
+                                                </td>
+                                                <td>
+                                                    <template if:true={itemCpDestino.Municipio_Ref_CP__c}>
+                                                        <div class="slds-truncate">{itemCpDestino.Municipio_Ref_CP__r.Name}</div>
+                                                    </template>
+                                                </td>
+                                            </tr>
+                                        </template>
+                                        </tbody>
+                                    </table>
+                                </template>
+                                <template if:false={guardaDestino}>
+                                    <lightning-input label="Codigo Postal Destino:"
+                                    disabled value={codigoPostalDestino} type="search"></lightning-input>
+                                </template>
+                            </div>
+                            <div class="slds-col slds-size_1-of-1"><br></div> 
+                            <div class="slds-col slds-size_6-of-12">
+                                <template if:true={guardaOrigen}>
+                                    <lightning-button label="Buscar Dirección Origen" onclick={direccionOrigen}></lightning-button>
+                                </template>
+                                <template if:false={guardaOrigen}>
+                                    <lightning-layout>
+                                        <lightning-layout-item padding="around-small">
+                                            <div class="header-column">
+                                                <p class="field-title">Calle: {calleOrigen}</p>
+                                                <p class="field-title">Numero Exterior: {numeroExteriorOrigen}</p>
+                                                <p class="field-title">Numero Interior: {numeroInteriorOrigen}</p>
+                                                <p class="field-title">Codigo Postal: {codigoPostalOrigen}</p>
+                                                <p class="field-title">Colonia: {coloniaOrigen}</p>
+                                                <p class="field-title">Municipio: {municipioOrigen}</p>
+                                                <p class="field-title">Localidad: {localidadOrigen}</p>
+                                                <p class="field-title">Estado: {estadoOrigen}</p>
+                                                <p class="field-title">Pais: {paisOrigen}</p>
+                                                <p class="field-title">Folio: {folioAddressOrigen}</p>
+                                            </div>
+                                        </lightning-layout-item>
+                                    </lightning-layout>
+                                </template>
+                            </div>
+                            <div class="slds-col slds-size_6-of-12">
+                                <template if:true={guardaDestino}>
+                                    <lightning-button label="Buscar Dirección Destino" onclick={direccionDestino}></lightning-button>
+                                </template>
+                                <template if:false={guardaDestino}>
+                                    <lightning-layout>
+                                        <lightning-layout-item padding="around-small">
+                                            <div class="header-column">
+                                                <p class="field-title">Calle: {calleDestino}</p>
+                                                <p class="field-title">Numero Exterior: {numeroExteriorDestino}</p>
+                                                <p class="field-title">Numero Interior: {numeroInteriorDestino}</p>
+                                                <p class="field-title">Codigo Postal: {codigoPostalDestino}</p>
+                                                <p class="field-title">Colonia: {coloniaDestino}</p>
+                                                <p class="field-title">Municipio: {municipioDestino}</p>
+                                                <p class="field-title">Localidad: {localidadDestino}</p>
+                                                <p class="field-title">Estado: {estadoDestino}</p>
+                                                <p class="field-title">Pais: {paisDestino}</p>
+                                                <p class="field-title">Folio: {folioAddressDestino}</p>
+                                            </div>
+                                        </lightning-layout-item>
+                                    </lightning-layout>
+                                </template>
+                            </div>
+                            <div class="slds-col slds-size_12-of-12" style="text-align: center;font-size: 20px;">
+                                <template if:true={guardaDirecion}>
+                                    <lightning-layout>
+                                        <lightning-layout-item padding="around-small">
+                                            <div class="header-column">
+                                                <br><span class="field-title">Ruta: {ruta} </span><lightning-button label="Ver Direcciones" onclick={verRuta} class="slds-m-left_x-small">
+                                                </lightning-button><br>
+                                            </div>
+                                        </lightning-layout-item>
+                                    </lightning-layout>
+                                </template>
+                            </div>
+                        <div class="slds-col slds-size_1-of-1"><br></div>
+                        </div>
+                    </template>
+                    <template if:true={buscaMap}>
+                        <div class="scrollable  slds-grid slds-wrap slds-gutters slds-grid_align-center">
+                            <div class="slds-col slds-size_1-of-1"><br></div> 
+                            <div class="slds-col slds-size_2-of-12" style="font-size: 16 px;">
+                                <p><b>Pasos a seguir para seleccionar una dirección.</b></p><br>
+                                <p>1. Visualizar las direcciones en el mapa (puedes dar clic en una marca en el mapa y se mostrara su información)</p><br>
+                                <p>2. En la parte de abajo del mapa esta una tabla con las direcciones que se muestran en el mapa</p><br>
+                                <p>3. Del lado derecho seleccionar la direccion que se desea agregar dando clic en el campo Seleccion</p><br>
+                                <p>4. Dar clic en el boton "Agregar Direccion"</p>
+                            </div>
+                            <div class="slds-col slds-size_10-of-12">
+                                <div class="subsection subsection-one-bottom border-guide">
+                                    <lightning-map list-view="hidden"
+                                        map-markers={mapMarkers} 
+                                        onmarkerselect={handleMarkerSelect}
+                                        selected-marker-value={selectedMarkerValue}>
+                                    </lightning-map>
+                                </div>
+                            </div>
+                            <div class="slds-col slds-size_1-of-1"><br></div>
+                            <div class="slds-col slds-size_12-of-12">
+                                <table class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_striped">
+                                    <thead>
+                                    <tr class="slds-line-height_reset"></tr>
+                                        <th scope="col">
+                                            <div class="slds-truncate" title="First Name">Folio Address</div>
+                                        </th>
+                                        <th scope="col">
+                                            <div class="slds-truncate" title="First Name">Nombre</div>
+                                        </th>
+                                        <th scope="col">
+                                            <div class="slds-truncate" title="First Name">Codigo Postal</div>
+                                        </th>
+                                        <th scope="col">
+                                            <div class="slds-truncate" title="First Name">Municipio</div>
+                                        </th>
+                                        <th scope="col">
+                                            <div class="slds-truncate" title="First Name">Status</div>
+                                        </th>
+                                        <th scope="col">
+                                            <div class="slds-truncate" title="First Name">Seleccion</div>
+                                        </th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <template for:each={listaAddress} for:item="address">
+                                        <tr class="slds-hint-parent" data-id={address.idAddress} key={address.idAddress}> 
+                                            <td>
+                                                <div class="slds-truncate">{address.folioAddress}</div>
+                                            </td>
+                                            <td>
+                                                <div class="slds-truncate">{address.nameAddress}</div>
+                                            </td>
+                                            <td>
+                                                <div class="slds-truncate">{address.codigoPostal}</div>
+                                            </td>
+                                            <td>
+                                                <div class="slds-truncate">{address.municipio}</div>
+                                            </td>
+                                            <td>
+                                                <div class="slds-truncate">{address.status}</div>
+                                            </td>
+                                            <td>
+                                                <div class="slds-truncate">
+                                                    <template if:true={address.esValidado}>
+                                                        <lightning-input type="radio" name="selection" value={address.seleccion} onchange={selectAddress}></lightning-input>
+                                                    </template>
+                                                    <template if:false={address.esValidado}>
+                                                        <p style="color: #C4C909;">Pendiente de Validar</p>
+                                                    </template>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </template>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </template>
+                    <template if:true={rutaMap}>
+                        <div class="scrollable slds-grid slds-wrap slds-gutters slds-grid_align-center">
+                            <div class="slds-col slds-size_1-of-1"><br></div> 
+                            <div class="slds-col slds-size_10-of-12">
+                                <div class="subsection subsection-one-bottom border-guide">
+                                    <lightning-map list-view="hidden"
+                                        map-markers={mapMarkers} 
+                                        onmarkerselect={handleMarkerSelect}
+                                        selected-marker-value={selectedMarkerValue}>
+                                    </lightning-map>
+                                </div>
+                            </div>
+                            <div class="slds-col slds-size_1-of-1"><br></div>
+                            <div class="slds-col slds-size_12-of-12">
+                                <table class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_striped">
+                                    <thead>
+                                    <tr class="slds-line-height_reset"></tr>
+                                        <th scope="col">
+                                            <div class="slds-truncate" title="First Name">Folio Address</div>
+                                        </th>
+                                        <th scope="col">
+                                            <div class="slds-truncate" title="First Name">Nombre</div>
+                                        </th>
+                                        <th scope="col">
+                                            <div class="slds-truncate" title="First Name">Codigo Postal</div>
+                                        </th>
+                                        <th scope="col">
+                                            <div class="slds-truncate" title="First Name">Municipio</div>
+                                        </th>
+                                        <th scope="col">
+                                            <div class="slds-truncate" title="First Name">Estado</div>
+                                        </th>
+                                        <th scope="col">
+                                            <div class="slds-truncate" title="First Name">Posición</div>
+                                        </th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr class="slds-hint-parent"></tr>
+                                            <td>
+                                                <div class="slds-truncate">{folioAddressOrigen}</div>
+                                            </td>
+                                            <td>
+                                                <div class="slds-truncate">{nameOrigen}</div>
+                                            </td>
+                                            <td>
+                                                <div class="slds-truncate">{codigoPostalOrigen}</div>
+                                            </td>
+                                            <td>
+                                                <div class="slds-truncate">{municipioOrigen}</div>
+                                            </td>
+                                            <td>
+                                                <div class="slds-truncate">{estadoOrigen}</div>
+                                            </td>
+                                            <td>
+                                                <div class="slds-truncate" style="color: Red;">Origen</div>
+                                            </td>
+                                        </tr>
+                                        <tr class="slds-hint-parent"> 
+                                            <td>
+                                                <div class="slds-truncate">{folioAddressDestino}</div>
+                                            </td>
+                                            <td>
+                                                <div class="slds-truncate">{nameDestino}</div>
+                                            </td>
+                                            <td>
+                                                <div class="slds-truncate">{codigoPostalDestino}</div>
+                                            </td>
+                                            <td>
+                                                <div class="slds-truncate">{municipioDestino}</div>
+                                            </td>
+                                            <td>
+                                                <div class="slds-truncate">{estadoDestino}</div>
+                                            </td>
+                                            <td>
+                                                <div class="slds-truncate" style="color: Red;">Destino</div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </template>
+                </div>
+                <footer class="slds-modal__footer">
+                    <button class="slds-button slds-button_neutral" onclick={closeModal} title="Cancel">Cancel</button>
+                    <template if:true={botonOrigen}>
+                        <lightning-button label="Atras" onclick={volverFormulario} class="slds-m-left_x-small"></lightning-button>
+                        <lightning-button label="Agregar Dirección" onclick={aprobarBuequedaOrigen} class="slds-m-left_x-small"></lightning-button>
+                    </template>
+                    <template if:true={botonDestino}>
+                        <lightning-button label="Atras" onclick={volverFormulario} class="slds-m-left_x-small"></lightning-button>
+                        <lightning-button label="Agregar Dirección" onclick={aprobarBuequedaDestino} class="slds-m-left_x-small"></lightning-button>
+                    </template>
+                    <template if:true={guardaDirecion}>
+                        <lightning-button label="Agregar Direcciones" onclick={aprobarBuequeda} class="slds-m-left_x-small"></lightning-button>
+                    </template>
+                    <template if:true={rutaMap}>
+                        <lightning-button label="Atras" onclick={volverFormulario} class="slds-m-left_x-small"></lightning-button>
+                    </template>
+                </footer>
+            </div>
+            </div>
+        </section>
+    </template>
+</template>

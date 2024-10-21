@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RecordType xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Codigo_Postal</fullName>
+    <active>true</active>
+    <compactLayoutAssignment>Catalogo_SAT</compactLayoutAssignment>
+    <description>Catalogo del SAT c_Colonias</description>
+    <label>Codigo Postal</label>
+</RecordType>

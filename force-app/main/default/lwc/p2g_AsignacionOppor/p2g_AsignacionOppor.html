@@ -507,9 +507,9 @@
                                 <div class="slds-card__body">
                                     <p>
                                         <b>{account.Shipment_Status_Plann__c}</b> <span style="margin-right: 20px;"></span>
-                                        {account.ETD_from_Point_of_Load__c}   /   {account.Status_Observations__c}
+                                        {account.ETD_from_Point_of_Load__c}   /   {account.ETA_Point_of_Discharge__c}
                                     </p>
-                                    <p> Time: {account.Reason_for_declined__c} hrs / {account.Account_Shipment_Reference__c} hrs</p>
+                                    <p> Time: {account.Account_Shipment_Reference__c} hrs / {account.Reason_for_declined__c} hrs</p>
                                     <template if:true={account.Account_for__c}>
                                         <p>Account: {account.Account_for__r.Name}</p>
                                     </template>

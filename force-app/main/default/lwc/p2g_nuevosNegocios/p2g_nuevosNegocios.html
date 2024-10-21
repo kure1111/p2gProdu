@@ -3,7 +3,18 @@
         <div class="slds-grid slds-gutters">
             <!-- Botón izquierdo -->
             <div class="slds-col">
-                <lightning-button variant="brand" label="Cargar Producto" title="Cargar Producto" onclick={handleClick1}></lightning-button>
+                <template if:true={cargarProducto}>
+                    <lightning-button variant="brand" label="Cargar Producto" title="Cargar Producto" onclick={handleClick1}></lightning-button>
+                </template>
+            </div>
+            <div class="slds-col">
+                <!--lightning-button variant="brand" label="Cargar SubProducto" title="Cargar SubProducto" onclick={handleClick3}></lightning-button>
+                <c-p2g_new_sub_producto onnewsubproducto={handleNewSubProducto}></c-p2g_new_sub_producto>
+                <template if:true={creaSubproducto}>
+                    <div class="main">
+                        <c-p2G_newSubProducto record-id={recordId}></c-p2G_newSubProducto>
+                    </div>
+                </template -->
             </div>
             <!-- Botón derecho -->
             <div class="slds-col">

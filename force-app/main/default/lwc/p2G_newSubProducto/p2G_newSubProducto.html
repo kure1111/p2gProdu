@@ -1,0 +1,242 @@
+<template>
+    <div>
+        <template if:true={isLoading}>
+            <!-- Muestra el spinner mientras isLoading es verdadero -->
+            <lightning-spinner alternative-text="Loading" size="small"></lightning-spinner>
+        </template>
+    <lightning-card  title="SubProducto" class="slds-p-horizontal_small">
+        <lightning-button label="New" slot="actions" onclick={clicNew}></lightning-button><hr>
+        <div class="fondoBlamco">
+            <template for:each={listSupProducto} for:item="sub">
+                <p class="margenes" data-id={sub.Id} key={sub.Id}>
+                    <b><lightning-button label={sub.Name} 
+                                        variant="base" 
+                                        class="slds-m-left_x-small" 
+                                        data-id={sub.Id} 
+                                        onclick={clicAbrirSub}>
+                        </lightning-button></b><br>
+                    <template if:true={esOportunidad}>
+                        Ruta Producto:      {sub.SubProduct_Opportunity_Product__r.Ruta__c} <br>
+                    </template>
+                    <template if:false={esOportunidad}>
+                        Oportunidad:        {sub.SubProduct_Opportunity__r.Name} <br>
+                    </template>
+                    <!-- SAP Service Type:   {sub.SubProduct_SAP_Service_Type__r.Name} <br> -->
+                    Buy Price:          ${sub.SubProduct_Buy_Price__c} {sub.CurrencyIsoCode}<br>
+                    Sell Price:         ${sub.SubProduct_Sell_Price__c} {sub.CurrencyIsoCode}<br>
+                </p>
+            </template>
+        </div>
+        <div slot="footer"><b><lightning-button label='View All'
+            variant="base" class="slds-m-left_x-small" 
+            onclick={clicViewAll}></lightning-button></b>
+        </div>
+        <template if:true={nuevoSubProducto}>
+            <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+                <div class="slds-modal__container">
+                    <header class="slds-modal__header">
+                        <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close" onclick={Cerrar}>
+                            <lightning-icon icon-name="utility:close" alternative-text="close"
+                                variant="inverse" size="small" ></lightning-icon>
+                            <span class="slds-assistive-text">Close</span>
+                        </button>
+                        <h2 class="slds-text-heading_medium slds-hyphenate">Crear SubProducto</h2>
+                    </header>
+                    <div class="slds-modal__content">
+                        <template if:true={productos}>
+                            <div class="slds-grid slds-wrap slds-gutters margenes">
+                                <div class="slds-col slds-size_1-of-1 colorSection">
+                                    <h1><b>Lista de Productos en la oportunidad</b></h1>
+                                </div> <br>
+                                <table class="slds-table margenes">
+                                    <tbody>
+                                        <template for:each={listaProductos} for:item="product">
+                                            <tr class="slds-hint-parent" data-id={product.Id} key={product.Id} onclick={clicAgregarSub} data-name={product.Ruta__c}> 
+                                                <td>
+                                                    <div class="slds-truncate">{product.Ruta__c}</div>
+                                                </td>
+                                            </tr>
+                                        </template>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </template>
+                        <template if:true={formulario}>
+                            <div class="slds-grid slds-wrap slds-gutters margenes">
+                                <div class="slds-col slds-size_1-of-1 colorSection">
+                                    <h1>Datos Generales</h1>
+                                </div> <br><br>
+                                <div class="slds-col slds-size_6-of-12">
+                                    <lightning-input label="Cargo Adicional:" type="Text" required=""
+                                    placeholder="Coloque el nonbre del cargo" onchange={registroName}></lightning-input>
+                                </div>
+                                <div class="slds-col slds-size_6-of-12">
+                                    <lightning-combobox  label="Currency:" value={valueCurrency}
+                                    options={optionsCurrency} onchange={registroCurrency} required=""></lightning-combobox>
+                                </div>
+                                <div class="slds-col slds-size_1-of-1"><br></div>
+                                <div class="slds-col slds-size_6-of-12">
+                                    <lightning-input label="Buy Price:" type="number" value="0"
+                                        onchange={registroBuyPrice} step="0.01"></lightning-input>
+                                </div> 
+                                <div class="slds-col slds-size_6-of-12">
+                                    <div onkeyup={searchKeySstBuy}>
+                                        <lightning-input label="Sap service Type Buy:" type="search" value={searchValueSstBuy} 
+                                        placeholder="Buscar SAP Service Type.."></lightning-input>
+                                    </div>
+                                    <table if:true={showSideSstBuy} class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_striped">
+                                        <thead>
+                                            <tr class="slds-line-height_reset">
+                                                <th class="" scope="col">
+                                                <div class="slds-truncate" title="First Name">Name</div>
+                                                </th>
+                                                <th class="" scope="col">
+                                                <div class="slds-truncate" title="Last Name">Code</div>
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <template for:each={sideRecordsSstBuy} for:item="con">
+                                                <tr class="slds-hint-parent" data-id={con.Id} key={con.Id} onclick={SideSelectSstBuy} data-name={con.Name}> 
+                                                <td>
+                                                    <div class="slds-truncate">{con.Name}</div>
+                                                </td>
+                                                <td>
+                                                    <div class="slds-truncate">{con.Code__c}</div>
+                                                </td>
+                                                </tr>
+                                            </template>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="slds-col slds-size_1-of-1"><br></div> 
+                                <div class="slds-col slds-size_6-of-12">
+                                    <lightning-input label="Sell Price:" type="number" value="0"
+                                        onchange={registroSellPrice} step="0.01"></lightning-input>
+                                </div>
+                                <div class="slds-col slds-size_6-of-12">
+                                    <div onkeyup={searchKeySst}>
+                                        <lightning-input label="Sap service Type Sell:" type="search" value={searchValueSst} 
+                                        placeholder="Buscar SAP Service Type.."></lightning-input>
+                                    </div>
+                                    <table if:true={showSideSst} class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_striped">
+                                        <thead>
+                                            <tr class="slds-line-height_reset">
+                                                <th class="" scope="col">
+                                                <div class="slds-truncate" title="First Name">Name</div>
+                                                </th>
+                                                <th class="" scope="col">
+                                                <div class="slds-truncate" title="Last Name">Code</div>
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <template for:each={sideRecordsSst} for:item="con">
+                                                <tr class="slds-hint-parent" data-id={con.Id} key={con.Id} onclick={SideSelectSst} data-name={con.Name}> 
+                                                <td>
+                                                    <div class="slds-truncate">{con.Name}</div>
+                                                </td>
+                                                <td>
+                                                    <div class="slds-truncate">{con.Code__c}</div>
+                                                </td>
+                                                </tr>
+                                            </template>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <br><br>
+                            <div class="slds-grid slds-wrap slds-gutters slds-grid_align-left margenes">
+                                <div class="slds-col slds-size_1-of-1"><br></div> 
+                                <div class="slds-col slds-size_1-of-1 colorSection">
+                                    <h1>Datos del Cargo Adicional</h1>
+                                </div>
+                                <div class="slds-col slds-size_1-of-1"><br></div> 
+                                <div class="slds-col slds-size_12-of-12">
+                                    <lightning-textarea label="Detalles: " placeholder="Detalles de la carga"
+                                    onchange={registroDetalles}></lightning-textarea>
+                                </div>
+                                <div class="slds-col slds-size_1-of-1"><br></div>
+                                <div class="slds-col slds-size_6-of-12">
+                                    <lightning-input  label="Seguro de mercancia ($):" type="number"
+                                    onchange={registroSeguroMercancia} formatter="currency"></lightning-input>
+                                </div>
+                                <div class="slds-col slds-size_6-of-12">
+                                    <lightning-input  label="Seguro de contenedor ($):" type="number"
+                                    onchange={registroSeguroContenedor} formatter="currency"></lightning-input>
+                                </div>
+                                <div class="slds-col slds-size_1-of-1"><br><h2>Dimensiones</h2></div>
+                                <div class="slds-col slds-size_4-of-12">
+                                    <lightning-input type="number" label="Item Height(cm):" step="0.01" 
+                                        onchange={handleItemHeightChange}></lightning-input>
+                                </div>
+                                <div class="slds-col slds-size_4-of-12">
+                                    <lightning-input type="number" label="Item Width(cm):" step="0.01" 
+                                        onchange={handleItemWidthChange}></lightning-input>
+                                </div>
+                                <div class="slds-col slds-size_4-of-12">
+                                    <lightning-input type="number" label="Item Lenght(cm):" step="0.01" 
+                                        onchange={handleItemLenghtChange}></lightning-input>
+                                </div>
+                                <div class="slds-col slds-size_1-of-1"><br></div>
+                                <div class="slds-col slds-size_4-of-12">
+                                    <lightning-input type="checkbox" label="Trasborda?"
+                                    onchange={registroTrasborda}></lightning-input>
+                                </div>
+                                <div class="slds-col slds-size_4-of-12">
+                                    <lightning-input type="checkbox" label="Hazmat"
+                                    onchange={registroHazmat}></lightning-input>
+                                </div>
+                                <div class="slds-col slds-size_1-of-1"><br></div>
+                                <div class="slds-col slds-size_4-of-12">
+                                    <lightning-input type="checkbox" label="Reefer"
+                                    onchange={registroReefer}></lightning-input>
+                                </div>
+                                <template if:true={reefer}>
+                                    <div class="slds-col slds-size_4-of-12">
+                                        <lightning-input label="Temperatura (C° o F):" type="Text"
+                                        onchange={registroTemperatura}></lightning-input>
+                                    </div>
+                                </template>
+                                <template if:true={aereo}>
+                                    <div class="slds-col slds-size_4-of-12">
+                                        <lightning-input  label="Units:" type="number"
+                                        onchange={registroUnits}></lightning-input>
+                                    </div>
+                                </template>
+                                <template if:false={ce}>
+                                    <div class="slds-col slds-size_4-of-12">
+                                    </div>
+                                    <div class="slds-col slds-size_4-of-12">
+                                    </div>
+                                </template>
+                                <template if:true={ce}>
+                                    <div class="slds-col slds-size_4-of-12">
+                                        <lightning-input label="Asesoria:" type="Text"
+                                        onchange={registroAsesoria}></lightning-input>
+                                    </div>
+                                    <div class="slds-col slds-size_4-of-12">
+                                        <lightning-input label="Despacho:" type="Text"
+                                        onchange={registroDespacho}></lightning-input>
+                                    </div>
+                                    <div class="slds-col slds-size_4-of-12">
+                                        <lightning-input label="Comercializadora:" type="Text"
+                                        onchange={registroComercializadora}></lightning-input>
+                                    </div>
+                                </template>
+                            </div>
+                            <div class="slds-col slds-size_1-of-1"><br></div>
+                        </template>
+                    </div>
+                    <footer class="slds-modal__footer">
+                        <button class="slds-button slds-button_neutral" onclick={Cerrar} title="Cerrar">Cerrar</button>
+                        <template if:true={formulario}>
+                            <lightning-button label="Crear SubProducto" onclick={clicCrearSub}></lightning-button>
+                        </template>
+                    </footer>
+                </div>
+            </section>
+        </template>
+    </lightning-card>
+    </div>
+</template>

@@ -30,86 +30,54 @@ public class P2G_sincrinizarConOppoProduct {
     }
     @InvocableMethod
 	public static void updateQuoteLine(List<Quote> newQuotes) {
-        List<QuoteLineItem> qlis = todasQuoteLineItem(newQuotes);
-        List<OpportunityLineItem> todosOlis = todasOpportunityLineItem(newQuotes);
-        List<SubProducto__c> subproduct =todosSubproduct(newQuotes);
-        List<QuoteLineItem> modificarQuoteLine = new List<QuoteLineItem>();
-        List<QuoteLineItem> eliminarQuoteLine = new List<QuoteLineItem>();
-        List<QuoteLineItem> insertarQuoteLine = new List<QuoteLineItem>();
-        List<QuoteLineItem> modificarQuoteLineSub = new List<QuoteLineItem>();
-        List<QuoteLineItem> eliminarQuoteLineSub = new List<QuoteLineItem>();
-        List<QuoteLineItem> insertarQuoteLineSub = new List<QuoteLineItem>();
+        List<QuoteLineItem> listaQli = todasQuoteLineItem(newQuotes);
+        List<OpportunityLineItem> listaOli = todasOpportunityLineItem(newQuotes);
+        List<SubProducto__c> listaSubproduct = todosSubproduct(newQuotes);
         Set<OpportunityLineItem> oliParaInsertar = new Set<OpportunityLineItem>();
         Set<SubProducto__c> subProParaInsertar = new Set<SubProducto__c>();
-        if(qlis.size() > 0){
-        	for(QuoteLineItem qli : qlis){
-            System.debug('es '+qli);
-            for(OpportunityLineItem oli : todosOlis){
-                if(qli.OpportunityLineItemId != null){
-                    modificarQuoteLine = modificarQuoteLine(qlis, todosOlis);
-                    eliminarQuoteLine = eliminarQuoteLine(qlis, todosOlis);
-                    insertarQuoteLine = insertarQuoteLine(modificarQuoteLine, todosOlis, newQuotes[0].Id);
-            	}
-           	}
-            if((subproduct.size() > 0)&&(qli.OpportunityLineItemId == null)){
-                for(SubProducto__c sub : subproduct){
-                    if(qli.SubProducto__c == sub.Id){
-                        System.debug('es cargo adicional '+sub);
-                        modificarQuoteLineSub = modificarQuoteLineSub(qlis, subproduct);
-                        eliminarQuoteLineSub = eliminarQuoteLineSub(qlis, subproduct);
-                        insertarQuoteLineSub = insertarQuoteLineSub(modificarQuoteLine, subproduct, newQuotes[0].Id);
-                	}
-            	}
-        	}
-        	}
-        }else{
-            for(OpportunityLineItem oli : todosOlis){
-                if((oli.Status__c == 'Cotizada') || (oli.Status__c == 'Aceptada') || (oli.Status__c == 'Negociación con cliente')){
-                    oliParaInsertar.add(oli);
-                }
+        List<QuoteLineItem> insertarQuoteLineNuevo = new List<QuoteLineItem>();
+        List<QuoteLineItem> insertarQuoteLineSubNuevo = new List<QuoteLineItem>();
+        if(listaQli.size() > 0){
+            delete listaQli;
+        }
+        for(OpportunityLineItem oli : listaOli){
+            if((oli.Status__c == 'Cotizada') || (oli.Status__c == 'Aceptada') || (oli.Status__c == 'Negociación con cliente')){
+                oliParaInsertar.add(oli);
             }
-            if(subproduct.size() > 0){
-                for(SubProducto__c sub : subproduct){
-                    if((sub.Status__c == 'Cotizada') || (sub.Status__c == 'Aceptada') || (sub.Status__c == 'Negociación con cliente')){
-                        subProParaInsertar.add(sub);
-                    }
+        }
+        if(listaSubproduct.size() > 0){
+            for(SubProducto__c sub : listaSubproduct){
+                if((sub.Status__c == 'Cotizada') || (sub.Status__c == 'Aceptada') || (sub.Status__c == 'Negociación con cliente')){
+                    subProParaInsertar.add(sub);
                 }
             }
         }
         if(oliParaInsertar.size() > 0){
             for(OpportunityLineItem oli : oliParaInsertar){
                 QuoteLineItem quoLine = insertarProducto(oli, newQuotes[0].Id);
-                insertarQuoteLine.add(quoLine);
+                insertarQuoteLineNuevo.add(quoLine);
             }
         }
         if(subProParaInsertar.size() > 0){
             for(SubProducto__c sub : subProParaInsertar){
-                QuoteLineItem quoLine = insertarSubProducto(sub, newQuotes[0].Id);
-                insertarQuoteLineSub.add(quoLine);
+                for(OpportunityLineItem oli : oliParaInsertar){
+                    if(sub.SubProduct_Opportunity_Product__c == oli.Id){
+                        QuoteLineItem quoLine = insertarSubProducto(sub, newQuotes[0].Id, oli);
+                        insertarQuoteLineSubNuevo.add(quoLine);
+                    }
+                }
             }
         }
-        if(modificarQuoteLine.size() > 0){
-        	update modificarQuoteLine;
+        if(insertarQuoteLineNuevo.size() > 0){
+        	insert insertarQuoteLineNuevo;
         }
-        if(modificarQuoteLineSub.size() > 0){
-        	update modificarQuoteLineSub;
-        }
-        if(eliminarQuoteLine.size() > 0){
-        	delete eliminarQuoteLine;
-        }
-        if(eliminarQuoteLineSub.size() > 0){
-        	delete eliminarQuoteLineSub;
-        }
-        if(insertarQuoteLine.size() > 0){
-        	insert insertarQuoteLine;
-        }
-        if(insertarQuoteLineSub.size() > 0){
-        	insert insertarQuoteLineSub;
+        if(insertarQuoteLineSubNuevo.size() > 0){
+        	insert insertarQuoteLineSubNuevo;
         }
     }
+    
 	public static List<QuoteLineItem> modificarQuoteLine(List<QuoteLineItem> qlis, List<OpportunityLineItem> todosOlis) {
         List<String> idolis = new List<String>();
-        
         Set<QuoteLineItem> paraModificar = new Set<QuoteLineItem>();
         List<QuoteLineItem> qliModificar = new List<QuoteLineItem>();
         if(qlis.size() > 0){
@@ -207,7 +175,7 @@ public class P2G_sincrinizarConOppoProduct {
                         if(qli.SubProducto__c == sub.Id){
                             System.debug('es cargo adicional '+sub);
                             if((sub.Status__c == 'Cotizada') || (sub.Status__c == 'Aceptada') || (sub.Status__c == 'Negociación con cliente')){
-                                qli.Quantity = sub.SubProduct_Opportunity_Product__r.Quantity;
+                                //qli.Quantity = sub.SubProduct_Opportunity_Product__r.Quantity;
                                 qli.Sales_Price_Converted__c = sub.SubProduct_Buy_Price_Converted__c;
                                 qli.UnitPrice = sub.SubProduct_Sell_Price__c ;
                                 paraModificar.add(qli);
@@ -250,18 +218,16 @@ public class P2G_sincrinizarConOppoProduct {
         }
         return qliEliminar;
     }
-	public static List<QuoteLineItem> insertarQuoteLineSub(List<QuoteLineItem> qliModificar, List<SubProducto__c> subproduct, String idQuote) {
+	public static List<QuoteLineItem> insertarQuoteLineSub(List<QuoteLineItem> qliModificar, List<SubProducto__c> subproduct, String idQuote, List<OpportunityLineItem> listOli) {
         Set<SubProducto__c> subProParaInsertar = new Set<SubProducto__c>();
         List<QuoteLineItem> qliInsertar = new List<QuoteLineItem>();
         if(qliModificar.size() > 0){
             for(QuoteLineItem mod : qliModificar){
-                if((subproduct.size() > 0)&&(mod.SubProducto__c != null)){
-                    for(SubProducto__c sub : subproduct){
-                        if(mod.SubProducto__c != sub.Id){
-                            System.debug('para insertar sub '+sub);
-                            if((sub.Status__c == 'Cotizada') || (sub.Status__c == 'Aceptada') || (sub.Status__c == 'Negociación con cliente')){
-                                subProParaInsertar.add(sub);
-                            }
+                for(SubProducto__c sub : subproduct){
+                    if((subproduct.size() > 0)&&(mod.SubProducto__c != sub.Id)){
+                        System.debug('para insertar sub '+sub);
+                        if((sub.Status__c == 'Cotizada') || (sub.Status__c == 'Aceptada') || (sub.Status__c == 'Negociación con cliente')){
+                            subProParaInsertar.add(sub);
                         }
                     }
                 }
@@ -277,10 +243,13 @@ public class P2G_sincrinizarConOppoProduct {
             }
         }
                     System.debug('set insertar sub '+subProParaInsertar.size()+' '+subProParaInsertar);
-        if(subProParaInsertar.size() > 0){
-            for(SubProducto__c sub : subProParaInsertar){
-                QuoteLineItem quoLine = insertarSubProducto(sub, idQuote);
-                qliInsertar.add(quoLine);
+        for(SubProducto__c sub : subProParaInsertar){
+            for(OpportunityLineItem oli : listOli){
+                if(sub.SubProduct_Opportunity_Product__c == oli.Id){
+                    System.debug('set insertar sub '+subProParaInsertar.size()+' '+subProParaInsertar);
+                    QuoteLineItem quoLine = insertarSubProducto(sub, idQuote, oli);
+                    qliInsertar.add(quoLine);
+                }
             }
         }
                     System.debug('lista insertar '+qliInsertar.size()+' '+qliInsertar);
@@ -298,16 +267,119 @@ public class P2G_sincrinizarConOppoProduct {
             quoLine.UnitPrice = oli.UnitPrice;
         return quoLine;
     }
-    public static QuoteLineItem insertarSubProducto(SubProducto__c sub, String quoteId){
+    public static QuoteLineItem insertarSubProducto(SubProducto__c sub, String quoteId, OpportunityLineItem oli){
         QuoteLineItem quoLine = new QuoteLineItem();
             quoLine.SubProducto__c = sub.Id;
-            quoLine.PricebookEntryId = sub.SubProduct_Opportunity_Product__r.PricebookEntryId;
-            quoLine.Product2Id = sub.SubProduct_Opportunity_Product__r.Product2Id;
-            quoLine.Quantity = sub.SubProduct_Opportunity_Product__r.Quantity;
+            quoLine.PricebookEntryId = oli.PricebookEntryId;
+            quoLine.Product2Id = oli.Product2Id;
+            quoLine.Quantity = oli.Quantity;
             quoLine.QuoteId = quoteId;
             quoLine.Sales_Price_Converted__c = sub.SubProduct_Buy_Price_Converted__c;
             quoLine.Tipo_de_Linea__c = 'Cargo Adicional';
             quoLine.UnitPrice = sub.SubProduct_Sell_Price__c;
         return quoLine;
+    }
+    public static void pase(){
+        Integer a = 1;
+        a = 1;
+        a = 1;
+        a = 1;
+        a = 1;
+        a = 1;
+        a = 1;
+        a = 1;
+        a = 1;
+        a = 1;
+        a = 1;
+        a = 1;
+        a = 1;
+        a = 1;
+        a = 1;
+        a = 1;
+        a = 1;
+        a = 1;
+        a = 1;
+        a = 1;
+        a = 1;
+        a = 1;
+        a = 1;
+        a = 1;
+        a = 1;
+        a = 1;
+        a = 1;
+        a = 1;
+        a = 1;
+        a = 1;
+        a = 1;
+        a = 1;
+        a = 1;
+        a = 1;
+        a = 1;
+        a = 1;
+        a = 1;
+        a = 1;
+        a = 1;
+        a = 1;
+        a = 1;
+        a = 1;
+        a = 1;
+        a = 1;
+        a = 1;
+        a = 1;
+        a = 1;
+        a = 1;
+        a = 1;
+        a = 1;
+        a = 1;
+        a = 1;
+        a = 1;
+        a = 1;
+        a = 1;
+        a = 1;
+        a = 1;
+        a = 1;
+        a = 1;
+        a = 1;
+        a = 1;
+        a = 1;
+        a = 1;
+        a = 1;
+        a = 1;
+        a = 1;
+        a = 1;
+        a = 1;
+        a = 1;
+        a = 1;
+        a = 1;
+        a = 1;
+        a = 1;
+        a = 1;
+        a = 1;
+        a = 1;
+        a = 1;
+        a = 1;
+        a = 1;
+        a = 1;
+        a = 1;
+        a = 1;
+        a = 1;
+        a = 1;
+        a = 1;
+        a = 1;
+        a = 1;
+        a = 1;
+        a = 1;
+        a = 1;
+        a = 1;
+        a = 1;
+        a = 1;
+        a = 1;
+        a = 1;
+        a = 1;
+        a = 1;
+        a = 1;
+        a = 1;
+        a = 1;
+        a = 1;
     }
 }

@@ -149,7 +149,7 @@ public with sharing class NEU_CartaPorteSavePDF
             HttpResponse response = sendRequest(Body);
             system.debug('response Status: ' + response.getStatusCode());
             system.debug('response body: ' + response.getBody());
-			ReadResponse(response,shipmentID);
+			ReadResponse(response,shipmentID,Body);
            
         }catch(Exception e)
         {
@@ -159,7 +159,7 @@ public with sharing class NEU_CartaPorteSavePDF
          
     }
     
-    private void ReadResponse( HttpResponse response, string shipmentID)
+    private void ReadResponse( HttpResponse response, string shipmentID, string body)
     {
         try
         {
@@ -181,12 +181,14 @@ public with sharing class NEU_CartaPorteSavePDF
             else
             {
                 string xml =root.getChildElement('Xml','http://tempuri.org/').getText();
-                string qrCode =root.getChildElement('QrCode','http://tempuri.org/').getText();
                 string selloTFD =root.getChildElement('SelloTFD','http://tempuri.org/').getText();
                 string fechaTFD = root.getChildElement('FechaTFD','http://tempuri.org/').getText();
                 string uuidTFD =root.getChildElement('UUIDTFD','http://tempuri.org/').getText();
                 string cadenaOriginalTFD =root.getChildElement('CadenaOriginalTFD','http://tempuri.org/').getText();
                 
+                //Para crear el QR
+                string qrCode = creaQR(uuidTFD, cadenaOriginalTFD, body);
+
                 // replace the 'T' with blank space to make date time string compatible with format method
                 String dtString = fechaTFD.replace('T', ' ');
                 
@@ -223,6 +225,47 @@ system.debug(' cadenaOriginalTFD -> ' +  cadenaOriginalTFD);*/
             throw e;
         }
         
+    }
+    public static String creaQR(String uuidTFD, String cadenaOriginal, String body) {
+        String emisor = body.substringBetween('"Emisor":{"Rfc":"','","RegimenFiscal":');
+        String receptor = body.substringBetween('","Rfc":"','","ResidenciaFiscal":');
+        String total = body.substringBetween('"Total":"','","TipoDeComprobante":');
+        String cadena = cadenaOriginal.substringBetween('','==|');
+		String selloSAP = cadena.RIGHT(6) + '==';
+        String qr = '';
+        //qr += 'http://expertensoft.com/qr/qr2.php?';
+        qr += 'https://verificacfdi.facturaelectronica.sat.gob.mx/default.aspx?id=';
+        qr += uuidTFD + '&re=';
+        qr += emisor + '&rr=';
+        qr += receptor + '&tt=';
+        qr += total + '&fe=';
+        qr += selloSAP;
+        System.debug('el qr es: ' + qr);
+        String qrCode = generateQRCode(qr);
+        return qrCode;
+    }
+    public static String generateQRCode(String data) {
+        // URL del servicio externo para generar el QR code
+        String baseUrl = 'https://api.qrserver.com/v1/create-qr-code/';
+        // Parámetros de la URL para el QR code
+        String size = '150x150';
+        String url = baseUrl + '?size=' + size + '&data=' + EncodingUtil.urlEncode(data, 'UTF-8');
+        // Realizar la solicitud HTTP
+        Http http = new Http();
+        HttpRequest request = new HttpRequest();
+        request.setEndpoint(url);
+        request.setMethod('GET');
+        try {
+            HttpResponse response = http.send(request);
+            if (response.getStatusCode() == 200) {
+                // Devolver la URL del QR code
+                return url;
+            } else {
+                throw new CalloutException('Falla al generar el QR code: ' + response.getStatus());
+            }
+        } catch (Exception e) {
+            throw new CalloutException('Erorr en el llamado: ' + e.getMessage());
+        }
     }
     
     private HttpResponse sendRequest(string body)

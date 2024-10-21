@@ -35,8 +35,14 @@
                 <label>Aceptada</label>
             </value>
             <value>
+                <fullName>Negociación con cliente</fullName>
+                <default>false</default>
+                <label>Negociación con cliente</label>
+            </value>
+            <value>
                 <fullName>Cerrada</fullName>
                 <default>false</default>
+                <isActive>false</isActive>
                 <label>Cerrada</label>
             </value>
         </valueSetDefinition>

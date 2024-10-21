@@ -832,8 +832,6 @@
     <relatedLists>
         <excludeButtons>New</excludeButtons>
         <fields>NAME</fields>
-        <fields>RECORDTYPE</fields>
-        <fields>Mode__c</fields>
         <fields>Route__c</fields>
         <fields>ETD_from_Point_of_Load__c</fields>
         <fields>ETA_Point_of_Discharge__c</fields>
@@ -841,6 +839,8 @@
         <fields>Total_Weight_Kg__c</fields>
         <fields>SUM_Destination_Amount__c</fields>
         <fields>Shipment_Status_Plann__c</fields>
+        <fields>Traslado_Ingreso__c</fields>
+        <fields>Operation_Executive__c</fields>
         <relatedList>Shipment__c.Account_for__c</relatedList>
         <sortField>NAME</sortField>
         <sortOrder>Desc</sortOrder>

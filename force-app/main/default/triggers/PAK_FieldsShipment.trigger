@@ -16,9 +16,18 @@ trigger PAK_FieldsShipment on Shipment__c (before update, after update) {
     
     if(trigger.isBefore){
         System.debug('***PAK_FieldsShipment BEFORE***');
+        P2G_Advertencia.handleBeforeUpdate(Trigger.new[0], Trigger.oldMap);
         map<String,String> mapWareHouse = new map<String,String>();
         for(Warehouse__c WH: [Select Id, Warehouse_Manager__c, Warehouse_Executive__c, Warehouse_Manager__r.Email,Warehouse_Executive__r.Email From Warehouse__c]){String ExEmail = '';String ManEmail = '';if(WH.Warehouse_Executive__c != null){ExEmail = WH.Warehouse_Executive__r.Email;}if(WH.Warehouse_Manager__c != null){ManEmail = WH.Warehouse_Manager__r.Email;}mapWareHouse.put(WH.Id, ExEmail+'-'+ManEmail);}
         for(Shipment__c SHIP: trigger.new){
+            
+        // inicia guardar Cancelled by
+              if((SHIP.Shipment_Status_Plann__c != trigger.oldMap.get(SHIP.Id).Shipment_Status_Plann__c)&&(SHIP.Shipment_Status_Plann__c == 'Cancel')){
+                  SHIP.Cancelled_by__c = UserInfo.getName();
+   			 	  System.debug('Shipment cancel modificado : '+SHIP);
+                }
+        // termina guardar Cancelled by
+
             String EmailEx = mapWareHouse.get(SHIP.Warehouse__c) != null?mapWareHouse.get(SHIP.Warehouse__c).substringBefore('-'):'';
             String EmailMan = mapWareHouse.get(SHIP.Warehouse__c) != null?mapWareHouse.get(SHIP.Warehouse__c).substringAfter('-'):'';
             if(mapShipment.containsKey(SHIP.Id)){SHIP.Email_Sales_ExecutiveSP__c = mapShipment.get(SHIP.Id).Import_Export_Quote__r.CreatedBy.Email;}

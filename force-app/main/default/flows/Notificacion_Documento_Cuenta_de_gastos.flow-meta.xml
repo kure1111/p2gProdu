@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionCalls>
+        <description>Alerta de email cuando se carga un nuevo documento de Cuenta de gastos</description>
+        <name>Cuenta_de_gastos</name>
+        <label>Cuenta de gastos</label>
+        <locationX>50</locationX>
+        <locationY>455</locationY>
+        <actionName>Associated_Document__c.Notificacion_Documento_Cuenta_de_gastos</actionName>
+        <actionType>emailAlert</actionType>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>SObjectRowId</name>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </inputParameters>
+        <nameSegment>Associated_Document__c.Notificacion_Documento_Cuenta_de_gastos</nameSegment>
+        <versionSegment>1</versionSegment>
+    </actionCalls>
+    <apiVersion>55.0</apiVersion>
+    <decisions>
+        <description>Condicional para detectar si el documento asociado pertenece a un Shipment de Comercio Exterior.</description>
+        <name>SP_Comercio_Exterior</name>
+        <label>SP Comercio Exterior</label>
+        <locationX>182</locationX>
+        <locationY>335</locationY>
+        <defaultConnectorLabel>No Comercio Exterior</defaultConnectorLabel>
+        <rules>
+            <name>Comercio_Exterior</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Shipment__r.Name</leftValueReference>
+                <operator>StartsWith</operator>
+                <rightValue>
+                    <stringValue>SP-CE</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Cuenta_de_gastos</targetReference>
+            </connector>
+            <label>Comercio Exterior</label>
+        </rules>
+    </decisions>
+    <description>Flujo que envía una notificación de correo electrónico al equipo administrativo de Comercio Exterior (CE) cuando se carga un documento de Cuenta de gastos</description>
+    <environments>Default</environments>
+    <interviewLabel>Notificación Documento &quot;Cuenta de gastos&quot; {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Notificación Documento &quot;Cuenta de gastos&quot;</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <start>
+        <locationX>56</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>SP_Comercio_Exterior</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Document_Type__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Cuenta de gastos</stringValue>
+            </value>
+        </filters>
+        <object>Associated_Document__c</object>
+        <recordTriggerType>Create</recordTriggerType>
+        <triggerType>RecordAfterSave</triggerType>
+    </start>
+    <status>Active</status>
+</Flow>

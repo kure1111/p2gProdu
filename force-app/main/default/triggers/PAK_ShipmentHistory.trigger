@@ -23,9 +23,9 @@ trigger PAK_ShipmentHistory on Shipment__c (after update) {
                     ModificationDate = System.now();//Captura la fecha actual
                     RecordID = ship.Id;//Captura el ID del shipment modificada
                     
-                    //CAMPO ﻿Acuse en SAP
+                    //CAMPO Acuse en SAP
                     if(ship.Acuse_en_SAP__c != oldShipment.Acuse_en_SAP__c){
-                        FieldLabel += String.valueOf(aux) + '. ﻿Acuse en SAP<br/>';
+                        FieldLabel += String.valueOf(aux) + '. Acuse en SAP<br/>';
                         OriginalValues += String.valueOf(aux) + '. ' + oldShipment.Acuse_en_SAP__c + '<br/>';
                         NewValues += String.valueOf(aux) + '. ' + ship.Acuse_en_SAP__c + '<br/>';
                         aux = aux + 1;
@@ -513,6 +513,42 @@ trigger PAK_ShipmentHistory on Shipment__c (after update) {
                         NewValues += String.valueOf(aux) + '. ' + ship.Routing_Operation_Status__c + '<br/>';
                         aux = aux + 1;
                     }
+                    //CAMPO Tipo de Carta Porte
+                    if(ship.Traslado_Ingreso__c != oldShipment.Traslado_Ingreso__c){
+                        FieldLabel += String.valueOf(aux) + '. Tipo de Carta Porte<br/>';
+                        OriginalValues += String.valueOf(aux) + '. ' + oldShipment.Traslado_Ingreso__c + '<br/>';
+                        NewValues += String.valueOf(aux) + '. ' + ship.Traslado_Ingreso__c + '<br/>';
+                        aux = aux + 1;
+                    }
+                    //CAMPO Placed Time
+                    if (ship.Equip_Placed__c != oldShipment.Equip_Placed__c) {
+                        // Obtener la zona horaria del usuario actual
+                        TimeZone localTimeZone = UserInfo.getTimeZone();
+                    
+                        // Convertir las horas UTC a la hora local
+                        DateTime oldPlacedTimeUTC = oldShipment.Equip_Placed__c;
+                        DateTime newPlacedTimeUTC = ship.Equip_Placed__c;
+                    
+                        // Convertir UTC a la hora local
+                        DateTime oldPlacedTimeLocal = oldPlacedTimeUTC != null 
+                            ? oldPlacedTimeUTC.addSeconds(localTimeZone.getOffset(oldPlacedTimeUTC) / 1000)
+                            : null;
+                        DateTime newPlacedTimeLocal = newPlacedTimeUTC.addSeconds(localTimeZone.getOffset(newPlacedTimeUTC) / 1000);
+                    
+                        // Formatear las horas en la hora local del usuario
+                        String oldPlacedTimeLocalStr = oldPlacedTimeLocal != null 
+                            ? oldPlacedTimeLocal.format('dd/MM/yyyy hh:mm a', 'en_US') 
+                            : 'null';
+                        String newPlacedTimeLocalStr = newPlacedTimeLocal.format('dd/MM/yyyy hh:mm a', 'en_US');
+                    
+                        // Concatenar los valores formateados en la zona horaria local
+                        FieldLabel += String.valueOf(aux) + '. Placed Time<br/>';
+                        OriginalValues += String.valueOf(aux) + '. ' + oldPlacedTimeLocalStr + '<br/>';
+                        NewValues += String.valueOf(aux) + '. ' + newPlacedTimeLocalStr + '<br/>';
+                        aux = aux + 1;
+                    }
+                    
+
                 }
                 //CREA UN OBJETO DE TIPO Fiel_History_Tracking__c PARA HACER LA INSTANCIA
                 

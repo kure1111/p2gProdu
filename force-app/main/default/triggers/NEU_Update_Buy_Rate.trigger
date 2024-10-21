@@ -7,6 +7,9 @@ trigger NEU_Update_Buy_Rate on Fee__c (before insert, before update) {
         
         if(trigger.isInsert || trigger.isUpdate)
         {
+            if (trigger.isUpdate && isBuyRateUpdated(trigger.new[0])) {
+                P2G_updateLog.handleUpdate(trigger.new[0]);
+            }
             for(Fee__c fee : trigger.new)
             {
                 if(fee.Cost_Concept_1__c != null || fee.Cost_Concept_2__c != null || fee.Cost_Concept_3__c != null || fee.Cost_Concept_4__c != null || fee.Cost_Concept_5__c != null)
@@ -20,5 +23,11 @@ trigger NEU_Update_Buy_Rate on Fee__c (before insert, before update) {
             }
         }
     } 
+    private Boolean isBuyRateUpdated(Fee__c fee) {
+        if (Trigger.oldMap.containsKey(fee.Id)) {
+            return Trigger.oldMap.get(fee.Id).Buy_Rate__c != fee.Buy_Rate__c;
+        }
+        return false;
+    }
   
 }

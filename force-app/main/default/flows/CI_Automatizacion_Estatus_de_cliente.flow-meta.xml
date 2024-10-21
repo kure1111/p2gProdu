@@ -1,0 +1,724 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>56.0</apiVersion>
+    <decisions>
+        <description>Consulta en que etapa se encuentra el campo Estatus del cliente, para entonces hacer el análisis para la siguiente etapa</description>
+        <name>Estatus_de_Cliente</name>
+        <label>Estatus de Cliente</label>
+        <locationX>1403</locationX>
+        <locationY>1068</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Nuevo</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Estatus_de_cliente__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Nuevo</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Meses_transcurridos</targetReference>
+            </connector>
+            <label>Nuevo</label>
+        </rules>
+        <rules>
+            <name>Recurrente</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Estatus_de_cliente__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Recurrente</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Cambio_Total_IEQ_Approved_2</targetReference>
+            </connector>
+            <label>Recurrente</label>
+        </rules>
+        <rules>
+            <name>Perdido</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Estatus_de_cliente__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Perdido</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Cambio_Total_IEQ_Approved_3</targetReference>
+            </connector>
+            <label>Perdido</label>
+        </rules>
+        <rules>
+            <name>Recuperado</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Estatus_de_cliente__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Recuperado</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Cambio_Estatus_de_cliente</targetReference>
+            </connector>
+            <label>Recuperado</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>Consulta si la cuenta actual ha realizado compras de algún servicio ó producto.</description>
+        <name>Ha_realizado_compras</name>
+        <label>¿Ha realizado compras?</label>
+        <locationX>182</locationX>
+        <locationY>1428</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Si</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Cambio_Total_IEQ_Approved_1</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Estatus_Cliente_Recurrente</targetReference>
+            </connector>
+            <label>Si</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>Detecta el tiempo transcurrido desde la creación de la cuenta. Deben haber pasado 3 meses para pasarlo a Recurrente</description>
+        <name>Meses_transcurridos</name>
+        <label>Meses transcurridos</label>
+        <locationX>380</locationX>
+        <locationY>1188</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>X3_Meses</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>mesesTranscurridosNuevo</leftValueReference>
+                <operator>GreaterThanOrEqualTo</operator>
+                <rightValue>
+                    <numberValue>3.0</numberValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Cambio_Total_IEQ_Approved_1</targetReference>
+            </connector>
+            <label>3 Meses</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>Detecta el tiempo transcurrido desde la última compra. Deben haber pasado 6 meses para pasarlo a Perdido</description>
+        <name>Meses_transcurridos_2</name>
+        <label>Meses transcurridos</label>
+        <locationX>974</locationX>
+        <locationY>1308</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>X6_Meses</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>mesesTranscurridosRecurrente</leftValueReference>
+                <operator>GreaterThanOrEqualTo</operator>
+                <rightValue>
+                    <numberValue>6.0</numberValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Estatus_Cliente_Perdido</targetReference>
+            </connector>
+            <label>6 Meses</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Meses_Transcurridos_3</name>
+        <label>Meses Transcurridos</label>
+        <locationX>2030</locationX>
+        <locationY>1308</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>X3_Meses_Recuperado</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>mesesTranscurridosRecuperado</leftValueReference>
+                <operator>GreaterThanOrEqualTo</operator>
+                <rightValue>
+                    <numberValue>3.0</numberValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Estatus_Cliente_Recuperado_a_Recurrente</targetReference>
+            </connector>
+            <label>3 Meses</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>Consulta si la última compra que realizó el cliente, fue después de la fecha en que pasó al estatus de Perdido.</description>
+        <name>Nueva_Compra</name>
+        <label>¿Nueva Compra?</label>
+        <locationX>1502</locationX>
+        <locationY>1308</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>SiCompra</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>compraDespuesDePerdido</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Estatus_Cliente_Recuperado</targetReference>
+            </connector>
+            <label>Si</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>Consulta los movimientos del cliente para confirmar si no ha habido aprobación de cotizaciones en más de 60 días.</description>
+        <name>Seguimiento_del_cliente</name>
+        <label>Seguimiento del cliente</label>
+        <locationX>1183</locationX>
+        <locationY>636</locationY>
+        <defaultConnector>
+            <targetReference>Estatus_de_Cliente</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>X60_Dias_sin_cotizacion</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>diasUltimaCotizacion</leftValueReference>
+                <operator>GreaterThanOrEqualTo</operator>
+                <rightValue>
+                    <numberValue>60.0</numberValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.SeguimientoProspecto__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>Vendido</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Seguimiento_No_Venta</targetReference>
+            </connector>
+            <label>60 Días sin cotización</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>Consulta si el cliente lleva más de 60 días sin un historial de aprobaciones de folios.</description>
+        <name>Seguimiento_del_cliente_2</name>
+        <label>Seguimiento del cliente</label>
+        <locationX>1623</locationX>
+        <locationY>636</locationY>
+        <defaultConnector>
+            <targetReference>Estatus_de_Cliente</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>X60_Dias_sin_historial_de_aprobaciones</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>diasSinHistorialDeAprobaciones</leftValueReference>
+                <operator>GreaterThanOrEqualTo</operator>
+                <rightValue>
+                    <numberValue>60.0</numberValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.SeguimientoProspecto__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>Vendido</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Seguimiento_No_Venta_2</targetReference>
+            </connector>
+            <label>60 Días sin historial de aprobaciones</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>Consulta si el componente de búsqueda &quot;Ultimo Total IEQ Approved&quot; tiene un historial con las últimas aprobaciones del cliente. Si hay historial, se revisa si la última aprobación fue hace más de 60 días.
+Si no hay historial, eso quiere decir que el cliente no ha hecho movimientos en mucho tiempo, por lo que se procede a consultar si podría cambiarse el seguimiento a &quot;No Venta&quot;</description>
+        <name>Ventas_Aprobadas_en_Account_History</name>
+        <label>¿Ventas Aprobadas en Account History?</label>
+        <locationX>1403</locationX>
+        <locationY>516</locationY>
+        <defaultConnector>
+            <targetReference>Seguimiento_del_cliente_2</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>NO</defaultConnectorLabel>
+        <rules>
+            <name>SI_ApproveHistory</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Ultimo_Total_IEQ_Approved</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Seguimiento_del_cliente</targetReference>
+            </connector>
+            <label>SI</label>
+        </rules>
+    </decisions>
+    <description>Flujo para automatizar los cambios en el campo &quot;Estatus de cliente&quot; en el objeto Account.</description>
+    <environments>Default</environments>
+    <formulas>
+        <description>Formula que consulta si se realizaron compras actualmente. Solo para clientes que estén en el estatus de &quot;Perdido&quot;</description>
+        <name>compraDespuesDePerdido</name>
+        <dataType>Boolean</dataType>
+        <expression>IF( DATEVALUE({!Cambio_Total_IEQ_Approved_3.CreatedDate}) = TODAY(), True, False )</expression>
+    </formulas>
+    <formulas>
+        <description>Calcula el total de días transcurridos desde la creación del cliente. Solo para aquellos clientes que aún no cuentan con un historial de aprobaciones.</description>
+        <name>diasSinHistorialDeAprobaciones</name>
+        <dataType>Number</dataType>
+        <expression>TODAY() - DATEVALUE({!$Record.CreatedDate})</expression>
+        <scale>0</scale>
+    </formulas>
+    <formulas>
+        <description>Calcula el total de días transcurridos desde la última cotización que se generó</description>
+        <name>diasUltimaCotizacion</name>
+        <dataType>Number</dataType>
+        <expression>TODAY() - DATEVALUE({!Ultimo_Total_IEQ_Approved.CreatedDate})</expression>
+        <scale>0</scale>
+    </formulas>
+    <formulas>
+        <description>Consulta la fecha del día en que se ejecuta el flujo</description>
+        <name>fechaActual</name>
+        <dataType>Date</dataType>
+        <expression>TODAY()</expression>
+    </formulas>
+    <formulas>
+        <description>Calcula los meses transcurridos desde que la cuenta se creó</description>
+        <name>mesesTranscurridosNuevo</name>
+        <dataType>Number</dataType>
+        <expression>((YEAR(TODAY()) - YEAR(DATEVALUE({!$Record.CreatedDate})))*12) + (MONTH(TODAY()) - MONTH(DATEVALUE({!$Record.CreatedDate})))</expression>
+        <scale>0</scale>
+    </formulas>
+    <formulas>
+        <description>Calcula los meses transcurridos desde que se hizo la última compra</description>
+        <name>mesesTranscurridosRecuperado</name>
+        <dataType>Number</dataType>
+        <expression>((YEAR(TODAY()) - YEAR(DATEVALUE({!Cambio_Estatus_de_cliente.CreatedDate})))*12) + (MONTH(TODAY()) - MONTH(DATEVALUE({!Cambio_Estatus_de_cliente.CreatedDate})))</expression>
+        <scale>0</scale>
+    </formulas>
+    <formulas>
+        <description>Calcula los meses transcurridos desde que se hizo la última compra</description>
+        <name>mesesTranscurridosRecurrente</name>
+        <dataType>Number</dataType>
+        <expression>((YEAR(TODAY()) - YEAR(DATEVALUE({!Cambio_Total_IEQ_Approved_2.CreatedDate})))*12) + (MONTH(TODAY()) - MONTH(DATEVALUE({!Cambio_Total_IEQ_Approved_2.CreatedDate})))</expression>
+        <scale>0</scale>
+    </formulas>
+    <interviewLabel>CI / Automatización Estatus de cliente {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>CI / Automatización Estatus de cliente</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordLookups>
+        <description>Consulta si la cuenta actual ha tenido cambios en el campo Estatus de cliente.</description>
+        <name>Cambio_Estatus_de_cliente</name>
+        <label>Cambio Estatus de cliente</label>
+        <locationX>2030</locationX>
+        <locationY>1188</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Meses_Transcurridos_3</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Account_History__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>Field_Tracking_Estatus_de_cliente__c</field>
+            <operator>IsNull</operator>
+            <value>
+                <booleanValue>false</booleanValue>
+            </value>
+        </filters>
+        <filters>
+            <field>Field_Tracking_Estatus_de_cliente__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Recuperado</stringValue>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Field_History_Tracking__c</object>
+        <sortField>CreatedDate</sortField>
+        <sortOrder>Desc</sortOrder>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
+        <description>Consulta si el cuenta actual ha tenido cambios en el campo Total IEQ Approved.</description>
+        <name>Cambio_Total_IEQ_Approved_1</name>
+        <label>Cambio Total IEQ Approved</label>
+        <locationX>182</locationX>
+        <locationY>1308</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Ha_realizado_compras</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Account_History__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>Field_Tracking_Total_IEQ_Approved__c</field>
+            <operator>IsNull</operator>
+            <value>
+                <booleanValue>false</booleanValue>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Field_History_Tracking__c</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
+        <description>Consulta si el cuenta actual ha tenido cambios en el campo Total IEQ Approved.</description>
+        <name>Cambio_Total_IEQ_Approved_2</name>
+        <label>Cambio Total IEQ Approved</label>
+        <locationX>974</locationX>
+        <locationY>1188</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Meses_transcurridos_2</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Account_History__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>Field_Tracking_Total_IEQ_Approved__c</field>
+            <operator>IsNull</operator>
+            <value>
+                <booleanValue>false</booleanValue>
+            </value>
+        </filters>
+        <filters>
+            <field>Field_Tracking_Total_IEQ_Approved__c</field>
+            <operator>NotEqualTo</operator>
+            <value>
+                <stringValue>0</stringValue>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Field_History_Tracking__c</object>
+        <sortField>CreatedDate</sortField>
+        <sortOrder>Desc</sortOrder>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
+        <description>Consulta si la cuenta actual ha tenido cambios en el campo Total IEQ Approved.</description>
+        <name>Cambio_Total_IEQ_Approved_3</name>
+        <label>Cambio Total IEQ Approved</label>
+        <locationX>1502</locationX>
+        <locationY>1188</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Nueva_Compra</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Account_History__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>Field_Tracking_Total_IEQ_Approved__c</field>
+            <operator>IsNull</operator>
+            <value>
+                <booleanValue>false</booleanValue>
+            </value>
+        </filters>
+        <filters>
+            <field>Field_Tracking_Total_IEQ_Approved__c</field>
+            <operator>NotEqualTo</operator>
+            <value>
+                <stringValue>0</stringValue>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Field_History_Tracking__c</object>
+        <sortField>CreatedDate</sortField>
+        <sortOrder>Desc</sortOrder>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
+        <description>Consulta el Id del Record Type Supply Chain Partner del objeto Account.</description>
+        <name>Get_Account_Record_ID</name>
+        <label>Get Account Record ID</label>
+        <locationX>1403</locationX>
+        <locationY>276</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Ultimo_Total_IEQ_Approved</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>DeveloperName</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Transporter</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>SobjectType</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Account</stringValue>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>RecordType</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
+        <description>Se consulta la fecha de la última vez que se aprobó una cotización para el cliente</description>
+        <name>Ultimo_Total_IEQ_Approved</name>
+        <label>Último Total IEQ Approved</label>
+        <locationX>1403</locationX>
+        <locationY>396</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Ventas_Aprobadas_en_Account_History</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Account_History__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>Field_Tracking_Total_IEQ_Approved__c</field>
+            <operator>IsNull</operator>
+            <value>
+                <booleanValue>false</booleanValue>
+            </value>
+        </filters>
+        <filters>
+            <field>Field_Tracking_Total_IEQ_Approved__c</field>
+            <operator>NotEqualTo</operator>
+            <value>
+                <stringValue>0</stringValue>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Field_History_Tracking__c</object>
+        <sortField>CreatedDate</sortField>
+        <sortOrder>Desc</sortOrder>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordUpdates>
+        <description>Actualiza el valor del campo &quot;Estatus de cliente&quot; a Perdido</description>
+        <name>Estatus_Cliente_Perdido</name>
+        <label>Estatus Cliente - Recurrente a Perdido</label>
+        <locationX>842</locationX>
+        <locationY>1428</locationY>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>RecordTypeId</field>
+            <operator>NotEqualTo</operator>
+            <value>
+                <elementReference>Get_Account_Record_ID.Id</elementReference>
+            </value>
+        </filters>
+        <inputAssignments>
+            <field>Estatus_de_cliente__c</field>
+            <value>
+                <stringValue>Perdido</stringValue>
+            </value>
+        </inputAssignments>
+        <inputReference>$Record</inputReference>
+    </recordUpdates>
+    <recordUpdates>
+        <description>Actualiza el valor del campo &quot;Estatus de cliente&quot; a Recuperado</description>
+        <name>Estatus_Cliente_Recuperado</name>
+        <label>Estatus Cliente - Perdido a Recuperado</label>
+        <locationX>1370</locationX>
+        <locationY>1428</locationY>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>RecordTypeId</field>
+            <operator>NotEqualTo</operator>
+            <value>
+                <elementReference>Get_Account_Record_ID.Id</elementReference>
+            </value>
+        </filters>
+        <inputAssignments>
+            <field>Estatus_de_cliente__c</field>
+            <value>
+                <stringValue>Recuperado</stringValue>
+            </value>
+        </inputAssignments>
+        <inputReference>$Record</inputReference>
+    </recordUpdates>
+    <recordUpdates>
+        <description>Actualiza el valor del campo &quot;Estatus de cliente&quot; a Recurrente</description>
+        <name>Estatus_Cliente_Recuperado_a_Recurrente</name>
+        <label>Estatus Cliente - Recuperado a Recurrente</label>
+        <locationX>1898</locationX>
+        <locationY>1428</locationY>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>RecordTypeId</field>
+            <operator>NotEqualTo</operator>
+            <value>
+                <elementReference>Get_Account_Record_ID.Id</elementReference>
+            </value>
+        </filters>
+        <inputAssignments>
+            <field>Estatus_de_cliente__c</field>
+            <value>
+                <stringValue>Recurrente</stringValue>
+            </value>
+        </inputAssignments>
+        <inputReference>$Record</inputReference>
+    </recordUpdates>
+    <recordUpdates>
+        <description>Actualiza el valor del campo &quot;Estatus de cliente&quot; a Recurrente</description>
+        <name>Estatus_Cliente_Recurrente</name>
+        <label>Estatus Cliente - Nuevo a Recurrente</label>
+        <locationX>50</locationX>
+        <locationY>1548</locationY>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>RecordTypeId</field>
+            <operator>NotEqualTo</operator>
+            <value>
+                <elementReference>Get_Account_Record_ID.Id</elementReference>
+            </value>
+        </filters>
+        <inputAssignments>
+            <field>Estatus_de_cliente__c</field>
+            <value>
+                <stringValue>Recurrente</stringValue>
+            </value>
+        </inputAssignments>
+        <inputReference>$Record</inputReference>
+    </recordUpdates>
+    <recordUpdates>
+        <description>Actualiza el campo Seguimiento del registro que desencadena el flujo. El valor se coloca como No Venta.</description>
+        <name>Seguimiento_No_Venta</name>
+        <label>Seguimiento - No Venta</label>
+        <locationX>1051</locationX>
+        <locationY>756</locationY>
+        <connector>
+            <targetReference>Estatus_de_Cliente</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>RecordTypeId</field>
+            <operator>NotEqualTo</operator>
+            <value>
+                <elementReference>Get_Account_Record_ID.Id</elementReference>
+            </value>
+        </filters>
+        <inputAssignments>
+            <field>Motivo_no_venta__c</field>
+            <value>
+                <stringValue>Falta de seguimiento</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>SeguimientoProspecto__c</field>
+            <value>
+                <stringValue>No Venta</stringValue>
+            </value>
+        </inputAssignments>
+        <inputReference>$Record</inputReference>
+    </recordUpdates>
+    <recordUpdates>
+        <description>Actualiza el campo Seguimiento del registro que desencadena el flujo. El valor se coloca como No Venta.</description>
+        <name>Seguimiento_No_Venta_2</name>
+        <label>Seguimiento - No Venta</label>
+        <locationX>1491</locationX>
+        <locationY>756</locationY>
+        <connector>
+            <targetReference>Estatus_de_Cliente</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>RecordTypeId</field>
+            <operator>NotEqualTo</operator>
+            <value>
+                <elementReference>Get_Account_Record_ID.Id</elementReference>
+            </value>
+        </filters>
+        <inputAssignments>
+            <field>Motivo_no_venta__c</field>
+            <value>
+                <stringValue>Falta de seguimiento</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>SeguimientoProspecto__c</field>
+            <value>
+                <stringValue>No Venta</stringValue>
+            </value>
+        </inputAssignments>
+        <inputReference>$Record</inputReference>
+    </recordUpdates>
+    <start>
+        <locationX>1277</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Get_Account_Record_ID</targetReference>
+        </connector>
+        <object>Account</object>
+        <schedule>
+            <frequency>Daily</frequency>
+            <startDate>2023-03-22</startDate>
+            <startTime>23:45:00.000Z</startTime>
+        </schedule>
+        <triggerType>Scheduled</triggerType>
+    </start>
+    <status>Active</status>
+</Flow>

@@ -243,7 +243,7 @@ function handleLocationError(browserHasGeolocation, infoWindow, pos) {
      
                 </apex:pageBlockSection>
             <apex:pageBlockButtons location="bottom">
-                <apex:commandButton onclick="location.reload(true);" value="Search" />
+                <!-- apex:commandButton onclick="location.reload(true);" value="Search" / -->
                 <apex:commandButton value="Save" action="{!Save}"/>
                 
             </apex:pageBlockButtons>

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <actionCalls>
-        <name>Email_Encuesta</name>
-        <label>Email Encuesta</label>
+        <name>Confirmaci_n_Email_Encuesta</name>
+        <label>Confirmación Email Encuesta</label>
         <locationX>314</locationX>
         <locationY>1392</locationY>
         <actionName>emailSimple</actionName>
@@ -11,19 +11,22 @@
         <inputParameters>
             <name>emailAddresses</name>
             <value>
-                <stringValue>carlos.martinez@pak2go.com</stringValue>
+                <stringValue>alberto.garcia@2gologistics.com, carlos.martinez@2gologistics.com</stringValue>
             </value>
         </inputParameters>
         <inputParameters>
-            <name>emailSubject</name>
+            <name>senderAddress</name>
+        </inputParameters>
+        <inputParameters>
+            <name>recipientId</name>
             <value>
-                <stringValue>Encuesta enviada</stringValue>
+                <elementReference>IdUsusarioconfirmarEnvioEncuesta</elementReference>
             </value>
         </inputParameters>
         <inputParameters>
-            <name>emailBody</name>
+            <name>emailTemplateId</name>
             <value>
-                <elementReference>Body_Formua</elementReference>
+                <stringValue>00XRQ000001Gtkj2AC</stringValue>
             </value>
         </inputParameters>
         <nameSegment>emailSimple</nameSegment>
@@ -47,15 +50,21 @@
             </value>
         </inputParameters>
         <inputParameters>
-            <name>emailSubject</name>
+            <name>senderAddress</name>
             <value>
-                <stringValue>Subject</stringValue>
+                <stringValue>no-reply@pak2go.com</stringValue>
             </value>
         </inputParameters>
         <inputParameters>
-            <name>emailBody</name>
+            <name>recipientId</name>
             <value>
-                <elementReference>Body_Formua</elementReference>
+                <elementReference>IdUsusarioconfirmarEnvioEncuesta</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>emailTemplateId</name>
+            <value>
+                <stringValue>00XRQ000001Gtkj2AC</stringValue>
             </value>
         </inputParameters>
         <nameSegment>emailSimple</nameSegment>
@@ -89,7 +98,7 @@
         <defaultConnectorLabel>Yes</defaultConnectorLabel>
         <rules>
             <name>Yes</name>
-            <conditionLogic>and</conditionLogic>
+            <conditionLogic>or</conditionLogic>
             <conditions>
                 <leftValueReference>IdsAccount</leftValueReference>
                 <operator>Contains</operator>
@@ -253,7 +262,7 @@
             <targetReference>Accounts</targetReference>
         </nextValueConnector>
         <noMoreValuesConnector>
-            <targetReference>Email_Encuesta</targetReference>
+            <targetReference>Confirmaci_n_Email_Encuesta</targetReference>
         </noMoreValuesConnector>
     </loops>
     <processMetadataValues>
@@ -386,7 +395,7 @@
         </schedule>
         <triggerType>Scheduled</triggerType>
     </start>
-    <status>Draft</status>
+    <status>Obsolete</status>
     <textTemplates>
         <name>BodyTemplate</name>
         <isViewedAsPlainText>false</isViewedAsPlainText>
@@ -452,5 +461,15 @@
         <isInput>false</isInput>
         <isOutput>false</isOutput>
         <objectType>Shipment__c</objectType>
+    </variables>
+    <variables>
+        <name>IdUsusarioconfirmarEnvioEncuesta</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <value>
+            <stringValue>005RQ000000yysXYAQ</stringValue>
+        </value>
     </variables>
 </Flow>

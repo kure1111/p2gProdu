@@ -89,7 +89,7 @@ public with sharing class NEU_Generate_Shipments
                     'Last_Shipment__c', 'Last_Shipment__r.Name', 'Last_Shipment__r.Shipment_Status__c', 'Last_Shipment__r.Site_of_Discharge__c', 
                     'Last_Shipment__r.ETA_Point_of_Discharge__c','Last_Shipment__r.Storage_Date_From__c','Last_Shipment__r.Storage_Date_To__c',
                     'Last_Shipment__r.Site_of_Discharge__r.Name', 'Last_Shipment__r.ETA_Point_of_Discharge__c', 'Border__c', 'Customs__c', 'Warehouse__c', 'Only_Warehouse_Service__c',
-                    'ETA__c', 'ETD__c', (UserInfo.isMultiCurrencyOrganization()== true ? 'CurrencyIsoCode' : 'Cube_m3__c'),'Origin_Location__Latitude__s','Kms__c','Origin_Location__Longitude__s','Destination_Location__Latitude__s','Destination_Location__Longitude__s','Approved_Date_time01__c'
+                    'ETA__c', 'ETD__c', 'FolioResume__c', (UserInfo.isMultiCurrencyOrganization()== true ? 'CurrencyIsoCode' : 'Cube_m3__c'),'Origin_Location__Latitude__s','Kms__c','Origin_Location__Longitude__s','Destination_Location__Latitude__s','Destination_Location__Longitude__s','Approved_Date_time01__c'
                     });
         record=(Customer_Quote__c)stdController.getRecord();
         
@@ -995,9 +995,25 @@ public with sharing class NEU_Generate_Shipments
         new_shipment.Destination_Location__Latitude__s = record.Destination_Location__Latitude__s;
         new_shipment.Destination_Location__Longitude__s = record.Destination_Location__Longitude__s;
         new_shipment.Kms__c = record.Kms__c;
+        SYSTEM.debug(' new_shipment.Kms__c' +  new_shipment.Kms__c);
         
-       SYSTEM.debug(' new_shipment.Kms__c' +  new_shipment.Kms__c);
-        
+        //Tipo de carta porte para FN
+        List<Account> account =[SELECT Tipo_de_Servicio_TNA__c, Tipo_de_Servicio_TNA__r.Name FROM Account 
+                          WHERE id =: record.Account_for__c AND Tipo_de_Servicio_TNA__c != null AND Tipo_de_Servicio_TNA__c != ''];
+        System.debug('valor servicio: '+ record.FolioResume__c);
+        if(record.FolioResume__c == 'FN'){
+            if(account.size() > 0){
+                if(account[0].Tipo_de_Servicio_TNA__r.Name.contains('FLETE NACIONAL')){
+                    new_shipment.Traslado_Ingreso__c = 'Ingreso';
+                }else if(account[0].Tipo_de_Servicio_TNA__r.Name.contains('SERVICIOS LOGISTICOS')){
+                    new_shipment.Traslado_Ingreso__c = 'Traslado';
+                }
+            }else{
+                new_shipment.Traslado_Ingreso__c = 'Traslado';
+            }
+        	System.debug('valor de carta porte: '+ new_shipment.Traslado_Ingreso__c);
+        }
+
         System.debug('ORDR - Entra a generar Ordr');
         Order ord =	generarOrder(new_shipment);
         System.debug('ORDR - Id: ' + ord.Id);
@@ -1213,7 +1229,7 @@ return new PageReference('/apex/NEU_OM_ShipFeeLinesPriceListYDiscount?id='+new_s
                                              Origin_Location__Longitude__s, Destination_Location__Latitude__s, Destination_Location__Longitude__s, Kms__c, Freight_Mode__c,Service_Type__c,Route__c,
                                              Route__r.Name, CurrencyIsoCode, Country_ofDischarge__c, Country_ofLoad__c, State_of_Discharge__c, State_of_Load__c, Site_of_Discharge__c, Site_of_Load__c,
                                              ETA__c, ETD__c, Awaiting_unload_time__c, Container_Count__c, Awaiting_load_time__c, 
-                                             Last_Shipment__c, Pricing_Executive__r.Email 
+                                             Last_Shipment__c, Pricing_Executive__r.Email, FolioResume__c
                                              FROM Customer_Quote__c where Id =: ids[0]]; 
         
         NEU_Generate_Shipments neu = new NEU_Generate_Shipments();
@@ -1290,7 +1306,24 @@ return new PageReference('/apex/NEU_OM_ShipFeeLinesPriceListYDiscount?id='+new_s
             //Id = '0054T000001ju8UQAQ' julio guillen
             new_shipment.Operation_Executive__c = '005RQ000000115JYAQ';
         }
-         
+        
+        //Tipo de carta porte para FN
+        List<Account> account =[SELECT Tipo_de_Servicio_TNA__c, Tipo_de_Servicio_TNA__r.Name FROM Account 
+                          WHERE id =: findFolio[0].Account_for__c AND Tipo_de_Servicio_TNA__c != null AND Tipo_de_Servicio_TNA__c != ''];
+        System.debug('valor servicio: '+ findFolio[0].FolioResume__c);
+        if(findFolio[0].FolioResume__c == 'FN'){
+            if(account.size() > 0){
+                if(account[0].Tipo_de_Servicio_TNA__r.Name.contains('FLETE NACIONAL')){
+                    new_shipment.Traslado_Ingreso__c = 'Ingreso';
+                }else if(account[0].Tipo_de_Servicio_TNA__r.Name.contains('SERVICIOS LOGISTICOS')){
+                    new_shipment.Traslado_Ingreso__c = 'Traslado';
+                }
+            }else{
+                new_shipment.Traslado_Ingreso__c = 'Traslado';
+            }
+        	System.debug('valor de carta porte: '+ new_shipment.Traslado_Ingreso__c);
+        }
+
         insert new_shipment;
         
 

@@ -93,16 +93,18 @@ public with sharing class p2g_CreateServiceLineShipment {
     //Seccion 3 Inicia
     @AuraEnabled(cacheable=true)
     public static List<P2G_UpdateShipmentServiceLine.shipmentFeeLineWrapper> getRateTarifario(String Id) {
-        Customer_Quote__c ship = [SELECT Id, Account_for__c, Route__c, Last_Shipment__r.Shipment_Type__c,Last_Shipment__r.Total_Volume_m3__c, 
-                                  Last_Shipment__r.Total_Weight_Kg__c FROM Customer_Quote__c WHERE Last_Shipment__c =: Id LIMIT 1];
+        Shipment_Line__c ship = [SELECT Import_Export_Quote__c, Import_Export_Quote__r.Account_for__c, Import_Export_Quote__r.Route__c,
+                                 Shipment__r.Shipment_Type__c, Shipment__r.Total_Volume_m3__c, 
+                                 Shipment__r.Total_Weight_Kg__c, Container_Type__c, Shipment__c
+                                 FROM Shipment_Line__c WHERE Shipment__c =: Id LIMIT 1];
         Date fechaHoy = Date.today();
         List<P2G_UpdateShipmentServiceLine.shipmentFeeLineWrapper> feeWrapper = new List<P2G_UpdateShipmentServiceLine.shipmentFeeLineWrapper>();        
         List<Fee__c> feeList = [SELECT Id, Name, Route__r.Name, CustomRate__c, Container_Type__r.Name, Fee_Category__c,CurrencyIsoCode,
                                 Account_for__r.Name, SAP_Service_Type__r.Name, Fee_Rate__c, Carrier_Account__r.Name,Group__c,
                                 SAP_Service_Type_Buy__r.Name, Buy_Rate__c, Valid_Until__c, Active__c FROM Fee__c 
-                                WHERE (Account_for__c =: ship.Account_for__c OR Account_for__r.Name =: 'Cotizador') 
-                                AND Route__c =: ship.Route__c AND CustomRate__c = True AND Active__c = True 
-                                AND Valid_Until__c>=:fechaHoy];
+                                WHERE (Account_for__c =: ship.Import_Export_Quote__r.Account_for__c OR Account_for__r.Name =: 'Cotizador') 
+                                AND Route__c =: ship.Import_Export_Quote__r.Route__c AND CustomRate__c = True AND Active__c = True 
+                                AND Container_Type__c =: ship.Container_Type__c AND Valid_Until__c>=:fechaHoy];
         for (Fee__c fee : feeList) {
             P2G_UpdateShipmentServiceLine.shipmentFeeLineWrapper wrapper = new P2G_UpdateShipmentServiceLine.shipmentFeeLineWrapper();
             wrapper=rellenaFee(fee, ship);
@@ -114,7 +116,7 @@ public with sharing class p2g_CreateServiceLineShipment {
         }
         return feeWrapper;
     }
-    public static P2G_UpdateShipmentServiceLine.shipmentFeeLineWrapper rellenaFee(Fee__c fee,Customer_Quote__c ship){
+    public static P2G_UpdateShipmentServiceLine.shipmentFeeLineWrapper rellenaFee(Fee__c fee,Shipment_Line__c ship){
         P2G_UpdateShipmentServiceLine.shipmentFeeLineWrapper wrapper = new P2G_UpdateShipmentServiceLine.shipmentFeeLineWrapper();
         wrapper.Id = fee.Id;
         wrapper.ServiceRateName = fee.Name;
@@ -136,13 +138,13 @@ public with sharing class p2g_CreateServiceLineShipment {
         wrapper.ValidUntil = fee.Valid_Until__c;
         wrapper.Activo = fee.Active__c;
         wrapper.seModifica = false;
-        wrapper.idQuote = ship.Id;
+        wrapper.idQuote = ship.Import_Export_Quote__c;
         wrapper.Moneda = fee.CurrencyIsoCode;
         wrapper.FeeCategory = fee.Fee_Category__c;
         wrapper.Grou = fee.Group__c;
-        wrapper.TotalVolume = String.valueOf(ship.Last_Shipment__r.Total_Volume_m3__c);
-        wrapper.TotalWeight = String.valueOf(ship.Last_Shipment__r.Total_Weight_Kg__c);
-        wrapper.ShipmentId = ship.Last_Shipment__c;
+        wrapper.TotalVolume = String.valueOf(ship.Shipment__r.Total_Volume_m3__c);
+        wrapper.TotalWeight = String.valueOf(ship.Shipment__r.Total_Weight_Kg__c);
+        wrapper.ShipmentId = ship.Shipment__c;
         return wrapper; 
     }
     @AuraEnabled
@@ -167,6 +169,7 @@ public with sharing class p2g_CreateServiceLineShipment {
                 //Crear Lista Service linea
                 Shipment_Fee_Line__c feeLine = CreateServiceLine(NameLine,listWrapper[posicion]);
                 listaFeeLine.add(feeLine); //Guardar en lista
+                listWrapper[posicion].Name = feeLine.Name;
                 posicion++;
                 NameLine++;
             }

@@ -15,6 +15,7 @@ export default class P2g_Advertencia extends LightningElement {
     @track showApprovalSection = false;
     @track datos;
     previousValue;
+    isReasonValid = false;
 
     @wire(getRecord, { recordId: '$recordId', fields: [WARNING_FIELD, NAME_FIELD] })
     wiredRecord({ error, data }) {
@@ -32,10 +33,28 @@ export default class P2g_Advertencia extends LightningElement {
 
     handleReasonChange(event) {
         this.approvalReason = event.target.value;
+        this.validateApprovalReason();
+    }
+
+    validateApprovalReason() {
+        // Validar que el motivo de aprobación tenga al menos 5 caracteres y no contenga caracteres especiales
+        const reason = this.approvalReason;
+        const isValid = reason && reason.length >= 5 && /^[a-zA-Z\sáéíóúÁÉÍÓÚüÜ.]*$/.test(reason);
+        this.isReasonValid = isValid;
     }
 
     handleApprove() {
-        console.log('Motivo de aprobación:', this.approvalReason);
+        if (!this.isReasonValid) {
+            // Mostrar mensaje de error si el motivo de aprobación no es válido
+            this.dispatchEvent(
+                new ShowToastEvent({
+                    title: 'Error',
+                    message: 'El motivo debe ser comprensible y no debe contener caracteres especiales.',
+                    variant: 'error'
+                })
+            );
+            return;
+        }
         updateLogAprobacion({ recordId: this.recordId, motivo: this.approvalReason })
             .then(() => {
                 this.dispatchEvent(new ShowToastEvent({

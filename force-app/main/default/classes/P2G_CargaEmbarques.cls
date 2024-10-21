@@ -19,7 +19,6 @@ public class P2G_CargaEmbarques {
             requerido.ETD = ship.ETD_from_Point_of_Load__c;
             requerido.ETDTime = ship.ETD_Time_from_Point_of_Load__c;
             requerido.accountForCustomer_Name = ship.Account_for__r.Name;
-            requerido.customerReference = ship.Account_Shipment_Reference__c;
             requerido.accountDestinationAddress = ship.Account_Destination_Address__c;
             requerido.ETA = ship.ETA_Point_of_Discharge__c;
             requerido.ETATime = ship.ETA_Time_Point_of_Discharge__c;

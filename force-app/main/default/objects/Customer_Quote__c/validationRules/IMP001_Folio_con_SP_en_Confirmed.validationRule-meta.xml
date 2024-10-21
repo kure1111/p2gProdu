@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>IMP001_Folio_con_SP_en_Confirmed</fullName>
+    <active>false</active>
+    <errorConditionFormula>AND(
+TEXT(Last_Shipment__r.Shipment_Status_Plann__c)=&apos;Confirmed&apos;,
+OR(
+NOT(ISCHANGED(Site_of_Load__c )),
+NOT(ISCHANGED(Site_of_Discharge__c)),
+NOT(ISCHANGED(Origin_Location__c)),
+NOT(ISCHANGED(Destination_Location__c))
+)
+)</errorConditionFormula>
+    <errorMessage>IMP001 - No es posible editar los campos de &quot;site of load&quot;, &quot;site of discharge&quot;, &quot;Origin Location&quot; o &quot;Destination Location&quot; una vez que el Shipment relacionado esta en Confirmed</errorMessage>
+</ValidationRule>

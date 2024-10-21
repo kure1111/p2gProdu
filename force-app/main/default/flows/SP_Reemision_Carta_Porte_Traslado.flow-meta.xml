@@ -138,9 +138,14 @@ IF(ISCHANGED({!$Record.Account_Destination_Address__r.Name}),
 ) &amp; 
 
 IF(NOT(ISBLANK({!$Record.Operation_Executive__r.FirstName})), 
-    BR() &amp; BR() &amp; &quot;@&quot; &amp; {!$Record.Operation_Executive__r.FirstName}, 
+    BR() &amp; BR() &amp; {!TagOperationExecutive}, 
     &quot;&quot;
 )</expression>
+    </formulas>
+    <formulas>
+        <name>TagOperationExecutive</name>
+        <dataType>String</dataType>
+        <expression>&quot;@[&quot;+{!$Record.Operation_Executive__r.Id}+&quot;]&quot;</expression>
     </formulas>
     <interviewLabel>SP-Reemi {!$Flow.CurrentDateTime}</interviewLabel>
     <label>SP-Reemision Carta Porte Traslado</label>
@@ -237,7 +242,7 @@ IF(NOT(ISBLANK({!$Record.Operation_Executive__r.FirstName})),
         <recordTriggerType>Update</recordTriggerType>
         <triggerType>RecordAfterSave</triggerType>
     </start>
-    <status>Draft</status>
+    <status>Active</status>
     <variables>
         <name>BoddyPost</name>
         <dataType>String</dataType>

@@ -21,15 +21,17 @@ global with sharing class WsShipment {
     global static string UpdateShipment(
       string status,
       string idShipment,
-      string specialNote,
       string type,
+      string eventDatetime,
+      string specialNote,
       string servicesMode,
-      string eventDatetime
+      string otd
+      
     ) {
 		try {
             string mensaje = validarParametros(status, idShipment, type, eventDatetime);
             GenerarSets();
-
+            System.debug('specialNoteXX: '+ specialNote);
             if(mensaje != 'OK' ) {
                 return 'Error: '+ mensaje;
             }
@@ -52,17 +54,20 @@ global with sharing class WsShipment {
                 
                 if(fecha !=null) {
                     switch on status{
-                        when 'Arrive Origin' {
+                       /* when 'Arrive Origin' {
                             ship.Equip_Placed__c = fecha;
-                        }
+                        }  */
                         when 'Arrive Destination' {
                             ship.Equip_Reserved__c = fecha;
                         }
-                        when 'Awaiting load_M' {
+                       /* when 'Awaiting load_M' {
                             if(ship.Equip_Placed__c == null) {
                                 ship.Equip_Placed__c = fecha;
                             }
-                        }
+                        } */
+// Se comenta el campo Equip_Placed__c derivado de que el equipo operativo requiere que no se actualice la fecha cada que se actualice el SP,
+// dado que que ese campo se actualia por parte del usario lo que omite su actualización por parte de Control Room
+
                         when 'Awaiting Unload_M' {
                             if(ship.Equip_Reserved__c == null) {
                                 ship.Equip_Reserved__c = fecha;
@@ -108,10 +113,15 @@ global with sharing class WsShipment {
             if(String.isNotBlank(specialNote)) {
                 ship.Special_Notes__c = specialNote;
             }
+
+            if(String.isNotBlank(otd)){
+                ship.OTD__c = otd;
+            }
             
             update ship;
             return 'El shipment fue Actualizado con Éxito..';
         } catch(Exception ex) {
+            System.debug('Error: '+ex.getMessage());
             return 'Error: '+ ex.getMessage();
         }
 
@@ -130,6 +140,7 @@ global with sharing class WsShipment {
         if(string.isEmpty(eventDatetime)) {
             return 'Favor de enviar un eventDatetime';
         }
+
         return 'OK';
     }
 }

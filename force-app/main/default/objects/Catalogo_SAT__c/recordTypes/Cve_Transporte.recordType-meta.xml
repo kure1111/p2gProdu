@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RecordType xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Cve_Transporte</fullName>
+    <active>true</active>
+    <compactLayoutAssignment>Catalogo_SAT</compactLayoutAssignment>
+    <description>Catálogo de la clave del transporte Versión 1.0</description>
+    <label>Cve Transporte</label>
+</RecordType>

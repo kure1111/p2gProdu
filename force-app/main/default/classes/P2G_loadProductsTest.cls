@@ -1,51 +1,12 @@
-@isTest
+@isTest(SeeAllData=true)
 public class P2G_loadProductsTest {
     @isTest
     public static void load(){
-        /*
-        Account a = new Account();
-        a.Name = 'test';
-        insert a;
-        
-        Opportunity op = new Opportunity();
-        op.AccountId = a.Id;
-        op.Name = 'Test OP';
-        op.Service_Type__c = 'FN';
-        op.StageName = 'Prospecting';
-        op.CloseDate = date.today() + 3;
-        insert op;
-        
-        // Crea un producto para el OpportunityLineItem
-        Product2 testProduct = new Product2(
-            Name = 'Test Product'
-        );
-        insert testProduct;
-        
-        // Crea una entrada en el libro de precios para el producto
-        PricebookEntry testPricebookEntry = new PricebookEntry(
-            Product2Id = testProduct.Id,
-            UnitPrice = 100,  // Puedes ajustar el precio según sea necesario
-            IsActive = true,
-            Pricebook2Id = Test.getStandardPricebookId()
-        );
-        insert testPricebookEntry;
-        
-        // Crea el OpportunityLineItem asociado al Opportunity y PricebookEntry
-        OpportunityLineItem testOpportunityLineItem = new OpportunityLineItem(
-            OpportunityId = op.Id,
-            Product2Id = testProduct.Id,
-            PricebookEntryId = testPricebookEntry.Id,
-            Quantity = 1,
-            Precio_Sugerido__c = 1.0
-        );
-        insert testOpportunityLineItem;
-		*/
-        
         P2G_loadProducts.csvProduct csv = P2G_loadProducts.getCsv();
         csv.origen = 'ori';
         csv.destino = 'dest';
-        csv.origenId = '006RL0000046t18YAA';
-        csv.destinoId = '006RL0000046t18YAA';
+        csv.origenId = 'a034T000004F9RnQAK';
+        csv.destinoId = 'a034T000004F9RnQAK';
         csv.cantidad = '1';
         csv.pesoDeCarga = '1';
         csv.unidadPorFrecuencia = '1';
@@ -60,11 +21,13 @@ public class P2G_loadProductsTest {
         csv.modificar = false;
         csv.buyPrice = '12';
         csv.sellPrice = '12';
-        
+        csv.IdOli = '00kRQ0000097LXJYA2';
+        List<P2G_loadProducts.csvProduct> listCsv = new List<P2G_loadProducts.csvProduct>();
+        listCsv.add(csv);
         OpportunityLineItem oliop = new OpportunityLineItem(
-        OpportunityId = '006RL0000046t18YAA',
-        Product2Id = '006RL0000046t18YAA',
-        PricebookEntryId = '006RL0000046t18YAA',
+        OpportunityId = '006RQ000007Ohe6YAC',
+        Product2Id = '01tRQ000002j1QEYAY',
+        PricebookEntryId = '01sRQ000000LJxJYAW',
         Quantity = 10,
         UnitPrice = 100.00,
         TotalPrice = 1000.00,
@@ -82,8 +45,19 @@ public class P2G_loadProductsTest {
     );
         P2G_loadProducts.csvProduct csv2 = P2G_loadProducts.rellenagetItems(oliop);
         OpportunityLineItem oli2 = P2G_loadProducts.rellenaOpporLi(csv);
-        OpportunityLineItem oli = P2G_loadProducts.createOpporLi('006RL0000046t18YAA','006RL0000046t18YAA','006RL0000046t18YAA',csv);
+        OpportunityLineItem oli = P2G_loadProducts.createOpporLi('006RQ000007Ohe6YAC','006RL0000046t18YAA','006RL0000046t18YAA',csv);
+        List<P2G_loadProducts.csvProduct> getOpportunityLineItems = P2G_loadProducts.getOpportunityLineItems('006RL0000046t18YAA');
         P2G_loadProducts.quitar();
+        Decimal convertirLbKg = P2G_loadProducts.convertirLbKg('234');
+        OpportunityLineItem oliquote = [SELECT id, OpportunityId FROM OpportunityLineItem limit 1];
+        Opportunity infoGrupo = P2G_loadProducts.infoGrupo(oliquote.OpportunityId);
+        List<ContentVersion> getFiles = P2G_loadProducts.getFiles(oliquote.id);
+        P2G_loadProducts.updateNotas(oliquote.id, 'Una nota test');
+        List<OpportunityLineItem> getproducto = P2G_loadProducts.getproducto(oliquote.id);
+        list<Catalogo_SAT__c> getCp = P2G_loadProducts.getCp('98465');
+        String jsonString = JSON.serialize(csv);
+        P2G_loadProducts.handleProduct(oliquote.OpportunityId,jsonString);
+        String jsonStringList = JSON.serialize(listCsv);
+        P2G_loadProducts.updateOli(jsonStringList);
     }
-
 }

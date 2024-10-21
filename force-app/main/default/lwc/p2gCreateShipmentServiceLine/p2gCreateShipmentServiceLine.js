@@ -10,6 +10,7 @@ import getCreaLine from '@salesforce/apex/p2g_CreateServiceLineShipment.getCreaL
 //import wrapperNuevo from '@salesforce/apex/p2g_CreateServiceLineShipment.wrapper2';
 import createNewLine from '@salesforce/apex/p2g_CreateServiceLineShipment.Create';//P2G_PruebaALbert
 import getSst from '@salesforce/apex/P2G_UpdateShipmentServiceLine.getSapServiceTypeShipment';
+import getSstNfiltro from '@salesforce/apex/P2G_UpdateShipmentServiceLine.getSst';
 import getCarrier from '@salesforce/apex/P2G_UpdateShipmentServiceLine.getCarrier';
 import { refreshApex } from '@salesforce/apex';
 //import { getRecord, getFieldValue } from 'lightning/uiRecordApi';
@@ -383,7 +384,7 @@ export default class P2gCreateShipmentServiceLine extends LightningElement {
         if (this.searchValueSstb.length >= 3) {
             this.showSideSstb = true;
             this.showVistaSstb = true;
-            getSst({SapService: this.searchValueSstb, IdShip: this.recordId})
+            getSstNfiltro({SapService: this.searchValueSstb, IdShip: this.recordId})
                 .then(result => {
                     this.sideRecordsSstb = result;
                 })
@@ -603,7 +604,7 @@ export default class P2gCreateShipmentServiceLine extends LightningElement {
                 this.searchValueIdCSstb='';
                 this.showSideCSstb = true;            
                 if (this.searchValueCSstb.length >= 3) {
-                    getSst({SapService: this.searchValueCSstb, IdShip: this.recordId})
+                    getSstNfiltro({SapService: this.searchValueCSstb, IdShip: this.recordId})
                         .then(result => {
                             this.sideRecordsCSstb = result;
                         })

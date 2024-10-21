@@ -23,14 +23,26 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>Precio_Sugerido3__c</field>
+                <field>Buy_Price__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Buy_Price_Converted__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Precio_Sugerido_Venta__c</field>
             </layoutItems>
             <layoutItems>
                 <emptySpace>true</emptySpace>
             </layoutItems>
             <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Buy_Price__c</field>
+                <behavior>Required</behavior>
+                <field>UnitPrice</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Sales_Price_Converted__c</field>
             </layoutItems>
             <layoutItems>
                 <emptySpace>true</emptySpace>
@@ -40,20 +52,8 @@
                 <field>Quantity</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Required</behavior>
-                <field>UnitPrice</field>
-            </layoutItems>
-            <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>TotalPrice</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>PROJ_Buy_price__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Precio_Sugerido_Venta__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
@@ -87,6 +87,21 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>OTC_Folio__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Tipo_de_moneda__c</field>
+            </layoutItems>
+            <layoutItems>
+                <emptySpace>true</emptySpace>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Status__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Razon_del_rechazo__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsTopToBottom</style>
@@ -181,11 +196,28 @@
         <layoutColumns/>
         <style>CustomLinks</style>
     </layoutSections>
+    <miniLayout>
+        <fields>OpportunityId</fields>
+        <fields>Ruta__c</fields>
+        <fields>Product2Id</fields>
+        <fields>UnitPrice</fields>
+        <fields>Quantity</fields>
+        <relatedLists>
+            <fields>NAME</fields>
+            <fields>SubProduct_Ruta_Producto__c</fields>
+            <relatedList>SubProducto__c.SubProduct_Opportunity_Product__c</relatedList>
+        </relatedLists>
+    </miniLayout>
     <multilineLayoutFields>Product2Id</multilineLayoutFields>
+    <multilineLayoutFields>Tipo_de_moneda__c</multilineLayoutFields>
     <multilineLayoutFields>Buy_Price__c</multilineLayoutFields>
+    <multilineLayoutFields>Buy_Price_Converted__c</multilineLayoutFields>
     <multilineLayoutFields>Precio_Sugerido_Venta__c</multilineLayoutFields>
     <multilineLayoutFields>UnitPrice</multilineLayoutFields>
+    <multilineLayoutFields>Sales_Price_Converted__c</multilineLayoutFields>
     <multilineLayoutFields>Comentarios__c</multilineLayoutFields>
+    <multilineLayoutFields>Status__c</multilineLayoutFields>
+    <multilineLayoutFields>Razon_del_rechazo__c</multilineLayoutFields>
     <multilineLayoutFields>PROJ_Frecuencia__c</multilineLayoutFields>
     <multilineLayoutFields>PROJ_Unidades_por_frecuencia__c</multilineLayoutFields>
     <multilineLayoutFields>PROJ_Modalidad__c</multilineLayoutFields>
@@ -195,6 +227,17 @@
     <multilineLayoutFields>PROJ_Tiempo_de_carga__c</multilineLayoutFields>
     <multilineLayoutFields>PROJ_Tiempo_de_descarga__c</multilineLayoutFields>
     <multilineLayoutFields>OpportunityId</multilineLayoutFields>
+    <relatedLists>
+        <fields>NAME</fields>
+        <fields>SubProduct_Ruta_Producto__c</fields>
+        <fields>SubProduct_Buy_Price__c</fields>
+        <fields>SubProduct_Sell_Price__c</fields>
+        <fields>SubProduct_SAP_Service_Type__c</fields>
+        <fields>SubProduct_Detalles__c</fields>
+        <fields>SubProduct_Opportunity__c</fields>
+        <fields>SubProduct_Units__c</fields>
+        <relatedList>SubProducto__c.SubProduct_Opportunity_Product__c</relatedList>
+    </relatedLists>
     <showEmailCheckbox>false</showEmailCheckbox>
     <showRunAssignmentRulesCheckbox>false</showRunAssignmentRulesCheckbox>
     <showSubmitAndAttachButton>false</showSubmitAndAttachButton>

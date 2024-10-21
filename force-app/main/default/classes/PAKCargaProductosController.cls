@@ -127,7 +127,7 @@ global with sharing class PAKCargaProductosController {
                 }
                 System.debug('lista de load Products: '+loadProducts);
                 String json = JSON.serialize(loadProducts);
-                P2G_loadProductsCsv.handleProduct(idOpportunity,json);
+                P2G_loadProductsCsv.handleProduct(idOpportunity,json,opp.CurrencyIsoCode);
                 return 'ok';
             }else{
                 return 'No se encontraron líneas en el documento';

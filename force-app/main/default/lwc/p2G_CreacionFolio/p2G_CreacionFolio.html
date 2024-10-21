@@ -8,98 +8,98 @@
   </div> 
   <div class="slds-grid slds-grid_align-center slds-gutters">
       <div class="slds-col" style="width:90px;">
-          <lightning-button variant="brand"
-              label="A-AEREO"
-              title="A-AEREO"
-              onclick={openModal}
-              style="--sds-c-button-line-height:1;" stretch></lightning-button>
-      </div>
-      <div class="slds-col" style="width:120px;">
-          <lightning-button variant="brand"
-              label="WH-ALMACENAJE"
-              title="WH-ALMACENAJE"
-              onclick={openModal}
-              style="--sds-c-button-line-height:1;" stretch></lightning-button>
-      </div>
-      <div class="slds-col" style="width:110px;">
-          <lightning-button variant="brand" 
-          label="T-CONSOLIDADO" 
-          title="T-CONSOLIDADO"  
-          onclick={openModal}
-          style="--sds-c-button-line-height:1;" stretch></lightning-button>
-      </div>
-  </div>
-  <div><br></div> 
-  <div class="slds-grid slds-grid_align-center slds-gutters">
-      <div class="slds-col" style="width:90px;">
-          <lightning-button variant="brand" 
-          label="FN-FLETE NACIONAL" 
-          title="FN-FLETE NACIONAL"  
-          onclick={OpenF_NACIONAL}
-          style="--sds-c-button-line-height:1;" stretch></lightning-button>
-      </div>
-      <div class="slds-col" style="width:120px;">
-          <lightning-button variant="brand" 
-          label="FI-FLETE INTERNACIONAL" 
-          title="FI-FLETE INTERNACIONAL"  
-          onclick={openModal}
-          style="--sds-c-button-line-height:1;" stretch></lightning-button>
-      </div>
-      <div class="slds-col" style="width:110px;">
-          <lightning-button variant="brand" 
-          label="M-MARITIMO" 
-          title="M-MARITIMO"  
-          onclick={openModal}
-          style="--sds-c-button-line-height:1;" stretch></lightning-button>
-      </div>
-  </div>
-  <div><br></div> 
-  <div class="slds-grid slds-grid_align-center slds-gutters">
-      <div class="slds-col" style="width:90px;">
-          <lightning-button variant="brand" 
-          label="PTO-PUERTOS" 
-          title="PTO-PUERTOS"  
-          onclick={openModal}
-          style="--sds-c-button-line-height:1;" stretch></lightning-button>
-      </div>
-      <div class="slds-col" style="width:120px;">
-          <lightning-button variant="brand" 
-          label="EX-SEGUROS" 
-          title="EX-SEGUROS"  
-          onclick={openModal}
-          style="--sds-c-button-line-height:1;" stretch></lightning-button>
-      </div>
-      <div class="slds-col" style="width:110px;">
-          <lightning-button variant="brand" 
-          label="W-GLOBAL MARITIMO" 
-          title="W-GLOBAL MARITIMO"  
-          onclick={openModal}
-          style="--sds-c-button-line-height:1;" stretch></lightning-button>
-      </div>
-  </div>
-  <div><br></div> 
-  <div class="slds-grid slds-grid_align-center slds-gutters">
-      <div class="slds-col" style="width:90px;">
-          <lightning-button variant="brand" 
-          label="R-GLOBAL ROUTING" 
-          title="R-GLOBAL ROUTING"  
-          onclick={openModal}
-          style="--sds-c-button-line-height:1;" stretch></lightning-button>
-      </div>
-      <div class="slds-col" style="width:120px;">
-          <lightning-button variant="brand" 
-          label="AW-GLOBAL AEREO" 
-          title="AW-GLOBAL AEREO"  
-          onclick={openModal}
-          style="--sds-c-button-line-height:1;" stretch></lightning-button>
-      </div>
-      <div class="slds-col" style="width:110px;">
-          <lightning-button variant="brand" 
-          label="CE-COMERCIO EXTERIOR" 
-          title="CE-COMERCIO EXTERIOR"  
-          onclick={openModal}
-          style="--sds-c-button-line-height:1;" stretch></lightning-button>
-      </div>
+        <lightning-button variant="brand"
+            label="A-AEREO"
+            title="A-AEREO"
+            onclick={folioAereo}
+            style="--sds-c-button-line-height:1;" stretch></lightning-button>
+    </div>
+    <div class="slds-col" style="width:120px;">
+        <lightning-button variant="brand"
+            label="WH-ALMACENAJE"
+            title="WH-ALMACENAJE"
+            onclick={folioWH}
+            style="--sds-c-button-line-height:1;" stretch></lightning-button>
+    </div>
+    <div class="slds-col" style="width:110px;">
+        <lightning-button variant="brand" 
+        label="T-CONSOLIDADO" 
+        title="T-CONSOLIDADO"  
+        onclick={folioTarimas}
+        style="--sds-c-button-line-height:1;" stretch></lightning-button>
+    </div>
+</div>
+<div><br></div> 
+<div class="slds-grid slds-grid_align-center slds-gutters">
+    <div class="slds-col" style="width:90px;">
+        <lightning-button variant="brand" 
+        label="FN-FLETE NACIONAL" 
+        title="FN-FLETE NACIONAL"  
+        onclick={OpenF_NACIONAL}
+        style="--sds-c-button-line-height:1;" stretch></lightning-button>
+    </div>
+    <div class="slds-col" style="width:120px;">
+        <lightning-button variant="brand" 
+        label="FI-FLETE INTERNACIONAL" 
+        title="FI-FLETE INTERNACIONAL"  
+        onclick={folioFleteInter}
+        style="--sds-c-button-line-height:1;" stretch></lightning-button>
+    </div>
+    <div class="slds-col" style="width:110px;">
+        <lightning-button variant="brand" 
+        label="M-MARITIMO" 
+        title="M-MARITIMO"  
+        onclick={folioMaritimo}
+        style="--sds-c-button-line-height:1;" stretch></lightning-button>
+    </div>
+</div>
+<div><br></div> 
+<div class="slds-grid slds-grid_align-center slds-gutters">
+    <div class="slds-col" style="width:90px;">
+        <lightning-button variant="brand" 
+        label="PTO-PUERTOS" 
+        title="PTO-PUERTOS"  
+        onclick={folioPuertos}
+        style="--sds-c-button-line-height:1;" stretch></lightning-button>
+    </div>
+    <div class="slds-col" style="width:120px;">
+        <lightning-button variant="brand" 
+        label="EX-SEGUROS" 
+        title="EX-SEGUROS"  
+        onclick={folioSeguros}
+        style="--sds-c-button-line-height:1;" stretch></lightning-button>
+    </div>
+    <div class="slds-col" style="width:110px;">
+        <lightning-button variant="brand" 
+        label="W-GLOBAL MARITIMO" 
+        title="W-GLOBAL MARITIMO"  
+        onclick={folioGlobalMaritimo}
+        style="--sds-c-button-line-height:1;" stretch></lightning-button>
+    </div>
+</div>
+<div><br></div> 
+<div class="slds-grid slds-grid_align-center slds-gutters">
+    <div class="slds-col" style="width:90px;">
+        <lightning-button variant="brand" 
+        label="R-GLOBAL ROUTING" 
+        title="R-GLOBAL ROUTING"  
+        onclick={folioGlobalRouting}
+        style="--sds-c-button-line-height:1;" stretch></lightning-button>
+    </div>
+    <div class="slds-col" style="width:120px;">
+        <lightning-button variant="brand" 
+        label="AW-GLOBAL AEREO" 
+        title="AW-GLOBAL AEREO"  
+        onclick={folioGlobalAereo}
+        style="--sds-c-button-line-height:1;" stretch></lightning-button>
+    </div>
+    <div class="slds-col" style="width:110px;">
+        <lightning-button variant="brand" 
+        label="CE-COMERCIO EXTERIOR" 
+        title="CE-COMERCIO EXTERIOR"  
+        onclick={folioComercioExterior}
+        style="--sds-c-button-line-height:1;" stretch></lightning-button>
+    </div>
   </div>
   <div><br></div> 
   <div class="slds-grid slds-grid_align-center slds-gutters">

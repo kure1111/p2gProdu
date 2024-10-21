@@ -7,31 +7,23 @@
         <default>false</default>
     </values>
     <values>
-        <fullName>Construir</fullName>
+        <fullName>Cotización</fullName>
         <default>false</default>
     </values>
     <values>
-        <fullName>Cotizar</fullName>
+        <fullName>Ejecución</fullName>
         <default>false</default>
     </values>
     <values>
-        <fullName>Cultivar</fullName>
+        <fullName>Ganada</fullName>
         <default>false</default>
     </values>
     <values>
-        <fullName>Explorar</fullName>
+        <fullName>Negociación</fullName>
         <default>false</default>
     </values>
     <values>
-        <fullName>Implementar</fullName>
-        <default>false</default>
-    </values>
-    <values>
-        <fullName>Presentar</fullName>
-        <default>false</default>
-    </values>
-    <values>
-        <fullName>Prospectar</fullName>
+        <fullName>Perdida</fullName>
         <default>false</default>
     </values>
 </BusinessProcess>

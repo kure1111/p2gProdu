@@ -1,5 +1,10 @@
 <template>
-    
+    <header class="slds-modal__header">
+        <button class="slds-button slds-button_icon slds-modal__close" title="Close" onclick={cerrar}>
+            <lightning-icon icon-name="utility:close" alternative-text="Close" variant="inverse"></lightning-icon>
+            <span class="slds-assistive-text">Close</span>
+        </button>
+    </header>
     <lightning-modal-body>
         <div>
 
@@ -119,7 +124,7 @@
                                         <div class="slds-truncate" title="Dirección de Descarga">Dirección de Descarga</div>
                                     </th>
                                     <th scope="col">
-                                        <div class="slds-truncate" title="Total Price">Buy Price</div>
+                                        <div class="slds-truncate" title="Total Price">Tipo Moneda</div>
                                     </th>
                                     <th scope="col">
                                         <div class="slds-truncate" title="comentarios">Comentarios</div>
@@ -189,10 +194,10 @@
                                             </lightning-combobox>
                                         </td>
                                         <td>
-                                            <lightning-input type="text" value={oli.tiempoCarga} name="tiempoCarga" onchange={handleInputChange}></lightning-input>
+                                            <lightning-input type="number" value={oli.tiempoCarga} name="tiempoCarga" onchange={handleInputChange}></lightning-input>
                                         </td>
                                         <td>
-                                            <lightning-input type="text" value={oli.tiempoDescarga} name="tiempoDescarga" onchange={handleInputChange}></lightning-input>
+                                            <lightning-input type="number" value={oli.tiempoDescarga} name="tiempoDescarga" onchange={handleInputChange}></lightning-input>
                                         </td>
                                         <td>
                                             <div class="slds-truncate">{oli.modalidad}</div>
@@ -204,7 +209,7 @@
                                             <lightning-input type="text" value={oli.direccionDescarga} name="direccionDescarga" onchange={handleInputChange}></lightning-input>
                                         </td>
                                         <td>
-                                            <lightning-input type="text" value={oli.buyPrice} name="buyPrice" onchange={handleInputChange}></lightning-input>
+                                            <div class="slds-truncate">{oli.currencyOli}</div>
                                         </td>
                                         <td>
                                             <lightning-input type="text" value={oli.comentarios} name="comentarios" onchange={handleInputChange}></lightning-input>
@@ -222,218 +227,536 @@
             <div class="slds-m-top_medium slds-text-align_right">
                 <lightning-button variant="outline-brand" label="Actualizar" onclick={updateItems}></lightning-button>
             </div>
-    
-            <!-- Sección 2 -->
-            <div class="slds-card section-card">
-                <div class="slds-card__body">
-                    <!-- Contenido de la segunda sección -->
-                    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px;">
-    
-                        <div style="width: 100%;">
-                            <div onkeyup={searchKeyOrigen}>
-                                <lightning-input label="Origen" id="Origen" placeholder="Buscar Origen" 
-                                    value={searchOrigen} type="text" required></lightning-input>
-                            </div>
-                            <table if:true={showOrigen} class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_striped">
-                                <thead>
-                                   <tr class="slds-line-height_reset">
-                                      <th scope="col">
-                                         <div class="slds-truncate" title="First Name">Name</div>
-                                      </th>
-                                      <th scope="col">
-                                         <div class="slds-truncate" title="Last Name">Country</div>
-                                      </th>
-                                      <th scope="col">
-                                         <div class="slds-truncate" title="Last Name">State</div>
-                                      </th>
-                                   </tr>
-                                </thead>
-                                <tbody>
-                                   <template for:each={listOrige} for:item="itemOrigen">
-                                      <tr class="slds-hint-parent" data-id={itemOrigen.Id} data-name={itemOrigen.Name} key={itemOrigen.Id} onclick={origenSelect}> 
-                                         <td>
-                                            <div class="slds-truncate">{itemOrigen.Name}</div>
-                                         </td>
-                                         <template lwc:if={itemOrigen.Country__c}>
-                                            <td>
-                                                <div class="slds-truncate">{itemOrigen.Country__r.Name}</div>
-                                            </td>
-                                        </template>
-                                        <template lwc:if={itemOrigen.State__c}>
-                                            <td>
-                                                <div class="slds-truncate">{itemOrigen.State__r.Name}</div>
-                                            </td>
-                                        </template>
-                                      </tr>
-                                   </template>
-                                </tbody>
-                              </table>
-                        </div>
-    
-                        <!-- Búsqueda de Destino -->
-                        <div style="width: 100%;">
-                            <div onkeyup={searchKeyDestino}>
-                                <lightning-input required label="Destino" id="Destino" placeholder="Buscar Destino" 
-                                    value={searchDestino} type="text"></lightning-input>
-                            </div>
-                            <table if:true={showDestino} class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_striped">
-                                <thead>
+            <template if:true={noEjecucion}>
+                <!-- Sección 2 -->
+                <div class="slds-card section-card">
+                    <div class="slds-card__body">
+                        <!-- Contenido de la segunda sección -->
+                        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px;">
+        
+                            <div style="width: 100%;">
+                                <div onkeyup={searchKeyOrigen}>
+                                    <lightning-input label="Origen" id="Origen" placeholder="Buscar Origen" 
+                                        value={searchOrigen} type="text" required></lightning-input>
+                                </div>
+                                <table if:true={showOrigen} class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_striped">
+                                    <thead>
                                     <tr class="slds-line-height_reset">
-                                        <th class="" scope="col">
+                                        <th scope="col">
                                             <div class="slds-truncate" title="First Name">Name</div>
                                         </th>
-                                        <th class="" scope="col">
+                                        <th scope="col">
                                             <div class="slds-truncate" title="Last Name">Country</div>
                                         </th>
-                                        <th class="" scope="col">
+                                        <th scope="col">
                                             <div class="slds-truncate" title="Last Name">State</div>
                                         </th>
                                     </tr>
-                                </thead>
-                                <tbody>
-                                    <template for:each={listDestino} for:item="itemDestino">
-                                        <tr class="slds-hint-parent" data-id={itemDestino.Id} data-name={itemDestino.Name} key={itemDestino.Id} onclick={destinoSelect}> 
+                                    </thead>
+                                    <tbody>
+                                    <template for:each={listOrige} for:item="itemOrigen">
+                                        <tr class="slds-hint-parent" data-id={itemOrigen.Id} data-name={itemOrigen.Name} key={itemOrigen.Id} onclick={origenSelect}> 
                                             <td>
-                                                <div class="slds-truncate">{itemDestino.Name}</div>
+                                                <div class="slds-truncate">{itemOrigen.Name}</div>
                                             </td>
-                                            <template lwc:if={itemDestino.Country__c}>
+                                            <template lwc:if={itemOrigen.Country__c}>
                                                 <td>
-                                                    <div class="slds-truncate">{itemDestino.Country__r.Name}</div>
+                                                    <div class="slds-truncate">{itemOrigen.Country__r.Name}</div>
                                                 </td>
                                             </template>
-                                            <template lwc:if={itemDestino.State__c}>
+                                            <template lwc:if={itemOrigen.State__c}>
                                                 <td>
-                                                    <div class="slds-truncate">{itemDestino.State__r.Name}</div>
+                                                    <div class="slds-truncate">{itemOrigen.State__r.Name}</div>
                                                 </td>
                                             </template>
                                         </tr>
                                     </template>
-                                </tbody>
-                            </table>
-                        </div>
-    
-                        <div style="width: 100%;">
+                                    </tbody>
+                                </table>
+                            </div>
+        
+                            <!-- Búsqueda de Destino -->
                             <div style="width: 100%;">
-                                <lightning-combobox
-                                    label="Frecuencia"
-                                    value={selectedFrecuencia}
-                                    options={frecuenciaOptions}
-                                    onchange={handleFrecuenciaChange}>
-                                </lightning-combobox>
-                            </div>
-                        </div>
-    
-                        <div style="width: 100%;">
-                            <div onkeyup={searchKeyModalidad}>
-                                <lightning-input required label="Modalidad" id="Modalidad" placeholder="Buscar Modalidad" 
-                                    value={searchModalidad} type="text"></lightning-input>
-                            </div>
-                            <table if:true={showModalidad} class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_striped">
+                                <div onkeyup={searchKeyDestino}>
+                                    <lightning-input required label="Destino" id="Destino" placeholder="Buscar Destino" 
+                                        value={searchDestino} type="text"></lightning-input>
+                                </div>
+                                <table if:true={showDestino} class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_striped">
                                     <thead>
                                         <tr class="slds-line-height_reset">
-                                        <th class="" scope="col">
-                                            <div class="slds-truncate">Container Type</div>
-                                        </th>
-                                        <th class="" scope="col">
-                                            <div class="slds-truncate">Cargo Weight (Kg)</div>
-                                        </th>
-                                        <th class="" scope="col">
-                                            <div class="slds-truncate">Cargo Volume (m3)</div>
-                                        </th>
+                                            <th class="" scope="col">
+                                                <div class="slds-truncate" title="First Name">Name</div>
+                                            </th>
+                                            <th class="" scope="col">
+                                                <div class="slds-truncate" title="Last Name">Country</div>
+                                            </th>
+                                            <th class="" scope="col">
+                                                <div class="slds-truncate" title="Last Name">State</div>
+                                            </th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <template for:each={listModalidad} for:item="itemModalidad">
-                                            <tr class="slds-hint-parent" data-id={itemModalidad.Id} data-name={itemModalidad.Name} key={itemModalidad.Id} onclick={selectModalidad}>
+                                        <template for:each={listDestino} for:item="itemDestino">
+                                            <tr class="slds-hint-parent" data-id={itemDestino.Id} data-name={itemDestino.Name} key={itemDestino.Id} onclick={destinoSelect}> 
                                                 <td>
-                                                  <div class="slds-truncate">{itemModalidad.Name}</div>
+                                                    <div class="slds-truncate">{itemDestino.Name}</div>
                                                 </td>
-                                                <td>
-                                                  <div class="slds-truncate">{itemModalidad.Cargo_Weight_Kg__c}</div>
-                                                </td>
-                                                <td>
-                                                  <div class="slds-truncate">{itemModalidad.Cargo_Volume_m3__c}</div>
-                                                </td>
+                                                <template lwc:if={itemDestino.Country__c}>
+                                                    <td>
+                                                        <div class="slds-truncate">{itemDestino.Country__r.Name}</div>
+                                                    </td>
+                                                </template>
+                                                <template lwc:if={itemDestino.State__c}>
+                                                    <td>
+                                                        <div class="slds-truncate">{itemDestino.State__r.Name}</div>
+                                                    </td>
+                                                </template>
                                             </tr>
                                         </template>
                                     </tbody>
-                            </table>
-                        </div>
-    
-                        <div style="width: 100%;">
-                            <lightning-input required label="Unidad Por Frecuencia" value={unitPerFrequency} data-fieldname="unitPerFrequency" onchange={handleChange}></lightning-input>
-                        </div>
-    
-                        <div style="width: 100%;">
-                            <div onkeyup={searchKeyMercancia}>
-                                <lightning-input required label="Mercancia" placeholder="Buscar Mercancia" 
-                                    value={searchMercancia} type="text"></lightning-input>
+                                </table>
                             </div>
-                            <table if:true={showMercancia} class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_striped">
-                                <thead>
+        
+                            <div style="width: 100%;">
+                                <div style="width: 100%;">
+                                    <lightning-combobox
+                                        label="Frecuencia"
+                                        value={selectedFrecuencia}
+                                        options={frecuenciaOptions}
+                                        onchange={handleFrecuenciaChange}>
+                                    </lightning-combobox>
+                                </div>
+                            </div>
+        
+                            <div style="width: 100%;">
+                                <div onkeyup={searchKeyModalidad}>
+                                    <lightning-input required label="Modalidad" id="Modalidad" placeholder="Buscar Modalidad" 
+                                        value={searchModalidad} type="text"></lightning-input>
+                                </div>
+                                <table if:true={showModalidad} class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_striped">
+                                        <thead>
+                                            <tr class="slds-line-height_reset">
+                                            <th class="" scope="col">
+                                                <div class="slds-truncate">Container Type</div>
+                                            </th>
+                                            <th class="" scope="col">
+                                                <div class="slds-truncate">Cargo Weight (Kg)</div>
+                                            </th>
+                                            <th class="" scope="col">
+                                                <div class="slds-truncate">Cargo Volume (m3)</div>
+                                            </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <template for:each={listModalidad} for:item="itemModalidad">
+                                                <tr class="slds-hint-parent" data-id={itemModalidad.Id} data-name={itemModalidad.Name} key={itemModalidad.Id} onclick={selectModalidad}>
+                                                    <td>
+                                                    <div class="slds-truncate">{itemModalidad.Name}</div>
+                                                    </td>
+                                                    <td>
+                                                    <div class="slds-truncate">{itemModalidad.Cargo_Weight_Kg__c}</div>
+                                                    </td>
+                                                    <td>
+                                                    <div class="slds-truncate">{itemModalidad.Cargo_Volume_m3__c}</div>
+                                                    </td>
+                                                </tr>
+                                            </template>
+                                        </tbody>
+                                </table>
+                            </div>
+        
+                            <div style="width: 100%;">
+                                <lightning-input required label="Unidad Por Frecuencia" value={unitPerFrequency} data-fieldname="unitPerFrequency" onchange={handleUnitPerFrequencyChange}></lightning-input>
+                            </div>
+        
+                            <div style="width: 100%;">
+                                <div onkeyup={searchKeyMercancia}>
+                                    <lightning-input required label="Mercancia" placeholder="Buscar Mercancia" 
+                                        value={searchMercancia} type="text"></lightning-input>
+                                </div>
+                                <table if:true={showMercancia} class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_striped">
+                                    <thead>
+                                        <tr class="slds-line-height_reset">
+                                            <th scope="col">
+                                                <div class="slds-truncate" title="Name">Name</div>
+                                            </th>
+                                            <th scope="col">
+                                                <div class="slds-truncate" title="Clave">Clave</div>
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <template for:each={listMercancia} for:item="itemMer">
+                                            <tr class="slds-hint-parent" data-id={itemMer.Id} data-name={itemMer.Name} key={itemMer.Id} onclick={mercanciaSelect}> 
+                                                <td>
+                                                    <div class="slds-truncate">{itemMer.Name}</div>
+                                                </td>
+                                                <template lwc:if={itemMer.Clave_SAT__c}>
+                                                    <td>
+                                                        <div class="slds-truncate">{itemMer.Clave_SAT__c}</div>
+                                                    </td>
+                                                </template>
+                                            </tr>
+                                        </template>
+                                    </tbody>
+                                </table>
+                            </div>
+        
+                            <div style="width: 100%;">
+                                    <lightning-input style="width: 80%;"  required label="Peso" value={weight} data-fieldname="weight" onchange={handleChange} pattern="^\d*\.?\d*$" ></lightning-input>
+                                    <lightning-radio-group style="width: 15%; top: -43px; float:right;"
+                                        options={UnidadPesoOptions} onchange={handleUnidadPesoChange}
+                                        value={selectedUnidadPeso} type="radio"></lightning-radio-group>
+                            </div>
+
+                            <div style="width: 100%;">
+                                <div onkeyup={searchKeyCpOrigen}>
+                                    <lightning-input label="CP Origen" id="CpOrigen" placeholder="Buscar Cp Origen" 
+                                        value={searchCpOrigen} type="text"></lightning-input>
+                                </div>
+                                <table if:true={showCpOrigen} class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_striped">
+                                    <thead>
                                     <tr class="slds-line-height_reset">
                                         <th scope="col">
-                                            <div class="slds-truncate" title="Name">Name</div>
+                                            <div class="slds-truncate">Codigo Postal</div>
                                         </th>
                                         <th scope="col">
-                                            <div class="slds-truncate" title="Clave">Clave</div>
+                                            <div class="slds-truncate">Pais</div>
                                         </th>
                                     </tr>
-                                </thead>
-                                <tbody>
-                                    <template for:each={listMercancia} for:item="itemMer">
-                                        <tr class="slds-hint-parent" data-id={itemMer.Id} data-name={itemMer.Name} key={itemMer.Id} onclick={mercanciaSelect}> 
+                                    </thead>
+                                    <tbody>
+                                    <template for:each={listCpOrigen} for:item="itemCpOrigen">
+                                        <tr class="slds-hint-parent" data-id={itemCpOrigen.Id} data-name={itemCpOrigen.Name} key={itemCpOrigen.Id} onclick={cpOrigenSelect}> 
                                             <td>
-                                                <div class="slds-truncate">{itemMer.Name}</div>
+                                                <div class="slds-truncate">{itemCpOrigen.Name}</div>
                                             </td>
-                                            <template lwc:if={itemMer.Clave_SAT__c}>
-                                                <td>
-                                                    <div class="slds-truncate">{itemMer.Clave_SAT__c}</div>
-                                                </td>
-                                            </template>
+                                            <td>
+                                                <div class="slds-truncate">{itemCpOrigen.Pais_RefCP__r.Name}</div>
+                                            </td>
                                         </tr>
                                     </template>
-                                </tbody>
-                            </table>
-                        </div>
-    
-                        <div style="width: 100%;">
-                            <lightning-input required label="Peso" value={weight} data-fieldname="weight" onchange={handleChange} pattern="^\d*\.?\d*$" ></lightning-input>
-                        </div>
+                                    </tbody>
+                                </table>
+                                <!--lightning-input required label="Dirección de Carga" value={loadingAddress} data-fieldname="loadingAddress" onchange={handleChange}></lightning-input -->
+                            </div>
 
-                        <div style="width: 100%;">
-                            <lightning-input required label="Dirección de Carga" value={loadingAddress} data-fieldname="loadingAddress" onchange={handleChange}></lightning-input>
-                        </div>
+                            <div style="width: 100%;">
+                                <div onkeyup={searchKeyCpDestino}>
+                                    <lightning-input label="CP Destino" placeholder="Buscar Cp Destino" 
+                                        value={searchCpDestino} type="text"></lightning-input>
+                                </div>
+                                <br>
+                                <table if:true={showCpDestino} class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_striped">
+                                    <thead>
+                                    <tr class="slds-line-height_reset">
+                                        <th scope="col">
+                                            <div class="slds-truncate" title="First Name">Codigo Postal</div>
+                                        </th>
+                                        <th scope="col">
+                                            <div class="slds-truncate" title="First Name">Pais</div>
+                                        </th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <template for:each={listCpDestino} for:item="itemCpDestino">
+                                        <tr class="slds-hint-parent" data-id={itemCpDestino.Id} data-name={itemCpDestino.Name} key={itemCpDestino.Id} onclick={cpDestinoSelect}> 
+                                            <td>
+                                                <div class="slds-truncate">{itemCpDestino.Name}</div>
+                                            </td>
+                                            <td>
+                                                <div class="slds-truncate">{itemCpDestino.Pais_RefCP__r.Name}</div>
+                                            </td>
+                                        </tr>
+                                    </template>
+                                    </tbody>
+                                </table>
+                                <!--lightning-input required label="Dirección de Descarga" value={unloadingAddress} data-fieldname="unloadingAddress" onchange={handleChange}></lightning-input -->
+                            </div>
 
-                        <div style="width: 100%;">
-                            <lightning-input required label="Dirección de Descarga" value={unloadingAddress} data-fieldname="unloadingAddress" onchange={handleChange}></lightning-input>
-                        </div>
+                            <div style="width: 100%;">
+                                <lightning-input style="top: -43px;" required label="Tiempo Carga (Horas)" value={timeLoad} data-fieldname="timeLoad" onchange={handleChange} pattern="\d*" title="Ingresa un número entero"  type="number"></lightning-input>
+                            </div>
 
-                        <div style="width: 100%;">
-                            <lightning-input required label="Cantidad" value={quantity} data-fieldname="quantity" onchange={handleChange}></lightning-input>
-                        </div>
+                            <div style="width: 100%;">
+                                <lightning-input style="top: -43px;" required label="Tiempo Descarga (Horas)" value={timeUnload} data-fieldname="timeUnload" onchange={handleChange} pattern="\d*" title="Ingresa un número entero"  type="number"></lightning-input>
+                            </div>
 
-                        <div style="width: 100%;">
-                            <lightning-input required label="Tiempo Carga" value={timeLoad} data-fieldname="timeLoad" onchange={handleChange} pattern="\d*" title="Ingresa un número entero"></lightning-input>
-                        </div>
+                            <div style="width: 100%;">
+                                <div style="width: 100%;">
+                                    <lightning-combobox style="top: -43px;" required
+                                        label="Tipo de Moneda"
+                                        value={selectedMoneda}
+                                        options={monedaOptions}
+                                        onchange={handleMonedaChange}>
+                                    </lightning-combobox>
+                                </div>
+                            </div>
 
-                        <div style="width: 100%;">
-                            <lightning-input required label="Tiempo Descarga" value={timeUnload} data-fieldname="timeUnload" onchange={handleChange} pattern="\d*" title="Ingresa un número entero"></lightning-input>
-                        </div>
+                            <div style="width: 100%;">
+                                <lightning-input style="top: -43px;" label="Comentarios: " value={comentarios} data-fieldname="comentarios" onchange={handleChange}></lightning-input>
+                            </div>
 
-                        <div style="width: 100%;">
-                            <lightning-input label="Comentarios: " value={comentarios} data-fieldname="comentarios" onchange={handleChange}></lightning-input>
-                        </div>
+                            <div style="width: 100%;">
+                                <lightning-input style="top: -43px;" type="number" label="Costo Target del cliente:" value={target} data-fieldname="target" onchange={handleChange}></lightning-input>
+                            </div>
 
-                        <div style="width: 100%;">
+                            <div style="width: 100%;">
+                                <div style="width: 100%; top: -43px;">
+                                    <lightning-combobox  style="top: -43px;"
+                                        label="Incoterm" value={selectedIncoterm}
+                                        options={incotermOptions} onchange={handleIncotermChange}>
+                                    </lightning-combobox>
+                                </div>
+                            </div>
                         </div>
+                        <div>
+                            <br><h1>Datos adicionales del servicio</h1><br>
+                        </div>
+                        <template if:true={inicioWrapper}>
+                            <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px;">
+                                <template if:true={vistaPMFC}>
+                                    <div style="width: 100%;">
+                                        <div style="width: 100%;">
+                                            <template if:true={opPM}>
+                                                <lightning-combobox label="Tipo de servicio:" value={selectedTipoServicio}
+                                                    options={OptionsTipoServicioPM} onchange={handleTipoServicioChange}>
+                                                </lightning-combobox>
+                                            </template>
+                                            <template if:true={opF}>
+                                                <lightning-combobox label="Tipo de servicio:" value={selectedTipoServicio}
+                                                    options={OptionsTipoServicioF} onchange={handleTipoServicioChange}>
+                                                </lightning-combobox>
+                                            </template>
+                                            <template if:true={opC}>
+                                                <lightning-combobox label="Tipo de servicio:" value={selectedTipoServicio}
+                                                    options={OptionsTipoServicioC} onchange={handleTipoServicioChange}>
+                                                </lightning-combobox>
+                                            </template>
+                                        </div>
+                                    </div>
+                                </template>
+
+                                <template if:true={vistaPMFAC}>
+                                    <div style="width: 100%;">
+                                        <div style="width: 100%;">
+                                            <lightning-combobox label="Tipo de Ruta:"
+                                                value={selectedTipoRuta} options={tipoRutaOptions}
+                                                onchange={handleTipoRutaChange}>
+                                            </lightning-combobox>
+                                        </div>
+                                    </div>
+                                    <div style="width: 100%;">
+                                        <div style="width: 100%;">
+                                            <lightning-combobox label="Servicio Especial:"
+                                                value={selectedServicioEspecial} options={servicioEspecialOptions}
+                                                onchange={handleServicioEspecialChange}>
+                                            </lightning-combobox>
+                                        </div>
+                                    </div>
+                                    <template if:true={siservicioEspecial}>
+                                        <div style="width: 100%;">
+                                            <div style="width: 100%;">
+                                                <lightning-input type="file" accept=".jpg, .jpeg, .png, .doc, .docx, .pdf" label="incluir medidas/ fotos/ diagrama" 
+                                                onchange={handleFileServicioEspecialChange}></lightning-input>
+                                                <template if:true={fileServicioEspecialData}>
+                                                    <p>{fileServicioEspecialData.filename}</p>
+                                                </template>
+                                            </div>
+                                        </div>
+                                    </template>
+                                    <div style="width: 100%;">
+                                        <lightning-input label="Volumen Mensual:" onchange={handleVolumenMensualChange} 
+                                        value={valueVolumenMensual} type="number"></lightning-input>
+                                    </div>
+                                    <div style="width: 100%;">
+                                        <div style="width: 100%;">
+                                            <lightning-combobox label="Servicio Adicional:"
+                                                value={selectedServicioAdicional} options={servicioAdicionalOptions}
+                                                onchange={handleServicioAdicionalChange}>
+                                            </lightning-combobox>
+                                        </div>
+                                    </div>
+                                    <div style="width: 100%;">
+                                        <div style="width: 100%;">
+                                            <lightning-combobox label="Border:"
+                                                value={selectedBorder} options={borderOptions}
+                                                onchange={handleBorderChange}>
+                                            </lightning-combobox>
+                                        </div>
+                                    </div>
+                                    <template if:true={opCustomsNorte}>
+                                    <div style="width: 100%;">
+                                        <div style="width: 100%;">
+                                            <lightning-combobox label="Customs:" value={selectedCustoms}
+                                            options={OptionsCustomsNorte} onchange={handleCustomsChange}></lightning-combobox>
+                                        </div>
+                                    </div>
+                                    </template>
+                                    <template if:true={opCustomsSur}>
+                                        <div style="width: 100%;">
+                                            <div style="width: 100%;">
+                                                <lightning-combobox label="Customs:" value={selectedCustoms}
+                                                options={OptionsCustomsSur} onchange={handleCustomsChange}></lightning-combobox>
+                                            </div>
+                                        </div>
+                                    </template>
+                                    <template if:true={opCustomsMaritimas}>
+                                        <div style="width: 100%;">
+                                            <div style="width: 100%;">
+                                                <lightning-combobox label="Customs:" value={selectedCustoms}
+                                                options={OptionsCustomsMaritimas} onchange={handleCustomsChange}></lightning-combobox>
+                                            </div>
+                                        </div>
+                                    </template>
+                                    <template if:true={opCustomsInteriores}>
+                                        <div style="width: 100%;">
+                                            <div style="width: 100%;">
+                                                <lightning-combobox label="Customs:" value={selectedCustoms}
+                                                options={OptionsCustomsInteriores} onchange={handleCustomsChange}></lightning-combobox>
+                                            </div>
+                                        </div>
+                                    </template>
+                                </template>
+                                <!--template if:true={vistaPM}>
+                                    <div style="width: 100%;">
+                                        <div style="width: 100%;">
+                                            <lightning-combobox
+                                                label="Tipo de Contenedor:" value={selectedTipoContenedor}
+                                                options={tipoContenedorOptions} onchange={handleTipoContenedorChange}>
+                                            </lightning-combobox>
+                                        </div>
+                                    </div>
+                                </template -->
+
+                                <template if:true={vistaPMAC}>
+                                    <div style="width: 100%;">
+                                        <lightning-input type="Text" label="Puerto de Salida/Arribo:" 
+                                        onchange={handlePuertoSalidaChange} value={obj.puertoSalidaArribo}></lightning-input>
+                                    </div>
+                                </template>
+
+                                <template if:true={vistaPMFA}>
+                                    <div style="width: 100%;">
+                                        <div style="width: 100%;">
+                                            <lightning-combobox
+                                                label="Hazmat:" value={selectedHazmat}
+                                                options={optionsSiNo} onchange={handleHazmatChange}>
+                                            </lightning-combobox>
+                                        </div>
+                                    </div>
+                                    <template if:true={sihazmat}>
+                                        <div style="width: 100%;">
+                                            <div style="width: 100%;">
+                                                <lightning-input type="file" accept=".jpg, .jpeg, .png, .doc, .docx, .pdf" label="UN/ MSDS" 
+                                                onchange={handleFileHazmatChange}></lightning-input>
+                                                <template if:true={fileHazmatData}>
+                                                    <p>{fileHazmatData.filename}</p>
+                                                </template>
+                                            </div>
+                                        </div>
+                                    </template>
+                                    <div style="width: 100%;">
+                                        <div style="width: 100%;">
+                                            <lightning-combobox
+                                                label="Certificaciones:" value={selectedCertificaciones}
+                                                options={certificacionesOptions} onchange={handleCertificacionesChange}>
+                                            </lightning-combobox>
+                                        </div>
+                                    </div>
+                                    <div style="width: 100%;">
+                                        <lightning-input type="Text" label="Accesoriales" onchange={handleAccesorialesChange}
+                                        value={obj.accesoriales}></lightning-input>
+                                    </div>
+                                </template>
+
+                                <template if:true={vistaF}>
+                                    <div style="width: 100%;">
+                                        <lightning-input label="Frontera de cruce" onchange={handleFronteraCruceChange}
+                                        value={obj.fronteraCruce}></lightning-input>
+                                    </div>
+                                    <div style="width: 100%;">
+                                        <div style="width: 100%;">
+                                            <lightning-combobox
+                                                label="Transbordo:" value={selectedTransbordo}
+                                                options={optionsSiNo} onchange={handleTransbordoChange}>
+                                            </lightning-combobox>
+                                        </div>
+                                    </div>
+                                </template>
+
+                                <template if:true={vistaAC}>
+                                    <div style="width: 100%;">
+                                        <lightning-input type="number" label="Piezas" onchange={handlePiezasChange}
+                                        value={obj.piezas}></lightning-input>
+                                    </div>
+                                </template>
+
+                                <template if:true={vistaC}>
+                                    <div style="width: 100%;">
+                                        <lightning-combobox
+                                            label="Aeropuerto de Salida/Arribo:" value={selectedAeropuertoSalidaArribo}
+                                            options={aeropuertoSalidaArriboOptions} onchange={handleAeropuertoSalidaArriboChange}>
+                                        </lightning-combobox>
+                                    </div>
+                                </template>
+
+                                <template if:true={vistaS}>
+                                    <div style="width: 100%;">
+                                        <lightning-input type="date" label="Fecha inicio del embarque:" 
+                                        onchange={handleFechaInicioEmbarqueChange} value={obj.fechaInicioEmbarque}></lightning-input>
+                                    </div>
+                                    <div style="width: 100%;">
+                                        <lightning-input type="date" label="Fecha fin del embarque:" 
+                                        onchange={handleFechaFinEmbarqueChange} value={obj.fechaFinEmbarque}></lightning-input>
+                                    </div>
+                                    <div style="width: 100%;">
+                                        <lightning-combobox
+                                            label="Tipo de seguro:" value={selectedTipoSeguro}
+                                            options={tipoSeguroOptions} onchange={handleTipoSeguroChange}>
+                                        </lightning-combobox>
+                                    </div>
+                                    <div style="width: 100%;">
+                                        <lightning-combobox
+                                            label="Tipo de Servicio/ Embarque:" value={selectedTipoServicioEmbarque}
+                                            options={tipoServicioEmbarqueOptions} onchange={handleTipoServicioEmbarqueChange}>
+                                        </lightning-combobox>
+                                    </div>
+                                    <div style="width: 100%;">
+                                        <lightning-input type="text" label="Razon social embarcador:" 
+                                        onchange={handleRazonSocialEmbarcadorChange} value={obj.razonSocialEmbarcador}></lightning-input>
+                                    </div>
+                                    <div style="width: 100%;">
+                                        <lightning-input type="text" label="Razon social importador:"
+                                        onchange={handleRazonSocialImportadorChange} value={obj.razonSocialImportador}></lightning-input>
+                                    </div>
+                                </template>
+
+                            </div>
+                            <template if:true={vistaFA}>
+                                <div style="width: 100%;"><br><h1>Dimensiones:</h1><br></div>
+                                <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px;">
+                                    <div style="width: 100%;">
+                                        <lightning-input type="number" label="Item Height(cm):" step="0.01" 
+                                        onchange={handleItemHeightChange} value={obj.itemHeight}></lightning-input>
+                                    </div>
+                                    <div style="width: 100%;">
+                                        <lightning-input type="number" label="Item Width(cm):" step="0.01" 
+                                        onchange={handleItemWidthChange} value={obj.itemWidth}></lightning-input>
+                                    </div>
+                                    <div style="width: 100%;">
+                                        <lightning-input type="number" label="Item Lenght(cm):" step="0.01" 
+                                        onchange={handleItemLenghtChange} value={obj.itemLenght}></lightning-input>
+                                    </div>
+                                </div>
+                            </template>
+                        </template>
+                    </div>
+                    <div class="slds-m-top_medium slds-text-align_right">
+                        <lightning-button variant="outline-brand" label="Agregar Producto" onclick={aceptar}></lightning-button>
                     </div>
                 </div>
-                <div class="slds-m-top_medium slds-text-align_right">
-                    <lightning-button variant="outline-brand" label="Agregar Producto" onclick={aceptar}></lightning-button>
-                </div>
-            </div>
-
+            </template>
             <div class="slds-align_absolute-center">
                 <lightning-button variant="brand" label="Cerrar" onclick={cerrar}></lightning-button>
             </div>

@@ -4,10 +4,11 @@ public class p2G_FoliosEnOportunidadesTest {
     public static void prueba(){
         NEU_StaticVariableHelper.setBoolean1(true);
         OpportunityLineItem oli = [SELECT OpportunityId , PROJ_Modalidad__c FROM OpportunityLineItem 
-                                   WHERE OpportunityId != null AND PROJ_Modalidad__c = 'Caja 53 FT' 
-                                   AND PROJ_Tipo_de_mercancia__c != null
-                                   AND Opportunity.Group__c = 'SP-FN-FLETE NACIONAL' LIMIT 1];
+                                   WHERE OpportunityId != null AND Opportunity.Total_IEQO_Creados__c > 0
+                                   LIMIT 1];
         System.debug('OpportunityLineItem: ' + oli);
+        List<Customer_Quote__c> getIEQO = p2G_FoliosEnOportunidades.getIEQO(oli.OpportunityId,'FN-');
+        String asignar = p2G_FoliosEnOportunidades.asignarFolio(oli.OpportunityId,getIEQO[0].Id);
         List<p2G_FoliosEnOportunidades.wrapperProduct> lista = p2G_FoliosEnOportunidades.getRoute(oli.OpportunityId);
         List<p2G_FoliosEnOportunidades.wrapperProduct> listaCrear = new List<p2G_FoliosEnOportunidades.wrapperProduct>();
         listaCrear.add(lista[0]);
@@ -28,6 +29,14 @@ public class p2G_FoliosEnOportunidadesTest {
         lista[0].grupo ='SP-PTO-PUERTOS';
         p2G_FoliosEnOportunidades.grupo(lista[0]);
         lista[0].grupo ='SP-R-GLOBAL ROUTING';
+        p2G_FoliosEnOportunidades.grupo(lista[0]);
+        lista[0].grupo ='SP-EX-SEGUROS';
+        p2G_FoliosEnOportunidades.grupo(lista[0]);
+        lista[0].grupo ='SP-PQ-PAQUETERIA';
+        p2G_FoliosEnOportunidades.grupo(lista[0]);
+        lista[0].grupo ='SP-WH-ALMACENAJE';
+        p2G_FoliosEnOportunidades.grupo(lista[0]);
+        lista[0].grupo ='SP-T-CONSOLIDADO';
         p2G_FoliosEnOportunidades.grupo(lista[0]);
         
     }
