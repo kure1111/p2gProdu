@@ -1,13 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <Package xmlns="http://soap.sforce.com/2006/04/metadata">
-	<types>
-		<members>P2G_AccountAddress</members>
-		<members>P2G_AccountAddressTest</members>
-		<members>P2G_asignarAccountAddressMap</members>
-		<members>P2G_asignarAccountAddressMapTest</members>
-		<members>P2G_updateAddresWs</members>
-		<members>P2G_updateAddresWsTest</members>
-		<name>ApexClass</name>
-	</types>
+    <types>
+        <members>PAKCargaProductos</members>
+        <name>AuraDefinitionBundle</name>
+    </types>
 	<version>60.0</version>
 </Package>
