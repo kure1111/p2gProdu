@@ -15,7 +15,7 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>asignar_campana</targetReference>
+            <targetReference>Crear_tareas</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -32,7 +32,7 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>asignar_campana</targetReference>
+            <targetReference>Crear_tareas</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -63,6 +63,20 @@
                 <elementReference>Servicio_ServiceType</elementReference>
             </value>
         </assignmentItems>
+        <assignmentItems>
+            <assignToReference>fechacierre</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Fecha_estimada_cierre</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>moneda</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>CurrencyOppo</elementReference>
+            </value>
+        </assignmentItems>
         <connector>
             <targetReference>Get_Opportunity_Record_ID1</targetReference>
         </connector>
@@ -77,6 +91,20 @@
             <operator>Assign</operator>
             <value>
                 <elementReference>Servicio_ServiceType</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>fechacierre</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Fecha_estimada_de_cierre</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>moneda</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>CurrencyOppo2</elementReference>
             </value>
         </assignmentItems>
         <connector>
@@ -236,7 +264,6 @@
             <label>No</label>
         </rules>
     </decisions>
-    <description>se agregó flujo para asignar campaña</description>
     <dynamicChoiceSets>
         <name>colonia</name>
         <dataType>String</dataType>
@@ -259,6 +286,14 @@
         <object xsi:nil="true"/>
         <picklistField>Estatus_Recuperado__c</picklistField>
         <picklistObject>Account</picklistObject>
+    </dynamicChoiceSets>
+    <dynamicChoiceSets>
+        <name>Currency</name>
+        <dataType>Picklist</dataType>
+        <displayField xsi:nil="true"/>
+        <object xsi:nil="true"/>
+        <picklistField>CurrencyIsoCode</picklistField>
+        <picklistObject>Opportunity</picklistObject>
     </dynamicChoiceSets>
     <dynamicChoiceSets>
         <name>ESTATUSDECONTACTO</name>
@@ -324,20 +359,20 @@
 &quot;SP-A-AEREO&quot;, &quot;A&quot;,
 &quot;SP-AW-GLOBAL AEREO&quot;, &quot;AW&quot;,
 &quot;SP-CE-COMERCIO EXT&quot;, &quot;CE&quot;,
-&quot;SP-EX-SEGUROS&quot;, &quot;SEGUROS&quot;,
+&quot;SP-EX-SEGUROS&quot;, &quot;EX&quot;,
 &quot;SP-M-MARITIMO&quot;, &quot;M&quot;,
 &quot;SP-PQ-PAQUETERIA&quot;, &quot;PQ&quot;,
 &quot;SP-PTO-PUERTOS&quot;, &quot;PTO&quot;,
-&quot;SP-R-GLOBAL ROUTING&quot;, &quot;FI&quot;,
+&quot;SP-R-GLOBAL ROUTING&quot;, &quot;R&quot;,
 &quot;SP-SL-SERV LOGISTICO&quot;, &quot; &quot;,
 &quot;SP-T-CONSOLIDADO&quot;, &quot;T&quot;,
-&quot;SP-W-GLOBAL MARITIMO&quot;, &quot;M&quot;,
+&quot;SP-W-GLOBAL MARITIMO&quot;, &quot;W&quot;,
 &quot;SP-WH-ALMACENAJE&quot;, &quot;WH&quot;,
 &quot;N/A&quot;
 )</expression>
     </formulas>
     <interviewLabel>CAPEX - Funnel Commercial / Opportunitties4 {!$Flow.CurrentDateTime}</interviewLabel>
-    <label>CAPEX - Funnel Commercial / Opportunitties4</label>
+    <label>CAPEX - Funnel Commercial / Opportunitties Nuevo</label>
     <processMetadataValues>
         <name>BuilderType</name>
         <value>
@@ -383,6 +418,24 @@
             </value>
         </inputAssignments>
         <inputAssignments>
+            <field>CurrencyIsoCode</field>
+            <value>
+                <elementReference>CurrencyOppo2</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Data_Time_Entendimiento__c</field>
+            <value>
+                <elementReference>$Flow.CurrentDateTime</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Fecha_Estimada_Cierre__c</field>
+            <value>
+                <elementReference>Fecha_estimada_de_cierre</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
             <field>Group__c</field>
             <value>
                 <elementReference>Tipo_de_servicio</elementReference>
@@ -409,13 +462,7 @@
         <inputAssignments>
             <field>StageName</field>
             <value>
-                <stringValue>Prospectar</stringValue>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>Total_Amount_del__c</field>
-            <value>
-                <elementReference>PROJ_Tamano_de_Oportunidad_MX</elementReference>
+                <stringValue>Entendimiento</stringValue>
             </value>
         </inputAssignments>
         <object>Opportunity</object>
@@ -446,6 +493,24 @@
             </value>
         </inputAssignments>
         <inputAssignments>
+            <field>CurrencyIsoCode</field>
+            <value>
+                <elementReference>CurrencyOppo</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Data_Time_Entendimiento__c</field>
+            <value>
+                <elementReference>$Flow.CurrentDateTime</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Fecha_Estimada_Cierre__c</field>
+            <value>
+                <elementReference>Fecha_estimada_cierre</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
             <field>Group__c</field>
             <value>
                 <elementReference>Tipo_de_servicio</elementReference>
@@ -472,13 +537,7 @@
         <inputAssignments>
             <field>StageName</field>
             <value>
-                <stringValue>Prospectar</stringValue>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>Total_Amount_del__c</field>
-            <value>
-                <elementReference>Tama_o_de_Oportunidad_Anual_MX</elementReference>
+                <stringValue>Entendimiento</stringValue>
             </value>
         </inputAssignments>
         <object>Opportunity</object>
@@ -547,6 +606,47 @@
             </value>
         </inputAssignments>
         <object>Account</object>
+    </recordCreates>
+    <recordCreates>
+        <name>Crear_tareas</name>
+        <label>Crear tareas</label>
+        <locationX>512</locationX>
+        <locationY>2462</locationY>
+        <connector>
+            <targetReference>Seleccion_de_campanas</targetReference>
+        </connector>
+        <inputAssignments>
+            <field>OwnerId</field>
+            <value>
+                <elementReference>$User.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Priority</field>
+            <value>
+                <stringValue>Normal</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Status</field>
+            <value>
+                <stringValue>Not Started</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Subject</field>
+            <value>
+                <stringValue>Cargar Productos y Subproductos</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>WhatId</field>
+            <value>
+                <elementReference>OpportunityID</elementReference>
+            </value>
+        </inputAssignments>
+        <object>Task</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordCreates>
     <recordLookups>
         <description>Documento de licitación en la oportunidad</description>
@@ -846,6 +946,36 @@
                     <isRequired>true</isRequired>
                 </fields>
                 <fields>
+                    <name>Documentos_Contado</name>
+                    <fieldText>&lt;p&gt;Los documentos asociados para dar de alta al &lt;span style=&quot;background-color: var(--slds-g-color-neutral-base-100, var(--lwc-colorBackgroundInput,rgb(255, 255, 255))); color: var(--slds-g-color-neutral-base-30, var(--lwc-colorTextWeak,rgb(68, 68, 68))); font-size: var(--lwc-fontSize3,0.8125rem); font-family: var(--lwc-fontFamily,-apple-system, BlinkMacSystemFont, &apos;Segoe UI&apos;, Roboto, Helvetica, Arial, sans-serif, &apos;Apple Color Emoji&apos;, &apos;Segoe UI Emoji&apos;, &apos;Segoe UI Symbol&apos;);&quot;&gt;clientes de Contado en SAP  son:&lt;/span&gt;&lt;/p&gt;&lt;ul&gt;&lt;li&gt;Cedula Fiscal&lt;/li&gt;&lt;/ul&gt;&lt;p&gt;&lt;span style=&quot;color: rgb(238, 10, 10); background-color: rgb(255, 255, 255);&quot;&gt;Nota: Prepara tu documentación para cuando des de alta al cliente en SAP.&lt;/span&gt;&lt;/p&gt;</fieldText>
+                    <fieldType>DisplayText</fieldType>
+                    <visibilityRule>
+                        <conditionLogic>and</conditionLogic>
+                        <conditions>
+                            <leftValueReference>Tipo_de_venta</leftValueReference>
+                            <operator>EqualTo</operator>
+                            <rightValue>
+                                <stringValue>Contado</stringValue>
+                            </rightValue>
+                        </conditions>
+                    </visibilityRule>
+                </fields>
+                <fields>
+                    <name>Documentos_Credito</name>
+                    <fieldText>&lt;p&gt;&lt;span style=&quot;color: rgb(68, 68, 68); background-color: rgb(255, 255, 255);&quot;&gt;Los documentos asociados para dar de alta al clientes de Crédito en SAP son:&lt;/span&gt;&lt;/p&gt;&lt;ul&gt;&lt;li&gt;Cedula Fiscal&lt;/li&gt;&lt;li&gt;Comprobante de Domicilio&lt;/li&gt;&lt;li&gt;IFE del Represéntate Legal&lt;/li&gt;&lt;li&gt;Acta constitutiva&lt;/li&gt;&lt;li&gt;Solicitud de crédito&lt;/li&gt;&lt;li&gt;Constancia Visita Fotografia Del Negocio&lt;/li&gt;&lt;/ul&gt;&lt;p&gt;&lt;span style=&quot;color: rgb(238, 10, 10); background-color: rgb(255, 255, 255);&quot;&gt;Nota: Prepara tu documentación para cuando des de alta al cliente en SAP.&lt;/span&gt;&lt;/p&gt;</fieldText>
+                    <fieldType>DisplayText</fieldType>
+                    <visibilityRule>
+                        <conditionLogic>and</conditionLogic>
+                        <conditions>
+                            <leftValueReference>Tipo_de_venta</leftValueReference>
+                            <operator>EqualTo</operator>
+                            <rightValue>
+                                <stringValue>Credito</stringValue>
+                            </rightValue>
+                        </conditions>
+                    </visibilityRule>
+                </fields>
+                <fields>
                     <name>ESTATUS_DE_CONTACTO</name>
                     <choiceReferences>ESTATUSDECONTACTO</choiceReferences>
                     <dataType>String</dataType>
@@ -925,13 +1055,21 @@
                     <storeOutputAutomatically>true</storeOutputAutomatically>
                 </fields>
                 <fields>
-                    <name>Tama_o_de_Oportunidad_Anual_MX</name>
-                    <dataType>Currency</dataType>
-                    <fieldText>Tamaño de Oportunidad Anual (MX$)</fieldText>
+                    <name>Fecha_estimada_cierre</name>
+                    <dataType>Date</dataType>
+                    <fieldText>Fecha estimada de cierre</fieldText>
                     <fieldType>InputField</fieldType>
                     <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
-                    <isRequired>false</isRequired>
-                    <scale>0</scale>
+                    <isRequired>true</isRequired>
+                </fields>
+                <fields>
+                    <name>CurrencyOppo</name>
+                    <choiceReferences>Currency</choiceReferences>
+                    <dataType>String</dataType>
+                    <fieldText>Currency</fieldText>
+                    <fieldType>DropdownBox</fieldType>
+                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+                    <isRequired>true</isRequired>
                 </fields>
                 <inputParameters>
                     <name>width</name>
@@ -1044,13 +1182,21 @@
             <storeOutputAutomatically>true</storeOutputAutomatically>
         </fields>
         <fields>
-            <name>PROJ_Tamano_de_Oportunidad_MX</name>
-            <dataType>Currency</dataType>
-            <fieldText>Tamaño de Oportunidad Anual (MX$)</fieldText>
+            <name>Fecha_estimada_de_cierre</name>
+            <dataType>Date</dataType>
+            <fieldText>Fecha estimada de cierre</fieldText>
             <fieldType>InputField</fieldType>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
-            <isRequired>false</isRequired>
-            <scale>0</scale>
+            <isRequired>true</isRequired>
+        </fields>
+        <fields>
+            <name>CurrencyOppo2</name>
+            <choiceReferences>Currency</choiceReferences>
+            <dataType>String</dataType>
+            <fieldText>Currency</fieldText>
+            <fieldType>DropdownBox</fieldType>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <isRequired>true</isRequired>
         </fields>
         <showFooter>true</showFooter>
         <showHeader>false</showHeader>
@@ -1060,13 +1206,13 @@
         <name>SCREEN_Resumen_Nuevos_Negocios</name>
         <label>Resumen - Nuevos Negocios</label>
         <locationX>512</locationX>
-        <locationY>2570</locationY>
+        <locationY>2678</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
         <fields>
             <name>OpportunityNuevosNegocios</name>
-            <fieldText>&lt;p&gt;&lt;a href=&quot;{!TXT_UrlProd}{!OpportunityID}&quot; rel=&quot;noopener noreferrer&quot; target=&quot;_blank&quot;&gt;Se ha creado la oportunidad: {!Get_Oportunidad_Nuevos_Negocios.Name}  De click aqui para abrirla&lt;/a&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;u&gt;Detalles.&lt;/u&gt;&lt;/p&gt;&lt;ul&gt;&lt;li&gt;&lt;strong&gt;Tamaño de Oportunidad Anual (MX$):&lt;/strong&gt; &lt;em&gt;{!Get_Oportunidad_Nuevos_Negocios.Amount}&lt;/em&gt;&lt;/li&gt;&lt;li&gt;&lt;strong&gt;Etapa:&lt;/strong&gt; &lt;em&gt;{!Get_Oportunidad_Nuevos_Negocios.StageName}&lt;/em&gt;&lt;/li&gt;&lt;/ul&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;a href=&quot;{!TXT_UrlProd}{!OpportunityID}&quot; rel=&quot;noopener noreferrer&quot; target=&quot;_blank&quot;&gt;Se ha creado la oportunidad: {!Get_Oportunidad_Nuevos_Negocios.Name} De click aqui para abrirla&lt;/a&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;u&gt;Detalles.&lt;/u&gt;&lt;/p&gt;&lt;ul&gt;&lt;li&gt;&lt;strong&gt;Fecha estimada de Cierre:&lt;/strong&gt; &lt;em&gt;{!fechacierre}&lt;/em&gt;&lt;/li&gt;&lt;li&gt;&lt;strong&gt;Etapa:&lt;/strong&gt; &lt;em&gt;{!Get_Oportunidad_Nuevos_Negocios.StageName}&lt;/em&gt;&lt;/li&gt;&lt;li&gt;&lt;strong&gt;Moneda:&lt;/strong&gt; {!moneda}&lt;/li&gt;&lt;/ul&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
@@ -1109,12 +1255,12 @@
             <targetReference>GetAccount</targetReference>
         </connector>
     </start>
-    <status>Obsolete</status>
+    <status>Active</status>
     <subflows>
-        <name>asignar_campana</name>
-        <label>asignar campaña</label>
+        <name>Seleccion_de_campanas</name>
+        <label>Selección de campañas</label>
         <locationX>512</locationX>
-        <locationY>2462</locationY>
+        <locationY>2570</locationY>
         <connector>
             <targetReference>SCREEN_Resumen_Nuevos_Negocios</targetReference>
         </connector>
@@ -1122,7 +1268,7 @@
         <inputAssignments>
             <name>IdOpportunity</name>
             <value>
-                <elementReference>Get_Oportunidad_Nuevos_Negocios.Id</elementReference>
+                <elementReference>OpportunityID</elementReference>
             </value>
         </inputAssignments>
     </subflows>
@@ -1136,6 +1282,20 @@
         <value>
             <booleanValue>false</booleanValue>
         </value>
+    </variables>
+    <variables>
+        <name>fechacierre</name>
+        <dataType>Date</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>moneda</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
     </variables>
     <variables>
         <description>Almacena el ID de la oportunidad que se creará para proyectos.</description>
