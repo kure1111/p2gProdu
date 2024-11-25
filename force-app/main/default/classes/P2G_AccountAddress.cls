@@ -1,4 +1,6 @@
 public class P2G_AccountAddress {
+    //prod 0124T000000Q3D0QAK , uat 0120R000003chbpQAA
+    public static final String IDRECORDTYPE = '0124T000000Q3D0QAK';
     @AuraEnabled
     public static list<Account_Address__c> getAddress(String address){
         String searchKeyword = '%' + address + '%';
@@ -7,8 +9,9 @@ public class P2G_AccountAddress {
         for(Account_Address__c accountSearch : [SELECT Id, Name, Pais_cat1__c,Estado_cat2__c, Localidad_Cat2__c,LocalidadEspejo__r.Name, Municipio_Cat2__c,
                                                 Colonia_espejo__c, Codigo_Postal_CP__r.Name, CalleEspejo__c, Numero_Ext_cp__c
                                                 FROM Account_Address__c
-                                                WHERE status__c = 'Validado'AND Active__c = true AND Name LIKE : searchKeyword limit 15]){
-                                                    AccountListRecord.add(accountSearch);
+                                                //WHERE status__c = 'Validado'AND Active__c = true AND Name LIKE : searchKeyword limit 15]){
+                                                WHERE status__c != null AND Name LIKE : searchKeyword limit 15]){
+                                                        AccountListRecord.add(accountSearch);
                                                 }
         return AccountListRecord;
     } 
@@ -72,7 +75,7 @@ public class P2G_AccountAddress {
                                       item.Address__c,yellowColor,
                                       item.CalleEspejo__c, item.Numero_Ext_cp__c,item.Colonia_espejo__c,
                                      item.Codigo_Postal_CP__r.Name,item.LocalidadEspejo__r.Name,item.EstadoEspejo__r.Name,
-                                     item.PaisEspejo__r.Name));
+                                     item.PaisEspejo__r.Name,''));
             
         }
         System.debug('XXXX: '+markers);
@@ -110,42 +113,67 @@ public class P2G_AccountAddress {
                                       item.Address__c,yellowColor,
                                       item.CalleEspejo__c, item.Numero_Ext_cp__c,item.Colonia_espejo__c,
                                      item.Codigo_Postal_CP__r.Name,item.LocalidadEspejo__r.Name,item.EstadoEspejo__r.Name,
-                                     item.PaisEspejo__r.Name));
+                                     item.PaisEspejo__r.Name,''));
         }
         return markers;
     }
     @AuraEnabled
-    public static List<MapMarker> getMapMarkersByUser() {
+    public static List<MapMarker> getMapMarkersByUser(String status) {
         String idUser = UserInfo.getUserId();
         // Crear una lista de MapMarker para almacenar los marcadores
         List<MapMarker> markers = new List<MapMarker>();
-        
-        list<Account_Address__c> listAddress = new list<Account_Address__c>();
-        listAddress = [SELECT Id, Name,status__c,Codigo_Postal_CP__c ,Address__c,Address_Coordinates__Latitude__s,
-                       Address_Coordinates__Longitude__s,CalleEspejo__c  ,Numero_Ext_cp__c,Colonia_espejo__c,
-                       Codigo_Postal_CP__r.Name,LocalidadEspejo__r.Name,EstadoEspejo__r.Name,PaisEspejo__r.Name,Veces_rechazado__c
-                       FROM Account_Address__c
-                       WHERE CreatedById =:idUser AND (status__c = 'Rechazado' OR status__c = 'Pendiente' OR status__c ='Validado') 
-                       ORDER BY status__c DESC];
-        
-        for(Account_Address__c item:listAddress){
-            String yellowColor = '';
-            if(item.status__c =='Pendiente'){
-                yellowColor = 'amarillo';
+
+        // Lista para almacenar las direcciones
+        List<Account_Address__c> listAddress;
+        System.debug('status: '+ status);
+        // Definir la consulta SOQL según el estado
+        if (status == 'Rechazado') {
+            // Si el estado es "todosOrg", obtener todos los registros con estado "Rechazado"
+            listAddress = [SELECT Id, Name, status__c, Codigo_Postal_CP__c, Address__c, 
+                                   Address_Coordinates__Latitude__s, Address_Coordinates__Longitude__s, 
+                                   CalleEspejo__c, Numero_Ext_cp__c, Colonia_espejo__c, 
+                                   Codigo_Postal_CP__r.Name, LocalidadEspejo__r.Name, 
+                                   EstadoEspejo__r.Name, PaisEspejo__r.Name, Veces_rechazado__c,Motivo_rechazo__c
+                            FROM Account_Address__c
+                            WHERE status__c = 'Rechazado' // Obtener todos los rechazados sin filtrar por usuario
+                            ORDER BY status__c DESC];
+        } else {
+            // Si el estado no es "todosOrg", filtrar por el usuario y el estado seleccionado
+            listAddress = [SELECT Id, Name, status__c, Codigo_Postal_CP__c, Address__c, 
+                                   Address_Coordinates__Latitude__s, Address_Coordinates__Longitude__s, 
+                                   CalleEspejo__c, Numero_Ext_cp__c, Colonia_espejo__c, 
+                                   Codigo_Postal_CP__r.Name, LocalidadEspejo__r.Name, 
+                                   EstadoEspejo__r.Name, PaisEspejo__r.Name, Veces_rechazado__c,Motivo_rechazo__c
+                            FROM Account_Address__c
+                            WHERE CreatedById = :idUser 
+                            AND (status__c = 'Rechazado' OR status__c = 'Pendiente' OR status__c = 'Validado')
+                            ORDER BY status__c DESC];
+        }
+
+        // Mapear los resultados a la lista de marcadores
+        for (Account_Address__c item : listAddress) {
+            String markerColor = '';
+            if (item.status__c == 'Pendiente') {
+                markerColor = 'amarillo';
+            } else if (item.status__c == 'Rechazado') {
+                markerColor = 'rojo';
+            } else if (item.status__c == 'Validado') {
+                markerColor = 'verde';
             }
-            if(item.status__c =='Rechazado'){
-                yellowColor = 'rojo';
-            }
-            if(item.status__c =='Validado'){
-                yellowColor = 'verde';
-            }
-            markers.add(new MapMarker(item.Address_Coordinates__Latitude__s,item.Address_Coordinates__Longitude__s ,
-                                      item.Name,
-                                      item.Id,
-                                      item.Address__c,yellowColor,
-                                      item.CalleEspejo__c, item.Numero_Ext_cp__c,item.Colonia_espejo__c,
-                                     item.Codigo_Postal_CP__r.Name,item.LocalidadEspejo__r.Name,item.EstadoEspejo__r.Name,
-                                     item.PaisEspejo__r.Name));
+            markers.add(new MapMarker(item.Address_Coordinates__Latitude__s, 
+                                       item.Address_Coordinates__Longitude__s,
+                                       item.Name,
+                                       item.Id,
+                                       item.Address__c,
+                                       markerColor,
+                                       item.CalleEspejo__c, 
+                                       item.Numero_Ext_cp__c,
+                                       item.Colonia_espejo__c,
+                                       item.Codigo_Postal_CP__r.Name,
+                                       item.LocalidadEspejo__r.Name,
+                                       item.EstadoEspejo__r.Name,
+                                       item.PaisEspejo__r.Name,
+                                       item.Motivo_rechazo__c));
         }
         return markers;
     }
@@ -177,8 +205,10 @@ public class P2G_AccountAddress {
         public String pais;
         @AuraEnabled
         public String status;
+        @AuraEnabled
+        public String motivo;
         public MapMarker(Decimal lat, Decimal lng, String title,String id,String address, String color,
-                        String calle,String numero,String colonia,String codigoPostal,String localidad,String estado,String pais) {
+                        String calle,String numero,String colonia,String codigoPostal,String localidad,String estado,String pais,String motiv) {
                         this.location = new Map<String, Object>{
                             'Latitude' => String.valueOf(lat),  // Convertir Decimal a String
                             'Longitude' => String.valueOf(lng)  // Convertir Decimal a String
@@ -193,6 +223,7 @@ public class P2G_AccountAddress {
                         this.localidad=localidad;
                         this.estado=estado;
                         this.pais=pais;
+                        this.motivo = motiv;
              			if (color == 'amarillo') {
             				this.mapIcon = 'http://maps.google.com/mapfiles/ms/icons/yellow-dot.png';
                             this.status = 'Pendiente';
@@ -238,7 +269,7 @@ public class P2G_AccountAddress {
         List<Account_Address__c> listAddress = [SELECT Id,Name,Address__c,Referencia__c,Address_Coordinates__Latitude__s
                                              ,Address_Coordinates__Longitude__s,Numero_Ext_cp__c,
                                              Calle_cat__c,Codigo_Postal_CP__c,Codigo_Postal_CP__r.Name,Colonia_cp__c,Colonia_cp__r.Name,
-                                             Localidad_Cat2__c,Municipio_Cat2__c,Estado_cat2__c,Colonia_espejo__c,Pais_cat1__c,CreatedDate,Status__c,Active__c
+                                             Localidad_Cat2__c,Municipio_Cat2__c,Estado_cat2__c,Colonia_espejo__c,Pais_cat1__c,CreatedDate,Status__c
                                              FROM Account_Address__c 
                                              WHERE Codigo_Postal_CP__r.Pais_RefCP__r.Name ='méxico'
                                              AND Codigo_Postal_CP__r.Name =:codigoPostal
@@ -259,12 +290,11 @@ public class P2G_AccountAddress {
             listaIds.add(item.Id); 
         }
         System.debug('listaIds:'+ lista);
-        //prod 0124T000000Q3D0QAK , uat 0120R000003chbpQAA
         List<Catalogo_SAT__c> listaColExiste = [SELECT Id, Name,Codigo_Postal__c ,Clave_Relacion_SAT__c FROM Catalogo_SAT__c WHERE (Name =:colonia AND Clave_Relacion_SAT__c IN: listaIds)
-        AND recordTypeId ='0124T000000Q3D0QAK'];
+        AND recordTypeId =:IDRECORDTYPE];
         System.debug('listaColExiste:'+ listaColExiste);
         List<Catalogo_SAT__c> listaCol = [SELECT Id, Name,Codigo_Postal__c,Clave_Relacion_SAT__c FROM Catalogo_SAT__c WHERE (Clave_Relacion_SAT__c IN: listaIds)
-                                          AND recordTypeId ='0124T000000Q3D0QAK' 
+                                          AND recordTypeId =:IDRECORDTYPE 
                                          ];
         System.debug('listaCol:'+ listaCol);
         if(listAddress.size() > 0){
@@ -348,12 +378,11 @@ public class P2G_AccountAddress {
         for(Catalogo_SAT__c item:lista){
             listaIds.add(item.Id); 
         }
-        //prod 0124T000000Q3D0QAK , uat 0120R000003chbpQAA
         List<Catalogo_SAT__c> listaColExiste = [SELECT Id, Name,Codigo_Postal__c,Clave_Relacion_SAT__c FROM Catalogo_SAT__c WHERE (Name =:colonia AND Clave_Relacion_SAT__c IN: listaIds)
-        AND recordTypeId ='0124T000000Q3D0QAK' ];
+        AND recordTypeId =:IDRECORDTYPE ];
        
         List<Catalogo_SAT__c> listaCol = [SELECT Id, Name,Codigo_Postal__c,Clave_Relacion_SAT__c FROM Catalogo_SAT__c WHERE (Clave_Relacion_SAT__c IN: listaIds)
-                                          AND recordTypeId ='0124T000000Q3D0QAK'
+                                          AND recordTypeId =:IDRECORDTYPE
                                          ];
         
 
@@ -426,12 +455,11 @@ public class P2G_AccountAddress {
         for(Catalogo_SAT__c item:lista){
             listaIds.add(item.Id); 
         }
-        //prod 0124T000000Q3D0QAK , uat 0120R000003chbpQAA
         List<Catalogo_SAT__c> listaColExiste = [SELECT Id, Name,Codigo_Postal__c,Clave_Relacion_SAT__c FROM Catalogo_SAT__c WHERE (Name =:colonia AND Clave_Relacion_SAT__c IN: listaIds)
-        AND recordTypeId ='0124T000000Q3D0QAK' ];
+        AND recordTypeId =:IDRECORDTYPE ];
        
         List<Catalogo_SAT__c> listaCol = [SELECT Id, Name,Codigo_Postal__c,Clave_Relacion_SAT__c FROM Catalogo_SAT__c WHERE (Clave_Relacion_SAT__c IN: listaIds)
-                                          AND recordTypeId ='0124T000000Q3D0QAK'
+                                          AND recordTypeId =:IDRECORDTYPE
                                          ];
         
 
@@ -541,7 +569,7 @@ public class P2G_AccountAddress {
                                       item.Address__c,yellowColor,
                                       item.CalleEspejo__c, item.Numero_Ext_cp__c,item.Colonia_espejo__c,
                                      item.Codigo_Postal_CP__r.Name,item.LocalidadEspejo__r.Name,item.EstadoEspejo__r.Name,
-                                     item.PaisEspejo__r.Name));
+                                     item.PaisEspejo__r.Name,''));
                 }
                 return markers;      
             }
@@ -575,7 +603,7 @@ public class P2G_AccountAddress {
                                       item.Address__c,yellowColor,
                                       item.CalleEspejo__c, item.Numero_Ext_cp__c,item.Colonia_espejo__c,
                                      item.Codigo_Postal_CP__r.Name,item.LocalidadEspejo__r.Name,item.EstadoEspejo__r.Name,
-                                     item.PaisEspejo__r.Name));
+                                     item.PaisEspejo__r.Name,''));
                 }
                 return markers;      
             }
