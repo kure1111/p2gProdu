@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>SeguimientoProspecto__c</fullName>
+    <label>Seguimiento</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <type>Picklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Sin comentarios</fullName>
+                <default>false</default>
+                <label>Sin comentarios</label>
+            </value>
+            <value>
+                <fullName>Cotizado</fullName>
+                <default>false</default>
+                <label>Cliente Contactado</label>
+            </value>
+            <value>
+                <fullName>En espera de Costos</fullName>
+                <default>false</default>
+                <label>En espera de Costos</label>
+            </value>
+            <value>
+                <fullName>Cliente_no_localizable</fullName>
+                <default>false</default>
+                <label>Cliente no localizable</label>
+            </value>
+            <value>
+                <fullName>Cotizado_1</fullName>
+                <default>false</default>
+                <label>Cotizado</label>
+            </value>
+            <value>
+                <fullName>Vendido</fullName>
+                <default>false</default>
+                <label>Venta</label>
+            </value>
+            <value>
+                <fullName>No Venta</fullName>
+                <default>false</default>
+                <label>No Venta</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>
