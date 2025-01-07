@@ -1,20 +1,26 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <Package xmlns="http://soap.sforce.com/2006/04/metadata">
     <types>
-        <members>P2G_Advertencia</members>
-        <members>P2G_AdvertenciaTest</members>
-        <members>P2G_ValidarMargenShipment</members>
-        <members>P2G_ValidarMargenShipmentTest</members>
-        <name>ApexClass</name>
-    </types>
-    <types>
-        <members>PAK_ClienteContado</members>
-        <name>ApexTrigger</name>
-    </types>
-    <types>
-        <members>p2g_Advertencia</members>
-        <members>p2g_Aprobar</members>
-        <name>LightningComponentBundle</name>
+        <members>Account-Account Layout</members>
+        <members>Account-Commercial Prospect</members>
+        <members>Account-Customer</members>
+        <members>Account-Customer %28FFWD%2FIMPORT-EXPORT%29</members>
+        <members>Account-Customer %28Services%29</members>
+        <members>Account-Customer Admin Vtas</members>
+        <members>Account-Customer Community Layout</members>
+        <members>Account-Export Company</members>
+        <members>Account-MKT Prospect</members>
+        <members>Account-Prospect</members>
+        <members>Account-Prospect Bloq</members>
+        <members>Account-Prospect Piloto</members>
+        <members>Account-Purchase Agent</members>
+        <members>Account-SCP Delphus</members>
+        <members>Account-Sales Agent</members>
+        <members>Account-Supplier</members>
+        <members>Account-Supplier %28Services%29</members>
+        <members>Account-Supply Chain Partner</members>
+        <members>Account-Supply Chain Partner Delphus</members>
+        <name>Layout</name>
     </types>
 	<version>62.0</version>
 </Package>
