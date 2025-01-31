@@ -1,0 +1,5 @@
+.scrollable {
+    height: 400px; /* Ajusta esta altura según tu preferencia */
+    overflow-y: auto; /* Habilita el desplazamiento vertical */
+    overflow-x: auto; /* Evita el desplazamiento horizontal */
+}

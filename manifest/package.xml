@@ -1,23 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <Package xmlns="http://soap.sforce.com/2006/04/metadata">
     <types>
-        <members>Operaciones_Ricardo/jizTOnKNTrDAEXwXJnpiqhTPhmngkF1</members>
-        <name>Dashboard</name>
+        <members>P2G_reporteProductosOportunidad</members>
+        <members>P2G_reporteProductosOportunidadTest</members>
+        <name>ApexClass</name>
     </types>
     <types>
-        <members>ADMINISTRACION_OPERATIVA/COTIZADO_INTER_KARINA</members>
-        <members>ADMINISTRACION_OPERATIVA/New_Opportunities_Report</members>
-        <members>ADMINISTRACION_OPERATIVA/Oportunidades_Cotizacion</members>
-        <members>ADMINISTRACION_OPERATIVA/Oportunidades_Ejecucion1</members>
-        <members>ADMINISTRACION_OPERATIVA/Oportunidades_Global</members>
-        <members>ADMINISTRACION_OPERATIVA/Oportunidades_Negociacion</members>
-        <members>ADMINISTRACION_OPERATIVA/Top_Clientes_INTER_VENTA_OPERADA</members>
-        <members>ADMINISTRACION_OPERATIVA/Venta_por_ejecutivo_INTER</members>
-        <members>Planeaci_n_Estrat_gica/Reuniones_INTER</members>
-        <members>Planeaci_n_Estrat_gica/Reuniones_INTER_Semanal</members>
-        <members>unfiled$public/INTER_Awaiting_Costs</members>
-        <members>unfiled$public/VENTA_OPERADA_IMD</members>
-        <name>Report</name>
+        <members>p2G_ReporteProductosPendientesCotizar</members>
+        <name>LightningComponentBundle</name>
     </types>
 	<version>62.0</version>
 </Package>
