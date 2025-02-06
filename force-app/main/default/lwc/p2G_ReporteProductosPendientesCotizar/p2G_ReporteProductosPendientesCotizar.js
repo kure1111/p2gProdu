@@ -27,12 +27,15 @@ export default class P2G_ReporteProductosPendientesCotizar extends LightningElem
     @track optionsCuenta = [];
     @track optionsOwner = [];
     @track optionsIc = [];
+    sinInfoMensaje = 'No se encontraron resultados para los filtros seleccionados. Por favor, ajusta los criterios de búsqueda e intenta nuevamente.';
+    sinInfoP = false;
+    sinInfoSP = false;
+    sinInfoIEQO = false;
     valueCuenta = '';
-    valueStatus = '';
+    valueStatus = 'Pendiente por Cotizar';
     valueOwnerOppo = '';
     valueUserIc = '';
-    @track mostrarTodosCotizados = false;
-    @track mostrarTodosAceptados = false;
+    valueQuotationStatus = 'Awaiting costs suppliers';
 
     activeSections = ['Seccion1', 'Seccion2', 'Seccion3'];
     //evento
@@ -51,6 +54,11 @@ export default class P2G_ReporteProductosPendientesCotizar extends LightningElem
         getProductosPendientes()
             .then(result => {
                 this.listaPendiente = result;
+                if(this.listaPendiente == null){
+                    this.sinInfoP = true;
+                }else{
+                    this.sinInfoP = false;
+                }
             })
             .catch(error => {
                 this.pushMessage('Error','error', error.body.message);
@@ -59,6 +67,11 @@ export default class P2G_ReporteProductosPendientesCotizar extends LightningElem
         getSubProductos()
             .then(result => {
                 this.listaSubproductos = result;
+                if(this.listaSubproductos == null){
+                    this.sinInfoSP = true;
+                }else{
+                    this.sinInfoSP = false;
+                }
             })
             .catch(error => {
                 this.pushMessage('Error','error', error.body.message);
@@ -67,6 +80,11 @@ export default class P2G_ReporteProductosPendientesCotizar extends LightningElem
         getServiceLineIEQO()
                 .then(result => {
                     this.listaIEQOPendiente = result;
+                    if(this.listaIEQOPendiente == null){
+                        this.sinInfoIEQO = true;
+                    }else{
+                        this.sinInfoIEQO = false;
+                    }
                 })
                 .catch(error => {
                     this.pushMessage('Error','error', error.body.message);
@@ -106,6 +124,17 @@ export default class P2G_ReporteProductosPendientesCotizar extends LightningElem
             { label: 'Negociación con cliente', value: 'Negociación con cliente' },
             { label: 'Rechazada', value: 'Rechazada' },
             { label: 'No Cotizada', value: 'No Cotizada' }
+        ];
+    }
+    //valores Quotation status
+    get optionsQuotationStatus() {
+        return [
+            { label: 'Quote being prepared', value: 'Quote being prepared' },
+            { label: 'Awaiting costs suppliers', value: 'Awaiting costs suppliers' },
+            { label: 'Sent awaiting response', value: 'Sent awaiting response' },
+            { label: 'Approved as Succesful', value: 'Approved as Succesful' },
+            { label: 'Shipped', value: 'Shipped' },
+            { label: 'Quote Declined', value: 'Quote Declined' }
         ];
     }
     //valores Servicio
@@ -217,20 +246,16 @@ export default class P2G_ReporteProductosPendientesCotizar extends LightningElem
     valueServicio = '';
     agregarStatus(event){
         this.valueStatus = event.detail.value;
+        this.valueQuotationStatus = this.valueQuotationStatus;
         this.llamarfiltro();
-        if(this.valueStatus === 'Cotizada'){
-            this.mostrarTodosCotizados = true;
-            this.mostrarTodosAceptados = false;
-        }else if(this.valueStatus === 'Aceptada'){
-            this.mostrarTodosCotizados = false;
-            this.mostrarTodosAceptados = true;
-        }else{
-            this.mostrarTodosCotizados = false;
-            this.mostrarTodosAceptados = false;
-        }
+    }
+    agregarQuotationStatus(event){
+        this.valueQuotationStatus = event.detail.value;
+        this.llamarfiltro();
     }
     agregarServicio(event){
         this.valueServicio = event.detail.value;
+        console.log('se agrega el servicio' + this.valueServicio);
         this.llamarfiltro();
     }
     agregarCliente(event){
@@ -246,33 +271,55 @@ export default class P2G_ReporteProductosPendientesCotizar extends LightningElem
         this.llamarfiltro();
     }
     llamarfiltro(){
+        console.log('entra a llamar filtro');
         this.listaPendiente = null;
         this.listaSubproductos = null;
         this.listaIEQOPendiente = null;
         buscaProductosPendientes({status: this.valueStatus, servicio: this.valueServicio, ownerOppo: this.valueOwnerOppo, userIc: this.valueUserIc, cliente: this.valueCuenta})
             .then(result => {
                 this.listaPendiente = result;
+                console.log('la lista de productos '+ this.listaPendiente);
+                if(this.listaPendiente == null){
+                    this.sinInfoP = true;
+                }else{
+                    this.sinInfoP = false;
+                }
             })
             .catch(error => {
                 this.pushMessage('Error','error', error.body.message);
                 this.listaPendiente = error;
             });
+        console.log('buscaProductosPendientes '+ this.listaPendiente);
         buscaSubProductosPendientes({status: this.valueStatus, servicio: this.valueServicio, ownerOppo: this.valueOwnerOppo, userIc: this.valueUserIc, cliente: this.valueCuenta})
             .then(result => {
                 this.listaSubproductos = result;
+                console.log('la lista de subproductos '+ this.listaSubproductos);
+                if(this.listaSubproductos == null){
+                    this.sinInfoSP = true;
+                }else{
+                    this.sinInfoSP = false;
+                }
             })
             .catch(error => {
                 this.pushMessage('Error','error', error.body.message);
                 this.listaSubproductos = error;
             });
-        buscaIEQOPendientes({servicio: this.valueServicio, ownerOppo: this.valueOwnerOppo, userIc: this.valueUserIc, cliente: this.valueCuenta})
+        console.log('buscaSubProductosPendientes '+ this.listaSubproductos);
+        buscaIEQOPendientes({status: this.valueQuotationStatus, servicio: this.valueServicio, ownerOppo: this.valueOwnerOppo, userIc: this.valueUserIc, cliente: this.valueCuenta})
             .then(result => {
                 this.listaIEQOPendiente = result;
+                console.log('la lista de IEQO '+ this.listaIEQOPendiente);
+                if(this.listaIEQOPendiente == null){
+                    this.sinInfoIEQO = true;
+                }else{
+                    this.sinInfoIEQO = false;
+                }
             })
             .catch(error => {
                 this.pushMessage('Error','error', error.body.message);
                 this.listaIEQOPendiente = error;
             });
+        console.log('buscaIEQOPendientes '+ this.listaIEQOPendiente);
     }
     abrirProducto(event){
         const idProducto = event.currentTarget.dataset.id;
@@ -309,7 +356,7 @@ export default class P2G_ReporteProductosPendientesCotizar extends LightningElem
         console.log('URL: ',recordUrl);
         window.open(recordUrl, '_blank'); 
     }
-    selectCotizados(event){
+    /*selectCotizados(event){
         const radio = event.target.checked;
         this.listaPendiente = null;
         this.listaSubproductos = null;
@@ -358,13 +405,14 @@ export default class P2G_ReporteProductosPendientesCotizar extends LightningElem
         }else{    
             this.llamarfiltro();
         }
-    }
+    }*/
     clicLimpioFiltro(){
         this.listaPendiente = null;
         this.listaSubproductos = null;
         this.listaIEQOPendiente = null;
         this.valueCuenta = '';
-        this.valueStatus = '';
+        this.valueStatus = 'Pendiente por Cotizar';
+        this.valueQuotationStatus = 'Awaiting costs suppliers';
         this.valueOwnerOppo = '';
         this.valueUserIc = '';
         this.valueServicio = '';
@@ -380,6 +428,11 @@ export default class P2G_ReporteProductosPendientesCotizar extends LightningElem
         getProductosPendientes()
             .then(result => {
                 this.listaPendiente = result;
+                if(this.listaPendiente == null){
+                    this.sinInfoP = true;
+                }else{
+                    this.sinInfoP = false;
+                }
             })
             .catch(error => {
                 this.pushMessage('Error','error', error.body.message);
@@ -388,6 +441,11 @@ export default class P2G_ReporteProductosPendientesCotizar extends LightningElem
         getSubProductos()
             .then(result => {
                 this.listaSubproductos = result;
+                if(this.listaPendiente == null){
+                    this.sinInfoSP = true;
+                }else{
+                    this.sinInfoSP = false;
+                }
             })
             .catch(error => {
                 this.pushMessage('Error','error', error.body.message);
@@ -396,10 +454,86 @@ export default class P2G_ReporteProductosPendientesCotizar extends LightningElem
         getServiceLineIEQO()
             .then(result => {
                 this.listaIEQOPendiente = result;
+                if(this.listaPendiente == null){
+                    this.sinInfoIEQO = true;
+                }else{
+                    this.sinInfoIEQO = false;
+                }
             })
             .catch(error => {
                 this.pushMessage('Error','error', error.body.message);
                 this.listaIEQOPendiente = error;
             });
+    }
+    //descargar Archivo
+    columnHeader = ['Type', 'Servicio', 'Cliente', 'Fecha Solicitud', 'Fecha Respuesta Pricing', 'Oportunidad/Folio', 'Producto/Service Line', 'Owner', 'Pricing' ];
+
+    Descargar(){
+        // Prepare a html table
+        let doc = '<table>';
+        // Add styles for the table
+        doc += '<style>';
+        doc += 'table, th, td {';
+        doc += '    border: 1px solid black;';
+        doc += '    border-collapse: collapse;';
+        doc += '}';          
+        doc += '</style>';
+        // Add all the Table Headers
+        doc += '<tr>';
+        this.columnHeader.forEach(element => {            
+            doc += '<th>'+ element +'</th>'           
+        });
+        doc += '</tr>';
+        // Add the data rows
+        this.listaPendiente.forEach(record => {
+            doc += '<tr>';
+            doc += '<th>'+'Producto'+'</th>';
+            doc += '<th>'+record.Opportunity.Name.slice(0, 2)+'</th>';
+            doc += '<th>'+record.Opportunity.Account.Name+'</th>';
+            doc += '<th>'+record.Fecha_y_hora_Solicitud__c+'</th>';
+            doc += '<th>'+record.Fecha_y_Hora_Respuesta_Pricing__c+'</th>';
+            doc += '<th>'+record.Opportunity.Name+'</th>';
+            doc += '<th>'+record.Product2.Name+'</th>'; 
+            doc += '<th>'+record.Opportunity.Owner.Name+'</th>';
+            doc += '<th>'+record.Opportunity.Usuario_IC__r.Name+'</th>'; 
+            doc += '</tr>';
+        });
+        doc += '<tr></tr>';
+        this.listaSubproductos.forEach(record => {
+            doc += '<tr>';
+            doc += '<th>'+'Subproducto'+'</th>';
+            doc += '<th>'+record.SubProduct_Opportunity__r.Name.slice(0, 2)+'</th>'; 
+            doc += '<th>'+SubProduct_Opportunity__r.Account.Name+'</th>';
+            doc += '<th>'+''+'</th>';
+            doc += '<th>'+''+'</th>';
+            doc += '<th>'+record.SubProduct_Opportunity__r.Name+'</th>';
+            doc += '<th>'+record.Name+'</th>'; 
+            doc += '<th>'+record.SubProduct_Opportunity__r.Owner.Name+'</th>';
+            doc += '<th>'+record.SubProduct_Opportunity__r.Usuario_IC__r.Name+'</th>'; 
+            doc += '</tr>';
+        });
+        doc += '<tr></tr>';
+        this.listaIEQOPendiente.forEach(record => {
+            doc += '<tr>';
+            doc += '<th>'+'Service Line'+'</th>';
+            doc += '<th>'+record.Import_Export_Quote__r.Name.slice(0, 2)+'</th>'; 
+            doc += '<th>'+record.Import_Export_Quote__r.Account_for__r.Name+'</th>';
+            doc += '<th>'+record.Import_Export_Quote__r.Date_Send_Request__c+'</th>';
+            doc += '<th>'+record.Import_Export_Quote__r.Date_Pricing_responded__c+'</th>';
+            doc += '<th>'+record.Import_Export_Quote__r.Name+'</th>';
+            doc += '<th>'+record.Name+'</th>'; 
+            doc += '<th>'+record.Import_Export_Quote__r.Pricing_Executive__r.Name+'</th>';
+            doc += '<th>'+record.Import_Export_Quote__r.CreatedBy.Name+'</th>'; 
+            doc += '</tr>';
+        });
+        doc += '</table>';
+        var element = 'data:application/vnd.ms-excel,' + encodeURIComponent(doc);
+        let downloadElement = document.createElement('a');
+        downloadElement.href = element;
+        downloadElement.target = '_self';
+        // use .csv as extension on below line if you want to export data as csv
+        downloadElement.download = 'Contact Data.xls';
+        document.body.appendChild(downloadElement);
+        downloadElement.click();
     }
 }

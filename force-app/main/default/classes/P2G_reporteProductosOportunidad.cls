@@ -125,7 +125,6 @@ public class P2G_reporteProductosOportunidad {
                query += 'Opportunity.OwnerId, Opportunity.Owner.Name, Product2Id, Product2.Name, Target__c, Status__c, Buy_Price__c, Fecha_y_Hora_Respuesta_Pricing__c,';
                query += 'Tipo_de_moneda__c, Moneda_Oportunidad__c, Opportunity.AccountId, Opportunity.Account.Name FROM OpportunityLineItem';
         List<String> conditions = new List<String>();
-		conditions.add('Buy_Price__c = NULL');
 		conditions.add('Status__c != NULL');
 		conditions.add('Opportunity.StageName != \'' + String.escapeSingleQuotes('Perdida') + '\'');
 		conditions.add('Opportunity.RecordType.Name != \'' + String.escapeSingleQuotes('Standar Opportunity') + '\'');
@@ -134,6 +133,7 @@ public class P2G_reporteProductosOportunidad {
             conditions.add('Status__c = \'' + String.escapeSingleQuotes(status) + '\'');
         }else{
 			conditions.add('Status__c = \'' + String.escapeSingleQuotes('Pendiente por Cotizar') + '\'');
+			conditions.add('Buy_Price__c = NULL');
         }
         if (!String.isBlank(servicio)) {
             conditions.add('Opportunity.Service_Type__c = \'' + String.escapeSingleQuotes(servicio) + '\'');
@@ -171,7 +171,6 @@ public class P2G_reporteProductosOportunidad {
             query += 'Tipo_de_moneda__c, SubProduct_Opportunity_Product__r.Moneda_Oportunidad__c, Status__c, SubProduct_Buy_Price__c,';
             query += 'SubProduct_Opportunity__r.AccountId, SubProduct_Opportunity__r.Account.Name FROM Subproducto__c';
         List<String> conditions = new List<String>();
-		conditions.add('SubProduct_Buy_Price__c = 0');
 		conditions.add('Status__c != NULL');
 		conditions.add('SubProduct_Opportunity__c != NULL');
 		conditions.add('SubProduct_Opportunity_Product__c != NULL');
@@ -182,6 +181,7 @@ public class P2G_reporteProductosOportunidad {
             conditions.add('Status__c = \'' + String.escapeSingleQuotes(status) + '\'');
         }else{
 			conditions.add('Status__c = \'' + String.escapeSingleQuotes('Pendiente por Cotizar') + '\'');
+            conditions.add('SubProduct_Buy_Price__c = 0');
         }
         if (!String.isBlank(servicio)) {
             conditions.add('SubProduct_Opportunity__r.Service_Type__c = \'' + String.escapeSingleQuotes(servicio) + '\'');
@@ -508,11 +508,10 @@ public class P2G_reporteProductosOportunidad {
                                               Import_Export_Quote__r.Date_Pricing_responded__c, Import_Export_Quote__r.Pricing_Executive__c, Import_Export_Quote__r.CreatedById,
                                               Import_Export_Quote__r.CreatedBy.Name, Import_Export_Quote__r.Quotation_Status__c, Import_Export_Quote__r.Account_for__c, CurrencyIsoCode,
                                               Import_Export_Quote__r.Account_for__r.Name, Import_Export_Quote__r.Pricing_Executive__r.Name, Import_Export_Quote__r.CurrencyIsoCode FROM Import_Export_Fee_Line__c 
-                                              WHERE Import_Export_Quote__r.Quotation_Status__c ='Awaiting costs suppliers' OR Import_Export_Quote__r.Quotation_Status__c ='Sent awaiting response'
-                                              ORDER BY LastModifiedDate DESC LIMIT 50];
+                                              WHERE Import_Export_Quote__r.Quotation_Status__c ='Awaiting costs suppliers' ORDER BY LastModifiedDate DESC LIMIT 50];
         return listaOli;
     }
-    public static List<SObject> queryFilteredIEQO(String servicio, String ownerOppo, String userIc, String cliente) {
+    public static List<SObject> queryFilteredIEQO(String status, String servicio, String ownerOppo, String userIc, String cliente) {
         // Construimos la consulta base
         String query = 'SELECT Id, Name, Import_Export_Quote__c, Import_Export_Quote__r.Name, Import_Export_Quote__r.FolioResume__c, CurrencyIsoCode,';
                query += 'Quote_Buy_Price__c, Service_Rate_Name__c, Service_Rate_Name__r.Name, Buy_Rate__c, Import_Export_Quote__r.Date_Send_Request__c,';
@@ -520,11 +519,12 @@ public class P2G_reporteProductosOportunidad {
                query += 'Import_Export_Quote__r.CreatedBy.Name, Import_Export_Quote__r.Quotation_Status__c, Import_Export_Quote__r.Account_for__c,';
                query += 'Import_Export_Quote__r.Account_for__r.Name, Import_Export_Quote__r.Pricing_Executive__r.Name, Import_Export_Quote__r.CurrencyIsoCode FROM Import_Export_Fee_Line__c';
         List<String> conditions = new List<String>();
-		conditions.add('Import_Export_Quote__r.Quotation_Status__c != \'' + String.escapeSingleQuotes('Quote being prepared') + '\'');
-		conditions.add('Import_Export_Quote__r.Quotation_Status__c != \'' + String.escapeSingleQuotes('Approved as Succesful') + '\'');
-        conditions.add('Import_Export_Quote__r.Quotation_Status__c != \'' + String.escapeSingleQuotes('Shipped') + '\'');
-		conditions.add('Import_Export_Quote__r.Quotation_Status__c != \'' + String.escapeSingleQuotes('Quote Declined') + '\'');
-        // Agregamos condiciones solo para las variables que no están vacías
+		// Agregamos condiciones solo para las variables que no están vacías
+        if (!String.isBlank(status)) {
+            conditions.add('Import_Export_Quote__r.Quotation_Status__c = \'' + String.escapeSingleQuotes(status) + '\'');
+        }else{
+			conditions.add('Import_Export_Quote__r.Quotation_Status__c = \'' + String.escapeSingleQuotes('Awaiting costs suppliers') + '\'');
+        }
         if (!String.isBlank(servicio)) {
             servicio = modificarServicio(servicio);
             conditions.add('Import_Export_Quote__r.Name LIKE \'' + String.escapeSingleQuotes(servicio) + '-%' + '\'');
@@ -577,9 +577,9 @@ public class P2G_reporteProductosOportunidad {
         return nuevoServicio;
     }
     @AuraEnabled
-    public static List<Import_Export_Fee_Line__c> buscaIEQOPendientes(String servicio, String ownerOppo, String userIc, String cliente){
+    public static List<Import_Export_Fee_Line__c> buscaIEQOPendientes(String status, String servicio, String ownerOppo, String userIc, String cliente){
         System.debug('lo que llega '+servicio+ ownerOppo+ userIc+ cliente);
-        List<Import_Export_Fee_Line__c> listaSL = queryFilteredIEQO(servicio, ownerOppo, userIc, cliente);
+        List<Import_Export_Fee_Line__c> listaSL = queryFilteredIEQO(status, servicio, ownerOppo, userIc, cliente);
         System.debug('la lista '+listaSL);
         return listaSL;
     }
