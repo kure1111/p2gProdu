@@ -18,9 +18,9 @@
             </value>
         </inputParameters>
         <nameSegment>NEU_Generate_Shipments</nameSegment>
-        <versionSegment>1</versionSegment>
     </actionCalls>
     <apiVersion>54.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
     <constants>
         <name>IdLider1_Noroeste_GDL</name>
         <dataType>String</dataType>
