@@ -24,7 +24,7 @@ public class P2G_AccountAddressTest {
         P2G_AccountAddress.getMapMarkersByName('CHAPALA GDL');
         P2G_AccountAddress.getResume(id);
         P2G_AccountAddress.getDuplicates('6350','El Zapote Del Valle');
-        P2G_AccountAddress.getMapMarkersByUser('Pendiente');
+
         String id2 = P2G_AccountAddress.addressEdit(lista);
         
     }

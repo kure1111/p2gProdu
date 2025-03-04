@@ -56,6 +56,7 @@ public with sharing class P2G_EventMeeting {
             OwnerId = ownerId,
             WhatId = whatId,
             Tipo_Visita__c = tipoVisita,
+            Status_Event__c = 'Not Started', 
             StartDateTime = startDateTime,
             EndDateTime = endDateTime
         );

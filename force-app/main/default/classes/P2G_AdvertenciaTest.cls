@@ -11,10 +11,13 @@ public class P2G_AdvertenciaTest {
         update sp;
         P2G_Advertencia.proceso(sp.Id,'prueba@gmail.com');
         Log_Aprobacion__c log = P2G_Advertencia.creaLogAprobacion(sp.Id,12,12,12);
-        P2G_Advertencia.approveShipment(sp.Id, 'Aprobada');
+        String approveShipment = P2G_Advertencia.approveShipment(sp.Id, 'Aprobada');
         P2G_Advertencia.sendShipmentLink('prueba','prueba@gmail.com',log);
         P2G_Advertencia.mostrarAdvertencia(sp.Id);
         P2G_Advertencia.updateRate(lineas);
+        P2G_Advertencia.updateLogAprobacion(sp.Id, 'Solicitud de confirmación por Margen');
+        String approveShipment2 = P2G_Advertencia.approveShipment(sp.Id, 'Aprobada');
+        P2G_Advertencia.emailSendPlanner(log);
         test.stopTest();
     }
 

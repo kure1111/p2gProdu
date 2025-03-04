@@ -2,11 +2,19 @@
 public class P2G_tiempoTranscurridoOppoTest {
 	@isTest
     static void prueba() {
-        Opportunity oppo = [SELECT Id, StageName, CreatedDate, AccountId FROM Opportunity LIMIT 1];
+        List<OpportunityLineItem> listOli =[SELECT Id, Name, Status__c, OpportunityId FROM OpportunityLineItem 
+                                            WHERE Status__c = 'Aceptada'
+                                            AND Precio_Sugerido_Venta__c != 0 AND Precio_Sugerido_Venta__c != null];
+        Opportunity oppo = [SELECT Id, StageName, CreatedDate, AccountId FROM Opportunity WHERE StageName = 'Entendimiento' LIMIT 1];
+        Opportunity oppoC = [SELECT Id, StageName, CreatedDate, AccountId, Data_Time_Cotizacion__c FROM Opportunity 
+                             WHERE StageName = 'Cotización' AND Data_Time_Cotizacion__c != null LIMIT 1];
+        Opportunity oppoN = [SELECT Id, StageName, CreatedDate, AccountId, Data_Time_Negociacion__c FROM Opportunity
+                             WHERE StageName = 'Negociación' AND Data_Time_Negociacion__c != null LIMIT 1];
+        
         Test.startTest();
-        oppo.StageName = 'Entendimiento';
-        update oppo;
         String etapa = P2G_tiempoTranscurridoOppo.etapa(oppo);
+        String etapaC = P2G_tiempoTranscurridoOppo.etapa(oppoC);
+        String etapaN = P2G_tiempoTranscurridoOppo.etapa(oppoN);
         P2G_tiempoTranscurridoOppo.multiplicacionAnual(23.23,'Diario');
         P2G_tiempoTranscurridoOppo.multiplicacionAnual(23.23,'Semanal');
         P2G_tiempoTranscurridoOppo.multiplicacionAnual(23.23,'Mensual');
@@ -20,10 +28,10 @@ public class P2G_tiempoTranscurridoOppoTest {
         
         P2G_tiempoTranscurridoOppo.tiempoTranscurridoOli(fechaCreacion,fechaActual);
         List<String> lista = new List<String>();
-        lista.add(oppo.Id);
+        lista.add(listOli[0].OpportunityId);
         P2G_tiempoTranscurridoOppo.sumaTotalAmount(lista);
-        P2G_tiempoTranscurridoOppo.quoteVendida(oppo.Id);
-        P2G_tiempoTranscurridoOppo.statusOpportunityProduct(oppo.Id);
+        P2G_tiempoTranscurridoOppo.quoteVendida(listOli[0].OpportunityId);
+        P2G_tiempoTranscurridoOppo.statusOpportunityProduct(listOli[0].OpportunityId);
         OpportunityLineItem oli = new OpportunityLineItem ();
         oli.PROJ_Frecuencia__c = 'Diario';
         oli.Quantity = 2;
@@ -37,7 +45,6 @@ public class P2G_tiempoTranscurridoOppoTest {
         oli.PROJ_Frecuencia__c = 'hfgj';
         P2G_tiempoTranscurridoOppo.multiplicacionTotalAmount(123.45,oli);
         P2G_tiempoTranscurridoOppo.validaCliente(oppo.AccountId);
-        P2G_tiempoTranscurridoOppo.pase();
         Test.stopTest();
     }
 }

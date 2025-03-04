@@ -64,14 +64,15 @@ public class ShipmentTriggerHandler extends TriggerHandler {
                 }
                 
                 // Verificar si algún otro campo ha cambiado
-                if (ship.ETD_from_Point_of_Load__c != oldShip.ETD_from_Point_of_Load__c ||
+                if (ship.Service_Mode__c == 'NATIONAL' && (ship.ETD_from_Point_of_Load__c != oldShip.ETD_from_Point_of_Load__c ||
                     ship.ETA_Point_of_Discharge__c != oldShip.ETA_Point_of_Discharge__c ||
                     ship.Vehicle__c != oldShip.Vehicle__c ||
                     ship.Operation_Executive__c != oldShip.Operation_Executive__c ||
                     ship.National_Operator__c != oldShip.National_Operator__c ||
                     ship.Account_Origin_Address__c != oldShip.Account_Origin_Address__c ||
                     ship.Account_Destination_Address__c != oldShip.Account_Destination_Address__c ||
-                    ship.Carrier__c != oldShip.Carrier__c) {
+                    ship.Carrier__c != oldShip.Carrier__c ||
+                    ship.Shipment_Status_Mon__c != oldShip.Shipment_Status_Mon__c)) {
                     updatedShipments.add(ship);
                 }
             }
@@ -108,6 +109,8 @@ public class ShipmentTriggerHandler extends TriggerHandler {
             PAK_SendToSap.sendShipmentTrigger(listaShipment,listaOrders); 
             NEU_StaticVariableHelper.setBoolean1(false);
         }
+        /*Creación de Casos No SHOW en Shipments*/
+        P2G_CreateCaseForNoShow.casesNoShow((List<Shipment__c>) Trigger.new, (Map<Id, Shipment__c>) Trigger.oldMap);
         
     }
     public Boolean ValidaShipmentSend(Shipment__c S, Shipment__c oldShip)

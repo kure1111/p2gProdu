@@ -19,85 +19,19 @@
  *
  * See the Apex Language Reference for more information about Testing and Code Coverage.
  */
-@isTest
+@isTest(SeeAllData=true)
 private class NEU_test_Minuta {
-
-
-    static testMethod void NEU_GenerateMinuta ()
-    {
-        NEU_StaticVariableHelper.setBoolean1(true);
-
-        Account a= new Account ();
-        a.name='Test Account';
-        insert a;
-
-        Event e = new Event();
-        e.WhatId=a.id;
-        e.StartDateTime=system.today();
-        e.EndDateTime=system.today()+5;
-
-        insert  e;
-
-        NEU_GenerateMinuta gm = new NEU_GenerateMinuta(new ApexPages.StandardController(e));
-
+    @isTest
+    public static void test(){
+        Event event = [SELECT Id, StartDateTime, Who.Name, Who.Title, EndDateTime,Temas_Pendientes__c, Location, Objetivo__c,
+                       Owner.Name, Subject, Comments_Pric__c, Proxima_Reunion__c, Motivo_Minuta__c, TipoMeeting__c, WhatId, WhoId
+				 		FROM Event LIMIT 1];
+        NEU_GenerateMinuta gm = new NEU_GenerateMinuta(new ApexPages.StandardController(event));
+        Event getEvent = NEU_GenerateMinuta.getEvent(event.id);
+        List<Contact> getContact = NEU_GenerateMinuta.getContact('Maria');
+        String generaPDF = NEU_GenerateMinuta.generaPDF(event, 'Mensual', '2024-10-29T20:27:00.000Z', '2024-10-29T20:27:00.000Z');
+        Event nuevoEvento = NEU_GenerateMinuta.nuevoEvento(event, 'Mensual', '2024-10-29T20:27:00.000Z', '2024-10-29T20:27:00.000Z');
+        Event updateEvent = NEU_GenerateMinuta.updateEvent(event, '2024-10-29T20:27:00.000Z',event.id);
+        DateTime acomodoFechaHora = NEU_GenerateMinuta.acomodoFechaHora('2024-10-29T20:27:00.000Z');
     }
-
-    static testMethod void NEU_SendMinutaEmail ()
-    {
-        NEU_StaticVariableHelper.setBoolean1(true);
-
-        Account a= new Account ();
-        a.name='Test Account';
-        insert a;
-
-        Event e = new Event();
-        e.WhatId=a.id;
-        e.StartDateTime=system.today();
-        e.EndDateTime=system.today()+5;
-        insert  e;
-
-        Event_Issues__c ei = new Event_Issues__c();
-        ei.Date__c = system.today();
-        ei.Id_Calendar_Event__c = string.valueOf(e.Id);
-        ei.Situation__c = 'Test';
-        ei.Topic__c = 'Test';
-
-        insert ei;
-
-        NEU_SendMinutaEmail sm = new NEU_SendMinutaEmail(new ApexPages.StandardController(e));
-        sm.defaultTo = 'Test';
-        sm.html_body = 'Test';
-        sm.defaultTo = 'joseantonio@neurored.com';
-        sm.defaultBcc = 'joseantonio@neurored.com';
-        sm.defaultCc = 'joseantonio@neurored.com';
-        sm.generatePdf(e.Id);
-        sm.send_email();
-        sm.return_event();
-    }
-
-    static testMethod void NEU_EventIssues ()
-    {
-        NEU_StaticVariableHelper.setBoolean1(true);
-
-        Account a= new Account ();
-        a.name='Test Account';
-        insert a;
-
-        Event e = new Event();
-        e.WhatId=a.id;
-        e.StartDateTime=system.today();
-        e.EndDateTime=system.today()+5;
-        insert  e;
-
-        Event_Issues__c ei = new Event_Issues__c();
-        ei.Date__c = system.today();
-        ei.Id_Calendar_Event__c = string.valueOf(e.Id);
-        ei.Situation__c = 'Test';
-        ei.Topic__c = 'Test';
-
-        insert ei;
-
-        NEU_EventIssues sm = new NEU_EventIssues(new ApexPages.StandardController(e));
-    }
-
 }

@@ -16,8 +16,8 @@ public class P2G_reporteProductosOportunidadTest {
         List<p2G_FoliosEnOportunidades.wrapperProduct> getProductsAceptados = P2G_reporteProductosOportunidad.getProductsAceptados();
         List<Account> getAccountAceptados = P2G_reporteProductosOportunidad.getAccountAceptados('Cliente');
         List<p2G_FoliosEnOportunidades.wrapperProduct> getProductsEnCuentas = P2G_reporteProductosOportunidad.getProductsEnCuentas(getAccountAceptados[0].Id,'SP-FN-FLETE NACIONAL');
-        List<Import_Export_Fee_Line__c> getServiceLineIEQO = P2G_reporteProductosOportunidad.getServiceLineIEQO();
-        List<Import_Export_Fee_Line__c> buscaIEQOPendientes = P2G_reporteProductosOportunidad.buscaIEQOPendientes('Awaiting costs suppliers','FN', getServiceLineIEQO[0].Import_Export_Quote__r.Account_for__c, getServiceLineIEQO[0].Import_Export_Quote__r.CreatedById, getServiceLineIEQO[0].Import_Export_Quote__r.Pricing_Executive__c);
+        List<Customer_Quote__c> getServiceLineIEQO = P2G_reporteProductosOportunidad.getServiceLineIEQO();
+        List<Customer_Quote__c> buscaIEQOPendientes = P2G_reporteProductosOportunidad.buscaIEQOPendientes('Awaiting costs suppliers','FN', getServiceLineIEQO[0].Account_for__c, getServiceLineIEQO[0].CreatedById, getServiceLineIEQO[0].Pricing_Executive__c);
         list<User> getUser = P2G_reporteProductosOportunidad.getUser('Mar');
     }
 

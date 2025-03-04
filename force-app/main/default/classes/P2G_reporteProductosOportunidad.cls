@@ -502,41 +502,37 @@ public class P2G_reporteProductosOportunidad {
         return listProduct;
     }
     @AuraEnabled
-    public static List<Import_Export_Fee_Line__c> getServiceLineIEQO(){
-        List<Import_Export_Fee_Line__c> listaOli = [SELECT Id, Name, Import_Export_Quote__c, Import_Export_Quote__r.Name, Import_Export_Quote__r.FolioResume__c,
-                                              Quote_Buy_Price__c, Service_Rate_Name__c, Service_Rate_Name__r.Name, Buy_Rate__c, Import_Export_Quote__r.Date_Send_Request__c,
-                                              Import_Export_Quote__r.Date_Pricing_responded__c, Import_Export_Quote__r.Pricing_Executive__c, Import_Export_Quote__r.CreatedById,
-                                              Import_Export_Quote__r.CreatedBy.Name, Import_Export_Quote__r.Quotation_Status__c, Import_Export_Quote__r.Account_for__c, CurrencyIsoCode,
-                                              Import_Export_Quote__r.Account_for__r.Name, Import_Export_Quote__r.Pricing_Executive__r.Name, Import_Export_Quote__r.CurrencyIsoCode FROM Import_Export_Fee_Line__c 
-                                              WHERE Import_Export_Quote__r.Quotation_Status__c ='Awaiting costs suppliers' ORDER BY LastModifiedDate DESC LIMIT 50];
-        return listaOli;
+    public static List<Customer_Quote__c> getServiceLineIEQO(){
+        List<Customer_Quote__c> listIEQO =[SELECT Id, Name,FolioResume__c, Date_Send_Request__c, Date_Pricing_responded__c,Pricing_Executive__c,
+                                           CreatedBy.Name, Quotation_Status__c, Account_for__c, CurrencyIsoCode,Account_for__r.Name, CreatedById,
+                                           Pricing_Executive__r.Name, Total_Services_Sell_Amount__c, Total_Services_Std_Buy_Amount__c
+                                           FROM Customer_Quote__c WHERE Quotation_Status__c ='Awaiting costs suppliers' ORDER BY LastModifiedDate DESC LIMIT 50];
+        return listIEQO;
     }
     public static List<SObject> queryFilteredIEQO(String status, String servicio, String ownerOppo, String userIc, String cliente) {
         // Construimos la consulta base
-        String query = 'SELECT Id, Name, Import_Export_Quote__c, Import_Export_Quote__r.Name, Import_Export_Quote__r.FolioResume__c, CurrencyIsoCode,';
-               query += 'Quote_Buy_Price__c, Service_Rate_Name__c, Service_Rate_Name__r.Name, Buy_Rate__c, Import_Export_Quote__r.Date_Send_Request__c,';
-               query += 'Import_Export_Quote__r.Date_Pricing_responded__c, Import_Export_Quote__r.Pricing_Executive__c, Import_Export_Quote__r.CreatedById,';
-               query += 'Import_Export_Quote__r.CreatedBy.Name, Import_Export_Quote__r.Quotation_Status__c, Import_Export_Quote__r.Account_for__c,';
-               query += 'Import_Export_Quote__r.Account_for__r.Name, Import_Export_Quote__r.Pricing_Executive__r.Name, Import_Export_Quote__r.CurrencyIsoCode FROM Import_Export_Fee_Line__c';
+        String query = 'SELECT Id, Name,FolioResume__c, Date_Send_Request__c, Date_Pricing_responded__c,Pricing_Executive__c,';
+               query += 'CreatedBy.Name, Quotation_Status__c, Account_for__c, CurrencyIsoCode,Account_for__r.Name, CreatedById,';
+               query += 'Pricing_Executive__r.Name, Total_Services_Sell_Amount__c, Total_Services_Std_Buy_Amount__c FROM Customer_Quote__c ';
         List<String> conditions = new List<String>();
 		// Agregamos condiciones solo para las variables que no están vacías
         if (!String.isBlank(status)) {
-            conditions.add('Import_Export_Quote__r.Quotation_Status__c = \'' + String.escapeSingleQuotes(status) + '\'');
+            conditions.add('Quotation_Status__c = \'' + String.escapeSingleQuotes(status) + '\'');
         }else{
-			conditions.add('Import_Export_Quote__r.Quotation_Status__c = \'' + String.escapeSingleQuotes('Awaiting costs suppliers') + '\'');
+			conditions.add('Quotation_Status__c = \'' + String.escapeSingleQuotes('Awaiting costs suppliers') + '\'');
         }
         if (!String.isBlank(servicio)) {
             servicio = modificarServicio(servicio);
-            conditions.add('Import_Export_Quote__r.Name LIKE \'' + String.escapeSingleQuotes(servicio) + '-%' + '\'');
+            conditions.add('Name LIKE \'' + String.escapeSingleQuotes(servicio) + '-%' + '\'');
         }
         if (!String.isBlank(ownerOppo)) {
-            conditions.add('Import_Export_Quote__r.CreatedById = \'' + String.escapeSingleQuotes(ownerOppo) + '\'');
+            conditions.add('CreatedById = \'' + String.escapeSingleQuotes(ownerOppo) + '\'');
         }
         if (!String.isBlank(userIc)) {
-            conditions.add('Import_Export_Quote__r.Pricing_Executive__c = \'' + String.escapeSingleQuotes(userIc) + '\'');
+            conditions.add('Pricing_Executive__c = \'' + String.escapeSingleQuotes(userIc) + '\'');
         }
         if (!String.isBlank(cliente)) {
-            conditions.add('Import_Export_Quote__r.Account_for__c = \'' + String.escapeSingleQuotes(cliente) + '\'');
+            conditions.add('Account_for__c = \'' + String.escapeSingleQuotes(cliente) + '\'');
         }
 
         // Verificamos si hay al menos una condición
@@ -577,11 +573,10 @@ public class P2G_reporteProductosOportunidad {
         return nuevoServicio;
     }
     @AuraEnabled
-    public static List<Import_Export_Fee_Line__c> buscaIEQOPendientes(String status, String servicio, String ownerOppo, String userIc, String cliente){
-        System.debug('lo que llega '+servicio+ ownerOppo+ userIc+ cliente);
-        List<Import_Export_Fee_Line__c> listaSL = queryFilteredIEQO(status, servicio, ownerOppo, userIc, cliente);
-        System.debug('la lista '+listaSL);
-        return listaSL;
+    public static List<Customer_Quote__c> buscaIEQOPendientes(String status, String servicio, String ownerOppo, String userIc, String cliente){
+        List<Customer_Quote__c> listaIEQO = queryFilteredIEQO(status, servicio, ownerOppo, userIc, cliente);
+        System.debug('la lista '+listaIEQO);
+        return listaIEQO;
     }
     @AuraEnabled
     public static list<User> getUser(string name){

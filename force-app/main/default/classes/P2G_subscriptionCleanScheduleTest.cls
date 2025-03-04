@@ -5,7 +5,7 @@ public class P2G_subscriptionCleanScheduleTest {
         Id prospectRecordTypeId = Schema.SObjectType.Account.getRecordTypeInfosByName().get('Prospect').getRecordTypeId();
         Account account_test = new Account();
         account_test.RecordTypeId = prospectRecordTypeId;
-        account_test.Estatus_Recuperado__c='Cliente Visitado';
+        account_test.SeguimientoProspecto__c='Cliente Visitado';
         account_test.Name='prueba';
         account_test.Name = 'Ejemplo de Cuenta';
         account_test.Credit_Terms__c = '15 days';

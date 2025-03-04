@@ -1,15 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <Package xmlns="http://soap.sforce.com/2006/04/metadata">
-    <types>
-        <members>NEU_Generate_Shipments</members>
-        <members>NEU_Generate_Shipments_test</members>
-        <members>P2G_creacionFolioInternacionales</members>
-        <members>P2G_creacionFolioInternacionalesTest</members>
-        <name>ApexClass</name>
-    </types>
-    <types>
-        <members>Creacion_de_SP_con_folios_FN</members>
-        <name>Flow</name>
-    </types>
-    <version>63.0</version>
+	<types>
+		<members>*</members>
+		<name>ApexClass</name>
+	</types>
+	<version>62.0</version>
 </Package>

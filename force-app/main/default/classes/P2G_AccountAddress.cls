@@ -1,5 +1,5 @@
 public class P2G_AccountAddress {
-    //prod 0124T000000Q3D0QAK , uat 0120R000003chbpQAA
+//prod 0124T000000Q3D0QAK , uat 0120R000003chbpQAA
     public static final String IDRECORDTYPE = '0124T000000Q3D0QAK';
     @AuraEnabled
     public static list<Account_Address__c> getAddress(String address){
@@ -9,8 +9,8 @@ public class P2G_AccountAddress {
         for(Account_Address__c accountSearch : [SELECT Id, Name, Pais_cat1__c,Estado_cat2__c, Localidad_Cat2__c,LocalidadEspejo__r.Name, Municipio_Cat2__c,
                                                 Colonia_espejo__c, Codigo_Postal_CP__r.Name, CalleEspejo__c, Numero_Ext_cp__c
                                                 FROM Account_Address__c
-                                                //WHERE status__c = 'Validado'AND Active__c = true AND Name LIKE : searchKeyword limit 15]){
-                                                WHERE status__c != null AND Name LIKE : searchKeyword limit 15]){
+                                                WHERE status__c = 'Validado' AND Active__c = true AND Name LIKE : searchKeyword limit 15]){
+                                                //WHERE status__c != null AND Name LIKE : searchKeyword limit 15]){
                                                         AccountListRecord.add(accountSearch);
                                                 }
         return AccountListRecord;

@@ -129,6 +129,10 @@ public class P2G_creacionFolioInternacionales {
             quote.RecordTypeId = recordTypeId;
             if(flete.recordTypeUnidad != '' && flete.recordTypeUnidad != null){
                 quote.Clave_de_Unidad_de_Peso__c = flete.recordTypeUnidad;}
+                if(flete.comercioExterior=='Si'){
+                    quote.Operations_Exec__c=System.Label.Operation_Executive_CE;
+                    System.debug(quote.Operations_Exec__c);                    
+                }
             quote.Name='.';
             quote.Account_for__c = flete.idAccount;
             quote.Team__c = flete.team;

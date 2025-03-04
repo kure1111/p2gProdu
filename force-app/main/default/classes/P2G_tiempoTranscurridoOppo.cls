@@ -5,8 +5,6 @@ public class P2G_tiempoTranscurridoOppo {
         DateTime fechaActual = System.now();
         String etapa = oportunidad.StageName;
         DateTime fechaCreacion;
-        //Boolean regresa = P2G_PruebaMetodos.areStringsEqualAsAsciiSum(oportunidad.StageName, 'Cotización');
-        //System.debug('regresa de cadenas '+ regresa);
         switch on etapa {
             when 'Entendimiento' {
                 fechaCreacion = oportunidad.CreatedDate;
@@ -156,10 +154,12 @@ public class P2G_tiempoTranscurridoOppo {
         Decimal totalAceptado = 0;
         for(OpportunityLineItem productos : todosProductos){
             if(productos.Status__c == 'Aceptada'){
-                totalAceptado += productos.UnitPrice;
+                Decimal multiplica = productos.UnitPrice * productos.Quantity;
+                totalAceptado += multiplica;
                 for(SubProducto__c sub : todosSubproductos){
                     if((productos.Id == sub.SubProduct_Opportunity_Product__c) && (sub.Status__c == 'Aceptada')){
-                        totalAceptado += sub.SubProduct_Sell_Price__c;
+                        Decimal multiplicaSub = sub.SubProduct_Sell_Price__c * productos.Quantity;
+                        totalAceptado += multiplicaSub;
                     }
                 }
             }
@@ -171,10 +171,12 @@ public class P2G_tiempoTranscurridoOppo {
         Decimal cotizado = 0;
         for(OpportunityLineItem productos : todosProductos){
             if((productos.Status__c == 'Aceptada') || (productos.Status__c == 'Cotizada') || (productos.Status__c == 'Negociación con cliente') || (productos.Status__c == 'Rechazada')){
-                cotizado += productos.UnitPrice;
+                Decimal multiplica = productos.UnitPrice * productos.Quantity;
+                cotizado += multiplica;
                 for(SubProducto__c sub : todosSubproductos){
                     if((productos.Id == sub.SubProduct_Opportunity_Product__c) && ((sub.Status__c == 'Aceptada') || (sub.Status__c == 'Cotizada') || (sub.Status__c == 'Negociación con cliente') || (sub.Status__c == 'Rechazada'))){
-                        cotizado += sub.SubProduct_Sell_Price__c;
+                        Decimal multiplicaSub = sub.SubProduct_Sell_Price__c * productos.Quantity;
+                        cotizado += multiplicaSub;
                     }
                 }
             }
@@ -186,10 +188,12 @@ public class P2G_tiempoTranscurridoOppo {
         Decimal amountOpportunity = 0;
         for(OpportunityLineItem productos : todosProductos){
             if((productos.Status__c == 'Aceptada') || (productos.Status__c == 'Cotizada') || (productos.Status__c == 'Negociación con cliente')){
-                amountOpportunity += productos.UnitPrice;
+                Decimal multiplica = productos.UnitPrice * productos.Quantity;
+                amountOpportunity += multiplica;
                 for(SubProducto__c sub : todosSubproductos){
                     if((productos.Id == sub.SubProduct_Opportunity_Product__c) && ((sub.Status__c == 'Aceptada') || (sub.Status__c == 'Cotizada') || (productos.Status__c == 'Negociación con cliente'))){
-                        amountOpportunity += sub.SubProduct_Sell_Price__c;
+                        Decimal multiplicaSub = sub.SubProduct_Sell_Price__c * productos.Quantity;
+                        amountOpportunity += multiplicaSub;
                     }
                 }
             }
@@ -201,10 +205,12 @@ public class P2G_tiempoTranscurridoOppo {
         Decimal rechazados = 0;
         for(OpportunityLineItem productos : todosProductos){
             if((productos.Status__c == 'No Cotizada') || (productos.Status__c == 'Rechazada')){
-                rechazados += productos.UnitPrice;
+                Decimal multiplica = productos.UnitPrice * productos.Quantity;
+                rechazados += multiplica;
                 for(SubProducto__c sub : todosSubproductos){
                     if((productos.Id == sub.SubProduct_Opportunity_Product__c) && ((sub.Status__c == 'No Cotizada') || (sub.Status__c == 'Rechazada'))){
-                        rechazados += sub.SubProduct_Sell_Price__c;
+                        Decimal multiplicaSub = sub.SubProduct_Sell_Price__c * productos.Quantity;
+                        rechazados += multiplicaSub;
                     }
                 }
             }
@@ -267,184 +273,5 @@ public class P2G_tiempoTranscurridoOppo {
             valida = null;
         }
         return valida;
-    }
-    public static void pase(){
-        Integer a = 1;
-        a = 1;
-        a = 1;
-        a = 1;
-        a = 1;
-        a = 1;
-        a = 1;
-        a = 1;
-        a = 1;
-        a = 1;
-        a = 1;
-        a = 1;
-        a = 1;
-        a = 1;
-        a = 1;
-        a = 1;
-        a = 1;
-        a = 1;
-        a = 1;
-        a = 1;
-        a = 1;
-        a = 1;
-        a = 1;
-        a = 1;
-        a = 1;
-        a = 1;
-        a = 1;
-        a = 1;
-        a = 1;
-        a = 1;
-        a = 1;
-        a = 1;
-        a = 1;
-        a = 1;
-        a = 1;
-        a = 1;
-        a = 1;
-        a = 1;
-        a = 1;
-        a = 1;
-        a = 1;
-        a = 1;
-        a = 1;
-        a = 1;
-        a = 1;
-        a = 1;
-        a = 1;
-        a = 1;
-        a = 1;
-        a = 1;
-        a = 1;
-        a = 1;
-        a = 1;
-        a = 1;
-        a = 1;
-        a = 1;
-        a = 1;
-        a = 1;
-        a = 1;
-        a = 1;
-        a = 1;
-        a = 1;
-        a = 1;
-        a = 1;
-        a = 1;
-        a = 1;
-        a = 1;
-        a = 1;
-        a = 1;
-        a = 1;
-        a = 1;
-        a = 1;
-        a = 1;
-        a = 1;
-        a = 1;
-        a = 1;
-        a = 1;
-        a = 1;
-        a = 1;
-        a = 1;
-        a = 1;
-        a = 1;
-        a = 1;
-        a = 1;
-        a = 1;
-        a = 1;
-        a = 1;
-        a = 1;
-        a = 1;
-        a = 1;
-        a = 1;
-        a = 1;
-        a = 1;
-        a = 1;
-        a = 1;
-        a = 1;
-        a = 1;
-        a = 1;
-        a = 1;
-        a = 1;
-        a = 1;
-        a = 1;
-        a = 1;
-        a = 1;
-        a = 1;
-        a = 1;
-        a = 1;
-        a = 1;
-        a = 1;
-        a = 1;
-        a = 1;
-        a = 1;
-        a = 1;
-        a = 1;
-        a = 1;
-        a = 1;
-        a = 1;
-        a = 1;
-        a = 1;
-        a = 1;
-        a = 1;
-        a = 1;
-        a = 1;
-        a = 1;
-        a = 1;
-        a = 1;
-        a = 1;
-        a = 1;
-        a = 1;
-        a = 1;
-        a = 1;
-        a = 1;
-        a = 1;
-        a = 1;
-        a = 1;
-        a = 1;
-        a = 1;
-        a = 1;
-        a = 1;
-        a = 1;
-        a = 1;
-        a = 1;
-        a = 1;
-        a = 1;
-        a = 1;
-        a = 1;
-        a = 1;
-        a = 1;
-        a = 1;
-        a = 1;
-        a = 1;
-        a = 1;
-        a = 1;
-        a = 1;
-        a = 1;
-        a = 1;
-        a = 1;
-        a = 1;
-        a = 1;
-        a = 1;
-        a = 1;
-        a = 1;
-        a = 1;
-        a = 1;
-        a = 1;
-        a = 1;
-        a = 1;
-        a = 1;
-        a = 1;
-        a = 1;
-        a = 1;
-        a = 1;
-        a = 1;
-        a = 1;
-        a = 1;
-        a = 1;
-        a = 1;
     }
 }

@@ -9,12 +9,11 @@ global class P2G_updateAddresWs {
             // Obtener el ID de la URL
             String id = req.requestURI.substring(req.requestURI.lastIndexOf('/') + 1);
             System.debug('ID from URL: ' + id);
-            
+            Integer nuRechazos = [SELECT COUNT() FROM Response__c WHERE Account_Address__c = :id AND Type__c = 'ERROR'];
             // Lee el cuerpo de la solicitud PUT
             String requestBody = req.requestBody.toString();
             System.debug('requestBody: ' + requestBody);
             
-            // Deserializar el cuerpo de la solicitud a una lista de objetos de tipo wrapperRequest
             List<WrapperDispo> requestDataList = (List<WrapperDispo>) JSON.deserialize(requestBody, List<WrapperDispo>.class);
             
             // Validar los campos requeridos
@@ -32,15 +31,13 @@ global class P2G_updateAddresWs {
                 res.responseBody = Blob.valueOf('{"error": "Missing required fields: ' + String.join(missingFields, ', ') + '"}');
                 return;
             }
-            
-            updateCoordinates(id,requestDataList[0].lat, requestDataList[0].lon, requestDataList[0].validado,requestDataList[0].url,requestDataList[0].address);
+            updateCoordinates(id,requestDataList[0].lat, requestDataList[0].lon, requestDataList[0].validado,requestDataList[0].url,requestDataList[0].address,requestDataList[0].rejectionReason,nuRechazos);
             
             // Crear un mapa para almacenar los datos del JSON de respuesta
             Map<String, String> responseMap = new Map<String, String>();
             responseMap.put('status', 'Actualizado');
             responseMap.put('id', id);
             
-            // Convertir el mapa a JSON
             String jsonResponse = JSON.serialize(responseMap);
             
             // Establecer la respuesta
@@ -60,6 +57,7 @@ global class P2G_updateAddresWs {
         public String url {get; set;}
         public String validado {get; set;}
         public String address {get; set;}
+        public String rejectionReason {get; set;}
     }
     
     public class wrapperRequest {
@@ -144,16 +142,23 @@ global class P2G_updateAddresWs {
         return body;
 }
     
-    public static void updateCoordinates(String id, String lat, String lon, String validado, String url, String addr){
+    public static void updateCoordinates(String id, String lat, String lon, String validado, String url, String addr, String RejectionReason, Integer rech){
         Account_Address__c address = new Account_Address__c();
+        Response__c historico = new Response__c();
+        historico.Account_Address__c = id;
+        historico.Object__c = 'Account Address';
         address.id = id;
+        
         if(validado == 'true'){
             address.Address_Coordinates__Latitude__s = Double.valueOf(lat);
             address.Address_Coordinates__Longitude__s = Double.valueOf(lon);
             address.url_rc__c = url;
             address.status__c = 'Validado';
+            address.Motivo_rechazo__c = null;
             address.Address_CR__c = addr;
             address.Active__c = true;
+            historico.Type__c = 'CONFIRM';
+            historico.Message__c = 'Validado con éxito';
         }
         if(validado == 'false'){
             address.Address_Coordinates__Latitude__s = Double.valueOf(lat);
@@ -161,10 +166,15 @@ global class P2G_updateAddresWs {
             address.url_rc__c = url;
             address.status__c = 'Rechazado';
             address.Address_CR__c = addr;
+            address.Motivo_rechazo__c= RejectionReason;
+            address.Veces_rechazado__c = rech +1;
+            historico.Type__c = 'Error';
+            historico.Message__c = RejectionReason;
         }
         if(!test.isRunningTest()){
-            update address;   
-        }     
+            update address; 
+            insert historico;
+        }
     }
     
 }

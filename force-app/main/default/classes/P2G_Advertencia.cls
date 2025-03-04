@@ -11,10 +11,10 @@ public class P2G_Advertencia {
                 if(logAprobacion[0].Status__c == 'Aprobada' || EmailUsuario == EmailAprobador){
                     
                 }
-                else{
+                //else{
                     //agregar error chipment
-                    shipment.addError('Necesita Aprobacion');
-                }
+                    //shipment.addError('Necesita Aprobacion');
+                //}
             }
             else{
                 Decimal necesitaAprobacion = proceso(shipment.Id,EmailAprobador);
@@ -132,7 +132,7 @@ orderedEmails.add(userEmailsByRoleId.get(roleId));
     
     public static void sendShipmentLink(String Name,String emailAddress, Log_Aprobacion__c log) {
         String shipmentLink = URL.getOrgDomainUrl().toExternalForm() + '/lightning/r/Shipment__c/' + log.Shipment__c + '/view';
-        //String shipmentLink = URL.getOrgDomainUrl().toExternalForm() + '/lightning/n/AprobacionMargenes?c__recordId=' + idShipment;
+        //String shipmentLink = URL.getOrgDomainUrl().toExternalForm() + '/lightning/n/AprobacionMargenes?c__recordId=' + log.Shipment__c;
         //String shipmentLink = URL.getOrgDomainUrl().toExternalForm() + '/lightning/action/quick/Shipment__c.Aprobar?objectApiName&context=RECORD_DETAIL&recordId=' + log.Shipment__c;
 
         String emailSubject = 'Shipment en Espera de Aprobacion';
@@ -210,14 +210,17 @@ orderedEmails.add(userEmailsByRoleId.get(roleId));
         List<csvLine> csvLines = new List<csvLine>();
         List<Log_Aprobacion__c> aprobacion = [SELECT Id, Status__c,motivoSolicitud__c FROM Log_Aprobacion__c WHERE Shipment__c =:idShipment];
         // Consulta para obtener las líneas de tarifas de envío
-        
         List<Shipment_Fee_Line__c> feeLines = [SELECT Id,Service_Rate_Name__r.Carrier_Account__r.Name,Service_Rate_Name__r.Name, Service_Rate_Name__r.Buy_Rate__c,Service_Rate_Name__r.Fee_Rate__c,Name,Service_Rate_Name__r.Account_for__c,
-                                               Shipment__c, Service_Rate_Name__r.Route__r.Name, Service_Rate_Name__r.SAP_Service_Type__c, Service_Rate_Name__r.Container_Type__r.Name,
+                                               Shipment__c, Service_Rate_Name__r.Route__r.Name, Service_Rate_Name__r.SAP_Service_Type__c, Service_Rate_Name__r.Container_Type__r.Name, Service_Rate_Name__c,
                                                Shipment__r.Name, Shipment__r.Operation_Executive__r.Name,Shipment__r.ETD_from_Point_of_Load__c
                                                FROM Shipment_Fee_Line__c
                                                WHERE Shipment__c = :idShipment];
         for (Shipment_Fee_Line__c fee : feeLines) {
-            Fee__c serviceRate = P2G_CreacionFolios.condicionesTarifario(fee.Service_Rate_Name__r.Account_for__c, fee.Service_Rate_Name__r.SAP_Service_Type__c, fee.Service_Rate_Name__r.Container_Type__c, fee.Service_Rate_Name__r.Route__c);
+            Fee__c serviceRate = new Fee__c();
+            if(aprobacion[0].motivoSolicitud__c != 'Solicitud de confirmación por Margen'){
+                serviceRate = P2G_CreacionFolios.condicionesTarifario(fee.Service_Rate_Name__r.Account_for__c, fee.Service_Rate_Name__r.SAP_Service_Type__c, fee.Service_Rate_Name__r.Container_Type__c, fee.Service_Rate_Name__r.Route__c);
+            }
+            
             if (serviceRate != null) {
                 tarifarios.put(fee.Id, serviceRate);
                 feeLinesMap.put(fee.Id, fee);
@@ -261,18 +264,46 @@ orderedEmails.add(userEmailsByRoleId.get(roleId));
     }
     
     @AuraEnabled
-    public static void approveShipment(String shipmentId, String status){
-        List<Log_Aprobacion__c> aprobacion = [SELECT Id, Status__c,Shipment__c, SolicitadoPor__c, Shipment__r.Name FROM Log_Aprobacion__c WHERE Shipment__c =:shipmentId];
+    public static String approveShipment(String shipmentId, String status){
+        String mensaje;
+        List<Log_Aprobacion__c> aprobacion = [SELECT Id, Status__c,Shipment__c, SolicitadoPor__c, Shipment__r.Name, motivoSolicitud__c FROM Log_Aprobacion__c WHERE Shipment__c =:shipmentId];
         if(aprobacion.size() > 0){
-            aprobacion[0].Status__c = status;
-            aprobacion[0].aprobado_por__c = userinfo.getUserId();
-            update aprobacion;
-            emailSendPlanner(aprobacion[0]);
-            //Shipment__c aprobado =  new Shipment__c();
-            //aprobado.Id = shipmentId;
-            //aprobado.Shipment_Status_Plann__c = 'Confirmed';
-            //update aprobado;
+            /*if(aprobacion[0].motivoSolicitud__c == 'Solicitud de confirmación por Margen'){
+                List<Lideres_Aprobacion_Shipment__mdt> emailsMeta = [SELECT Email_Lider__c FROM Lideres_Aprobacion_Shipment__mdt];
+                String userEmail = UserInfo.getUserEmail();
+                Boolean Aprobar = false;
+                for(Lideres_Aprobacion_Shipment__mdt meta: emailsMeta){
+                    if(meta.Email_Lider__c == userEmail){
+                        Aprobar = true;
+                    }else{
+                        Aprobar = false;
+                    }
+                }
+                if(Aprobar == true){
+                    aprobacion[0].Status__c = status;
+                    aprobacion[0].aprobado_por__c = userinfo.getUserId();
+                    update aprobacion;
+                    Shipment__c aprobado =  new Shipment__c();
+                    aprobado.Id = shipmentId;
+                    aprobado.Shipment_Status_Plann__c = 'Confirmed';
+                    update aprobado;
+                    mensaje = 'Todo bien';
+                }else{
+                    mensaje = 'El usuario no tiene permisos para aprobar el Shipment';
+                }
+            }else{*/
+                aprobacion[0].Status__c = status;
+                aprobacion[0].aprobado_por__c = userinfo.getUserId();
+                update aprobacion;
+                emailSendPlanner(aprobacion[0]);
+                //Shipment__c aprobado =  new Shipment__c();
+                //aprobado.Id = shipmentId;
+                //aprobado.Shipment_Status_Plann__c = 'Confirmed';
+                //update aprobado;
+                mensaje = 'Todo bien';
+           // }
         }
+        return mensaje;
     }
     
     public static void emailSendPlanner(Log_Aprobacion__c log){
@@ -302,6 +333,13 @@ orderedEmails.add(userEmailsByRoleId.get(roleId));
         if(aprobacion.size() > 0 ){
             if((aprobacion[0].motivoSolicitud__c=='' || aprobacion[0].motivoSolicitud__c == null) && aprobacion[0].Status__c =='Solicitud Enviada'){
                 log = aprobacion[0];
+            }
+            if(aprobacion[0].motivoSolicitud__c == 'Solicitud de confirmación por Margen' && aprobacion[0].Status__c =='Solicitud Enviada'){
+                Shipment__c ship = [SELECT Id, Name, Shipment_Type__c, SPMargen_Operativo__c, Service_Type__c FROM Shipment__c WHERE Id =: shipmentId];
+                String mensaje = P2G_ValidarMargenShipment.MargenEs(ship);
+                if(mensaje == 'Requiere Aprobacion'){
+                    log = aprobacion[0];
+                }
             }
         }
         
