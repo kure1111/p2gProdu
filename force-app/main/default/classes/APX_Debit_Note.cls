@@ -933,20 +933,30 @@ public with sharing class APX_Debit_Note {
             system.debug('cv: ' + cv);
             system.debug('cdl: ' + cdl);
             
-            Messaging.EmailFileAttachment attach = new Messaging.EmailFileAttachment();
-            attach.setContentType('application/pdf');
-            attach.setFileName(nameFile);
-            attach.Body = body;
-
-            Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
-            mail.setToAddresses(new String[] {'mayra.ortiza@pak2go.com','carlos.martinez@pak2go.com','frida.macias@pak2go.com','sandra.trujillo@pak2go.com','jose.medellin@pak2go.com','israel.mar@pak2go.com','daniel.rios@pak2go.com','tomas.urdiales@pak2go.com','karina.gloria@pak2go.com','alma.ruiz@pak2go.com'});//,'leonardo.nocelo@pak2go.com','carlos.martinez@pak2go.com','israel.mar@pak2go.com','enrique.maycotte@pak2go.com','paola.gonzalez@pak2go.com','karina.gloria@pak2go.com','alma.ruiz@pak2go.com'});
-            mail.setSubject('Debit Note: '  + nameFile);
-            mail.setHtmlBody('Agregar texto para enviar mensaje');
-            mail.setFileAttachments(new Messaging.EmailFileAttachment[] {attach}); 
-            // Send the email
-            Messaging.sendEmail(new Messaging.SingleEmailMessage[] {mail});
-            system.debug('Se ha enviado un Email con el PDF correctamente');
-
+            List<Correo_Debit_Note__mdt> emailsMeta = [SELECT Correo_Emisor__c, Correo_Receptor__c FROM Correo_Debit_Note__mdt];
+            String userEmail = UserInfo.getUserEmail();
+            List<String> emailReceptor = listaReceptor(emailsMeta);
+            List<String> emailEmisor = listaEmisor(emailsMeta);
+            for(String emisor : emailEmisor){
+                if(userEmail == emisor){
+                    System.debug('Entra al if userEmail '+userEmail+' emailEmisor '+emailEmisor);
+                    Messaging.EmailFileAttachment attach = new Messaging.EmailFileAttachment();
+                    attach.setContentType('application/pdf');
+                    attach.setFileName(nameFile);
+                    attach.Body = body;
+        
+                    Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
+                    System.debug('Email receptor '+emailReceptor);
+                    mail.setToAddresses(emailReceptor);
+                    //mail.setToAddresses(new String[] {'mayra.ortiza@pak2go.com','carlos.martinez@pak2go.com','frida.macias@pak2go.com','sandra.trujillo@pak2go.com','jose.medellin@pak2go.com','israel.mar@pak2go.com','daniel.rios@pak2go.com','tomas.urdiales@pak2go.com','karina.gloria@pak2go.com','alma.ruiz@pak2go.com'});//,'leonardo.nocelo@pak2go.com','carlos.martinez@pak2go.com','israel.mar@pak2go.com','enrique.maycotte@pak2go.com','paola.gonzalez@pak2go.com','karina.gloria@pak2go.com','alma.ruiz@pak2go.com'});
+                    mail.setSubject('Debit Note: '  + nameFile);
+                    mail.setHtmlBody('Agregar texto para enviar mensaje');
+                    mail.setFileAttachments(new Messaging.EmailFileAttachment[] {attach}); 
+                    // Send the email
+                    Messaging.sendEmail(new Messaging.SingleEmailMessage[] {mail});
+                    system.debug('Se ha enviado un Email con el PDF correctamente');
+                }
+            }
             return nameFile;
         
         }catch(Exception e){
@@ -954,7 +964,24 @@ public with sharing class APX_Debit_Note {
             throw new AuraHandledException(e.getMessage());
         }        
     }
-
+    public static List<String> listaReceptor(List<Correo_Debit_Note__mdt> emailsMeta){
+        List<String> correo = new List<String>();
+        for(Correo_Debit_Note__mdt email : emailsMeta){
+            if(email.Correo_Receptor__c != null){
+                correo.add(email.Correo_Receptor__c);
+            }
+        }
+        return correo;
+    }
+    public static List<String> listaEmisor(List<Correo_Debit_Note__mdt> emailsMeta){
+        List<String> correo = new List<String>();
+        for(Correo_Debit_Note__mdt email : emailsMeta){
+            if(email.Correo_Emisor__c != null){
+                correo.add(email.Correo_Emisor__c);
+            }
+        }
+        return correo;
+    }
     @AuraEnabled
     public static string uploadFiles(List<Id> spsId, String fileName){
         try {
@@ -1660,7 +1687,7 @@ public with sharing class APX_Debit_Note {
                 FROM  Debit_Note__c 
                 WHERE  Import_Export_Quote_1__c=:idFolio OR Import_Export_Quote_Order_2__c=:idFolio OR Import_Export_Quote_Order_3__c=:idFolio OR Import_Export_Quote_Order_4__c=:idFolio OR Import_Export_Quote_Order_5__c=:idFolio limit 1];
     }
-    
+
     public static void testRun(){
         
         if(Test.isRunningTest()){
@@ -4087,7 +4114,7 @@ public with sharing class APX_Debit_Note {
         }
         
     }
-// 
+
     public class asignCustomReferenceWrapp{        
         @AuraEnabled public Boolean laDNtieneEspacio;
         @AuraEnabled public Debit_Note__c dnObjWrapp;

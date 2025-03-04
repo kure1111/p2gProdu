@@ -77,7 +77,9 @@
                                                     <div class="slds-truncate">{con.Colonia_espejo__c}</div>
                                                     </td>
                                                     <td>
-                                                    <div class="slds-truncate">{con.Codigo_Postal_CP__r.Name}</div>
+                                                        <template if:true={con.Codigo_Postal_CP__c}>
+                                                        <div class="slds-truncate">{con.Codigo_Postal_CP__r.Name}</div>
+                                                        </template>
                                                     </td>
                                                 </tr>
                                             </template>
@@ -131,7 +133,9 @@
                                                 <div class="slds-truncate">{con.Colonia_espejo__c}</div>
                                                 </td>
                                                 <td>
-                                                <div class="slds-truncate">{con.Codigo_Postal_CP__r.Name}</div>
+                                                    <template if:true={con.Codigo_Postal_CP__c}>
+                                                        <div class="slds-truncate">{con.Codigo_Postal_CP__r.Name}</div>
+                                                    </template>
                                                 </td>
                                             </tr>
                                         </template>
@@ -441,12 +445,13 @@
                                             </td>
                                             <td>
                                                 <div class="slds-truncate">
-                                                    <template if:true={address.esValidado}>
+                                                    <lightning-input type="radio" name="selection" value={address.seleccion} onchange={selectAddress}></lightning-input>
+                                                    <!--template if:true={address.esValidado}>
                                                         <lightning-input type="radio" name="selection" value={address.seleccion} onchange={selectAddress}></lightning-input>
                                                     </template>
                                                     <template if:false={address.esValidado}>
                                                         <p style="color: #C4C909;">Pendiente de Validar</p>
-                                                    </template>
+                                                    </template -->
                                                 </div>
                                             </td>
                                         </tr>

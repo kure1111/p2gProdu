@@ -52,10 +52,10 @@ public class CPV2 {
                 CP.fecha=dateFormated;
                 CP.serie=datosCPShip.Shipment_Type__c;
                 CP.folio=folio;
-                CP.subTotal='0.00';
+                CP.subTotal='0';
                 CP.moneda='XXX';//MXN';  
                 CP.lugarExpedicion=(emisor == null ? '': (string.isBlank(emisor.C_digo_Postal__c) ? '' :emisor.C_digo_Postal__c));
-                CP.total='0.00';
+                CP.total='0';
                 CP.TipoDeComprobante=TipoComprobante;
                 CP.formaPago=''; //solicitado por dll
                 CP.condicionesPago='';//solicitado por dll

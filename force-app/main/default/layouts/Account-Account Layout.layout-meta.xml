@@ -379,12 +379,10 @@
     <relatedLists>
         <fields>NAME</fields>
         <fields>CREATEDBY_USER</fields>
+        <fields>CREATED_DATE</fields>
         <fields>Object__c</fields>
         <fields>Type__c</fields>
         <fields>Message__c</fields>
-        <fields>Shipment__c</fields>
-        <fields>Invoice__c</fields>
-        <fields>Disbursement__c</fields>
         <relatedList>Response__c.Account__c</relatedList>
     </relatedLists>
     <relatedLists>

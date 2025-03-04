@@ -4,15 +4,14 @@ public class P2G_SendBatchAddress implements Database.Batchable<SObject>, Databa
 
     // Query para obtener los registros que deseas procesar
     public Database.QueryLocator start(Database.BatchableContext BC) {
-        String query = 'SELECT Id FROM Account_Address__c WHERE status__c = \'Nuevo\'';
+        String query = 'SELECT Id, Name, Address__c, Address_Coordinates__Latitude__s, Address_Coordinates__Longitude__s FROM Account_Address__c WHERE status__c = \'Nuevo\'';
         return Database.getQueryLocator(query);
     }
 
     // Procesa los registros en lotes de 50
     public void execute(Database.BatchableContext BC, List<Account_Address__c> scope) {
-        for(Account_Address__c accAddress : scope) {
-            P2G_updateAddresWs.send(accAddress.Id);
-        }
+        P2G_updateAddresWs.listAddressNew(scope);
+
     }
 
     // Finaliza el batch

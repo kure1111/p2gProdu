@@ -26,5 +26,6 @@ public class NEU_ActualizaFolioIETest {
         quote_test.Service_Mode__c = 'Export';
         quote_test.Service_Type__c = 'FTL';
         update quote_test;
+        NEU_ActualizaFolioIE.pase();
 	}
 }

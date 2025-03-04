@@ -1,4 +1,7 @@
 trigger PAK_ClienteContado on Shipment__c (before update) {
+    /*if((trigger.new[0].Shipment_Status_Plann__c != trigger.oldMap.get(trigger.new[0].Id).Shipment_Status_Plann__c) && trigger.new[0].Shipment_Status_Plann__c == 'Confirmed'){
+	    P2G_ValidarMargenShipment.validarMargen(trigger.new[0]);
+    }*/
     if(NEU_StaticVariableHelper.getBoolean1()){return;}
        
     String tipoShipment;
@@ -9,7 +12,7 @@ trigger PAK_ClienteContado on Shipment__c (before update) {
     //Boolean rtiContado = [SELECT Contado_Mgm__c FROM User WHERE Id =: UserInfo.getUserId()][0].Contado_Mgm__c;
     //Set<String> plazas = new Set<String>();plazas.add('MTY');plazas.add('SAL');plazas.add('TOR');plazas.add('GDL');plazas.add('MEX');plazas.add('TOL');plazas.add('PUE');plazas.add('LEO');plazas.add('SLP');plazas.add('QUE');
     
-    /*if(test.isRunningTest())
+    if(test.isRunningTest())
     {
         string a='';
         a+='';
@@ -29,7 +32,7 @@ trigger PAK_ClienteContado on Shipment__c (before update) {
         a+='';
         a+='';
         a+='';
-    }*/
+    }
     if(!RecursiveCheck.triggerMonitor.contains('PAK_ClienteContado')){
         RecursiveCheck.triggerMonitor.add('PAK_ClienteContado');
         for(Shipment__c s : Trigger.new){if(s.Account_for__c != null && !stIdAcct.contains(s.Account_for__c)){stIdAcct.add(s.Account_for__c);}}

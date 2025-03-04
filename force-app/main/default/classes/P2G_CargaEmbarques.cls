@@ -10,7 +10,8 @@ public class P2G_CargaEmbarques {
                                 Account_for__c,Account_for__r.Name, Account_Shipment_Reference__c, Account_Destination_Address__c,
                                 Account_Origin_Address__r.Direcci_n__c,Account_Destination_Address__r.Direcci_n__c,Account_Origin_Address__r.Name,
                                 Account_Destination_Address__r.Name,
-                                Vehicle__c,Carrier__r.Customer_Id__c FROM Shipment__c WHERE id =: shipId];
+                                Vehicle__c,Carrier__r.Customer_Id__c,Shipment_Status_Mon__c
+                                FROM Shipment__c WHERE id =: shipId];
             P2G_WS_EmbarquesWrapper.Requerido requerido = new P2G_WS_EmbarquesWrapper.Requerido();
             requerido.vehicle_NumPlacaTracto = ship.Vehicle__r.Num_Placa_Tracto__c;
             requerido.operationExecutive = ship.Operation_Executive__r.Name;
@@ -64,6 +65,7 @@ public class P2G_CargaEmbarques {
                 //CargaEmbarques.Driver.name = ship.National_Operator__r.Name;//agregado
                 CargaEmbarques.Source.aux_1 = ship.Operation_Executive__r.Name;//obligatorio
                 CargaEmbarques.Source.aux_2 = ship.National_Operator__r.Id_Recurso_Confiable__c;
+                CargaEmbarques.Source.aux_3 = ship.Shipment_Status_Mon__c;
                 CargaEmbarques.Source.description = ship.Account_Origin_Address__r.Name;//'PRUEBAS REPARTO';
                 CargaEmbarques.Source.address = ship.Account_Origin_Address__r.Direcci_n__c;//'calle 2,prueba 2,Oaxaca,Mexico';
                 if(CargaEmbarques.Source.aux_2 == '' || CargaEmbarques.Source.aux_2 == null) {

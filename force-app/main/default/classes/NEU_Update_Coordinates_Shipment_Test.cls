@@ -2,8 +2,8 @@
 public class NEU_Update_Coordinates_Shipment_Test {
 
     
-    @TestSetUp
-    public static void makeData(){
+    
+    /*public static void makeData(){
             
         User userT = TestDataFactory.createUserAdmin();
         Account accCustomer = TestDataFactory.createAccounts('Cuenta customer', 'Customer');        
@@ -61,12 +61,12 @@ public class NEU_Update_Coordinates_Shipment_Test {
             system.debug('capturando el error: ' + e.getMessage());
         }        
         
-    }
+    }*/
     
-    @isTest
+    @isTest(SeeAllData=true)
     public static void runTest(){
         
-        Shipment__c sp = [Select Id, Name,Traslado_Ingreso__c,VERIFY_PAK_CONTROL__c,Shipment_Status_Plann__c from Shipment__c where Name = 'SP-FN-22-000111'];
+        Shipment__c sp = [Select Id, Name,Traslado_Ingreso__c,VERIFY_PAK_CONTROL__c,Shipment_Status_Plann__c from Shipment__c where Name = 'SP-FN-25-002587'];
         
         Test.startTest();
         

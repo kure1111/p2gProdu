@@ -74,7 +74,7 @@
                         type: "error"
                     });
                     toastEvent.fire();
-                    component.find("Id_spinner").set("v.class" , 'slds-hide');
+                    //component.find("Id_spinner").set("v.class" , 'slds-hide');
                 }
             }else{
                 var toastEvent = $A.get("e.force:showToast");
@@ -85,12 +85,13 @@
                     type: "error"
                 });
                 toastEvent.fire();
-                component.find("Id_spinner").set("v.class" , 'slds-hide');
+                //component.find("Id_spinner").set("v.class" , 'slds-hide');
             }
         }else{
             alert("Seleccionar un archivo .csv para procesar");
-            component.find("Id_spinner").set("v.class" , 'slds-hide');
-        }        
+            //component.find("Id_spinner").set("v.class" , 'slds-hide');
+        }
+              
     }
     
 })

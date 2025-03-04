@@ -60,6 +60,8 @@ public class p2G_FoliosEnOportunidades {
         @AuraEnabled public String loadSite{get;set;}
         @AuraEnabled public String dischargeSite{get;set;}
         @AuraEnabled public Boolean warehouseService{get;set;}
+        @AuraEnabled public String idAddressOrigen{get;set;}
+        @AuraEnabled public String idAddressDestino{get;set;}
         //para la cargoline
         @AuraEnabled public String id{get;set;}
         @AuraEnabled public String idQuote{get;set;}
@@ -75,6 +77,7 @@ public class p2G_FoliosEnOportunidades {
         @AuraEnabled public String currencyLine{get;set;}
         @AuraEnabled public Boolean seCrea{get;set;}
         @AuraEnabled public String idSST{get;set;}
+        @AuraEnabled public String existeDireccion{get;set;}
     }
     @AuraEnabled
     public static List<wrapperProduct> getWrapper(){
@@ -121,7 +124,10 @@ public class p2G_FoliosEnOportunidades {
                 product.extencionItemName = route.PROJ_Tipo_de_mercancia__c;
                 product.loadSite = route.Product2.PROJ_Site_of_load__c;
                 product.dischargeSite = route.Product2.PROJ_Site_of_discharge__c;
+                product.idAddressOrigen = '';
+                product.idAddressDestino = '';
             	product.seCrea = false;
+            	product.existeDireccion = '';
             if((route.Tipo_de_moneda__c != null && route.Tipo_de_moneda__c != route.CurrencyIsoCode) && (route.Buy_Price_Converted__c != null && route.Buy_Price_Converted__c != '') && (route.Sales_Price_Converted__c != null && route.Sales_Price_Converted__c != '')){
                 product.currencyLine = route.Tipo_de_moneda__c;
                 product.buyPrice = Decimal.ValueOF(buyPriceConverted[1]);
@@ -474,6 +480,10 @@ public class p2G_FoliosEnOportunidades {
         	if(product.warehouseService != null){
             	quote.Only_Warehouse_Service__c = product.warehouseService;
             }
+            if(product.idAddressOrigen != '' && product.idAddressOrigen != null){
+                quote.Account_Origin_Address__c = product.idAddressOrigen;}
+            if(product.idAddressDestino != '' && product.idAddressDestino != null){
+                quote.Account_Destination_Address__c = product.idAddressDestino;}
             return quote;
         
     }

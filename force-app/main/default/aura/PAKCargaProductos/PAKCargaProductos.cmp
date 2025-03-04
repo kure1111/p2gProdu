@@ -1,46 +1,38 @@
-<!-- Aura Component - Primera Parte -->
 <aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,lightning:actionOverride,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" controller="PAKCargaProductosController">
-    <!-- init handler -->
+     <!-- export attributes start  -->
+    <!--aura init handler, call js "loadContactList" function on component load, and display contact data on table-->   
     <aura:handler name="init" value="{!this}" action="{!c.loadContactList}"/>
-    <!-- Attribute for storing Contact Records List -->
+    <!--Declare Attribute for store Contact Records List-->  
     <aura:attribute name="ListOfProduct" type="Product2[]"/>
-    <!-- Attribute for file upload -->
+    <!-- export attributes end-->
+    
     <aura:attribute name="fileToBeUploaded" type="Object[]" /> 
     <aura:attribute name="fileToBeUploadedProd" type="Object[]" /> 
-
-    <!-- Sección Principal con rejilla slds-grid -->
-    <div class="slds-grid slds-wrap">
-        <!-- Primera Sección -->
-        <div class="slds-col slds-size_1-of-2">
-            <div class="slds-box" style="background-color:white">
-                <lightning:spinner variant="brand" size="large" aura:id="Id_spinner" class="slds-hide" />
-                <div class="slds-box slds-is-relative">
-                    <div class="slds-text-title_bold">
-                        Carga Masiva de Productos
-                    </div>
-                    <div class="slds-text-body_small">
-                        Carga de manera sencilla tus rutas, puedes descargar el template de ejemplo.
-                    </div>
-                    <div class="slds-align_absolute-center">
-                        <lightning:input messageWhenTypeMismatch="Cargar solamente archivo soportado" type="file" label="" multiple="false" 
-                                         name="file" accept=".csv" onchange="{! c.CreateRecordProd }" files="{!v.fileToBeUploadedProd}" /> 
-                    </div>   
-                    <div class="slds-m-top_medium">
-                        <form class="slds-form--stacked">
-                            <lightning:formattedUrl 
-                                value="https://pak2gologistics--uat.my.salesforce.com/sfc/p/0R000000MBcG/a/0R0000000QU7/P.iogtl9F_xg1gCZmXvjWEG_33tSMA7pOpSkBvtQtWA"
-                                label="Descargar template"
-                                target="_blank" /> 
-                        </form>
-                    </div>
-                </div>
+    
+    <div class="slds-box" style="background-color:white">
+        <lightning:spinner variant="brand" size="large" aura:id="Id_spinner" class="slds-hide" />
+          <div class="slds-box slds-is-relative">   
+            <div class="slds-text-title_bold">
+                Carga Masiva de Productos
+            </div>
+                <div class="slds-text-body_small">
+                    Carga de manera sencilla tus rutas, puedes descargar el template de ejemplo.
+            </div>
+            <div class="slds-align_absolute-center">
+                <lightning:input messageWhenTypeMismatch="Cargar solamente archivo soportado" type="file" label="" multiple="false" 
+                                 name="file" accept=".csv" onchange="{! c.CreateRecordProd }" files="{!v.fileToBeUploadedProd}" /> 
+            </div>   
+               <div class="slds-m-top_medium">
+                 <form class="slds-form--stacked">
+                    
+                
+                      <lightning:formattedUrl 
+        value="https://pak2gologistics--uat.my.salesforce.com/sfc/p/0R000000MBcG/a/0R0000000QU7/P.iogtl9F_xg1gCZmXvjWEG_33tSMA7pOpSkBvtQtWA"
+        label="Descargar template"
+        target="_blank" /> 
+                </form>
             </div>
         </div>
-
-        <div class="slds-col slds-size_1-of-2">
-            
-        </div>
-
-
-    </div>
+       
+    </div>	
 </aura:component>
