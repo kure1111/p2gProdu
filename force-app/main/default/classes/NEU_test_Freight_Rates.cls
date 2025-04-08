@@ -21,8 +21,8 @@
  */
 @isTest
 private class NEU_test_Freight_Rates {
-	@isTest
-	static void NEU_SeaRatesSearch() {
+
+	static testMethod void NEU_SeaRatesSearch() {
 		NEU_StaticVariableHelper.setBoolean1(true);
 		//create record test necessaries
 		Account account=new Account();
@@ -85,8 +85,8 @@ private class NEU_test_Freight_Rates {
 		neu_sea_freight.id_service = service_rate.Id;
 		neu_sea_freight.get_historical_prices();
 	}
-	@isTest
-	static void NEU_RoadRatesSearch() {
+	
+	static testMethod void NEU_RoadRatesSearch() {
 		NEU_StaticVariableHelper.setBoolean1(true);
 		//create record test necessaries
 		Account account=new Account();
@@ -153,8 +153,8 @@ private class NEU_test_Freight_Rates {
 		neu_road_freight.id_service = service_rate.Id;
 		neu_road_freight.get_historical_prices();
 	}
-	@isTest
-	static void NEU_AirRatesSearch() {
+	
+	static testMethod void NEU_AirRatesSearch() {
 		NEU_StaticVariableHelper.setBoolean1(true);
 		//create record test necessaries
 		Account account=new Account();
@@ -218,8 +218,8 @@ private class NEU_test_Freight_Rates {
 		neu_air_freight.id_service = service_rate.Id;
 		neu_air_freight.get_historical_prices();
 	}
-	@isTest
-	static void NEU_POLRatesSearch() {
+	
+	static testMethod void NEU_POLRatesSearch() {
 		NEU_StaticVariableHelper.setBoolean1(true);
 		//create record test necessaries
 		Account account=new Account();
@@ -280,8 +280,8 @@ private class NEU_test_Freight_Rates {
 		neu_pol_freight.id_service = service_rate.Id;
 		neu_pol_freight.get_historical_prices();
 	}
-	@isTest
-	static void NEU_PODRatesSearch() {
+	
+	static testMethod void NEU_PODRatesSearch() {
 		NEU_StaticVariableHelper.setBoolean1(true);
 		//create record test necessaries
 		Account account=new Account();
@@ -342,8 +342,8 @@ private class NEU_test_Freight_Rates {
 		neu_pod_freight.id_service = service_rate.Id;
 		neu_pod_freight.get_historical_prices();
 	}
-	@isTest
-	static void NEU_OtherRatesSearch() {
+	
+	static testMethod void NEU_OtherRatesSearch() {
 		NEU_StaticVariableHelper.setBoolean1(true);
 		//create record test necessaries
 		Account account=new Account();
@@ -380,8 +380,8 @@ private class NEU_test_Freight_Rates {
 		neu_other_freight.id_service = service_rate.Id;
 		neu_other_freight.get_historical_prices();
 	}
-	@isTest
-	static void NEU_DrayagesRatesSearch() {
+	
+	static testMethod void NEU_DrayagesRatesSearch() {
 		NEU_StaticVariableHelper.setBoolean1(true);
 		//create record test necessaries
 		Account account=new Account();
@@ -444,8 +444,8 @@ private class NEU_test_Freight_Rates {
 		neu_drayages_freight.id_service = service_rate.Id;
 		neu_drayages_freight.get_historical_prices();
 	}
-	@isTest
-	static void NEU_TarimasRatesSearch() {
+	
+	static testMethod void NEU_TarimasRatesSearch() {
 		NEU_StaticVariableHelper.setBoolean1(true);
 		//create record test necessaries
 		Account account=new Account();
@@ -509,8 +509,8 @@ private class NEU_test_Freight_Rates {
 		neu_tarimas_freight.id_service = service_rate.Id;
 		neu_tarimas_freight.get_historical_prices();
 	}
-	@isTest
-	static void NEU_PaqueteriaRatesSearch() {
+	
+	static testMethod void NEU_PaqueteriaRatesSearch() {
 		NEU_StaticVariableHelper.setBoolean1(true);
 		//create record test necessaries
 		Account account=new Account();
@@ -547,8 +547,8 @@ private class NEU_test_Freight_Rates {
 		neu_paqueteria_freight.id_service = service_rate.Id;
 		neu_paqueteria_freight.get_historical_prices();
 	}
-	@isTest
-	static void NEU_PaqueteriaExpressRatesSearch() {
+	
+	static testMethod void NEU_PaqueteriaExpressRatesSearch() {
 		NEU_StaticVariableHelper.setBoolean1(true);
 		//create record test necessaries
 		Account account=new Account();
