@@ -5,8 +5,8 @@
 @isTest
 private class NEU_test_SchedulerReport
 {
-
-    static testMethod void ProcessSchedulerReport() {
+	@isTest
+    static void ProcessSchedulerReport() {
         NEU_StaticVariableHelper.setBoolean1(true);
         Test.startTest();
         Account buyer = new Account();
@@ -36,19 +36,21 @@ private class NEU_test_SchedulerReport
         Test.stopTest();
     }
 
-    static testMethod void DeleteSchedulerReport() {
+    @isTest
+    static void DeleteSchedulerReport() {
         NEU_StaticVariableHelper.setBoolean1(true);
         Scheduler_Shipment_Services_Lines__c schedulerReport = new Scheduler_Shipment_Services_Lines__c();
         schedulerReport.Name = 'Test';
         insert schedulerReport;
-
         ApexPages.currentPage().getParameters().put('test', 'test');
         DeleteSchedulerReport dsr = new DeleteSchedulerReport(new ApexPages.StandardController(schedulerReport));
         dsr.delete_record();
+		dsr.record = schedulerReport;
         system.debug( 'Delete done' );
     }
 
-    static testMethod void DeactivateSchedulerReport() {
+    @isTest
+    static void DeactivateSchedulerReport() {
         NEU_StaticVariableHelper.setBoolean1(true);
         Scheduler_Shipment_Services_Lines__c schedulerReport = new Scheduler_Shipment_Services_Lines__c();
         schedulerReport.Name = 'Test';
@@ -60,7 +62,8 @@ private class NEU_test_SchedulerReport
         system.debug( 'Deactivate done' );
     }
 
-    static testMethod void RefreshSchedulerReport() {
+    @isTest
+    static void RefreshSchedulerReport() {
         NEU_StaticVariableHelper.setBoolean1(true);
         Test.startTest();
         Account buyer = new Account();
