@@ -1,26 +1,29 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <Package xmlns="http://soap.sforce.com/2006/04/metadata">
-    <types>
-        <members>NEU_Shipment_Program_View_Route</members>
-        <members>NEU_TarimasFreight</members>
-        <members>NEU_TarimasINT</members>
-        <members>NEU_Track_and_Trace</members>
-        <members>NEU_TrafficSummary</members>
-        <members>NEU_Traxon_FHL</members>
-        <members>NEU_Traxon_FSR_SP</members>
-        <members>NEU_Traxon_Waybill_Status</members>
-        <members>NEU_create_shipmet_pallets</members>
-        <members>NEU_test_Freight_Rates</members>
-        <members>NEU_test_SchedulerReport</members>
-        <members>NEU_test_Shipment_Program</members>
-        <members>NEU_test_TarimasINT</members>
-        <members>NEU_test_Track_and_Trace_v2</members>
-        <members>NEU_test_Traffic</members>
+	<types>
+        <members>NEU_AssociatedDocuments</members>
+        <members>NEU_Associated_10Documents_Request</members>
+        <members>NEU_Controller_Comparable</members>
+        <members>NEU_Customers_Community_Login</members>
+        <members>NEU_GenerateMinuta</members>
+        <members>NEU_GenerateWEDocSave</members>
+        <members>NEU_NewImportExportButton</members>
+        <members>NEU_OM_Allocate_Offers_Account</members>
+        <members>NEU_OM_CreateBOMExplosionRelations</members>
+        <members>NEU_OM_Generate_SLI</members>
+        <members>NEU_Traxon_FWB</members>
+        <members>NEU_Traxon_TTTHistory</members>
+        <members>NEU_test_Account</members>
+        <members>NEU_test_Comparable</members>
+        <members>NEU_test_Item</members>
+        <members>NEU_test_Minuta</members>
+        <members>NEU_test_Shipment</members>
         <members>NEU_test_Traxon</members>
-        <members>NEU_test_create_shipment_pallets</members>
-        <members>PAK_ImpkQuote</members>
-        <members>PAK_SendCargoLines</members>
-        <members>RefreshSchedulerReport</members>
+        <members>P2G_NEU_AssociatedDocumentsTest</members>
+        <members>P2G_NEU_Associated_10DocumentsTest</members>
+        <members>P2G_NEU_Customers_Community_LoginTest</members>
+        <members>P2G_NEU_GenerateWEDocSaveTest</members>
+        <members>P2G_NEU_NewImportExportButtonTest</members>
         <name>ApexClass</name>
     </types>
 	<version>62.0</version>
