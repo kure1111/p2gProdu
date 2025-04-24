@@ -1,30 +1,17 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <Package xmlns="http://soap.sforce.com/2006/04/metadata">
-	<types>
-        <members>NEU_AssociatedDocuments</members>
-        <members>NEU_Associated_10Documents_Request</members>
-        <members>NEU_Controller_Comparable</members>
-        <members>NEU_Customers_Community_Login</members>
-        <members>NEU_GenerateMinuta</members>
-        <members>NEU_GenerateWEDocSave</members>
-        <members>NEU_NewImportExportButton</members>
-        <members>NEU_OM_Allocate_Offers_Account</members>
-        <members>NEU_OM_CreateBOMExplosionRelations</members>
-        <members>NEU_OM_Generate_SLI</members>
-        <members>NEU_Traxon_FWB</members>
-        <members>NEU_Traxon_TTTHistory</members>
-        <members>NEU_test_Account</members>
-        <members>NEU_test_Comparable</members>
-        <members>NEU_test_Item</members>
-        <members>NEU_test_Minuta</members>
-        <members>NEU_test_Shipment</members>
-        <members>NEU_test_Traxon</members>
-        <members>P2G_NEU_AssociatedDocumentsTest</members>
-        <members>P2G_NEU_Associated_10DocumentsTest</members>
-        <members>P2G_NEU_Customers_Community_LoginTest</members>
-        <members>P2G_NEU_GenerateWEDocSaveTest</members>
-        <members>P2G_NEU_NewImportExportButtonTest</members>
+    <types>
+        <members>triggerOppoProducYSubproducTest</members>
+        <members>OpportunityNameTest</members>
+        <members>P2G_tiempoTranscurridoOppo</members>
+        <members>P2G_tiempoTranscurridoOppoTest</members>
         <name>ApexClass</name>
+    </types>
+    <types>
+        <members>OpportunityName</members>
+        <members>triggerControllerOpportunityProduct</members>
+        <members>triggerControllerSubProducto</members>
+        <name>ApexTrigger</name>
     </types>
 	<version>62.0</version>
 </Package>

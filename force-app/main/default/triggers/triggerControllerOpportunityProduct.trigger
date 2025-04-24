@@ -35,6 +35,7 @@ trigger triggerControllerOpportunityProduct on OpportunityLineItem (before inser
                 if(((trigger.oldMap.get(oli.Id).Buy_Price__c == 0) || (trigger.oldMap.get(oli.Id).Buy_Price__c == null)) && (trigger.oldMap.get(oli.Id).Buy_Price__c != oli.Buy_Price__c)){
                     String tiempoTranscurridas = P2G_tiempoTranscurridoOppo.tiempoTranscurridoOli(oli.CreatedDate,System.now());
                     oli.SLA_Cotiza_Pricing__c = tiempoTranscurridas + ' El Buy Price que se coloco es: $'+ oli.Buy_Price__c.format()+oli.CurrencyIsoCode;
+                    oli.Fecha_y_Hora_Respuesta_Pricing__c = System.now();
                 }
                 //llena el campo Datatime Negociacion y correo Pricing
                 if(oli.Status__c == 'Negociación con cliente'){
