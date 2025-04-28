@@ -1,17 +1,23 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <Package xmlns="http://soap.sforce.com/2006/04/metadata">
     <types>
-        <members>triggerOppoProducYSubproducTest</members>
-        <members>OpportunityNameTest</members>
-        <members>P2G_tiempoTranscurridoOppo</members>
-        <members>P2G_tiempoTranscurridoOppoTest</members>
+        <members>NEU_Aditional_Discounts</members>
+        <members>NEU_Order_Confirmation_IE_details_pdf</members>
+        <members>NEU_Order_Confirmation_IE_pdf</members>
+        <members>P2G_NEU_Aditional_DiscountsTest</members>
+        <members>P2G_NEU_OrderConfirmIEdetailspdfTest</members>
+        <members>P2G_NEU_Order_Confirmation_IE_pdfTest</members>
+        <members>P2G_PK2_FN_TABLETest</members>
+        <members>PK2_FN_TABLE</members>
+        <members>CifidShipmentLines</members>    
+        <members>Cifid_SendUpdateIeq</members>
+        <members>Cifid_ServiceLines</members>
+        <members>Cifid_Test</members>
+        <members>NEU_Aditional_Discounts</members>
+        <members>P2G_Cifid_SendShipLinesTest</members>
+        <members>P2G_Cifid_SendUpdateIeqTest</members>
+        <members>P2G_NEU_Aditional_DiscountsTest</members>
         <name>ApexClass</name>
     </types>
-    <types>
-        <members>OpportunityName</members>
-        <members>triggerControllerOpportunityProduct</members>
-        <members>triggerControllerSubProducto</members>
-        <name>ApexTrigger</name>
-    </types>
-	<version>62.0</version>
+	<version>63.0</version>
 </Package>
