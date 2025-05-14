@@ -144,36 +144,6 @@ trigger OpportunityName on Opportunity (before insert, before update) {
                     op.SLA_Ejecucion__c = tiempoTranscurrido;
                     op.Data_Time_Ejecucion__c = System.now();
                 }
-                //llena campos totales
-                Double totalAmount = P2G_tiempoTranscurridoOppo.sumaTotalAmountAceptado(todosProductos);
-                Decimal totalAceptada = P2G_tiempoTranscurridoOppo.totalAceptada(todosProductos,todosSubproductos);
-                Decimal totalCotizado = P2G_tiempoTranscurridoOppo.totalCotizado(todosProductos,todosSubproductos);
-                Decimal totalAmountOpportunity = P2G_tiempoTranscurridoOppo.totalAmountOpportunity(todosProductos,todosSubproductos);
-                Decimal totalRechazados = P2G_tiempoTranscurridoOppo.totalRechazados(todosProductos,todosSubproductos);
-                Double totalAceptadaAnual = 0;
-                Double totalCotizadoAnual = 0;
-                Double totalAmountOpportunityAnual = 0;
-                Double totalRechazadosAnual = 0;
-                for(OpportunityLineItem oli : todosProductos){
-                    if(oli.OpportunityId == op.Id){
-                        totalCotizadoAnual = P2G_tiempoTranscurridoOppo.multiplicacionAnual(totalCotizado, oli.PROJ_Frecuencia__c);
-                        totalAmountOpportunityAnual = P2G_tiempoTranscurridoOppo.multiplicacionAnual(totalAmountOpportunity, oli.PROJ_Frecuencia__c);
-                        totalRechazadosAnual = P2G_tiempoTranscurridoOppo.multiplicacionAnual(totalRechazados, oli.PROJ_Frecuencia__c);
-                        totalAceptadaAnual = P2G_tiempoTranscurridoOppo.multiplicacionAnual(totalAceptada, oli.PROJ_Frecuencia__c);
-                    }
-                }
-                System.debug('los totales son totalCotizado: '+totalCotizado+' totalAmountOpportunity: '+totalAmountOpportunity+
-                             ' totalRechazados: '+totalRechazados+' totalCotizadoAnual: '+totalCotizadoAnual+' totalAmountOpportunityAnual: '+
-                             totalAmountOpportunityAnual+' totalRechazadosAnual: '+totalRechazadosAnual);
-                op.Total_Amount_Aceptada__c = totalAmount;
-                op.Total_Cerrado_Ganado__c = totalAceptada;
-                op.Total_Cotizado__c = totalCotizado;
-                op.Total_Opportunity__c = totalAmountOpportunity;
-                op.Total_Amount_Rechazados__c = totalRechazados;
-                op.Total_Cotizado_Anual__c = totalCotizadoAnual;
-                op.Total_Opportunity_Anual__c = totalAmountOpportunityAnual;
-                op.Total_Amount_Rechazados_Anual__c = totalRechazadosAnual;
-                op.Total_Cerrado_Ganado_Anual__c = totalAceptadaAnual;
             }
         } else if (Trigger.isAfter) {
             

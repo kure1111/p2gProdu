@@ -9,7 +9,7 @@ public class P2G_tiempoTranscurridoOppo {
             when 'Entendimiento' {
                 fechaCreacion = oportunidad.CreatedDate;
                 tiempoTranscurrido = tiempoTranscurridas(fechaCreacion, fechaActual,oportunidad.CreatedDate);
-            }	
+            }   
             when 'Cotización' {
                 fechaCreacion = oportunidad.Data_Time_Cotizacion__c;
                 tiempoTranscurrido = tiempoTranscurridas(fechaCreacion, fechaActual,oportunidad.CreatedDate);
@@ -86,12 +86,12 @@ public class P2G_tiempoTranscurridoOppo {
     //Para ir sumando el Total Amount
     @InvocableMethod
     public static void sumaTotalAmount(List<String> idOppo){
-     	Opportunity op = new Opportunity();
+        Opportunity op = new Opportunity();
         List<OpportunityLineItem> listOli = [SELECT Id, Name, OpportunityId, opportunity.Total_Amount_Aceptada__c, PROJ_Frecuencia__c,
                                              Precio_Sugerido_Venta__c, Quantity FROM OpportunityLineItem 
-											WHERE OpportunityId =: idOppo[0] AND Precio_Sugerido_Venta__c != 0 AND Precio_Sugerido_Venta__c != null];
+                                            WHERE OpportunityId =: idOppo[0] AND Precio_Sugerido_Venta__c != 0 AND Precio_Sugerido_Venta__c != null];
         Double totalAmount = 0;
-		Double multiplicacionTotalAmount;
+        Double multiplicacionTotalAmount;
         if(listOli.size()>0){
             for(OpportunityLineItem Product : listOli){
                 multiplicacionTotalAmount = multiplicacionTotalAmount(Product.Precio_Sugerido_Venta__c, Product);
@@ -104,8 +104,8 @@ public class P2G_tiempoTranscurridoOppo {
     }
     //Para ir sumando el Total Amount aceptado
     public static Double sumaTotalAmountAceptado(List<OpportunityLineItem> todosProductos){
-     	Double totalAmount = 0;
-		Double multiplicacionTotalAmount;
+        Double totalAmount = 0;
+        Double multiplicacionTotalAmount;
         for(OpportunityLineItem Product : todosProductos){
             if(Product.Status__c == 'Aceptada'){
                 System.debug('el oli que se suma: '+Product.Id+' fre: '+Product.PROJ_Frecuencia__c);
@@ -113,14 +113,14 @@ public class P2G_tiempoTranscurridoOppo {
                 totalAmount += multiplicacionTotalAmount;
             }
         }
-		return totalAmount;
+        return totalAmount;
     }
     public static Double multiplicacionTotalAmount(Decimal precioVenta , OpportunityLineItem oli){
-		Double multiplica;
+        Double multiplica;
         switch on oli.PROJ_Frecuencia__c {
             when 'Diario' {
                 multiplica = precioVenta * oli.Quantity * 365;
-            }	
+            }   
             when 'Semanal' {
                 multiplica = precioVenta * oli.Quantity * 53;
             }
@@ -191,7 +191,7 @@ public class P2G_tiempoTranscurridoOppo {
                 Decimal multiplica = productos.UnitPrice * productos.Quantity;
                 amountOpportunity += multiplica;
                 for(SubProducto__c sub : todosSubproductos){
-                    if((productos.Id == sub.SubProduct_Opportunity_Product__c) && ((sub.Status__c == 'Aceptada') || (sub.Status__c == 'Cotizada') || (productos.Status__c == 'Negociación con cliente'))){
+                    if((productos.Id == sub.SubProduct_Opportunity_Product__c) && ((sub.Status__c == 'Aceptada') || (sub.Status__c == 'Cotizada') || (sub.Status__c == 'Negociación con cliente'))){
                         Decimal multiplicaSub = sub.SubProduct_Sell_Price__c * productos.Quantity;
                         amountOpportunity += multiplicaSub;
                     }
@@ -217,21 +217,81 @@ public class P2G_tiempoTranscurridoOppo {
         }
         return rechazados;
     }
-        //multipmicar para anual
-    public static Double multiplicacionAnual(Decimal sumaTotal , String frecuencia){
-		Double multiplica;
+    //Total Aceptado x producto
+    public static Decimal totalAceptadaxProducto(OpportunityLineItem Product, List<SubProducto__c> todosSubproductos){
+        Decimal totalAceptado = 0;
+        if(product.Status__c == 'Aceptada'){
+            Decimal multiplica = product.UnitPrice * product.Quantity;
+            totalAceptado += multiplica;
+            for(SubProducto__c sub : todosSubproductos){
+                if((product.Id == sub.SubProduct_Opportunity_Product__c) && (sub.Status__c == 'Aceptada')){
+                    Decimal multiplicaSub = sub.SubProduct_Sell_Price__c * product.Quantity;
+                    totalAceptado += multiplicaSub;
+                }
+            }
+        }
+        return totalAceptado;
+    }
+    //Total Cotizado x producto
+    public static Decimal totalCotizadoxProducto(OpportunityLineItem Product, List<SubProducto__c> todosSubproductos){
+        Decimal cotizado = 0;
+        if((product.Status__c == 'Aceptada') || (product.Status__c == 'Cotizada') || (product.Status__c == 'Negociación con cliente') || (product.Status__c == 'Rechazada')){
+            Decimal multiplica = product.UnitPrice * product.Quantity;
+            cotizado += multiplica;
+            for(SubProducto__c sub : todosSubproductos){
+                if((product.Id == sub.SubProduct_Opportunity_Product__c) && ((sub.Status__c == 'Aceptada') || (sub.Status__c == 'Cotizada') || (sub.Status__c == 'Negociación con cliente') || (sub.Status__c == 'Rechazada'))){
+                    Decimal multiplicaSub = sub.SubProduct_Sell_Price__c * product.Quantity;
+                    cotizado += multiplicaSub;
+                }
+            }
+    	}
+        return cotizado;
+    }
+    //Total Amount Opportunity x producto
+    public static Decimal totalAmountOpportunityxProducto(OpportunityLineItem Product, List<SubProducto__c> todosSubproductos){
+        Decimal amountOpportunity = 0;
+        if((product.Status__c == 'Aceptada') || (product.Status__c == 'Cotizada') || (product.Status__c == 'Negociación con cliente')){
+            Decimal multiplica = product.UnitPrice * product.Quantity;
+            amountOpportunity += multiplica;
+            for(SubProducto__c sub : todosSubproductos){
+                if((product.Id == sub.SubProduct_Opportunity_Product__c) && ((sub.Status__c == 'Aceptada') || (sub.Status__c == 'Cotizada') || (sub.Status__c == 'Negociación con cliente'))){
+                    Decimal multiplicaSub = sub.SubProduct_Sell_Price__c * product.Quantity;
+                    amountOpportunity += multiplicaSub;
+                }
+            }
+        }
+        return amountOpportunity;
+    }
+    //Total Rechazados x producto
+    public static Decimal totalRechazadosxProducto(OpportunityLineItem Product, List<SubProducto__c> todosSubproductos){
+        Decimal rechazados = 0;
+        if((product.Status__c == 'No Cotizada') || (product.Status__c == 'Rechazada')){
+            Decimal multiplica = product.UnitPrice * product.Quantity;
+            rechazados += multiplica;
+            for(SubProducto__c sub : todosSubproductos){
+                if((product.Id == sub.SubProduct_Opportunity_Product__c) && ((sub.Status__c == 'No Cotizada') || (sub.Status__c == 'Rechazada'))){
+                    Decimal multiplicaSub = sub.SubProduct_Sell_Price__c * product.Quantity;
+                    rechazados += multiplicaSub;
+                }
+            }
+        }
+        return rechazados;
+    }
+    //multiplicar para anual
+    public static Double multiplicacionAnual(Decimal totalProducto, String frecuencia){
+        Double multiplica;
         switch on frecuencia {
             when 'Diario' {
-                multiplica = sumaTotal * 365;
-            }	
+                multiplica = totalProducto * 365;
+            }   
             when 'Semanal' {
-                multiplica = sumaTotal * 53;
+                multiplica = totalProducto * 53;
             }
             when 'Mensual' {
-                multiplica = sumaTotal * 12;
+                multiplica = totalProducto * 12;
             }
             when 'Anual' {
-                multiplica = sumaTotal * 1;
+                multiplica = totalProducto * 1;
             }
             when else {
                 multiplica = 0;
@@ -273,5 +333,44 @@ public class P2G_tiempoTranscurridoOppo {
             valida = null;
         }
         return valida;
+    }
+    public static Opportunity sumaTotalesOportunidad(List<OpportunityLineItem> todosProductos, List<SubProducto__c> todosSubproductos, Opportunity op){
+        Decimal totalAceptada = P2G_tiempoTranscurridoOppo.totalAceptada(todosProductos,todosSubproductos);
+        Decimal totalCotizado = P2G_tiempoTranscurridoOppo.totalCotizado(todosProductos,todosSubproductos);
+        Decimal totalAmountOpportunity = P2G_tiempoTranscurridoOppo.totalAmountOpportunity(todosProductos,todosSubproductos);
+        Decimal totalRechazados = P2G_tiempoTranscurridoOppo.totalRechazados(todosProductos,todosSubproductos);
+        Double totalAceptadaAnual = 0;
+        Double totalCotizadoAnual = 0;
+        Double totalAmountOpportunityAnual = 0;
+        Double totalRechazadosAnual = 0;
+        for(OpportunityLineItem oli : todosProductos){
+            Decimal productoAceptada = 0;
+            Decimal productoCotizado = 0;
+            Decimal productoAmountOpportunity = 0;
+            Decimal productoRechazados = 0;
+            productoAceptada = totalAceptadaxProducto(oli,todosSubproductos);
+            productoCotizado = totalCotizadoxProducto(oli,todosSubproductos);
+            productoAmountOpportunity = totalAmountOpportunityxProducto(oli,todosSubproductos);
+            productoRechazados = totalRechazadosxProducto(oli,todosSubproductos);
+            if(oli.OpportunityId == op.Id){
+                totalCotizadoAnual += multiplicacionAnual(productoCotizado, oli.PROJ_Frecuencia__c);
+                totalAmountOpportunityAnual += multiplicacionAnual(productoAmountOpportunity, oli.PROJ_Frecuencia__c);
+                totalRechazadosAnual += multiplicacionAnual(productoRechazados, oli.PROJ_Frecuencia__c);
+                totalAceptadaAnual += multiplicacionAnual(productoAceptada, oli.PROJ_Frecuencia__c);
+            }
+        }
+        System.debug('los totales son totalCotizado: '+totalCotizado+' totalAmountOpportunity: '+totalAmountOpportunity+
+        ' totalRechazados: '+totalRechazados+' totalCotizadoAnual: '+totalCotizadoAnual+' totalAmountOpportunityAnual: '+
+        totalAmountOpportunityAnual+' totalRechazadosAnual: '+totalRechazadosAnual);
+        op.Total_Cerrado_Ganado__c = totalAceptada;
+        op.Total_Cotizado__c = totalCotizado;
+        op.Total_Opportunity__c = totalAmountOpportunity;
+        op.Total_Amount_Rechazados__c = totalRechazados;
+        op.Total_Cotizado_Anual__c = totalCotizadoAnual;
+        op.Total_Opportunity_Anual__c = totalAmountOpportunityAnual;
+        op.Total_Amount_Rechazados_Anual__c = totalRechazadosAnual;
+        op.Total_Cerrado_Ganado_Anual__c = totalAceptadaAnual;
+        
+        return Op;
     }
 }
