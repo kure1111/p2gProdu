@@ -1,9 +1,19 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <Package xmlns="http://soap.sforce.com/2006/04/metadata">
-	<types>
-		<members>NEU_DatedConversionRates</members>
-		<members>NEU_DatedConversionRatesTest</members>
-		<name>ApexClass</name>
-	</types>
+    <types>
+        <members>P2G_NEU_OM_UpdateFoClaimTest</members>
+        <members>P2G_NEU_OM_UpdateFoItemTest</members>
+        <members>P2G_NEU_OM_UpdateFoLaborProgramTest</members>
+        <members>P2G_NEU_OM_UpdateFoSCM_ContractTest</members>
+        <name>ApexClass</name>
+    </types>
+    <types>
+        <members>NEU_OM_UpdateFoClaim</members>
+       
+        <members>NEU_OM_UpdateFoItem</members>
+        <members>NEU_OM_UpdateFoLaborProgram</members>
+        <members>NEU_OM_UpdateFoSCM_Contract</members>
+        <name>ApexTrigger</name>
+    </types>
 	<version>62.0</version>
 </Package>
