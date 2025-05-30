@@ -22,7 +22,7 @@
 @isTest
 private class NEU_test_Supply_Projects {
     
-    @isTest(SeeAllData=true)
+    @isTest
     static void test_NEU_MD_PriceComparison()
     {
         NEU_StaticVariableHelper.setBoolean1(true);
@@ -39,12 +39,12 @@ private class NEU_test_Supply_Projects {
         Account a=new Account();
         a.Name='TESTACC';
         a.RecordTypeId =  Schema.SObjectType.Account.getRecordTypeInfosByName().get('Supplier').getRecordTypeId();
-        a.OwnerId='0054T0000025ew3QAA';
+        a.OwnerId=UserInfo.getUserId();
         insert a;
         Account a2 =new Account();             
         a2.Name='TESTACCSup';
         a2.RecordTypeId =  Schema.SObjectType.Account.getRecordTypeInfosByName().get('Supplier').getRecordTypeId();
-        a2.OwnerId='0054T0000025ew3QAA';
+        a2.OwnerId=UserInfo.getUserId();
         insert a2;
 
         //Account b = list_accounts[2];
@@ -54,7 +54,7 @@ private class NEU_test_Supply_Projects {
         Account b=new Account();
         b.Name='TESTCustomer';
         b.RecordTypeId =  Schema.SObjectType.Account.getRecordTypeInfosByName().get('Customer').getRecordTypeId();
-        b.OwnerId='0054T0000025ew3QAA';
+        b.OwnerId=UserInfo.getUserId();
         insert b;
         
         Country__c Country = new Country__c(Name='test country',  ISO_Code__c='EUR');
@@ -101,7 +101,7 @@ private class NEU_test_Supply_Projects {
         insert fee2;
         Fee__c fee3 = new Fee__c(Name = 'test fees', Fee_Category__c = 'Disbursement',  Active__c = true, RecordTypeId = Schema.SobjectType.Fee__c.getRecordTypeInfosByName().get('Other Service Charges').getRecordTypeId(), Rate_Type__c='Per Container',Standard_Rate__c = true, Account_for__c = a.Id);
         insert fee3;
-        Supplier_Quote_Order_Fee_Line__c sup_quotefeeline = new Supplier_Quote_Order_Fee_Line__c(Name= 'test supquote fee line', Supplier_Quote_Order__c = supquote.Id, Fee_Name__c = fee.Id);
+        Supplier_Quote_Order_Fee_Line__c sup_quotefeeline = new Supplier_Quote_Order_Fee_Line__c(Name= 'test supquote fee line', Supplier_Quote_Order__c = supquote.Id, Fee_Name__c = fee.Id, CurrencyIsoCode='MXN');
         insert sup_quotefeeline;
         
         Container_Type__c cont_type = new Container_Type__c(Name='test container', Cargo_Volume_m3__c = 100, Cargo_Weight_Kg__c = 100);
@@ -122,7 +122,7 @@ private class NEU_test_Supply_Projects {
     }
     
     
-    @isTest(SeeAllData=true)
+    @isTest
     static void test_NEU_OM_UploadItems()//ok
     {
         NEU_StaticVariableHelper.setBoolean1(true);
@@ -137,12 +137,12 @@ private class NEU_test_Supply_Projects {
         Account a=new Account();
 		a.Name='TESTACC';
 		a.RecordTypeId =  Schema.SObjectType.Account.getRecordTypeInfosByName().get('Supplier').getRecordTypeId();
-        a.OwnerId='0054T0000025ew3QAA';
+        a.OwnerId=UserInfo.getUserId();
 		insert a;
         Account b=new Account();
 		b.Name='TESTACC';
 		b.RecordTypeId =  Schema.SObjectType.Account.getRecordTypeInfosByName().get('Customer').getRecordTypeId();
-        b.OwnerId='0054T0000025ew3QAA';
+        b.OwnerId=UserInfo.getUserId();
 		insert b;
         
         Contact contacto = new Contact(AccountId = b.Id, LastName='test contact');
@@ -183,12 +183,12 @@ private class NEU_test_Supply_Projects {
         Account a=new Account();
 		a.Name='TESTACC';
 		a.RecordTypeId =  Schema.SObjectType.Account.getRecordTypeInfosByName().get('Supplier').getRecordTypeId();
-        a.OwnerId='0054T0000025ew3QAA';
+        a.OwnerId=UserInfo.getUserId();
 		insert a;
         Account b=new Account();
 		b.Name='TESTACC';
 		b.RecordTypeId =  Schema.SObjectType.Account.getRecordTypeInfosByName().get('Customer').getRecordTypeId();
-        b.OwnerId='0054T0000025ew3QAA';
+        b.OwnerId=UserInfo.getUserId();
 		insert b;
 
         Contact contacto = new Contact(AccountId = b.Id, LastName='test contact');
@@ -236,12 +236,12 @@ private class NEU_test_Supply_Projects {
             Account a=new Account();
 		    a.Name='TESTACC';
 		    a.RecordTypeId =  Schema.SObjectType.Account.getRecordTypeInfosByName().get('Supplier').getRecordTypeId();
-            a.OwnerId='0054T0000025ew3QAA';
+            a.OwnerId=UserInfo.getUserId();
 		    insert a;
             Account pre=new Account();
 		    pre.Name='TESTACC';
 		    pre.RecordTypeId =  Schema.SObjectType.Account.getRecordTypeInfosByName().get('Supplier').getRecordTypeId();
-            pre.OwnerId='0054T0000025ew3QAA';
+            pre.OwnerId=UserInfo.getUserId();
 		    insert pre;       
             //Account pre = list_accounts[1];
             //a.Status_Account__c = 'Premium';
@@ -253,7 +253,7 @@ private class NEU_test_Supply_Projects {
             Account ac =new Account();
             ac.Name='TESTACC';
 		    ac.RecordTypeId =  Schema.SObjectType.Account.getRecordTypeInfosByName().get('Supplier').getRecordTypeId();
-            ac.OwnerId='0054T0000025ew3QAA';
+            ac.OwnerId=UserInfo.getUserId();
             insert ac;
                       
             //Account b = list_accounts[3];
@@ -262,7 +262,7 @@ private class NEU_test_Supply_Projects {
             Account b =new Account();
             b.Name='TESTACC';
 		    b.RecordTypeId =  Schema.SObjectType.Account.getRecordTypeInfosByName().get('Customer').getRecordTypeId();
-            b.OwnerId='0054T0000025ew3QAA';
+            b.OwnerId=UserInfo.getUserId();
             insert b;
                         
             Contact contacto = new Contact(AccountId = b.Id, LastName='test contact');
@@ -292,7 +292,7 @@ private class NEU_test_Supply_Projects {
             system.debug( 'Prueba realizada' );
         }
     
-    public  @isTest(SeeAllData=true)
+      @isTest
         static void test_NEU_Clone_Supply_Projects()//ok
     {
         NEU_StaticVariableHelper.setBoolean1(true);
@@ -306,7 +306,7 @@ private class NEU_test_Supply_Projects {
         Account a =new Account();
         a.Name='TESTACC';
 		a.RecordTypeId =  Schema.SObjectType.Account.getRecordTypeInfosByName().get('Supplier').getRecordTypeId();
-        a.OwnerId='0054T0000025ew3QAA';
+        a.OwnerId=UserInfo.getUserId();
         insert a;
                       
             //Account b = list_accounts[3];
@@ -315,7 +315,7 @@ private class NEU_test_Supply_Projects {
         Account b =new Account();
         b.Name='TESTACC';
 		b.RecordTypeId =  Schema.SObjectType.Account.getRecordTypeInfosByName().get('Customer').getRecordTypeId();
-        b.OwnerId='0054T0000025ew3QAA';
+        b.OwnerId=UserInfo.getUserId();
         insert b;
 
         Supply_Project__c supplyproject = new Supply_Project__c(Name='project test', Customer__c = b.Id);
@@ -336,7 +336,7 @@ private class NEU_test_Supply_Projects {
         csp.duplicate_supply_projects();
     }
     
-    @isTest(SeeAllData=true)
+    @isTest
         static void test_NEU_OM_Send_Requests()//ok
     {
         NEU_StaticVariableHelper.setBoolean1(true);
@@ -350,13 +350,13 @@ private class NEU_test_Supply_Projects {
         Account a =new Account();
         a.Name='TESTACC';
 		a.RecordTypeId =  Schema.SObjectType.Account.getRecordTypeInfosByName().get('Supplier').getRecordTypeId();
-        a.OwnerId='0054T0000025ew3QAA';
+        a.OwnerId=UserInfo.getUserId();
         insert a;
                       
         Account b =new Account();
         b.Name='TESTACC';
 		b.RecordTypeId =  Schema.SObjectType.Account.getRecordTypeInfosByName().get('Customer').getRecordTypeId();
-        b.OwnerId='0054T0000025ew3QAA';
+        b.OwnerId=UserInfo.getUserId();
         insert b;
 
         Contact contacto = new Contact(AccountId = b.Id, LastName='test contact');
@@ -394,7 +394,7 @@ private class NEU_test_Supply_Projects {
         system.debug( 'Prueba realizada' );
     }
     
-    @isTest(SeeAllData=true)
+    @isTest
     static void NEU_OM_UploadItems() 
     {
         NEU_StaticVariableHelper.setBoolean1(true);
@@ -406,7 +406,7 @@ private class NEU_test_Supply_Projects {
         Account new_account =new Account();
         new_account.Name='TESTACC';
 		new_account.RecordTypeId =  Schema.SObjectType.Account.getRecordTypeInfosByName().get('Customer').getRecordTypeId();
-        new_account.OwnerId='0054T0000025ew3QAA';
+        new_account.OwnerId=UserInfo.getUserId();
         insert new_account;
         
         Product_Family__c new_family = new Product_Family__c();
@@ -461,97 +461,9 @@ private class NEU_test_Supply_Projects {
     }
     
     
-    @isTest(SeeAllData=true)
-    static void NEU_OM_UploadItems2() 
-    {
-        NEU_StaticVariableHelper.setBoolean1(true);
-        Account new_account =new Account();
-        new_account.Name='TESTACC';
-		new_account.RecordTypeId =  Schema.SObjectType.Account.getRecordTypeInfosByName().get('Customer').getRecordTypeId();
-        new_account.OwnerId='0054T0000025ew3QAA';
-        insert new_account;
-        
-        Product_Family__c new_family = new Product_Family__c();
-        new_family.Name = 'Family Test';
-        insert new_family;
-        
-        Supply_Project__c new_supply_project = new Supply_Project__c();
-        new_supply_project.Name = 'Supply Project Test';
-        new_supply_project.Customer__c = new_account.Id;
-        insert new_supply_project;
-        
-        Sourcing_Item__c new_item = new Sourcing_Item__c();
-        new_item.Name = 'Item Test';
-        new_item.Account_Owner__c = new_account.Id;
-        new_item.Sourcing_Family__c = new_family.Id;
-        insert new_item;
-        
-        Sourcing_Item__c new_item2 = new Sourcing_Item__c();
-        new_item2.Name = 'Item Test2';
-        new_item2.Account_Owner__c = new_account.Id;
-        new_item2.Sourcing_Family__c = new_family.Id;
-        insert new_item2;
-        
-        Items_to_Supply__c new_item_supply = new Items_to_Supply__c();
-        new_item_supply.Sourcing_Item__c = new_item.Id;
-        new_item_supply.Supply_Project__c = new_supply_project.Id;
-        insert new_item_supply;
-        
-        Items_to_Supply__c new_item_supply2 = new Items_to_Supply__c();
-        new_item_supply2.Sourcing_Item__c = new_item2.Id;
-        new_item_supply2.Supply_Project__c = new_supply_project.Id;
-        insert new_item_supply2;
-        
-        Country__c Country = new Country__c(Name='test country',  ISO_Code__c='EUR');
-        insert Country;
-        Location__c localizacion = new Location__c(Name='test localizacion', City__c='test city', Country__c= country.Id, Subdivision__c='test subdivision', UNLOCODE__c='ABC');
-        insert localizacion;
-        Customer_Quote__c importexportquote = new Customer_Quote__c( Account_for__c = new_account.Id,
-                                                                    Freight_Mode__c='Air',Service_Mode__c='Import', Service_Type__c='LCL Cargo',Move_Type__c='Door to Door',Origin_Address__c='tst adrress', 
-                                                                    Country_ofLoad__c= Country.Id, Site_of_Load__c =localizacion.Id,Country_ofDischarge__c= Country.Id, Pricing_Executive__c='0054T0000025ew3QAA',
-                                                                    Site_of_Discharge__c= localizacion.Id, Destination_Address__c='test address', Supply_Project_Name__c = new_supply_project.Id);//Quote_Agent__c= ,Quote_Export_Company__c=, 
-        insert importexportquote;
-        Quote_Item_Line__c quote = new Quote_Item_Line__c(Import_Export_Quote__c = importexportquote.id,Name = 'lineas items');
-        insert quote;
-        Fee__c fee = new Fee__c(Name = 'test fees', Fee_Category__c = 'Disbursement', Rate_Type__c = 'Fixed', Account_for__c = new_account.Id);
-        insert fee;
-        Import_Export_Fee_Line__c quote2 = new Import_Export_Fee_Line__c(Import_Export_Quote__c = importexportquote.id,Name = 'lineas items', Service_Rate_Name__c= fee.Id, Extension_Service_Name__c='test extension fee name', Discount__c=10, Quote_Buy_Price__c=10, Quote_Sell_Price__c=10,Units__c=10, Supply_Project__c=new_supply_project.Id );
-        insert quote2;
-        
-        Import_Export_Fee_Line__c quote3 = new Import_Export_Fee_Line__c(Import_Export_Quote__c = importexportquote.id,Name = 'lineas items', Service_Rate_Name__c= fee.Id, Extension_Service_Name__c='test extension fee name', Discount__c=10, Quote_Buy_Price__c=10, Quote_Sell_Price__c=10,Units__c=10, Supply_Project__c=new_supply_project.Id );
-        insert quote3;
-        Import_Export_Fee_Line__c quote4 = new Import_Export_Fee_Line__c(Import_Export_Quote__c = importexportquote.id,Name = 'lineas items', Service_Rate_Name__c= fee.Id, Extension_Service_Name__c='test extension fee name', Discount__c=10, Quote_Buy_Price__c=10, Quote_Sell_Price__c=10,Units__c=10, Supply_Project__c=new_supply_project.Id );
-        insert quote4;
-        
-        Customer_Quote__c importexportquote2 = new Customer_Quote__c( Account_for__c = new_account.Id,
-                                                                     Freight_Mode__c='Air',Service_Mode__c='Import', Service_Type__c='LCL Cargo',Move_Type__c='Door to Door',Origin_Address__c='tst adrress', 
-                                                                     Country_ofLoad__c= Country.Id, Site_of_Load__c=localizacion.Id,Country_ofDischarge__c= Country.Id,
-                                                                     Site_of_Discharge__c = localizacion.Id, Destination_Address__c='test address', Supply_Project_Name__c = new_supply_project.Id);//Quote_Agent__c= ,Quote_Export_Company__c=, 
-        insert importexportquote2;
-        
-        Import_Export_Fee_Line__c quote5 = new Import_Export_Fee_Line__c(Import_Export_Quote__c = importexportquote2.id,Name = 'lineas items', Service_Rate_Name__c= fee.Id, Extension_Service_Name__c='test extension fee name', Discount__c=10, Quote_Buy_Price__c=10, Quote_Sell_Price__c=10,Units__c=10, Supply_Project__c=new_supply_project.Id );
-        insert quote5;
-        
-        NEU_OM_UploadItems ui = new NEU_OM_UploadItems(new ApexPages.StandardController( new_supply_project ));
-        NEU_OM_UploadItems.items_s item;
-        List<NEU_OM_UploadItems.items_s> lista_items = new List<NEU_OM_UploadItems.items_s>();
-        lista_items.add(new NEU_OM_UploadItems.items_s(null,null,'','','','',0,0,0,'',false,null,'EUR'));
-        List<NEU_OM_UploadItems.items_s> lista_items2 = new List<NEU_OM_UploadItems.items_s>();
-        lista_items2.add(new NEU_OM_UploadItems.items_s(null,null,'test','test','test','test',10,10,10,'test',true,null,'EUR'));
-        ui.new_items = lista_items2;
-        ui.items_to_save = lista_items2;
-        ui.id_oi = new_item_supply.Id;
-        ui.id_family = new_family.Id;
-        ui.get_oi_from_family();
-        
-        ui.create_oi();
-        // ui.crearlineaSupplyitem();
-        
-        ui.delete_oi();
-        ui.return_project();
-    }
     
-    @isTest(SeeAllData=true)
+    
+    @isTest
     static void NEU_OM_Upload_Suppliers_to_Invite() 
     {
         NEU_StaticVariableHelper.setBoolean1(true);
@@ -569,12 +481,12 @@ private class NEU_test_Supply_Projects {
         Account new_supplier =new Account();
         new_supplier.Name='TESTACC';
 		new_supplier.RecordTypeId =  Schema.SObjectType.Account.getRecordTypeInfosByName().get('Supplier').getRecordTypeId();
-        new_supplier.OwnerId='0054T0000025ew3QAA';
+        new_supplier.OwnerId=UserInfo.getUserId();
         insert new_supplier;
         Account new_account =new Account();
         new_account.Name='TESTACC';
 		new_account.RecordTypeId =  Schema.SObjectType.Account.getRecordTypeInfosByName().get('Customer').getRecordTypeId();
-        new_account.OwnerId='0054T0000025ew3QAA';
+        new_account.OwnerId=UserInfo.getUserId();
         insert new_account;
         
         Contact new_contact = new Contact();
@@ -628,7 +540,7 @@ private class NEU_test_Supply_Projects {
         usti.return_project();
     }
     
-    @isTest(SeeAllData=true)
+    @isTest
     static void test_NEU_OM_Upload_Suppliers_to_Invite2() {
         NEU_StaticVariableHelper.setBoolean1(true);
         ApexPages.currentPage().getParameters().put('test', 'test');
@@ -650,18 +562,18 @@ private class NEU_test_Supply_Projects {
         Account a =new Account();
         a.Name='TESTACC';
         a.RecordTypeId =  Schema.SObjectType.Account.getRecordTypeInfosByName().get('Supplier').getRecordTypeId();
-        a.OwnerId='0054T0000025ew3QAA';
+        a.OwnerId=UserInfo.getUserId();
         insert a;
         Account a2 =new Account();
         a2.Name='TESTACC';
         a2.RecordTypeId =  Schema.SObjectType.Account.getRecordTypeInfosByName().get('Supplier').getRecordTypeId();
-        a2.OwnerId='0054T0000025ew3QAA';
+        a2.OwnerId=UserInfo.getUserId();
         insert a2;
                 
         Account b =new Account();
         b.Name='TESTACC';
         b.RecordTypeId =  Schema.SObjectType.Account.getRecordTypeInfosByName().get('Customer').getRecordTypeId();
-        b.OwnerId='0054T0000025ew3QAA';
+        b.OwnerId=UserInfo.getUserId();
         insert b;
         Supply_Project__c supplyproject = new Supply_Project__c(Name='project test', Customer__c = b.Id);
         insert supplyproject; 
@@ -723,7 +635,7 @@ private class NEU_test_Supply_Projects {
         
     }
     
-    public  @isTest(SeeAllData=true)
+      @isTest
         static void test_NEU_OM_Send_Requests2()//ok
     {
         NEU_StaticVariableHelper.setBoolean1(true);
@@ -738,13 +650,13 @@ private class NEU_test_Supply_Projects {
         Account a =new Account();
         a.Name='TESTACC';
         a.RecordTypeId =  Schema.SObjectType.Account.getRecordTypeInfosByName().get('Supplier').getRecordTypeId();
-        a.OwnerId='0054T0000025ew3QAA';
+        a.OwnerId=UserInfo.getUserId();
         insert a;
                 
         Account b =new Account();
         b.Name='TESTACC';
         b.RecordTypeId =  Schema.SObjectType.Account.getRecordTypeInfosByName().get('Customer').getRecordTypeId();
-        b.OwnerId='0054T0000025ew3QAA';
+        b.OwnerId=UserInfo.getUserId();
         insert b;
         Contact contacto = new Contact(AccountId = b.Id, LastName='test contact');
         insert contacto;
@@ -819,7 +731,7 @@ private class NEU_test_Supply_Projects {
         system.debug( 'Prueba realizada' );
     }
     
-    public  @isTest(SeeAllData=true)
+     @isTest
         static void testNEU_OM_FollowersSupplyProject() {//ok
             NEU_StaticVariableHelper.setBoolean1(true);
             ApexPages.currentPage().getParameters().put('test', 'test');
@@ -831,7 +743,7 @@ private class NEU_test_Supply_Projects {
             Account a =new Account();
             a.Name='TESTACC';
             a.RecordTypeId =  Schema.SObjectType.Account.getRecordTypeInfosByName().get('Customer').getRecordTypeId();
-            a.OwnerId='0054T0000025ew3QAA';
+            a.OwnerId=UserInfo.getUserId();
             insert a;
             Contact contacto = new Contact(AccountId = a.Id, LastName='test contact');
             insert contacto;
@@ -848,7 +760,7 @@ private class NEU_test_Supply_Projects {
             uda.quitarlinea();
         }
     
-    public  @isTest(SeeAllData=true)
+    @isTest(SeeAllData=true)
         static void testNEU_OM_FollowersSupplyProject2() {//ok
             NEU_StaticVariableHelper.setBoolean1(true);
             ApexPages.currentPage().getParameters().put('test', 'test');
@@ -859,7 +771,7 @@ private class NEU_test_Supply_Projects {
             Account a =new Account();
             a.Name='TESTACC';
             a.RecordTypeId =  Schema.SObjectType.Account.getRecordTypeInfosByName().get('Customer').getRecordTypeId();
-            a.OwnerId='0054T0000025ew3QAA';
+            a.OwnerId=UserInfo.getUserId();
             insert a;      
             Contact contacto = new Contact(AccountId = a.Id, LastName='test contact');
             insert contacto;
@@ -880,7 +792,7 @@ private class NEU_test_Supply_Projects {
             uda.quitarlinea();
         }
     
-    @isTest(SeeAllData=true)
+    @isTest
     static void test_NEU_OM_ProjectSteps() {
         NEU_StaticVariableHelper.setBoolean1(true);
         ApexPages.currentPage().getParameters().put('test', 'test');
@@ -895,12 +807,12 @@ private class NEU_test_Supply_Projects {
         Account sup =new Account();
         sup.Name='TESTACCSUP';
         sup.RecordTypeId =  Schema.SObjectType.Account.getRecordTypeInfosByName().get('Supplier').getRecordTypeId();
-        sup.OwnerId='0054T0000025ew3QAA';
+        sup.OwnerId=UserInfo.getUserId();
         insert sup;
         Account a =new Account();
         a.Name='TESTACC';
         a.RecordTypeId =  Schema.SObjectType.Account.getRecordTypeInfosByName().get('Customer').getRecordTypeId();
-        a.OwnerId='0054T0000025ew3QAA';
+        a.OwnerId=UserInfo.getUserId();
         insert a;
         Supply_Project__c supplyproject = new Supply_Project__c(Name='project test', Customer__c = a.Id);
         insert supplyproject;
