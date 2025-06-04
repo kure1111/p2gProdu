@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <Package xmlns="http://soap.sforce.com/2006/04/metadata">
-    <types>
-        <members>NEU_OM_Start_Clearance_Shipment</members>
-        <members>NEU_OM_Start_Clearance_ShipmentTest</members>
-        <name>ApexClass</name>
-    </types>
-	<version>62.0</version>
+	<types>
+		<members>NEU_SendMinutaEmail</members>
+		<members>NEU_SendMinutaEmailTest</members>
+		<members>P2G_NEU_SendMinutaEmailTest</members>
+		<name>ApexClass</name>
+	</types>
+	<version>63.0</version>
 </Package>
