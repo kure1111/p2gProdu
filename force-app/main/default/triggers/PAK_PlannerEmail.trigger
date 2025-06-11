@@ -25,7 +25,7 @@ trigger PAK_PlannerEmail on Customer_Quote__c (before insert,before update,after
             list<Account> Cuenta = [Select ActiveSap__c, Venta_Sap__c, RecordtypeId, Owner.Workplace__c, Saldo_DisponibleOK__c From Account Where Id=: trigger.new[0].Account_for__c];
             list<Lead> leads = [SELECT Name, Id, ConvertedAccountId FROM Lead where ConvertedAccountId =: trigger.new[0].Account_for__c ]; 
             RecordType customerRt = [Select Id From Recordtype Where DeveloperName='Customer' limit 1];
-            
+            System.debug('La cuenta: '+ trigger.new);
             System.debug('Saldo: ' + Cuenta[0].Saldo_DisponibleOK__c);
             System.debug('MontoQuote: ' + trigger.new[0].Total_Services_Sell_Amount__c);
             System.debug('RtAccount: ' + Cuenta[0].RecordtypeId);
