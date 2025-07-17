@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <Package xmlns="http://soap.sforce.com/2006/04/metadata">
     <types>
-        <members>NEU_CheckAccountInactiveIE</members>
-        <members>PAK_IEQSST</members>
-        <members>PAK_PlannerEmail</members>
-        <members>PAK_SR_Prom</members>
-        <members>PAK_ClienteRecuperado</members>        
-        <name>ApexTrigger</name>
+        <members>NEU_CartaPortePDF</members>
+        <members>NEU_CartaPortePDF_Test</members>
+        <members>NEU_CartaPorteSavePDF</members>
+        <members>NEU_cartaPorteSavePDF_Test</members>
+        <members>P2G_Validacion_Datos_CartaPorte</members>
+        <members>P2G_Validacion_Datos_CartaPorteTest</members>
+        <name>ApexClass</name>
     </types>
-	<version>63.0</version>
+	<version>64.0</version>
 </Package>
