@@ -212,7 +212,7 @@ public with sharing class NEU_OM_Start_Clearance_Shipment {
         string hs_code_item = '';
   
         
-        Shipment_Item_Line = [select Id, Name, Unit_Origin_Sell_Price__c,
+        Shipment_Item_Line = [select Id, Name, Unit_Origin_Sell_Price__c,CurrencyIsoCode,
          Sales_Tax__c,  Duty__c, Customs_Value__c, Customs_Incoterm__c, Additional_Import_Taxes_Amount__c,
          Item_Name__r.Name, Extension_Item_Name__c, Shipping_Weight_Kg__c,HS_Code__c ,Shipment__r.Country_of_Load__c, 
          Shipment__r.Route__r.Country_of_Load__r.ISO_Code__c, Shipping_Volume_m3__c, Percent_Duty__c, Total_Taxes__c ,

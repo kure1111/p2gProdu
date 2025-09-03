@@ -1,27 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <Package xmlns="http://soap.sforce.com/2006/04/metadata">
     <types>
-        <members>NEU_Shipment_Program_View_Route</members>
-        <members>NEU_TarimasFreight</members>
-        <members>NEU_TarimasINT</members>
-        <members>NEU_Track_and_Trace</members>
-        <members>NEU_TrafficSummary</members>
-        <members>NEU_Traxon_FHL</members>
-        <members>NEU_Traxon_FSR_SP</members>
-        <members>NEU_Traxon_Waybill_Status</members>
-        <members>NEU_create_shipmet_pallets</members>
-        <members>NEU_test_Freight_Rates</members>
-        <members>NEU_test_SchedulerReport</members>
-        <members>NEU_test_Shipment_Program</members>
-        <members>NEU_test_TarimasINT</members>
-        <members>NEU_test_Track_and_Trace_v2</members>
-        <members>NEU_test_Traffic</members>
-        <members>NEU_test_Traxon</members>
-        <members>NEU_test_create_shipment_pallets</members>
-        <members>PAK_ImpkQuote</members>
-        <members>PAK_SendCargoLines</members>
-        <members>RefreshSchedulerReport</members>
+        <members>NEU_CartaPortePDF</members>
+        <members>NEU_CartaPortePDF_Test</members>
+        <members>NEU_CartaPorteSavePDF</members>
+        <members>NEU_cartaPorteSavePDF_Test</members>
+        <members>P2G_Validacion_Datos_CartaPorte</members>
+        <members>P2G_Validacion_Datos_CartaPorteTest</members>
         <name>ApexClass</name>
     </types>
-	<version>62.0</version>
+	<version>64.0</version>
 </Package>

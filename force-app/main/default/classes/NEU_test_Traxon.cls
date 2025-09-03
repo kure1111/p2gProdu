@@ -82,7 +82,7 @@ private class NEU_test_Traxon {
         List<Account> list_accounts = NEU_Utils.getAccounts('Customer,');
         Account a = list_accounts[0];
         insert a;
-        Shipment__c ship = new Shipment__c(Account_for__c = a.Id, Freight_Mode__c='Air', Service_Mode__c ='Import',MAWB_Number__c='012345678901', Only_Warehouse_Service__c = true);
+        Shipment__c ship = new Shipment__c(Name = 'SP-TS-0001', Account_for__c = a.Id, Freight_Mode__c='Air', Service_Mode__c ='Import',MAWB_Number__c='012345678901', Only_Warehouse_Service__c = true);
         insert ship;
         Shipment_Program__c ship_prog = new Shipment_Program__c(Number_of_Containers__c =2, Flight_Number__c='10',MAWB_Number__c='012345678901');
         insert ship_prog;
@@ -127,7 +127,7 @@ private class NEU_test_Traxon {
         insert Country;
         Location__c location = new Location__c(Name='test', City__c='test city', Country__c= country.Id, Subdivision__c='test subdivision', UNLOCODE__c='ABC');
         insert location;
-        Shipment__c ship = new Shipment__c(Account_for__c = b.Id, Freight_Mode__c='Sea', Service_Mode__c ='Import', Only_Warehouse_Service__c = true);
+        Shipment__c ship = new Shipment__c(Name = 'SP-TS-0002', Account_for__c = b.Id, Freight_Mode__c='Sea', Service_Mode__c ='Import', Only_Warehouse_Service__c = true);
         insert ship;
         NEU_Traxon_FSR t=new NEU_Traxon_FSR(new ApexPages.StandardController(ship));
         t.sendToTraxon();
@@ -147,7 +147,7 @@ private class NEU_test_Traxon {
         insert Country;
         Location__c location = new Location__c(Name='test', City__c='test city', Country__c= country.Id, Subdivision__c='test subdivision', UNLOCODE__c='ABC', IATA_Code__c = 'ABC');
         insert location;
-        Shipment__c ship = new Shipment__c(Account_for__c = b.Id, Freight_Mode__c='Sea', Service_Mode__c ='Import', Country_of_Load__c = Country.Id, Country_of_Discharge__c = Country.Id, Site_of_Load__c = location.Id, Site_of_Discharge__c = location.Id, Only_Warehouse_Service__c = true);
+        Shipment__c ship = new Shipment__c(Name = 'SP-TS-0003', Account_for__c = b.Id, Freight_Mode__c='Sea', Service_Mode__c ='Import', Country_of_Load__c = Country.Id, Country_of_Discharge__c = Country.Id, Site_of_Load__c = location.Id, Site_of_Discharge__c = location.Id, Only_Warehouse_Service__c = true);
         ship.Carrier__c=a.id;
         ship.MAWB_Number__c='TEST';
         insert ship;
@@ -324,7 +324,7 @@ private class NEU_test_Traxon {
         insert location;
         Customer_Quote__c importexportquoteR = new Customer_Quote__c(Account_for__c = b.Id, Quotation_Status__c='Quote being prepared', Only_Warehouse_Service__c = true);
         insert importexportquoteR; 
-        Shipment__c ship = new Shipment__c(Account_for__c = b.Id, Freight_Mode__c='Sea', Service_Mode__c ='Import', Service_Type__c='LCL Cargo');
+        Shipment__c ship = new Shipment__c(Name = 'SP-TS-0004', Account_for__c = b.Id, Freight_Mode__c='Sea', Service_Mode__c ='Import', Service_Type__c='LCL Cargo');
         insert ship;
         Shipment_Line__c sl = new Shipment_Line__c(Shipment__c = ship.id, Name = 'lineas items');
 	    insert sl;
@@ -387,7 +387,7 @@ private class NEU_test_Traxon {
         insert location;
         Customer_Quote__c importexportquoteR = new Customer_Quote__c(Account_for__c = b.Id, Quotation_Status__c='Quote being prepared', Only_Warehouse_Service__c = true);
         insert importexportquoteR;
-        Shipment__c ship = new Shipment__c(Account_for__c = b.Id, Freight_Mode__c='Sea', Service_Mode__c ='Import', Service_Type__c='LCL Cargo');
+        Shipment__c ship = new Shipment__c(Name = 'SP-TS-0005', Account_for__c = b.Id, Freight_Mode__c='Sea', Service_Mode__c ='Import', Service_Type__c='LCL Cargo');
         insert ship;
         Shipment_Line__c sl = new Shipment_Line__c(Shipment__c = ship.id, Name = 'lineas items');
 	    insert sl;
@@ -512,7 +512,7 @@ private class NEU_test_Traxon {
 		acc_test.RecordTypeId = Schema.SobjectType.Account.getRecordTypeInfosByName().get('Customer').getRecordTypeId();
 		insert acc_test;
 		
-		Shipment__c test_shipment = new Shipment__c(Account_for__c=acc_test.Id, MAWB_Number__c='020-79209734', Only_Warehouse_Service__c = true);
+		Shipment__c test_shipment = new Shipment__c(Name = 'SP-TS-0006', Account_for__c=acc_test.Id, MAWB_Number__c='020-79209734', Only_Warehouse_Service__c = true);
 		insert test_shipment;
 		
 		Event__c test_event = new Event__c(Shipment__c=test_shipment.Id);
@@ -557,7 +557,7 @@ private class NEU_test_Traxon {
         insert location;
         Customer_Quote__c importexportquoteR = new Customer_Quote__c(Account_for__c = b.Id, Quotation_Status__c='Quote being prepared', Only_Warehouse_Service__c = true);
         insert importexportquoteR; 
-        Shipment__c ship = new Shipment__c(Account_for__c = b.Id, Freight_Mode__c='Sea', Service_Mode__c ='Import', Service_Type__c='LCL Cargo');
+        Shipment__c ship = new Shipment__c(Name = 'SP-TS-0007', Account_for__c = b.Id, Freight_Mode__c='Sea', Service_Mode__c ='Import', Service_Type__c='LCL Cargo');
         insert ship;
         Shipment_Line__c sl = new Shipment_Line__c(Shipment__c = ship.id, Name = 'lineas items');
 	    insert sl;
@@ -620,7 +620,7 @@ private class NEU_test_Traxon {
         insert location;
         Customer_Quote__c importexportquoteR = new Customer_Quote__c(Account_for__c = b.Id, Quotation_Status__c='Quote being prepared', Only_Warehouse_Service__c = true);
         insert importexportquoteR;
-        Shipment__c ship = new Shipment__c(Account_for__c = b.Id, Freight_Mode__c='Sea', Service_Mode__c ='Import', Service_Type__c='LCL Cargo');
+        Shipment__c ship = new Shipment__c(Name = 'SP-TS-0008', Account_for__c = b.Id, Freight_Mode__c='Sea', Service_Mode__c ='Import', Service_Type__c='LCL Cargo');
         insert ship;
         Shipment_Line__c sl = new Shipment_Line__c(Shipment__c = ship.id, Name = 'lineas items');
 	    insert sl;
@@ -1158,7 +1158,7 @@ private class NEU_test_Traxon {
         insert a;  
         Customer_Quote__c importexportquoteR = new Customer_Quote__c(Account_for__c = a.Id, Quotation_Status__c='Quote being prepared', Only_Warehouse_Service__c = true);
         insert importexportquoteR; 
-        Shipment__c ship = new Shipment__c(Account_for__c = a.Id, Freight_Mode__c='Sea', Service_Mode__c ='Import', Service_Type__c='LCL Cargo', MAWB_Number__c='');
+        Shipment__c ship = new Shipment__c(Name = 'SP-TS-0009', Account_for__c = a.Id, Freight_Mode__c='Sea', Service_Mode__c ='Import', Service_Type__c='LCL Cargo', MAWB_Number__c='');
         insert ship;
 	    //Shipment_Program__c ship_prog = new Shipment_Program__c(Number_of_Containers__c =2, Flight_Number__c='10',MAWB_Number__c='012345678901');
 	    //insert ship_prog; 

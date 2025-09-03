@@ -91,7 +91,7 @@ global class P2G_CreacionFoliosWrapper {
     @AuraEnabled
     public static list<SAP_Service_Type__c> getSapServiceType(string sapServiceT, String grupo){
         string searchKeyword = '%' + sapServiceT + '%';
-        list<SAP_Service_Type__c> ListSapServiceT = [SELECT Id, Name FROM SAP_Service_Type__c 
+        list<SAP_Service_Type__c> ListSapServiceT = [SELECT Id, Name, Code__c FROM SAP_Service_Type__c 
                                               where Name LIKE : searchKeyword AND Group__c =: grupo limit 20];
         if(ListSapServiceT.size() == 0){
             throw new AuraHandledException('No Record Found..'); 

@@ -7,6 +7,22 @@ private class NEU_test_AsyncOI {
 		NEU_AsyncOI a=new NEU_AsyncOI();
     	a.execute(null);
     }
+    @IsTest(SeeAllData=true)
+    public static void NEU_AsyncOI2() {
+        Account acc = [SELECT Id, Name FROM Account WHERE Name LIKE '%ejemplo%' LIMIT 1];
+		Shipment__c new_shipment = new Shipment__c();
+        new_shipment.Name = 'SP-FN-000001';
+        new_shipment.Freight_Mode__c= 'Road';
+        new_shipment.Service_Type__c= 'FTL';
+        new_shipment.Service_Mode__c = 'NATIONAL';
+        new_shipment.Account_for__c = acc.Id;
+        insert new_shipment;
+        
+        new_shipment.External_Reference_OI__c = 'test';
+        update new_shipment;
+        
+        NEU_AsyncOI.query_oi_future();
+    }
     static testMethod void NEU_AsyncOIShipment() {
 		NEU_StaticVariableHelper.setBoolean1(true);
 

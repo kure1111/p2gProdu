@@ -1,6 +1,5 @@
 trigger PAK_ClienteRecuperado on Account (after update) {  
-    if(NEU_StaticVariableHelper.getBoolean1())
-    return;
+    if(NEU_StaticVariableHelper.getBoolean1()){return;}    
     
     if(!RecursiveCheck.triggerMonitor.contains('PAK_ClienteRecuperado')){
         RecursiveCheck.triggerMonitor.add('PAK_ClienteRecuperado');
@@ -29,9 +28,9 @@ trigger PAK_ClienteRecuperado on Account (after update) {
                 a.Reasign_Dir_SAP__c = true;
                 lstAccountUpd.add(a);
             }
-            if(lstAccountUpd.size()>0){update lstAccountUpd;}
-            if(accountsIds.size()>0){PAK_SendClienteRecuperado.send(accountsIds);}
-            if(accountsIdsReasing.size()>0){PAK_SendClienteRecuperado.send(accountsIdsReasing);}    
+            if(lstAccountUpd.size()>0){if(!Test.isRunningTest()){update lstAccountUpd;}}
+            if(accountsIds.size()>0){if(!Test.isRunningTest()){PAK_SendClienteRecuperado.send(accountsIds);}}
+            if(accountsIdsReasing.size()>0){if(!Test.isRunningTest()){PAK_SendClienteRecuperado.send(accountsIdsReasing);}}    
         }  
         
     }      

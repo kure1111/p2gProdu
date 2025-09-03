@@ -19,11 +19,11 @@
  *
  * See the Apex Language Reference for more information about Testing and Code Coverage.
  */
-@isTest
+@isTest(SeeAllData=true)
 private class NEU_test_Shipment_Entry {
 
    
-  /*public static testMethod void NEU_Shipment_Entry()
+  public static testMethod void NEU_Shipment_Entry()
      {
      	NEU_StaticVariableHelper.setBoolean1(true);
      	
@@ -39,8 +39,19 @@ private class NEU_test_Shipment_Entry {
         Price_List__c b = new Price_List__c(Name = 'Test lista', Business_Area__c = 'Auto-Parts', Items_Account_Owner__c = a.Id);
         insert b;
         //Customer_Quote__c importexportquote = new Customer_Quote__c(Consignee__c = a.Id, Supplier_Account__c = sup.Id, Catalog_Price_List__c = b.id, Account_for__c = a.Id, Authorized_Credit__c =true, Quotation_Status__c ='Approved as Succesful');
-        Customer_Quote__c importexportquote = new Customer_Quote__c(Consignee__c = a.Id, Supplier_Account__c = tr.Id, Catalog_Price_List__c = b.id, Account_for__c = a.Id, Authorized_Credit__c =true, Quotation_Status__c ='Quote being prepared', Origin_Address__c = '', Destination_Address__c = '');
-        insert importexportquote;
+        Customer_Quote__c importexportquote = [SELECT Id, Name, Account_for__c, Freight_Mode__c, Service_Mode__c, 
+        Service_Type__c, Move_Type__c, Origin_Address__c, Destination_Address__c
+ FROM Customer_Quote__c
+ WHERE Account_for__c != null
+   AND Freight_Mode__c != null
+   AND Service_Mode__c != null
+   AND Service_Type__c != null
+   AND Origin_Address__c != null
+   AND Pricing_Executive__c!= null
+   AND Quotation_Status__c != 'Quote Declined'
+   AND Que_tarifa_esperaba_el_cliente__c!=null
+   AND Destination_Address__c != null LIMIT 1];
+
         Product_Family__c c = new Product_Family__c(Name = 'Test acount',Business_Area__c = 'Auto-Parts');
         insert c;
         Customer_Price_List__c d = new Customer_Price_List__c(Customer__c = a.id,Price_List__c = b.Id);
@@ -100,7 +111,7 @@ private class NEU_test_Shipment_Entry {
         update importexportquote;
         
         //Customer_Quote__c importexportquote2 = new Customer_Quote__c(Consignee__c = a.Id, Supplier_Account__c = sup.Id, Catalog_Price_List__c = b.id, Account_for__c = a.Id, Authorized_Credit__c =true, Quotation_Status__c ='Approved as Succesful');
-        Customer_Quote__c importexportquote2 = new Customer_Quote__c(Consignee__c = a.Id, Supplier_Account__c = tr.Id, Catalog_Price_List__c = b.id, Account_for__c = a.Id, Authorized_Credit__c =true, Quotation_Status__c ='Quote being prepared');
+        Customer_Quote__c importexportquote2 = new Customer_Quote__c( Account_for__c = a.Id, Freight_Mode__c='Air',Service_Mode__c='Import', Service_Type__c='LCL Cargo',Move_Type__c='Door to Door',Origin_Address__c='tst adrress', Destination_Address__c='test address');
         insert importexportquote2;
         Quote_Item_Line__c quote2 = new Quote_Item_Line__c(Import_Export_Quote__c = importexportquote2.id,Name = 'lineas items', Item_Name__c = item.Id, Item_Supplier_Owner__c=sup.Id, Units__c=10);
         insert quote2;
@@ -123,10 +134,10 @@ private class NEU_test_Shipment_Entry {
         insert ware;
         Warehouse_Storage_Bin__c ware_storage = new Warehouse_Storage_Bin__c(Name='test warehause', Warehouse__c = ware.Id);
         insert ware_storage;
-        Inventory_Entry__c sentry = new Inventory_Entry__c(Item__c = item.Id, Units_Entry__c=10,Warehouse_Storage_Bin__c= ware_storage.Id);
+        Inventory_Entry__c sentry = new Inventory_Entry__c(Item__c = item.Id,Warehouse__c=ware.ID, Units_Entry__c=10,Warehouse_Storage_Bin__c= ware_storage.Id);
         insert sentry;
 
-        Shipment__c ship = new Shipment__c(Account_for__c = a.Id, Freight_Mode__c='Sea', Service_Mode__c ='Import');
+        Shipment__c ship = new Shipment__c(Name = 'hoae',Account_for__c = a.Id, Freight_Mode__c='Sea', Service_Mode__c ='Import', Service_Type__c='FTL');
         insert ship;
         
         Shipment_Line__c shipline = new Shipment_Line__c(Shipment__c = ship.Id, Name= 'test ship line', Item_Name__c=g.id,Supplier_Quote_Line__c=sup_quote_lines.id,Supplier_Quote__c=sup_quote.id, Shipping_Weight_Kg__c =100, Shipping_Volume_m3__c = 100,Expense_Amount__c =10,Units_Shipped__c=100 );
@@ -209,5 +220,5 @@ private class NEU_test_Shipment_Entry {
         }
         uda.applyLines();
         uda.cancelLines();
-     }*/
+     }
 }

@@ -5,9 +5,6 @@ trigger OpportunityName on Opportunity (before insert, before update) {
     Set<Id> setAccounts = new Set<Id>();
     Map<Id, String> mapAccount = new Map<Id, String>();
     List<String> idOpportuniy = new List<String>();
-    if(Test.isRunningTest()){
-        pase();
-    }
     for(Opportunity op :Trigger.New){
         if(op.AccountId != null){
             setAccounts.add(op.AccountId);
@@ -34,25 +31,26 @@ trigger OpportunityName on Opportunity (before insert, before update) {
     //Actualización del Campo
     for(Opportunity op : Trigger.New){
         if(op.AccountId != null && op.Service_Type__c != null){
-    		String elGrupo = getGroup (op.Service_Type__c);
-           	op.Name = op.Service_Type__c + ' - ' + mapAccount.get(op.AccountId)+ ' - ' + mapOwnerOpp.get(op.OwnerId) + ' - ' + op.Opportunity_Record_Number__c;
+            String tipoServicio = P2G_reporteProductosOportunidad.modificarServicio(op.Service_Type__c);
+    		String elGrupo = getGroup (tipoServicio);
+           	op.Name = tipoServicio + ' - ' + mapAccount.get(op.AccountId)+ ' - ' + mapOwnerOpp.get(op.OwnerId) + ' - ' + op.Opportunity_Record_Number__c;
         	op.Group__c = elGrupo;
         }
     }
     if (Trigger.isinsert) {
         if (Trigger.isBefore) {
-            for(Opportunity op :Trigger.New){
-                system.debug('op ' + op);
+            for(Opportunity op : Trigger.New){
+        		system.debug('op ' + op);
                 if((op.Group__c == 'SP-PQ-PAQUETERIA')||(op.Group__c == 'SP-WH-ALMACENAJE')||(op.Group__c == 'SP-T-CONSOLIDADO')){
-                    Pricebook2 pb = [SELECT Id, Name FROM Pricebook2 WHERE Name = 'Paqueteria'];
-                    op.Pricebook2Id = pb.id;
-                    system.debug('pb ' + pb);
-                }else{
-                    Pricebook2 pb = new Pricebook2(Name = op.name, IsActive = true, Description = 'Auto- Generado');
-                    insert pb;
-                    op.Pricebook2Id = pb.id;
-                    system.debug('pb ' + pb);
-                }
+                Pricebook2 pb = [SELECT Id, Name FROM Pricebook2 WHERE Name = 'Paqueteria'];
+                op.Pricebook2Id = pb.id;
+                system.debug('pb ' + pb);
+            }else{
+                Pricebook2 pb = new Pricebook2(Name = op.name, IsActive = true, Description = 'Auto- Generado');
+                insert pb;
+                op.Pricebook2Id = pb.id;
+                system.debug('pb ' + pb);
+            }
             }
         }
     }
@@ -146,36 +144,6 @@ trigger OpportunityName on Opportunity (before insert, before update) {
                     op.SLA_Ejecucion__c = tiempoTranscurrido;
                     op.Data_Time_Ejecucion__c = System.now();
                 }
-                //llena campos totales
-                Double totalAmount = P2G_tiempoTranscurridoOppo.sumaTotalAmountAceptado(todosProductos);
-                Decimal totalAceptada = P2G_tiempoTranscurridoOppo.totalAceptada(todosProductos,todosSubproductos);
-                Decimal totalCotizado = P2G_tiempoTranscurridoOppo.totalCotizado(todosProductos,todosSubproductos);
-                Decimal totalAmountOpportunity = P2G_tiempoTranscurridoOppo.totalAmountOpportunity(todosProductos,todosSubproductos);
-                Decimal totalRechazados = P2G_tiempoTranscurridoOppo.totalRechazados(todosProductos,todosSubproductos);
-                Double totalAceptadaAnual = 0;
-                Double totalCotizadoAnual = 0;
-                Double totalAmountOpportunityAnual = 0;
-                Double totalRechazadosAnual = 0;
-                for(OpportunityLineItem oli : todosProductos){
-                    if(oli.OpportunityId == op.Id){
-                        totalCotizadoAnual = P2G_tiempoTranscurridoOppo.multiplicacionAnual(totalCotizado, oli.PROJ_Frecuencia__c);
-                        totalAmountOpportunityAnual = P2G_tiempoTranscurridoOppo.multiplicacionAnual(totalAmountOpportunity, oli.PROJ_Frecuencia__c);
-                        totalRechazadosAnual = P2G_tiempoTranscurridoOppo.multiplicacionAnual(totalRechazados, oli.PROJ_Frecuencia__c);
-                        totalAceptadaAnual = P2G_tiempoTranscurridoOppo.multiplicacionAnual(totalAceptada, oli.PROJ_Frecuencia__c);
-                    }
-                }
-                System.debug('los totales son totalCotizado: '+totalCotizado+' totalAmountOpportunity: '+totalAmountOpportunity+
-                             ' totalRechazados: '+totalRechazados+' totalCotizadoAnual: '+totalCotizadoAnual+' totalAmountOpportunityAnual: '+
-                             totalAmountOpportunityAnual+' totalRechazadosAnual: '+totalRechazadosAnual);
-                op.Total_Amount_Aceptada__c = totalAmount;
-                op.Total_Cerrado_Ganado__c = totalAceptada;
-                op.Total_Cotizado__c = totalCotizado;
-                op.Total_Opportunity__c = totalAmountOpportunity;
-                op.Total_Amount_Rechazados__c = totalRechazados;
-                op.Total_Cotizado_Anual__c = totalCotizadoAnual;
-                op.Total_Opportunity_Anual__c = totalAmountOpportunityAnual;
-                op.Total_Amount_Rechazados_Anual__c = totalRechazadosAnual;
-                op.Total_Cerrado_Ganado_Anual__c = totalAceptadaAnual;
             }
         } else if (Trigger.isAfter) {
             
@@ -194,108 +162,5 @@ trigger OpportunityName on Opportunity (before insert, before update) {
             }
         }
         return elGrupo;
-    }
-    public static void pase(){
-        integer a = 1;
-        a = 1;
-        a = 1;
-        a = 1;
-        a = 1;
-        a = 1;
-        a = 1;
-        a = 1;
-        a = 1;
-        a = 1;
-        a = 1;
-        a = 1;
-        a = 1;
-        a = 1;
-        a = 1;
-        a = 1;
-        a = 1;
-        a = 1;
-        a = 1;
-        a = 1;
-        a = 1;
-        a = 1;
-        a = 1;
-        a = 1;
-        a = 1;
-        a = 1;
-        a = 1;
-        a = 1;
-        a = 1;
-        a = 1;
-        a = 1;
-        a = 1;
-        a = 1;
-        a = 1;
-        a = 1;
-        a = 1;
-        a = 1;
-        a = 1;
-        a = 1;
-        a = 1;
-        a = 1;
-        a = 1;
-        a = 1;
-        a = 1;
-        a = 1;
-        a = 1;
-        a = 1;
-        a = 1;
-        a = 1;
-        a = 1;
-        a = 1;
-        a = 1;
-        a = 1;
-        a = 1;
-        a = 1;
-        a = 1;
-        a = 1;
-        a = 1;
-        a = 1;
-        a = 1;
-        a = 1;
-        a = 1;
-        a = 1;
-        a = 1;
-        a = 1;
-        a = 1;
-        a = 1;
-        a = 1;
-        a = 1;
-        a = 1;
-        a = 1;
-        a = 1;
-        a = 1;
-        a = 1;
-        a = 1;
-        a = 1;
-        a = 1;
-        a = 1;
-        a = 1;
-        a = 1;
-        a = 1;
-        a = 1;
-        a = 1;
-        a = 1;
-        a = 1;
-        a = 1;
-        a = 1;
-        a = 1;
-        a = 1;
-        a = 1;
-        a = 1;
-        a = 1;
-        a = 1;
-        a = 1;
-        a = 1;
-        a = 1;
-        a = 1;
-        a = 1;
-        a = 1;
-        a = 1;
-        a = 1;
     }
 }

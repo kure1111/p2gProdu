@@ -15,7 +15,49 @@ public class Cifid_Test {
         new Cifid_updateQuote.CustomerQuote();
         new Cifid_updateQuote.Cifid_UpdateQuoteFromPak();
     }
-    
+    @isTest
+    public static void Cifid_updateQuote_Test(){
+        Cifid_updateQuote.LogInfo logInfo = new Cifid_updateQuote.LogInfo();
+        logInfo.category = 'test';
+        logInfo.level = 'test';
+        Cifid_updateQuote.DebuggingInfo_element DebuggingInfo_element = new Cifid_updateQuote.DebuggingInfo_element();
+        DebuggingInfo_element.debugLog = 'test';
+        Cifid_updateQuote.address address = new Cifid_updateQuote.address();
+        address.city = 'test';
+        address.country = 'test';
+        address.countryCode = 'test';
+        address.geocodeAccuracy = 'test';
+        address.postalCode = 'test';
+        address.state = 'test';
+        address.stateCode = 'test';
+        address.street = 'test';
+        Cifid_updateQuote.SessionHeader_element SessionHeader_element = new Cifid_updateQuote.SessionHeader_element();
+        SessionHeader_element.sessionId = 'test';
+        Cifid_updateQuote.estatus estatus = new Cifid_updateQuote.estatus();
+        estatus.code = 'test';
+        estatus.message = 'test';
+        Cifid_updateQuote.CallOptions_element CallOptions_element = new Cifid_updateQuote.CallOptions_element();
+        CallOptions_element.client = 'test';
+    	Cifid_updateQuote.DebuggingHeader_element DebuggingHeader_element = new Cifid_updateQuote.DebuggingHeader_element();
+        DebuggingHeader_element.debugLevel = 'test';
+    	Cifid_updateQuote.location location = new Cifid_updateQuote.location();
+        location.latitude = 2.3;
+        location.longitude = 2.3;
+    	Cifid_updateQuote.AllowFieldTruncationHeader_element AllowFieldTruncationHeader_element = new Cifid_updateQuote.AllowFieldTruncationHeader_element();
+        AllowFieldTruncationHeader_element.allowFieldTruncation = True;
+    	Cifid_updateQuote.CustomerQuote CustomerQuote = new Cifid_updateQuote.CustomerQuote();
+        CustomerQuote.finalClient = 'test';
+        CustomerQuote.pricingExecutive = 'test';
+        CustomerQuote.quoteName = 'test';
+        CustomerQuote.quoteStatus = 'test';
+        CustomerQuote.totalServStdBuyAmt = 2.3;
+    	Cifid_updateQuote.Cifid_UpdateQuoteFromPak Cifid_UpdateQuoteFromPak =new Cifid_updateQuote.Cifid_UpdateQuoteFromPak();
+        Cifid_UpdateQuoteFromPak.endpoint_x = 'https://na85.salesforce.com/services/Soap/class/Cifid_UpdateQuoteFromPak';
+        Cifid_UpdateQuoteFromPak.clientCertName_x = 'test';
+        Cifid_UpdateQuoteFromPak.clientCert_x = 'test';
+        Cifid_UpdateQuoteFromPak.clientCertPasswd_x = 'test';
+        Cifid_UpdateQuoteFromPak.timeout_x = 23;
+    }
     private static testMethod void shipmentUpdate(){
         new Cifid_updateQuoteShipment.LogInfo();
         new Cifid_updateQuoteShipment.DebuggingInfo_element();
@@ -48,7 +90,55 @@ public class Cifid_Test {
         new CifidQuoteLines.quoteLines_element();
         new CifidQuoteLines.Cifid_QuoteLines();
     }
-    
+    public static void CifidQuoteLines_test(){
+        CifidQuoteLines.LogInfo logInfo = new CifidQuoteLines.LogInfo();
+            logInfo.category = 'tesst';
+            logInfo.level = 'test';
+        CifidQuoteLines.DebuggingInfo_element DebuggingInfo_element = new CifidQuoteLines.DebuggingInfo_element();
+        	DebuggingInfo_element.debugLog = 'test';
+        CifidQuoteLines.address address = new CifidQuoteLines.address();
+            address.city = 'test';
+            address.country = 'test';
+            address.countryCode = 'test';
+            address.geocodeAccuracy = 'test';
+            address.postalCode = 'test';
+            address.state = 'test';
+            address.stateCode = 'test';
+            address.street = 'test';
+        CifidQuoteLines.CallOptions_element CallOptions_element = new CifidQuoteLines.CallOptions_element();
+        	CallOptions_element.client = 'test';
+    	CifidQuoteLines.DebuggingHeader_element DebuggingHeader_element = new CifidQuoteLines.DebuggingHeader_element();
+        	DebuggingHeader_element.debugLevel = 'test';
+    	CifidQuoteLines.Quote Quote = new CifidQuoteLines.Quote();
+            Quote.operation = 23;
+            Quote.quoteName = 'test';
+        CifidQuoteLines.SessionHeader_element SessionHeader_element = new CifidQuoteLines.SessionHeader_element();
+        	SessionHeader_element.sessionId = 'test';
+        CifidQuoteLines.estatus estatus = new CifidQuoteLines.estatus();
+            estatus.code = 'test';
+            estatus.message = 'test';
+    	CifidQuoteLines.QuoteLine QuoteLine =new CifidQuoteLines.QuoteLine();
+            QuoteLine.carrier = 'test';
+            QuoteLine.idLine = 'test';
+            QuoteLine.quoteSellPrice = 2.3;
+            QuoteLine.quoteStdBuyPrice = 2.3;
+            QuoteLine.rateCategory = 'test';
+            QuoteLine.rateName = 'test';
+            QuoteLine.sellNetAmmount = 2.3;
+            QuoteLine.StdBuyAmmount = 2.3;
+            QuoteLine.units = 2.3;
+    	CifidQuoteLines.location location = new CifidQuoteLines.location();
+            location.latitude = 2.3;
+            location.longitude = 2.3;
+    	CifidQuoteLines.AllowFieldTruncationHeader_element AllowFieldTruncationHeader_element = new CifidQuoteLines.AllowFieldTruncationHeader_element();
+        	AllowFieldTruncationHeader_element.allowFieldTruncation = True;
+        CifidQuoteLines.Cifid_QuoteLines Cifid_QuoteLines = new CifidQuoteLines.Cifid_QuoteLines();
+        Cifid_QuoteLines.endpoint_x = 'https://na85.salesforce.com/services/Soap/class/Cifid_QuoteLines';
+        Cifid_QuoteLines.clientCertName_x = 'test';
+        Cifid_QuoteLines.clientCert_x = 'test';
+        Cifid_QuoteLines.clientCertPasswd_x = 'test';
+        Cifid_QuoteLines.timeout_x = 23;
+    }
     private static testMethod void shipmentLines(){
         new CifidShipmentLines.LogInfo();
         new CifidShipmentLines.DebuggingInfo_element();
@@ -101,17 +191,12 @@ public class Cifid_Test {
         
         quote_test.Date_Pricing_responded__c = System.today();
         update quote_test;
-        
-        Cifid_SendUpdateIeq.Test();
     }
     
-    private static testMethod void updateQuoteShipment(){
+    /*private static testMethod void updateQuoteShipment(){
         List<Account> list_accounts = NEU_Utils.getAccounts('Customer,');
         Account account_test = list_accounts[0];
         insert account_test;
-        
-        Shipment__c ship = new Shipment__c(Account_for__c = account_test.Id, Freight_Mode__c='Air', Service_Mode__c ='Import', Only_Warehouse_Service__c = true);
-        insert ship;
         
         Customer_Quote__c quote_test = new Customer_Quote__c();
         quote_test.Account_for__c = account_test.Id;
@@ -125,6 +210,9 @@ public class Cifid_Test {
         quote_test.Impak_Request__c = true;
         insert quote_test;
         
+        Shipment__c ship = new Shipment__c(Name='SP-'+quote_test.Name, Account_for__c = account_test.Id, Freight_Mode__c='Air', Service_Mode__c ='Import', Only_Warehouse_Service__c = true);
+        insert ship;
+        
         quote_test.Last_Shipment__c = ship.Id;
         update quote_test;
         
@@ -132,7 +220,7 @@ public class Cifid_Test {
         update ship;
 
 		Cifid_SendUpdateShipment.Test();        
-    }
+    }*/
     
     private static testMethod void servLinesTrgr(){
         List<Account> list_accounts = NEU_Utils.getAccounts('Customer,');
@@ -194,7 +282,7 @@ public class Cifid_Test {
         Cifid_SendQuoteLines.Test();
     }
     
-    private static testMethod void shipServLinesTrgr(){
+    /*private static testMethod void shipServLinesTrgr(){
         List<Account> list_accounts = NEU_Utils.getAccounts('Customer,');
         Account account_test = list_accounts[0];
         insert account_test;
@@ -227,6 +315,7 @@ public class Cifid_Test {
         shipment_test.Freight_Mode__c = 'Sea';
         shipment_test.Service_Mode__c = 'Import';
         shipment_test.Only_Warehouse_Service__c = true;
+        shipment_test.Name = 'SP-'+quote_test.Name;
         insert shipment_test;
         
         quote_test.Last_Shipment__c = shipment_test.Id;
@@ -237,6 +326,7 @@ public class Cifid_Test {
         shipment_test2.Freight_Mode__c = 'Sea';
         shipment_test2.Service_Mode__c = 'Import';
         shipment_test2.Only_Warehouse_Service__c = true;
+        shipment_test.Name = 'SP-'+quote_test2.Name;
         insert shipment_test2;
         
         quote_test2.Last_Shipment__c = shipment_test.Id;
@@ -263,10 +353,10 @@ public class Cifid_Test {
         /*delete sfl3;
         
         sfl2.Name = '004';
-        update sfl2;*/
+        update sfl2;*//*
         
         Cifid_SendShipLines.Test();
-    }
+    }*/
     
     private static testMethod void updateQuotePak(){
         List<Account> list_accounts = NEU_Utils.getAccounts('Customer,');

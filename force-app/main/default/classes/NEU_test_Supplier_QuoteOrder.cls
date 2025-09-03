@@ -93,7 +93,7 @@ private class NEU_test_Supplier_QuoteOrder {
          insert ware;
          warehouse_Storage_Bin__c ware_storage = new Warehouse_Storage_Bin__c(Name='test warehause', Warehouse__c = ware.Id);
          insert ware_storage;
-         Shipment__c ship = new Shipment__c(Account_for__c = b.Id, Freight_Mode__c='Sea', Service_Mode__c ='Import', Only_Warehouse_Service__c = true);
+         Shipment__c ship = new Shipment__c(Account_for__c = b.Id, Name='saas',Freight_Mode__c='Sea', Service_Mode__c ='Import', Only_Warehouse_Service__c = true);
          insert ship;
          Shipment_Line__c shipline = new Shipment_Line__c(Shipment__c = ship.Id, Name= 'test ship line',  Item_Name__c= g.Id,Units_Shipped__c=10, Supplier_Quote_Line__c = sup_quote_lines.Id, Supplier_Quote__c = supquote.Id);
          insert shipline;
