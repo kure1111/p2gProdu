@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Validation_State</fullName>
+    <active>false</active>
+    <errorConditionFormula>( Country__r.Name = &apos;United States&apos; || Country__r.Name = &apos;Mexico&apos; )  &amp;&amp;  State__c == null</errorConditionFormula>
+    <errorDisplayField>State__c</errorDisplayField>
+    <errorMessage>The field State is required</errorMessage>
+</ValidationRule>

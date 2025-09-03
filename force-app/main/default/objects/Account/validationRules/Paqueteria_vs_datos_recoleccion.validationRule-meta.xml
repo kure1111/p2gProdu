@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Paqueteria_vs_datos_recoleccion</fullName>
+    <active>false</active>
+    <errorConditionFormula>IF (RecordType.Name = &quot;Customer&quot;, 
+INCLUDES(Unineg_cta__c, &quot;Paqueteria&quot;) &amp;&amp;
+(ISPICKVAL(Horrec_cta__c, &quot;&quot;) || 
+ISPICKVAL(Frec_cta__c, &quot;&quot;) || 
+ISPICKVAL(Tipveh_cta__c, &quot;&quot;) || 
+ISPICKVAL(Tipenv_cta__c, &quot;&quot;) || 
+ISPICKVAL(Tipogui_cta__c, &quot;&quot;)), NULL)</errorConditionFormula>
+    <errorMessage>Ha seleccionado Unidad de Negocio Paqueteria, debe capturar Todos los datos del apartado Datos de Recolección.</errorMessage>
+</ValidationRule>

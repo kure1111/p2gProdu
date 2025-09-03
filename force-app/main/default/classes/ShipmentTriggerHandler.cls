@@ -42,24 +42,52 @@ public class ShipmentTriggerHandler extends TriggerHandler {
     }
     
     public override void afterUpdate() {
-        system.debug('lo que contiene Trigger.new: '+Trigger.new);
-        if (P2G_llamadoWebHelper.getWebServiceUpdate()) {
-            return;
-        }
+        //if (P2G_llamadoWebHelper.getWebServiceUpdate()) {
+        //     return;
+        //}
         List <Shipment__c> SPobj = (list<Shipment__c>)Trigger.new;
+        //--------------------------------
         List<Shipment__c> updatedShipments = new List<Shipment__c>();    
-        for (Shipment__c shipment : SPobj) {
-            Shipment__c oldShip = (Shipment__c)Trigger.oldMap.get(shipment.id);
-            if(shipment.Shipment_Status_Plann__c == 'Confirmed' && oldShip.Shipment_Status_Plann__c!='Confirmed' &&shipment.Service_Mode__c=='NATIONAL') {
-                updatedShipments.add(shipment);
+
+        for (Shipment__c ship : SPobj) {
+            Shipment__c oldShip = (Shipment__c)Trigger.oldMap.get(ship.Id);
+            
+            if (oldShip.Shipment_Status_Plann__c == 'Confirmed' && ship.Shipment_Status_Plann__c != 'Confirmed' && ship.Shipment_Status_Plann__c != 'In Progress') {
+                // Si el estatus anterior era 'Confirmed' y el actual es diferente de 'Confirmed', agregar a updatedShipments
+                updatedShipments.add(ship);
+            }
+
+            if (ship.Shipment_Status_Plann__c == 'Confirmed') {
+                // Verificar si el estatus cambió a 'Confirmed' y es de tipo 'NATIONAL'
+                if (oldShip.Shipment_Status_Plann__c != 'Confirmed' && ship.Service_Mode__c == 'NATIONAL') {
+                    updatedShipments.add(ship);
+                }
+                
+                // Verificar si algún otro campo ha cambiado
+                if (ship.Service_Mode__c == 'NATIONAL' && (ship.ETD_from_Point_of_Load__c != oldShip.ETD_from_Point_of_Load__c ||
+                    ship.ETA_Point_of_Discharge__c != oldShip.ETA_Point_of_Discharge__c ||
+                    ship.Vehicle__c != oldShip.Vehicle__c ||
+                    ship.Operation_Executive__c != oldShip.Operation_Executive__c ||
+                    ship.National_Operator__c != oldShip.National_Operator__c ||
+                    ship.Account_Origin_Address__c != oldShip.Account_Origin_Address__c ||
+                    ship.Account_Destination_Address__c != oldShip.Account_Destination_Address__c ||
+                    ship.Carrier__c != oldShip.Carrier__c ||
+                    ship.Shipment_Status_Mon__c != oldShip.Shipment_Status_Mon__c)) {
+                    updatedShipments.add(ship);
+                }
             }
         }
+        
+        //--------------------------
         if(SPobj.size()>0){
             API_send_SP_to_PakControl.send_SP(SPobj[0].Id);
         }
-        if (!updatedShipments.isEmpty()) {
-            //try{P2G_creacionFolioWs.callSerCon(updatedShipments[0].Id);}catch(Exception e){System.debug('Error updatedShipments: '+e.getLineNumber());}      
+
+        if (!updatedShipments.isEmpty() && !P2G_llamadoWebHelper.getWebServiceUpdate()){
+            P2G_llamadoWebHelper.setWebServiceUpdate(true);
+            try{P2G_creacionFolioWs.callSerCon(updatedShipments[0].Id);}catch(Exception e){System.debug('Error P2G_creacionFolioWs.callSerCon: '+e.getLineNumber());}      
         }
+
         if(NEU_StaticVariableHelper.getBoolean1() || System.IsBatch() || System.isFuture()||test.isRunningTest())
             return;
         set<string> listaShipment = new set<string>();
@@ -81,6 +109,8 @@ public class ShipmentTriggerHandler extends TriggerHandler {
             PAK_SendToSap.sendShipmentTrigger(listaShipment,listaOrders); 
             NEU_StaticVariableHelper.setBoolean1(false);
         }
+        /*Creación de Casos No SHOW en Shipments*/
+        P2G_CreateCaseForNoShow.casesNoShow((List<Shipment__c>) Trigger.new, (Map<Id, Shipment__c>) Trigger.oldMap);
         
     }
     public Boolean ValidaShipmentSend(Shipment__c S, Shipment__c oldShip)

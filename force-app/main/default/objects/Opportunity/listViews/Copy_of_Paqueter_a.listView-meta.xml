@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Copy_of_Paqueter_a</fullName>
+    <columns>OPPORTUNITY.NAME</columns>
+    <columns>ACCOUNT.NAME</columns>
+    <columns>Import_Export_Quote_Order__c</columns>
+    <columns>IEQ_Status__c</columns>
+    <columns>OPPORTUNITY.STAGE_NAME</columns>
+    <columns>Modalidad__c</columns>
+    <columns>Tipo_de_Oportunidad__c</columns>
+    <columns>Guias__c</columns>
+    <columns>Proveedor__c</columns>
+    <columns>OPPORTUNITY.AMOUNT</columns>
+    <columns>CORE.USERS.FULL_NAME</columns>
+    <columns>OPPORTUNITY.CLOSE_DATE</columns>
+    <columns>OPPORTUNITY.CREATED_DATE</columns>
+    <filterScope>Everything</filterScope>
+    <filters>
+        <field>Service_Type__c</field>
+        <operation>equals</operation>
+        <value>PQ,PQ - Paqueterias,T</value>
+    </filters>
+    <filters>
+        <field>OPPORTUNITY.CREATED_DATE</field>
+        <operation>greaterThan</operation>
+        <value>1/1/2022 12:00 AM</value>
+    </filters>
+    <filters>
+        <field>CORE.USERS.FULL_NAME</field>
+        <operation>equals</operation>
+        <value>Brayan Nava</value>
+    </filters>
+    <label>Paquetería Bryan</label>
+</ListView>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomMetadata xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <label>Licencia</label>
+    <protected>false</protected>
+    <values>
+        <field>Nombre_de_Documento__c</field>
+        <value xsi:type="xsd:string">Licencia</value>
+    </values>
+    <values>
+        <field>Objeto__c</field>
+        <value xsi:nil="true"/>
+    </values>
+    <values>
+        <field>Palabras_Clave__c</field>
+        <value xsi:type="xsd:string">LICENCIA, LICENCIA,LICENCIA , LICENCIA ,licencia</value>
+    </values>
+    <values>
+        <field>Tipo_de_Documento__c</field>
+        <value xsi:nil="true"/>
+    </values>
+</CustomMetadata>

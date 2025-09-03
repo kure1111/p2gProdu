@@ -1,5 +1,6 @@
 trigger NEU_RecalculateTraffic on Customer_Quote__c (before insert, before update, after delete) 
 {        
+    /*
     
     if(NEU_StaticVariableHelper.getBoolean1()){return;}        
     
@@ -121,5 +122,6 @@ trigger NEU_RecalculateTraffic on Customer_Quote__c (before insert, before updat
         }else{
         system.debug('No se ejecuta nada en NEU_RecalculateTraffic');
     }
-    }    
+    }
+    */
 }

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>LA001_Permiso_Aprobar</fullName>
+    <active>true</active>
+    <errorConditionFormula>AND( 
+				NOT(OR(
+($Profile.Id =&quot;00e4T000000zD9C&quot;), ( $User.Id  = &quot;005RQ000001cjgH&quot;))) ,
+ISCHANGED(Status__c),  OR(ISPICKVAL(Status__c, &quot;Aprobada&quot;),ISPICKVAL(Status__c, &quot;Rechazada&quot;))  )</errorConditionFormula>
+    <errorMessage>LA001: Sin permisos para cambiar el Status a Aprobada</errorMessage>
+</ValidationRule>

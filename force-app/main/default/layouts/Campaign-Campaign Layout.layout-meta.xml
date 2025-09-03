@@ -315,6 +315,14 @@
     </relatedLists>
     <relatedLists>
         <fields>ACCOUNT.NAME</fields>
+        <fields>ACCOUNT.INDUSTRY</fields>
+        <fields>ACCOUNT.TYPE</fields>
+        <fields>ACCOUNT.PHONE1</fields>
+        <fields>CORE.USERS.ALIAS</fields>
+        <relatedList>RelatedAccountList</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>ACCOUNT.NAME</fields>
         <fields>ActiveSap__c</fields>
         <fields>ACCOUNT.RECORDTYPE</fields>
         <fields>ACCOUNT.PHONE1</fields>

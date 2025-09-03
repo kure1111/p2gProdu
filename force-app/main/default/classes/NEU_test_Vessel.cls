@@ -40,7 +40,7 @@ private class NEU_test_Vessel {
       insert suprequest;
       Supplier_Quote__c supquote = new Supplier_Quote__c(Supply_Project__c= supplyproject.Id,Supplier__c=sup.Id);
       insert supquote;
-      Shipment__c ship = new Shipment__c(Account_for__c = a.Id, Freight_Mode__c='Sea', Service_Mode__c ='Import', IMO_Number__c ='10', Only_Warehouse_Service__c = true);
+      Shipment__c ship = new Shipment__c(Name='afaf',Account_for__c = a.Id, Freight_Mode__c='Sea', Service_Mode__c ='Import', IMO_Number__c ='10', Only_Warehouse_Service__c = true);
       insert ship;
       Carrier_Line_Load_Point__c route = new Carrier_Line_Load_Point__c(Name ='test route');
       insert route;
@@ -68,7 +68,7 @@ private class NEU_test_Vessel {
           insert suprequest;
           Supplier_Quote__c supquote = new Supplier_Quote__c(Supply_Project__c= supplyproject.Id,Supplier__c=sup.Id);
           insert supquote;
-          Shipment__c ship = new Shipment__c(Account_for__c = a.Id, Freight_Mode__c='Sea', Service_Mode__c ='Import', IMO_Number__c ='10', Only_Warehouse_Service__c = true);
+          Shipment__c ship = new Shipment__c(Name='aaff',Account_for__c = a.Id, Freight_Mode__c='Sea', Service_Mode__c ='Import', IMO_Number__c ='10', Only_Warehouse_Service__c = true);
           insert ship;
           Carrier_Line_Load_Point__c route = new Carrier_Line_Load_Point__c(Name ='test route');
           insert route;
@@ -126,7 +126,7 @@ private class NEU_test_Vessel {
         insert suprequest;
         Supplier_Quote__c supquote = new Supplier_Quote__c(Supply_Project__c= supplyproject.Id,Supplier__c=sup.Id);
         insert supquote;
-        Shipment__c ship = new Shipment__c(Account_for__c = a.Id, Freight_Mode__c='Sea', Service_Mode__c ='Import', IMO_Number__c ='10', Only_Warehouse_Service__c = true);
+        Shipment__c ship = new Shipment__c(Name='af',Account_for__c = a.Id, Freight_Mode__c='Sea', Service_Mode__c ='Import', IMO_Number__c ='10', Only_Warehouse_Service__c = true);
         insert ship;
         Carrier_Line_Load_Point__c route = new Carrier_Line_Load_Point__c(Name ='test route');
         insert route;

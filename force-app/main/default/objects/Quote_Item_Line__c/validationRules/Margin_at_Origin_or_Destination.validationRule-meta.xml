@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Margin_at_Origin_or_Destination</fullName>
+    <active>false</active>
+    <errorConditionFormula>( BLANKVALUE( Margin__c , 0)&lt;&gt;0)  &amp;&amp; 
+ ( BLANKVALUE( Margin_at_Destination__c , 0)&lt;&gt;0)</errorConditionFormula>
+    <errorDisplayField>Margin_at_Destination__c</errorDisplayField>
+    <errorMessage>There is already a Margin at Origin</errorMessage>
+</ValidationRule>

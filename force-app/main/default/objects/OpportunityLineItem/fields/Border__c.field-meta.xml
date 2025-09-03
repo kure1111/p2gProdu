@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Border__c</fullName>
+    <externalId>false</externalId>
+    <label>Border</label>
+    <required>false</required>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Norte</fullName>
+                <default>false</default>
+                <label>Norte</label>
+            </value>
+            <value>
+                <fullName>Sur</fullName>
+                <default>false</default>
+                <label>Sur</label>
+            </value>
+            <value>
+                <fullName>Marítimas</fullName>
+                <default>false</default>
+                <label>Marítimas</label>
+            </value>
+            <value>
+                <fullName>Interiores</fullName>
+                <default>false</default>
+                <label>Interiores</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

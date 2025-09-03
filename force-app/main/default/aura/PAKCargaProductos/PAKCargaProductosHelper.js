@@ -31,7 +31,7 @@
             "idOpportunity" : entryId
         });
         action.setCallback(this, function(response) {
-            component.find("Id_spinner").set("v.class" , 'slds-hide');
+            component.find("Id_spinner").set("v.class", "slds-hide");
             var toastEvent = $A.get("e.force:showToast");
             var state = response.getState();
             if (state === "SUCCESS") {  

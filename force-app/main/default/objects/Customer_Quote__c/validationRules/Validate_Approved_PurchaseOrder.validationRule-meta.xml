@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Validate_Approved_PurchaseOrder</fullName>
+    <active>true</active>
+    <errorConditionFormula>IF(
+ Account_for__r.Owner.Workplace__c = &quot;GDL&quot;||Account_for__r.Owner.Workplace__c = &quot;LEO&quot;||
+Account_for__r.Owner.Workplace__c = &quot;QUE&quot;||
+Account_for__r.Owner.Workplace__c = &quot;SLP&quot;||
+Account_for__r.Owner.Workplace__c = &quot;CUU&quot;|| Account_for__r.Owner.Workplace__c = &quot;MTY&quot;||
+Account_for__r.Owner.Workplace__c = &quot;MEX&quot;||
+Account_for__r.Owner.Workplace__c = &quot;MXS&quot;||
+Account_for__r.Owner.Workplace__c = &quot;SLP&quot;,
+ISPICKVAL(Quotation_Status__c,&quot;Approved as Succesful&quot;)  &amp;&amp;   Account_for__r.Requiere_Orden_de_Compra__c = True &amp;&amp; 
+ Account_for__r.Order_to_Cash__c = False &amp;&amp;
+ Purchase_OrderNum__c = NULL,NULL)</errorConditionFormula>
+    <errorDisplayField>Account_for__c</errorDisplayField>
+    <errorMessage>ERROR: &quot;CUSTOMER&quot; Required Purchase Order
+Please contact Administrative team
+(Para este Cliente se Requiere de Orden de Compra)</errorMessage>
+</ValidationRule>

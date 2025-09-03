@@ -1,6 +1,104 @@
 @isTest
 public with sharing class APX_Debit_Note_Test {
-    
+    @TestSetup
+    static void Setup(){
+        NEU_StaticVariableHelper.setBoolean1(true);
+        List<Account> list_accounts = NEU_Utils.getAccounts('Customer,');
+        Account account_test = list_accounts[0];
+        account_test.Name = 'Bimbo';
+        account_test.Credit_Limit__c = 1000000;
+        account_test.Venta_Sap__c='Credito';
+        account_test.Segment__c='Nuevo';
+        account_test.Workplace__c=null;
+        insert account_test;
+        Account carrier_test = new Account();
+        String recordCarrier = Schema.SObjectType.Account.getRecordTypeInfosByName().get('Supply Chain Partner').getRecordTypeId();
+        carrier_test.RecordTypeId = recordCarrier;
+        carrier_test.Name = 'Carrier de Test';
+        carrier_test.TAX_ID__c = 'FLD120217NW5';
+        carrier_test.Credit_Limit__c = 1000000;
+        carrier_test.Venta_Sap__c='Credito';
+        carrier_test.Segment__c='Nuevo';
+        carrier_test.Workplace__c=null;
+        carrier_test.Customer_Id__c ='P005153';
+        carrier_test.ActiveSap__c = TRUE;
+        insert carrier_test;
+        User userT = [select id,managerId, userRole.Name  from user where id =: UserInfo.getUserId() limit 1];
+        Rol_Margen__c rolMargen = TestDataFactory.createRolMargen(userT.userRole.Name);//Director Comercial ,Director Regional
+        Country__c country = new Country__c(Name='Mxico');
+        insert country;
+        State__c state = new State__c(Name='Sonora',Country__c=country.Id,Iso_Code__c='SON',ISO_Code_2c__c='SO',Zone_Planner_email__c='kuresa@gmaidl.com',Active__c=true);
+        insert state;
+        Location__c location = new Location__c(Name='xalapa', State__c=state.Id,Country__c=country.Id);
+        insert location;
+        Container_Type__c container = new Container_Type__c(Name='Super tracto Camion',Type__c='Road',Cargo_Weight_Kg__c=22222);
+        insert container;
+        Customer_Quote__c quote = new Customer_Quote__c();
+        String recordTypeId = Schema.SObjectType.Customer_Quote__c.getRecordTypeInfosByName().get('Import-Export Quote').getRecordTypeId();
+        quote.RecordTypeId = recordTypeId;
+        quote.Name='.';
+        quote.Account_for__c = account_test.Id;
+        quote.Team__c = 'P2G';
+        quote.Quotation_Status__c = 'Quote being prepared';
+        quote.Customer_Reference__c = 'holi';
+        quote.Valid_From__c = system.today();
+        quote.Valid_Until__c = system.today();
+        quote.Comercio_Exterior__c = 'No';
+        quote.Freight_Mode__c = 'Road';
+        quote.Service_Mode__c = 'NATIONAL';
+        quote.Service_Type__c = 'FTL';
+        quote.CurrencyIsoCode = 'MXN';
+        quote.Country_ofLoad__c = location.Country__c;
+        quote.State_of_Load__c = location.State__c;
+        quote.Site_of_Load__c = location.Id;
+        quote.Country_ofDischarge__c = location.Country__c;
+        quote.State_of_Discharge__c = location.State__c;
+        quote.Site_of_Discharge__c = location.Id;
+        quote.ETD__c = Date.today();
+        quote.ETA__c = Date.today();
+        quote.Community_Status__c = 'CUSTOMER CREATED';
+        quote.Pricing_Executive__c= userT.Id;
+        quote.Operations_Exec__c = userT.Id;
+        insert quote;
+        Shipment__c new_shipment = new Shipment__c();
+        new_shipment.Name = 'SP-FN-23-000783';
+        new_shipment.Freight_Mode__c= 'Road';
+        new_shipment.Service_Type__c= 'FTL';
+        new_shipment.ETA_Point_of_Discharge__c = Date.valueOf('2023-05-2');
+        new_shipment.ETD_from_Point_of_Load__c = Date.valueOf('2023-05-12');
+        new_shipment.ETA_Time_Point_of_Discharge__c = Time.newInstance(08,0,0,0);
+        new_shipment.ETD_Time_from_Point_of_Load__c = Time.newInstance(08,0,0,0);
+        new_shipment.Route__c = quote.Route__c;
+        new_shipment.Account_for__c= account_test.Id;
+        new_shipment.Country_of_Discharge__c = country.Id;
+        new_shipment.Country_of_Load__c = country.Id;
+        new_shipment.State_of_Discharge__c = state.Id;
+        new_shipment.State_of_Load__c = state.Id;
+        new_shipment.Site_of_Discharge__c = location.Id;
+        new_shipment.Site_of_Load__c = location.Id;
+        new_shipment.Container_Type__c = container.Id;
+        new_shipment.Service_Mode__c = 'NATIONAL';
+        insert new_shipment;
+        Debit_Note__c debit = new Debit_Note__c();
+        debit.Account_for__c = account_test.Id;
+        debit.Shipment_Number_1__c = new_shipment.Id;
+        debit.Import_Export_Quote_1__c = quote.Id;
+        insert debit;
+    }
+    @isTest
+    static void APX_Debit_NoteTest(){
+        Debit_Note__c dn = [SELECT id, Shipment_Number_1__c FROM Debit_Note__c LIMIT 1];
+        List<string> recordIds = new List<string>();
+        recordIds.add(dn.Id);
+        Test.startTest();
+        APX_Debit_Note.asignCustomReferenceWrapp asign = new APX_Debit_Note.asignCustomReferenceWrapp();
+        asign.laDNtieneEspacio = true;
+        asign.dnObjWrapp = dn;
+        List<Debit_Note__c> getDebitNote = APX_Debit_Note.getDebitNote(dn.Id);
+        List<Debit_Note__c> getDebitNoteByList = APX_Debit_Note.getDebitNoteByList(recordIds);
+        string updateDebitNote = APX_Debit_Note.updateDebitNote(dn.Id, dn.Shipment_Number_1__c);
+        Test.stopTest();
+    }
     private class createException extends Exception {}
     /*@TestSetup
     static void createObjects(){
@@ -128,7 +226,7 @@ public with sharing class APX_Debit_Note_Test {
 
     @isTest
     public static void runTest1(){
-
+		APX_Debit_Note.testRun();
         /*Id catalogo = [Select Id from Catalogo_SAT__c where Name = 'Caja de acero test'].Id;
         Id acc  = [Select Id, Name from Account where Name ='Cuenta customer'].Id;
         Customer_Quote__c folio1;
@@ -148,7 +246,7 @@ public with sharing class APX_Debit_Note_Test {
         
 
         Test.startTest();        
-        	APX_Debit_Note.testRun();
+//        	APX_Debit_Note.testRun();
             /*try{             
                 system.debug('folio sp1: ' + sp1.ShipmentService__c);
                 sp1.Shipment_Status_Plann__c = 'Closed';        	

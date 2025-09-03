@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Validate_Without_Service_Lines</fullName>
+    <active>false</active>
+    <errorConditionFormula>Total_IEQServLines__c =0  &amp;&amp; ispickval( Quotation_Status__c , &quot;Approved as Succesful&quot;) &amp;&amp;  NOT(FolioResume__c = &quot;FO, FP&quot;)</errorConditionFormula>
+    <errorMessage>ERROR: No se puede Aprovar sin crear las Service Lines</errorMessage>
+</ValidationRule>

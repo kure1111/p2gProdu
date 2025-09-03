@@ -66,8 +66,8 @@ public with sharing class P2G_UpdateShipmentServiceLine {
             wrapper.AccountId = feeLine.Service_Rate_Name__r.Account_for__c;
             wrapper.Tarifario = feeLine.Service_Rate_Name__r.CustomRate__c;
             if(!Test.isRunningTest()){
-        	wrapper.ContainerType = shipmentCargoLine.Container_Type__r.Name;
-            wrapper.ContainerTypeId = shipmentCargoLine.Container_Type__c;}
+                wrapper.ContainerType = shipmentCargoLine.Container_Type__r.Name;
+                wrapper.ContainerTypeId = shipmentCargoLine.Container_Type__c;}
             wrapper.CarrierName = feeLine.Carrier__c;
             wrapper.CarrierId = feeLine.Service_Rate_Name__r.Carrier_Account__c;
             wrapper.ShipmentName = feeLine.Shipment__r.Name;
@@ -126,26 +126,39 @@ public with sharing class P2G_UpdateShipmentServiceLine {
         return AccountListRecord;
     } 
     /*@AuraEnabled
-    public static list<SAP_Service_Type__c> getSapServiceType(string SapService){
-        string searchKeyword = '%' + SapService + '%';
-        list<SAP_Service_Type__c> SapServiceListRecord = new list<SAP_Service_Type__c>();
-        for(SAP_Service_Type__c sapServiceSearch : [SELECT Id, Name FROM SAP_Service_Type__c
-                                                    WHERE Name LIKE : searchKeyword limit 15]){
-                                                        SapServiceListRecord.add(sapServiceSearch);
-                                                    }
-        if(SapServiceListRecord.size() == 0){
-            throw new AuraHandledException('No Record Found..'); 
-        }
-        return SapServiceListRecord;
-    } */
+public static list<SAP_Service_Type__c> getSapServiceType(string SapService){
+string searchKeyword = '%' + SapService + '%';
+list<SAP_Service_Type__c> SapServiceListRecord = new list<SAP_Service_Type__c>();
+for(SAP_Service_Type__c sapServiceSearch : [SELECT Id, Name FROM SAP_Service_Type__c
+WHERE Name LIKE : searchKeyword limit 15]){
+SapServiceListRecord.add(sapServiceSearch);
+}
+if(SapServiceListRecord.size() == 0){
+throw new AuraHandledException('No Record Found..'); 
+}
+return SapServiceListRecord;
+} */
     @AuraEnabled
     public static list<SAP_Service_Type__c> getSapServiceTypeShipment(string SapService, String IdShip){
-        Shipment__c ship =[SELECT Shipment_Type__c FROM Shipment__c WHERE Id =: IdShip LIMIT 1];
-        string grou = 'SP-' + ship.Shipment_Type__c + '%';
+        Shipment__c ship =[SELECT ShipmentService__c,Account_for__r.Tipo_de_Servicio_TNA__c FROM Shipment__c WHERE Id =: IdShip LIMIT 1];
+        string grou = ship.ShipmentService__c + '%';
         string searchKeyword = '%' + SapService + '%';
-        list<SAP_Service_Type__c> SapServiceListRecord = new list<SAP_Service_Type__c>();
-        for(SAP_Service_Type__c sapServiceSearch : [SELECT Id, Name FROM SAP_Service_Type__c 
-                                                    WHERE Activo__c =: TRUE AND Name LIKE : searchKeyword AND Group__c LIKE : grou]){
+        string nosearch1 = '';
+        string nosearch2 = '';
+        if(ship.Account_for__r != null){
+            if(ship.Account_for__r.Tipo_de_Servicio_TNA__c == 'a1n4T000001XXYCQA4'){
+                nosearch1 = 'SERVICIOS LOGISTICOS NACIONALES FN (IC) (FN)';
+                nosearch2 = 'SERVICIOS LOGISTICOS LOCALES FN (IC) (FN)';
+            }
+            if(ship.Account_for__r.Tipo_de_Servicio_TNA__c == 'a1n4T000002JWphQAG' || ship.Account_for__r.Tipo_de_Servicio_TNA__c == null){
+                nosearch1 = 'FLETE NACIONAL (IC) (FN)';
+                nosearch2 = 'FLETE LOCAL (IC) (FN)';
+            }          
+        }
+        List<String> nosearchValues = new List<String>{nosearch1, nosearch2};
+            list<SAP_Service_Type__c> SapServiceListRecord = new list<SAP_Service_Type__c>();
+        for(SAP_Service_Type__c sapServiceSearch : [SELECT Id, Name, Code__c FROM SAP_Service_Type__c 
+                                                    WHERE Activo__c =: TRUE AND Name LIKE : searchKeyword AND Group__c LIKE : grou AND Name NOT IN :nosearchValues]){
                                                         SapServiceListRecord.add(sapServiceSearch);
                                                     }
         if(SapServiceListRecord.size() == 0){
@@ -212,11 +225,11 @@ listaShip.add(updateship);*/
             //Modifica service Line
             System.debug('la lista a modificar de Service Line es: '+listaFeeLine);
             update listaFeeLine;
-                        /*//Modifica Shipment
-            if(listaShipSet.size() != 0){
-            List<Shipment__c> listaShip = updateShipment(listaShipSet);
-            update listaShip;
-            }*/
+            /*//Modifica Shipment
+if(listaShipSet.size() != 0){
+List<Shipment__c> listaShip = updateShipment(listaShipSet);
+update listaShip;
+}*/
             message='Modificacion exitosa';
         }catch(Exception e){
             System.debug('Entra al catch');
@@ -352,10 +365,9 @@ listaShip.add(updateship);*/
     }
     public static Fee__c CreateServiceRate(shipmentFeeLineWrapper wrapper){
         String recordTypeId = Schema.SObjectType.Fee__c.getRecordTypeInfosByName().get('Sea/Ground Freight').getRecordTypeId();
-        String category = wrapper.FeeCategory + '%';
-        String grou = 'SP-'+ wrapper.Grou +'%';
-        Fee__c campos;
-         if(!Test.isRunningTest()){campos =[SELECT Fee_Category__c, Group__c FROM fee__c WHERE Fee_Category__c LIKE: Category and Group__c LIKE:grou LIMIT 1];}
+        String grou = 'SP-'+wrapper.Grou;
+        String FeeCategory = getFeeCategory(wrapper.FeeCategory);
+    	String grupo = getGroup(grou);
         Fee__c serviceRate = new Fee__c();
         try{
             serviceRate.RecordTypeId = recordTypeId;
@@ -368,8 +380,8 @@ listaShip.add(updateship);*/
             serviceRate.Rate_Type__c = 'Fixed';
             serviceRate.Account_for__c = wrapper.AccountId;
             serviceRate.Active__c=true;
-            serviceRate.Fee_Category__c = campos.Fee_Category__c; 
-            serviceRate.Group__c = campos.Group__c;
+            serviceRate.Fee_Category__c = FeeCategory; 
+            serviceRate.Group__c = grupo;
             if(wrapper.SapServiceTypeBuyId != null){serviceRate.SAP_Service_Type_Buy__c = wrapper.SapServiceTypeBuyId;}
             if(wrapper.SellRate != null){serviceRate.Fee_Rate__c = Decimal.valueOf(wrapper.SellRate);}
             if(wrapper.BuyRate != null){serviceRate.Buy_Rate__c = Decimal.valueOf(wrapper.BuyRate);}
@@ -382,19 +394,45 @@ listaShip.add(updateship);*/
         }
         return serviceRate; 
     }
-    /*public static Shipment__c listaShipment(shipmentFeeLineWrapper fee){
-Shipment__c updateship = new Shipment__c();
-if((fee.SapServiceType == 'SERVICIOS LOGISTICOS NACIONALES FN (IC) (FN)')||(fee.SapServiceType == 'SERVICIOS LOGISTICOS FN (IC) (FN)')||(fee.SapServiceType == 'FLETE NACIONAL (IC) (FN)')){
-updateship.Id = fee.ShipmentId;
-updateship.Account_for__c = fee.AccountId;
-}
-return updateship;
-}
-public static List<Shipment__c> updateShipment(set<Shipment__c> listaShipSet){
-List<Shipment__c> listaShip = new List<Shipment__c>();
-for (Shipment__c ship : listaShipSet){
-listaShip.add(ship);
-}
-return listaShip;
-}*/
+    @AuraEnabled
+    public static list<SAP_Service_Type__c> getSst(string SapService, String IdShip){
+        Shipment__c ship =[SELECT Shipment_Type__c,Account_for__r.Tipo_de_Servicio_TNA__c FROM Shipment__c WHERE Id =: IdShip LIMIT 1];
+        string grou = 'SP-' + ship.Shipment_Type__c + '%';
+        string searchKeyword = '%' + SapService + '%';
+        list<SAP_Service_Type__c> SapServiceListRecord = new list<SAP_Service_Type__c>();
+        for(SAP_Service_Type__c sapServiceSearch : [SELECT Id, Name, Code__c FROM SAP_Service_Type__c 
+                                                    WHERE Activo__c =: TRUE AND Name LIKE : searchKeyword AND Group__c LIKE : grou]){
+                                                        SapServiceListRecord.add(sapServiceSearch);
+                                                    }
+        if(SapServiceListRecord.size() == 0){
+            throw new AuraHandledException('No Record Found..'); 
+        }
+        return SapServiceListRecord;
+    }
+    public static String getFeeCategory(string category){
+        String FeeCategory;
+        Schema.DescribeFieldResult cober = Fee__c.Fee_Category__c.getDescribe();
+        List<Schema.PicklistEntry> values = cober.getPicklistValues();
+        for(Schema.PicklistEntry item:values){
+            if(!Test.isRunningTest()){
+            	if(item.getValue().CONTAINS(category)){
+                    FeeCategory = item.getValue();
+                    System.debug('Fee Category: '+item.getValue());
+                }
+            }
+        }
+        return FeeCategory;
+    }
+    public static String getGroup(string grupo){
+        String elGrupo;
+        Schema.DescribeFieldResult cober = Fee__c.Group__c.getDescribe();
+        List<Schema.PicklistEntry> values = cober.getPicklistValues();
+        for(Schema.PicklistEntry item:values){
+            if(item.getValue().CONTAINS(grupo)){
+                elGrupo = item.getValue();
+                System.debug('Grupo: '+item.getValue());
+            }
+        }
+        return elGrupo;
+    }
 }

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomMetadata xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <label>vehiculos</label>
+    <protected>false</protected>
+    <values>
+        <field>Documentos_requeridos__c</field>
+        <value xsi:type="xsd:string">Tarjeta Circulacion,Poliza Vigente y del Prestador,Tercerizado</value>
+    </values>
+    <values>
+        <field>Nombre_del_objeto__c</field>
+        <value xsi:type="xsd:string">Vehicle__c</value>
+    </values>
+</CustomMetadata>

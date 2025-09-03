@@ -2,6 +2,7 @@
 public class NEU_Generate_Shipments_test {
  
     public static testMethod void test_NEU_Generate_Shipments() {
+        //Comentario de prueba
      	
 /*NEU_StaticVariableHelper.setBoolean1(true);
      	

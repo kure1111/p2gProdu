@@ -44,15 +44,18 @@ public class CPV2 {
                 string folio = '';
                 if(arrTest.size()>0)
                     folio = arrTest[3];
+                if([SELECT IsSandbox FROM Organization LIMIT 1].IsSandbox)
+                        CP.Test ='1';
+                else
+                        CP.Test ='0';
                 //SP-FN-21-23456
-                
                 CP.fecha=dateFormated;
                 CP.serie=datosCPShip.Shipment_Type__c;
                 CP.folio=folio;
-                CP.subTotal='0.00';
+                CP.subTotal='0';
                 CP.moneda='XXX';//MXN';  
                 CP.lugarExpedicion=(emisor == null ? '': (string.isBlank(emisor.C_digo_Postal__c) ? '' :emisor.C_digo_Postal__c));
-                CP.total='0.00';
+                CP.total='0';
                 CP.TipoDeComprobante=TipoComprobante;
                 CP.formaPago=''; //solicitado por dll
                 CP.condicionesPago='';//solicitado por dll
@@ -1374,7 +1377,8 @@ if(datosCPShip.Shipment_Type__c == 'FI'||datosCPShip.Shipment_Type__c == 'FN'||d
         public CartaPorte CartaPorte { get; set; } 
     }
     
-    public class Comprobante { 
+    public class Comprobante {
+        public String Test { get; set; }
         
         public Emisor Emisor { get; set; } 
         
@@ -1409,6 +1413,6 @@ if(datosCPShip.Shipment_Type__c == 'FI'||datosCPShip.Shipment_Type__c == 'FN'||d
         public string TipoCambio { get; set; }
         
         public string Confirmacion { get; set; }
-        
+              
     }   
 }

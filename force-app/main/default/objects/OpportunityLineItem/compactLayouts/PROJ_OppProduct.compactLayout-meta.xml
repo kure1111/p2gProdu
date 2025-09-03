@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CompactLayout xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>PROJ_OppProduct</fullName>
+    <fields>Name</fields>
+    <fields>Ruta__c</fields>
+    <fields>Product2Id</fields>
+    <fields>Precio_Sugerido_Venta__c</fields>
+    <fields>UnitPrice</fields>
+    <fields>Total_Buy_Price__c</fields>
+    <fields>ProductCode</fields>
+    <label>PROJ_OppProduct</label>
+</CompactLayout>

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>SHP003_SP_en_Confirmed_con_Service_Line</fullName>
+    <active>false</active>
+    <description>Estatus Confirmed solo con Service Line asociadas al Shipment</description>
+    <errorConditionFormula>AND(
+				 ISPICKVAL(Shipment_Status_Plann__c, &apos;Confirmed&apos; ),
+				Shipment_Sin_Serv_Lines__c = TRUE
+				)</errorConditionFormula>
+    <errorMessage>SHP003 - No es posible pasar al estaus de Confirmed sin tener Service Line asociadas al Shipment</errorMessage>
+</ValidationRule>

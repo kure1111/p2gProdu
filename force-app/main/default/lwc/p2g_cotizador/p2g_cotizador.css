@@ -1,0 +1,18 @@
+.margenCampos{
+    padding-left: 30px;
+}
+.titulos{
+    text-align: center;
+    font-size: 16px;
+    font-weight: bold;
+}
+.textoCentrado{
+    text-align: center;
+    font-size: 16px;
+}
+.textoTamaño{
+    font-size: 16px;
+}
+.textoNegritas{
+    font-weight: bold;
+}

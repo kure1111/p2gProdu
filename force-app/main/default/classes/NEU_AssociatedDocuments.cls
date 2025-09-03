@@ -35,6 +35,7 @@ public class NEU_AssociatedDocuments
     @AuraEnabled
     public static List<Associated_Document__c> createAssociatedDocuments(string recordId, string[] ids_ficheros)
     {		
+        system.debug('Entrando al metodo para subir los documentos asociados');
         record = [select Id, Name, Account_for__c from Shipment__c where Id =: recordId limit 1];
         
         List<Associated_Document__c> new_documents = new List<Associated_Document__c>();

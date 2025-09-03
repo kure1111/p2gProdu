@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Validate_Awaiting_Load_Time</fullName>
+    <active>true</active>
+    <errorConditionFormula>ISPICKVAL( Quotation_Status__c,&quot;Awaiting costs suppliers&quot;) &amp;&amp; 
+ISPICKVAL(Freight_Mode__c, &quot;ROAD&quot;) &amp;&amp;   
+ISPICKVAL(Service_Mode__c, &quot;NATIONAL&quot;)  &amp;&amp; 
+ISPICKVAL(Service_Type__c, &quot;FTL&quot;) &amp;&amp;
+  ISBLANK(Awaiting_load_time__c)=TRUE &amp;&amp;
+NOT($Profile.Name = &apos;CUSTOMER COMMUNITY&apos;)</errorConditionFormula>
+    <errorMessage>ERROR: MUST BE DEFINE AWAITING LOAD TIME</errorMessage>
+</ValidationRule>

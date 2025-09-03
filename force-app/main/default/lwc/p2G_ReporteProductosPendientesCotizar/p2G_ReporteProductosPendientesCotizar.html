@@ -1,0 +1,472 @@
+<template>
+    <lightning-card  title="Reporte Rutas Pendientes por cotizar">
+        <div class="slds-p-horizontal_small">
+            <div class="slds-grid slds-gutters">
+                <div  class="slds-col slds-size_12-of-12">
+                    <br><h1><b>Filtro por Servicio</b></h1><br>
+                </div>
+            </div>
+            <div class="slds-grid slds-gutters">
+                <div class="slds-col slds-size_4-of-12">
+                    <lightning-combobox  label="Status del Producto:" value={valueStatus}
+                                options={optionsStatus} onchange={agregarStatus}></lightning-combobox>
+                </div>
+                <div class="slds-col slds-size_4-of-12">
+                    <lightning-combobox  label="Quotation Status:" value={valueQuotationStatus}
+                                options={optionsQuotationStatus} onchange={agregarQuotationStatus}></lightning-combobox>
+                </div>
+                <div class="slds-col slds-size_4-of-12">
+                    <lightning-combobox  label="Tipo de Servicio:" value={valueServicio}
+                                options={optionsServicio} onchange={agregarServicio}></lightning-combobox>
+                </div>
+            </div>
+            <div class="slds-grid slds-gutters">
+                <div class="slds-col slds-size_4-of-12">
+                    <div onkeyup={searchKeyAccount}>
+                        <lightning-input id="AccountFor" label="Account For:" placeholder="Buscar Account for" 
+                            value={searchValueAccount} type="search"></lightning-input>
+                    </div>
+                    <table if:true={showSideAccount} class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_striped">
+                        <thead>
+                            <tr class="slds-line-height_reset">
+                            <th class="" scope="col">
+                                <div class="slds-truncate" title="First Name">Name</div>
+                            </th>
+                            <th class="" scope="col">
+                                <div class="slds-truncate" title="First Name">Customer Id</div>
+                            </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <template for:each={sideRecordsAccount} for:item="con">
+                                <tr class="slds-hint-parent" data-id={con.Id} key={con.Id} onclick={SideSelectAccount} data-name={con.Name}> 
+                                   <td>
+                                      <div class="slds-truncate">{con.Name}</div>
+                                   </td>
+                                   <td>
+                                    <div class="slds-truncate">{con.Customer_Id__c}</div>
+                                  </td>
+                                </tr>
+                            </template>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="slds-col slds-size_4-of-12">
+                    <div onkeyup={searchKeyOwner}>
+                        <lightning-input label="Ejecutivo Comercial:" placeholder="Buscar Owner ..." 
+                            value={searchValueOwner} type="search"></lightning-input>
+                    </div>
+                    <table if:true={showSideOwner} class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_striped">
+                        <thead>
+                            <tr class="slds-line-height_reset">
+                            <th class="" scope="col">
+                                <div class="slds-truncate" title="First Name">Name</div>
+                            </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <template for:each={sideRecordsOwner} for:item="con">
+                                <tr class="slds-hint-parent" data-id={con.Id} key={con.Id} onclick={SideSelectOwner} data-name={con.Name}> 
+                                   <td>
+                                      <div class="slds-truncate">{con.Name}</div>
+                                   </td>
+                                </tr>
+                            </template>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="slds-col slds-size_4-of-12">
+                    <div onkeyup={searchKeyUsuarioIc}>
+                        <lightning-input label="Usuario Pricing:" placeholder="Buscar Usuario Pricing ..." 
+                            value={searchValueUsuarioIc} type="search"></lightning-input>
+                    </div>
+                    <table if:true={showSideUsuarioIc} class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_striped">
+                        <thead>
+                            <tr class="slds-line-height_reset">
+                            <th class="" scope="col">
+                                <div class="slds-truncate" title="First Name">Name</div>
+                            </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <template for:each={sideRecordsUsuarioIc} for:item="con">
+                                <tr class="slds-hint-parent" data-id={con.Id} key={con.Id} onclick={SideSelectUsuarioIc} data-name={con.Name}> 
+                                   <td>
+                                      <div class="slds-truncate">{con.Name}</div>
+                                   </td>
+                                </tr>
+                            </template>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+                <br><br>
+            <div class="slds-grid slds-grid_align-center">
+                <!--div  class="slds-col slds-size_2-of-12">
+                    <lightning-button-icon icon-name="utility:download" label="Descargar Información" variant="bare" onclick={Descargar}></lightning-button-icon>
+                </div-->
+                <div  class="slds-col slds-size_2-of-12">
+                    <lightning-button label="Limpiar Filtro" onclick={clicLimpioFiltro} class="slds-m-left_x-small"></lightning-button>
+                </div>
+            </div>
+            <lightning-accordion allow-multiple-sections-open active-section-name={activeSections}>
+                <lightning-accordion-section name="Seccion1" label="Productos por estatus">
+                    <br><h1><b>Productos por estatus {valueStatus}</b></h1><br>
+                    <div class="slds-grid slds-gutters">
+                        <div class="scrollable slds-col slds-size_12-of-12">
+                            <template if:false={sinInfoP}>
+                                <table class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_striped">
+                                    <thead>
+                                    <tr class="slds-line-height_reset">
+                                        <th class="" scope="col">
+                                        <div class="slds-truncate">Fecha y Hora Solicitud</div>
+                                        </th>
+                                        <th class="" scope="col">
+                                        <div class="slds-truncate">Fecha y Hora Respuesta Pricing</div>
+                                        </th>
+                                        <th class="" scope="col">
+                                        <div class="slds-truncate">Status</div>
+                                        </th>
+                                        <th class="" scope="col">
+                                        <div class="slds-truncate">Product Name</div>
+                                        </th>
+                                        <th class="" scope="col">
+                                        <div class="slds-truncate">Cliente</div>
+                                        </th>
+                                        <th class="" scope="col">
+                                        <div class="slds-truncate">Opportunity Name</div>
+                                        </th>
+                                        <th class="" scope="col">
+                                        <div class="slds-truncate">Usuario IC</div>
+                                        </th>
+                                        <th class="" scope="col">
+                                        <div class="slds-truncate">Opportunity Owner</div>
+                                        </th>
+                                        <th class="" scope="col">
+                                        <div class="slds-truncate">Costo Buy Price</div>
+                                        </th>
+                                        <th class="" scope="col">
+                                        <div class="slds-truncate">Target</div>
+                                        </th>
+                                        <th class="" scope="col">
+                                        <div class="slds-truncate">Moneda</div>
+                                        </th>
+                                        <th class="" scope="col">
+                                        <div class="slds-truncate">Moneda Oportunidad</div>
+                                        </th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <template for:each={listaPendiente} for:item="con">
+                                        <tr class="slds-hint-parent" key={con.Id}>
+                                            <td>
+                                                <div class="slds-truncate">
+                                                    <lightning-formatted-date-time value={con.Fecha_y_hora_Solicitud__c} year="numeric" month="numeric" day="numeric" hour="2-digit"
+                                            minute="2-digit"></lightning-formatted-date-time></div>
+                                            </td>
+                                            <td>
+                                                <div class="slds-truncate">
+                                                    <lightning-formatted-date-time value={con.Fecha_y_Hora_Respuesta_Pricing__c} year="numeric" month="numeric" day="numeric" hour="2-digit"
+                                            minute="2-digit"></lightning-formatted-date-time></div>
+                                            </td>
+                                        <td>
+                                            <div class="slds-truncate">{con.Status__c}</div>
+                                        </td>
+                                        <td>
+                                            <div style="width: max-content;" class="slds-truncate" data-id={con.Id} onclick={abrirProducto}>
+                                                <b><em><lightning-button variant="base" label={con.Product2.Name} title={con.Product2.Name} class="slds-m-left_x-small"></lightning-button>
+                                                </em></b>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <template if:true={con.OpportunityId}>
+                                            <template if:true={con.Opportunity.Account}>
+                                            <div class="slds-truncate">{con.Opportunity.Account.Name}</div>
+                                            </template>
+                                            </template>
+                                        </td>
+                                        <td>
+                                            <div style="width: max-content;" class="slds-truncate" data-id={con.OpportunityId} onclick={abrirOppo}>
+                                                <b><em><lightning-button variant="base" label={con.Opportunity.Name} title={con.Opportunity.Name} class="slds-m-left_x-small"></lightning-button>
+                                                </em></b>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <template if:true={con.OpportunityId}>
+                                            <template if:true={con.Opportunity.Usuario_IC__c}>
+                                                <div class="slds-truncate">{con.Opportunity.Usuario_IC__r.Name}</div>
+                                            </template>
+                                            </template>
+                                        </td>
+                                        <td>
+                                            <template if:true={con.OpportunityId}>
+                                            <template if:true={con.Opportunity.OwnerId}>
+                                            <div class="slds-truncate">{con.Opportunity.Owner.Name}</div>
+                                                </template>
+                                            </template>
+                                        </td>
+                                        <td>
+                                            <div class="slds-truncate">{con.Buy_Price__c}</div>
+                                        </td>
+                                        <td>
+                                            <div class="slds-truncate">{con.Target__c}</div>
+                                        </td>
+                                        <td>
+                                            <div class="slds-truncate">{con.Tipo_de_moneda__c}</div>
+                                        </td>
+                                        <td>
+                                            <div class="slds-truncate">{con.Moneda_Oportunidad__c}</div>
+                                        </td>
+                                        </tr>
+                                    </template>
+                                    </tbody>
+                                </table>
+                            </template>
+                            <template if:true={sinInfoP}>
+                                <p>{sinInfoMensaje}</p>
+                            </template>
+                        </div>
+                    </div>
+                </lightning-accordion-section>
+                <lightning-accordion-section name="Seccion2" label="Subproductos por estatus">
+                    <br><h1><b>Subproductos por estatus {valueStatus}</b></h1><br>
+                    <div class="slds-grid slds-gutters">
+                        <div class="scrollable slds-col slds-size_12-of-12">
+                            <template if:false={sinInfoSP}>
+                                <table class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_striped">
+                                    <thead>
+                                    <tr class="slds-line-height_reset">
+                                        <th class="" scope="col">
+                                        <div class="slds-truncate">Status</div>
+                                        </th>
+                                        <th class="" scope="col">
+                                        <div class="slds-truncate">Name</div>
+                                        </th>
+                                        <th class="" scope="col">
+                                        <div class="slds-truncate">Product Name</div>
+                                        </th>
+                                        <th class="" scope="col">
+                                        <div class="slds-truncate">Cliente</div>
+                                        </th>
+                                        <th class="" scope="col">
+                                        <div class="slds-truncate">Opportunity Name</div>
+                                        </th>
+                                        <th class="" scope="col">
+                                        <div class="slds-truncate">Usuario IC</div>
+                                        </th>
+                                        <th class="" scope="col">
+                                        <div class="slds-truncate">Opportunity Owner</div>
+                                        </th>
+                                        <th class="" scope="col">
+                                        <div class="slds-truncate">Costo Buy Price</div>
+                                        </th>
+                                        <th class="" scope="col">
+                                        <div class="slds-truncate">Moneda</div>
+                                        </th>
+                                        <th class="" scope="col">
+                                        <div class="slds-truncate">Moneda Oportunidad</div>
+                                        </th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <template for:each={listaSubproductos} for:item="con">
+                                        <tr class="slds-hint-parent" key={con.Id}>
+                                        <td>
+                                            <div class="slds-truncate">{con.Status__c}</div>
+                                        </td>
+                                        <td>
+                                            <div style="width: max-content;" class="slds-truncate" data-id={con.Id} onclick={abrirSubProducto}>
+                                                <b><em><lightning-button variant="base" label={con.Name} title={con.Name} class="slds-m-left_x-small"></lightning-button>
+                                                </em></b>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <template if:true={con.SubProduct_Opportunity_Product__c}>
+                                            <template if:true={con.SubProduct_Opportunity_Product__r.Product2Id}>
+                                            <div class="slds-truncate">{con.SubProduct_Opportunity_Product__r.Product2.Name}</div>
+                                            </template>
+                                            </template>
+                                        </td>
+                                        <td>
+                                            <template if:true={con.SubProduct_Opportunity__c}>
+                                            <template if:true={con.SubProduct_Opportunity__r.AccountId}>
+                                            <div class="slds-truncate">{con.SubProduct_Opportunity__r.Account.Name}</div>
+                                            </template>
+                                            </template>
+                                        </td>
+                                        <td>
+                                            <template if:true={con.SubProduct_Opportunity__c}>
+                                                <div style="width: max-content;" class="slds-truncate" data-id={con.SubProduct_Opportunity__c} onclick={abrirOppo}>
+                                                    <b><em><lightning-button variant="base" label={con.SubProduct_Opportunity__r.Name} title={con.SubProduct_Opportunity__r.Name} class="slds-m-left_x-small"></lightning-button>
+                                                    </em></b>
+                                                </div>
+                                            </template>
+                                        </td>
+                                        <td>
+                                            <template if:true={con.SubProduct_Opportunity__c}>
+                                            <template if:true={con.SubProduct_Opportunity__r.Usuario_IC__c}>
+                                                <div class="slds-truncate">{con.SubProduct_Opportunity__r.Usuario_IC__r.Name}</div>
+                                            </template>
+                                            </template>
+                                        </td>
+                                        <td>
+                                            <template if:true={con.SubProduct_Opportunity__c}>
+                                            <template if:true={con.SubProduct_Opportunity__r.OwnerID}>
+                                            <div class="slds-truncate">{con.SubProduct_Opportunity__r.Owner.Name}</div>
+                                            </template>
+                                            </template>
+                                        </td>
+                                        <td>
+                                            <div class="slds-truncate">{con.SubProduct_Buy_Price__c}</div>
+                                        </td>
+                                        <td>
+                                            <div class="slds-truncate">{con.Tipo_de_moneda__c}</div>
+                                        </td>
+                                        <td>
+                                            <template if:true={con.SubProduct_Opportunity_Product__c}>
+                                            <div class="slds-truncate">{con.SubProduct_Opportunity_Product__r.Moneda_Oportunidad__c}</div>
+                                            </template>
+                                        </td>
+                                        </tr>
+                                    </template>
+                                    </tbody>
+                                </table>
+                            </template>
+                            <template if:true={sinInfoSP}>
+                                <p>{sinInfoMensaje}</p>
+                            </template>
+                        </div>
+                    </div>
+                </lightning-accordion-section>
+                <lightning-accordion-section name="Seccion3" label="Import Export Quote/Order por status">
+                    <br><h1><b>Import Export Quote/Order {valueQuotationStatus}</b></h1><br>
+                    <div class="slds-grid slds-gutters">
+                        <div class="scrollable slds-col slds-size_12-of-12">
+                            <template if:false={sinInfoIEQO}>
+                                <table class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_striped">
+                                    <thead>
+                                    <tr class="slds-line-height_reset">
+                                        <th class="" scope="col">
+                                        <div class="slds-truncate">Date Sernd Request</div>
+                                        </th>
+                                        <th class="" scope="col">
+                                        <div class="slds-truncate">Data Pricing Responded</div>
+                                        </th>
+                                        <th class="" scope="col">
+                                        <div class="slds-truncate">Status</div>
+                                        </th>
+                                        <th class="" scope="col">
+                                        <div class="slds-truncate">Service Line</div>
+                                        </th>
+                                        <th class="" scope="col">
+                                        <div class="slds-truncate">Cliente</div>
+                                        </th>
+                                        <th class="" scope="col">
+                                        <div class="slds-truncate">IEQO Name</div>
+                                        </th>
+                                        <th class="" scope="col">
+                                        <div class="slds-truncate">Pricing Executive</div>
+                                        </th>
+                                        <th class="" scope="col">
+                                        <div class="slds-truncate">Created By</div>
+                                        </th>
+                                        <th class="" scope="col">
+                                        <div class="slds-truncate">Quote Std. Buy Price</div>
+                                        </th>
+                                        <th class="" scope="col">
+                                        <div class="slds-truncate">Rate Name</div>
+                                        </th>
+                                        <th class="" scope="col">
+                                        <div class="slds-truncate">Buy Rate</div>
+                                        </th>
+                                        <th class="" scope="col">
+                                        <div class="slds-truncate">Moneda</div>
+                                        </th>
+                                        <th class="" scope="col">
+                                        <div class="slds-truncate">Moneda IEQO</div>
+                                        </th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <template for:each={listaIEQOPendiente} for:item="con">
+                                        <tr class="slds-hint-parent" key={con.Id}>
+                                            <td>
+                                                <div class="slds-truncate">
+                                                    <lightning-formatted-date-time value={con.Import_Export_Quote__r.Date_Send_Request__c} year="numeric" month="numeric" day="numeric" hour="2-digit"
+                                            minute="2-digit"></lightning-formatted-date-time></div>
+                                            </td>
+                                            <td>
+                                                <div class="slds-truncate">
+                                                    <lightning-formatted-date-time value={con.Import_Export_Quote__r.Date_Pricing_responded__c} year="numeric" month="numeric" day="numeric" hour="2-digit"
+                                            minute="2-digit"></lightning-formatted-date-time></div>
+                                            </td>
+                                        <td>
+                                            <div class="slds-truncate">{con.Import_Export_Quote__r.Quotation_Status__c}</div>
+                                        </td>
+                                        <td>
+                                            <div style="width: max-content;" class="slds-truncate" data-id={con.Id} onclick={abrirServiceLine}>
+                                                <b><em><lightning-button variant="base" label={con.Name} title={con.Name} class="slds-m-left_x-small"></lightning-button>
+                                                </em></b>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <template if:true={con.Import_Export_Quote__c}>
+                                            <template if:true={con.Import_Export_Quote__r.Account_for__c}>
+                                            <div class="slds-truncate">{con.Import_Export_Quote__r.Account_for__r.Name}</div>
+                                            </template>
+                                            </template>
+                                        </td>
+                                        <td>
+                                            <div style="width: max-content;" class="slds-truncate" data-id={con.Import_Export_Quote__c} onclick={abrirIEQO}>
+                                                <b><em><lightning-button variant="base" label={con.Import_Export_Quote__r.Name} title={con.Import_Export_Quote__r.Name} class="slds-m-left_x-small"></lightning-button>
+                                                </em></b>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <template if:true={con.Import_Export_Quote__c}>
+                                            <template if:true={con.Import_Export_Quote__r.Pricing_Executive__c}>
+                                                <div class="slds-truncate">{con.Import_Export_Quote__r.Pricing_Executive__r.Name}</div>
+                                            </template>
+                                            </template>
+                                        </td>
+                                        <td>
+                                            <template if:true={con.Import_Export_Quote__c}>
+                                            <template if:true={con.Import_Export_Quote__r.CreatedById}>
+                                            <div class="slds-truncate">{con.Import_Export_Quote__r.CreatedBy.Name}</div>
+                                                </template>
+                                            </template>
+                                        </td>
+                                        <td>
+                                            <div class="slds-truncate">{con.Quote_Buy_Price__c}</div>
+                                        </td>
+                                        <td>
+                                            <template if:true={con.Service_Rate_Name__c}>
+                                                <div class="slds-truncate">{con.Service_Rate_Name__r.Name}</div>
+                                            </template>
+                                        </td>
+                                        <td>
+                                            <div class="slds-truncate">{con.Buy_Rate__c}</div>
+                                        </td>
+                                        <td>
+                                            <template if:true={con.Import_Export_Quote__c}>
+                                                <div class="slds-truncate">{con.Import_Export_Quote__r.CurrencyIsoCode}</div>
+                                            </template>
+                                        </td>
+                                        <td>
+                                            <div class="slds-truncate">{con.CurrencyIsoCode}</div>
+                                        </td>
+                                        </tr>
+                                    </template>
+                                    </tbody>
+                                </table>
+                            </template>
+                            <template if:true={sinInfoIEQO}>
+                                <p>{sinInfoMensaje}</p>
+                            </template>
+                        </div>
+                    </div>
+                </lightning-accordion-section>
+            </lightning-accordion>
+        </div>
+    </lightning-card>
+</template>

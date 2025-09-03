@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Loss_Reason__c</fullName>
+    <externalId>false</externalId>
+    <label>Loss Reason</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <controllingField>StageName</controllingField>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Lost to Competitor</fullName>
+                <default>false</default>
+                <label>Lost to Competitor</label>
+            </value>
+            <value>
+                <fullName>No Budget / Lost Funding</fullName>
+                <default>false</default>
+                <label>No Budget / Lost Funding</label>
+            </value>
+            <value>
+                <fullName>No Decision / Non-Responsive</fullName>
+                <default>false</default>
+                <label>No Decision / Non-Responsive</label>
+            </value>
+            <value>
+                <fullName>Price</fullName>
+                <default>false</default>
+                <label>Price</label>
+            </value>
+            <value>
+                <fullName>Other</fullName>
+                <default>false</default>
+                <label>Other</label>
+            </value>
+            <value>
+                <fullName>Ruta fuera de portafolio</fullName>
+                <default>false</default>
+                <label>Ruta fuera de portafolio</label>
+            </value>
+            <value>
+                <fullName>No rentable</fullName>
+                <default>false</default>
+                <label>No rentable</label>
+            </value>
+            <value>
+                <fullName>Tiempo de plan de trabajo</fullName>
+                <default>false</default>
+                <label>Tiempo de plan de trabajo</label>
+            </value>
+            <value>
+                <fullName>Vetado, moroso (Temas Adm)</fullName>
+                <default>false</default>
+                <label>Vetado, moroso (Temas Adm)</label>
+            </value>
+            <value>
+                <fullName>No aplica proyecto</fullName>
+                <default>false</default>
+                <label>No aplica proyecto</label>
+            </value>
+            <value>
+                <fullName>No contesto al contactarlo nuevamente</fullName>
+                <default>false</default>
+                <label>No contesto al contactarlo nuevamente</label>
+            </value>
+            <value>
+                <fullName>Esta realizando benchmark/investigacion</fullName>
+                <default>false</default>
+                <label>Esta realizando benchmark/investigacion</label>
+            </value>
+            <value>
+                <fullName>Para oportunidad futura</fullName>
+                <default>false</default>
+                <label>Para oportunidad futura</label>
+            </value>
+            <value>
+                <fullName>Declinado por el folio</fullName>
+                <default>false</default>
+                <label>Declinado por el folio</label>
+            </value>
+            <value>
+                <fullName>Falta de seguimiento a oportunidad</fullName>
+                <default>false</default>
+                <label>Falta de seguimiento a oportunidad</label>
+            </value>
+            <value>
+                <fullName>Falta de crédito</fullName>
+                <default>false</default>
+                <label>Falta de crédito</label>
+            </value>
+            <value>
+                <fullName>Falta de disponibilidad</fullName>
+                <default>false</default>
+                <label>Falta de disponibilidad</label>
+            </value>
+            <value>
+                <fullName>Tarifa Alta</fullName>
+                <default>false</default>
+                <label>Tarifa Alta</label>
+            </value>
+            <value>
+                <fullName>Tardanza en Cotizar</fullName>
+                <default>false</default>
+                <label>Tardanza en Cotizar</label>
+            </value>
+            <value>
+                <fullName>Cancelación de Cliente</fullName>
+                <default>false</default>
+                <label>Cancelación de Cliente</label>
+            </value>
+            <value>
+                <fullName>Falla Operativa</fullName>
+                <default>false</default>
+                <label>Falla Operativa</label>
+            </value>
+            <value>
+                <fullName>Fuera de word to place</fullName>
+                <default>false</default>
+                <label>Fuera de word to place</label>
+            </value>
+            <value>
+                <fullName>Oportunidad duplicada</fullName>
+                <default>false</default>
+                <label>Oportunidad duplicada</label>
+            </value>
+            <value>
+                <fullName>No le interesa</fullName>
+                <default>false</default>
+                <label>No le interesa</label>
+            </value>
+        </valueSetDefinition>
+        <valueSettings>
+            <controllingFieldValue>Declinar</controllingFieldValue>
+            <valueName>Ruta fuera de portafolio</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Declinar</controllingFieldValue>
+            <valueName>No rentable</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Declinar</controllingFieldValue>
+            <valueName>Tiempo de plan de trabajo</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Declinar</controllingFieldValue>
+            <valueName>Vetado, moroso (Temas Adm)</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Declinar</controllingFieldValue>
+            <valueName>No aplica proyecto</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Closed Lost</controllingFieldValue>
+            <valueName>No contesto al contactarlo nuevamente</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Closed Lost</controllingFieldValue>
+            <valueName>Esta realizando benchmark/investigacion</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Closed Lost</controllingFieldValue>
+            <valueName>Para oportunidad futura</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Closed Lost</controllingFieldValue>
+            <valueName>Declinado por el folio</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Closed Lost</controllingFieldValue>
+            <valueName>Falta de seguimiento a oportunidad</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Closed Lost</controllingFieldValue>
+            <valueName>Falta de crédito</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Closed Lost</controllingFieldValue>
+            <valueName>Falta de disponibilidad</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Closed Lost</controllingFieldValue>
+            <valueName>Tarifa Alta</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Closed Lost</controllingFieldValue>
+            <valueName>Tardanza en Cotizar</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Closed Lost</controllingFieldValue>
+            <valueName>Cancelación de Cliente</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Closed Lost</controllingFieldValue>
+            <valueName>Falla Operativa</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Closed Lost</controllingFieldValue>
+            <valueName>Fuera de word to place</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Closed Lost</controllingFieldValue>
+            <valueName>Oportunidad duplicada</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Closed Lost</controllingFieldValue>
+            <valueName>No le interesa</valueName>
+        </valueSettings>
+    </valueSet>
+</CustomField>

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PathAssistant xmlns="http://soap.sforce.com/2006/04/metadata">
+    <active>true</active>
+    <entityName>Customer_Quote__c</entityName>
+    <fieldName>Quotation_Status__c</fieldName>
+    <masterLabel>StatusQuote</masterLabel>
+    <pathAssistantSteps>
+        <fieldNames>Quotation_Status__c</fieldNames>
+        <picklistValueName>Approved as Succesful</picklistValueName>
+    </pathAssistantSteps>
+    <pathAssistantSteps>
+        <fieldNames>Quotation_Status__c</fieldNames>
+        <picklistValueName>Awaiting costs suppliers</picklistValueName>
+    </pathAssistantSteps>
+    <pathAssistantSteps>
+        <fieldNames>Quotation_Status__c</fieldNames>
+        <picklistValueName>Quote Declined</picklistValueName>
+    </pathAssistantSteps>
+    <pathAssistantSteps>
+        <fieldNames>Quotation_Status__c</fieldNames>
+        <picklistValueName>Quote being prepared</picklistValueName>
+    </pathAssistantSteps>
+    <pathAssistantSteps>
+        <fieldNames>Quotation_Status__c</fieldNames>
+        <picklistValueName>Sent awaiting response</picklistValueName>
+    </pathAssistantSteps>
+    <recordTypeName>Import_Export_Quote</recordTypeName>
+</PathAssistant>

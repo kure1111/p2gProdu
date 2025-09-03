@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>US001_No_cambiar_los_datos</fullName>
+    <active>true</active>
+    <errorConditionFormula>AND(
+NOT( $Profile.Id =&quot;00e4T000000zD9C&quot;),
+NOT (ISCHANGED(Fax))
+)</errorConditionFormula>
+    <errorMessage>US001 - Privilegios insufucientes para editar el registro.</errorMessage>
+</ValidationRule>

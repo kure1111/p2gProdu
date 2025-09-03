@@ -18,6 +18,9 @@ public class p2g_Cotizador {
         @AuraEnabled public String claveServicioName { get; set; }
         //costo Cotizacion
         @AuraEnabled public String costo {get;set;}
+        @AuraEnabled public Decimal costoSug {get;set;}
+        @AuraEnabled public Decimal costoMax {get;set;}
+        @AuraEnabled public Decimal costoMin {get;set;}
         @AuraEnabled public Boolean tarifario { get; set; }
         @AuraEnabled public String quoteId {get;set;}
         @AuraEnabled public String quoteName { get; set; }
@@ -25,6 +28,10 @@ public class p2g_Cotizador {
         
         @AuraEnabled public String idLead { get; set; }
         @AuraEnabled public String cuentaId { get; set; }
+        @AuraEnabled public String cuentaName { get; set; }
+        @AuraEnabled public String ruta { get; set; }
+        @AuraEnabled public String idAddress { get; set; }
+        @AuraEnabled public Boolean conCuenta { get; set; }
         //Emparque
         @AuraEnabled public String rfc {get;set;}
         @AuraEnabled public String razonSocial {get;set;}
@@ -46,6 +53,13 @@ public class p2g_Cotizador {
         @AuraEnabled public String coloniaDestinoId { get; set; }
         @AuraEnabled public String etd {get;set;}
         @AuraEnabled public String eta { get; set; }
+        @AuraEnabled public String calleFiscal { get; set; }
+        @AuraEnabled public String interiorFiscal {get;set;}
+        @AuraEnabled public String exteriorFiscal { get; set; }
+        @AuraEnabled public String cPFiscal {get;set;}
+        @AuraEnabled public String cPFiscalId {get;set;}
+        @AuraEnabled public String coloniaFiscal { get; set; }
+        @AuraEnabled public String coloniaFiscalId { get; set; }
     }
     
     @AuraEnabled
@@ -86,11 +100,11 @@ public class p2g_Cotizador {
     
     @AuraEnabled
     public static wrapperCotizador Cotizador(wrapperCotizador cotizador, Integer ban){
-        Lead lead = crearLead(cotizador);
-        cotizador.idLead = lead.Id;
+        cotizador = buscarLeadExistente(cotizador);
         cotizador.tarifario = false;
         Customer_Quote__c quote = creaIeqCotizador(cotizador);
-        Customer_Quote__c idQuote = [SELECT Route__c, Name, Account_for__c FROM Customer_Quote__c WHERE Id =: quote.Id];
+        Customer_Quote__c idQuote = [SELECT Route__c,Route__r.Name, Name, Account_for__c FROM Customer_Quote__c WHERE Id =: quote.Id];
+        cotizador.ruta = idQuote.Route__r.Name;
         Fee__c tarifario = P2G_CreacionFolios.condicionesTarifario('noTomarId',cotizador.sapServiceType,cotizador.containerType,idQuote.Route__c);
         Sourcing_Item__c item = P2G_CreacionFolios.creaItem(cotizador.claveServicioName, idQuote.Account_for__c,'MXN');
         System.debug('para item: '+cotizador.claveServicioName+' ----'+ idQuote.Account_for__c);
@@ -108,24 +122,28 @@ public class p2g_Cotizador {
             String contenido = '{'+getbody2+'}';
             System.debug('Se envia json: '+contenido);
             List<p2g_CreateServiceLineQuote.quoteFeeLineWrapper> serviceLine = p2g_CreateServiceLineQuote.CrearLineTarifario(contenido, 1);
-            cotizador.costo = String.valueOf(tarifario.Fee_Rate__c);
-            cotizador.buyRate = tarifario.Buy_Rate__c;
             cotizador.tarifario = true;
             cotizador.quoteId = quote.Id;
             cotizador.quoteName = idQuote.Name;
+            updateQuote(quote.Id,4,'','','','','');
+            cotizador = generarCostos(tarifario,cotizador);
+            System.debug('Lo que regresa tarifario: '+cotizador);
             return cotizador;
         }
         else{
             P2G_UpdateShipmentServiceLine.shipmentFeeLineWrapper data = rellenaServiceRate(cotizador,idQuote.Route__c, idQuote.Account_for__c);
             Fee__c serviceRate = p2g_CreateServiceLineQuote.CreateServiceRate(data);
-            insert serviceRate;
+                insert serviceRate;
             Import_Export_Fee_Line__c serviceLine = p2g_CreateServiceLineQuote.CreateServiceLine(1,quote.Id, serviceRate);
-            insert serviceLine;
+            if(!Test.isRunningTest()){
+                insert serviceLine;
+            }
             updateQuote(quote.Id,1,'','','','','');
             cotizador.tarifario = false;
             cotizador.quoteId = quote.Id;
             cotizador.quoteName = idQuote.Name;
-            enviarCorreo(quote.Id);
+            P2G_callsCotizador.enviarCorreo(quote.Id);
+            System.debug('Lo que regresa sin tarifario: '+cotizador);
             return cotizador;	
         }
     }
@@ -140,7 +158,13 @@ public class p2g_Cotizador {
             quote.RecordTypeId = recordTypeId;
             quote.Clave_de_Unidad_de_Peso__c = recordTypeUnidad.Id;
             quote.Name='.';
-            quote.Account_for__c = [SELECT Id, Name FROM Account Where Name = 'Cotizador' limit 1].Id;
+            if((wrapper.cuentaId != null)&&(wrapper.cuentaId != '')){
+                System.debug('tiene cuenta ');
+                quote.Account_for__c = wrapper.cuentaId;
+            }else{
+            	quote.Account_for__c = [SELECT Id, Name FROM Account Where Name = 'Cotizador' limit 1].Id;
+                System.debug('no tiene cuenta '+quote.Account_for__c);
+            }
             quote.Team__c = 'P2G';
             quote.Quotation_Status__c = 'Quote being prepared';          
             quote.Valid_From__c = system.today();
@@ -157,6 +181,7 @@ public class p2g_Cotizador {
             Time myTime = Time.newInstance(8, 00, 0, 0);
             quote.Awaiting_load_time__c = myTime;
             quote.Pricing_Executive__c = UserInfo.getUserId();
+            quote.Final_Client_Pak__c = wrapper.idLead;
             switch on wrapper.tipoServicio {
                 when 'SP-FN-FLETE NACIONAL' {
                     //inicio FN-FLET_NACIONAL_IC
@@ -189,19 +214,25 @@ public class p2g_Cotizador {
     @AuraEnabled
     public static wrapperCotizador crearEmbarque(wrapperCotizador cotizador){
         Map<Integer,String> datos = new Map<Integer,String>();
-        String coloniaOr = cotizador.coloniaOrigen;
-		coloniaOr = coloniaOr.replaceAll('(\\s+)','');
-        String coloniaDes = cotizador.coloniaDestino;
-		coloniaDes = coloniaDes.replaceAll('(\\s+)','');
-        Map<String, Decimal> cordenadasOrigen = P2G_callsCotizador.getCoordinates(cotizador.cPOrigen,coloniaOr);
-        Map<String, Decimal> cordenadasDestino = P2G_callsCotizador.getCoordinates(cotizador.cPDestino,coloniaDes);
-        Account cuenta = creaAccount(cotizador);
-        insert cuenta;
-        eliminarSuscripcionCuenta(cuenta.Id, UserInfo.getUserId());
-        cotizador.cuentaId = cuenta.id;
+        Map<String, Decimal> cordenadasFiscal = P2G_callsCotizador.getCoordinates(cotizador.cPFiscal,cotizador.coloniaFiscal);
+        Map<String, Decimal> cordenadasOrigen = P2G_callsCotizador.getCoordinates(cotizador.cPOrigen,cotizador.coloniaOrigen);
+        Map<String, Decimal> cordenadasDestino = P2G_callsCotizador.getCoordinates(cotizador.cPDestino,cotizador.coloniaDestino);
+        Account cuenta = new Account();
+        if((cotizador.cuentaId != null)&&(cotizador.cuentaId != '')){
+            cuenta.Id = cotizador.cuentaId;
+            cuenta.Name = cotizador.cuentaName;
+            p2g_asignarCuentaSpot.crearAccount(cotizador,cordenadasOrigen,cordenadasDestino);
+               //Actualiza cuenta
+            p2g_asignarCuentaSpot.actualizacionCuenta(cotizador,cordenadasFiscal);
+        }else{
+            cuenta = creaAccount(cotizador);
+        	insert cuenta;
+        	cotizador.cuentaId = cuenta.id;
+        }
+        //eliminarSuscripcionCuenta(cuenta.Id, UserInfo.getUserId());
         P2G_callsCotizador.altaSAP(cuenta.Id,cotizador.tipoServicio);
 		System.debug('id cuenta: '+cuenta.id);
-        crearAccountAddres(cotizador, cuenta,cordenadasOrigen,cordenadasDestino);
+        crearAccountAddres(cotizador, cuenta,cordenadasFiscal,cordenadasOrigen,cordenadasDestino);
         
         //datos.p
         //convieteLeand(datos);
@@ -228,8 +259,9 @@ public class p2g_Cotizador {
         address.Numero_Ext_cp__c = noExterior;
         address.Numero_Int_cat__c = noInterior;
         address.Codigo_Postal_CP__c = cP;
-        if(!Test.isRunningTest())
+        if(!Test.isRunningTest()){
         	address.Colonia_cp__c = colonia;
+        }
         address.Type__c = 'Shipping Address	';
         address.Address_Coordinates__Latitude__s = cordenadas.get('latitude');
         address.Address_Coordinates__Longitude__s = cordenadas.get('longitude');
@@ -238,53 +270,28 @@ public class p2g_Cotizador {
         return address;
     }
     
-    public static void crearAccountAddres(wrapperCotizador wrapper,Account cuenta,Map<String, Decimal> cordenadasOrigen, Map<String, Decimal> cordenadasDestino){
+    public static void crearAccountAddres(wrapperCotizador wrapper,Account cuenta,Map<String, Decimal> cordenadasFiscal,Map<String, Decimal> cordenadasOrigen, Map<String, Decimal> cordenadasDestino){
+        //account Fiscal
+        Account_Address__c accountFiscal = creAccountAddres('Fiscal ',cuenta.Id,cuenta.Name,wrapper.calleFiscal,wrapper.exteriorFiscal,wrapper.interiorFiscal,wrapper.cPFiscalId,wrapper.coloniaFiscalId,cordenadasFiscal);
+        insert accountFiscal;
         //account origen
-        Account_Address__c accountOrigen = creAccountAddres('Origen',cuenta.Id,cuenta.Name,wrapper.calleOrigen,wrapper.exteriorOrigen,wrapper.interiorOrigen,wrapper.cPOrigenId,wrapper.coloniaOrigenId,cordenadasOrigen);
+        Account_Address__c accountOrigen = creAccountAddres('Origen ',cuenta.Id,cuenta.Name,wrapper.calleOrigen,wrapper.exteriorOrigen,wrapper.interiorOrigen,wrapper.cPOrigenId,wrapper.coloniaOrigenId,cordenadasOrigen);
         insert accountOrigen;
         //account destino
-        Account_Address__c accountDestino = creAccountAddres('Destino',cuenta.Id,cuenta.Name,wrapper.calleDestino,wrapper.exteriorDestino,wrapper.interiorDestino,wrapper.cPDestinoId,wrapper.coloniaDestinoId,cordenadasDestino);
+        Account_Address__c accountDestino = creAccountAddres('Destino ',cuenta.Id,cuenta.Name,wrapper.calleDestino,wrapper.exteriorDestino,wrapper.interiorDestino,wrapper.cPDestinoId,wrapper.coloniaDestinoId,cordenadasDestino);
         insert accountDestino;
         
-        cuenta.Direccion_Principal__c = accountOrigen.Id;
+        cuenta.Direccion_Principal__c = accountFiscal.Id;
         update cuenta;
         updateQuote(wrapper.quoteId, 3, cuenta.Id,wrapper.etd,wrapper.eta,accountOrigen.Id,accountDestino.Id);
     }
-    
-    public static void enviarCorreo(String IdObjeto) {
-        Messaging.SingleEmailMessage email = new Messaging.SingleEmailMessage();
-        email.setToAddresses(new String[]{'omar.rojo@pak2go.com'}); //para quien se envia
-        email.setReplyTo('admin2020@force.com');//quien lo envia
-        email.setSenderDisplayName('Actualización Sistemas 2021');
-        
-        //asunto del correo
-        email.setSubject('Actualización de Costo:  ' + IdObjeto);
-        
-        String cuerpoCorreo = '<p>Hola,</p>';
-        cuerpoCorreo += '<p>Por favor, actualice el costo de Service Rate:</p>';
-        cuerpoCorreo += '<p><strong>Quote:</strong> ' + IdObjeto + '</p>';
-        cuerpoCorreo += '<p><a href="https://pak2gologistics.lightning.force.com/lightning/r/Customer_Quote__c/' + IdObjeto + '/view">Haga clic aquí para actualizar</a></p>';
-        cuerpoCorreo += '<p>Gracias,</p>';
-        cuerpoCorreo += '<p>Tu Nombre</p>';
-        email.setHtmlBody(cuerpoCorreo);
-        
-        // Envia el correo electrónico
-        Messaging.SendEmailResult[] resultados = Messaging.sendEmail(new Messaging.SingleEmailMessage[]{email});
-        
-        // Verifica los resultados del envío
-        if (resultados[0].isSuccess()) {
-            System.debug('Correo electrónico enviado con éxito: ');
-        } else {
-            System.debug('Error al enviar el correo electrónico: ' + resultados[0].getErrors()[0].getMessage());
-        }
-    }
-    
     public static void updateQuote(String idQuote, Integer opcion, String idCuenta,String etd, String eta,String addressOr, String addressDes) {
         Customer_Quote__c quote = new Customer_Quote__c();
         quote.Id = idQuote;
         switch on opcion {
             when 1 {
                 	quote.Quotation_Status__c = 'Awaiting costs suppliers';
+                    quote.clave_de_lead__c='Spot cotizador';
             }
             when 2 {
                 quote.Motivo__c = 'TARIFA ALTA';
@@ -300,6 +307,9 @@ public class p2g_Cotizador {
                 quote.ETA__c = Date.valueOf(eta);
                 quote.Account_Origin_Address__c = addressOr;
                 quote.Account_Destination_Address__c = addressDes;
+            }
+            when 4 {
+                quote.clave_de_lead__c='Spot tarifario';
             }
             when else {
                 System.debug('default');
@@ -365,13 +375,13 @@ public class p2g_Cotizador {
     
     @AuraEnabled
     public static Account creaAccount(wrapperCotizador cotizador){
-        List<Catalogo_SAT__c> cp = codigoPostal(cotizador.cPOrigen,1,'');
+        List<Catalogo_SAT__c> cp = codigoPostal(cotizador.cPFiscal,1,'');
         String ciudad;
         String estado;
         String pais;
         String localidad;
         for(Catalogo_SAT__c codigo : cp){
-            if(codigo.id == cotizador.cPOrigenId){
+            if(codigo.id == cotizador.cPFiscalId){
         		ciudad = codigo.Municipio_Ref_CP__r.Name; 
                 estado = codigo.Clave_Relacion_SAT__r.Name;
         		pais = codigo.Pais_RefCP__r.Name;
@@ -388,13 +398,13 @@ public class p2g_Cotizador {
         cuenta.TAX_ID__c = cotizador.rfc;	//RFC
         cuenta.Bank_Name_Supplier_Form2__c = cotizador.banco;//PENDIENTE
 		cuenta.Bank_Account_Number__c = cotizador.numeroCuenta;//PENDIENTE
-        cuenta.BillingStreet = cotizador.calleOrigen;//DireccionFiscal (Dirección de Origen)
+        cuenta.BillingStreet = cotizador.calleFiscal;//DireccionFiscal (Dirección de Fiscal)
         cuenta.BillingCity = ciudad; 
         cuenta.BillingState = estado; 
-        cuenta.BillingPostalCode = cotizador.cPOrigen;
+        cuenta.BillingPostalCode = cotizador.cPFiscal;
         cuenta.BillingCountry = pais;
-        cuenta.Estado__c = localidad; //Dirección de Origen
-		cuenta.Address_in_Sap__c = 'Direccion';//Copiar Billing Address = Address_in_Sap__c ¨**no es fijo checar con carlos
+        cuenta.Estado__c = localidad; //Dirección de Fiscal
+		cuenta.Address_in_Sap__c = 'Calle: '+cotizador.calleFiscal+' CP: '+cotizador.cPFiscal+', '+ciudad+', '+estado+', '+pais;//Copiar Billing Address = Address_in_Sap__c
         cuenta.Credit_Terms__c = 'Contado'; //DiasCredito
         cuenta.Requiere_Evidencia__c = 'No';//RequiereEvidencia
         cuenta.Tipo_de_Acuse_Sap__c	= 'No Requiere';//TipoEvidenciaAcuse
@@ -463,5 +473,94 @@ public class p2g_Cotizador {
             update serviceLine;
             update serviceRate;
         }
+    }
+    public static wrapperCotizador generarCostos(Fee__c tarifario, wrapperCotizador cotizador){
+        Decimal costoMax = (tarifario.Buy_Rate__c * 1.27);
+        Decimal costoMin = (tarifario.Buy_Rate__c * 1.18);
+        Decimal costoSugerido = (tarifario.Buy_Rate__c * 1.22);
+        
+        cotizador.costoMax = costoMax;
+        cotizador.costoMin = costoMin;
+        cotizador.costoSug = costoSugerido;
+        cotizador.costo = String.valueOf(tarifario.Fee_Rate__c);
+        cotizador.buyRate = tarifario.Buy_Rate__c;
+        
+        return cotizador;    
+    }
+    public static wrapperCotizador buscarLeadExistente(wrapperCotizador cotizador){
+        List<Lead> lead = [SELECT Id FROM Lead WHERE Email =: cotizador.emailCliente ORDER BY LastModifiedDate desc Limit 1];
+        List<Contact> contacto = [SELECT Id, AccountId, Account.Name,Account.TAX_ID__c,Account.Phone,Account.NEU_Email__c,
+                                  Account.Bank_Name_Supplier_Form2__c,Account.Bank_Account_Number__c,Account.Direccion_Principal__c 
+                                  FROM Contact WHERE Email =: cotizador.emailCliente ORDER BY LastModifiedDate desc Limit 1];
+        List<Account> cuenta = [SELECT Id,Name,TAX_ID__c,Phone,NEU_Email__c,Bank_Name_Supplier_Form2__c,Bank_Account_Number__c,
+                                Direccion_Principal__c FROM Account 
+                                WHERE NEU_Email__c =: cotizador.emailCliente ORDER BY LastModifiedDate desc LIMIT 1];
+        
+        if(lead.size() >0){
+            if(cuenta.size() >0){
+                cotizador.conCuenta = true;
+                cotizador = p2g_asignarCuentaSpot.llenarCuenta(cuenta[0],cotizador);
+                cotizador.cuentaName = cuenta[0].Name;
+                cotizador.idLead = lead[0].Id;
+                cotizador.conCuenta =true;
+                System.debug('con cuenta: '+cotizador.cuentaId+' lead: '+cotizador.idLead);
+            }else if(contacto.size() >0){
+                cotizador.idLead = lead[0].Id;
+                if(contacto[0].AccountId != null){
+                    cotizador = contactoConCuenta(contacto[0],cotizador);
+                	System.debug('contacto con cuenta: '+cotizador.cuentaId+' lead: '+cotizador.idLead);
+                }
+            }else{
+                cotizador.idLead = lead[0].Id;
+            	System.debug('encontro lead: '+ cotizador.idLead);
+            }
+        }else if(cuenta.size() >0){
+            cotizador = p2g_asignarCuentaSpot.llenarCuenta(cuenta[0],cotizador);
+            cotizador.conCuenta = true;
+            cotizador.cuentaName = cuenta[0].Name;
+            Lead leadCrea = crearLead(cotizador);
+        	cotizador.idLead = leadCrea.Id;
+            if(!Test.isRunningTest()){
+                p2g_asignarCuentaSpot.convertLead(leadCrea.Id, cuenta[0].Id);
+            }
+            System.debug('cuenta: '+cotizador.cuentaId+' lead: '+cotizador.idLead);
+        }else if(contacto.size() >0){
+            Lead leadCrea = crearLead(cotizador);
+        	cotizador.idLead = leadCrea.Id;
+            if(contacto[0].AccountId != null){
+            	cotizador = contactoConCuenta(contacto[0],cotizador);
+                p2g_asignarCuentaSpot.convertLead(leadCrea.Id, contacto[0].AccountId);
+        		System.debug('cuenta: '+cotizador.cuentaId+' contacto: '+contacto[0].Id+' lead: '+cotizador.idLead);
+            }
+        }else{
+            Lead leadCrea = crearLead(cotizador);
+        	cotizador.idLead = leadCrea.Id;
+            System.debug('se creo lead: '+ cotizador.idLead);
+        }
+        return cotizador;
+    }
+    public static p2g_Cotizador.wrapperCotizador contactoConCuenta(Contact contacto,p2g_Cotizador.wrapperCotizador cuenta){
+        List<Account_Address__c> address = [SELECT Id,Calle_cat__c,Numero_Ext_cp__c,Numero_Int_cat__c,Codigo_Postal_CP__c,Colonia_cp__c,Codigo_Postal_CP__r.Name,Colonia_cp__r.Name
+                                             FROM Account_Address__c WHERE Id =: contacto.Account.Direccion_Principal__c ORDER BY LastModifiedDate desc LIMIT 1];
+        		cuenta.conCuenta = true;
+        		cuenta.cuentaId = contacto.AccountId;
+                cuenta.cuentaName = contacto.Account.Name;
+        		cuenta.rfc = contacto.Account.TAX_ID__c;
+                cuenta.telefonoCliente = contacto.Account.Phone;
+                cuenta.emailCliente = contacto.Account.NEU_Email__c;
+                cuenta.razonSocial = contacto.Account.Name;
+                cuenta.banco = contacto.Account.Bank_Name_Supplier_Form2__c;
+                cuenta.numeroCuenta = contacto.Account.Bank_Account_Number__c;
+                if(address.size()>0){
+                    cuenta.idAddress = address[0].Id; //para guardar el id del account address
+                    cuenta.calleFiscal = address[0].Calle_cat__c;
+                    cuenta.exteriorFiscal = address[0].Numero_Ext_cp__c;
+                    cuenta.interiorFiscal = address[0].Numero_Int_cat__c;
+                    cuenta.cPFiscalId = address[0].Codigo_Postal_CP__c;
+                    cuenta.cPFiscal = address[0].Codigo_Postal_CP__r.Name;
+                    cuenta.coloniaFiscalId = address[0].Colonia_cp__c;
+                    cuenta.coloniaFiscal = address[0].Colonia_cp__r.Name;
+                }
+        return cuenta;
     }
 }

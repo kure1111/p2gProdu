@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Temperatura_Requerido</fullName>
+    <active>true</active>
+    <description>Cuando el campo Reefer esta en true se requiere llenar el campo temperatura</description>
+    <errorConditionFormula>AND(
+    SubProduct_Reefer__c,
+    ISBLANK(SubProduct_Temperatura__c)
+)</errorConditionFormula>
+    <errorMessage>Error SubP 001: El campo Reefer esta en true, se requiere llenar el campo temperatura</errorMessage>
+</ValidationRule>

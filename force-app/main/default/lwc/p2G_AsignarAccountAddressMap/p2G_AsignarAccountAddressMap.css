@@ -1,0 +1,20 @@
+.slds-modal__container{
+    max-width: 97rem !important;
+    width: 90em !important;
+    height: 600px !important;
+}
+.slds-modal__content {
+    max-height: 600px !important;
+    height: 500px !important;
+    overflow-x: auto;
+    background-color: #f8f7f7;
+}
+.border{
+    border: 2px solid black;
+}
+.titulo{
+    font-size: 16px;
+}
+.cuerpo{
+    font-size: 14px;
+}

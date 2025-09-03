@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>LimiteCreditoNoDisponible</fullName>
+    <active>true</active>
+    <description>Regla que detecta cuando el total de servicios vendidos supera al saldo disponible del cliente</description>
+    <errorConditionFormula>AND(
+ISCHANGED(Shipment_Sell_Price__c),
+Shipment__r.Account_for__r.Saldo_DisponibleOK__c &lt;  Shipment_Sell_Price__c,
+ Shipment__r.Acc_venta__c = &apos;Credito&apos;
+)</errorConditionFormula>
+    <errorDisplayField>Shipment_Sell_Price__c</errorDisplayField>
+    <errorMessage>Crédito del cliente insuficiente. Hablar con el departamento de créditos*</errorMessage>
+</ValidationRule>

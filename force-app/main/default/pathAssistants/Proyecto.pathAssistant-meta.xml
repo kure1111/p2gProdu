@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PathAssistant xmlns="http://soap.sforce.com/2006/04/metadata">
+    <active>true</active>
+    <entityName>Opportunity</entityName>
+    <fieldName>StageName</fieldName>
+    <masterLabel>Proyecto</masterLabel>
+    <pathAssistantSteps>
+        <fieldNames>CloseDate</fieldNames>
+        <fieldNames>Requerimientos_especialesNew__c</fieldNames>
+        <fieldNames>Comentarios_Otros__c</fieldNames>
+        <fieldNames>Total_Amount_del__c</fieldNames>
+        <picklistValueName>Prospectar</picklistValueName>
+    </pathAssistantSteps>
+    <recordTypeName>Proyectos</recordTypeName>
+</PathAssistant>

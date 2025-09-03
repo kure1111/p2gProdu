@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>CR001</fullName>
+    <active>true</active>
+    <description>solo letras y numeros en el nombre</description>
+    <errorConditionFormula>AND(
+NOT(ISBLANK(Name)),
+
+NOT(REGEX(Name, &quot;^[a-zA-Z0-9 ]+$&quot;))
+ 
+)</errorConditionFormula>
+    <errorDisplayField>Name</errorDisplayField>
+    <errorMessage>CR001 - Solo se pueden poner letras y numeros en el nombre.</errorMessage>
+</ValidationRule>

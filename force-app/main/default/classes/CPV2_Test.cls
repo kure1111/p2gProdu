@@ -209,7 +209,7 @@ public class CPV2_Test {
         vehicle.Numero_Poliza_Seguro__c = '123123';
         vehicle.Asegura_Responsabilidad_Civil__c = 'Test aseguradora';
         vehicle.Poliza_Responsabilidad_civil__c = 'Test poliza';
-        vehicle.Prima_Seguro__c = 'Test prima';
+        vehicle.Prima_Seguro__c = '0004258666';
         vehicle.Numero_de_Permiso_SCT__c = 'Test numero';
         vehicle.Tipo_de_Permiso__c = permiso.Id;
         vehicle.Configuracion_Vehicularcat__c = trans.Id;

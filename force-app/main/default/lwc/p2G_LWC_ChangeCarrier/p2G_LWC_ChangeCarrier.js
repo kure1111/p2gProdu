@@ -10,6 +10,7 @@ import getCarrier from '@salesforce/apex/P2G_UpdateShipmentServiceLine.getCarrie
 import getWrapper from '@salesforce/apex/P2G_UpdateShipmentServiceLine.getwrapper';
 import ChangeLine from '@salesforce/apex/P2G_UpdateShipmentServiceLine.ChangeLine';
 import getSst from '@salesforce/apex/P2G_UpdateShipmentServiceLine.getSapServiceTypeShipment';
+import getSstNfiltro from '@salesforce/apex/P2G_UpdateShipmentServiceLine.getSst';
 
 export default class P2G_LWC_ChangeCarrier extends LightningElement {
     @api recordId;
@@ -194,7 +195,7 @@ export default class P2G_LWC_ChangeCarrier extends LightningElement {
                 this.searchValueIdSstb='';
                 this.showSideSstb = true;            
                 if (this.searchValueSstb.length >= 3) {
-                    getSst({SapService: this.searchValueSstb, IdShip: this.recordId})
+                    getSstNfiltro({SapService: this.searchValueSstb, IdShip: this.recordId})
                         .then(result => {
                             this.sideRecordsSstb = result;
                         })

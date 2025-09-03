@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>55.0</apiVersion>
+    <description>Flujo que actualiza el campo &apos;Realización CE Status&apos; del folio vinculado al servicio de Comercio Exterior (CE)</description>
+    <environments>Default</environments>
+    <interviewLabel>CE Status - Folios Vinculados {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>CE Status - Folios Vinculados</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordLookups>
+        <description>Folio de Comercio Exterior del cuál se generó el Shipment que desencadena el flujo</description>
+        <name>Import_Export_Quote_Order_CE</name>
+        <label>Import-Export Quote/Order CE</label>
+        <locationX>176</locationX>
+        <locationY>335</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Import_Export_Quote_Order_Vinculado</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Last_Shipment__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Customer_Quote__c</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
+        <description>Folio vinculado al servicio de Comercio Exterior que desencadeno el flujo</description>
+        <name>Import_Export_Quote_Order_Vinculado</name>
+        <label>Import-Export Quote/Order Vinculado</label>
+        <locationX>176</locationX>
+        <locationY>455</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Shipment_Vinculado</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>Import_Export_Quote_Order_CE.Customer_Reference_Form__r.Id</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Customer_Quote__c</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordUpdates>
+        <description>Shipment vinculado al servicio de Comercio Exterior (CE)</description>
+        <name>Shipment_Vinculado</name>
+        <label>Shipment Vinculado</label>
+        <locationX>176</locationX>
+        <locationY>575</locationY>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>Import_Export_Quote_Order_Vinculado.Last_Shipment__r.Id</elementReference>
+            </value>
+        </filters>
+        <inputAssignments>
+            <field>Realizacion_CE_Status__c</field>
+            <value>
+                <elementReference>$Record.Realizacion_CE_Status__c</elementReference>
+            </value>
+        </inputAssignments>
+        <object>Shipment__c</object>
+    </recordUpdates>
+    <start>
+        <locationX>50</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Import_Export_Quote_Order_CE</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Name</field>
+            <operator>StartsWith</operator>
+            <value>
+                <stringValue>SP-CE</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>Realizacion_CE_Status__c</field>
+            <operator>IsChanged</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </filters>
+        <object>Shipment__c</object>
+        <recordTriggerType>CreateAndUpdate</recordTriggerType>
+        <triggerType>RecordAfterSave</triggerType>
+    </start>
+    <status>Active</status>
+</Flow>

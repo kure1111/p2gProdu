@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Validate_Border</fullName>
+    <active>true</active>
+    <errorConditionFormula>AND(Impak_Request__c = False, 
+ OR(FolioResume__c = &quot;FI&quot;,FolioResume__c = &quot;CE&quot;),  
+   NOT(ISPICKVAL(TIPO_DE_SERVICIO__c,&quot;Domestico&quot;)), 
+    ISPICKVAL(Border__c,&quot;&quot;))</errorConditionFormula>
+    <errorDisplayField>Border__c</errorDisplayField>
+    <errorMessage>ERROR: Para FI&apos;s y CE debes elegir la Aduana de Cruce (Campo &quot;Border&quot; y &quot;Customs&quot;)</errorMessage>
+</ValidationRule>

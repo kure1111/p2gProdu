@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Validate_Shipment_Evaluate</fullName>
+    <active>true</active>
+    <description>***Si el Embarque esta Finalizado favor de Calificar el Servicio***</description>
+    <errorConditionFormula>IF( Account_for__r.Workplace_AccOwner__c ==&apos;GDL&apos;,
+
+AND(
+ISPICKVAL( Shipment_Status_Mon__c,&apos;Finished&apos;), 
+ISPICKVAL( Rating__c ,&apos;&apos;),
+$Profile.Id = &apos;00e0Y000000ZMMv&apos;
+), NULL)</errorConditionFormula>
+    <errorDisplayField>Rating__c</errorDisplayField>
+    <errorMessage>***Si el Embarque esta Finalizado favor de Calificar el Servicio***</errorMessage>
+</ValidationRule>

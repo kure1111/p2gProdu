@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>OPP009</fullName>
+    <active>true</active>
+    <description>Agregar que otro requerimiento especial en campo de texto</description>
+    <errorConditionFormula>AND(
+  INCLUDES(Requerimientos_especialesNew__c, &quot;Otro&quot;),
+  ISBLANK(Comentarios_Otros__c)
+)</errorConditionFormula>
+    <errorMessage>OPP009 - Es necesario especificar que otro requerimiento especial se necesita en el campo &quot;Comentarios Otros&quot;.</errorMessage>
+</ValidationRule>

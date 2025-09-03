@@ -1,0 +1,19 @@
+.margenes{
+    margin: 5px;
+    background-color: #ffffff;
+}
+.slds-modal__container{
+    max-width: 80% !important;
+    width: 80% !important;
+    height: 650px;
+}
+.fondoBlamco{
+    background-color: #ffffff;
+}
+hr{
+    margin-top: 0px !important;
+    margin-bottom: 0px !important;
+}
+:host {
+    --sds-c-card-color-background: #F3F3F3;
+}

@@ -1,0 +1,109 @@
+.section {
+    border: 1px solid #000; /* Borde temporal */
+}
+
+.subsection {
+    border: 1px solid #000; /* Borde temporal */
+}
+
+.subsubsection {
+    border: 1px solid #000; /* Borde temporal */
+}
+
+.subsubsection-inner {
+    border: 1px solid #000; /* Borde temporal */
+}
+
+.section-one {
+    display: flex;
+    flex-direction: column;
+    height: 50vh;
+}
+
+.subsection-one-top {
+    display: flex;
+    flex: 1 1 20%;
+}
+
+.subsubsection {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.subsubsection-inner {
+    flex: 1;
+}
+
+.subsection-one-bottom {
+    flex: 1 1 80%;
+}
+
+.section-two {
+    height: 50vh;
+}
+
+.border-guide {
+    border: 1px dashed #ccc; /* Borde guía temporal */
+}
+
+
+.modal-body {
+    display: flex;
+    height: 100%;
+}
+
+.left-section, .right-section {
+    flex: 1;
+    padding: 1rem;
+}
+
+.left-section {
+    border-right: 1px solid #d8dde6;
+}
+
+.map-container {
+    width: 100%;
+    height: 300px; /* Ajusta la altura según tus necesidades */
+}
+
+.slds-modal__content {
+    display: flex;
+    flex-direction: column;
+}
+
+.section-1 {
+    width: 100%;
+    height: 5vh; /* 5% del alto de la ventana */
+    text-align: center;
+}
+
+.section-title {
+    font-size: 2em; /* Tamaño grande */
+    color: green; /* Texto en verde */
+    margin: 0; /* Remueve margen por defecto */
+}
+
+.section-2,
+.section-3 {
+    width: 50%;
+    height: 45vh; /* 45% del alto de la ventana */
+}
+
+.green-background {
+    background-color: #d4f4dd; /* Color verde claro */
+}
+
+.yellow-background {
+    background-color: #f9f871; /* Color amarillo */
+}
+
+.red-background {
+    background-color: #d43d3d; /* Color amarillo */
+}
+
+.input-error {
+    border: 2px solid red; /* Aplica un borde rojo al contenedor */
+    padding: 4px; /* Opcional: agrega un poco de espacio interno */
+    border-radius: 4px; /* Opcional: agrega esquinas redondeadas */
+}

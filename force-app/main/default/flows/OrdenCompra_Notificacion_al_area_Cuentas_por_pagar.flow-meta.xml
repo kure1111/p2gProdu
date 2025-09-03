@@ -1,0 +1,214 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionCalls>
+        <description>Notificación de email para el área de Cuentas por pagar</description>
+        <name>Email_Alert_Cuentas_por_pagar</name>
+        <label>Email Alert - Cuentas por pagar</label>
+        <locationX>264</locationX>
+        <locationY>815</locationY>
+        <actionName>emailSimple</actionName>
+        <actionType>emailSimple</actionType>
+        <connector>
+            <targetReference>Iterar_Shipment_Service_Lines</targetReference>
+        </connector>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>emailBody</name>
+            <value>
+                <elementReference>Template_CuentasPorPagar</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>emailAddresses</name>
+            <value>
+                <elementReference>$Label.OC_Email_CuentasPorPagar</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>sendRichBody</name>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>senderAddress</name>
+            <value>
+                <stringValue>no-reply@pak2go.com</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>senderType</name>
+            <value>
+                <stringValue>OrgWideEmailAddress</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>emailSubject</name>
+            <value>
+                <stringValue>Se modificó el carrier de la línea {!$Record.Name} del Shipment {!Get_Shipment.Name}</stringValue>
+            </value>
+        </inputParameters>
+        <nameSegment>emailSimple</nameSegment>
+        <versionSegment>1</versionSegment>
+    </actionCalls>
+    <apiVersion>57.0</apiVersion>
+    <decisions>
+        <description>Detecta si el componente Get SAP Response devuelve algún registro, comprobando que ya cuenta con orden de venta y solicitud de compra</description>
+        <name>Tiene_Orden_Venta_y_Solicitud_compra</name>
+        <label>¿Tiene Orden Venta y Solicitud compra?</label>
+        <locationX>396</locationX>
+        <locationY>695</locationY>
+        <defaultConnector>
+            <targetReference>Iterar_Shipment_Service_Lines</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>SI</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_Shipment.SolicitudCompra__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Get_Shipment.OrdenVenta__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Email_Alert_Cuentas_por_pagar</targetReference>
+            </connector>
+            <label>SI</label>
+        </rules>
+    </decisions>
+    <description>Este flujo envía una notificación al área de &quot;Cuentas por pagar&quot; cuando se edita el carrier de una línea que ya cuenta con una Orden/Solicitud de compra en el objeto Shipment</description>
+    <environments>Default</environments>
+    <interviewLabel>OrdenCompra/ Notificación al área Cuentas por pagar {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>OrdenCompra/ Notificación al área Cuentas por pagar</label>
+    <loops>
+        <description>Este loop se encarga de leer las Shipment Service Lines que se obtengan en el componente &quot;Get Shipment Service Line&quot;</description>
+        <name>Iterar_Shipment_Service_Lines</name>
+        <label>Iterar Shipment Service Lines</label>
+        <locationX>176</locationX>
+        <locationY>455</locationY>
+        <collectionReference>Get_Shipment_Service_Line</collectionReference>
+        <iterationOrder>Asc</iterationOrder>
+        <nextValueConnector>
+            <targetReference>Get_Shipment</targetReference>
+        </nextValueConnector>
+    </loops>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordLookups>
+        <description>Consulta el Shipment relacionado al Shipment Service Line del componente &quot;Get Shipment Service Line&quot;</description>
+        <name>Get_Shipment</name>
+        <label>Get Shipment</label>
+        <locationX>396</locationX>
+        <locationY>575</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Tiene_Orden_Venta_y_Solicitud_compra</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>Iterar_Shipment_Service_Lines.Shipment__r.Id</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Shipment__c</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
+        <description>Se consulta el Shipment Service Line el cuál tiene asignado el Service Rate en el campo Rate Name</description>
+        <name>Get_Shipment_Service_Line</name>
+        <label>Get Shipment Service Line</label>
+        <locationX>176</locationX>
+        <locationY>335</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Iterar_Shipment_Service_Lines</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Service_Rate_Name__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>false</getFirstRecordOnly>
+        <object>Shipment_Fee_Line__c</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <start>
+        <locationX>50</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Get_Shipment_Service_Line</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Carrier_Account__c</field>
+            <operator>IsChanged</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </filters>
+        <object>Fee__c</object>
+        <recordTriggerType>Update</recordTriggerType>
+        <triggerType>RecordAfterSave</triggerType>
+    </start>
+    <status>Active</status>
+    <textTemplates>
+        <description>Template para la notificación de email para el equipo de Cuentas por pagar</description>
+        <name>Template_CuentasPorPagar</name>
+        <isViewedAsPlainText>false</isViewedAsPlainText>
+        <text>&lt;p style=&quot;text-align: center;&quot;&gt;&lt;img src=&quot;https://pak2gologistics--uat.sandbox.file.force.com/sfc/servlet.shepherd/version/download/0680R000001rHbt?asPdf=false&amp;amp;operationContext=CHATTER&quot; alt=&quot;p2g1.png&quot;&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;font-size: 16px;&quot;&gt;Al equipo de cuentas por pagar,&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;font-size: 16px;&quot;&gt;Les informamos que el carrier en la línea &lt;/span&gt;&lt;a href=&quot;{!TXT_UrlProd}{!$Record.Id}&quot; rel=&quot;noopener noreferrer&quot; target=&quot;_blank&quot; style=&quot;font-size: 16px; color: rgb(49, 89, 228);&quot;&gt;&lt;strong&gt;{!$Record.Name}&lt;/strong&gt;&lt;/a&gt;&lt;span style=&quot;font-size: 16px;&quot;&gt; para el folio &lt;/span&gt;&lt;a href=&quot;{!TXT_UrlProd}{!Get_Shipment.Id}&quot; rel=&quot;noopener noreferrer&quot; target=&quot;_blank&quot; style=&quot;font-size: 16px; color: rgb(240, 115, 92);&quot;&gt;&lt;strong&gt;{!Get_Shipment.Name} &lt;/strong&gt;&lt;/a&gt;&lt;span style=&quot;font-size: 16px;&quot;&gt;acaba de ser actualizado. Anteriormente tenía asignado el carrier &lt;/span&gt;&lt;em style=&quot;font-size: 16px;&quot;&gt;{!$Record__Prior.Carrier_Account__r.Name}&lt;/em&gt;&lt;span style=&quot;font-size: 16px;&quot;&gt;, y ahora tiene asignado &lt;/span&gt;&lt;em style=&quot;font-size: 16px;&quot;&gt;{!$Record.Carrier_Account__r.Name}&lt;/em&gt;&lt;span style=&quot;font-size: 16px;&quot;&gt;.&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;font-size: 16px;&quot;&gt;El propósito de está notificación es para que tomen las medidas necesarias, debido a que el folio &lt;/span&gt;&lt;a href=&quot;{!TXT_UrlProd}{!Get_Shipment.Id}&quot; rel=&quot;noopener noreferrer&quot; target=&quot;_blank&quot; style=&quot;font-size: 16px; color: rgb(240, 115, 92); background-color: rgb(255, 255, 255);&quot;&gt;&lt;strong&gt;{!Get_Shipment.Name}&lt;/strong&gt;&lt;/a&gt;&lt;span style=&quot;font-size: 16px; color: rgb(68, 68, 68); background-color: rgb(255, 255, 255);&quot;&gt; ya cuenta con la &lt;/span&gt;&lt;strong style=&quot;font-size: 16px; color: rgb(68, 68, 68); background-color: rgb(255, 255, 255);&quot;&gt;Solicitud de Compra&lt;/strong&gt;&lt;span style=&quot;font-size: 16px; color: rgb(68, 68, 68); background-color: rgb(255, 255, 255);&quot;&gt; &lt;/span&gt;&lt;em style=&quot;font-size: 16px;&quot;&gt;{!Get_Shipment.SolicitudCompra__c}&lt;/em&gt;&lt;span style=&quot;font-size: 16px; color: rgb(68, 68, 68); background-color: rgb(255, 255, 255);&quot;&gt; y &lt;/span&gt;&lt;strong style=&quot;font-size: 16px; color: rgb(68, 68, 68); background-color: rgb(255, 255, 255);&quot;&gt;Orden de Venta&lt;/strong&gt;&lt;span style=&quot;font-size: 16px; color: rgb(68, 68, 68); background-color: rgb(255, 255, 255);&quot;&gt; &lt;/span&gt;&lt;em style=&quot;font-size: 16px;&quot;&gt;{!Get_Shipment.OrdenVenta__c}&lt;/em&gt;&lt;span style=&quot;font-size: 16px;&quot;&gt;.&lt;/span&gt;&lt;/p&gt;</text>
+    </textTemplates>
+    <variables>
+        <description>Enlace URL para registros en el entorno de producción</description>
+        <name>TXT_UrlProd</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <value>
+            <stringValue>https://pak2gologistics.lightning.force.com/</stringValue>
+        </value>
+    </variables>
+    <variables>
+        <description>Enlace URL para registros en el entorno de UAT</description>
+        <name>TXT_UrlUAT</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <value>
+            <stringValue>https://pak2gologistics--uat.sandbox.lightning.force.com/</stringValue>
+        </value>
+    </variables>
+</Flow>

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Comercio_Exterior_Obligatorio002</fullName>
+    <active>true</active>
+    <description>CE-002 Para Folios CE se requiere agregar Padron Impak</description>
+    <errorConditionFormula>AND(
+FolioResume__c = &quot;CE&quot;,
+ISPICKVAL(Comercio_Exterior__c, &quot;Si&quot;),
+ISPICKVAL(IMPAK__c, &quot;&quot;)
+)</errorConditionFormula>
+    <errorDisplayField>IMPAK__c</errorDisplayField>
+    <errorMessage>CE-002 Para Folios CE se requiere agregar Padron Impak</errorMessage>
+</ValidationRule>

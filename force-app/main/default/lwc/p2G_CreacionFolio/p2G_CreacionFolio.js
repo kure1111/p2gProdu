@@ -19,6 +19,18 @@ import condicionesTarifario from '@salesforce/apex/P2G_CreacionFolios.condicione
 import { refreshApex } from '@salesforce/apex';
 import fileProcess from '@salesforce/apex/P2G_convertCsv.fileProcess';
 import getSapServiceType from '@salesforce/apex/P2G_CreacionCargoLines.getSapServiceType';
+import getSstName from '@salesforce/apex/P2G_CreacionCargoLines.getSstName';
+import folioA from "c/p2G_creacionFolioAereo";
+import folioWHAlma from "c/p2G_creacionFolioWhAlmacenaje";
+import folioT from "c/p2G_creacionFolioTConsolidado";
+import folioFI from "c/p2G_creacionFolioFleteInter";
+import folioM from "c/p2G_creacionFolioMaritimo";
+import folioPTO from "c/p2G_creacionFolioPuertos";
+import folioEX from "c/p2G_creacionFolioSeguros";
+import folioW from "c/p2G_creacionFolioGlobalMaritimo";
+import folioR from "c/p2G_creacionFolioGlobalRouting";
+import folioAW from "c/p2G_creacionFolioGlobalAereo";
+import folioCE from "c/p2G_creacionFolioComercioExterior";
 
 export default class P2G_CreacionFolio extends LightningElement {
     //lista de cargo line
@@ -75,6 +87,7 @@ export default class P2G_CreacionFolio extends LightningElement {
     searchValueIdClaveServicio ='';
     showSideClaveServicio = false;
     
+    materialPeligroso = false;
     @track sideRecordsMaterialPeligroso;
     searchValueMaterialPeligroso ='';
     searchValueIdMaterialPeligroso ='';
@@ -91,7 +104,7 @@ export default class P2G_CreacionFolio extends LightningElement {
     showSideContainerType = false;
 
     @track sideRecordsClaveUnidadPeso;
-    searchValueClaveUnidadPeso ='';
+    searchValueClaveUnidadPeso ='Pallet';
     searchValueIdClaveUnidadPeso ='';
     showSideClaveUnidadPeso = false;
 
@@ -124,7 +137,7 @@ export default class P2G_CreacionFolio extends LightningElement {
 
     @track recordSST;
     showSST=false;
-    searchSST='FLETE NACIONAL (IC) (FN)';
+    searchSST='SERVICIOS LOGISTICOS NACIONALES FN (IC) (FN)';
     searchKeyIdSST='';
 
 //valores Comercio Exterior
@@ -203,6 +216,25 @@ pushMessage(title, variant, message){
         this.wrapperFolio.idAccount = event.currentTarget.dataset.id;
         this.wrapperCargoLine.idItemSuplienerOwner = event.currentTarget.dataset.id;
         this.wrapperFolio.idReferenceForm='';
+
+        if(event.currentTarget.dataset.sst !== undefined){
+            this.searchKeyIdSST=event.currentTarget.dataset.sst;
+            getSstName({idSst: this.searchKeyIdSST})
+            .then(result => {
+                this.searchSST=result.Name;
+            })
+            .catch(error => {
+                this.pushMessage('Error','getSstName', error.body.message);
+            });
+        }
+        else{
+            this.searchSST = 'SERVICIOS LOGISTICOS NACIONALES FN (IC) (FN)';
+            this.searchKeyIdSST='a1n4T000002JWphQAG'; //prod a1n4T000001XXYCQA4 UAT:a1n0R000001lZceQAE
+
+        }
+        console.log(this.searchKeyIdSST);
+        console.log( this.searchSST);
+        
     }
     searchKeyAccount(event){
         this.searchValueAccount = event.target.value;
@@ -283,6 +315,7 @@ registroCustomer(event){
 }
 registroETD(event){
     this.wrapperFolio.ETD = event.target.value;
+    this.ETD = event.target.value;
 }
 registroETA(event){
     this.wrapperFolio.ETA = event.target.value;
@@ -309,7 +342,7 @@ registrounloadtime(event){
 //Abril Modal Pop flete nacional
 OpenF_NACIONAL(){
     this.isF_NACIONAL = true;
-    this.searchKeySST='FLETE NACIONAL (IC) (FN)';
+    this.searchKeySST='SERVICIOS LOGISTICOS NACIONALES FN (IC) (FN)';
     getWrapper()
             .then(result => {
                 this.wrapperFolio = result;
@@ -366,7 +399,7 @@ AgregarItemPrice(){
 }
 
 cleanClaveUnidadPeso(){
-    this.searchValueClaveUnidadPeso = '';
+    this.searchValueClaveUnidadPeso = 'Pallet';
     this.showSideClaveUnidadPeso = false;
     this.searchValueIdClaveUnidadPeso = '';
     this.wrapperFolio.recordTypeUnidad = '';
@@ -375,7 +408,20 @@ cleanClaveUnidadPeso(){
 GeF_NACIONAL(){
     //id por defecto en uat para clave de unidad de peso a3n0R000000ETiqQAG
     //id por defecto en produccion para clave de unidad de peso a3K4T000000SNdIUAW
-
+    if (typeof this.searchValueAccount === 'undefined' || this.searchValueAccount === null || this.searchValueAccount === '' ||
+    typeof this.searchValueLoad === 'undefined' || this.searchValueLoad === null || this.searchValueLoad === '' ||
+    typeof this.searchValueDischarge === 'undefined' || this.searchValueDischarge === null || this.searchValueDischarge === '' ||
+    typeof this.ETD === 'undefined' || this.ETD === null || this.ETD === ''||
+    typeof this.wrapperFolio.ETA === 'undefined' || this.wrapperFolio.ETA === null || this.wrapperFolio.ETA === '' ||
+    typeof this.searchValueContainerType === 'undefined' || this.searchValueContainerType === null || this.searchValueContainerType === '' ||
+    typeof this.searchValueClaveServicio === 'undefined' || this.searchValueClaveServicio === null || this.searchValueClaveServicio === '' ||
+    typeof this.units === 'undefined' || this.units === null || this.units === '' ||
+    typeof this.pesoBruto === 'undefined' || this.pesoBruto === null || this.pesoBruto === '' ||
+    typeof this.pesoNeto === 'undefined' || this.pesoNeto === null || this.pesoNeto === '' ||
+    typeof this.totalShipping === 'undefined' || this.totalShipping === null || this.totalShipping === '') {
+        this.pushMessage('Campos Faltantes','error', 'Favor de llenar todos campos requeridos indicados con *');
+        return
+    }
     this.wrapperFolio['recordTypeUnidad'] = this.wrapperFolio.recordTypeUnidad && this.wrapperFolio.recordTypeUnidad.length > 0 ? this.wrapperFolio.recordTypeUnidad : 'a3K4T000000SNdIUAW';
     creaFolios({fleteNacional: this.wrapperFolio, cargoLine: this.wrapperCargoLine})   
     .then(result => {
@@ -385,7 +431,7 @@ GeF_NACIONAL(){
             this.isGeneFolio = true;
             this.cleanClaveUnidadPeso();
             if(this.searchKeyIdSST.length<3){
-                this.searchKeyIdSST='a1n4T000001XXYCQA4'; //prod a1n4T000001XXYCQA4 UAT:a1n0R000001lZceQAE
+                this.searchKeyIdSST='a3K4T000000SNdIUAW'; //prod a3K4T000000SNdIUAW UAT:a1n0R000001lZceQAE
             }
             getIdFolio({listaFolio: this.listaFolios,divisa: this.currency,idConteinerType: this.searchValueIdContainerType,account: this.searchValueIdAccount,idSST:this.searchKeyIdSST})
                 .then(result => {
@@ -454,9 +500,10 @@ GeF_NACIONAL(){
         this.searchValueEmbalaje = null;
         this.searchValueMaterialPeligroso = null;
         this.searchValueClaveServicio = null;
+        this.materialPeligroso = false;
         this.quoteSellPrice = 0;
         this.nfolios = 1;
-        this.searchKeyIdSST='a1n4T000001XXYCQA4'; //prod a1n4T000001XXYCQA4 UAT:a1n0R000001lZceQAE
+        this.searchKeyIdSST='a1n4T000002JWphQAG'; //prod a1n4T000001XXYCQA4 UAT:a1n0R000001lZceQAE
     }
     abrirFolio(event){
             this.folioname = event.target.outerText;
@@ -472,11 +519,18 @@ GeF_NACIONAL(){
     
 // buscador ClaveServicio
 SideSelectClaveServicio(event){
+    this.materialPeligroso = false;
     this.searchValueClaveServicio = event.target.outerText;
     this.showSideClaveServicio = false;
     this.searchValueIdClaveServicio = event.currentTarget.dataset.id;
     this.wrapperCargoLine.idClaveSat = event.currentTarget.dataset.id;
     this.wrapperCargoLine.extencionItemName = event.target.outerText;
+    for (let i in this.sideRecordsClaveServicio){
+        if(this.searchValueIdClaveServicio == this.sideRecordsClaveServicio[i].Id && this.sideRecordsClaveServicio[i].Material_PeligrosoCP__c === true){
+            this.materialPeligroso = true;
+            console.log('es un material peligroso '+this.sideRecordsClaveServicio[i].Material_PeligrosoCP__c);
+        }
+    }
 }
 searchKeyClaveServicio(event){
     this.searchValueClaveServicio = event.target.value;
@@ -706,5 +760,125 @@ openCargaMasiva(){
                 });
         };
         reader.readAsText(this.csvFile);
+    }
+    async folioAereo() {
+        console.log('id es: ', this.recordId);
+        const result = await folioA.open({
+            size: 'medium',
+            description: 'Modal para cargar',
+            recordId: this.recordId,
+            label: 'Modal Heading'
+        });
+        console.log(result);
+    }
+    async folioWH() {
+        console.log('id es: ', this.recordId);
+        const result = await folioWHAlma.open({
+            size: 'medium',
+            description: 'Modal para cargar',
+            recordId: this.recordId,
+            label: 'Modal Heading'
+        });
+        console.log(result);
+    }
+    async folioTarimas() {
+        console.log('id es: ', this.recordId);
+        const result = await folioT.open({
+            size: 'medium',
+            description: 'Modal para cargar',
+            recordId: this.recordId,
+            label: 'Modal Heading'
+        });
+        console.log(result);
+    }
+    /*async folioFleteNacional() {
+        console.log('id es: ', this.recordId);
+        const result = await .open({
+            size: 'medium',
+            description: 'Modal para cargar',
+            recordId: this.recordId,
+            label: 'Modal Heading'
+        });
+        console.log(result);
+    }*/
+    async folioFleteInter() {
+        console.log('id es: ', this.recordId);
+        const result = await folioFI.open({
+            size: 'medium',
+            description: 'Modal para cargar',
+            recordId: this.recordId,
+            label: 'Modal Heading'
+        });
+        console.log(result);
+    }
+    async folioMaritimo() {
+        console.log('id es: ', this.recordId);
+        const result = await folioM.open({
+            size: 'medium',
+            description: 'Modal para cargar',
+            recordId: this.recordId,
+            label: 'Modal Heading'
+        });
+        console.log(result);
+    }
+    async folioPuertos() {
+        console.log('id es: ', this.recordId);
+        const result = await folioPTO.open({
+            size: 'medium',
+            description: 'Modal para cargar',
+            recordId: this.recordId,
+            label: 'Modal Heading'
+        });
+        console.log(result);
+    }
+    async folioSeguros() {
+        console.log('id es: ', this.recordId);
+        const result = await folioEX.open({
+            size: 'medium',
+            description: 'Modal para cargar',
+            recordId: this.recordId,
+            label: 'Modal Heading'
+        });
+        console.log(result);
+    }
+    async folioGlobalMaritimo() {
+        console.log('id es: ', this.recordId);
+        const result = await folioW.open({
+            size: 'medium',
+            description: 'Modal para cargar',
+            recordId: this.recordId,
+            label: 'Modal Heading'
+        });
+        console.log(result);
+    }
+    async folioGlobalRouting() {
+        console.log('id es: ', this.recordId);
+        const result = await folioR.open({
+            size: 'medium',
+            description: 'Modal para cargar',
+            recordId: this.recordId,
+            label: 'Modal Heading'
+        });
+        console.log(result);
+    }
+    async folioGlobalAereo() {
+        console.log('id es: ', this.recordId);
+        const result = await folioAW.open({
+            size: 'medium',
+            description: 'Modal para cargar',
+            recordId: this.recordId,
+            label: 'Modal Heading'
+        });
+        console.log(result);
+    }
+    async folioComercioExterior() {
+        console.log('id es: ', this.recordId);
+        const result = await folioCE.open({
+            size: 'medium',
+            description: 'Modal para cargar',
+            recordId: this.recordId,
+            label: 'Modal Heading'
+        });
+        console.log(result);
     }
 }

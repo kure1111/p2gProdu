@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Validate_Mkt_Chat</fullName>
+    <active>true</active>
+    <errorConditionFormula>AND( $Profile.Name = &quot;MKT SALESCLOUD&quot;,ISPICKVAL( AccountSource, &quot;MKT - Web - Chat&quot;),  Numero_de_Chat__c = &quot;&quot;)</errorConditionFormula>
+    <errorDisplayField>Numero_de_Chat__c</errorDisplayField>
+    <errorMessage>DEBES CAPTURAR EL NUMERO DE CHAT</errorMessage>
+</ValidationRule>

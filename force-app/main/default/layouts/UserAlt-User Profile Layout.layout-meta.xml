@@ -202,6 +202,10 @@
                 <behavior>Edit</behavior>
                 <field>Meta_Citas__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>P2G_spot__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>

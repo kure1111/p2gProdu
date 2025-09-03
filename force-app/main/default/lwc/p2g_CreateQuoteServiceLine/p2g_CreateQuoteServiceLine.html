@@ -6,7 +6,7 @@
                 <h1 class="slds-text-heading_medium slds-hyphenate">Crear Líneas de servicio</h1>
                 <h3>Import-Export Quote/Order 
                     <template for:each={vistaLine} for:item="con">
-                        <p data-id={con.AccountId} key={con.AccountId}> {con.IdQuoteName}</p>
+                        <p data-id={con.idQuote} key={con.idQuote} onclick={abrirQuote}> {con.IdQuoteName}</p>
                     </template>
                 </h3>
                 <hr/><br>
@@ -61,6 +61,9 @@
                                 <div class="slds-truncate">Quote Buy Price</div>
                             </th>
                             <th class="" scope="col">
+                                <div class="slds-truncate">Currency</div>
+                            </th>
+                            <th class="" scope="col">
                                 <div class="slds-truncate">Comments Service Line</div>
                             </th>
                         </tr>
@@ -109,6 +112,9 @@
                                 </td>
                                 <td>
                                     <div class="slds-truncate">{con.StdBuyPrice}</div>
+                                </td>
+                                <td>
+                                    <div class="slds-truncate">{con.Moneda}</div>
                                 </td>
                                 <td>
                                     <div class="slds-truncate">{con.CommentsServiceLine}</div>
@@ -260,11 +266,14 @@
                             <th class="" scope="col">
                                 <div class="slds-truncate">Container Type</div>
                             </th>
+                            <th class="" scope="col">
+                                <div class="slds-truncate">Currency</div>
+                            </th>
                         </tr>
                     </thead>
                     <tbody>
                         <template if:true={cargoLine} for:each={vistaLine} for:item="con">
-                            <tr class="slds-hint-parent" data-id={con.AccountId} key={con.AccountId}> 
+                            <tr class="slds-hint-parent" data-id={con.idQuote} key={con.idQuote}> 
                                 <td>
                                     <div class="slds-truncate">{con.Name}</div>
                                 </td>
@@ -302,7 +311,7 @@
                                                                     <div class="slds-truncate" title="First Name">Name</div>
                                                                     </th>
                                                                     <th class="" scope="col">
-                                                                    <div class="slds-truncate" title="Last Name">Country Name</div>
+                                                                    <div class="slds-truncate" title="Last Name">Code</div>
                                                                     </th>
                                                                 </tr>
                                                             </thead>
@@ -313,7 +322,7 @@
                                                                         <div class="slds-truncate">{con.Name}</div>
                                                                     </td>
                                                                     <td>
-                                                                        <div class="slds-truncate">{con.Country_Name__c}</div>
+                                                                        <div class="slds-truncate">{con.Code__c}</div>
                                                                     </td>
                                                                     </tr>
                                                                 </template>
@@ -331,6 +340,15 @@
                                 </td>
                                 <td>
                                     <div class="slds-truncate">{con.ContainerType}</div>
+                                </td>
+                                <td>
+                                    <div class="slds-truncate">
+                                        <select class="slds-select" onchange={registroCurrency}>
+                                          <option value="MXN">MXN</option>
+                                          <option value="EUR">EUR</option>
+                                          <option value="USD">USD</option>
+                                        </select>
+                                    </div>
                                 </td>
                             </tr>
                         </template>
@@ -350,7 +368,13 @@
     </lightning-accordion>
         <footer class="slds-modal__footer">
             <br>
-            <lightning-button variant="neutral" label="Cerrar" onclick={close}></lightning-button>
+            <template if:true={deURL}>
+                <lightning-button variant="neutral" label="Regresar al Import-Export" onclick={abrirQuote}></lightning-button>
+            </template>
+            <template if:false={deURL}>
+                <lightning-button variant="neutral" label="Cerrar" onclick={close}></lightning-button>
+            </template>
+            
         </footer>
     </div>
 </template>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>valida_cuenta_credito</fullName>
+    <active>true</active>
+    <description>Valida si la nueva cuenta con credito</description>
+    <errorConditionFormula>AND 
+(
+ Ischanged(Account_for__c),
+ISPICKVAL( Account_for__r.Venta_Sap__c , &quot;Credito&quot;), 
+ Account_for__r.Saldo_DisponibleOK__c &lt;  Total_Services_Sell_Amount__c 
+
+)</errorConditionFormula>
+    <errorMessage>Cliente sin crédito disponible</errorMessage>
+</ValidationRule>

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Validate_FNFI_operationstime</fullName>
+    <active>false</active>
+    <errorConditionFormula>AND(ISPICKVAL( Shipment_Status_Mon__c,&quot;Finished&quot;),   ISNULL(Equip_Placed__c)||
+ ISNULL(Equip_Loaded__c)|| 
+  ISNULL(Departure_Time__c)|| 
+   ISNULL(Equip_Reserved__c)|| 
+    ISNULL(Equip_Solicited__c)||
+      ISNULL(Equip_Unloaded__c))</errorConditionFormula>
+    <errorMessage>NO puede ser &quot;Finalizado&quot; sin completar la seccion ROUTE &amp; SCHEDULE</errorMessage>
+</ValidationRule>

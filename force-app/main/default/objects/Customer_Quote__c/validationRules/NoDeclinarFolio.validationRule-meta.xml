@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NoDeclinarFolio</fullName>
+    <active>true</active>
+    <description>La regla evita que el folio se decline utilizando el picklist Quotation Status. Forzosamente se va pedir utilizar el botón Declined.</description>
+    <errorConditionFormula>AND(
+ ISPICKVAL( Quotation_Status__c, &apos;Quote Declined&apos;),
+ Folio_Declinado__c = False
+)</errorConditionFormula>
+    <errorDisplayField>Quotation_Status__c</errorDisplayField>
+    <errorMessage>FD-001: Para declinar el folio, utilizar el botón &quot;Declined&quot; ubicado en la parte superior.</errorMessage>
+</ValidationRule>

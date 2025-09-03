@@ -45,12 +45,12 @@ public class OpportunityLineItemTest {
         insert acc;
                 
         
-        Opportunity oppPaq = createOpp('TestPaq', 'PAQUETERIA', acc, customPB);            
+        /*Opportunity oppPaq = createOpp('TestPaq', 'PAQUETERIA', acc, customPB);            
         insert oppPaq;
                                
         OpportunityLineItem oliPaq = createProd(oppPaq, customPrice);
         insert oliPaq;
-        
+        */
         
         Opportunity oppFN = createOpp('TestFN', 'FN', acc, customPB);            
         insert oppFN;

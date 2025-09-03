@@ -19,7 +19,7 @@ public class NEU_JE_Update_Shipment_Addresses_test {
         //Account     
         Account accCustomer = TestDataFactory.createAccounts('Cuenta customer', 'Customer');        
         Account accCarrier = TestDataFactory.createAccounts('Cuenta carrier', 'Supply Chain Partner');                
-        
+        //produccion Autotransporte  -- uat: Autotrasporte
         Catalogo_SAT__c trans1 = TestDataFactory.createCatalogoSat('Camión-Remolque-Test', 'T3S17','Configuracion Autotransporte');                                         
         //RecordType: AUT y  produccion : Tipo de Permiso     
         Catalogo_SAT__c trans2 = TestDataFactory.createCatalogoSat('Autotransporte Federal Test' , 'T3S172','Tipo de Permiso'); 

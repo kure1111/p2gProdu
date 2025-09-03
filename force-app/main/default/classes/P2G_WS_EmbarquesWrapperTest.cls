@@ -257,7 +257,6 @@ public class P2G_WS_EmbarquesWrapperTest {
         requerido.ETD = DATE.valueOf('2023-12-13');
         requerido.ETDTime = time.newInstance(08, 00, 00, 00);
         requerido.accountForCustomer_Name = 'Prueba 171';
-        requerido.customerReference = 'Prueba 172';
         requerido.accountDestinationAddress = 'Prueba 173';
         requerido.ETA = DATE.valueOf('2023-12-13');
         requerido.ETATime = time.newInstance(08, 00, 00, 00);

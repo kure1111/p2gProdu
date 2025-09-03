@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Check_Max_Kgs_Max_M3</fullName>
+    <active>false</active>
+    <errorConditionFormula>if(AND( TEXT(Fee_Category__c) == &apos;Drayages&apos;, 
+TEXT(Rate_Type__c) ==&apos;Fixed&apos;), if(ISNULL(Max_Kgs__c) == true,
+if(ISNULL(Max_M3__c) == true,true,false),false)
+,false)</errorConditionFormula>
+    <errorMessage>The field &quot;Max Kgs&quot; or &quot;Max M3&quot;  or both must be filled</errorMessage>
+</ValidationRule>

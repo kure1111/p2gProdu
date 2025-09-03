@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Credit_Note_Negative_Amount</fullName>
+    <active>false</active>
+    <errorConditionFormula>text(Type__c) == &apos;Credit Note&apos; &amp;&amp; Total_Incl_VAT__c &gt; 0</errorConditionFormula>
+    <errorMessage>You can’t include these lines because Total(Incl. Vat) in the “Credit Note” Invoice must be negative</errorMessage>
+</ValidationRule>

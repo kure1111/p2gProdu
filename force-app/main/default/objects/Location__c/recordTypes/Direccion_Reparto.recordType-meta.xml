@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RecordType xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Direccion_Reparto</fullName>
+    <active>true</active>
+    <compactLayoutAssignment>Location</compactLayoutAssignment>
+    <description>Dirección de Repartos a partir el Origen</description>
+    <label>Dirección de Reparto</label>
+</RecordType>

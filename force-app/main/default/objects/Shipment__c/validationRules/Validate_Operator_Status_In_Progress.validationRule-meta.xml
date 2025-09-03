@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Validate_Operator_Status_In_Progress</fullName>
+    <active>true</active>
+    <errorConditionFormula>ShipmentService__c = &quot;SP-FN&quot; &amp;&amp; 
+ISPICKVAL( Shipment_Status_Plann__c,&quot;In Progress&quot; ) &amp;&amp;
+National_Operator__c = NULL</errorConditionFormula>
+    <errorDisplayField>National_Operator__c</errorDisplayField>
+    <errorMessage>ERROR: Must be Choose  OPERATOR, VEHICULE AND CARRIER
+(Debes de capturar el Proveedor, Vehiculo y Conductor)</errorMessage>
+</ValidationRule>

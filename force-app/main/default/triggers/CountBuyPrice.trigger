@@ -9,7 +9,7 @@ trigger CountBuyPrice on OpportunityLineItem (after insert, after update) {
     }
     
     
-    for( Opportunity oport : [select id, name,PROJ_Buy_price__c,(select id, name,PROJ_Buy_price__c , OpportunityId from  OpportunityLineItems) from  Opportunity where id in:opsIds ])
+    for( Opportunity oport : [select id, name,PROJ_Buy_price__c,(select id, name,PROJ_Buy_price__c , OpportunityId from  OpportunityLineItems) from  Opportunity where id in:opsIds])
     {
         oport.PROJ_Buy_price__c = 0;
         system.debug('oport ' + oport);

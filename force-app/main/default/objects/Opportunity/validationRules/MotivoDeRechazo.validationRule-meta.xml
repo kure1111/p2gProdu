@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>MotivoDeRechazo</fullName>
+    <active>true</active>
+    <errorConditionFormula>AND(
+ ISPICKVAL(StageName,&quot;Declinar&quot;),
+ RecordType.Name = &quot;Proyectos&quot;,
+  ISPICKVAL( Loss_Reason__c , &quot;&quot;)  
+
+)</errorConditionFormula>
+    <errorDisplayField>Loss_Reason__c</errorDisplayField>
+    <errorMessage>PROJ006: Favor de agregar un motivo de pérdida.</errorMessage>
+</ValidationRule>

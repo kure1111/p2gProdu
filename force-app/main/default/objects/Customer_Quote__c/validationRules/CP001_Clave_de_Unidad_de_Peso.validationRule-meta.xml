@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>CP001_Clave_de_Unidad_de_Peso</fullName>
+    <active>false</active>
+    <description>Obligatorio para servicios FN FI PTO</description>
+    <errorConditionFormula>AND
+(
+OR ( FolioResume__c = &quot;FN&quot;,
+ FolioResume__c = &quot;FI&quot;,
+ FolioResume__c = &quot;PT&quot;
+),
+( Clave_de_Unidad_de_Peso__c  =  &quot;&quot;)
+)</errorConditionFormula>
+    <errorDisplayField>Clave_de_Unidad_de_Peso__c</errorDisplayField>
+    <errorMessage>CP001: Error  CLAVE DE UNIDAD DE PESO 
+(Debes de capturar la clave de unidad de peso)</errorMessage>
+</ValidationRule>

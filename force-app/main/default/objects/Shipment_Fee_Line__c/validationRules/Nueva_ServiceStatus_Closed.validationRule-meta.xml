@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Nueva_ServiceStatus_Closed</fullName>
+    <active>true</active>
+    <errorConditionFormula>AND(
+Shipment__r.Estatus_Cerrado__c = true,
+OR(
+ISPICKVAL( Shipment__r.Shipment_Status_Plann__c , &apos;Closed&apos;),
+ISPICKVAL( Shipment__r.Air_Shipment_Status__c , &apos;Closed&apos;),
+ISPICKVAL( Shipment__r.Shipment_Status__c, &apos;Closed&apos;),
+ISPICKVAL( Shipment__r.Ocean_Shipment_Status__c , &apos;Closed&apos;)
+),
+isnew()
+)</errorConditionFormula>
+    <errorMessage>No se pueden crear Service Lines si el Shipment esta en estatus &quot;Closed&quot;</errorMessage>
+</ValidationRule>

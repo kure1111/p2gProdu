@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Validate_FN_with_Origin_Address</fullName>
+    <active>false</active>
+    <errorConditionFormula>ISPICKVAL(Quotation_Status__c,&quot;Approved as Succesful&quot;)  &amp;&amp; FolioResume__c = &quot;FN&quot; &amp;&amp;  Origin_Address__c = &quot;&quot;</errorConditionFormula>
+    <errorDisplayField>Origin_Address__c</errorDisplayField>
+    <errorMessage>ERROR: Debe capturar Direcciones de Recoleccion y Entrega</errorMessage>
+</ValidationRule>

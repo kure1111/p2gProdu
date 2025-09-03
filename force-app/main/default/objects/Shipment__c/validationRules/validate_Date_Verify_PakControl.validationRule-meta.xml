@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>validate_Date_Verify_PakControl</fullName>
+    <active>true</active>
+    <errorConditionFormula>AND(NOT(ISBLANK(Date_Verify_PakControlTxt__c)),ISCHANGED(Date_Verify_PakControlTxt__c))</errorConditionFormula>
+    <errorMessage>no se puede modificar la fecha Date Verify PakControl</errorMessage>
+</ValidationRule>

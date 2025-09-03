@@ -1,0 +1,287 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RecordType xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Customer</fullName>
+    <active>true</active>
+    <compactLayoutAssignment>Account_Compact_Layout</compactLayoutAssignment>
+    <description>Customers who purchase goods or services from us. Also for Shippers and Consignees.</description>
+    <label>Customer</label>
+    <picklistValues>
+        <picklist>AccountSource</picklist>
+        <values>
+            <fullName>Base de datos</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Cambaceo</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Correo masivo</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Customer Event</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Google AdWords</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MKT - Llamada entrante</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MKT - Promociones</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MKT - Redes sociales</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MKT - SPOT</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MKT Expo</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Other</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Purchased List</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Recomendación</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Webinar</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Website</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>ePak</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Industry</picklist>
+        <values>
+            <fullName>Agriculture</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Automotriz</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Bienes de consumo</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Bienes industriales</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Construction</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Desperdicios y desechos</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Electrodomesticos%2C aparatos electricos y equipo de generacion de energia electrica</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Energia e Infraestructura</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Equipo de computacion y accesorios electronicos</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Fabricacion de equipo de transporte</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Filial</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Food %26 Beverage</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Government</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Healthcare</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Hotelero</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Industria Quimica</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Industria Textil</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Industria alimentaria</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Industria de la madera</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Industria de las bebidas y del tabaco</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Industria del papel</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Industria del plastico y del hule</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Manufacturing</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Maquinaria y equipo</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Metalurgico</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Mineria</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Muebles</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Other</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Papel y Paqueteria</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Persona Fisica</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Productos a base de minerales no metalicos %28vidrio%2C cemento y ceramica%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Productos metalicos o derivados</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Reciclador</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Retail</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Servicios Empresariales</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Technology</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Telecommunications</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Textil</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Transportation</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Transporte y Logistica</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Venta equipos</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Ownership</picklist>
+        <values>
+            <fullName>Other</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Private</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Public</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Subsidiary</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Rating</picklist>
+        <values>
+            <fullName>Cold</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Hot</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Warm</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Type</picklist>
+        <values>
+            <fullName>Corporativo</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>PyMe</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+</RecordType>

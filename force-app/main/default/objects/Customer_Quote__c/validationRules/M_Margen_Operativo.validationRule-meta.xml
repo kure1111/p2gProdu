@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>M_Margen_Operativo</fullName>
+    <active>true</active>
+    <errorConditionFormula>IF ( Account_for__r.Order_to_Cash__c = false,
+AND(
+FolioResume__c = &quot;M&quot;,
+ISPICKVAL( Quotation_Status__c , &quot;Approved as Succesful&quot;) , Margen_Operativo__c &lt; $User.M_Marg_Op__c ),
+NULL)</errorConditionFormula>
+    <errorMessage>MARGEN OPERATIVO ES MENOR A TU LIMITE DE AUTORIZACION PARA FOLIO &quot;M&quot; 
+*Favor de Contactar a la Gerencia o Dirección de Ventas.</errorMessage>
+</ValidationRule>

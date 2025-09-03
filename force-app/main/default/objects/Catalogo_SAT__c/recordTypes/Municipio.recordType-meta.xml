@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RecordType xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Municipio</fullName>
+    <active>true</active>
+    <compactLayoutAssignment>Catalogo_SAT</compactLayoutAssignment>
+    <description>Describe el municipio con base al catálogo c_municipio</description>
+    <label>Municipio</label>
+</RecordType>

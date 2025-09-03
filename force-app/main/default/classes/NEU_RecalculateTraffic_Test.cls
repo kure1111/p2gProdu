@@ -13,7 +13,7 @@ public class NEU_RecalculateTraffic_Test {
         insert a;
         
         User usr = TestDataFactory.createUserAdmin();
-		Rol_Margen__c rm = TestDataFactory.createRolMargen('Director Comercial');        
+		Rol_Margen__c rm = TestDataFactory.createRolMargen('Director Regional');        
         
         Contact contacto = new Contact(AccountId = a.Id, LastName='test contact');
         insert contacto;

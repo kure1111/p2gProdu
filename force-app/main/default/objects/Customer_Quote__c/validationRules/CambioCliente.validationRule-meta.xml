@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>CambioCliente</fullName>
+    <active>true</active>
+    <errorConditionFormula>AND( PRIORVALUE(Account_for__c)   &lt;&gt;  Account_for__c,
+ OR(ISPICKVAL( Quotation_Status__c , &apos;Approved as Succesful&apos;),ISPICKVAL( Quotation_Status__c , &apos;Shipped&apos;)))</errorConditionFormula>
+    <errorDisplayField>Requiere_Seguro__c</errorDisplayField>
+    <errorMessage>ERROR: No puedes cambar el Cliente cuando la cotizacion esta en estatus &quot;Approved as Succesful&quot; y estatus &quot;Shipped&quot;</errorMessage>
+</ValidationRule>

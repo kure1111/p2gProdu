@@ -1,0 +1,10 @@
+.slds-box {
+    border-radius: 0.25rem;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+}
+.slds-text-heading_medium {
+    font-weight: bold;
+}
+.slds-text-align_center {
+    text-align: center;
+}

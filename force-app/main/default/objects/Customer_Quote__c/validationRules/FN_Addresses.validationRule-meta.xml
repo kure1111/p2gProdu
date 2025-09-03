@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>FN_Addresses</fullName>
+    <active>false</active>
+    <errorConditionFormula>AND( 
+FolioResume__c = &quot;FN&quot; || 
+FolioResume__c = &quot;FI&quot; ||
+FolioResume__c = &quot;PT&quot;, 
+ISPICKVAL( Quotation_Status__c , &quot;Approved as Succesful&quot;),
+ Account_Origin_Address__r.Address__c = &quot;&quot;
+)</errorConditionFormula>
+    <errorMessage>El campo de Account Origin Address, no puede estar vacío.</errorMessage>
+</ValidationRule>

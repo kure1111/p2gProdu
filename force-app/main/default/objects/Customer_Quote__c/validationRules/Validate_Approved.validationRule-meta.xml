@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Validate_Approved</fullName>
+    <active>false</active>
+    <errorConditionFormula>ISPICKVAL( Quotation_Status__c , &quot;Approved as Succesful&quot;)&amp;&amp;
+ AUTORIZADO_FP_FO__c = True</errorConditionFormula>
+    <errorMessage>ERROR: No se puede realizar la siguiente accion: Modify, Duplicate, Delete</errorMessage>
+</ValidationRule>

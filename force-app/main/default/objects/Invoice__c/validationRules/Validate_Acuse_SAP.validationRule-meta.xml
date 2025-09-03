@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Validate_Acuse_SAP</fullName>
+    <active>false</active>
+    <errorConditionFormula>Status_Acuse_SAP__c &lt;&gt; &quot;ACUSE RECIBIDO&quot;</errorConditionFormula>
+    <errorMessage>ERROR: El estatus del Acuse en SAP debe ser: &quot;ACUSE RECIBIDO&quot;
+Favor de acudir con Departamento de Acuses (Rocio Osuna)</errorMessage>
+</ValidationRule>

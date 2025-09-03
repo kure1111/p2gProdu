@@ -1,0 +1,106 @@
+<template>
+    <lightning-card  title="Agregar Notas" class="slds-p-horizontal_small">
+        <div style="margin: 5px 10px;">
+            <template for:each={producto} for:item="producto">
+                <div class="slds-grid slds-grid_vertical" data-id={producto.Id} key={producto.Id}>
+                    <div class="slds-col">
+                        <template if:false={modifica}>
+                            <div style="border: 4px outset #cccccc;">
+                                <lightning-formatted-rich-text value={producto.Notas__c}></lightning-formatted-rich-text>
+                            </div>
+                            <div class="slds-col">
+                                <div class=" slds-p-around_medium lgc-bg">
+                                    <div>Modificar Notas
+                                        <lightning-button-icon icon-name="utility:edit" class="slds-m-left_xx-small" onclick={abrirModificar}></lightning-button-icon>
+                                    </div>
+                                </div>
+                            </div>
+                        </template>
+                        <template if:true={modifica}>
+                            <lightning-input-rich-text
+                                label="Modificar nota" value={producto.Notas__c}
+                                onchange={updateNotas}> </lightning-input-rich-text>
+                            <br>
+                            <lightning-button style="align-content: center;" label="Guardar" onclick={clicGuardar}></lightning-button>
+                        </template>
+                    </div><br>
+                    <template if:false={esFN}>
+                        <div class="slds-col">
+                            <lightning-card  title="Datos Adicionales" class="slds-p-horizontal_small">
+                                <div>
+                                    <br><h1>Datos adicionales del servicio</h1><br>
+                                </div>
+                                <template if:true={vistaIncoterm}>
+                                    <lightning-input type="text" label="Incoterm:" value={producto.Incoterm__c} readonly></lightning-input>
+                                </template>
+                                <template if:true={vistaPMFC}>
+                                    <lightning-input type="text" label="Tipo de servicio:" value={producto.Tipo_de_servicio__c} readonly></lightning-input>
+                                </template>
+                                <template if:true={vistaPMFAC}>
+                                    <lightning-input type="text" label="Tipo de Ruta:" value={producto.Tipo_de_ruta__c} readonly></lightning-input>
+                                    <lightning-input type="text" label="Servicio Especial:" value={producto.Servicio_especial__c} readonly></lightning-input>
+                                    <lightning-input type="number" label="Volumen Mensual:" value={producto.Volumen_Mensual__c} readonly></lightning-input>
+                                    <lightning-input type="text" label="Servicio Adicional:" value={producto.Servicio_adicional__c} readonly></lightning-input>
+                                </template>
+                                <template if:true={vistaPMAC}>
+                                    <lightning-input type="text" label="Puerto de Salida/Arribo:" value={producto.Puerto_de_Salida_Arribo__c} readonly></lightning-input>
+                                </template>
+                                <template if:true={vistaPMFA}>
+                                    <div>
+                                        Hazmat:
+                                        <lightning-input type="checkbox" label="" value={producto.Hazmat__c} disabled></lightning-input>
+                                    </div>
+                                    <lightning-input type="text" label="Certificaciones:" value={producto.Certificaciones__c} readonly></lightning-input>
+                                    <lightning-input type="text" label="Accesoriales:" value={producto.Accesoriales__c} readonly></lightning-input>
+                                </template>
+                                <template if:true={vistaF}>
+                                    <lightning-input type="text" label="Frontera de cruce:" value={producto.Frontera_de_cruce__c} readonly></lightning-input>
+                                    <lightning-input type="checkbox" label="Transbordo:" value={producto.Transbordo__c} disabled></lightning-input>
+                                </template>
+                                <template if:true={vistaAC}>
+                                    <lightning-input type="number" label="Piezas:" value={producto.Piezas__c} readonly></lightning-input>
+                                </template>
+                                <template if:true={vistaC}>
+                                    <lightning-input type="text" label="Aeropuerto de Salida/Arribo:" value={producto.Aeropuerto_de_Salida_Arribo__c} readonly></lightning-input>
+                                </template>
+                                <template if:true={vistaS}>
+                                    <lightning-input type="date" label="Fecha inicio del embarque:" value={producto.Fecha_Inicio_Embarque__c} readonly></lightning-input>
+                                    <lightning-input type="date" label="Fecha fin del embarque:" value={producto.Fecha_Fin_Embarque__c} readonly></lightning-input>
+                                    <lightning-input type="text" label="Tipo de seguro:" value={producto.Tipo_de_seguro__c} readonly></lightning-input>
+                                    <lightning-input type="text" label="Tipo de Servicio/ Embarque:" value={producto.Tipo_de_Servicio_Embarque__c} readonly></lightning-input>
+                                    <lightning-input type="text" label="Razon social embarcador:" value={producto.Razon_Social_Embarcador__c} readonly></lightning-input>
+                                    <lightning-input type="text" label="Razon social importador:" value={producto.Razon_Social_Importador__c} readonly></lightning-input>
+                                </template>
+                                <template if:true={vistaFA}>
+                                    <h1>Dimensiones:</h1><br>
+                                    <lightning-input type="number" label="Item Height(cm):" value={producto.Item_Height__c} readonly step="0.01"></lightning-input>
+                                    <lightning-input type="number" label="Item Width(cm):" value={producto.Item_Height__c} readonly step="0.01"></lightning-input>
+                                    <lightning-input type="number" label="Item Lenght(cm):" value={producto.Item_Lenght__c} readonly step="0.01"></lightning-input>
+                                </template>
+                            </lightning-card>
+                        </div>
+                    </template>
+                </div>
+            </template>
+        </div>
+        <!-- div style="margin: 5px 10px;">
+            <div class="slds-grid slds-grid_vertical">
+                <div class="slds-col">
+                    <br><h1>Archivos adjuntos</h1><br>
+                </div>
+                <div class="slds-col">
+                    <template if:true={sifiles}>
+                        <ul>
+                            <template for:each={files} for:item="file">
+                                <li key={file.Id}>
+                                    <lightning-formatted-url value={file.VersionData} label={file.Title} target="_blank">
+                                    </lightning-formatted-url>
+                                </li>
+                            </template>
+                        </ul>
+                    </template>
+                </div>
+            </div>
+        </div -->
+    </lightning-card>
+</template>

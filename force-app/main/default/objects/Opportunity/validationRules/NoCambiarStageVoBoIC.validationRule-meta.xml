@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NoCambiarStageVoBoIC</fullName>
+    <active>true</active>
+    <description>Solo puede cambiar etapa Inteligencia Comercial</description>
+    <errorConditionFormula>AND(
+ $User.Id &lt;&gt; &quot;0054T000001hgIi&quot;,
+ $Profile.Id &lt;&gt; &quot;00e4T000000zD9C&quot;,
+ $User.Id &lt;&gt; &quot;0054T000001iWDU&quot;,
+
+ISPICKVAL(StageName, &quot;VoBo IC&quot;),
+ISCHANGED(StageName),
+RecordType.Name = &quot;Proyectos&quot;)</errorConditionFormula>
+    <errorMessage>PROJ005: Solo Inteligencia Comercial puede aprobar esta etapa</errorMessage>
+</ValidationRule>

@@ -1,6 +1,6 @@
 public class p2g_CreateServiceLineShipmentSec2 {
 	@AuraEnabled
-    public static List<p2g_CreateServiceLineQuote.quoteFeeLineWrapper> CrearLineQuote(String line, Integer numLinea){
+    public static List<P2G_UpdateShipmentServiceLine.shipmentFeeLineWrapper> CrearLineQuote(String line, Integer numLinea){
         System.debug('Json que llego: '+ numLinea);
         List<P2G_UpdateShipmentServiceLine.shipmentFeeLineWrapper> listWrapper = P2G_UpdateShipmentServiceLine.CrearListaWrapper(line,numLinea);
         System.debug('La line wrapper: '+ listWrapper);
@@ -35,6 +35,10 @@ public class p2g_CreateServiceLineShipmentSec2 {
             for(P2G_UpdateShipmentServiceLine.shipmentFeeLineWrapper wrapper: listWrapper){
                 wrapper.Id = listaFeeLine[posicion].Id;
                 wrapper.Name = listaFeeLine[posicion].Name;
+                wrapper.seModifica = false;
+                wrapper.Tarifario = false;
+                wrapper.ShipmentSellPrice = wrapper.SellRate;
+	            wrapper.ShipmentBuyPrice = wrapper.BuyRate;
                 nuevalinea = p2g_CreateServiceLineQuote.rellenaSeccion(wrapper);
                 listaRespuesta.add(nuevalinea);
                 posicion++;
@@ -47,6 +51,6 @@ public class p2g_CreateServiceLineShipmentSec2 {
             System.debug('Error al realizar la modificacion: '+e.getMessage()+e.getLineNumber());
         }
         System.debug('lo que devuelve es: '+nuevalinea);
-        return listaRespuesta;
+        return listWrapper;
     }
 }

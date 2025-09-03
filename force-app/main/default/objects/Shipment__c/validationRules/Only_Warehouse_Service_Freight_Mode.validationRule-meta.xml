@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Only_Warehouse_Service_Freight_Mode</fullName>
+    <active>true</active>
+    <description>Freight Mode is required if &quot;Only Warehouse Service&quot; isn&apos;t checked</description>
+    <errorConditionFormula>AND(Only_Warehouse_Service__c == false, ISBLANK(TEXT(Freight_Mode__c)))</errorConditionFormula>
+    <errorDisplayField>Freight_Mode__c</errorDisplayField>
+    <errorMessage>Freight Mode is required if &quot;Only Warehouse Service&quot; isn&apos;t checked</errorMessage>
+</ValidationRule>

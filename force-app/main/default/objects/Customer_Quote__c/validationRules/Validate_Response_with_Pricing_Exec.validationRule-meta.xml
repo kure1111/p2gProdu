@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Validate_Response_with_Pricing_Exec</fullName>
+    <active>true</active>
+    <errorConditionFormula>ISPICKVAL(Quotation_Status__c,&quot;Sent awaiting response&quot;) &amp;&amp;  Pricing_Executive__c  = &quot;&quot; &amp;&amp;
+NOT($Profile.Name = &apos;CUSTOMER COMMUNITY&apos;)</errorConditionFormula>
+    <errorDisplayField>Pricing_Executive__c</errorDisplayField>
+    <errorMessage>ERROR: Mulst be choose PRICING EXECUTIVE</errorMessage>
+</ValidationRule>

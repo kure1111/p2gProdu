@@ -1,6 +1,6 @@
 @Istest
 public class P2G_creacionFolioWsTest {
-    	@testSetup
+    @testSetup
     static void Setup(){
         List<Account> list_accounts = NEU_Utils.getAccounts('Customer,');
         Account account_test = list_accounts[0];
@@ -93,18 +93,18 @@ public class P2G_creacionFolioWsTest {
         new_shipment.Shipment_Status_Plann__c = 'Confirmed';
         insert new_shipment;
         P2G_token__c token = new P2G_token__c();
-		token.Name = 'tokenRC';
-		token.token__c ='tokenInicial';
-		insert token;
+        token.Name = 'tokenRC';
+        token.token__c ='tokenInicial';
+        insert token;
     }
-        @isTest
+    @isTest
     static void creacionFolioWs(){
-       Shipment__c ship = [SELECT Id FROM Shipment__c Limit :1];  
-       Test.startTest();
-       Test.setMock(HttpCalloutMock.class, new P2G_MockHttpResponse(1));
-       P2G_creacionFolioWs.callSerCon(ship.Id);
-       P2G_creacionFolioWs.callWebService('token test','body test');
-       Test.stopTest();
+        Shipment__c ship = [SELECT Id FROM Shipment__c Limit :1];  
+        Test.startTest();
+        Test.setMock(HttpCalloutMock.class, new P2G_MockHttpResponse(1));
+        P2G_creacionFolioWs.callSerCon(ship.Id);
+        P2G_creacionFolioWs.callWebService('token test','body test');
+        Test.stopTest();
     }
-
+    
 }

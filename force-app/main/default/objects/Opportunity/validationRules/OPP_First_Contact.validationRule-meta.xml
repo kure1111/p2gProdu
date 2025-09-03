@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>OPP_First_Contact</fullName>
+    <active>false</active>
+    <description>Validación de esta etapa</description>
+    <errorConditionFormula>AND(
+ISPICKVAL(StageName,&quot;First Contact / Need Analysis&quot;),
+RecordType.Name = &quot;Standar Opportunity&quot;,
+
+Total_Products__c  &lt;= 0
+
+)</errorConditionFormula>
+    <errorMessage>OPP001-Para pasar a la siguiente etapa es necesario agregar Productos</errorMessage>
+</ValidationRule>

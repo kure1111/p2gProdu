@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>CE_BloqOceanExpoShipmentStatus</fullName>
+    <active>true</active>
+    <description>Regla que bloquea la actualización del campo &apos;Ocean Expo Shipment Status&apos; cuando no se ha confirmado la &apos;Recolección&apos; por Comercio Exterior</description>
+    <errorConditionFormula>AND(
+ NOT(BEGINS( Name, &apos;SP-CE&apos;)),
+ ISPICKVAL(Freight_Mode__c, &apos;Sea&apos;),
+ OR(
+  ISPICKVAL( Realizacion_CE_Status__c, &apos;Alta Cliente AA&apos;),
+  ISPICKVAL( Realizacion_CE_Status__c, &apos;Clasificación Arancelaria&apos;),
+  ISPICKVAL( Realizacion_CE_Status__c, &apos;Realización de Facturas&apos;)
+ ),
+ OR(
+  ISPICKVAL( Shipment_Status__c, &apos;Pending but Pre-Captured&apos;),
+  ISPICKVAL( Shipment_Status__c, &apos;Booking Confirmation&apos;),
+  ISPICKVAL( Shipment_Status__c, &apos;Planned for delivery - Not yet on route&apos;),
+  ISPICKVAL( Shipment_Status__c, &apos;Captured but not yet sent EDI&apos;),
+  ISPICKVAL( Shipment_Status__c, &apos;Pending - Missing Documents/Instructions&apos;),
+  ISPICKVAL( Shipment_Status__c, &apos;Submitted to Customs&apos;),
+  ISPICKVAL( Shipment_Status__c, &apos;Cleared but Awaiting Vessel&apos;),
+  ISPICKVAL( Shipment_Status__c, &apos;Delivered&apos;),
+  ISPICKVAL( Shipment_Status__c, &apos;Cleared but Stopped&apos;),
+  ISPICKVAL( Shipment_Status__c, &apos;Delivered to Depot&apos;),
+  ISPICKVAL( Shipment_Status__c, &apos;ETA -15&apos;),
+  ISPICKVAL( Shipment_Status__c, &apos;ETA -10&apos;),
+  ISPICKVAL( Shipment_Status__c, &apos;ETA -7&apos;),
+  ISPICKVAL( Shipment_Status__c, &apos;ETA -4&apos;),
+  ISPICKVAL( Shipment_Status__c, &apos;In Progress&apos;),
+  ISPICKVAL( Shipment_Status__c, &apos;TLX Confirmation&apos;),
+  ISPICKVAL( Shipment_Status__c, &apos;Delivery On route&apos;),
+  ISPICKVAL( Shipment_Status__c, &apos;Finished&apos;)
+ )
+)</errorConditionFormula>
+    <errorDisplayField>Shipment_Status__c</errorDisplayField>
+    <errorMessage>CE-OESS-001: No se puede cambiar &quot;Ocean Expo Shipment Status&quot; a esta etapa cuando no se ha confirmado la &apos;Recolección&apos; por Comercio Exterior</errorMessage>
+</ValidationRule>

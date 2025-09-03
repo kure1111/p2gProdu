@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Annual_Revenue_Maritimo</fullName>
+    <active>false</active>
+    <errorConditionFormula>RecordType.Name = &quot;Customer&quot; &amp;&amp; 
+INCLUDES(Unineg_cta__c, &quot;Marítimo&quot;) &amp;&amp;
+ISBLANK(Annrevmar_cta__c)</errorConditionFormula>
+    <errorDisplayField>Annrevmar_cta__c</errorDisplayField>
+    <errorMessage>Para este Cliente Ha seleccionado Unidad de Negocio Maritimo, debe capturar Annual Revenue Maritimo.</errorMessage>
+</ValidationRule>

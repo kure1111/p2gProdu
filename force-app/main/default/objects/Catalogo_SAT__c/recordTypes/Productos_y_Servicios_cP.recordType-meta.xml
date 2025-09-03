@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RecordType xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Productos_y_Servicios_cP</fullName>
+    <active>true</active>
+    <compactLayoutAssignment>Catalogo_SAT</compactLayoutAssignment>
+    <description>Catálogo de productos y servicios carta porte</description>
+    <label>Productos y Servicios cP</label>
+</RecordType>

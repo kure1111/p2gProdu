@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Bloqueo_OperadorNoValido</fullName>
+    <active>false</active>
+    <errorConditionFormula>AND(NOT(ISNULL( National_Operator__c )),  National_Operator__r.Operador_Validado__c = FALSE)</errorConditionFormula>
+    <errorDisplayField>National_Operator__c</errorDisplayField>
+    <errorMessage>PP-002: ESTE OPERADOR NO ES VALIDO</errorMessage>
+</ValidationRule>

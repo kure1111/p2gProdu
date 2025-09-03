@@ -1,0 +1,40 @@
+/* p2g_monitoreoDisponibilidad.css */
+.slds-hint-parent {
+    padding: 10px; /* Ajusta el espaciado según sea necesario */
+}
+
+.slds-theme_error, .slds-theme_warning, .slds-theme_success {
+    color: #000000; /* Color de texto negro */
+}
+
+.slds-theme_red {
+    background-color: #e12f17; /* Color de fondo para la bandera 'Rojo' */
+}
+
+.slds-theme_green {
+    background-color: rgba(122, 211, 161, 0.2); /* Color de fondo 'Verde' con 80% de opacidad */
+}
+
+.slds-theme_yellow {
+    background-color: #b2c51d; /* Color de fondo para la bandera 'Verde' */
+}
+
+.table-container {
+    overflow-x: auto; /* Agrega desplazamiento horizontal cuando el contenido excede el ancho del contenedor */
+}
+
+.large-text {
+    font-size: 1.5em; /* Ajusta el tamaño según lo necesites */
+}
+
+.bg-green {
+    background-color: green;
+}
+
+.bg-yellow {
+    background-color: yellow;
+}
+
+.bg-red {
+    background-color: red;
+}

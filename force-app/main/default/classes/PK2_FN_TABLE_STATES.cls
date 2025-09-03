@@ -36,6 +36,6 @@ public class PK2_FN_TABLE_STATES {
                     Where Account_for__r.Customer_Id__c !='CMTY3748' AND CreatedDate >= :FromDate
                     and Freight_Mode__c = 'Road' and Service_Mode__c = 'NATIONAL' 
                     and Name LIKE 'FN-%' and Quotation_Status__c IN ('Shipped', 'Approved as Succesful') and Last_Shipment__r.Shipment_Status_Plann__c !='Confirmed' and Last_Shipment__r.Shipment_Status_Plann__c !='False' and Last_Shipment__r.Shipment_Status_Plann__c !='Cancel' and Last_Shipment__r.Shipment_Status_Plann__c !='Closed'
-                    and (Last_Shipment__r.Operation_Executive__r.Workplace__c =:usr.Workplace__c or State_of_Load__r.Zone__c =:usr.Zone_of_Load__c) Order by Quotation_Status__c,ETD__c asc LIMIT 1000];
+                    /*and (Last_Shipment__r.Operation_Executive__r.Workplace__c =:usr.Workplace__c or State_of_Load__r.Zone__c =:usr.Zone_of_Load__c)*/ Order by Quotation_Status__c,ETD__c asc LIMIT 1000];
     }
 }

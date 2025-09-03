@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>56.0</apiVersion>
+    <description>Flujo que detecta cuando en el SAP Response llega el mensaje Orden de Compra Creada. Entonces captura el valor de esa orden de compra y lo guarda en el campo SC Sap</description>
+    <environments>Default</environments>
+    <formulas>
+        <description>Número de la orden de venta creada</description>
+        <name>OrdenVenta</name>
+        <dataType>String</dataType>
+        <expression>TRIM( RIGHT( {!message}, LEN({!message}) - FIND(&apos;:&apos;,{!message}) ) )</expression>
+    </formulas>
+    <interviewLabel>SP - Orden de Compra creada {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>SP - Orden de Compra creada</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordUpdates>
+        <description>Actualiza el Shipment relacionado al SAP Response para asignarle el número de la Orden de Compra</description>
+        <name>Agregar_OC_al_Shipment</name>
+        <label>Agregar OC al Shipment</label>
+        <locationX>176</locationX>
+        <locationY>335</locationY>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>$Record.Shipment__c</elementReference>
+            </value>
+        </filters>
+        <inputAssignments>
+            <field>SC_Sap__c</field>
+            <value>
+                <elementReference>OrdenVenta</elementReference>
+            </value>
+        </inputAssignments>
+        <object>Shipment__c</object>
+    </recordUpdates>
+    <start>
+        <locationX>50</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Agregar_OC_al_Shipment</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Message__c</field>
+            <operator>StartsWith</operator>
+            <value>
+                <stringValue>Orden de Compra Creada</stringValue>
+            </value>
+        </filters>
+        <object>Response__c</object>
+        <recordTriggerType>Create</recordTriggerType>
+        <triggerType>RecordAfterSave</triggerType>
+    </start>
+    <status>Active</status>
+    <variables>
+        <description>Variable a la cual se le asigna el mensaje devuelto en las SAP Response</description>
+        <name>message</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <value>
+            <elementReference>$Record.Message__c</elementReference>
+        </value>
+    </variables>
+</Flow>

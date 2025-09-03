@@ -173,7 +173,7 @@
                 </tr>
                 <apex:repeat var="line" value="{!record.lines}">
                     <tr>
-                        <td style="padding-left:5px; font: 10pt; ">{!line.Shipment_Service_Line__r.Name} &nbsp; <!--{!line.Shipment_Service_Line__r.Sap_Service_Type__c}--></td>
+                        <td style="padding-left:5px; font: 10pt; ">{!line.Shipment_Service_Line__r.Service_Rate_Name__r.Name} &nbsp; <!--{!line.Shipment_Service_Line__r.Sap_Service_Type__c}--></td>
                         <td style="text-align:left; border-left: 1px solid black;">$ {!line.Amount__c}</td>
                         <td style="text-align:left; padding-right:5px; border-left: 1px solid black;">$</td>    
                     </tr>                    

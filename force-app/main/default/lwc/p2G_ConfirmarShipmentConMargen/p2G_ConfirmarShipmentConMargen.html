@@ -1,0 +1,39 @@
+<template>
+    <div if:true={messageview} class="approval-overlay">
+        <div style="position: fixed; top: 10%; width: 100%; z-index: 10000;">
+            <lightning-toast title="Advertencia" message='El margen es menor a lo que puede el usuario confirmar, se envia solicitar aprobación al lider' variant="warning"></lightning-toast>
+        </div>
+        <div class="approval-box">
+            <div class="description">
+                <p class="description-text">Es necesario la aprobación del lider ya que el margen es menor al que se permite.</p>
+            </div>
+
+            <div class="approval-info-table">
+                <p>
+                    <span style="color: blue;"><lightning-badge label="Shipment: " icon-name="standard:archive"></lightning-badge></span>
+                    <lightning-badge label={nombre} class="slds-badge_lightest"></lightning-badge>
+                </p>
+                <p>
+                    <lightning-badge label="Costo Buy Price: " icon-name="standard:money"></lightning-badge>
+                    <lightning-badge label={buyPrice} class="slds-badge_lightest"></lightning-badge>
+                </p>
+                <p>
+                    <lightning-badge label="Costo Sell Price: " icon-name="standard:money"></lightning-badge>
+                    <lightning-badge label={sellPrice} class="slds-badge_lightest"></lightning-badge>
+                </p>
+                <p>
+                    <lightning-badge label="Profi: " icon-name="standard:moneybag"></lightning-badge>
+                    <lightning-badge label={margen} class="slds-badge_lightest"></lightning-badge>
+                </p>
+                <p>
+                    <lightning-badge label="Motivo: " icon-name="standard:notebook"></lightning-badge>
+                    <lightning-badge label="Solicitud de confirmación por Margen" class="slds-badge_lightest"></lightning-badge>
+                </p>
+                <br><br>
+                <div class="button-section">
+                    <lightning-button label="Cerrar" onclick={Cerrar} variant="brand"></lightning-button>
+                </div>
+            </div>
+        </div>
+    </div>
+</template>

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<HomePageComponent xmlns="http://soap.sforce.com/2006/04/metadata">
+    <links>Reporte_Cobranza</links>
+    <links>Reporte_de_Ordenes_de_Venta_por_Facturar</links>
+    <links>Reporte_de_Ventas</links>
+    <pageComponentType>links</pageComponentType>
+</HomePageComponent>

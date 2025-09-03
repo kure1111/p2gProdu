@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Nueva_sin_credito</fullName>
+    <active>true</active>
+    <errorConditionFormula>AND(
+ISPICKVAL( Shipment__r.Account_for__r.Venta_Sap__c  , &quot;Credito&quot;),
+OR(
+ISPICKVAL( Service_Rate_Name__r.Fee_Category__c  , &apos;Road Freights&apos;),
+ISPICKVAL( Service_Rate_Name__r.Fee_Category__c  , &apos;Sea Freights&apos;),
+ISPICKVAL( Service_Rate_Name__r.Fee_Category__c  , &apos;Air Freights&apos;)
+),
+Shipment__r.Account_for__r.Saldo_DisponibleOK__c &lt;= 0,
+isnew()
+)</errorConditionFormula>
+    <errorMessage>Cliente sin crédito disponible</errorMessage>
+</ValidationRule>

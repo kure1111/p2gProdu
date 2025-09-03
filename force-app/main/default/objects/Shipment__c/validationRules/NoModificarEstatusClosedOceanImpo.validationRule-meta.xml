@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NoModificarEstatusClosedOceanImpo</fullName>
+    <active>true</active>
+    <errorConditionFormula>AND(
+OR(
+ISPICKVAL( PRIORVALUE ( Ocean_Shipment_Status__c ), &quot;Closed&quot;)),
+ISCHANGED( Ocean_Shipment_Status__c),
+NOT(
+$Profile.Id = &quot;00e4T000000zD9C&quot;),
+NOT($UserRole.Id = &quot;00E4T000000ga5l&quot;),
+NOT($UserRole.Id = &quot;00E4T000000gi4H&quot;)
+)</errorConditionFormula>
+    <errorMessage>Ya que el registro esta en closed, no se debe modificar el estatus.</errorMessage>
+</ValidationRule>

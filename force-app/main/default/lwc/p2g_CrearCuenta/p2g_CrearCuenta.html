@@ -1,0 +1,379 @@
+<template>
+    <div class="container" style="text-align: center;">
+        <template if:true={asignarCuenta}>
+            <lightning-card  title="Asignar Cuenta" style="background: bisque !important;">
+                <br>
+                <h1 class="slds-text-heading_small titulos">Datos de la cuenta</h1>
+                <br>
+                <lightning-accordion allow-multiple-sections-open active-section-name={activeSections}>
+
+
+                    <lightning-accordion-section name="PreSeccion" label="Datos principales">
+                        <div class="slds-m-around_medium">
+                        </div>
+                        <div  class="slds-grid slds-gutters">
+                            <div class="slds-col slds-size_6-of-12">
+                                <lightning-input type="text" value={rfc} label="RFC"  onchange={RFCCustomer} required></lightning-input>
+                            </div>
+                            <div class="slds-col slds-size_6-of-12">
+                                <lightning-input type="text" value={correo} label="Correo" onchange={EmailCustomer}  required></lightning-input>
+                            </div>
+                        </div>
+                        
+                        <br>
+                        <div class="slds-grid slds-grid_vertical">
+                            <template if:true={existeRFC}>
+                                <p class="textoTamaño">Se encontro una cuenta llamada: {wrapper.razonSocial}</p>
+                            </template>
+                            <template if:true={esLead}>
+                                <p class="textoTamaño">No se encontro cuenta asignada, favor de llenar todos los campos</p>
+                            </template>
+                            <h1 class="slds-text-heading_small titulos">Nota: Favor de verificar si el RFC ya existe en una cuenta.</h1>
+                            <br>
+                            <div class="slds-grid slds-grid_align-center">
+                                <lightning-button variant="neutral" label="Verificar" onclick={verificar}></lightning-button>  
+                            </div>
+                        </div>
+                    </lightning-accordion-section>
+
+
+
+                   
+                   
+                    <lightning-accordion-section name="Seccion1" label="Datos para actualización de cuenta">
+                        <div class="slds-m-around_medium">
+                        </div>
+                        <div  class="slds-grid slds-gutters">
+                            <template if:true={existeRFC}>
+                                <div class="slds-col slds-size_6-of-12">
+                                    <lightning-input type="text" value={wrapper.razonSocial} label="Razon social" onchange={razonSocialCustomer} required></lightning-input>
+                                </div>
+                            </template>                            
+                            <template if:false={existeRFC}>
+                                <div class="slds-col slds-size_6-of-12">
+                                    <lightning-input type="text" value={razonsocial} label="Razon social" onchange={razonSocialCustomer} required></lightning-input>
+                                </div>
+                            </template>
+                            <template if:true={existeRFC}>
+                                <div class="slds-col slds-size_6-of-12">
+                                    <lightning-input type="text" value={wrapper.telefonoCliente} label="Telefono" onchange={telefonoCustomer} required></lightning-input>
+                                </div>
+                            </template>
+                            <template if:false={existeRFC}>
+                                <div class="slds-col slds-size_6-of-12">
+                                    <template if:true={esLead}>
+                                        <lightning-input type="text" value={wrapper.telefonoCliente} label="Telefono" onchange={telefonoCustomer} required></lightning-input>
+                                    </template>
+                                    <template if:false={esLead}>
+                                        <lightning-input type="text" value={telefono} label="Telefono" onchange={telefonoCustomer} required></lightning-input>
+                                    </template>
+                                </div>
+                            </template>
+                        </div>
+                        <div  class="slds-grid slds-gutters">
+                            <template if:true={existeRFC}>
+                                <div class="slds-col slds-size_6-of-12">
+                                    <lightning-combobox name="Banco" label="Banco:" value={wrapper.banco} 
+                                    placeholder="Seleccione un Banco" options={optionBanco} onchange={bancoSeleccionado} required
+                                    ></lightning-combobox>
+                                </div>
+                            </template>
+                            <template if:false={existeRFC}>
+                                <div class="slds-col slds-size_6-of-12">
+                                    <lightning-combobox name="Banco" label="Banco:" value={banco} 
+                                    placeholder="Seleccione un Banco" options={optionBanco} onchange={bancoSeleccionado} required
+                                    ></lightning-combobox>
+                                </div>
+                            </template>
+                            <div class="slds-col slds-size_6-of-12">
+                                <template if:true={existeRFC}>
+                                    <lightning-input type="text" value={wrapper.numeroCuenta}  label="Numero de cuenta" onchange={numCuentaCustommer} required></lightning-input>
+                                </template>
+                                <template if:false={existeRFC}>
+                                    <lightning-input type="text" value={numerocuenta}  label="Numero de cuenta" onchange={numCuentaCustommer} required></lightning-input>
+                                </template>
+                            </div>
+                        </div>
+                    </lightning-accordion-section>
+                    <br><br>
+                    <lightning-accordion-section name="Seccion2" label="Datos de direccion fiscal">
+                        <div  class="slds-grid slds-gutters">
+                            <div class="slds-col slds-size_6-of-12">
+                                <template if:true={existeRFC}>
+                                    <lightning-input type="text" label="Calle" value={wrapper.calleFiscal} onchange={calleFiscal}></lightning-input>
+                                </template>
+                                <template if:false={existeRFC}>
+                                    <lightning-input type="text" label="Calle" value={callefis} onchange={calleFiscal}></lightning-input>
+                                </template>
+                            </div>
+                            <div class="slds-col slds-size_6-of-12">
+                                <div onkeyup={searchKeyCPFis}>
+                                    <template if:true={existeRFC}>
+                                        <lightning-input label="Codigo Postal:" placeholder="Buscar un codigo postal" 
+                                                                            required="" value={wrapper.cPFiscal} type="search"></lightning-input>
+                                    </template>
+                                    <template if:false={existeRFC}>
+                                        <lightning-input label="Codigo Postal:" placeholder="Buscar un codigo postal" 
+                                                                            required="" value={searchValueCPFis} type="search"></lightning-input>
+                                    </template>
+                                </div>
+                                <table if:true={showSideCPFis} class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_striped">
+                                    <thead>
+                                        <tr class="slds-line-height_reset">
+                                            <th class="" scope="col">
+                                                <div class="slds-truncate" title="First Name">Codigo Postal</div>
+                                            </th>
+                                            <th class="" scope="col">
+                                                <div class="slds-truncate" title="First Name">Pais</div>
+                                            </th>
+                                         </tr>
+                                    </thead>
+                                    <tbody>
+                                        <template for:each={sideRecordsCPFis} for:item="con">
+                                            <tr class="slds-hint-parent" data-id={con.Id} key={con.Id} onclick={SideSelectCPFis}> 
+                                                <td>
+                                                    <div class="slds-truncate">{con.Name}</div>
+                                                </td>
+                                                <td>
+                                                    <div class="slds-truncate">{con.Pais_RefCP__r.Name}</div>
+                                                </td>
+                                            </tr>
+                                        </template>
+                                    </tbody>
+                                </table>
+                            </div>
+                            </div>
+                            <div  class="slds-grid slds-gutters">
+                                 <div class="slds-col slds-size_3-of-12">
+                                    <template if:true={existeRFC}>
+                                        <lightning-input type="text" value={wrapper.exteriorFiscal} label="Numero exterior" onchange={exteriorFiscal} required=""></lightning-input>
+                                    </template>
+                                    <template if:false={existeRFC}>
+                                        <lightning-input type="text" value={numeroexteriorfis} label="Numero exterior" onchange={exteriorFiscal} required=""></lightning-input>
+                                    </template>
+                                </div>
+                                <div class="slds-col slds-size_3-of-12">
+                                    <template if:true={existeRFC}>
+                                        <lightning-input type="text" value={wrapper.interiorFiscal} label="Numero interior" onchange={interiorFiscal}></lightning-input>
+                                    </template>
+                                    <template if:false={existeRFC}>
+                                        <lightning-input type="text" value={numerointeriorfis} label="Numero interior" onchange={interiorFiscal}></lightning-input>
+                                    </template>
+                                </div>
+                                <div class="slds-col slds-size_6-of-12">
+                                    <template if:true={existeRFC}>
+                                        <div onkeyup={searchKeyColoniaFis}>
+                                            <lightning-input label="Colonia:" placeholder="Buscar una colonia" 
+                                                                                required="" value={wrapper.coloniaFiscal} type="search"></lightning-input>
+                                        </div>
+                                    </template>
+                                    <template if:false={existeRFC}>
+                                        <div onkeyup={searchKeyColoniaFis}>
+                                            <lightning-input label="Colonia:" placeholder="Buscar una colonia" 
+                                                                                required="" value={searchValueColoniaFis} type="search"></lightning-input>
+                                        </div>
+                                    </template>
+                                    <table if:true={showSideColoniaFis} class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_striped">
+                                        <thead>
+                                            <tr class="slds-line-height_reset">
+                                                <th class="" scope="col">
+                                                    <div class="slds-truncate" title="First Name">Colonia</div>
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <template for:each={sideRecordsColoniaFis} for:item="con">
+                                                <tr class="slds-hint-parent" data-id={con.Id} key={con.Id} onclick={SideSelectColoniaFis}> 
+                                                    <td>
+                                                        <div class="slds-truncate">{con.Name}</div>
+                                                    </td>
+                                                </tr>
+                                            </template>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                </div>
+                    </lightning-accordion-section>
+                </lightning-accordion>
+                <br>
+                <div class="slds-grid slds-grid_align-end" style="padding-right: 30px;" slot="footer">
+                    <lightning-button variant="neutral" label="Siguiente" onclick={creaAddress}></lightning-button>
+                </div>
+            </lightning-card>
+        </template>
+        <template if:true={accountAddress}>
+            <lightning-card  title="Crear Account Address">
+                <br>
+                <h1 class="titulos">Direccion Origen</h1>
+                <br>
+                <div  class="slds-grid slds-gutters">
+                    <div class="slds-col slds-size_1-of-12"></div>
+                    <div class="slds-col slds-size_5-of-12 ">
+                        <lightning-input type="texto" value={calleor} onchange={calleOrigen} label="Calle:" required=""></lightning-input>
+                    </div>
+                    <div class="slds-col slds-size_5-of-12 ">
+                        <div onkeyup={searchKeyCPOr}>
+                            <lightning-input label="Codigo Postal:" placeholder="Buscar un codigo postal" 
+                                required="" value={searchValueCPOr} type="search"></lightning-input>
+                        </div>
+                        <table if:true={showSideCPOr} class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_striped">
+                            <thead>
+                                <tr class="slds-line-height_reset">
+                                <th class="" scope="col">
+                                    <div class="slds-truncate" title="First Name">Codigo Postal</div>
+                                </th>
+                                <th class="" scope="col">
+                                    <div class="slds-truncate" title="First Name">Pais</div>
+                                </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <template for:each={sideRecordsCPOr} for:item="con">
+                                <tr class="slds-hint-parent" data-id={con.Id} key={con.Id} onclick={SideSelectCPOr}> 
+                                    <td>
+                                        <div class="slds-truncate">{con.Name}</div>
+                                    </td>
+                                    <td>
+                                        <div class="slds-truncate">{con.Pais_RefCP__r.Name}</div>
+                                    </td>
+                                </tr>
+                                </template>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="slds-col slds-size_1-of-12"></div>
+                </div>
+                <div  class="slds-grid slds-gutters">
+                    <div class="slds-col slds-size_1-of-12"></div>
+                    <div class="slds-col slds-size_2-of-12 ">
+                        <lightning-input type="number" value={numeroexterioror} onchange={exteriorOrigen} label="Numero Exterior:" required=""></lightning-input>
+                    </div>
+                    <div class="slds-col slds-size_2-of-12 ">
+                        <lightning-input type="number" value={numerointerioror} onchange={interiorOrigen} label="Numero Interior:"></lightning-input>
+                    </div>
+                    <div class="slds-col slds-size_1-of-12 "></div>
+                    <div class="slds-col slds-size_5-of-12 ">
+                        <div onkeyup={searchKeyColoniaOr}>
+                            <lightning-input label="Colonia:" placeholder="Buscar una colonia" 
+                                required="" value={searchValueColoniaOr} type="search"></lightning-input>
+                        </div>
+                        <table if:true={showSideColoniaOr} class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_striped">
+                            <thead>
+                                <tr class="slds-line-height_reset">
+                                <th class="" scope="col">
+                                    <div class="slds-truncate" title="First Name">Colonia</div>
+                                </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <template for:each={sideRecordsColoniaOr} for:item="con">
+                                <tr class="slds-hint-parent" data-id={con.Id} key={con.Id} onclick={SideSelectColoniaOr}> 
+                                    <td>
+                                        <div class="slds-truncate">{con.Name}</div>
+                                    </td>
+                                </tr>
+                                </template>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="slds-col slds-size_1-of-12"></div>
+                </div><br><br>
+                <h1 class="titulos">Direccion Destino</h1>
+                <br>
+                <div  class="slds-grid slds-gutters">
+                    <div class="slds-col slds-size_1-of-12"></div>
+                    <div class="slds-col slds-size_5-of-12">
+                        <lightning-input type="texto" value={calledes} onchange={calleDestino} label="Calle:" required=""></lightning-input>
+                    </div>
+                    <div class="slds-col slds-size_5-of-12">
+                        <div onkeyup={searchKeyCPDes}>
+                            <lightning-input label="Codigo Postal:" placeholder="Buscar un codigo postal" 
+                                required="" value={searchValueCPDes} type="search"></lightning-input>
+                        </div>
+                        <table if:true={showSideCPDes} class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_striped">
+                            <thead>
+                                <tr class="slds-line-height_reset">
+                                <th class="" scope="col">
+                                    <div class="slds-truncate" title="First Name">Codigo Postal</div>
+                                </th>
+                                <th class="" scope="col">
+                                    <div class="slds-truncate" title="First Name">Pais</div>
+                                </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <template for:each={sideRecordsCPDes} for:item="con">
+                                <tr class="slds-hint-parent" data-id={con.Id} key={con.Id} onclick={SideSelectCPDes}> 
+                                    <td>
+                                        <div class="slds-truncate">{con.Name}</div>
+                                    </td>
+                                    <td>
+                                        <div class="slds-truncate">{con.Pais_RefCP__r.Name}</div>
+                                    </td>
+                                </tr>
+                                </template>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                    <div  class="slds-grid slds-gutters">
+                        <div class="slds-col slds-size_1-of-12"></div>
+                        <div class="slds-col slds-size_2-of-12">
+                            <lightning-input type="number" value={numeroexteriordes} onchange={exteriorDestino} label="Numero Exterior:" required=""></lightning-input>
+                        </div>
+                        <div class="slds-col slds-size_2-of-12">
+                        <lightning-input type="number" onchange={interiorDestino} value={numerointeriordes} label="Numero Interior:"></lightning-input>
+                    </div>
+                        <div class="slds-col slds-size_1-of-12"></div>
+                    <div class="slds-col slds-size_5-of-12">
+                        <div onkeyup={searchKeyColoniaDes}>
+                            <lightning-input label="Colonia:" placeholder="Buscar una colonia" 
+                                required="" value={searchValueColoniaDes} type="search"></lightning-input>
+                        </div>
+                        <table if:true={showSideColoniaDes} class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_striped">
+                            <thead>
+                                <tr class="slds-line-height_reset">
+                                <th class="" scope="col">
+                                    <div class="slds-truncate" title="First Name">Colonia</div>
+                                </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <template for:each={sideRecordsColoniaDes} for:item="con">
+                                <tr class="slds-hint-parent" data-id={con.Id} key={con.Id} onclick={SideSelectColoniaDes}> 
+                                    <td>
+                                        <div class="slds-truncate">{con.Name}</div>
+                                    </td>
+                                </tr>
+                                </template>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="slds-col slds-size_1-of-12"></div>
+                </div>
+                <br><br>
+                <h1 class="titulos">Fechas de salida y llegada</h1>
+                <br>
+                <div  class="slds-grid slds-gutters">
+                    <div class="slds-col slds-size_1-of-12"></div>
+                    <div class="slds-col slds-size_5-of-12">
+                        <lightning-input type="date" value={etd} onchange={Fechadesalida} label="ETD" required=""> </lightning-input>
+                   </div>
+                   <div class="slds-col slds-size_5-of-12">
+                    <lightning-input type="date" value={eta} onchange={Fechadellegada} label="ETA" required=""> </lightning-input>
+                   </div>
+                   <div class="slds-col slds-size_1-of-12"></div>
+                </div>
+                <br><br>
+                <div class="slds-grid slds-grid_align-space" slot="footer">
+                    <div class="slds-col">
+                        <lightning-button variant="neutral" label="Anterior" onclick={Anterior}></lightning-button>
+                    </div>
+                    <div class="slds-col">
+                        <lightning-button variant="neutral" label="Aceptar" onclick={Aceptar}></lightning-button>
+                    </div>
+                </div>
+            </lightning-card>
+        </template>
+    </div>
+</template>

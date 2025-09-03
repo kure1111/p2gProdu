@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Validate_Date_time_Finished_monitoreo</fullName>
+    <active>true</active>
+    <errorConditionFormula>AND(NOT(ISBLANK(Date_time_FN_Finished__c)),ISCHANGED(Date_time_FN_Finished__c))</errorConditionFormula>
+    <errorMessage>No se puede modificar la fecha Date time Finished monitoreo</errorMessage>
+</ValidationRule>

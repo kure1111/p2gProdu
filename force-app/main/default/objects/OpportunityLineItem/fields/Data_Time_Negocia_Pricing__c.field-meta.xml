@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Data_Time_Negocia_Pricing__c</fullName>
+    <description>Se colocara cuando el status del producto cambia a Negociación con cliente</description>
+    <externalId>false</externalId>
+    <label>Data Time Negocia Pricing</label>
+    <required>false</required>
+    <type>DateTime</type>
+</CustomField>

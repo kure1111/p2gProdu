@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Requerimientos_especialesNew__c</fullName>
+    <externalId>false</externalId>
+    <label>Requerimientos especiales</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackTrending>false</trackTrending>
+    <type>MultiselectPicklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Estibable</fullName>
+                <default>false</default>
+                <label>Estibable</label>
+            </value>
+            <value>
+                <fullName>Ctpat.</fullName>
+                <default>false</default>
+                <label>Ctpat.</label>
+            </value>
+            <value>
+                <fullName>Granel</fullName>
+                <default>false</default>
+                <label>Granel</label>
+            </value>
+            <value>
+                <fullName>entarimado</fullName>
+                <default>false</default>
+                <label>entarimado</label>
+            </value>
+            <value>
+                <fullName>SUA (IMSS)</fullName>
+                <default>false</default>
+                <label>SUA (IMSS)</label>
+            </value>
+            <value>
+                <fullName>R-control</fullName>
+                <default>false</default>
+                <label>R-control</label>
+            </value>
+            <value>
+                <fullName>Alarma de reversa.</fullName>
+                <default>false</default>
+                <label>Alarma de reversa.</label>
+            </value>
+            <value>
+                <fullName>Extintor</fullName>
+                <default>false</default>
+                <label>Extintor</label>
+            </value>
+            <value>
+                <fullName>EPP (Botas, chalecos, cascos, guantes lentes, mascarilla, COVID)</fullName>
+                <default>false</default>
+                <label>EPP (Botas, chalecos, cascos, guantes lentes, mascarilla, COVID)</label>
+            </value>
+            <value>
+                <fullName>Personal con restricción de edad</fullName>
+                <default>false</default>
+                <label>Personal con restricción de edad</label>
+            </value>
+            <value>
+                <fullName>GPS en tracto y Caja</fullName>
+                <default>false</default>
+                <label>GPS en tracto y Caja</label>
+            </value>
+            <value>
+                <fullName>Riel logístico</fullName>
+                <default>false</default>
+                <label>Riel logístico</label>
+            </value>
+            <value>
+                <fullName>Gafas</fullName>
+                <default>false</default>
+                <label>Gafas</label>
+            </value>
+            <value>
+                <fullName>Certificado</fullName>
+                <default>false</default>
+                <label>Certificado</label>
+            </value>
+            <value>
+                <fullName>Otro</fullName>
+                <default>false</default>
+                <label>Otro</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+    <visibleLines>4</visibleLines>
+</CustomField>

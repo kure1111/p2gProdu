@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Validate_Confirmed_VerifyPak</fullName>
+    <active>false</active>
+    <errorConditionFormula>ShipmentService__c = &quot;SP-FN&quot; &amp;&amp; 
+ISPICKVAL(Shipment_Status_Plann__c,&quot;Confirmed&quot;)&amp;&amp;
+ VERIFY_PAK_CONTROL__c =False</errorConditionFormula>
+    <errorDisplayField>VERIFY_PAK_CONTROL__c</errorDisplayField>
+    <errorMessage>ERROR: Must be Confirmed by Pak Control</errorMessage>
+</ValidationRule>

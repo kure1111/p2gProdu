@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>MBL_Ocean_Expo_Shipment_Status</fullName>
+    <active>true</active>
+    <errorConditionFormula>AND(OR(ISPICKVAL(Shipment_Status__c, &quot;Cleared but Awaiting Vessel&quot;), ISPICKVAL(Shipment_Status__c, &quot;Delivered&quot;), ISPICKVAL(Shipment_Status__c, &quot;Cleared but Stopped&quot;), ISPICKVAL(Shipment_Status__c, &quot;Delivered to Depot&quot;), ISPICKVAL(Shipment_Status__c, &quot;Agent Notified&quot;), ISPICKVAL(Shipment_Status__c, &quot;ETA -15&quot;) , ISPICKVAL(Shipment_Status__c, &quot;ETA -10&quot;), ISPICKVAL(Shipment_Status__c, &quot;ETA -7&quot;), ISPICKVAL(Shipment_Status__c, &quot;ETA -4&quot;), ISPICKVAL(Shipment_Status__c, &quot;In Progress&quot;), ISPICKVAL(Shipment_Status__c , &quot;TLX Confirmation&quot;), ISPICKVAL(Shipment_Status__c , &quot;Delivery On route&quot;)) ,(ISPICKVAL(Freight_Mode__c, &quot;Sea&quot;)), MBL_Number__c = &quot;&quot;)</errorConditionFormula>
+    <errorDisplayField>MBL_Number__c</errorDisplayField>
+    <errorMessage>Please complete the MBL Number</errorMessage>
+</ValidationRule>
