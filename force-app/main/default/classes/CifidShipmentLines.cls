@@ -140,6 +140,7 @@ public class CifidShipmentLines {
         private String AllowFieldTruncationHeader_hns = 'AllowFieldTruncationHeader=http://soap.sforce.com/schemas/class/Cifid_ShipmentLines';
         private String DebuggingHeader_hns = 'DebuggingHeader=http://soap.sforce.com/schemas/class/Cifid_ShipmentLines';
         private String[] ns_map_type_info = new String[]{'http://soap.sforce.com/schemas/class/Cifid_ShipmentLines', 'CifidShipmentLines'};
+            
         public CifidShipmentLines.estatus shipmentLines(CifidShipmentLines.Shipment ship) {
             CifidShipmentLines.shipmentLines_element request_x = new CifidShipmentLines.shipmentLines_element();
             request_x.ship = ship;

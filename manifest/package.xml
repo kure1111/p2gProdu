@@ -1,12 +1,14 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <Package xmlns="http://soap.sforce.com/2006/04/metadata">
     <types>
-        <members>NEU_CartaPortePDF</members>
-        <members>NEU_CartaPortePDF_Test</members>
-        <members>NEU_CartaPorteSavePDF</members>
-        <members>NEU_cartaPorteSavePDF_Test</members>
-        <members>P2G_Validacion_Datos_CartaPorte</members>
-        <members>P2G_Validacion_Datos_CartaPorteTest</members>
+        <members>CifidQuoteLines</members>
+        <members>CifidShipmentLines</members>
+        <members>Cifid_Test</members>
+        <members>Cifid_updateQuote</members>
+        <members>Cifid_updateQuoteShipment</members>
+        <members>Cifid_updateQuoteShipmentTest</members>
+        <members>PAK_SendCargoLines</members>
+        <members>PakQuoteToCifid</members>
         <name>ApexClass</name>
     </types>
 	<version>64.0</version>
