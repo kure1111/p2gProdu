@@ -40,26 +40,6 @@
             <targetReference>Loop_Service_Rate_Carrier</targetReference>
         </connector>
     </assignments>
-    <customErrors>
-        <name>error</name>
-        <label>error</label>
-        <locationX>314</locationX>
-        <locationY>1139</locationY>
-        <customErrorMessages>
-            <errorMessage>No se puede confirmar el Shipment {!$Record.Name} ya que la Service Line realacionada al Shipment no tiene Carrier - Revisar &quot;{!NameServiceLine}&quot;</errorMessage>
-            <isFieldError>false</isFieldError>
-        </customErrorMessages>
-    </customErrors>
-    <customErrors>
-        <name>Error2</name>
-        <label>Error2</label>
-        <locationX>50</locationX>
-        <locationY>1139</locationY>
-        <customErrorMessages>
-            <errorMessage>No se puede confirmar el Shipment {!$Record.Name} ya que no tiene Service Line realacionadas.</errorMessage>
-            <isFieldError>false</isFieldError>
-        </customErrorMessages>
-    </customErrors>
     <decisions>
         <name>Decision_Error</name>
         <label>Decision Error</label>

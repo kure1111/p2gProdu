@@ -21,13 +21,21 @@ public class P2G_UpdateCurrency implements Schedulable {
         // Obtener el Token de acceso
         String accessToken = UserInfo.getSessionId();
         Http http = new Http();
-        
+
         // Obtener el ID de CurrencyType para USD y EUR
         CurrencyType usdCurrency = [SELECT Id FROM CurrencyType WHERE IsoCode = 'USD' LIMIT 1];
         CurrencyType eurCurrency = [SELECT Id FROM CurrencyType WHERE IsoCode = 'EUR' LIMIT 1];
         
+        // Actualizar tasas fechadas
+        Date startDate = Date.today();
+
+        String accessToken2 = UserInfo.getSessionId();
+        createDatedConversionRate('EUR', (1 / nuevaTasaEUR), startDate, accessToken2);
+        createDatedConversionRate('USD', (1 / nuevaTasaUSD), startDate, accessToken2);
+        
         // Actualizar ambas tasas de cambio en una sola llamada
         actualizarTasasCambio(http, usdCurrency.Id, eurCurrency.Id, (1 / nuevaTasaUSD), (1 / nuevaTasaEUR), accessToken);
+        
     }
     
     private static void actualizarTasasCambio(Http http, Id usdCurrencyId, Id eurCurrencyId, Decimal usdRate, Decimal eurRate, String accessToken) {
@@ -48,7 +56,7 @@ public class P2G_UpdateCurrency implements Schedulable {
         HttpResponse res = http.send(req);
         
         if (res.getStatusCode() == 200 || res.getStatusCode() == 204) {
-            System.debug('Tasas de cambio actualizadas correctamente');
+            System.debug('Tasas de cambio generales actualizadas correctamente');
         } else {
             System.debug('Error al actualizar tasas de cambio: ' + res.getBody());
         }
@@ -84,5 +92,37 @@ public class P2G_UpdateCurrency implements Schedulable {
         }
         System.debug('tasasDeCambio: ' + tasasDeCambio);
         return tasasDeCambio;
+    }
+
+    public static void createDatedConversionRate(String isoCode, Decimal rate, Date startDate, String accessToken) {
+        // Formatear las fechas al formato ISO (yyyy-MM-dd) manualmente
+        String startDateStr = String.valueOf(startDate.year()) + '-' + 
+            (startDate.month() < 10 ? '0' + String.valueOf(startDate.month()) : String.valueOf(startDate.month())) + '-' +
+            (startDate.day() < 10 ? '0' + String.valueOf(startDate.day()) : String.valueOf(startDate.day()));
+        
+        // Crear la solicitud HTTP
+        Http http = new Http();
+        HttpRequest req = new HttpRequest();
+        String endpoint = URL.getSalesforceBaseUrl().toExternalForm() + '/services/data/v52.0/sobjects/DatedConversionRate';
+        req.setEndpoint(endpoint);
+        req.setMethod('POST');
+        req.setHeader('Authorization', 'Bearer ' + accessToken);
+        req.setHeader('Content-Type', 'application/json');
+        
+        // Crear el cuerpo JSON con los datos fijos
+        Map<String, Object> requestBody = new Map<String, Object>{
+            'IsoCode' => isoCode,
+            'ConversionRate' => rate,
+            'StartDate' => startDateStr
+        };
+        req.setBody(JSON.serialize(requestBody));
+        
+        HttpResponse res = http.send(req);
+        
+        if (res.getStatusCode() == 201) {
+            System.debug('Tasas de cambio fechada creada correctamente para ' + isoCode + ': ' + res.getBody());
+        } else {
+            System.debug('Error al crear DatedConversionRate para ' + isoCode + ': ' + res.getBody());
+        }
     }
 }

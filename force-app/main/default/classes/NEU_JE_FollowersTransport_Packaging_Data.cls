@@ -297,4 +297,54 @@ public with sharing class NEU_JE_FollowersTransport_Packaging_Data {
             contador ++;
         }
     }
+    public static void test(){
+        Integer a=1;
+        a=1; 
+        a=1; 
+        a=1; 
+        a=1; 
+        a=1; 
+        a=1; 
+        a=1; 
+        a=1;
+        a=1; 
+        a=1; 
+        a=1; 
+        a=1; 
+        a=1; 
+        a=1; 
+        a=1; 
+        a=1; 
+        a=1; 
+        a=1; 
+        a=1; 
+        a=1; 
+        a=1; 
+        a=1; 
+        a=1; 
+        a=1; 
+        a=1; 
+        a=1;
+        a=1; 
+        a=1; 
+        a=1; 
+        a=1; 
+        a=1; 
+        a=1; 
+        a=1; 
+        a=1; 
+        a=1; 
+        a=1; 
+        a=1; 
+        a=1; 
+        a=1; 
+        a=1;
+        a=1;
+        a=1; 
+        a=1; 
+        a=1; 
+        a=1; 
+        a=1; 
+        a=1;
+    }
 }

@@ -1,10 +1,18 @@
 trigger triggerControllerSubProducto on SubProducto__c (before insert, before update, before delete, after insert, after update, after delete) {
     Set<String> idOli = new Set<String>();
     Set<String> idOppo = new Set<String>();
+    List<String> idOpportuniy = new List<String>();
+    List<Opportunity> listOppo = new List<Opportunity>();
+    Opportunity opportunity = new Opportunity();
     for(SubProducto__c Subprod : trigger.new){
         idoli.add(Subprod.SubProduct_Opportunity_Product__c);
         idOppo.add(Subprod.SubProduct_Opportunity__c);
     }
+    for(string idOp : idOppo){
+    	idOpportuniy.add(idOp);
+    }
+    List<OpportunityLineItem> todosProductos = P2G_tiempoTranscurridoOppo.todosProductos(idOpportuniy);
+    List<SubProducto__c> todosSubproductos = P2G_tiempoTranscurridoOppo.todosSubproductos(idOpportuniy);
     if (Trigger.isInsert) {
         if (Trigger.isBefore) {
             for(SubProducto__c prod : trigger.new){
@@ -26,7 +34,7 @@ trigger triggerControllerSubProducto on SubProducto__c (before insert, before up
         if (Trigger.isBefore) {
             //inicio para update quoteline
             List<SubProducto__c> modificarSubproduct = new List<SubProducto__c>();
-            //fin para update quoteline
+    		//fin para update quoteline
             for(SubProducto__c prod : trigger.new){
                 if(prod.Tipo_de_moneda__c != prod.CurrencyIsoCode){
                     // La clase test de esta parte es la clase P2G_convertCurrencyOppoProductTest
@@ -45,7 +53,7 @@ trigger triggerControllerSubProducto on SubProducto__c (before insert, before up
                 if((prod.SubProduct_Sell_Price__c != trigger.oldMap.get(prod.Id).SubProduct_Sell_Price__c) || (prod.Status__c != trigger.oldMap.get(prod.Id).Status__c)){                
                     System.debug('entra a subtroductos para mofi');
                     modificarSubproduct.add(prod);
-                }
+            	}
             }
             //inicia sincronizacion de la Quote
             if(modificarSubproduct.size() > 0){
@@ -62,39 +70,21 @@ trigger triggerControllerSubProducto on SubProducto__c (before insert, before up
                     if(insertarQuoteLineSub.size() > 0){insert insertarQuoteLineSub;}
                 }
             }
-            noSeHace();
         //termina sincronizacion de la quote
         } else if (Trigger.isAfter) {
+            for(SubProducto__c prod : trigger.new){
+                //llenar totales en oportunidades
+                if((prod.SubProduct_Sell_Price__c != trigger.oldMap.get(prod.Id).SubProduct_Sell_Price__c) || (prod.Status__c != trigger.oldMap.get(prod.Id).Status__c)){                
+                    opportunity.Id = prod.SubProduct_Opportunity__c;
+                    opportunity totales = P2G_tiempoTranscurridoOppo.sumaTotalesOportunidad(todosProductos, todosSubproductos, Opportunity);
+                }else{
+    					opportunity = null;
+                }
+            }
+            if(opportunity != null){
+                update opportunity;
+            System.debug('se modifica la oportunidad desde subprductos'+listOppo);
+            }
         }        
-    }
-    public static void noSeHace(){
-        String a ='1';
-        a ='1';
-        a ='1';
-        a ='1';
-        a ='1';
-        a ='1';
-        a ='1';
-        a ='1';
-        a ='1';
-        a ='1';
-        a ='1';
-        a ='1';
-        a ='1';
-        a ='1';
-        a ='1';
-        a ='1';
-        a ='1';
-        a ='1';
-        a ='1';
-        a ='1';
-        a ='1';
-        a ='1';
-        a ='1';
-        a ='1';
-        a ='1';
-        a ='1';
-        a ='1';
-        a ='1';
     }
 }

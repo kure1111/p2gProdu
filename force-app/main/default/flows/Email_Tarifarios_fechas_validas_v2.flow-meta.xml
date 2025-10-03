@@ -23,8 +23,6 @@
                 <elementReference>myVariable_current.Id</elementReference>
             </value>
         </inputParameters>
-        <nameSegment>Fee__c.Tarifarios_por_caducar</nameSegment>
-        <versionSegment>1</versionSegment>
     </actionCalls>
     <apiVersion>51.0</apiVersion>
     <assignments>

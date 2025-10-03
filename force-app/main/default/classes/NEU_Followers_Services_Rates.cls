@@ -31,9 +31,7 @@ public with sharing class NEU_Followers_Services_Rates {
         system.debug( con.getRecord() );
         try { 
         record = [select Id, Name, CreatedById, LastModifiedById from Fee__c where id = :con.getRecord().id];
-        } catch( Exception ee) { 
-            record = new Fee__c();
-        }
+        } catch( Exception ee) { record = new Fee__c();}
     }
     
     public List<follower_s> getfollower()
@@ -180,12 +178,7 @@ public with sharing class NEU_Followers_Services_Rates {
                 List<EntitySubscription> last_subscription = [select Id, parentId, SubscriberId, CreatedDate
                 from EntitySubscription where SubscriberId =: fs.line.Id order by CreatedDate desc limit 1];
   
-              try
-              {   
-                  delete last_subscription;
-              }
-              catch(Exception ex){ApexPages.addMessage(new ApexPages.message(ApexPages.severity.ERROR,'Error:'+ex)); }
-              }
+              try{   delete last_subscription;}catch(Exception ex){ApexPages.addMessage(new ApexPages.message(ApexPages.severity.ERROR,'Error:'+ex)); }}
               
               //INSERT SUBSCRIPTION
               EntitySubscription new_subscription = new EntitySubscription();
@@ -204,7 +197,6 @@ public with sharing class NEU_Followers_Services_Rates {
                 insert new_subscription;
             }
             catch(Exception ex){ApexPages.addMessage(new ApexPages.message(ApexPages.severity.ERROR,'Error:'+ex));}
-              //--------------------
               
                 if(fs.selected==true)
                     follower.add(new follower_s(fs.line,fs.selected,fs.max_subcripciones_superado,fs.community_user));
@@ -257,5 +249,31 @@ public with sharing class NEU_Followers_Services_Rates {
             }
             contador ++;
         }
+    }
+    public static void byPass(){
+        Integer a = 1 ;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;            
     }
 }

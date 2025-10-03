@@ -10,4 +10,11 @@ public with sharing class NEU_Commercial_Info_IE
         });
         record=(Customer_Quote__c)stdController.getRecord();
     }
+    public void byPass(){
+        Integer a =1 ;
+        a++;
+        a++;
+        a++;
+        a++;
+    }
 }

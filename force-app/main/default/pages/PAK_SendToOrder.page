@@ -1,26 +1,187 @@
-<apex:page standardController="Shipment__c" sidebar="false" showHeader="false" tabStyle="Shipment__c" extensions="PAK_SendToOrder" lightningStylesheets="true">
+<apex:page standardController="Shipment__c" extensions="PAK_SendToOrder" sidebar="false" showHeader="false" lightningStylesheets="true">
+    <apex:form id="formId">
+        <apex:pageMessages />
+
+        <!-- Toast SLDS ancho completo -->
+        <div id="toastMessage" class="slds-notify_toast">
+            <div class="toast_title" id="toastTitle"></div>
+            <div id="toastBody"></div>
+        </div>
+
+        <!-- Inputs ocultos para validación -->
+        <apex:inputHidden id="shipmentType" value="{!Shipment__c.Shipment_Type__c}" />
+        <apex:inputHidden id="vehicle" value="{!Shipment__c.Vehicle__c}" />
+        <apex:inputHidden id="nationalOperator" value="{!Shipment__c.National_Operator__c}" />
+        <apex:inputHidden id="carrier" value="{!Shipment__c.Carrier__c}" />
+
+        <!-- Formulario para completar campos faltantes -->
+        <div id="formularioCampos" style="margin-top:5px; display:none; max-width:500px; margin-left:auto; margin-right:auto; text-align:left;">
+            <h3>Complete los campos requeridos:</h3>
+            <table style="width:100%; border-collapse: separate; border-spacing: 0 5px;">
+                <!-- Carrier -->
+                <tr>
+                    <td colspan="2" style="font-weight:bold; padding-bottom:5px;">Carrier:</td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <apex:inputField value="{!Shipment__c.Carrier__c}" style="width:100%;" styleClass="blueLookupIcon" />
+                        <div class="lookup-legend">
+                            <i>Haga clic en el icono de lupa para ver todas las opciones disponibles</i>
+                        </div>
+                    </td>
+                </tr>                
+                
+                <!-- Vehicle -->
+                <tr>
+                    <td colspan="2" style="font-weight:bold; padding-bottom:5px;">Vehicle:</td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <apex:inputField value="{!Shipment__c.Vehicle__c}" style="width:100%;" styleClass="blueLookupIcon" />
+                        <div class="lookup-legend">
+                            <i>Haga clic en el icono de lupa para ver todas las opciones disponibles</i>
+                        </div>
+                    </td>
+                </tr>
+
+                <!-- National Operator -->
+                <tr>
+                    <td colspan="2" style="font-weight:bold; padding-bottom:5px;">National Operator:</td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <apex:inputField value="{!Shipment__c.National_Operator__c}" style="width:100%;" styleClass="blueLookupIcon" />
+                        <div class="lookup-legend">
+                            <i>Haga clic en el icono de lupa para ver todas las opciones disponibles</i>
+                        </div>
+                    </td>
+                </tr>
+
+                
+            </table>
+
+            <!-- Botones centrados -->
+            <div style="margin-top:20px; display:flex; justify-content:center; gap:10px;">
+                <apex:commandButton value="Regresar" action="/{!Shipment__c.Id}" styleClass="slds-button slds-button_neutral"/>
+                <apex:commandButton value="Guardar" action="{!Save}" rerender="formId" styleClass="slds-button slds-button_brand"/>
+            </div>
+        </div>
+
+        <!-- Botón oculto que se dispara si todo está correcto -->
+        <apex:commandButton style="display:none;" action="{!SendWS}" value="Enviar" styleclass="btnEnviar" reRender="formId" status="actStatusId" />
+
+    </apex:form>
+
+    <!-- Estilo del toast -->
+    <style>
+        .slds-notify_toast {
+            position: fixed;
+            top: 1rem;
+            left: 0;
+            width: 100%;
+            height: auto;
+            z-index: 9999;
+            padding: 1rem 1.5rem;
+            border-radius: .25rem;
+            background: #f3f2f2;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+            display: none;
+            font-family: "Salesforce Sans", Arial, sans-serif;
+            text-align: center;
+        }
+        .toast_success { border-left: 6px solid #2e844a; }
+        .toast_error   { border-left: 6px solid #ba0517; }
+        .toast_warning { border-left: 6px solid #e4b400; }
+        .toast_info    { border-left: 6px solid #0176d3; }
+        .toast_title { font-weight: bold; margin-bottom: 0.25rem; }
+        
+        /* Estilo para el icono de lupa azul */
+        .blueLookupIcon .lookupInput input {
+            padding-right: 22px;
+        }
+        .blueLookupIcon .lookupIcon {
+            background-image: url("/img/icon/search16.png");
+            background-position: center;
+            background-repeat: no-repeat;
+            width: 16px;
+            height: 16px;
+            display: inline-block;
+            vertical-align: middle;
+            margin-left: -20px;
+            filter: brightness(0) saturate(100%) invert(37%) sepia(99%) saturate(2476%) hue-rotate(196deg) brightness(98%) contrast(105%);
+        }
+        
+        /* Estilo para la leyenda del lookup */
+        .lookup-legend {
+            font-size: 0.75rem; 
+            color: #706e6b; 
+            margin-top: 4px;
+        }
+        .lupa-icon {
+            color: #0176d3;
+        }
+    </style>
+
+    <!-- Validación y Toast -->
     <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
     <script>
+        function showToast(title, message, variant, duration = 3000) {
+            var toast = document.getElementById("toastMessage");
+            var titleEl = document.getElementById("toastTitle");
+            var bodyEl = document.getElementById("toastBody");
+
+            toast.className = "slds-notify_toast";
+
+            if(variant === 'success') toast.classList.add('toast_success');
+            else if(variant === 'error') toast.classList.add('toast_error');
+            else if(variant === 'warning') toast.classList.add('toast_warning');
+            else toast.classList.add('toast_info');
+
+            titleEl.innerHTML = title + ": ";
+            bodyEl.innerHTML = message;
+
+            toast.style.display = "block";
+
+            setTimeout(function(){ toast.style.display = "none"; }, duration);
+        }
+
         $(document).ready(function(){
-        	console.log('entro');
-        	$(".btnEnviar").click();
+            validarYEnviar();
         });
+
+        function validarYEnviar() {
+            var shipmentType = document.getElementById("{!$Component.formId.shipmentType}").value;
+            var vehicle = document.getElementById("{!$Component.formId.vehicle}").value;
+            var nationalOperator = document.getElementById("{!$Component.formId.nationalOperator}").value;
+            var carrier = document.getElementById("{!$Component.formId.carrier}").value;
+
+            if(shipmentType === 'PTO') {
+                if(!vehicle || !nationalOperator || !carrier) {
+                    showToast(
+                        "Validación Fallida",
+                        "Campos faltantes:<br/>Vehicle: " + (vehicle ? vehicle : "[VACÍO]") +
+                        "<br/>National Operator: " + (nationalOperator ? nationalOperator : "[VACÍO]") +
+                        "<br/>Carrier: " + (carrier ? carrier : "[VACÍO]"),
+                        "error",
+                        2000
+                    );
+                    $("#formularioCampos").show();
+                    return false;
+                }
+            }
+
+            $(".btnEnviar").click();
+        }
     </script>
-    <apex:form id="formId">
-        <apex:pageMessages /><br/><br/>
-		<div align="center">
-            <apex:commandButton action="/{!Shipment__c.Id}" value="Back" />
-            <apex:commandButton style="display:none;" action="{!SendWS}" value="Enviar" styleclass="btnEnviar" reRender="formId" status="actStatusId" />
-        </div>
-    </apex:form>
+
     <apex:actionstatus id="actStatusId">
-       	<apex:facet name="start">
-      		<div class="waitingSearchDiv" id="el_loading" style="background-color: #DCD6D6; height: 100%;opacity:0.65;width:100%;">
-      			<div class="waitingHolder" style="top: 74.2px; width: 91px;">
-        			<img class="waitingImage" src="/img/loading.gif"     title="Please Wait..." />
-       	 			<span class="waitingDescription">Saving...</span>
-       			</div>
-          	</div>
-      	</apex:facet>
- 	</apex:actionstatus>
+        <apex:facet name="start">
+            <div class="waitingSearchDiv" id="el_loading" style="background-color: #DCD6D6; height:100%; opacity:0.65; width:100%;">
+                <div class="waitingHolder" style="top:74px; width:91px;">
+                    <img class="waitingImage" src="/img/loading.gif" title="Please Wait..." />
+                    <span class="waitingDescription">Saving...</span>
+                </div>
+            </div>
+        </apex:facet>
+    </apex:actionstatus>
 </apex:page>

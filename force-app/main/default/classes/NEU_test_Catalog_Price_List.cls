@@ -22,13 +22,19 @@
 @isTest
 private class NEU_test_Catalog_Price_List {
 
-    static testMethod void Test_NEU_Capture_Catalog_Price_List () 
+    @isTest(SeeAllData=true)
+    static void Test_NEU_Capture_Catalog_Price_List () 
     {
     	NEU_StaticVariableHelper.setBoolean1(true);
-        List<Account> list_accounts = NEU_Utils.getAccounts('Customer,');
+        //List<Account> list_accounts = NEU_Utils.getAccounts('Customer,');
         // TO DO: implement unit test
-        Account a = list_accounts[0];
-        insert a;
+        //Account a = list_accounts[0];
+        //a.Owner.SalesEmployer__c='000';
+        //insert a;
+        Account a = [SELECT Id, Owner.isActive,Owner.SalesEmployer__c, 
+        RecordType.DeveloperName FROM Account WHERE RecordType.DeveloperName='Customer'
+        AND Owner.isActive=true AND Owner.SalesEmployer__c!=null LIMIT 1];        
+        
         Price_List__c new_pl = new Price_List__c(Items_Account_Owner__c = a.Id);
         insert new_pl;
         Product_Family__c c = new Product_Family__c(Name = 'Test acount', Business_Area__c = 'Other Services');

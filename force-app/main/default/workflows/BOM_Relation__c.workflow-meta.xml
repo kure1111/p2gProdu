@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Workflow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fieldUpdates>
+        <fullName>Over_Write_BOM_Relation</fullName>
+        <field>Name</field>
+        <formula>Output_Item__r.Name  &amp;&quot; - &quot; &amp; Input_Item__r.Name</formula>
+        <name>Over Write BOM Relation</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+</Workflow>

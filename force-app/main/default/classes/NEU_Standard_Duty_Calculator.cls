@@ -1,5 +1,6 @@
 public with sharing class NEU_Standard_Duty_Calculator {
 
+    @testVisible
     private Customer_Quote__c record=null;
     public String api_key='0396552b6337c843';
     public String errores {get;set;}
@@ -29,15 +30,46 @@ public with sharing class NEU_Standard_Duty_Calculator {
         errores = '';
         
         Quote_Item_Line = new List<Quote_Item_Line__c>();
-        Quote_Item_Line = [select Id, Name, Price__c, List_Price__c, Percent_Duty__c, Percent_Taxes__c, 
-        Imp_Exp_Fees_assigned__c,  Import_Export_Quote__r.Total_Weight_Kg2__c, 
-        Import_Export_Quote__r.Route__r.Country_of_Load__r.ISO_Code__c, Import_Export_Quote__r.Route__r.Country_of_Discharge__r.ISO_Code__c, 
-        Product_Item_DC_Value__c, Category_DC_Value__c, Subcategory_DC_Value__c, Sales_Tax__c, Additional_Import_Taxes_Detail__c,
-        Total_Taxes_Form__c, Duty__c, Customs_Value__c, Incoterm__c, Item_Price__c, Item_Name__r.Name, Extension_Item_Name__c,
-        Import_Export_Quote__r.Country_ofDischarge__r.ISO_Code__c, Import_Export_Quote__r.Country_ofLoad__r.ISO_Code__c,
-        Category__c, Subcategory_DC__c, Product_Item_DC__c, Item_Name__c, Item_Name__r.Category_DC_Value__c, HS_Code__c, Item_Name__r.Product_Item__c, Item_Name__r.Subcategory__c, Item_Name__r.Category__c,
-        Units__c, Item_Name__r.Subcategory_DC_Value__c, Item_Name__r.Product_Item_DC_Value__c,
-        Item_Name__r.HS_Code_Text__c from Quote_Item_Line__c where Import_Export_Quote__c =: record.Id  ];//id =: idlineactualizar
+        Quote_Item_Line = [select Id, 
+                           Name,
+                           Price__c,
+                           List_Price__c,
+                           Percent_Duty__c,
+                           Percent_Taxes__c,                           
+        				   Imp_Exp_Fees_assigned__c,  
+                           Import_Export_Quote__r.Total_Weight_Kg2__c, 
+        				   Import_Export_Quote__r.Route__r.Country_of_Load__r.ISO_Code__c,
+                           Import_Export_Quote__r.Route__r.Country_of_Discharge__r.ISO_Code__c,                           
+        				   Product_Item_DC_Value__c,
+                           Category_DC_Value__c,
+                           Subcategory_DC_Value__c,
+                           Sales_Tax__c,
+                           Additional_Import_Taxes_Detail__c,
+                           Total_Taxes_Form__c,
+                           Duty__c,
+                           Customs_Value__c,
+                           Incoterm__c,
+                           Item_Price__c,
+                           Item_Name__r.Name,
+                           Extension_Item_Name__c,
+        				   Import_Export_Quote__r.Country_ofDischarge__r.ISO_Code__c,
+                           Import_Export_Quote__r.Country_ofLoad__r.ISO_Code__c,
+        				   Category__c,
+                           Subcategory_DC__c,
+                           Product_Item_DC__c,
+                           Item_Name__c,
+                           Item_Name__r.Category_DC_Value__c,
+                           HS_Code__c,
+                           Item_Name__r.Product_Item__c,
+                           Item_Name__r.Subcategory__c,
+                           Item_Name__r.Category__c,
+                           Units__c,
+                           Item_Name__r.Subcategory_DC_Value__c,
+                           Item_Name__r.Product_Item_DC_Value__c,
+                           Item_Name__r.HS_Code_Text__c,
+                           CurrencyIsoCode
+                           from Quote_Item_Line__c 
+                           where Import_Export_Quote__c =: record.Id  ];//id =: idlineactualizar
         
         decimal valoritems = 0;
         contador_de_llamadas = 0;
@@ -243,7 +275,7 @@ public with sharing class NEU_Standard_Duty_Calculator {
                         else
                         {       
                                 return refresh();
-                                break;
+                                //break;
                         }
                     }
                     else

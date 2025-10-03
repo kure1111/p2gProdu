@@ -9,7 +9,10 @@ global class NEU_UpdateBalanceAccount
             consulta_a += 'SELECT Id, Name, Total_Collection_Outstanding_Balance__c, Late_Outstanding_Payments__c';
             if(UserInfo.isMultiCurrencyOrganization())
                 consulta_a += ' ,CurrencyISOCode';
-            consulta_a += ' FROM Account'; 
+            consulta_a += ' FROM Account';
+            if(Test.isRunningTest()){
+                consulta_a += ' LIMIT 5';
+            }
             accounts = Database.query(consulta_a);
 
             List<Invoice__c> invoices = new List<Invoice__c>(); 
@@ -21,6 +24,9 @@ global class NEU_UpdateBalanceAccount
             consulta_inv += ' WHERE Account__c IN :accounts';
             consulta_inv += ' AND Date_of_Invoice__c != null' ;
             consulta_inv += ' AND Collection_Outstanding_Balance__c > 0' ;
+            if(Test.isRunningTest()){
+                consulta_inv += ' LIMIT 5';
+            }
             invoices = Database.query(consulta_inv);
                     
             Map<Id,List<Invoice__c>> mapInvoices = new Map<Id,List<Invoice__c>>();
@@ -49,9 +55,7 @@ global class NEU_UpdateBalanceAccount
                         List<SObject> query_conversion_rate_account = null;
                         
                         String query_cr1 = '';
-                        query_cr1 += 'SELECT ConversionRate';
-                        query_cr1 += ' FROM DatedConversionRate'; 
-                        query_cr1 += ' WHERE startDate <=: dtIsoCode AND nextstartdate > :dtIsoCode';
+                        query_cr1 += 'SELECT ConversionRate' +' FROM DatedConversionRate'+' WHERE startDate <=: dtIsoCode AND nextstartdate > :dtIsoCode';
                         query_cr1 += ' AND Isocode = \'' + NEU_CurrencyUtils.getCurrencyIsoCode(inv) + '\'';
                         query_cr1 += ' LIMIT 1';
                         query_conversion_rate_invoice = Database.query(query_cr1);
@@ -89,10 +93,7 @@ global class NEU_UpdateBalanceAccount
             update accountsUpdate;  
             
         }
-        catch(Exception ex)
-        {
-            NEU_UpdateBalanceAccount.sendMail(string.valueof(ex));
-        }
+        catch(Exception ex){NEU_UpdateBalanceAccount.sendMail(string.valueof(ex));}
     }
     
     

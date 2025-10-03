@@ -195,6 +195,15 @@ global class P2G_CreacionFoliosWrapper {
                 folio.freighMode = 'Air';
                 folio.serviceMode = 'EXPORT';
             }
+            when 'SP-PQ-PAQUETERIA' {
+                folio.quotationStatus = 'Sent awaiting response';
+                folio.CommunityStatus = 'CUSTOMER CREATED';
+                folio.team = 'P2G';
+                folio.comercioExterior = 'No';
+                folio.freighMode = 'Road';
+                folio.serviceMode = 'NATIONAL';
+                folio.servicetype = 'MAYOREO';
+            }
             when else {
                 System.debug('No hay grupo');
             }

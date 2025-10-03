@@ -1,6 +1,7 @@
 trigger PAK_AccountHistory on Account (after insert,after update) {        
     //VARIABLES PARA EL METODO FieldHistoryTracking
     String FieldLabel = '';
+    String changeFieldAccountOwner='';    
     String OriginalValues = '';
     String NewValues = '';
     String TotalIEQ_Approved = '';
@@ -58,7 +59,8 @@ trigger PAK_AccountHistory on Account (after insert,after update) {
                         }
                         //CAMPO Account Owner
                         if(acc.OwnerId != oldAccount.OwnerId){
-                            FieldLabel += String.valueOf(aux) + '. Account Owner <br/>';
+                            FieldLabel += String.valueOf(aux) + '. Account Owner <br/>';                            
+                            changeFieldAccountOwner='Account Owner';
                             OriginalValues += String.valueOf(aux) + '. ' + oldAccount.OwnerId + ' <br/>';
                             NewValues += String.valueOf(aux) + '. ' + acc.OwnerId + ' <br/>';
                             aux = aux + 1;
@@ -246,11 +248,11 @@ trigger PAK_AccountHistory on Account (after insert,after update) {
                             aux = aux + 1;
                         }
                         //CAMPO Estatus de cliente
-                        if(acc.Estatus_de_cliente__c != oldAccount.Estatus_de_cliente__c){
-                            FieldLabel += String.valueOf(aux) + '. Estatus de cliente <br/>';
-                            OriginalValues += String.valueOf(aux) + '. ' + oldAccount.Estatus_de_cliente__c + ' <br/>';
-                            NewValues += String.valueOf(aux) + '. ' + acc.Estatus_de_cliente__c + ' <br/>';
-                            Estatus_de_cliente = String.valueOf(acc.Estatus_de_cliente__c);
+                        if(acc.SeguimientoProspecto__c  != oldAccount.SeguimientoProspecto__c){
+                            FieldLabel += String.valueOf(aux) + '. Seguimiento del cliente <br/>';
+                            OriginalValues += String.valueOf(aux) + '. ' + oldAccount.SeguimientoProspecto__c  + ' <br/>';
+                            NewValues += String.valueOf(aux) + '. ' + acc.SeguimientoProspecto__c  + ' <br/>';
+                            Estatus_de_cliente = String.valueOf(acc.SeguimientoProspecto__c );
                             aux = aux + 1;
                         }
                         //CAMPO Evidencia de Visita del Vendedor
@@ -587,7 +589,8 @@ trigger PAK_AccountHistory on Account (after insert,after update) {
                         Field_History_Tracking__c F_HT = New Field_History_Tracking__c();
                         F_HT.Date__c = ModificationDate;
                         F_HT.Fields__c = FieldLabel;
-                        F_HT.User__c = User;
+                        F_HT.User__c = User;                        
+                        F_HT.FieldsChange__c=changeFieldAccountOwner;
                         F_HT.Original_Values__c = OriginalValues;
                         F_HT.New_Values__c = NewValues;
                         F_HT.Field_Tracking_Total_IEQ_Approved__c = TotalIEQ_Approved;

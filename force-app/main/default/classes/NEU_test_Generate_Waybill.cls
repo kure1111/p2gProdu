@@ -17,7 +17,7 @@ private class NEU_test_Generate_Waybill
         insert country;
         Location__c location = new Location__c(Name='test', City__c='test city', Country__c= country.Id, Subdivision__c='test subdivision', UNLOCODE__c='ABC',IATA_Code__c='XXX');
         insert location;
-		Shipment__c ship = new Shipment__c(Account_for__c = a.Id, Freight_Mode__c='Sea', Service_Mode__c ='Import', Service_Type__c='LCL Cargo', Site_of_Load__c=location.Id, Site_of_Discharge__c=location.Id, CurrencyIsoCode='USD', Flight_Number__c='10', ETD_from_Point_of_Load__c=system.today(), Country_of_Load__c=country.Id, Country_of_Discharge__c=country.Id, Supplier_Account__c=a.Id, Consignee__c=a.Id, Destination_Agent__c=a.Id);
+		Shipment__c ship = new Shipment__c(Name='asdasd',Account_for__c = a.Id, Freight_Mode__c='Sea', Service_Mode__c ='Import', Service_Type__c='LCL Cargo', Site_of_Load__c=location.Id, Site_of_Discharge__c=location.Id, CurrencyIsoCode='USD', Flight_Number__c='10', ETD_from_Point_of_Load__c=system.today(), Country_of_Load__c=country.Id, Country_of_Discharge__c=country.Id, Supplier_Account__c=a.Id, Consignee__c=a.Id, Destination_Agent__c=a.Id);
 		insert ship;
         Product_Family__c family = new Product_Family__c(Name = 'Test Account', Business_Area__c = 'Auto-Parts');
         insert family;

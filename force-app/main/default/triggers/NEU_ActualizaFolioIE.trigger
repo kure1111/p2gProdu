@@ -1,5 +1,6 @@
 trigger NEU_ActualizaFolioIE on Customer_Quote__c (before insert, before update) 
 {
+    system.debug('-----------------------------------------------------------------------------------------------');
     if(NEU_StaticVariableHelper.getBoolean1()){return;}
     
     if(Test.isRunningTest() || (!RecursiveCheck.triggerMonitor.contains('NEU_ActualizaFolioIE'))){
@@ -127,8 +128,7 @@ trigger NEU_ActualizaFolioIE on Customer_Quote__c (before insert, before update)
                 ref += ('000000' + (numeroFolio)).right(6);
                 
                 ie.Name = ref;
-                
-                update contador;    
+                update contador;
             }
         }
         else if(trigger.isUpdate == true)
@@ -241,7 +241,7 @@ trigger NEU_ActualizaFolioIE on Customer_Quote__c (before insert, before update)
                     ie.Name = ref;
                 }
                 else
-                    ie.Name = old_ie.Name;
+                ie.Name = old_ie.Name;
                 
                 
             }

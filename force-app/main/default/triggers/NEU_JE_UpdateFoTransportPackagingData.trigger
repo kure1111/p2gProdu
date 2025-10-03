@@ -4,7 +4,14 @@ trigger NEU_JE_UpdateFoTransportPackagingData on Transport_Packaging_Data__c (af
     
     Set<Id>users=new Set<Id>();
     Set<Id>accounts=new Set<Id>();
-    List<Transport_Packaging_Data__c> claims=[select Id, Shipment__r.Account_for__c, Shipment__r.Account_for__r.Account_Executive_User__c, Shipment__r.Account_for__r.OwnerId, Shipment__r.Account_for__r.Account_External_Follower_User__c, CreatedById from Transport_Packaging_Data__c where Id IN:trigger.new]; 
+    List<Transport_Packaging_Data__c> claims=[select Id, 
+                                              Shipment__r.Account_for__c,
+                                              Shipment__r.Account_for__r.Account_Executive_User__c,
+                                              Shipment__r.Account_for__r.OwnerId,
+                                              Shipment__r.Account_for__r.Account_External_Follower_User__c,
+                                              CreatedById 
+                                              from Transport_Packaging_Data__c
+                                              where Id IN:trigger.new]; 
     for(Transport_Packaging_Data__c obj : claims)
     {
         if(obj.Shipment__r.Account_for__r.Account_Executive_User__c!=null)

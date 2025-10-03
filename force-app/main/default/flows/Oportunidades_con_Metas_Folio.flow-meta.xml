@@ -5,7 +5,7 @@
         <name>Meta_null_y_opp_not_null</name>
         <label>Meta null y opp not null</label>
         <locationX>1040</locationX>
-        <locationY>695</locationY>
+        <locationY>647</locationY>
         <defaultConnector>
             <targetReference>Update_opp_y_Meta_not_null</targetReference>
         </defaultConnector>
@@ -37,7 +37,7 @@
         <name>Opp_null_y_Meta_no_null</name>
         <label>Opp null y Meta no null</label>
         <locationX>561</locationX>
-        <locationY>455</locationY>
+        <locationY>431</locationY>
         <defaultConnector>
             <targetReference>Update_opp_and_metas_null</targetReference>
         </defaultConnector>
@@ -69,7 +69,7 @@
         <name>Opp_y_meta_null</name>
         <label>Opp y meta null</label>
         <locationX>305</locationX>
-        <locationY>335</locationY>
+        <locationY>323</locationY>
         <defaultConnector>
             <targetReference>Opp_null_y_Meta_no_null</targetReference>
         </defaultConnector>
@@ -101,7 +101,7 @@
         <name>Update_opp_and_metas_null</name>
         <label>Update opp and metas null</label>
         <locationX>809</locationX>
-        <locationY>575</locationY>
+        <locationY>539</locationY>
         <defaultConnector>
             <targetReference>Meta_null_y_opp_not_null</targetReference>
         </defaultConnector>
@@ -147,7 +147,7 @@
         <name>Update_opp_y_Meta_not_null</name>
         <label>Update opp y Meta not null</label>
         <locationX>1238</locationX>
-        <locationY>815</locationY>
+        <locationY>755</locationY>
         <defaultConnector>
             <targetReference>Get_Debit_Note</targetReference>
         </defaultConnector>
@@ -194,7 +194,7 @@
         <name>Ya_cuenta_con_Debit_Note</name>
         <label>¿Ya cuenta con Debit Note?</label>
         <locationX>305</locationX>
-        <locationY>1655</locationY>
+        <locationY>1499</locationY>
         <defaultConnectorLabel>NO</defaultConnectorLabel>
         <rules>
             <name>SI_DebitNote</name>
@@ -253,7 +253,7 @@
         <name>Opp_1</name>
         <label>Opp 1</label>
         <locationX>50</locationX>
-        <locationY>455</locationY>
+        <locationY>431</locationY>
         <assignRecordIdToReference>newOpp.Id</assignRecordIdToReference>
         <connector>
             <targetReference>Get_Meta_1</targetReference>
@@ -283,6 +283,12 @@
             </value>
         </inputAssignments>
         <inputAssignments>
+            <field>RecordTypeId</field>
+            <value>
+                <stringValue>0124T000000Q3PkQAK</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
             <field>Service_Type__c</field>
             <value>
                 <elementReference>Services</elementReference>
@@ -306,7 +312,7 @@
         <name>Opp_2</name>
         <label>Opp 2</label>
         <locationX>314</locationX>
-        <locationY>575</locationY>
+        <locationY>539</locationY>
         <assignRecordIdToReference>newOpp.Id</assignRecordIdToReference>
         <connector>
             <targetReference>Update_Folio_2</targetReference>
@@ -336,6 +342,12 @@
             </value>
         </inputAssignments>
         <inputAssignments>
+            <field>RecordTypeId</field>
+            <value>
+                <stringValue>0124T000000Q3PkQAK</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
             <field>Service_Type__c</field>
             <value>
                 <elementReference>Services</elementReference>
@@ -360,7 +372,7 @@
         <name>Get_Debit_Note</name>
         <label>Get Debit Note</label>
         <locationX>305</locationX>
-        <locationY>1535</locationY>
+        <locationY>1391</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Ya_cuenta_con_Debit_Note</targetReference>
@@ -416,7 +428,7 @@
         <name>Get_Meta_1</name>
         <label>Get Meta 1</label>
         <locationX>50</locationX>
-        <locationY>575</locationY>
+        <locationY>539</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Update_Folio_1</targetReference>
@@ -458,7 +470,7 @@
         <name>Get_Meta_2</name>
         <label>Get Meta 2</label>
         <locationX>578</locationX>
-        <locationY>815</locationY>
+        <locationY>755</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Update_Folio_3</targetReference>
@@ -500,7 +512,7 @@
         <name>Get_Meta_3</name>
         <label>Get Meta 3</label>
         <locationX>842</locationX>
-        <locationY>815</locationY>
+        <locationY>755</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Update_Folio_4</targetReference>
@@ -542,7 +554,7 @@
         <name>Update_Folio_1</name>
         <label>Update Folio 1</label>
         <locationX>50</locationX>
-        <locationY>695</locationY>
+        <locationY>647</locationY>
         <connector>
             <targetReference>Get_Debit_Note</targetReference>
         </connector>
@@ -564,7 +576,7 @@
         <name>Update_Folio_2</name>
         <label>Update Folio 2</label>
         <locationX>314</locationX>
-        <locationY>695</locationY>
+        <locationY>647</locationY>
         <connector>
             <targetReference>Get_Debit_Note</targetReference>
         </connector>
@@ -580,7 +592,7 @@
         <name>Update_Folio_3</name>
         <label>Update Folio 3</label>
         <locationX>578</locationX>
-        <locationY>935</locationY>
+        <locationY>863</locationY>
         <connector>
             <targetReference>Get_Debit_Note</targetReference>
         </connector>
@@ -596,7 +608,7 @@
         <name>Update_Folio_4</name>
         <label>Update Folio 4</label>
         <locationX>842</locationX>
-        <locationY>935</locationY>
+        <locationY>863</locationY>
         <connector>
             <targetReference>Get_Debit_Note</targetReference>
         </connector>
@@ -612,7 +624,7 @@
         <name>Update_Opp_1</name>
         <label>Update Opp 1</label>
         <locationX>578</locationX>
-        <locationY>695</locationY>
+        <locationY>647</locationY>
         <connector>
             <targetReference>Get_Meta_2</targetReference>
         </connector>
@@ -648,7 +660,7 @@
         <name>Update_Opp_2</name>
         <label>Update Opp 2</label>
         <locationX>1106</locationX>
-        <locationY>935</locationY>
+        <locationY>863</locationY>
         <connector>
             <targetReference>Get_Debit_Note</targetReference>
         </connector>
@@ -685,7 +697,7 @@
         <name>Update_Opp_Debit_Note</name>
         <label>Update Opp Debit Note</label>
         <locationX>173</locationX>
-        <locationY>1775</locationY>
+        <locationY>1607</locationY>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Import_Export_Quote_Order__c</field>

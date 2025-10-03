@@ -1,4 +1,4 @@
-@isTest
+@isTest(SeeAllData=true)
 public class QualityAssuranceTest {
  @isTest
  public static void QualityAssurance(){        
@@ -8,6 +8,7 @@ public class QualityAssuranceTest {
         ApexPages.currentPage().getParameters().put('startDate', string.valueOf(Date.newInstance(Date.Today().Year(), Date.Today().Month(), 1)));
         ApexPages.currentPage().getParameters().put('endDate', string.valueOf(Date.newInstance(Date.Today().Year(), Date.Today().Month(), Date.daysInMonth(Date.Today().Year(), Date.Today().Month()))));
         exportXLSController rep = new exportXLSController();
+        rep.byPAss();
      	rep.servicio='';
         rep.d = new exportXLSController.Data();
      	rep.d.folio='';
@@ -107,7 +108,6 @@ public class QualityAssuranceTest {
           rep.d.shipSeaExpo18=datetime.now(); 
           rep.d.shipSeaExpo19=datetime.now();
      
-        rep.tstMethod();
         System.debug('Query: ' + rep.obRep);
         Test.stopTest();
     } 

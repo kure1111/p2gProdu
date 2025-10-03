@@ -2,7 +2,7 @@
 public class OpportunityNameTest {
     @isTest
     public static void test(){
-        Opportunity oppac = [SELECT Id, Name, AccountId FROM Opportunity WHERE Group__c = 'SP-PQ-PAQUETERIA' AND TotalOpportunityQuantity > 0 AND SLA_Entendimiento__c != null AND SLA_Cotizacion__c != null AND Account.Record_Type_Name__c = 'Customer' LIMIT 1];
+        Opportunity oppac = [SELECT Id, Name, AccountId, RecordTypeId FROM Opportunity WHERE Group__c = 'SP-PQ-PAQUETERIA' AND TotalOpportunityQuantity > 0 AND SLA_Entendimiento__c != null AND SLA_Cotizacion__c != null AND Account.Record_Type_Name__c = 'Customer' LIMIT 1];
         oppac.StageName = 'Ganada';
         update oppac;
         oppac.StageName = 'Negociación';
@@ -22,5 +22,16 @@ public class OpportunityNameTest {
         update oppo;
         oppo.StageName = 'Negociación';
         update oppo;
+        Opportunity newOppo = new Opportunity();
+        newOppo.Name = 'Test Name';
+        newOppo.RecordTypeId = oppac.RecordTypeId;
+        newOppo.Service_Type__c = 'PQ';
+        newOppo.AccountId = oppo.AccountId;
+        newOppo.StageName = 'Entendimiento';
+        newOppo.CloseDate = System.today()+5;
+        insert newOppo;
+        newOppo.Group__c = 'SP-PQ-PAQUETERIA';
+        newOppo.StageName = 'Ganada';
+        update newOppo;
     }
 }

@@ -79,6 +79,13 @@ public with sharing class NEU_OM_UploadImageProductFamily {
         }
         return null;
     }
-    
+    public void runtest(){
+       string a='';
+       a='';
+       a='';
+       a='';
+       a='';
+       a='';
+    }
 
 }

@@ -1,0 +1,332 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Workflow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <alerts>
+        <fullName>Alerta_para_creador_de_proyecto</fullName>
+        <description>Alerta de correo para comercial creador de proyecto</description>
+        <protected>false</protected>
+        <recipients>
+            <type>creator</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>unfiled$public/PROJ_Alerta_envio_de_correo</template>
+    </alerts>
+    <alerts>
+        <fullName>Enviar_al_grupo_de_pricing</fullName>
+        <description>Enviar al grupo de pricing oportunidad en cotizacion</description>
+        <protected>false</protected>
+        <recipients>
+            <recipient>admin2020@force.com</recipient>
+            <type>user</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>unfiled$public/oportunidad_en_cotizacion</template>
+    </alerts>
+    <alerts>
+        <fullName>Enviar_email_a_IC_para_VoBo</fullName>
+        <description>Enviar email a IC para VoBo</description>
+        <protected>false</protected>
+        <recipients>
+            <recipient>alicia.licea@pak2go.com</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>inteligencia.comercial@pak2go.com</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>marcos.arriaga@pak2go.com.prod</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>nayleth.gonzalez@pak2go.com</recipient>
+            <type>user</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>unfiled$public/PROJ003_Alerta_correo_IC_2</template>
+    </alerts>
+    <alerts>
+        <fullName>Enviar_email_a_comercial</fullName>
+        <description>Enviar email a comercial</description>
+        <protected>false</protected>
+        <recipients>
+            <type>owner</type>
+        </recipients>
+        <recipients>
+            <recipient>alicia.licea@pak2go.com</recipient>
+            <type>user</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>unfiled$public/PROJ_Alerta_correo_Enviar_Cotizaci_n_al_cliente</template>
+    </alerts>
+    <alerts>
+        <fullName>Enviar_email_a_departamento_de_compras</fullName>
+        <ccEmails>maria.ramirez@pak2go.com</ccEmails>
+        <description>Enviar email a departamento de compras</description>
+        <protected>false</protected>
+        <recipients>
+            <recipient>carlos.martinez@pak2go.com</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>miguel.olivo@pak2go.com</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>omar.rojo@pak2go.com</recipient>
+            <type>user</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>unfiled$public/PROJ002_Enviar_Correo_Compras</template>
+    </alerts>
+    <alerts>
+        <fullName>PROJ_Notificacion_a_Marcos</fullName>
+        <description>Notificación a Marcos</description>
+        <protected>false</protected>
+        <recipients>
+            <recipient>admin2020@force.com</recipient>
+            <type>user</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>unfiled$public/PROJ001_Enviar_a_Usuario_IC</template>
+    </alerts>
+    <alerts>
+        <fullName>PROJ_Notificacion_a_Usuario_IC</fullName>
+        <description>Notificación a Usuario IC</description>
+        <protected>false</protected>
+        <recipients>
+            <recipient>alicia.licea@pak2go.com</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>inteligencia.comercial@pak2go.com</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>marcos.arriaga@pak2go.com.prod</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>nayleth.gonzalez@pak2go.com</recipient>
+            <type>user</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>unfiled$public/PROJ001_Enviar_a_Usuario_IC</template>
+    </alerts>
+    <fieldUpdates>
+        <fullName>Asignar_Usuario_IC</fullName>
+        <field>Usuario_IC__c</field>
+        <name>Asignar Usuario IC</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>LookupValue</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Asignar_a_Marcos</fullName>
+        <field>Usuario_IC__c</field>
+        <name>Asignar a Marcos</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>LookupValue</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <rules>
+        <fullName>OPP_Potencial</fullName>
+        <actions>
+            <name>First_Contact_with_Customer</name>
+            <type>Task</type>
+        </actions>
+        <active>true</active>
+        <criteriaItems>
+            <field>Opportunity.RecordTypeId</field>
+            <operation>equals</operation>
+            <value>Standar Opportunity</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Opportunity.StageName</field>
+            <operation>equals</operation>
+            <value>Potencial</value>
+        </criteriaItems>
+        <triggerType>onCreateOnly</triggerType>
+    </rules>
+    <rules>
+        <fullName>PROJ001_Enviar Correo IC</fullName>
+        <actions>
+            <name>PROJ_Notificacion_a_Usuario_IC</name>
+            <type>Alert</type>
+        </actions>
+        <actions>
+            <name>Asignar_Usuario_IC</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <criteriaItems>
+            <field>Opportunity.StageName</field>
+            <operation>equals</operation>
+            <value>Activación Cliente</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Opportunity.Service_Type__c</field>
+            <operation>equals</operation>
+            <value>P</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Opportunity.RecordTypeId</field>
+            <operation>equals</operation>
+            <value>Proyecto</value>
+        </criteriaItems>
+        <description>Si la cuenta esta activa, envía correo a IC para la verificación de datos</description>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+    <rules>
+        <fullName>PROJ002_Llenar campo Usuario IC con Marcos Arriaga</fullName>
+        <actions>
+            <name>PROJ_Notificacion_a_Marcos</name>
+            <type>Alert</type>
+        </actions>
+        <actions>
+            <name>Asignar_a_Marcos</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>false</active>
+        <criteriaItems>
+            <field>Opportunity.StageName</field>
+            <operation>equals</operation>
+            <value>Factibilidad de Proyecto</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Opportunity.Service_Type__c</field>
+            <operation>equals</operation>
+            <value>P</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Opportunity.PROJ_Service_Mode__c</field>
+            <operation>equals</operation>
+            <value>FN</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Opportunity.RecordTypeId</field>
+            <operation>equals</operation>
+            <value>Proyecto</value>
+        </criteriaItems>
+        <description>Este workflow sirve para asignar al usuario de Marcos Arriaga al proyecto Nacional</description>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+    <rules>
+        <fullName>PROJ003_Cotización de compras</fullName>
+        <actions>
+            <name>Enviar_email_a_departamento_de_compras</name>
+            <type>Alert</type>
+        </actions>
+        <actions>
+            <name>Estatus_en_Cotizaci_n_de_Compras</name>
+            <type>Task</type>
+        </actions>
+        <active>false</active>
+        <criteriaItems>
+            <field>Opportunity.StageName</field>
+            <operation>equals</operation>
+            <value>Factibilidad de Proyecto</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Opportunity.RecordTypeId</field>
+            <operation>equals</operation>
+            <value>Proyecto</value>
+        </criteriaItems>
+        <description>Cuando llega a etapa de cotización de compras</description>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+    <rules>
+        <fullName>PROJ004_VoBo IC</fullName>
+        <actions>
+            <name>Enviar_email_a_IC_para_VoBo</name>
+            <type>Alert</type>
+        </actions>
+        <active>false</active>
+        <criteriaItems>
+            <field>Opportunity.StageName</field>
+            <operation>equals</operation>
+            <value>Cotización Compras</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Opportunity.RecordTypeId</field>
+            <operation>equals</operation>
+            <value>Proyecto</value>
+        </criteriaItems>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+    <rules>
+        <fullName>PROJ005_Enviar cotización al cliente</fullName>
+        <actions>
+            <name>Enviar_email_a_comercial</name>
+            <type>Alert</type>
+        </actions>
+        <active>true</active>
+        <criteriaItems>
+            <field>Opportunity.StageName</field>
+            <operation>equals</operation>
+            <value>VoBo IC</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Opportunity.RecordTypeId</field>
+            <operation>equals</operation>
+            <value>Proyecto</value>
+        </criteriaItems>
+        <description>Envía correo a comercial para que envié cotización final</description>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+    <rules>
+        <fullName>PROJ006_Finalizacion de Proyecto</fullName>
+        <actions>
+            <name>Alerta_para_creador_de_proyecto</name>
+            <type>Alert</type>
+        </actions>
+        <active>false</active>
+        <criteriaItems>
+            <field>Opportunity.StageName</field>
+            <operation>equals</operation>
+            <value>Envió de Cotización</value>
+        </criteriaItems>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+    <rules>
+        <fullName>ejmplo</fullName>
+        <active>false</active>
+        <booleanFilter>1 AND 2</booleanFilter>
+        <criteriaItems>
+            <field>Opportunity.StageName</field>
+            <operation>equals</operation>
+            <value>Closed Lost</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Opportunity.NextStep</field>
+            <operation>greaterThan</operation>
+            <value>2</value>
+        </criteriaItems>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+    <tasks>
+        <fullName>Estatus_en_Cotizaci_n_de_Compras</fullName>
+        <assignedTo>carlos.martinez@pak2go.com.2019</assignedTo>
+        <assignedToType>user</assignedToType>
+        <description>Crear cotización por parte de compras</description>
+        <dueDateOffset>1</dueDateOffset>
+        <notifyAssignee>false</notifyAssignee>
+        <offsetFromField>Opportunity.CreatedDate</offsetFromField>
+        <priority>Normal</priority>
+        <protected>false</protected>
+        <status>Not Started</status>
+        <subject>*Estatus en Cotización de Compras*</subject>
+    </tasks>
+    <tasks>
+        <fullName>First_Contact_with_Customer</fullName>
+        <assignedToType>owner</assignedToType>
+        <dueDateOffset>2</dueDateOffset>
+        <notifyAssignee>false</notifyAssignee>
+        <offsetFromField>Opportunity.CreatedDate</offsetFromField>
+        <priority>Normal</priority>
+        <protected>false</protected>
+        <status>Open</status>
+        <subject>First Contact with Customer</subject>
+    </tasks>
+</Workflow>

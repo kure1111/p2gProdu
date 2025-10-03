@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Workflow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <alerts>
+        <fullName>Envio_Acuse_Owens</fullName>
+        <description>Envio Acuse Owens</description>
+        <protected>false</protected>
+        <recipients>
+            <field>Carrier_Email__c</field>
+            <type>email</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>unfiled$public/FN_Shipment_Colocado_Owens</template>
+    </alerts>
+    <fieldUpdates>
+        <fullName>Carrier_Email</fullName>
+        <field>Carrier_Email__c</field>
+        <formula>Shipment__r.Carrier__r.NEU_Email__c</formula>
+        <name>Carrier Email</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+</Workflow>

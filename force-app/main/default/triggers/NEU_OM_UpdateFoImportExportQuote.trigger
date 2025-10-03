@@ -5,7 +5,16 @@ trigger NEU_OM_UpdateFoImportExportQuote on Customer_Quote__c (after insert) {
     
     Set<Id>users=new Set<Id>();
     Set<Id>accounts=new Set<Id>();
-    List<Customer_Quote__c> Import_export = [select Id, Name, Account_for__c, Account_for__r.Account_Executive_User__c, Account_for__r.OwnerId, Account_for__r.Account_External_Follower_User__c, CreatedById, LastModifiedById from Customer_Quote__c where Id IN:trigger.new];
+    List<Customer_Quote__c> Import_export = [select Id,
+                                             Name,
+                                             Account_for__c,
+                                             Account_for__r.Account_Executive_User__c,
+                                             Account_for__r.OwnerId,
+                                             Account_for__r.Account_External_Follower_User__c,
+                                             CreatedById,
+                                             LastModifiedById 
+                                             from Customer_Quote__c
+                                             where Id IN:trigger.new];
     for(Customer_Quote__c obj : Import_export)
     {
         if(obj.Account_for__r.Account_Executive_User__c!=null)
@@ -21,15 +30,15 @@ trigger NEU_OM_UpdateFoImportExportQuote on Customer_Quote__c (after insert) {
     }
     String masterCommId=null;
     Map<String,EntitySubscription>entities=new Map<String,EntitySubscription>();
-    for(User qi: [select Id,AccountId from User where Id IN :users OR AccountId IN :accounts])
+    for(User qi: [select Id,
+                  AccountId 
+                  from User 
+                  where Id IN :users
+                  OR AccountId IN :accounts])
     {
         for(Customer_Quote__c obj:Import_export)
         {
-             if((obj.Account_for__r.Account_Executive_User__c==qi.Id)
-             ||(obj.Account_for__r.OwnerId==qi.Id)
-             ||(obj.Account_for__r.Account_External_Follower_User__c==qi.Id)
-             ||(obj.CreatedById==qi.Id) 
-             ||(obj.Account_for__c==qi.AccountId))
+             if((obj.Account_for__r.Account_Executive_User__c==qi.Id)||(obj.Account_for__r.OwnerId==qi.Id)||(obj.Account_for__r.Account_External_Follower_User__c==qi.Id)||(obj.CreatedById==qi.Id) ||(obj.Account_for__c==qi.AccountId))
              {
                 if(string.isEmpty(qi.AccountId))
                 {

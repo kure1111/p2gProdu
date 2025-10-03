@@ -18,8 +18,8 @@ public class NEU_TrackTraceShipment
 		Truck_Vessel_Flight__r.Vessel_Information__c, Truck_Vessel_Flight__r.Vessel_Course__c,
 		Last_Update_Vessel__c, Final_Discharge_Code__c, Inbound_Consolidation_Program__c,
 		External_Reference_OI__c, Port_of_Transshipment_1__c, Port_of_Transshipment_Code_1__c, Port_of_Transshipment_2__c,
-		Port_of_Transshipment_Code_2__c, Port_of_Transshipment_3__c, Port_of_Transshipment_Code_3__c, Vessel_1__c, Vessel_Imo_1__c, Vessel_2__c,
-		Vessel_Imo_2__c, Vessel_3__c, Vessel_Imo_3__c, Vessel_4__c, Vessel_Imo_4__c, Truck_Number__c, Country_of_Load__r.Name,
+		Port_of_Transshipment_Code_2__c, Port_of_Transshipment_3__c, Port_of_Transshipment_Code_3__c,/* Vessel_1__c,*/ Vessel_Imo_1__c, /*Vessel_2__c,*/
+		Vessel_Imo_2__c, /*Vessel_3__c,*/ Vessel_Imo_3__c, /*Vessel_4__c,*/ Vessel_Imo_4__c, Truck_Number__c, Country_of_Load__r.Name,
 		Country_of_Discharge__r.Name, Site_of_Load__r.Name, Site_of_Discharge__r.Name, OI_Status__c,
 		OI_Status_Code__c, Number__c, Freight_Mode__c , Truck_Vessel_Flight__c, Truck_Vessel_Flight__r.IMO__c, Truck_Vessel_Flight__r.Name, MAWB_Number__c, 
 		Flight_Number__c, ETD_from_Point_of_Load__c, ETA_Point_of_Discharge__c, Shipment_Status__c, Vessel_Latitude_Vessel__c, Vessel_Longitude_Vessel__c,

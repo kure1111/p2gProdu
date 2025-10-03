@@ -1,7 +1,8 @@
 @isTest
 private class NEU_test_OtherINT {
 //Test apex class NEU_UploadCustomers and NEU_UploadLots called to all methods
-    static testMethod void NEU_OtherINTError() {
+    @isTest
+    static void NEU_OtherINTError() {
     	NEU_StaticVariableHelper.setBoolean1(true);
         //create record test necessaries
         Account a=new Account();
@@ -21,7 +22,8 @@ private class NEU_test_OtherINT {
         u4.getratesData();
         u4.saveLines();
     }
-    static testMethod void NEU_OtherINTFilter() {
+    @isTest
+    static void NEU_OtherINTFilter() {
     	NEU_StaticVariableHelper.setBoolean1(true);
         //create record test necessaries
         Account a=new Account();
@@ -45,7 +47,8 @@ private class NEU_test_OtherINT {
         u4.getratesData();
         u4.saveLines();
     }
-    static testMethod void NEU_OtherINTGood() {
+    @isTest
+    static void NEU_OtherINTGood() {
     	NEU_StaticVariableHelper.setBoolean1(true);
         //create record test necessaries
         Account a=new Account();

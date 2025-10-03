@@ -12,7 +12,19 @@ public with sharing class NEU_PaqueteriaINT {
     //9 Extended Area (columns[38])
     //10 SAP Service Type (columns[41])
 
-    public Integer[]columns=new Integer[]{35,13,16,38,39,1,12,2,3,11,0,5,6,18,19,20,21,17,14,37,15,39,22,23,24,25,26,27,28,29,30,31,32,33,34,4,7,8,9,10};//40
+    public Integer[]columns=new Integer[]{35,
+        13,
+        16,
+        38,
+        39,
+        1,
+        12,
+        2,
+        3,
+        11,
+        0,
+        5,
+        6,18,19,20,21,17,14,37,15,39,22,23,24,25,26,27,28,29,30,31,32,33,34,4,7,8,9,10};//40
     public Integer[] getcolumns()
     {
         return columns;

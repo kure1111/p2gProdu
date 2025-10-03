@@ -45,24 +45,11 @@ trigger NEU_Conversion_Rate_Disbursement_Date on Shipment_Disbursement__c (after
                 dis.Conversion_Rate_to_Imp_Exp_Currency__c = 1;
             else
             {
-                List<SObject> query_conversion_rate_disbursement = null;
-                List<SObject> query_conversion_rate_import_export = null;
+                List<SObject> query_conversion_rate_disbursement = null;List<SObject> query_conversion_rate_import_export = null;
                 
-                String query_cr1 = '';
-                query_cr1 += 'SELECT ConversionRate';
-                query_cr1 += ' FROM DatedConversionRate'; 
-                query_cr1 += ' WHERE startDate <=: dtIsoCode AND nextstartdate > :dtIsoCode';
-                query_cr1 += ' AND Isocode = \'' + NEU_CurrencyUtils.getCurrencyIsoCode(dis) + '\'';
-                query_cr1 += ' LIMIT 1';
-                query_conversion_rate_disbursement = Database.query(query_cr1);
+                String query_cr1 = 'SELECT ConversionRate';query_cr1 += ' FROM DatedConversionRate';query_cr1 += ' WHERE startDate <=: dtIsoCode AND nextstartdate > :dtIsoCode';query_cr1 += ' AND Isocode = \'' + NEU_CurrencyUtils.getCurrencyIsoCode(dis) + '\'';query_cr1 += ' LIMIT 1';query_conversion_rate_disbursement = Database.query(query_cr1);
                                         
-                String query_cr2 = '';
-                query_cr2 += 'SELECT ConversionRate';
-                query_cr2 += ' FROM DatedConversionRate'; 
-                query_cr2 += ' WHERE startDate <=:dtIsoCode AND nextstartdate > :dtIsoCode';
-                query_cr2 += ' AND Isocode = \'' + NEU_CurrencyUtils.getCurrencyIsoCode(dis.Import_Export_Quote_Order__r) + '\'';
-                query_cr2 += ' LIMIT 1';
-                query_conversion_rate_import_export = Database.query(query_cr2);
+                String query_cr2 = 'SELECT ConversionRate';query_cr2 += ' FROM DatedConversionRate';query_cr2 += ' WHERE startDate <=:dtIsoCode AND nextstartdate > :dtIsoCode';query_cr2 += ' AND Isocode = \'' + NEU_CurrencyUtils.getCurrencyIsoCode(dis.Import_Export_Quote_Order__r) + '\'';query_cr2 += ' LIMIT 1';query_conversion_rate_import_export = Database.query(query_cr2);
             
                 //Import/Export's ConversionRate is divided between Invoice's Conversion Rate because it's wante to get the value of the Import/Export
                 if(query_conversion_rate_disbursement != null && query_conversion_rate_import_export!=null)
@@ -86,14 +73,8 @@ trigger NEU_Conversion_Rate_Disbursement_Date on Shipment_Disbursement__c (after
             consulta_disbursement_lines += 'WHERE Disbursement__c IN: query_disbursement';
             query_disbursement_lines = Database.query(consulta_disbursement_lines);
         }
-        for(Import_Export_Service_Line_Disbursement__c disbursment_line:query_disbursement_lines)
-        {
-            disbursment_line.Conversion_Rate_to_Service_Line_Currency__c = disbursment_line.Disbursement__r.Conversion_Rate_to_Imp_Exp_Currency__c / disbursment_line.Import_Export_Service_Line__r.Conversion_Rate_to_Currency_Header__c;
-        }
-        if(query_disbursement_lines != null && query_disbursement_lines.size()>0)
-        {
-            update query_disbursement_lines;
-        }
+        for(Import_Export_Service_Line_Disbursement__c disbursment_line:query_disbursement_lines){disbursment_line.Conversion_Rate_to_Service_Line_Currency__c = disbursment_line.Disbursement__r.Conversion_Rate_to_Imp_Exp_Currency__c / disbursment_line.Import_Export_Service_Line__r.Conversion_Rate_to_Currency_Header__c;}
+        if(query_disbursement_lines != null && query_disbursement_lines.size()>0){update query_disbursement_lines;}
         
          // Consulta de las Invoices Order cargo Lines para actualizar su Conversion Rate
         List<Import_Export_Cargo_Line_Disbursement__c> query_disbursement_cargo_lines = new List<Import_Export_Cargo_Line_Disbursement__c>();
@@ -105,14 +86,8 @@ trigger NEU_Conversion_Rate_Disbursement_Date on Shipment_Disbursement__c (after
             consulta_disbursement_lines += 'WHERE Disbursement__c IN: query_disbursement';
             query_disbursement_cargo_lines = Database.query(consulta_disbursement_lines);
         }
-        for(Import_Export_Cargo_Line_Disbursement__c disbursment_line: query_disbursement_cargo_lines)
-        {
-            disbursment_line.Conversion_Rate_to_Cargo_Line_Currency__c = disbursment_line.Disbursement__r.Conversion_Rate_to_Imp_Exp_Currency__c / disbursment_line.Import_Export_Cargo_Line__r.Conversion_Rate_to_Currency_Header__c;
-        }
-        if(query_disbursement_cargo_lines != null && query_disbursement_cargo_lines.size()>0)
-        {
-            update query_disbursement_cargo_lines;
-        }
+        for(Import_Export_Cargo_Line_Disbursement__c disbursment_line: query_disbursement_cargo_lines){disbursment_line.Conversion_Rate_to_Cargo_Line_Currency__c = disbursment_line.Disbursement__r.Conversion_Rate_to_Imp_Exp_Currency__c / disbursment_line.Import_Export_Cargo_Line__r.Conversion_Rate_to_Currency_Header__c;}
+        if(query_disbursement_cargo_lines != null && query_disbursement_cargo_lines.size()>0){update query_disbursement_cargo_lines;}
         
         //Shipment
         // Consulta de las Invoices Order Lines para actualizar su Conversion Rate
@@ -125,14 +100,8 @@ trigger NEU_Conversion_Rate_Disbursement_Date on Shipment_Disbursement__c (after
             consulta_disbursement_lines += 'WHERE Shipment_Disbursement__c IN: query_disbursement';
             query_disbursement_service_lines = Database.query(consulta_disbursement_lines);
         }
-        for(Shipment_Service_Line_Disbursement__c disbursment_line: query_disbursement_service_lines )
-        {
-            disbursment_line.Conversion_Rate_to_Service_Line_Currency__c = disbursment_line.Shipment_Disbursement__r.Conversion_Rate_to_Imp_Exp_Currency__c/disbursment_line.Shipment_Service_Line__r.Conversion_Rate_to_Currency_Header__c;
-        }
-        if(query_disbursement_service_lines != null && query_disbursement_service_lines.size()>0)
-        {
-            update query_disbursement_service_lines;
-        }
+        for(Shipment_Service_Line_Disbursement__c disbursment_line: query_disbursement_service_lines ){disbursment_line.Conversion_Rate_to_Service_Line_Currency__c = disbursment_line.Shipment_Disbursement__r.Conversion_Rate_to_Imp_Exp_Currency__c/disbursment_line.Shipment_Service_Line__r.Conversion_Rate_to_Currency_Header__c;}
+        if(query_disbursement_service_lines != null && query_disbursement_service_lines.size()>0){update query_disbursement_service_lines;}
          
          // Consulta de las disbursement shipment cargo Lines para actualizar su Conversion Rate
         List<Shipment_Item_Line_Disbursement__c> query_disbursement_shipment_cargo_lines = new List<Shipment_Item_Line_Disbursement__c>();
@@ -144,14 +113,8 @@ trigger NEU_Conversion_Rate_Disbursement_Date on Shipment_Disbursement__c (after
             consulta_disbursement_lines += 'WHERE Shipment_Disbursement__c IN: query_disbursement';
             query_disbursement_shipment_cargo_lines = Database.query(consulta_disbursement_lines);
         }
-        for(Shipment_Item_Line_Disbursement__c disbursment_line: query_disbursement_shipment_cargo_lines )
-        {
-            disbursment_line.Conversion_Rate_to_Cargo_Line_Currency__c = disbursment_line.Shipment_Disbursement__r.Conversion_Rate_to_Imp_Exp_Currency__c / disbursment_line.Shipment_Item_Line__r.Conversion_Rate_to_Currency_Header__c;
-        }
-        if(query_disbursement_shipment_cargo_lines != null && query_disbursement_shipment_cargo_lines.size()>0)
-        {
-            update query_disbursement_shipment_cargo_lines;
-        }
+        for(Shipment_Item_Line_Disbursement__c disbursment_line: query_disbursement_shipment_cargo_lines ){disbursment_line.Conversion_Rate_to_Cargo_Line_Currency__c = disbursment_line.Shipment_Disbursement__r.Conversion_Rate_to_Imp_Exp_Currency__c / disbursment_line.Shipment_Item_Line__r.Conversion_Rate_to_Currency_Header__c;}
+        if(query_disbursement_shipment_cargo_lines != null && query_disbursement_shipment_cargo_lines.size()>0){update query_disbursement_shipment_cargo_lines;}
         
     }
 }

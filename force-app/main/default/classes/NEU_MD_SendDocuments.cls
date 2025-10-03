@@ -499,7 +499,7 @@ public with sharing class NEU_MD_SendDocuments
 
                     if(bfile.size()>0)
                     {
-                        nombre_documentos_enviados += ad.Name +' ('+URL.getSalesforceBaseUrl().toExternalForm() + ad.document_url+') \n';
+                        nombre_documentos_enviados += ad.Name +' ('+URL.getOrgDomainUrl().toExternalForm() + ad.document_url+') \n';
 
                         if(ad.Name.contains('.') == true)
                             eFileAttach.setFileName(ad.name);

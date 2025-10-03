@@ -29,7 +29,16 @@ public class NEU_OM_Followers {
         con = stdController;
         system.debug( con.getRecord() );
         try { 
-        record = [select Id, Name, CreatedById,Customer__c, LastModifiedById, Customer__r.OwnerId,Customer__r.Account_Executive_User__c, Customer__r.Account_External_Follower_User__c from Shopping_Cart__c where id = :con.getRecord().id];
+        record = [select Id, 
+                  Name,
+                  CreatedById,
+                  Customer__c,
+                  LastModifiedById,
+                  Customer__r.OwnerId,
+                  Customer__r.Account_Executive_User__c,
+                  Customer__r.Account_External_Follower_User__c
+                  from Shopping_Cart__c 
+                  where id = :con.getRecord().id];
         } catch( Exception ee) { 
             record = new Shopping_Cart__c();
         }
@@ -40,14 +49,37 @@ public class NEU_OM_Followers {
         {
             follower=new List<follower_s>();
             List<EntitySubscription> new_subscriptions = new List<EntitySubscription>();
-            new_subscriptions = [select Id, parentId, SubscriberId from EntitySubscription where parentId =: record.Id order by SubscriberId limit 100];
+            new_subscriptions = [select Id,
+                                 parentId,
+                                 SubscriberId
+                                 from EntitySubscription 
+                                 where parentId =: record.Id 
+                                 order by SubscriberId 
+                                 limit 100];
             
-            users = [select Id, Name, FullPhotoUrl, IsActive, UserRoleId, ContactId, UserRole.Name  from User where IsActive =: true  order by ContactId desc];
-            contactos = [select Id, Name, AccountId from Contact where AccountId =: record.Customer__c order by Name];
+            users = [select Id, 
+                     Name,
+                     FullPhotoUrl,
+                     IsActive,
+                     UserRoleId,
+                     ContactId,
+                     UserRole.Name
+                     from User
+                     where IsActive =: true  
+                     order by ContactId desc];
+            contactos = [select Id, 
+                         Name,
+                         AccountId
+                         from Contact 
+                         where AccountId =: record.Customer__c 
+                         order by Name];
             boolean encontrados=false;
             
             Map<id,decimal> maps_users_subcription = new Map<id,decimal>();
-            List<AggregateResult> query_entitysubscription = [select COUNT(Id) total, SubscriberId from EntitySubscription where SubscriberId IN: users group by SubscriberId];
+            List<AggregateResult> query_entitysubscription = [select COUNT(Id) total,
+                                                              SubscriberId 
+                                                              from EntitySubscription 
+                                                              where SubscriberId IN: users group by SubscriberId];
             for(AggregateResult qi: query_entitysubscription)
             {
                   maps_users_subcription.put((string)qi.get('SubscriberId'),(decimal)qi.get('total'));               
@@ -127,13 +159,32 @@ public class NEU_OM_Followers {
         if(followersin == null)
         {
                 followersin=new List<followersin_s>();
-                users = [select Id, Name, FullPhotoUrl, IsActive, UserRoleId, ContactId, UserRole.Name  from User where IsActive =: true and  (NOT Name  like '%Guest User%') order by Name,ContactId asc limit 1000];
-                contactos = [select Id, Name, AccountId from Contact where AccountId =: record.Customer__c order by Id];
+                users = [select Id, 
+                         Name,
+                         FullPhotoUrl,
+                         IsActive,
+                         UserRoleId,
+                         ContactId,
+                         UserRole.Name
+                         from User 
+                         where IsActive =: true
+                         and  (NOT Name  like '%Guest User%')
+                         order by Name,ContactId asc limit 1000];
+                contactos = [select Id,
+                             Name,
+                             AccountId
+                             from Contact
+                             where AccountId =: record.Customer__c 
+                             order by Id];
                 boolean encontrado =false;
                 boolean encontrados2=false;
                 
                 Map<id,decimal> maps_users_subcription = new Map<id,decimal>();
-                List<AggregateResult> query_entitysubscription = [select COUNT(Id) total, SubscriberId from EntitySubscription where SubscriberId IN: users group by SubscriberId];
+                List<AggregateResult> query_entitysubscription = [select COUNT(Id) total,
+                                                                  SubscriberId 
+                                                                  from EntitySubscription
+                                                                  where SubscriberId IN: users 
+                                                                  group by SubscriberId];
                 for(AggregateResult qi: query_entitysubscription)
                 {
                       maps_users_subcription.put((string)qi.get('SubscriberId'),(decimal)qi.get('total'));               
@@ -220,14 +271,9 @@ public class NEU_OM_Followers {
             	Integer total_suscripciones = Database.countQuery('SELECT COUNT() FROM EntitySubscription where SubscriberId = \''+fs.line.Id+'\' limit 500');
             	if(total_suscripciones >= 500)
             	{
-            		List<EntitySubscription> last_subscription = [select Id, parentId, SubscriberId, CreatedDate
-	            	from EntitySubscription where SubscriberId =: fs.line.Id order by CreatedDate desc limit 1];
-	
-			        try
-			        {   
-			            delete last_subscription;
-			        }
-			        catch(Exception ex){ApexPages.addMessage(new ApexPages.message(ApexPages.severity.ERROR,'Error:'+ex)); }
+            		List<EntitySubscription> last_subscription = [select Id, parentId,SubscriberId,CreatedDate from EntitySubscription where SubscriberId =: fs.line.Id order by CreatedDate desc limit 1];
+			        try{delete last_subscription;
+			        }catch(Exception ex){ApexPages.addMessage(new ApexPages.message(ApexPages.severity.ERROR,'Error:'+ex)); }
             	}
             	
             	//INSERT SUBSCRIPTION
@@ -235,24 +281,18 @@ public class NEU_OM_Followers {
 	            new_subscription.parentId = record.Id;
 	            new_subscription.SubscriberId = fs.line.Id;
 	            
-	            if(fs.community_user)
-	            {
+	            if(fs.community_user){
 	            	CSH_Community__c commId = CSH_Community__c.getOrgDefaults();
                     if(commId != null)
                     	NEU_CommunityUtils.setNetworkId(new_subscription,commId.Community_Id__c);
 	            }
 
-		        try
-		        {   
-		            insert new_subscription;
-		        }
-		        catch(Exception ex){ApexPages.addMessage(new ApexPages.message(ApexPages.severity.ERROR,'Error:'+ex));}
+		        try{insert new_subscription;}catch(Exception ex){ApexPages.addMessage(new ApexPages.message(ApexPages.severity.ERROR,'Error:'+ex));}
             	//--------------------
             	
                 if(fs.selected==true)
                     follower.add(new follower_s(fs.line,fs.selected,fs.max_subcripciones_superado,fs.community_user));
-                else
-                {
+                else{
                     if(follower.size()>0)
                         follower.add(0,new follower_s(fs.line,fs.selected,fs.max_subcripciones_superado,fs.community_user));
                     else

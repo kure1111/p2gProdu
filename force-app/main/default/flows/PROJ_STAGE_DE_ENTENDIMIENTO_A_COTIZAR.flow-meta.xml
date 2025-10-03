@@ -3,7 +3,7 @@
     <actionCalls>
         <name>Email_asignar_pricing</name>
         <label>Email asignar pricing</label>
-        <locationX>842</locationX>
+        <locationX>1106</locationX>
         <locationY>947</locationY>
         <actionName>emailSimple</actionName>
         <actionType>emailSimple</actionType>
@@ -18,9 +18,15 @@
             </value>
         </inputParameters>
         <inputParameters>
+            <name>senderType</name>
+            <value>
+                <stringValue>OrgWideEmailAddress</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
             <name>senderAddress</name>
             <value>
-                <stringValue>noreply@inteam.com</stringValue>
+                <stringValue>no-reply@pak2go.com</stringValue>
             </value>
         </inputParameters>
         <inputParameters>
@@ -41,13 +47,11 @@
                 <booleanValue>true</booleanValue>
             </value>
         </inputParameters>
-        <nameSegment>emailSimple</nameSegment>
-        <versionSegment>1</versionSegment>
     </actionCalls>
     <actionCalls>
         <name>Email_Buy_Price</name>
         <label>Email Buy Price</label>
-        <locationX>1414</locationX>
+        <locationX>1810</locationX>
         <locationY>2771</locationY>
         <actionName>emailSimple</actionName>
         <actionType>emailSimple</actionType>
@@ -62,9 +66,15 @@
             </value>
         </inputParameters>
         <inputParameters>
+            <name>senderType</name>
+            <value>
+                <stringValue>OrgWideEmailAddress</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
             <name>senderAddress</name>
             <value>
-                <stringValue>noreply@inteam.com</stringValue>
+                <stringValue>no-reply@pak2go.com</stringValue>
             </value>
         </inputParameters>
         <inputParameters>
@@ -85,13 +95,11 @@
                 <booleanValue>true</booleanValue>
             </value>
         </inputParameters>
-        <nameSegment>emailSimple</nameSegment>
-        <versionSegment>1</versionSegment>
     </actionCalls>
     <actionCalls>
         <name>Email_Sell_Price</name>
         <label>Email Sell Price</label>
-        <locationX>1150</locationX>
+        <locationX>1546</locationX>
         <locationY>2771</locationY>
         <actionName>emailSimple</actionName>
         <actionType>emailSimple</actionType>
@@ -106,9 +114,15 @@
             </value>
         </inputParameters>
         <inputParameters>
+            <name>senderType</name>
+            <value>
+                <stringValue>OrgWideEmailAddress</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
             <name>senderAddress</name>
             <value>
-                <stringValue>noreply@inteam.com</stringValue>
+                <stringValue>no-reply@pak2go.com</stringValue>
             </value>
         </inputParameters>
         <inputParameters>
@@ -129,14 +143,12 @@
                 <booleanValue>true</booleanValue>
             </value>
         </inputParameters>
-        <nameSegment>emailSimple</nameSegment>
-        <versionSegment>1</versionSegment>
     </actionCalls>
     <apiVersion>58.0</apiVersion>
     <assignments>
         <name>AddEmailOwner</name>
         <label>AddEmailOwner</label>
-        <locationX>1414</locationX>
+        <locationX>1810</locationX>
         <locationY>2447</locationY>
         <assignmentItems>
             <assignToReference>EmailOwnerandIC</assignToReference>
@@ -159,7 +171,7 @@
     <assignments>
         <name>Buy_Rate_Agregado</name>
         <label>Buy Rate Agregado</label>
-        <locationX>1766</locationX>
+        <locationX>2162</locationX>
         <locationY>1871</locationY>
         <assignmentItems>
             <assignToReference>productobuyrate</assignToReference>
@@ -175,7 +187,7 @@
     <assignments>
         <name>BuyPrice0</name>
         <label>BuyPrice0</label>
-        <locationX>1502</locationX>
+        <locationX>1898</locationX>
         <locationY>1871</locationY>
         <assignmentItems>
             <assignToReference>VarCeroBuyPrice</assignToReference>
@@ -191,7 +203,7 @@
     <assignments>
         <name>Check_Status</name>
         <label>Check Status</label>
-        <locationX>622</locationX>
+        <locationX>1018</locationX>
         <locationY>1571</locationY>
         <assignmentItems>
             <assignToReference>Recorre_tareas_realizadas.Status</assignToReference>
@@ -235,13 +247,6 @@
             <operator>Add</operator>
             <value>
                 <stringValue>maria.vargas@2gologistics.com</stringValue>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>EmailOwnerandIC</assignToReference>
-            <operator>Add</operator>
-            <value>
-                <stringValue>carlos.martinez@2gologistics.com</stringValue>
             </value>
         </assignmentItems>
         <connector>
@@ -292,7 +297,7 @@
             <assignToReference>EmailOwnerandIC</assignToReference>
             <operator>Add</operator>
             <value>
-                <stringValue>carlos.martinez@2gologistics.com</stringValue>
+                <elementReference>CorreoTest</elementReference>
             </value>
         </assignmentItems>
         <connector>
@@ -343,7 +348,7 @@
             <assignToReference>EmailOwnerandIC</assignToReference>
             <operator>Add</operator>
             <value>
-                <stringValue>carlos.martinez@2gologistics.com</stringValue>
+                <elementReference>CorreoTest</elementReference>
             </value>
         </assignmentItems>
         <connector>
@@ -394,7 +399,7 @@
             <assignToReference>EmailOwnerandIC</assignToReference>
             <operator>Add</operator>
             <value>
-                <stringValue>carlos.martinez@2gologistics.com</stringValue>
+                <elementReference>CorreoTest</elementReference>
             </value>
         </assignmentItems>
         <connector>
@@ -445,7 +450,58 @@
             <assignToReference>EmailOwnerandIC</assignToReference>
             <operator>Add</operator>
             <value>
-                <stringValue>carlos.martinez@2gologistics.com</stringValue>
+                <elementReference>CorreoTest</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Email_asignar_pricing</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Correo_Princing_M</name>
+        <label>Correo Princing M</label>
+        <locationX>1634</locationX>
+        <locationY>755</locationY>
+        <assignmentItems>
+            <assignToReference>CorreoUserIC</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>Get_Princing_PTO.Email</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>FI_o_FN</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>$Record.Group__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>EmailOwnerandIC</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>Get_Princing_PTO.Email</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>EmailOwnerandIC</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>$Record.Owner.Email</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>EmailOwnerandIC</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <stringValue>maria.vargas@2gologistics.com</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>EmailOwnerandIC</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>CorreoTest</elementReference>
             </value>
         </assignmentItems>
         <connector>
@@ -455,7 +511,7 @@
     <assignments>
         <name>Correo_Princing_Otros</name>
         <label>Correo Princing Otros</label>
-        <locationX>1634</locationX>
+        <locationX>2162</locationX>
         <locationY>755</locationY>
         <assignmentItems>
             <assignToReference>CorreoUserIC</assignToReference>
@@ -490,13 +546,6 @@
             <operator>Add</operator>
             <value>
                 <stringValue>maria.vargas@2gologistics.com</stringValue>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>EmailOwnerandIC</assignToReference>
-            <operator>Add</operator>
-            <value>
-                <stringValue>carlos.martinez@2gologistics.com</stringValue>
             </value>
         </assignmentItems>
         <connector>
@@ -504,15 +553,15 @@
         </connector>
     </assignments>
     <assignments>
-        <name>Correo_Princing_PTO_M_R</name>
-        <label>Correo Princing PTO M R</label>
+        <name>Correo_Princing_PTO</name>
+        <label>Correo Princing PTO</label>
         <locationX>578</locationX>
         <locationY>755</locationY>
         <assignmentItems>
             <assignToReference>CorreoUserIC</assignToReference>
             <operator>Add</operator>
             <value>
-                <elementReference>Get_Princing_PTO_M_R.Email</elementReference>
+                <elementReference>Get_Princing_PTO.Email</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
@@ -526,7 +575,7 @@
             <assignToReference>EmailOwnerandIC</assignToReference>
             <operator>Add</operator>
             <value>
-                <elementReference>Get_Princing_PTO_M_R.Email</elementReference>
+                <elementReference>Get_Princing_PTO.Email</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
@@ -547,7 +596,58 @@
             <assignToReference>EmailOwnerandIC</assignToReference>
             <operator>Add</operator>
             <value>
-                <stringValue>carlos.martinez@2gologistics.com</stringValue>
+                <elementReference>CorreoTest</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Email_asignar_pricing</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Correo_Princing_R</name>
+        <label>Correo Princing R</label>
+        <locationX>1898</locationX>
+        <locationY>755</locationY>
+        <assignmentItems>
+            <assignToReference>CorreoUserIC</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>Get_Princing_PTO.Email</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>FI_o_FN</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>$Record.Group__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>EmailOwnerandIC</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>Get_Princing_PTO.Email</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>EmailOwnerandIC</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>$Record.Owner.Email</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>EmailOwnerandIC</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <stringValue>maria.vargas@2gologistics.com</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>EmailOwnerandIC</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>CorreoTest</elementReference>
             </value>
         </assignmentItems>
         <connector>
@@ -557,7 +657,7 @@
     <assignments>
         <name>cuentaCero</name>
         <label>cuentaCero</label>
-        <locationX>1502</locationX>
+        <locationX>1898</locationX>
         <locationY>1571</locationY>
         <assignmentItems>
             <assignToReference>varcero</assignToReference>
@@ -573,7 +673,7 @@
     <assignments>
         <name>linea_no_cotizado</name>
         <label>linea no cotizado</label>
-        <locationX>1502</locationX>
+        <locationX>1898</locationX>
         <locationY>2171</locationY>
         <assignmentItems>
             <assignToReference>salesnocotizada</assignToReference>
@@ -589,7 +689,7 @@
     <assignments>
         <name>Sell_Price_Agregado</name>
         <label>Sell Price Agregado</label>
-        <locationX>1766</locationX>
+        <locationX>2162</locationX>
         <locationY>1571</locationY>
         <assignmentItems>
             <assignToReference>ProductoSellPrice</assignToReference>
@@ -605,7 +705,7 @@
     <decisions>
         <name>actualiza_stage_cotizar</name>
         <label>actualiza stage cotizar</label>
-        <locationX>1414</locationX>
+        <locationX>1810</locationX>
         <locationY>2555</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
@@ -663,7 +763,7 @@
     <decisions>
         <name>Buy_Price</name>
         <label>Buy Price</label>
-        <locationX>1634</locationX>
+        <locationX>2030</locationX>
         <locationY>1763</locationY>
         <defaultConnector>
             <targetReference>Buy_Rate_Agregado</targetReference>
@@ -699,7 +799,7 @@
     <decisions>
         <name>decision_etapa</name>
         <label>decision etapa</label>
-        <locationX>1370</locationX>
+        <locationX>1766</locationX>
         <locationY>1139</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
@@ -779,7 +879,7 @@
     <decisions>
         <name>Oportunidad_Nueva</name>
         <label>Oportunidad Nueva</label>
-        <locationX>1370</locationX>
+        <locationX>1766</locationX>
         <locationY>323</locationY>
         <defaultConnector>
             <targetReference>decision_etapa</targetReference>
@@ -804,7 +904,7 @@
     <decisions>
         <name>Producto_Cotizado</name>
         <label>Producto Cotizado</label>
-        <locationX>1370</locationX>
+        <locationX>1766</locationX>
         <locationY>3527</locationY>
         <defaultConnector>
             <targetReference>recorrer_productos_y_agregarlos_a_QLI</targetReference>
@@ -829,7 +929,7 @@
     <decisions>
         <name>Productos_sin_cotizar</name>
         <label>Productos sin cotizar</label>
-        <locationX>1634</locationX>
+        <locationX>2030</locationX>
         <locationY>2063</locationY>
         <defaultConnector>
             <targetReference>ciclo_productos</targetReference>
@@ -861,7 +961,7 @@
     <decisions>
         <name>sales_prices</name>
         <label>sales prices</label>
-        <locationX>1634</locationX>
+        <locationX>2030</locationX>
         <locationY>1463</locationY>
         <defaultConnector>
             <targetReference>Sell_Price_Agregado</targetReference>
@@ -893,7 +993,7 @@
     <decisions>
         <name>Usuario_FI_o_FN</name>
         <label>Usuario FI o FN</label>
-        <locationX>842</locationX>
+        <locationX>1106</locationX>
         <locationY>431</locationY>
         <defaultConnector>
             <targetReference>Actualizar_usuario_Otros</targetReference>
@@ -944,7 +1044,7 @@
             <label>PQ T WH</label>
         </rules>
         <rules>
-            <name>PTO_M_R</name>
+            <name>PTO</name>
             <conditionLogic>or</conditionLogic>
             <conditions>
                 <leftValueReference>$Record.Group__c</leftValueReference>
@@ -953,24 +1053,10 @@
                     <stringValue>SP-PTO-PUERTOS</stringValue>
                 </rightValue>
             </conditions>
-            <conditions>
-                <leftValueReference>$Record.Group__c</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <stringValue>SP-M-MARITIMO</stringValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>$Record.Group__c</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <stringValue>SP-R-GLOBAL ROUTING</stringValue>
-                </rightValue>
-            </conditions>
             <connector>
-                <targetReference>Actualizar_usuario_PTO_M_R</targetReference>
+                <targetReference>Actualizar_usuario_PTO</targetReference>
             </connector>
-            <label>PTO M R</label>
+            <label>PTO</label>
         </rules>
         <rules>
             <name>FI</name>
@@ -1017,14 +1103,45 @@
             </connector>
             <label>A</label>
         </rules>
+        <rules>
+            <name>M</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Group__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>SP-M-MARITIMO</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Actualizar_usuario_M</targetReference>
+            </connector>
+            <label>M</label>
+        </rules>
+        <rules>
+            <name>R</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Group__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>SP-R-GLOBAL ROUTING</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Actualizar_usuario_R</targetReference>
+            </connector>
+            <label>R</label>
+        </rules>
     </decisions>
+    <description>Se quito el correo de Carlos y se puso el OrgWideEmailAddress como remitente del correo</description>
     <environments>Default</environments>
     <interviewLabel>PROJ_STAGE DE EXPLORAR A COTIZAR {!$Flow.CurrentDateTime}</interviewLabel>
     <label>PROJ_STAGE DE EXPLORAR A COTIZAR</label>
     <loops>
         <name>ciclo_productos</name>
         <label>ciclo productos</label>
-        <locationX>1414</locationX>
+        <locationX>1810</locationX>
         <locationY>1355</locationY>
         <collectionReference>opptyproduct</collectionReference>
         <iterationOrder>Asc</iterationOrder>
@@ -1038,7 +1155,7 @@
     <loops>
         <name>recorre_subProducto</name>
         <label>recorre subProducto</label>
-        <locationX>1150</locationX>
+        <locationX>1546</locationX>
         <locationY>4019</locationY>
         <collectionReference>Get_SubProducto</collectionReference>
         <iterationOrder>Asc</iterationOrder>
@@ -1052,7 +1169,7 @@
     <loops>
         <name>Recorre_tareas_realizadas</name>
         <label>Recorre tareas realizadas</label>
-        <locationX>534</locationX>
+        <locationX>930</locationX>
         <locationY>1463</locationY>
         <collectionReference>Get_Tareas_Realizadas</collectionReference>
         <iterationOrder>Asc</iterationOrder>
@@ -1066,7 +1183,7 @@
     <loops>
         <name>recorrer_productos_y_agregarlos_a_QLI</name>
         <label>recorrer productos y agregarlos a QLI</label>
-        <locationX>1150</locationX>
+        <locationX>1546</locationX>
         <locationY>3419</locationY>
         <collectionReference>Get_opptyproduct</collectionReference>
         <iterationOrder>Asc</iterationOrder>
@@ -1099,7 +1216,7 @@
     <recordCreates>
         <name>crear_Quote</name>
         <label>crear Quote</label>
-        <locationX>1150</locationX>
+        <locationX>1546</locationX>
         <locationY>3203</locationY>
         <connector>
             <targetReference>Get_opptyproduct</targetReference>
@@ -1128,7 +1245,7 @@
     <recordCreates>
         <name>CREAR_QUOTE_LIT</name>
         <label>CREAR QUOTE LIT</label>
-        <locationX>1238</locationX>
+        <locationX>1634</locationX>
         <locationY>3635</locationY>
         <connector>
             <targetReference>recorrer_productos_y_agregarlos_a_QLI</targetReference>
@@ -1187,7 +1304,7 @@
     <recordCreates>
         <name>CREAR_QUOTE_LIT_SubPro</name>
         <label>CREAR QUOTE LIT SubPro</label>
-        <locationX>1238</locationX>
+        <locationX>1634</locationX>
         <locationY>4127</locationY>
         <connector>
             <targetReference>recorre_subProducto</targetReference>
@@ -1246,7 +1363,7 @@
     <recordCreates>
         <name>Tarea_1_Cotizacion</name>
         <label>Tarea 1 Cotizacion</label>
-        <locationX>534</locationX>
+        <locationX>930</locationX>
         <locationY>1871</locationY>
         <connector>
             <targetReference>Tarea_2_Cotizacion</targetReference>
@@ -1287,7 +1404,7 @@
     <recordCreates>
         <name>Tarea_1_Negociacion</name>
         <label>Tarea 1 Negociacion</label>
-        <locationX>1150</locationX>
+        <locationX>1546</locationX>
         <locationY>4319</locationY>
         <connector>
             <targetReference>Tarea_2_Negociacion</targetReference>
@@ -1328,7 +1445,7 @@
     <recordCreates>
         <name>Tarea_2_Cotizacion</name>
         <label>Tarea 2 Cotizacion</label>
-        <locationX>534</locationX>
+        <locationX>930</locationX>
         <locationY>1979</locationY>
         <inputAssignments>
             <field>OwnerId</field>
@@ -1366,7 +1483,7 @@
     <recordCreates>
         <name>Tarea_2_Negociacion</name>
         <label>Tarea 2 Negociacion</label>
-        <locationX>1150</locationX>
+        <locationX>1546</locationX>
         <locationY>4427</locationY>
         <connector>
             <targetReference>Tarea_3_Negociacion</targetReference>
@@ -1407,7 +1524,7 @@
     <recordCreates>
         <name>Tarea_3_Negociacion</name>
         <label>Tarea 3 Negociacion</label>
-        <locationX>1150</locationX>
+        <locationX>1546</locationX>
         <locationY>4535</locationY>
         <connector>
             <targetReference>Tarea_4_Negociacion</targetReference>
@@ -1448,7 +1565,7 @@
     <recordCreates>
         <name>Tarea_4_Negociacion</name>
         <label>Tarea 4 Negociacion</label>
-        <locationX>1150</locationX>
+        <locationX>1546</locationX>
         <locationY>4643</locationY>
         <connector>
             <targetReference>Tarea_5_Negociacion</targetReference>
@@ -1489,7 +1606,7 @@
     <recordCreates>
         <name>Tarea_5_Negociacion</name>
         <label>Tarea 5 Negociacion</label>
-        <locationX>1150</locationX>
+        <locationX>1546</locationX>
         <locationY>4751</locationY>
         <connector>
             <targetReference>Tarea_6_Negociacion</targetReference>
@@ -1530,7 +1647,7 @@
     <recordCreates>
         <name>Tarea_6_Negociacion</name>
         <label>Tarea 6 Negociacion</label>
-        <locationX>1150</locationX>
+        <locationX>1546</locationX>
         <locationY>4859</locationY>
         <inputAssignments>
             <field>OwnerId</field>
@@ -1568,7 +1685,7 @@
     <recordLookups>
         <name>Get_opptyproduct</name>
         <label>Get opptyproduct</label>
-        <locationX>1150</locationX>
+        <locationX>1546</locationX>
         <locationY>3311</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -1671,9 +1788,30 @@
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <recordLookups>
+        <name>Get_Princing_M</name>
+        <label>Get Princing M</label>
+        <locationX>1634</locationX>
+        <locationY>647</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Correo_Princing_M</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>pricingM</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>User</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
         <name>Get_Princing_Otros</name>
         <label>Get Princing Otros</label>
-        <locationX>1634</locationX>
+        <locationX>2162</locationX>
         <locationY>647</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -1692,20 +1830,41 @@
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <recordLookups>
-        <name>Get_Princing_PTO_M_R</name>
-        <label>Get Princing PTO M R</label>
+        <name>Get_Princing_PTO</name>
+        <label>Get Princing PTO</label>
         <locationX>578</locationX>
         <locationY>647</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Correo_Princing_PTO_M_R</targetReference>
+            <targetReference>Correo_Princing_PTO</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
             <operator>EqualTo</operator>
             <value>
-                <elementReference>pricingPTO_M_R</elementReference>
+                <elementReference>pricingPTO</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>User</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
+        <name>Get_Princing_R</name>
+        <label>Get Princing R</label>
+        <locationX>1898</locationX>
+        <locationY>647</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Correo_Princing_R</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>pricingR</elementReference>
             </value>
         </filters>
         <getFirstRecordOnly>true</getFirstRecordOnly>
@@ -1715,7 +1874,7 @@
     <recordLookups>
         <name>Get_SubProducto</name>
         <label>Get SubProducto</label>
-        <locationX>1150</locationX>
+        <locationX>1546</locationX>
         <locationY>3911</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -1736,7 +1895,7 @@
     <recordLookups>
         <name>get_tarea_1_cotizacion</name>
         <label>get tarea 1 cotizacion</label>
-        <locationX>1414</locationX>
+        <locationX>1810</locationX>
         <locationY>2879</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -1764,7 +1923,7 @@
     <recordLookups>
         <name>get_tarea_2_cotizacion</name>
         <label>get tarea 2 cotizacion</label>
-        <locationX>1150</locationX>
+        <locationX>1546</locationX>
         <locationY>2879</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -1792,7 +1951,7 @@
     <recordLookups>
         <name>Get_Tareas_Realizadas</name>
         <label>Get Tareas Realizadas</label>
-        <locationX>534</locationX>
+        <locationX>930</locationX>
         <locationY>1355</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -1813,7 +1972,7 @@
     <recordLookups>
         <name>opptyproduct</name>
         <label>opptyproduct</label>
-        <locationX>1414</locationX>
+        <locationX>1810</locationX>
         <locationY>1247</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -1834,7 +1993,7 @@
     <recordUpdates>
         <name>actualiza_etapa_a_negociacion</name>
         <label>actualiza etapa a negociacion</label>
-        <locationX>1150</locationX>
+        <locationX>1546</locationX>
         <locationY>3095</locationY>
         <connector>
             <targetReference>crear_Quote</targetReference>
@@ -1856,7 +2015,7 @@
     <recordUpdates>
         <name>Actualiza_etapa_Cotizacion</name>
         <label>Actualiza etapa Cotización</label>
-        <locationX>534</locationX>
+        <locationX>930</locationX>
         <locationY>1247</locationY>
         <connector>
             <targetReference>Get_Tareas_Realizadas</targetReference>
@@ -1878,7 +2037,7 @@
     <recordUpdates>
         <name>Actualiza_etapa_Ganada</name>
         <label>Actualiza etapa Ganada</label>
-        <locationX>1942</locationX>
+        <locationX>2338</locationX>
         <locationY>1247</locationY>
         <inputAssignments>
             <field>Data_Time_Ganada__c</field>
@@ -1897,7 +2056,7 @@
     <recordUpdates>
         <name>Actualizar_tarea_2_cotizacion</name>
         <label>Actualizar tarea 2 cotizacion</label>
-        <locationX>1150</locationX>
+        <locationX>1546</locationX>
         <locationY>2987</locationY>
         <connector>
             <targetReference>actualiza_etapa_a_negociacion</targetReference>
@@ -1983,9 +2142,25 @@
         <inputReference>$Record</inputReference>
     </recordUpdates>
     <recordUpdates>
+        <name>Actualizar_usuario_M</name>
+        <label>Actualizar usuario M</label>
+        <locationX>1634</locationX>
+        <locationY>539</locationY>
+        <connector>
+            <targetReference>Get_Princing_M</targetReference>
+        </connector>
+        <inputAssignments>
+            <field>Usuario_IC__c</field>
+            <value>
+                <elementReference>pricingM</elementReference>
+            </value>
+        </inputAssignments>
+        <inputReference>$Record</inputReference>
+    </recordUpdates>
+    <recordUpdates>
         <name>Actualizar_usuario_Otros</name>
         <label>Actualizar usuario Otros</label>
-        <locationX>1634</locationX>
+        <locationX>2162</locationX>
         <locationY>539</locationY>
         <connector>
             <targetReference>Get_Princing_Otros</targetReference>
@@ -1999,17 +2174,33 @@
         <inputReference>$Record</inputReference>
     </recordUpdates>
     <recordUpdates>
-        <name>Actualizar_usuario_PTO_M_R</name>
-        <label>Actualizar usuario PTO M R</label>
+        <name>Actualizar_usuario_PTO</name>
+        <label>Actualizar usuario PTO</label>
         <locationX>578</locationX>
         <locationY>539</locationY>
         <connector>
-            <targetReference>Get_Princing_PTO_M_R</targetReference>
+            <targetReference>Get_Princing_PTO</targetReference>
         </connector>
         <inputAssignments>
             <field>Usuario_IC__c</field>
             <value>
-                <elementReference>pricingPTO_M_R</elementReference>
+                <elementReference>pricingPTO</elementReference>
+            </value>
+        </inputAssignments>
+        <inputReference>$Record</inputReference>
+    </recordUpdates>
+    <recordUpdates>
+        <name>Actualizar_usuario_R</name>
+        <label>Actualizar usuario R</label>
+        <locationX>1898</locationX>
+        <locationY>539</locationY>
+        <connector>
+            <targetReference>Get_Princing_R</targetReference>
+        </connector>
+        <inputAssignments>
+            <field>Usuario_IC__c</field>
+            <value>
+                <elementReference>pricingR</elementReference>
             </value>
         </inputAssignments>
         <inputReference>$Record</inputReference>
@@ -2017,7 +2208,7 @@
     <recordUpdates>
         <name>Check_Buy_Price_Products</name>
         <label>Check Buy Price Products</label>
-        <locationX>1414</locationX>
+        <locationX>1810</locationX>
         <locationY>2663</locationY>
         <connector>
             <targetReference>Email_Buy_Price</targetReference>
@@ -2033,7 +2224,7 @@
     <recordUpdates>
         <name>Check_Realizado</name>
         <label>Check Realizado</label>
-        <locationX>622</locationX>
+        <locationX>1018</locationX>
         <locationY>1679</locationY>
         <connector>
             <targetReference>Recorre_tareas_realizadas</targetReference>
@@ -2057,7 +2248,7 @@
     <recordUpdates>
         <name>Copy_1_of_Check_Buy_Price_Products</name>
         <label>Copy 1 of Check Buy Price Products</label>
-        <locationX>1150</locationX>
+        <locationX>1546</locationX>
         <locationY>2663</locationY>
         <connector>
             <targetReference>Email_Sell_Price</targetReference>
@@ -2073,7 +2264,7 @@
     <recordUpdates>
         <name>Copy_1_of_Check_Realizado</name>
         <label>Actualizar tarea 1 cotizacion</label>
-        <locationX>1414</locationX>
+        <locationX>1810</locationX>
         <locationY>2987</locationY>
         <filterLogic>and</filterLogic>
         <filters>
@@ -2092,7 +2283,7 @@
         <object>Task</object>
     </recordUpdates>
     <start>
-        <locationX>1244</locationX>
+        <locationX>1640</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>Oportunidad_Nueva</targetReference>
@@ -2153,6 +2344,17 @@
         <isOutput>false</isOutput>
         <value>
             <elementReference>$Record.Owner.Email</elementReference>
+        </value>
+    </variables>
+    <variables>
+        <description>Se crea variable de correo para pruebas</description>
+        <name>CorreoTest</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <value>
+            <stringValue>abraham.cortez@2gologistics.com</stringValue>
         </value>
     </variables>
     <variables>
@@ -2223,7 +2425,18 @@
         <isInput>false</isInput>
         <isOutput>false</isOutput>
         <value>
-            <stringValue>005RQ000000tYNdYAM</stringValue>
+            <stringValue>005RQ0000030sZlYAI</stringValue>
+        </value>
+    </variables>
+    <variables>
+        <description>Id de la cuenta designada para los tipo de embarque Marítimo</description>
+        <name>pricingM</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <value>
+            <stringValue>005RQ000002hMNVYA2</stringValue>
         </value>
     </variables>
     <variables>
@@ -2237,13 +2450,24 @@
         </value>
     </variables>
     <variables>
-        <name>pricingPTO_M_R</name>
+        <name>pricingPTO</name>
         <dataType>String</dataType>
         <isCollection>false</isCollection>
         <isInput>false</isInput>
         <isOutput>false</isOutput>
         <value>
-            <stringValue>005RQ000002hMNVYA2</stringValue>
+            <stringValue>005RQ000001RRV0YAO</stringValue>
+        </value>
+    </variables>
+    <variables>
+        <description>Id del usuario para tipo de embarque Global Routing (R)</description>
+        <name>pricingR</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <value>
+            <stringValue>005RQ000002Mek1YAC</stringValue>
         </value>
     </variables>
     <variables>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Workflow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fieldUpdates>
+        <fullName>Name_SCM_Rule_Applied</fullName>
+        <description>Name SCM Rule Applied</description>
+        <field>Name</field>
+        <formula>SCM_Rule__r.SCM_Rule_Code__c &amp; &apos; - &apos; &amp; IF(Shopping_Cart__c != null, Shopping_Cart__r.Name, IF(Import_Export_Quote__c != null, Import_Export_Quote__r.Name, IF( Shipment__c != null ,Shipment__r.Name ,&apos;&apos;)))</formula>
+        <name>Name SCM Rule Applied</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+</Workflow>

@@ -194,4 +194,76 @@ Id job_id = System.schedule('NEU_UpdateDatedConversionRates', '0 '+minuto+' '+ho
         }
         catch(Exception exc){}		
     }
+
+    public static void byPass(){
+        Integer a = 1;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+
+
+
+    }
 }

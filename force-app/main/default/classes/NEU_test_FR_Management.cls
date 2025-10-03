@@ -1,24 +1,3 @@
-/**
- * This class contains unit tests for validating the behavior of Apex classes
- * and triggers.
- *
- * Unit tests are class methods that verify whether a particular piece
- * of code is working properly. Unit test methods take no arguments,
- * commit no data to the database, and are flagged with the testMethod
- * keyword in the method definition.
- *
- * All test methods in an organization are executed whenever Apex code is deployed
- * to a production organization to confirm correctness, ensure code
- * coverage, and prevent regressions. All Apex classes are
- * required to have at least 75% code coverage in order to be deployed
- * to a production organization. In addition, all triggers must have some code coverage.
- * 
- * The @isTest class annotation indicates this class only contains test
- * methods. Classes defined with the @isTest annotation do not count against
- * the organization size limit for all Apex scripts.
- *
- * See the Apex Language Reference for more information about Testing and Code Coverage.
- */
 @isTest
 private class NEU_test_FR_Management 
 {
@@ -72,6 +51,7 @@ private class NEU_test_FR_Management
         insert fee_test;
         
         Shipment__c shipment_test = new Shipment__c();
+        shipment_test.Name = 'Sea'; 
         shipment_test.Freight_Mode__c = 'Sea'; 
         shipment_test.Service_Mode__c = 'Import';
         shipment_test.Forwarder__c = a2.Id;
@@ -458,8 +438,30 @@ private class NEU_test_FR_Management
         List<Account> list_accounts = NEU_Utils.getAccounts('Customer,');
         Account a = list_accounts[0];
         insert a;
-        Customer_Quote__c importexportquote = new Customer_Quote__c( Account_for__c = a.Id, Only_Warehouse_Service__c = true);
-        insert importexportquote;
+User userT = [SELECT Id, ManagerId, UserRole.Name FROM User WHERE Id = :UserInfo.getUserId() LIMIT 1];
+Rol_Margen__c rolMargen = TestDataFactory.createRolMargen(userT.UserRole.Name); // Director Comercial, Director Regional
+
+Customer_Quote__c importexportquote = new Customer_Quote__c();
+String recordTypeId = Schema.SObjectType.Customer_Quote__c.getRecordTypeInfosByName().get('Import-Export Quote').getRecordTypeId();
+importexportquote.RecordTypeId = recordTypeId;
+importexportquote.Name = '.';
+importexportquote.Account_for__c = a.Id;
+importexportquote.Team__c = 'P2G';
+importexportquote.Quotation_Status__c = 'Quote being prepared';
+importexportquote.Customer_Reference__c = 'hola soy una prueba';
+importexportquote.Valid_From__c = System.today();
+importexportquote.Valid_Until__c = System.today();
+importexportquote.Comercio_Exterior__c = 'No';
+importexportquote.Freight_Mode__c = 'Road';
+importexportquote.Service_Mode__c = 'NATIONAL';
+importexportquote.Service_Type__c = 'FTL';
+importexportquote.CurrencyIsoCode = 'MXN';
+importexportquote.ETD__c = Date.today();
+importexportquote.ETA__c = Date.today();
+importexportquote.Community_Status__c = 'CUSTOMER CREATED';
+importexportquote.Pricing_Executive__c = userT.Id;
+importexportquote.Operations_Exec__c = userT.Id;
+insert importexportquote;
         Fee__c fee = new Fee__c(Name = 'test fees', Fee_Category__c = 'Sea Freights',  Active__c = true, RecordTypeId = Schema.SobjectType.Fee__c.getRecordTypeInfosByName().get('Sea/Ground Freight').getRecordTypeId(), Rate_Type__c='Per Kg', Standard_Rate__c = true, Account_for__c = a.Id, Valid_Until__c = system.today().AddDays(5));
         insert fee;
     	List<Fee__c> listado_fees = new List<Fee__c>();
@@ -545,6 +547,7 @@ private class NEU_test_FR_Management
 		save.feesReport = feesReportTest;
 		save.SaveSessionFeesReport();
 		NEU_Freight_Rates_Emails_pdf fre = new NEU_Freight_Rates_Emails_pdf();//Declare
+        fre.byPass();
 
 		ApexPages.currentPage().getParameters().put('rt_ty', NEU_Utils.safeString('Per Container'));
 		fre = new NEU_Freight_Rates_Emails_pdf();//Declare

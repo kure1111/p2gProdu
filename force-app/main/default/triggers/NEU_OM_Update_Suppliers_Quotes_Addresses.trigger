@@ -1,7 +1,6 @@
 trigger NEU_OM_Update_Suppliers_Quotes_Addresses on Supplier_Quote__c (after insert, after update) {
 
-  if(NEU_StaticVariableHelper.getBoolean1())
-    return;
+  if(NEU_StaticVariableHelper.getBoolean1())return;
   
 if(trigger.isInsert)
     {
@@ -17,7 +16,23 @@ if(trigger.isInsert)
            if(ids.size()>0)
          {   
   List<Supplier_Quote__c>toUpdate=new List<Supplier_Quote__c>();
-  for(Supplier_Quote__c s:[select Id, DeliveryAddress__c, Receipt_Address__c, Delivery_Account__c, Customer__c, Delivery_Account__r.ShippingStreet, Delivery_Account__r.ShippingCity, Delivery_Account__r.ShippingState, Delivery_Account__r.ShippingPostalCode, Delivery_Account__r.ShippingCountry, Customer__r.ShippingStreet, Customer__r.ShippingCity, Customer__r.ShippingState, Customer__r.ShippingPostalCode, Customer__r.ShippingCountry from Supplier_Quote__c WHERE Id IN:ids])
+  for(Supplier_Quote__c s:[select Id, 
+                           DeliveryAddress__c, 
+                           Receipt_Address__c, 
+                           Delivery_Account__c, 
+                           Customer__c,
+                           Delivery_Account__r.ShippingStreet,
+                           Delivery_Account__r.ShippingCity,
+                           Delivery_Account__r.ShippingState,
+                           Delivery_Account__r.ShippingPostalCode,
+                           Delivery_Account__r.ShippingCountry,
+                           Customer__r.ShippingStreet,
+                           Customer__r.ShippingCity,
+                           Customer__r.ShippingState,
+                           Customer__r.ShippingPostalCode,
+                           Customer__r.ShippingCountry
+                           from Supplier_Quote__c 
+                           WHERE Id IN:ids])
   {
     Boolean modified=false;
     if((String.IsEmpty(s.DeliveryAddress__c))&&(s.Delivery_Account__c!=null))

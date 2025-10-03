@@ -89,7 +89,9 @@ public with sharing class NEU_Generate_Shipments
                     'Last_Shipment__c', 'Last_Shipment__r.Name', 'Last_Shipment__r.Shipment_Status__c', 'Last_Shipment__r.Site_of_Discharge__c', 
                     'Last_Shipment__r.ETA_Point_of_Discharge__c','Last_Shipment__r.Storage_Date_From__c','Last_Shipment__r.Storage_Date_To__c',
                     'Last_Shipment__r.Site_of_Discharge__r.Name', 'Last_Shipment__r.ETA_Point_of_Discharge__c', 'Border__c', 'Customs__c', 'Warehouse__c', 'Only_Warehouse_Service__c',
-                    'ETA__c', 'ETD__c', 'FolioResume__c', (UserInfo.isMultiCurrencyOrganization()== true ? 'CurrencyIsoCode' : 'Cube_m3__c'),'Origin_Location__Latitude__s','Kms__c','Origin_Location__Longitude__s','Destination_Location__Latitude__s','Destination_Location__Longitude__s','Approved_Date_time01__c'
+                    'ETA__c', 'ETD__c', 'FolioResume__c', (UserInfo.isMultiCurrencyOrganization()== true ? 'CurrencyIsoCode' : 'Cube_m3__c'),'Origin_Location__Latitude__s','Kms__c','Origin_Location__Longitude__s','Destination_Location__Latitude__s','Destination_Location__Longitude__s','Approved_Date_time01__c',
+                    'Sales_Type__c'
+
                     });
         record=(Customer_Quote__c)stdController.getRecord();
         
@@ -996,6 +998,9 @@ public with sharing class NEU_Generate_Shipments
         new_shipment.Destination_Location__Longitude__s = record.Destination_Location__Longitude__s;
         new_shipment.Kms__c = record.Kms__c;
         SYSTEM.debug(' new_shipment.Kms__c' +  new_shipment.Kms__c);
+
+        //campo Sales Scenario Type
+        new_shipment.Sales_Type__c = record.Sales_Type__c;
         
         //Tipo de carta porte para FN
         List<Account> account =[SELECT Tipo_de_Servicio_TNA__c, Tipo_de_Servicio_TNA__r.Name FROM Account 
@@ -1229,7 +1234,9 @@ return new PageReference('/apex/NEU_OM_ShipFeeLinesPriceListYDiscount?id='+new_s
                                              Origin_Location__Longitude__s, Destination_Location__Latitude__s, Destination_Location__Longitude__s, Kms__c, Freight_Mode__c,Service_Type__c,Route__c,
                                              Route__r.Name, CurrencyIsoCode, Country_ofDischarge__c, Country_ofLoad__c, State_of_Discharge__c, State_of_Load__c, Site_of_Discharge__c, Site_of_Load__c,
                                              ETA__c, ETD__c, Awaiting_unload_time__c, Container_Count__c, Awaiting_load_time__c, 
-                                             Last_Shipment__c, Pricing_Executive__r.Email, FolioResume__c
+                                             Last_Shipment__c, Pricing_Executive__r.Email, FolioResume__c,
+                                             //Se agrega el valor de Sales Type
+                                             Sales_Type__c
                                              FROM Customer_Quote__c where Id =: ids[0]]; 
         
         NEU_Generate_Shipments neu = new NEU_Generate_Shipments();
@@ -1294,6 +1301,8 @@ return new PageReference('/apex/NEU_OM_ShipFeeLinesPriceListYDiscount?id='+new_s
         new_shipment.ETD_from_Point_of_Load__c = findFolio[0].ETD__c;
         new_shipment.ETA_Time_Point_of_Discharge__c= findFolio[0].Awaiting_unload_time__c;
         new_shipment.ETD_Time_from_Point_of_Load__c = findFolio[0].Awaiting_load_time__c;
+
+        new_shipment.Sales_Type__c = findFolio[0].Sales_Type__c;
                        
         //0054T000001ju8UQAQ usuario Julio Guillen 
         //List<User> executive = [select Id, Name from User where Name = 'Leonardo Nocelo']; //Id = '0054T000001ju8UQAQ' julio];

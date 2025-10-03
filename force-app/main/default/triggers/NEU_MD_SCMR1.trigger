@@ -73,7 +73,8 @@ trigger NEU_MD_SCMR1 on Sourcing_Item__c (before update)
                             if((spl.Offer_Price__c == null || spl.Offer_Price__c <= 0) && (spl.List_Price__c == null || spl.List_Price__c <= 0))
                             {
                                 if (!Test.isRunningTest()) 
-                                    ConnectApi.ChatterFeeds.postFeedItem(null, ConnectApi.FeedType.Record, spl.Shopping_Cart__c, fee_alarm_text);
+                                    //ConnectApi.ChatterFeeds.postFeedItem(null, ConnectApi.FeedType.Record, spl.Shopping_Cart__c, fee_alarm_text);                                                                    	
+                                    ConnectApi.FeedElement post = ConnectApi.ChatterFeeds.postFeedElement(null,spl.Shopping_Cart__c,ConnectApi.FeedElementType.FeedItem,fee_alarm_text);
                             }
                             spl.Item_Price__c = item.Item_Price__c;
                             
@@ -147,8 +148,9 @@ trigger NEU_MD_SCMR1 on Sourcing_Item__c (before update)
                         if(id_cq.contains(cql.Import_Export_Quote__c) == false)
                         {
                             if (!Test.isRunningTest()) 
-                                ConnectApi.ChatterFeeds.postFeedItem(null, ConnectApi.FeedType.Record, cql.Import_Export_Quote__c, fee_alarm_text);
-                            
+                                
+                                //ConnectApi.ChatterFeeds.postFeedItem(null, ConnectApi.FeedType.Record, cql.Import_Export_Quote__c, fee_alarm_text);
+                            	ConnectApi.FeedElement post = ConnectApi.ChatterFeeds.postFeedElement(null,cql.Import_Export_Quote__c,ConnectApi.FeedElementType.FeedItem,fee_alarm_text);
                             SCM_Rule_Applied__c new_rule_applied = new SCM_Rule_Applied__c();
                             new_rule_applied.SCM_Rule__c = scm_rule[0].Id;
                             new_rule_applied.Account_for__c = cql.Import_Export_Quote__r.Account_for__c;

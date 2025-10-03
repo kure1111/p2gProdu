@@ -1,7 +1,6 @@
 trigger NEU_Quote_Item_Line_copy on Quote_Item_Line__c (before insert, before update) {
 
-    if(NEU_StaticVariableHelper.getBoolean1())
-        return;
+    if(NEU_StaticVariableHelper.getBoolean1())return;
 
     Set<Id>itemids=new Set<Id>();
     Set<Id>linesids = new Set<Id>();
@@ -66,7 +65,7 @@ trigger NEU_Quote_Item_Line_copy on Quote_Item_Line__c (before insert, before up
         
     }
     
-     if(linesids.size()>0)
+    /*if(linesids.size()>0)
     {
         NEU_CurrencyUtils currencyUtils=new NEU_CurrencyUtils();
         String lista_lineas_id = '';
@@ -112,7 +111,7 @@ trigger NEU_Quote_Item_Line_copy on Quote_Item_Line__c (before insert, before up
                      }
                 }
         }
-    }
+    }*/
     
     if(itemids.size()>0)
     {

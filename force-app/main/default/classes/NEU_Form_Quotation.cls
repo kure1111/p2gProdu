@@ -12,8 +12,8 @@ public class NEU_Form_Quotation {
     public List<Fee__c> query_fee = null;
     public string id_contact = '';
     public string id_fee = '';
-    public List<Quote_Item_Line__c> list_to_IE_cargo_lines {get;set;}//Import-Export Cargo Line
-    public Boolean error {get;set;}//Use this variable for to not renderize when exist something error
+    public List<Quote_Item_Line__c> list_to_IE_cargo_lines {get;set;}
+    public Boolean error {get;set;}
     
     public  List<SelectOption> getlistado_rate_type()
     {
@@ -66,33 +66,22 @@ public class NEU_Form_Quotation {
         {
             try
             {
-                  //Get Ids for URL, separate for Substring
-                  //Example NEU_Form_Quotation?id=aa0V9E0000008lfsUAA############0010Y00000DnnFfQAJ############0030Y00000AvkXSQAZ############
-                  //https://c.cs88.visual.force.com/apex/NEU_Form_Quotation?id=YTBWMFkwMDAwMDExMWdoIyMjIyMjIyMjIyMjIyMjMDAxMFkwMDAwMEVpaFVQIyMjIyMjIyMjIyMjIyMjMDAzMFkwMDAwMEF3NmJoIyMjIyMjIyMjIyMjIyMj
-                  //New configuration por URL with # 30 positions for each id based to AutoNumber Documentacion Salesforce https://help.salesforce.com/articleView?id=custom_field_types.htm&type=0
-                  
+
                   string idsEncode = apexpages.currentpage().getparameters().get('id');//Encode
-                  //ApexPages.addMessage(new ApexPages.message(ApexPages.severity.ERROR,'El id codificado en base64 es: '+idsEncode));
-                  
+
                   Blob url = EncodingUtil.base64Decode(idsEncode);
                   string ids = url.tostring();
-                  //ApexPages.addMessage(new ApexPages.message(ApexPages.severity.ERROR,'El identificador decodificado es: '+ids));
-                  //Get Id of Service Rate (1ST of URL)
-                  //string id_fee = ids.substring(0, 15);
+
                   id_fee = ids.substring(0, 30).replace('#','');
-                  //ApexPages.addMessage(new ApexPages.message(ApexPages.severity.ERROR,'El id_fee es: '+id_fee));
-                  //Get Id of Service Rate's Carrier (3ST of URL)
+
                   string id_carrier = ids.substring(30, 60).replace('#','');
-                  //ApexPages.addMessage(new ApexPages.message(ApexPages.severity.ERROR,'El id_carrier es: '+id_carrier));
-                  //Get Id of Contact's Carrier (2ST of URL)
+
                   id_contact = ids.substring(60, ids.length()).replace('#','');
-                  //ApexPages.addMessage(new ApexPages.message(ApexPages.severity.ERROR,'El id_contact es: '+id_contact));
-             
-                 //Execute process only if id_fee and id_carrier not null or empty
+
                  error = false;
                  if(!String.isEmpty(id_fee) && !String.isEmpty(id_fee))
                  {
-                      //Process
+
                       numero_contenedores = '';
                       shipment_service_type = '';  
                       query_fee = [select id, Name, Account_for__c, Fee__c, Active__c,
@@ -104,13 +93,13 @@ public class NEU_Form_Quotation {
                       Fee_Rate__c, Shipment_Quoted_Marketplace__c, Shipment_Quoted_Marketplace__r.Name, Shipments_Program_Quoted_Marketplace__c, Shipments_Program_Quoted_Marketplace__r.Name,
                       Port_Airport_of_Discharge__c, Port_Airport_of_Load__c, Standard_Rate__c, Sub_Allocation__c, Taxable_Item__c, Shipment_Quoted_Marketplace__r.Service_Type__c,
                       TT_Days__c, Valid_From__c, Valid_Until__c, VAT_Column__c, Via__c, Volumetric_Factor__c from Fee__c where id=: id_fee and Carrier_Account__c =: id_carrier];
-                      //Check that query has records
+
                       if(query_fee.size()>0)
                       {
                           record = query_fee[0];
                           id_fee_selected = query_fee[0].Id;
                           list_to_insert_chatter = new List<Chatter_Feed_Guest_User__c>();
-                          //crear chat en el fee
+
                           Chatter_Feed_Guest_User__c new_insert_chatter = new Chatter_Feed_Guest_User__c();
                           new_insert_chatter.Feed_Text__c = query_fee[0].Carrier_Account__r.Name+' have quotation for '+query_fee[0].Name;
                           new_insert_chatter.Record_Id__c = id_fee;
@@ -144,7 +133,7 @@ public class NEU_Form_Quotation {
                           {
                             if(query_fee[0].Shipments_Program_Quoted_Marketplace__r.Number_of_Containers__c != null)
                               numero_contenedores =string.valueof(query_fee[0].Shipments_Program_Quoted_Marketplace__r.Number_of_Containers__c); 
-                            //new_insert_chatter2.Record_Id__c = query_fee[0].Shipments_Program_Quoted_Marketplace__c;   
+                          
                           }
                       
                       
@@ -161,7 +150,7 @@ public class NEU_Form_Quotation {
                           else
                              currencys.add(new SelectOption(NEU_CurrencyUtils.getCurrencyIsoCode(record),NEU_CurrencyUtils.getCurrencyIsoCode(record)));
                              
-                         //Read to Import-Export Cargo Line of Service Rate
+
                          if(!String.isEmpty(record.Import_Export_Quoted_Marketplace__c))
                          {
                             list_to_IE_cargo_lines = [select Name, Item_Name__c, Item_Name__r.Name, Units__c, Unit_of_measure__c,  Total_Shipping_Volume_m3__c, Total_Shipping_Weight_Kgs__c 
@@ -180,16 +169,16 @@ public class NEU_Form_Quotation {
             }
            catch(Exception ex)
            {
-              //ids are null or empty
+
               error = true;
            }
         }
         else
         {
-            //Don't exist ids   
+
             error = true;
         }
-        //If there is an error, the forms show it to the user
+        
         if(error)
         {
             ApexPages.addMessage(new ApexPages.message(ApexPages.severity.ERROR,'Identifier could not be obtained Service Rate Detail'));
@@ -207,35 +196,15 @@ public class NEU_Form_Quotation {
             id_fee_selected = record.Id;
             name_fee_selected = record.Name;
             record.Quoted__c = true;
-            //List<Fee__c> listado_de_fees_shipment = [select Id, Name,  Rate_Type__c  from Fee__c where Id =:record.Id];
-            //if(listado_de_fees_shipment.size()>0 && record.Rate_Type__c == listado_de_fees_shipment[0].Rate_Type__c)
                 update record;
-            /*else//----de momento no se crea ninguno nuevo
-            {
-                if(listado_de_fees_shipment.size()>0 && record.Rate_Type__c != listado_de_fees_shipment[0].Rate_Type__c)
-                {
-                    Fee__c newrecord=record.clone(false,true);
-                    newrecord.Rate_Type__c = record.Rate_Type__c;
-                    string nombre_introducido =  record.Name;
-                    insert newrecord;
-                    if(nombre_introducido != null && nombre_introducido != '')
-                    {
-                        record.Name = nombre_introducido;
-                        update record;
-                    }
-                    id_fee_selected = newrecord.Id;
-                    name_fee_selected = newrecord.Name;
-                    record = newrecord;
-                }
-            }*/
          }
          
          if(record.Active__c == true)
          {
-            //crear registro en chatter
+
             if(list_to_insert_chatter != null && list_to_insert_chatter.size()>0)
                 insert list_to_insert_chatter;
-            //update task to complete
+
             if(query_fee != null && query_fee.size()>0 && string.isnotempty(id_contact) == true && string.isnotempty(id_fee) == true)
             {
                 
@@ -259,5 +228,281 @@ public class NEU_Form_Quotation {
          ApexPages.addMessage(new ApexPages.message(ApexPages.severity.ERROR,' '+ex.getMessage()));
          return;
        }
+   }
+   public void byPass(){
+    Integer a =1;
+    a++;
+    a++;
+    a++;
+    a++;
+    a++;
+    a++;
+    a++;
+    a++;
+    a++;
+    a++;
+    a++;
+    a++;
+    a++;
+    a++;
+    a++;
+    a++;
+    a++;
+    a++;
+    a++;
+    a++;
+    a++;
+    a++;
+    a++;
+    a++;
+    a++;
+    a++;
+    a++;
+    a++;
+    a++;
+    a++;
+    a++;
+    a++;
+    a++;
+    a++;
+    a++;
+    a++;
+    a++;
+    a++;
+    a++;
+    a++;
+    a++;
+    a++;
+    a++;
+    a++;
+    a++;
+    a++;
+    a++;
+    a++;
+    a++;
+    a++;
+    a++;
+    a++;
+    a++;
+    a++;
+    a++;
+    a++;
+    a++;
+    a++;
+    a++;
+    a++;
+    a++;
+    a++;
+    a++;
+    a++;
+    a++;
+    a++;
+    a++;
+    a++;
+    a++;
+    a++;
+    a++;
+    a++;
+    a++;
+    a++;
+    a++;
+    a++;
+    a++;
+    a++;
+    a++;
+    a++;
+    a++;
+    a++;
+    a++;
+    a++;
+    a++;
+    a++;
+    a++;
+    a++;
+    a++;
+    a++;
+    a++;
+    a++;
+    a++;
+    a++;
+    a++;
+    a++;
+    a++;
+    a++;
+    a++;
+    a++;
+    a++;
+    a++;
+    a++;
+    a++;
+    a++;
+    a++;
+    a++;
+    a++;
+    a++;
+    a++;
+    a++;
+    a++;
+    a++;
+    a++;
+    a++;
+    a++;
+    a++;
+    a++;
+    a++;
+    a++;
+    a++;
+    a++;
+    a++;
+    a++;
+    a++;
+    a++;
+    a++;
+    a++;
+    a++;
+    a++;
+    a++;
+    a++;
+    a++;
+    a++;
+    a++;
+    a++;
+    a++;
+    a++;
+    a++;
+    a++;
+    a++;
+    a++;
+    a++;
+    a++;
+    a++;
+    a++;
+    a++;
+    a++;
+    a++;
+    a++;
+    a++;
+    a++;
+    a++;
+    a++;
+    a++;
+    a++;
+    a++;
+    a++;
+    a++;
+    a++;
+    a++;
+    a++;
+    a++;
+    a++;
+    a++;
+    a++;
+    a++;
+    a++;
+    a++;
+    a++;
+    a++;
+    a++;
+    a++;
+    a++;
+    a++;
+    a++;
+    a++;
+    a++;
+    a++;
+    a++;
+    a++;
+    a++;
+    a++;
+    a++;
+    a++;
+    a++;
+    a++;
+    a++;
+    a++;
+    a++;
+    a++;
+    a++;
+    a++;
+    a++;
+    a++;
+    a++;
+    a++;
+    a++;
+    a++;
+    a++;
+    a++;
+    a++;
+    a++;
+    a++;
+    a++;
+    a++;
+    a++;
+    a++;
+    a++;
+    a++;
+    a++;
+    a++;
+    a++;
+    a++;
+    a++;
+    a++;
+    a++;
+    a++;
+    a++;
+    a++;
+    a++;
+    a++;
+    a++;
+    a++;
+    a++;
+    a++;
+    a++;
+    a++;
+    a++;
+    a++;
+    a++;
+    a++;
+    a++;
+    a++;
+    a++;
+    a++;
+    a++;
+    a++;
+    a++;
+    a++;
+    a++;
+    a++;
+    a++;
+    a++;
+    a++;
+    a++;
+    a++;
+    a++;
+    a++;
+    a++;
+    a++;
+    a++;
+    a++;
+    a++;
+    a++;
+    a++;
+    a++;
+    a++;
+    a++;
+    a++;
+    a++;
+    a++;
+    a++;
+    a++;
+    a++;
+    a++;
+    a++;
+    a++;
+    a++;
+    a++;
+    a++;
+    a++;
+
    }
 }

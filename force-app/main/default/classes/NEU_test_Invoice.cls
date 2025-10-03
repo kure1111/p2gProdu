@@ -1,4 +1,3 @@
-
 @isTest(seeAllData=true)
 private class NEU_test_Invoice {
     static testMethod void NEU_Invoice_PDF() {

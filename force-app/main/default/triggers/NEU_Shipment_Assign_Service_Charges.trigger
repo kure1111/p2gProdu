@@ -1,7 +1,6 @@
 trigger NEU_Shipment_Assign_Service_Charges on Shipment__c (after update)
 {
-	if(NEU_StaticVariableHelper.getBoolean1())
-		return; 
+    if(NEU_StaticVariableHelper.getBoolean1()){return; }		
 	
     if(!RecursiveCheck.triggerMonitor.contains('NEU_Shipment_Assign_Service_Charges')){
         RecursiveCheck.triggerMonitor.add('NEU_Shipment_Assign_Service_Charges');

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Workflow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fieldUpdates>
+        <fullName>Over_Write_Item_Program_Step</fullName>
+        <field>Name</field>
+        <formula>TEXT (Step_N__c)  &amp; &quot; - &quot; &amp;   Family__r.Name &amp; &quot; - &quot; &amp; Subfamily__r.Name &amp; &quot; - &quot; &amp; Item__r.Name &amp; &quot; - &quot; &amp;   Factory_Line__r.Name &amp; &quot; - &quot; &amp; Workcell__r.Name</formula>
+        <name>Over Write Item Program Step</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+</Workflow>

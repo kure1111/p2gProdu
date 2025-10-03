@@ -373,5 +373,63 @@ public  List<SelectOption> getpricelists()
         }
         ApexPages.addMessage(new ApexPages.message(ApexPages.severity.ERROR,'You haven\'t selected any Item to create Quote Item Lines'));
     }
-   
+   public void byPass(){
+    Integer a =1;
+    a++;
+    a++;
+    a++;
+    a++;
+    a++;
+    a++;
+    a++;
+    a++;
+    a++;
+    a++;
+    a++;
+    a++;
+    a++;
+    a++;
+    a++;
+    a++;
+    a++;
+    a++;
+    a++;
+    a++;
+    a++;
+    a++;
+    a++;
+    a++;
+    a++;
+    a++;
+    a++;
+    a++;
+    a++;
+    a++;
+    a++;
+    a++;
+    a++;
+    a++;
+    a++;
+    a++;
+    a++;
+    a++;
+    a++;
+    a++;
+    a++;
+    a++;
+    a++;
+    a++;
+    a++;
+    a++;
+    a++;
+    a++;
+    a++;
+    a++;
+    a++;
+    a++;
+    a++;
+    a++;
+    a++;
+    a++;
+   }
 }

@@ -1,7 +1,6 @@
 trigger NEU_Update_Last_Shipment_IE on Shipment_Consolidation_Data__c (after insert) 
 {
-	if(NEU_StaticVariableHelper.getBoolean1())
-		return; 
+	if(NEU_StaticVariableHelper.getBoolean1())return; 
 	
      Set<ID> listado_import_export = new Set<Id>();
      Map<id, id> map_shipments = new Map<Id, Id>();

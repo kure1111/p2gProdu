@@ -302,7 +302,6 @@ El usuario debe seleccionar la campaña a la que quiera que pertenezca esa oport
                     </defaultValue>
                     <fieldText>lista campañas</fieldText>
                     <fieldType>DropdownBox</fieldType>
-                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>true</isRequired>
                 </fields>
                 <inputParameters>

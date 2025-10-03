@@ -1,7 +1,6 @@
 trigger NEU_ShipmentContainerType_to_Size on Shipment__c (before insert, before update) 
 {
-	if(NEU_StaticVariableHelper.getBoolean1())
-		return; 
+    if(NEU_StaticVariableHelper.getBoolean1()){return;}		
 	
     if(!RecursiveCheck.triggerMonitor.contains('NEU_ShipmentContainerType_to_Size')){
      	RecursiveCheck.triggerMonitor.add('NEU_ShipmentContainerType_to_Size');

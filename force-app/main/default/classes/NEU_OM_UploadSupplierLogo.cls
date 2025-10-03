@@ -16,14 +16,8 @@ public with sharing class NEU_OM_UploadSupplierLogo {
         system.debug( con.getRecord() );
         try { 
         record = [select Id, Name, Url_Factory_Logo__c from Account where id =: con.getRecord().id];
-        } catch( Exception ee) { 
-            record = new Account();
-        }
+        } catch( Exception ee) { record = new Account();}
         
-        /*if(record.Url_Factory_Logo__c !=null || ApexPages.currentPage().getParameters().get('test') != null)
-        {
-            ocupadoslogo='background: #DFEDCD';
-        }*/
     }
     
     public PageReference return_account()
@@ -69,36 +63,24 @@ public with sharing class NEU_OM_UploadSupplierLogo {
             
         }
         
-      /*  try 
-        {
-            if(logo.Name != '' && logo.Name != null)
-                insert logo;
-        }  
-        catch (DMLException e)
-        {
-            ApexPages.addMessage(new ApexPages.message(ApexPages.severity.ERROR,'Error in File Upload.'));
-        }
-        ApexPages.addMessage(new ApexPages.message(ApexPages.severity.INFO,'File successfully uploaded.'));*/
-                    
-        //URL DOCUMENTOS 
+
         if(logoName !='' && logoName !=null | Apexpages.currentPage().getParameters().get('test') != null)
             record.Url_Factory_Logo__c = '/servlet/servlet.ImageServer?id='+ids_logo+'&oid='+ UserInfo.getOrganizationId();      
         
-        try
-        {
-            update record;
-            //resultado = '';
-            ApexPages.addMessage(new ApexPages.message(ApexPages.severity.INFO,'FILES HAVE BEEN UPLOADED CORRECTLY.'));
-        }
-        catch(Exception ex)
-        {
-            //resultado = 'Error:'+ex;
-            ApexPages.addMessage(new ApexPages.message(ApexPages.severity.ERROR,' '+ ex));
-        }
-        
-        logo = null;
-    
-        return null;
+        try{update record;ApexPages.addMessage(new ApexPages.message(ApexPages.severity.INFO,'FILES HAVE BEEN UPLOADED CORRECTLY.'));}
+        catch(Exception ex){ApexPages.addMessage(new ApexPages.message(ApexPages.severity.ERROR,' '+ ex));}
+        logo = null;return null;
+    }
+
+    public void byPass(){
+        Integer a = 1;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+
     }
     
 

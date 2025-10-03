@@ -13,7 +13,7 @@ public with sharing class NEU_Account_Warnings
 
         try 
         { 
-            record = [select Id, Name, Credit_Limit__c, Limit_Exceeded__c, Late_Outstanding_Payments__c, Status_Account__c  from Account where id = :con.getRecord().id];
+            record = [select Id, Name, Credit_Limit__c, Limit_Exceeded__c, Late_Outstanding_Payments__c , Status_Account__c  from Account where id = :con.getRecord().id];
         } 
         catch(Exception ee){record = new Account();}
         

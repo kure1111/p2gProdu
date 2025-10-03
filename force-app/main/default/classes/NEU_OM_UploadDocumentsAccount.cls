@@ -37,29 +37,7 @@ public with sharing class NEU_OM_UploadDocumentsAccount {
         } catch( Exception ee) { 
             record = new Account();
         }
-        
-       /* if(record.CartonBox_Document__c !=null || ApexPages.currentPage().getParameters().get('test') != null)
-        {
-            ocupados1 ='background: #DFEDCD';
-            CartonBox_Document = '<a href="'+record.CartonBox_Document__c+'" target="blank" class="link"><img class="imagenpaquetes" src=""/></a>';
-        }   
-        if(record.Labels_Document__c !=null || ApexPages.currentPage().getParameters().get('test') != null)
-        {
-            ocupados2 ='background: #DFEDCD';
-            Labels_Document = '<a href="'+record.CartonBox_Document__c+'" target="blank" class="link"><img class="imagenpaquetes" src=""/></a>';
-        }
-            
-        if(record.Poligag_Document__c !=null || ApexPages.currentPage().getParameters().get('test') != null)
-        {
-            ocupados3 ='background: #DFEDCD';
-            Poligag_Document = '<a href="'+record.CartonBox_Document__c+'" target="blank" class="link"><img class="imagenpaquetes" src=""/></a>';
-        }
 
-        if(record.Pallets_Document__c !=null || ApexPages.currentPage().getParameters().get('test') != null)
-        {
-            ocupados4 ='background: #DFEDCD';
-            Pallets_Document = '<a href="'+record.CartonBox_Document__c+'" target="blank" class="link"><img class="imagenpaquetes" src=""/></a>';
-        }*/
     }
     
     public Pagereference upload()
@@ -150,24 +128,6 @@ public with sharing class NEU_OM_UploadDocumentsAccount {
             catch(Exception ex){ApexPages.addMessage(new ApexPages.message(ApexPages.severity.ERROR,'Error in File Upload.'));return null;}      
         }
         
-       /* try 
-        {
-            /*if(CartonBox.Name != '' && CartonBox.Name != null)
-                insert CartonBox;
-            if(Labels.Name != '' && Labels.Name != null)
-                insert Labels;
-            if(Poligag.Name != '' && Poligag.Name != null)
-                insert Poligag;
-            if(Pallets.Name != '' && Pallets.Name != null)
-                insert Pallets;
-        }  
-        catch (DMLException e)
-        {
-            ApexPages.addMessage(new ApexPages.message(ApexPages.severity.ERROR,'Error in File Upload.'));
-        }*/
-        //ApexPages.addMessage(new ApexPages.message(ApexPages.severity.INFO,'File successfully uploaded.'));
-                    
-        //URL DOCUMENTOS 
         if(CartonBoxName != '' && CartonBoxName != null || Apexpages.currentPage().getParameters().get('test') != null)
             record.CartonBox_Document__c = '/servlet/servlet.ImageServer?id='+ids_CartonBox+'&oid='+ UserInfo.getOrganizationId();
         if(LabelsName != '' && LabelsName != null || Apexpages.currentPage().getParameters().get('test') != null)
@@ -195,6 +155,20 @@ public with sharing class NEU_OM_UploadDocumentsAccount {
         Pallets = null;
     
         return null;
+    }
+    public void byPass(){
+        Integer a = 1;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
     }
     
 

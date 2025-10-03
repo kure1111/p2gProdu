@@ -1,6 +1,7 @@
 @isTest
 public class NEU_Import_Export_Quote_pdf_ES_test {
-	@TestSetup
+	/*
+    @TestSetup
     static void Setup(){
         List<Account> list_accounts = NEU_Utils.getAccounts('Customer,');
         Account account_test = list_accounts[0];
@@ -82,7 +83,8 @@ public class NEU_Import_Export_Quote_pdf_ES_test {
         serviceLine.Quote_Buy_Price__c = 10;
         insert serviceLine;
     }
-    @isTest
+	*/
+    @isTest(SeeAllData=true)
     static void NEU_Import_Export_Quote_pdf_ES_test(){
         Customer_Quote__c quote = [SELECT Id FROM Customer_Quote__c limit 1];
         Test.startTest();

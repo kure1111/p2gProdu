@@ -1,16 +1,27 @@
 @IsTest
 public class WsShipmentTest {  
-    @isTest(SeeAllData=true) static void testPUTShipmentSPFN() {
-        Shipment__c shipment = [SELECT Id FROM Shipment__c WHERE Name = 'SP-FN-20-176712' LIMIT 1];
-        
-        WsShipment.UpdateShipment('Arrive Origin', shipment.Id, 'SP-FN', '2024-02-07 17:04:09.071', '', 'EXPORT','Siniestro');
-        WsShipment.UpdateShipment('Arrive Destination', shipment.Id, 'SP-FN', '2024-02-07 17:04:09.071', '', 'EXPORT','Siniestro');
-        WsShipment.UpdateShipment('Awaiting load_M', shipment.Id, 'SP-FN', '2024-02-07 17:04:09.071', '', 'EXPORT','Siniestro');
-        WsShipment.UpdateShipment('Awaiting Unload_M', shipment.Id, 'SP-FN', '2024-02-07 17:04:09.071', '', 'EXPORT','Siniestro');
-        WsShipment.UpdateShipment('Delivery on Route_M', shipment.Id, 'SP-FN', '2024-02-07 17:04:09.071', '', 'EXPORT','Siniestro');
-        WsShipment.UpdateShipment('Finished_M', shipment.Id, 'SP-FN', '2024-02-07 17:04:09.071', '', 'EXPORT','Siniestro');
-        WsShipment.UpdateShipment('Loading_M', shipment.Id, 'SP-FN', '2024-02-07 17:04:09.071', '', 'EXPORT','Siniestro');
-		WsShipment.UpdateShipment('Unloading_M', shipment.Id, 'SP-FN', '2024-02-07 17:04:09.071', '', 'EXPORT','Siniestro');
-    }
 
+    @isTest(SeeAllData=true)
+    static void testPUTShipmentSPFN() {
+        Shipment__c shipment = [SELECT Id FROM Shipment__c LIMIT 1];
+        String shipmentId = shipment.Id;
+
+        List<Map<String, Object>> testData = new List<Map<String, Object>>{
+            new Map<String, Object>{ 'idShipment' => shipmentId, 'status' => 'Arrive Origin', 'otd' => 'Siniestro' },
+            new Map<String, Object>{ 'idShipment' => shipmentId, 'status' => 'Arrive Destination', 'eventDatetime' => '2024-02-07 17:04:09.071', 'otd' => 'Siniestro' },
+            new Map<String, Object>{ 'idShipment' => shipmentId, 'status' => 'Awaiting load_M', 'eventDatetime' => '2024-02-07 17:04:09.071', 'otd' => 'Siniestro' },
+            new Map<String, Object>{ 'idShipment' => shipmentId, 'status' => 'Awaiting Unload_M', 'eventDatetime' => '2024-02-07 17:04:09.071', 'otd' => 'Siniestro' },
+            new Map<String, Object>{ 'idShipment' => shipmentId, 'status' => 'Delivery on Route_M', 'eventDatetime' => '2024-02-07 17:04:09.071', 'otd' => 'Siniestro' },
+            new Map<String, Object>{ 'idShipment' => shipmentId, 'status' => 'Finished_M', 'eventDatetime' => '2024-02-07 17:04:09.071', 'otd' => 'Siniestro' },
+            new Map<String, Object>{ 'idShipment' => shipmentId, 'status' => 'Loading_M', 'eventDatetime' => '2024-02-07 17:04:09.071', 'otd' => 'Siniestro' },
+            new Map<String, Object>{ 'idShipment' => shipmentId, 'status' => 'Unloading_M', 'eventDatetime' => '2024-02-07 17:04:09.071', 'otd' => 'Siniestro' }
+        };
+
+        for (Map<String, Object> data : testData) {
+            RestContext.request = new RestRequest();
+            RestContext.response = new RestResponse();
+            RestContext.request.requestBody = Blob.valueOf(JSON.serialize(data));
+            String result = WsShipment.UpdateShipment();
+        }
+    }
 }

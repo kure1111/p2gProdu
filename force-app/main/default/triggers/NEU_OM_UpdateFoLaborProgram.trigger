@@ -5,7 +5,14 @@ trigger NEU_OM_UpdateFoLaborProgram on Labor_Program__c (after insert) {
     
     Set<Id>users=new Set<Id>();
     Set<Id>accounts=new Set<Id>();
-    List<Labor_Program__c> labors=[select Id, Factory_Line__r.Account_Owner__c, Factory_Line__r.Account_Owner__r.Account_Executive_User__c, Factory_Line__r.Account_Owner__r.OwnerId, Factory_Line__r.Account_Owner__r.Account_External_Follower_User__c, CreatedById from Labor_Program__c where Id IN:trigger.new]; 
+    List<Labor_Program__c> labors=[select Id, 
+                                   Factory_Line__r.Account_Owner__c,
+                                   Factory_Line__r.Account_Owner__r.Account_Executive_User__c,
+                                   Factory_Line__r.Account_Owner__r.OwnerId,
+                                   Factory_Line__r.Account_Owner__r.Account_External_Follower_User__c,
+                                   CreatedById
+                                   from Labor_Program__c
+                                   where Id IN:trigger.new]; 
     for(Labor_Program__c obj : labors)
     {
         if(obj.Factory_Line__r.Account_Owner__r.Account_Executive_User__c!=null)

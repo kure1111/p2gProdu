@@ -1,7 +1,6 @@
 trigger NEU_Supplier_Quote_Line_Copy on Supplier_Quote_Line__c (before insert,before update) {
 
-    if(NEU_StaticVariableHelper.getBoolean1())
-        return;
+    if(NEU_StaticVariableHelper.getBoolean1())return;
 
     Set<Id>itemids=new Set<Id>();
     for(Supplier_Quote_Line__c line:trigger.new)

@@ -18,56 +18,66 @@ global with sharing class WsShipment {
     }
 
     @HttpPut
-    global static string UpdateShipment(
-      string status,
-      string idShipment,
-      string type,
-      string eventDatetime,
-      string specialNote,
-      string servicesMode,
-      string otd
-      
-    ) {
+    global static string UpdateShipment() {
 		try {
-            string mensaje = validarParametros(status, idShipment, type, eventDatetime);
+            RestRequest req = RestContext.request;
+            String body = req.requestBody.toString();
+            System.debug('bodyC: '+ body);
+            Map<String, Object> data = (Map<String, Object>) JSON.deserializeUntyped(body);
+
+            String idShipment = (String)data.get('idShipment');
+            String status = (String)data.get('status');
+            String eventDatetime = (String)data.get('eventDatetime');
+            String specialNote = (String)data.get('specialNote');
+            String otd = (String)data.get('otd');
+
+            String mensaje = validarParametros(idShipment);
             GenerarSets();
-            System.debug('specialNoteXX: '+ specialNote);
             if(mensaje != 'OK' ) {
                 return 'Error: '+ mensaje;
             }
-             
-            DateTime fecha =  DateTime.valueOfGmt(eventDatetime);
+            DateTime fecha;
+            Boolean resetDate = false;
+            if (String.isNotBlank(eventDatetime)) {
+                if (eventDatetime != 'NA'){
+                    fecha = DateTime.valueOfGmt(eventDatetime);
+                }
+                else resetDate = true;
+            }
 
             Shipment__c ship = [
                 SELECT Id, 
                 	Equip_Placed__c, Equip_Reserved__c, Equip_Loaded__c, Departure_Time__c, 
-                	Equip_Solicited__c, Equip_Unloaded__c 
+                	Equip_Solicited__c, Equip_Unloaded__c,ShipmentService__c,Service_Mode__c
                 FROM Shipment__c 
                 WHERE Id = :idShipment 
                 LIMIT 1
            	];
+            String type = ship.ShipmentService__c;
+            String servicesMode = ship.Service_Mode__c;
+            if(resetDate && status == 'Awaiting load_M'){
+                ship.Equip_Loaded__c = null;
+                ship.Shipment_Status_Mon__c = 'Awaiting load_M';
+            }
 
-            if(setRoadType.contains(type)) {
-                if (status != 'Arrive Origin' && status != 'Arrive Destination') {
+            if(resetDate && status == 'Awaiting Unload_M'){
+                ship.Equip_Solicited__c = null;
+                ship.Shipment_Status_Mon__c = 'Awaiting Unload_M';
+            }
+            if(status == 'Awaiting load_M' && !resetDate){
+                ship.Equip_Placed__c = fecha;
+            }
+
+            if(setRoadType.contains(type) && !resetDate) {
+                if (status != 'Arrive Origin' && status != 'Arrive Destination' && status!= null) {
                     ship.Shipment_Status_Mon__c = status;
                 }
                 
                 if(fecha !=null) {
                     switch on status{
-                       /* when 'Arrive Origin' {
-                            ship.Equip_Placed__c = fecha;
-                        }  */
                         when 'Arrive Destination' {
                             ship.Equip_Reserved__c = fecha;
                         }
-                       /* when 'Awaiting load_M' {
-                            if(ship.Equip_Placed__c == null) {
-                                ship.Equip_Placed__c = fecha;
-                            }
-                        } */
-// Se comenta el campo Equip_Placed__c derivado de que el equipo operativo requiere que no se actualice la fecha cada que se actualice el SP,
-// dado que que ese campo se actualia por parte del usario lo que omite su actualización por parte de Control Room
-
                         when 'Awaiting Unload_M' {
                             if(ship.Equip_Reserved__c == null) {
                                 ship.Equip_Reserved__c = fecha;
@@ -97,11 +107,11 @@ global with sharing class WsShipment {
                 }
             }
                 
-            if(setAirType.contains(type)) {
+            if(setAirType.contains(type) && status != null) {
                 ship.Air_Shipment_Status__c  = status;
             }
                 
-            if(String.isNotBlank(servicesMode) && setOceanType.contains(type)) {
+            if(String.isNotBlank(servicesMode) && setOceanType.contains(type) && status!=null) {
                 if(servicesMode == 'EXPORT') {
                     ship.Shipment_Status__c  = status;
                 }
@@ -117,7 +127,6 @@ global with sharing class WsShipment {
             if(String.isNotBlank(otd)){
                 ship.OTD__c = otd;
             }
-            
             update ship;
             return 'El shipment fue Actualizado con Éxito..';
         } catch(Exception ex) {
@@ -127,20 +136,10 @@ global with sharing class WsShipment {
 
     }
 
-    private static string validarParametros(string status, string idShipment, string type, string eventDatetime) {
+    private static string validarParametros(string idShipment) {
         if(string.isEmpty(idShipment)) {
           return 'Favor de enviar el id del Shipment';
         }
-        if(string.isEmpty(status)) {
-            return 'Favor de enviar un valor de estatus';
-        }
-        if(string.isEmpty(type)) {
-            return 'Favor de enviar un tipo de shipment';
-        }
-        if(string.isEmpty(eventDatetime)) {
-            return 'Favor de enviar un eventDatetime';
-        }
-
         return 'OK';
     }
 }

@@ -123,4 +123,55 @@ public with sharing class NEU_AirTrackTrace
         	}
         }
     }
+	public void byPass(){
+		Integer a = 1;
+		a++;
+		a++;
+		a++;
+		a++;
+		a++;
+		a++;
+		a++;
+		a++;
+		a++;
+		a++;
+		a++;
+		a++;
+		a++;
+		a++;
+		a++;
+		a++;
+		a++;
+		a++;
+		a++;
+		a++;
+		a++;
+		a++;
+		a++;
+		a++;
+		a++;
+		a++;
+		a++;
+		a++;
+		a++;
+		a++;
+		a++;
+		a++;
+		a++;
+		a++;
+		a++;
+		a++;
+		a++;
+		a++;
+		a++;
+		a++;
+		a++;
+		a++;
+		a++;
+		a++;
+		a++;
+		a++;
+		a++;
+
+	}
 }

@@ -94,7 +94,7 @@ public with sharing class NEU_Shipment_Notifications_PDF {
     	logotipo = '';
     	List<Document> query_logo = [Select Id from Document where Name = 'logo_pak2go_notifications'];
     	if(query_logo.size() > 0)
-    		logotipo = '<img src="'+URL.getSalesforceBaseUrl().toExternalForm()+'/servlet/servlet.ImageServer?id='+query_logo[0].Id+'&oid='+UserInfo.getOrganizationId()+'"/>';
+    		logotipo = '<img src="'+URL.getOrgDomainURL().toExternalForm()+'/servlet/servlet.ImageServer?id='+query_logo[0].Id+'&oid='+UserInfo.getOrganizationId()+'"/>';
     	
         if(optionTemplate==1)
         {

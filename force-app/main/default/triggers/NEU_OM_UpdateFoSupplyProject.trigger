@@ -28,12 +28,7 @@ trigger NEU_OM_UpdateFoSupplyProject on Supply_Project__c (after insert) {
     {
         for(Supply_Project__c obj:Supply_Project)
         {
-            if((obj.Customer__r.Account_Executive_User__c==qi.Id)
-             ||(obj.Customer__r.OwnerId==qi.Id)
-             ||(obj.Customer__r.Account_External_Follower_User__c==qi.Id)
-             ||(obj.CreatedById==qi.Id) 
-             ||(obj.Customer__c==qi.AccountId))
-             {
+            if((obj.Customer__r.Account_Executive_User__c==qi.Id)||(obj.Customer__r.OwnerId==qi.Id)||(obj.Customer__r.Account_External_Follower_User__c==qi.Id)||(obj.CreatedById==qi.Id)||(obj.Customer__c==qi.AccountId)){
                 if(string.isEmpty(qi.AccountId))
                 {
                     String key=obj.id+'_'+qi.Id;

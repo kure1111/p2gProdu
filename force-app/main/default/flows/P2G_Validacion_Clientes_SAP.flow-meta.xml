@@ -4,7 +4,7 @@
         <name>Send_To_SAP</name>
         <label>Send To SAP</label>
         <locationX>4296</locationX>
-        <locationY>3170</locationY>
+        <locationY>3578</locationY>
         <actionName>APX_ValidacionCliente</actionName>
         <actionType>apex</actionType>
         <connector>
@@ -17,16 +17,46 @@
                 <elementReference>recordId</elementReference>
             </value>
         </inputParameters>
-        <nameSegment>APX_ValidacionCliente</nameSegment>
-        <versionSegment>1</versionSegment>
     </actionCalls>
     <apiVersion>54.0</apiVersion>
+    <assignments>
+        <name>A_agregar</name>
+        <label>A agregar</label>
+        <locationX>1977</locationX>
+        <locationY>1106</locationY>
+        <assignmentItems>
+            <assignToReference>TipoServicio</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>A</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Actualizar_tipo_de_servicio</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Aduanas_agregar</name>
+        <label>Aduanas agregar</label>
+        <locationX>2505</locationX>
+        <locationY>1106</locationY>
+        <assignmentItems>
+            <assignToReference>TipoServicio</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Aduanas</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Actualizar_tipo_de_servicio</targetReference>
+        </connector>
+    </assignments>
     <assignments>
         <description>Variable booleana que se asigna como Verdadera si encuentra un contacto de tipo Persona de contacto</description>
         <name>Asignar_Persona</name>
         <label>Asignar Persona</label>
         <locationX>4186</locationX>
-        <locationY>2354</locationY>
+        <locationY>2762</locationY>
         <assignmentItems>
             <assignToReference>TC_PersonaContacto</assignToReference>
             <operator>Assign</operator>
@@ -64,7 +94,7 @@
         <name>Asignar_Referencia</name>
         <label>Asignar Referencia</label>
         <locationX>3922</locationX>
-        <locationY>2354</locationY>
+        <locationY>2762</locationY>
         <assignmentItems>
             <assignToReference>TC_Referencia</assignToReference>
             <operator>Assign</operator>
@@ -101,7 +131,7 @@
         <name>Auxiliar_1</name>
         <label>Auxiliar 1</label>
         <locationX>446</locationX>
-        <locationY>2006</locationY>
+        <locationY>2414</locationY>
         <assignmentItems>
             <assignToReference>auxiliar_documentos</assignToReference>
             <operator>Add</operator>
@@ -118,7 +148,7 @@
         <name>Auxiliar_2</name>
         <label>Auxiliar 2</label>
         <locationX>886</locationX>
-        <locationY>2006</locationY>
+        <locationY>2414</locationY>
         <assignmentItems>
             <assignToReference>auxiliar_documentos</assignToReference>
             <operator>Add</operator>
@@ -135,7 +165,7 @@
         <name>Auxiliar_3</name>
         <label>Auxiliar 3</label>
         <locationX>1326</locationX>
-        <locationY>2006</locationY>
+        <locationY>2414</locationY>
         <assignmentItems>
             <assignToReference>auxiliar_documentos</assignToReference>
             <operator>Add</operator>
@@ -152,7 +182,7 @@
         <name>Auxiliar_4</name>
         <label>Auxiliar 4</label>
         <locationX>1766</locationX>
-        <locationY>2006</locationY>
+        <locationY>2414</locationY>
         <assignmentItems>
             <assignToReference>auxiliar_documentos</assignToReference>
             <operator>Add</operator>
@@ -169,7 +199,7 @@
         <name>Auxiliar_5</name>
         <label>Auxiliar 5</label>
         <locationX>2206</locationX>
-        <locationY>2006</locationY>
+        <locationY>2414</locationY>
         <assignmentItems>
             <assignToReference>auxiliar_documentos</assignToReference>
             <operator>Add</operator>
@@ -186,7 +216,7 @@
         <name>Auxiliar_6</name>
         <label>Auxiliar 6</label>
         <locationX>2646</locationX>
-        <locationY>2006</locationY>
+        <locationY>2414</locationY>
         <assignmentItems>
             <assignToReference>auxiliar_documentos</assignToReference>
             <operator>Add</operator>
@@ -203,7 +233,7 @@
         <name>Doc_Acta_constitutiva</name>
         <label>Acta constitutiva</label>
         <locationX>2989</locationX>
-        <locationY>1322</locationY>
+        <locationY>1730</locationY>
         <assignmentItems>
             <assignToReference>documentosSubidos</assignToReference>
             <operator>Add</operator>
@@ -226,7 +256,7 @@
         <name>Doc_Acta_constitutiva_0</name>
         <label>Acta constitutiva</label>
         <locationX>1634</locationX>
-        <locationY>1814</locationY>
+        <locationY>2222</locationY>
         <assignmentItems>
             <assignToReference>documentosRestantes</assignToReference>
             <operator>Add</operator>
@@ -242,7 +272,7 @@
         <name>Doc_Cedula_Fiscal</name>
         <label>Cedula Fiscal</label>
         <locationX>2197</locationX>
-        <locationY>1322</locationY>
+        <locationY>1730</locationY>
         <assignmentItems>
             <assignToReference>documentosSubidos</assignToReference>
             <operator>Add</operator>
@@ -265,7 +295,7 @@
         <name>Doc_Cedula_Fiscal_0</name>
         <label>Cedula Fiscal</label>
         <locationX>314</locationX>
-        <locationY>1814</locationY>
+        <locationY>2222</locationY>
         <assignmentItems>
             <assignToReference>documentosRestantes</assignToReference>
             <operator>Add</operator>
@@ -281,7 +311,7 @@
         <name>Doc_Comprobante_de_Domicilio</name>
         <label>Comprobante de Domicilio</label>
         <locationX>2461</locationX>
-        <locationY>1322</locationY>
+        <locationY>1730</locationY>
         <assignmentItems>
             <assignToReference>documentosSubidos</assignToReference>
             <operator>Add</operator>
@@ -304,7 +334,7 @@
         <name>Doc_Comprobante_de_Domicilio_0</name>
         <label>Comprobante de Domicilio</label>
         <locationX>754</locationX>
-        <locationY>1814</locationY>
+        <locationY>2222</locationY>
         <assignmentItems>
             <assignToReference>documentosRestantes</assignToReference>
             <operator>Add</operator>
@@ -320,7 +350,7 @@
         <name>Doc_Constancia_Visita_Fotografia_Del_Negocio</name>
         <label>Constancia Visita Fotografia Del Negocio</label>
         <locationX>3517</locationX>
-        <locationY>1322</locationY>
+        <locationY>1730</locationY>
         <assignmentItems>
             <assignToReference>documentosSubidos</assignToReference>
             <operator>Add</operator>
@@ -343,7 +373,7 @@
         <name>Doc_Constancia_Visita_Fotografia_Del_Negocio_0</name>
         <label>Constancia Visita Fotografia Del Negocio</label>
         <locationX>2514</locationX>
-        <locationY>1814</locationY>
+        <locationY>2222</locationY>
         <assignmentItems>
             <assignToReference>documentosRestantes</assignToReference>
             <operator>Add</operator>
@@ -359,7 +389,7 @@
         <name>Doc_IFE_del_Repres_ntate_Legal</name>
         <label>IFE del Represéntate Legal</label>
         <locationX>2725</locationX>
-        <locationY>1322</locationY>
+        <locationY>1730</locationY>
         <assignmentItems>
             <assignToReference>documentosSubidos</assignToReference>
             <operator>Add</operator>
@@ -382,7 +412,7 @@
         <name>Doc_IFE_del_Repres_ntate_Legal_0</name>
         <label>IFE del Represéntate Legal</label>
         <locationX>1194</locationX>
-        <locationY>1814</locationY>
+        <locationY>2222</locationY>
         <assignmentItems>
             <assignToReference>documentosRestantes</assignToReference>
             <operator>Add</operator>
@@ -398,7 +428,7 @@
         <name>Doc_Solicitud_de_credito</name>
         <label>Solicitud de crédito</label>
         <locationX>3253</locationX>
-        <locationY>1322</locationY>
+        <locationY>1730</locationY>
         <assignmentItems>
             <assignToReference>documentosSubidos</assignToReference>
             <operator>Add</operator>
@@ -421,7 +451,7 @@
         <name>Doc_Solicitud_de_credito_0</name>
         <label>Solicitud de crédito</label>
         <locationX>2074</locationX>
-        <locationY>1814</locationY>
+        <locationY>2222</locationY>
         <assignmentItems>
             <assignToReference>documentosRestantes</assignToReference>
             <operator>Add</operator>
@@ -431,6 +461,118 @@
         </assignmentItems>
         <connector>
             <targetReference>Auxiliar_5</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>FI_agregar</name>
+        <label>FI agregar</label>
+        <locationX>1185</locationX>
+        <locationY>1106</locationY>
+        <assignmentItems>
+            <assignToReference>TipoServicio</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>FI</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Actualizar_tipo_de_servicio</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>FN_agregar</name>
+        <label>FN agregar</label>
+        <locationX>921</locationX>
+        <locationY>1106</locationY>
+        <assignmentItems>
+            <assignToReference>TipoServicio</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>FN</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Actualizar_tipo_de_servicio</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>M_agregar</name>
+        <label>M agregar</label>
+        <locationX>1713</locationX>
+        <locationY>1106</locationY>
+        <assignmentItems>
+            <assignToReference>TipoServicio</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>M</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Actualizar_tipo_de_servicio</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>PQ_agregar</name>
+        <label>PQ agregar</label>
+        <locationX>1449</locationX>
+        <locationY>1106</locationY>
+        <assignmentItems>
+            <assignToReference>TipoServicio</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>PQ</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Actualizar_tipo_de_servicio</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Seguros_agregar</name>
+        <label>Seguros agregar</label>
+        <locationX>2769</locationX>
+        <locationY>1106</locationY>
+        <assignmentItems>
+            <assignToReference>TipoServicio</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Seguros</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Actualizar_tipo_de_servicio</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>TI_agregar</name>
+        <label>TI agregar</label>
+        <locationX>3033</locationX>
+        <locationY>1106</locationY>
+        <assignmentItems>
+            <assignToReference>TipoServicio</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>T</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Actualizar_tipo_de_servicio</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>WH_agregar</name>
+        <label>WH agregar</label>
+        <locationX>2241</locationX>
+        <locationY>1106</locationY>
+        <assignmentItems>
+            <assignToReference>TipoServicio</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>WH</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Actualizar_tipo_de_servicio</targetReference>
         </connector>
     </assignments>
     <choices>
@@ -488,7 +630,7 @@
         <name>Doc_1</name>
         <label>Doc 1</label>
         <locationX>446</locationX>
-        <locationY>1706</locationY>
+        <locationY>2114</locationY>
         <defaultConnector>
             <targetReference>Auxiliar_1</targetReference>
         </defaultConnector>
@@ -541,7 +683,7 @@
         <name>Doc_2</name>
         <label>Doc 2</label>
         <locationX>886</locationX>
-        <locationY>1706</locationY>
+        <locationY>2114</locationY>
         <defaultConnector>
             <targetReference>Auxiliar_2</targetReference>
         </defaultConnector>
@@ -580,7 +722,7 @@
         <name>Doc_3</name>
         <label>Doc 3</label>
         <locationX>1326</locationX>
-        <locationY>1706</locationY>
+        <locationY>2114</locationY>
         <defaultConnector>
             <targetReference>Auxiliar_3</targetReference>
         </defaultConnector>
@@ -619,7 +761,7 @@
         <name>Doc_4</name>
         <label>Doc 4</label>
         <locationX>1766</locationX>
-        <locationY>1706</locationY>
+        <locationY>2114</locationY>
         <defaultConnector>
             <targetReference>Auxiliar_4</targetReference>
         </defaultConnector>
@@ -658,7 +800,7 @@
         <name>Doc_5</name>
         <label>Doc 5</label>
         <locationX>2206</locationX>
-        <locationY>1706</locationY>
+        <locationY>2114</locationY>
         <defaultConnector>
             <targetReference>Auxiliar_5</targetReference>
         </defaultConnector>
@@ -697,7 +839,7 @@
         <name>Doc_6</name>
         <label>Doc 6</label>
         <locationX>2646</locationX>
-        <locationY>1706</locationY>
+        <locationY>2114</locationY>
         <defaultConnector>
             <targetReference>Auxiliar_6</targetReference>
         </defaultConnector>
@@ -736,7 +878,7 @@
         <name>Documentos_Faltantes</name>
         <label>Documentos Faltantes</label>
         <locationX>2109</locationX>
-        <locationY>1598</locationY>
+        <locationY>2006</locationY>
         <defaultConnector>
             <targetReference>Associated_Documents_Screen</targetReference>
         </defaultConnector>
@@ -836,7 +978,7 @@
         <name>Esta_validado_el_cliente</name>
         <label>Esta validado el cliente</label>
         <locationX>4428</locationX>
-        <locationY>3062</locationY>
+        <locationY>3470</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>Validado</name>
@@ -858,7 +1000,7 @@
         <name>Falta_Documentos</name>
         <label>Falta Documentos</label>
         <locationX>3773</locationX>
-        <locationY>1814</locationY>
+        <locationY>2222</locationY>
         <defaultConnector>
             <targetReference>Requiere_Contactos</targetReference>
         </defaultConnector>
@@ -944,7 +1086,7 @@
         <name>Requiere_Contactos</name>
         <label>¿Requiere Contactos?</label>
         <locationX>4593</locationX>
-        <locationY>1922</locationY>
+        <locationY>2330</locationY>
         <defaultConnector>
             <isGoTo>true</isGoTo>
             <targetReference>is_Ready_to_SAP</targetReference>
@@ -974,10 +1116,344 @@
         </rules>
     </decisions>
     <decisions>
+        <name>Seleccion_tipo_de_servicio</name>
+        <label>Seleccion tipo de servicio</label>
+        <locationX>2109</locationX>
+        <locationY>998</locationY>
+        <defaultConnector>
+            <targetReference>Actualizar_tipo_de_servicio</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>FN</name>
+            <conditionLogic>or</conditionLogic>
+            <conditions>
+                <leftValueReference>Servicio_CRED</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>FN - Flete Nacional</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Servicio_CONT</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>FN - Flete Nacional</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Servicio_WCA_CRED</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>FN - Flete Nacional</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Servicio_WCA_CONT</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>FN - Flete Nacional</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>FN_agregar</targetReference>
+            </connector>
+            <label>FN</label>
+        </rules>
+        <rules>
+            <name>FI</name>
+            <conditionLogic>or</conditionLogic>
+            <conditions>
+                <leftValueReference>Servicio_CRED</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>FI - Flete Internacional</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Servicio_CONT</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>FI - Flete Internacional</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Servicio_WCA_CRED</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>FI - Flete Internacional</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Servicio_WCA_CONT</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>FI - Flete Internacional</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>FI_agregar</targetReference>
+            </connector>
+            <label>FI</label>
+        </rules>
+        <rules>
+            <name>PQ</name>
+            <conditionLogic>or</conditionLogic>
+            <conditions>
+                <leftValueReference>Servicio_CRED</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>PQ - Paqueterias</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Servicio_CONT</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>PQ - Paqueterias</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Servicio_WCA_CRED</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>PQ - Paqueterias</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Servicio_WCA_CONT</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>PQ - Paqueterias</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>PQ_agregar</targetReference>
+            </connector>
+            <label>PQ</label>
+        </rules>
+        <rules>
+            <name>M</name>
+            <conditionLogic>or</conditionLogic>
+            <conditions>
+                <leftValueReference>Servicio_CRED</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>M - Maritimo</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Servicio_CONT</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>M - Maritimo</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Servicio_WCA_CRED</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>M - Maritimo</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Servicio_WCA_CONT</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>M - Maritimo</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>M_agregar</targetReference>
+            </connector>
+            <label>M</label>
+        </rules>
+        <rules>
+            <name>A</name>
+            <conditionLogic>or</conditionLogic>
+            <conditions>
+                <leftValueReference>Servicio_CRED</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>A - Aereo</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Servicio_CONT</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>A - Aereo</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Servicio_WCA_CRED</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>A - Aereo</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Servicio_WCA_CONT</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>A - Aereo</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>A_agregar</targetReference>
+            </connector>
+            <label>A</label>
+        </rules>
+        <rules>
+            <name>WH</name>
+            <conditionLogic>or</conditionLogic>
+            <conditions>
+                <leftValueReference>Servicio_CRED</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>WH - Almacenajes</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Servicio_CONT</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>WH - Almacenajes</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Servicio_WCA_CRED</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>WH - Almacenajes</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Servicio_WCA_CONT</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>WH - Almacenajes</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>WH_agregar</targetReference>
+            </connector>
+            <label>WH</label>
+        </rules>
+        <rules>
+            <name>Aduanas</name>
+            <conditionLogic>or</conditionLogic>
+            <conditions>
+                <leftValueReference>Servicio_CRED</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Aduanas</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Servicio_CONT</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Aduanas</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Servicio_WCA_CRED</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Aduanas</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Servicio_WCA_CONT</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Aduanas</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Aduanas_agregar</targetReference>
+            </connector>
+            <label>Aduanas</label>
+        </rules>
+        <rules>
+            <name>Seguros</name>
+            <conditionLogic>or</conditionLogic>
+            <conditions>
+                <leftValueReference>Servicio_CRED</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Seguros</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Servicio_CONT</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Seguros</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Servicio_WCA_CRED</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Seguros</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Servicio_WCA_CONT</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Seguros</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Seguros_agregar</targetReference>
+            </connector>
+            <label>Seguros</label>
+        </rules>
+        <rules>
+            <name>T</name>
+            <conditionLogic>or</conditionLogic>
+            <conditions>
+                <leftValueReference>Servicio_CRED</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>T - Tarimas</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Servicio_CONT</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>T - Tarimas</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Servicio_WCA_CRED</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>T - Tarimas</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Servicio_WCA_CONT</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>T - Tarimas</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>TI_agregar</targetReference>
+            </connector>
+            <label>T</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>Tiene_Contactos</name>
         <label>¿Tiene Contactos?</label>
         <locationX>3834</locationX>
-        <locationY>2630</locationY>
+        <locationY>3038</locationY>
         <defaultConnector>
             <targetReference>SI_Contactos</targetReference>
         </defaultConnector>
@@ -1079,7 +1555,7 @@
         <name>Tipo_de_Contacto</name>
         <label>Tipo de Contacto</label>
         <locationX>4186</locationX>
-        <locationY>2246</locationY>
+        <locationY>2654</locationY>
         <defaultConnector>
             <targetReference>Lista_de_Contactos</targetReference>
         </defaultConnector>
@@ -1120,7 +1596,7 @@
         <name>Tipo_de_Documento</name>
         <label>Tipo de Documento</label>
         <locationX>2989</locationX>
-        <locationY>1214</locationY>
+        <locationY>1622</locationY>
         <defaultConnector>
             <targetReference>Iterar_Documentos_Asociados</targetReference>
         </defaultConnector>
@@ -1570,7 +2046,7 @@ AND( {!Check_Cedula_Fiscal} = False, {!Check_Comprobante_de_Domicilio} = False, 
         <name>Iterar_Documentos_Asociados</name>
         <label>Iterar Documentos Asociados</label>
         <locationX>2109</locationX>
-        <locationY>1106</locationY>
+        <locationY>1514</locationY>
         <collectionReference>Associated_Documents</collectionReference>
         <iterationOrder>Asc</iterationOrder>
         <nextValueConnector>
@@ -1585,7 +2061,7 @@ AND( {!Check_Cedula_Fiscal} = False, {!Check_Comprobante_de_Domicilio} = False, 
         <name>Lista_de_Contactos</name>
         <label>Lista de Contactos</label>
         <locationX>3834</locationX>
-        <locationY>2138</locationY>
+        <locationY>2546</locationY>
         <collectionReference>contact_list</collectionReference>
         <iterationOrder>Asc</iterationOrder>
         <nextValueConnector>
@@ -1618,7 +2094,7 @@ AND( {!Check_Cedula_Fiscal} = False, {!Check_Comprobante_de_Domicilio} = False, 
         <name>Create_Contact</name>
         <label>Create Contact</label>
         <locationX>3240</locationX>
-        <locationY>2846</locationY>
+        <locationY>3254</locationY>
         <connector>
             <isGoTo>true</isGoTo>
             <targetReference>Get_Contacts</targetReference>
@@ -1675,7 +2151,7 @@ AND( {!Check_Cedula_Fiscal} = False, {!Check_Comprobante_de_Domicilio} = False, 
         <name>Create_Contact_0</name>
         <label>Create Contact</label>
         <locationX>3768</locationX>
-        <locationY>2846</locationY>
+        <locationY>3254</locationY>
         <connector>
             <isGoTo>true</isGoTo>
             <targetReference>Get_Contacts</targetReference>
@@ -1733,7 +2209,7 @@ AND( {!Check_Cedula_Fiscal} = False, {!Check_Comprobante_de_Domicilio} = False, 
         <name>Associated_Documents</name>
         <label>Associated Documents</label>
         <locationX>2109</locationX>
-        <locationY>998</locationY>
+        <locationY>1406</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Iterar_Documentos_Asociados</targetReference>
@@ -1789,7 +2265,7 @@ AND( {!Check_Cedula_Fiscal} = False, {!Check_Comprobante_de_Domicilio} = False, 
         <name>Get_Contacts</name>
         <label>Get Contacts</label>
         <locationX>3834</locationX>
-        <locationY>2030</locationY>
+        <locationY>2438</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Lista_de_Contactos</targetReference>
@@ -1820,7 +2296,7 @@ AND( {!Check_Cedula_Fiscal} = False, {!Check_Comprobante_de_Domicilio} = False, 
         <locationX>1581</locationX>
         <locationY>566</locationY>
         <connector>
-            <targetReference>Associated_Documents</targetReference>
+            <targetReference>Seleccion_tipo_de_servicio</targetReference>
         </connector>
         <faultConnector>
             <targetReference>Screen_Error_Contado</targetReference>
@@ -2034,7 +2510,7 @@ AND( {!Check_Cedula_Fiscal} = False, {!Check_Comprobante_de_Domicilio} = False, 
         <locationX>1053</locationX>
         <locationY>566</locationY>
         <connector>
-            <targetReference>Associated_Documents</targetReference>
+            <targetReference>Seleccion_tipo_de_servicio</targetReference>
         </connector>
         <faultConnector>
             <targetReference>Screen_Error_Credito</targetReference>
@@ -2278,7 +2754,7 @@ AND( {!Check_Cedula_Fiscal} = False, {!Check_Comprobante_de_Domicilio} = False, 
         <locationX>2637</locationX>
         <locationY>566</locationY>
         <connector>
-            <targetReference>Associated_Documents</targetReference>
+            <targetReference>Seleccion_tipo_de_servicio</targetReference>
         </connector>
         <faultConnector>
             <targetReference>Screen_Error_WCA_Contado</targetReference>
@@ -2396,7 +2872,7 @@ AND( {!Check_Cedula_Fiscal} = False, {!Check_Comprobante_de_Domicilio} = False, 
         <locationX>2109</locationX>
         <locationY>566</locationY>
         <connector>
-            <targetReference>Associated_Documents</targetReference>
+            <targetReference>Seleccion_tipo_de_servicio</targetReference>
         </connector>
         <faultConnector>
             <targetReference>Screen_Error_WCA_Credito</targetReference>
@@ -2502,6 +2978,31 @@ AND( {!Check_Cedula_Fiscal} = False, {!Check_Comprobante_de_Domicilio} = False, 
         <object>Account</object>
     </recordUpdates>
     <recordUpdates>
+        <description>Actualiza la información del cliente, para poder hacer su alta en SAP</description>
+        <name>Actualizar_tipo_de_servicio</name>
+        <label>Actualizar tipo de servicio</label>
+        <locationX>2109</locationX>
+        <locationY>1298</locationY>
+        <connector>
+            <targetReference>Associated_Documents</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>recordId</elementReference>
+            </value>
+        </filters>
+        <inputAssignments>
+            <field>Tipo_de_Servicio_Prospecto__c</field>
+            <value>
+                <elementReference>TipoServicio</elementReference>
+            </value>
+        </inputAssignments>
+        <object>Account</object>
+    </recordUpdates>
+    <recordUpdates>
         <description>Actualiza la Cuenta y le asigna un tipo de Venta</description>
         <name>Actualizar_Venta</name>
         <label>Actualizar Venta</label>
@@ -2532,7 +3033,7 @@ AND( {!Check_Cedula_Fiscal} = False, {!Check_Comprobante_de_Domicilio} = False, 
         <name>is_Ready_to_SAP</name>
         <label>is Ready to SAP?</label>
         <locationX>4428</locationX>
-        <locationY>2846</locationY>
+        <locationY>3254</locationY>
         <connector>
             <targetReference>Status_Cliente</targetReference>
         </connector>
@@ -2584,7 +3085,6 @@ AND( {!Check_Cedula_Fiscal} = False, {!Check_Comprobante_de_Domicilio} = False, 
                     <dataType>String</dataType>
                     <fieldText>Venta</fieldText>
                     <fieldType>DropdownBox</fieldType>
-                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>true</isRequired>
                 </fields>
                 <inputParameters>
@@ -2605,7 +3105,7 @@ AND( {!Check_Cedula_Fiscal} = False, {!Check_Comprobante_de_Domicilio} = False, 
         <name>Associated_Documents_Error</name>
         <label>Associated Documents Error</label>
         <locationX>5616</locationX>
-        <locationY>1106</locationY>
+        <locationY>1514</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -2621,7 +3121,7 @@ AND( {!Check_Cedula_Fiscal} = False, {!Check_Comprobante_de_Domicilio} = False, 
         <name>Associated_Documents_Screen</name>
         <label>Associated Documents</label>
         <locationX>3773</locationX>
-        <locationY>1706</locationY>
+        <locationY>2114</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -2640,7 +3140,7 @@ AND( {!Check_Cedula_Fiscal} = False, {!Check_Comprobante_de_Domicilio} = False, 
         <name>Create_Contact_Error</name>
         <label>Create Contact Error</label>
         <locationX>3504</locationX>
-        <locationY>2954</locationY>
+        <locationY>3362</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -2656,7 +3156,7 @@ AND( {!Check_Cedula_Fiscal} = False, {!Check_Comprobante_de_Domicilio} = False, 
         <name>Create_Contact_Error_0</name>
         <label>Create Contact Error</label>
         <locationX>4032</locationX>
-        <locationY>2954</locationY>
+        <locationY>3362</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -2704,7 +3204,7 @@ AND( {!Check_Cedula_Fiscal} = False, {!Check_Comprobante_de_Domicilio} = False, 
         <name>Get_Contacts_Error</name>
         <label>Get Contacts Error</label>
         <locationX>5088</locationX>
-        <locationY>2138</locationY>
+        <locationY>2546</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -2720,7 +3220,7 @@ AND( {!Check_Cedula_Fiscal} = False, {!Check_Comprobante_de_Domicilio} = False, 
         <name>is_Ready_SAP_Error</name>
         <label>is Ready SAP? (Error)</label>
         <locationX>4824</locationX>
-        <locationY>2954</locationY>
+        <locationY>3362</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -2736,7 +3236,7 @@ AND( {!Check_Cedula_Fiscal} = False, {!Check_Comprobante_de_Domicilio} = False, 
         <name>NO_Contactos</name>
         <label>Contactos</label>
         <locationX>3240</locationX>
-        <locationY>2738</locationY>
+        <locationY>3146</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -2759,7 +3259,6 @@ AND( {!Check_Cedula_Fiscal} = False, {!Check_Comprobante_de_Domicilio} = False, 
                     <dataType>String</dataType>
                     <fieldText>Nombre</fieldText>
                     <fieldType>InputField</fieldType>
-                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>true</isRequired>
                 </fields>
                 <fields>
@@ -2786,7 +3285,6 @@ AND( {!Check_Cedula_Fiscal} = False, {!Check_Comprobante_de_Domicilio} = False, 
                     <dataType>String</dataType>
                     <fieldText>Apellido</fieldText>
                     <fieldType>InputField</fieldType>
-                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>true</isRequired>
                 </fields>
                 <fields>
@@ -2831,7 +3329,6 @@ AND( {!Check_Cedula_Fiscal} = False, {!Check_Comprobante_de_Domicilio} = False, 
                     <dataType>String</dataType>
                     <fieldText>Tipo de referencia</fieldText>
                     <fieldType>InputField</fieldType>
-                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>true</isRequired>
                 </fields>
                 <fields>
@@ -2841,7 +3338,6 @@ AND( {!Check_Cedula_Fiscal} = False, {!Check_Comprobante_de_Domicilio} = False, 
                     <dataType>String</dataType>
                     <fieldText>Tipo de Contacto</fieldText>
                     <fieldType>DropdownBox</fieldType>
-                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>true</isRequired>
                 </fields>
                 <inputParameters>
@@ -2862,7 +3358,7 @@ AND( {!Check_Cedula_Fiscal} = False, {!Check_Comprobante_de_Domicilio} = False, 
         <name>NO_Contactos_2</name>
         <label>Contactos</label>
         <locationX>3768</locationX>
-        <locationY>2738</locationY>
+        <locationY>3146</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -2885,7 +3381,6 @@ AND( {!Check_Cedula_Fiscal} = False, {!Check_Comprobante_de_Domicilio} = False, 
                     <dataType>String</dataType>
                     <fieldText>Nombre</fieldText>
                     <fieldType>InputField</fieldType>
-                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>true</isRequired>
                 </fields>
                 <fields>
@@ -2912,7 +3407,6 @@ AND( {!Check_Cedula_Fiscal} = False, {!Check_Comprobante_de_Domicilio} = False, 
                     <dataType>String</dataType>
                     <fieldText>Apellido</fieldText>
                     <fieldType>InputField</fieldType>
-                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>true</isRequired>
                 </fields>
                 <fields>
@@ -2957,7 +3451,6 @@ AND( {!Check_Cedula_Fiscal} = False, {!Check_Comprobante_de_Domicilio} = False, 
                     <dataType>String</dataType>
                     <fieldText>Tipo de referencia</fieldText>
                     <fieldType>InputField</fieldType>
-                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>true</isRequired>
                 </fields>
                 <fields>
@@ -2966,7 +3459,6 @@ AND( {!Check_Cedula_Fiscal} = False, {!Check_Comprobante_de_Domicilio} = False, 
                     <dataType>String</dataType>
                     <fieldText>Tipo de Contacto</fieldText>
                     <fieldType>DropdownBox</fieldType>
-                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>true</isRequired>
                 </fields>
                 <inputParameters>
@@ -2987,7 +3479,7 @@ AND( {!Check_Cedula_Fiscal} = False, {!Check_Comprobante_de_Domicilio} = False, 
         <name>RespuestaMensaje</name>
         <label>RespuestaMensaje</label>
         <locationX>4296</locationX>
-        <locationY>3278</locationY>
+        <locationY>3686</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -3067,7 +3559,7 @@ AND( {!Check_Cedula_Fiscal} = False, {!Check_Comprobante_de_Domicilio} = False, 
         <name>SI_Contactos</name>
         <label>Contactos</label>
         <locationX>4428</locationX>
-        <locationY>2738</locationY>
+        <locationY>3146</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -3086,7 +3578,7 @@ AND( {!Check_Cedula_Fiscal} = False, {!Check_Comprobante_de_Domicilio} = False, 
         <name>Status_Cliente</name>
         <label>Status Cliente</label>
         <locationX>4428</locationX>
-        <locationY>2954</locationY>
+        <locationY>3362</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -3131,7 +3623,6 @@ AND( {!Check_Cedula_Fiscal} = False, {!Check_Comprobante_de_Domicilio} = False, 
                     </defaultValue>
                     <fieldText>Razon Social</fieldText>
                     <fieldType>InputField</fieldType>
-                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>true</isRequired>
                 </fields>
                 <inputParameters>
@@ -3159,7 +3650,6 @@ AND( {!Check_Cedula_Fiscal} = False, {!Check_Comprobante_de_Domicilio} = False, 
                     </defaultValue>
                     <fieldText>Email</fieldText>
                     <fieldType>InputField</fieldType>
-                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>true</isRequired>
                 </fields>
                 <fields>
@@ -3170,7 +3660,6 @@ AND( {!Check_Cedula_Fiscal} = False, {!Check_Comprobante_de_Domicilio} = False, 
                     </defaultValue>
                     <fieldText>TAX ID</fieldText>
                     <fieldType>InputField</fieldType>
-                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>true</isRequired>
                 </fields>
                 <fields>
@@ -3182,7 +3671,6 @@ AND( {!Check_Cedula_Fiscal} = False, {!Check_Comprobante_de_Domicilio} = False, 
                     </defaultValue>
                     <fieldText>Servicio Prospecto</fieldText>
                     <fieldType>DropdownBox</fieldType>
-                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>true</isRequired>
                 </fields>
                 <fields>
@@ -3194,7 +3682,6 @@ AND( {!Check_Cedula_Fiscal} = False, {!Check_Comprobante_de_Domicilio} = False, 
                     </defaultValue>
                     <fieldText>Type</fieldText>
                     <fieldType>DropdownBox</fieldType>
-                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>true</isRequired>
                 </fields>
                 <fields>
@@ -3273,7 +3760,6 @@ AND( {!Check_Cedula_Fiscal} = False, {!Check_Comprobante_de_Domicilio} = False, 
                     </defaultValue>
                     <fieldText>Phone</fieldText>
                     <fieldType>InputField</fieldType>
-                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>true</isRequired>
                 </fields>
                 <fields>
@@ -3285,7 +3771,6 @@ AND( {!Check_Cedula_Fiscal} = False, {!Check_Comprobante_de_Domicilio} = False, 
                     </defaultValue>
                     <fieldText>Servicio</fieldText>
                     <fieldType>DropdownBox</fieldType>
-                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>true</isRequired>
                 </fields>
                 <fields>
@@ -3360,7 +3845,7 @@ AND( {!Check_Cedula_Fiscal} = False, {!Check_Comprobante_de_Domicilio} = False, 
                 </fields>
                 <fields>
                     <name>CrearAccountAddress_Contado</name>
-                    <fieldText>&lt;p&gt;&lt;a href=&quot;https://pak2gologistics--uat.sandbox.lightning.force.com/lightning/o/Account_Address__c/home&quot; rel=&quot;noopener noreferrer&quot; target=&quot;_blank&quot;&gt;Crear Account Address&lt;/a&gt;&lt;/p&gt;</fieldText>
+                    <fieldText>&lt;p&gt;&lt;a href=&quot;https://pak2gologistics.lightning.force.com/lightning/o/Account_Address__c/home&quot; rel=&quot;noopener noreferrer&quot; target=&quot;_blank&quot;&gt;Crear Account Address&lt;/a&gt;&lt;/p&gt;</fieldText>
                     <fieldType>DisplayText</fieldType>
                 </fields>
                 <inputParameters>
@@ -3393,7 +3878,6 @@ AND( {!Check_Cedula_Fiscal} = False, {!Check_Comprobante_de_Domicilio} = False, 
                     </defaultValue>
                     <fieldText>Calle</fieldText>
                     <fieldType>InputField</fieldType>
-                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>true</isRequired>
                 </fields>
                 <fields>
@@ -3404,7 +3888,6 @@ AND( {!Check_Cedula_Fiscal} = False, {!Check_Comprobante_de_Domicilio} = False, 
                     </defaultValue>
                     <fieldText>Ciudad</fieldText>
                     <fieldType>InputField</fieldType>
-                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>true</isRequired>
                 </fields>
                 <fields>
@@ -3415,7 +3898,6 @@ AND( {!Check_Cedula_Fiscal} = False, {!Check_Comprobante_de_Domicilio} = False, 
                     </defaultValue>
                     <fieldText>País</fieldText>
                     <fieldType>InputField</fieldType>
-                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>true</isRequired>
                 </fields>
                 <inputParameters>
@@ -3437,7 +3919,6 @@ AND( {!Check_Cedula_Fiscal} = False, {!Check_Comprobante_de_Domicilio} = False, 
                     </defaultValue>
                     <fieldText>Código Postal</fieldText>
                     <fieldType>InputField</fieldType>
-                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>true</isRequired>
                 </fields>
                 <fields>
@@ -3448,7 +3929,6 @@ AND( {!Check_Cedula_Fiscal} = False, {!Check_Comprobante_de_Domicilio} = False, 
                     </defaultValue>
                     <fieldText>Estado</fieldText>
                     <fieldType>InputField</fieldType>
-                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>true</isRequired>
                 </fields>
                 <inputParameters>
@@ -3477,7 +3957,6 @@ AND( {!Check_Cedula_Fiscal} = False, {!Check_Comprobante_de_Domicilio} = False, 
                     </defaultValue>
                     <fieldText>Metodo de Pago</fieldText>
                     <fieldType>DropdownBox</fieldType>
-                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>true</isRequired>
                 </fields>
                 <fields>
@@ -3489,7 +3968,6 @@ AND( {!Check_Cedula_Fiscal} = False, {!Check_Comprobante_de_Domicilio} = False, 
                     </defaultValue>
                     <fieldText>Bank Name</fieldText>
                     <fieldType>DropdownBox</fieldType>
-                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>true</isRequired>
                 </fields>
                 <fields>
@@ -3501,7 +3979,6 @@ AND( {!Check_Cedula_Fiscal} = False, {!Check_Comprobante_de_Domicilio} = False, 
                     </defaultValue>
                     <fieldText>Uso CFDI</fieldText>
                     <fieldType>DropdownBox</fieldType>
-                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>true</isRequired>
                 </fields>
                 <inputParameters>
@@ -3524,7 +4001,6 @@ AND( {!Check_Cedula_Fiscal} = False, {!Check_Comprobante_de_Domicilio} = False, 
                     </defaultValue>
                     <fieldText>Forma de Pago</fieldText>
                     <fieldType>DropdownBox</fieldType>
-                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>true</isRequired>
                 </fields>
                 <fields>
@@ -3535,7 +4011,6 @@ AND( {!Check_Cedula_Fiscal} = False, {!Check_Comprobante_de_Domicilio} = False, 
                     </defaultValue>
                     <fieldText>Bank Account Number</fieldText>
                     <fieldType>InputField</fieldType>
-                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>true</isRequired>
                 </fields>
                 <fields>
@@ -3547,7 +4022,6 @@ AND( {!Check_Cedula_Fiscal} = False, {!Check_Comprobante_de_Domicilio} = False, 
                     </defaultValue>
                     <fieldText>Regimen Fiscal</fieldText>
                     <fieldType>DropdownBox</fieldType>
-                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>true</isRequired>
                 </fields>
                 <inputParameters>
@@ -3574,7 +4048,6 @@ AND( {!Check_Cedula_Fiscal} = False, {!Check_Comprobante_de_Domicilio} = False, 
                     </defaultValue>
                     <fieldText>Comentarios</fieldText>
                     <fieldType>LargeTextArea</fieldType>
-                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>true</isRequired>
                 </fields>
                 <inputParameters>
@@ -3621,7 +4094,6 @@ AND( {!Check_Cedula_Fiscal} = False, {!Check_Comprobante_de_Domicilio} = False, 
                     </defaultValue>
                     <fieldText>Razon Social</fieldText>
                     <fieldType>InputField</fieldType>
-                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>true</isRequired>
                 </fields>
                 <inputParameters>
@@ -3649,7 +4121,6 @@ AND( {!Check_Cedula_Fiscal} = False, {!Check_Comprobante_de_Domicilio} = False, 
                     </defaultValue>
                     <fieldText>TAX ID</fieldText>
                     <fieldType>InputField</fieldType>
-                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>true</isRequired>
                 </fields>
                 <fields>
@@ -3660,7 +4131,6 @@ AND( {!Check_Cedula_Fiscal} = False, {!Check_Comprobante_de_Domicilio} = False, 
                     </defaultValue>
                     <fieldText>Email</fieldText>
                     <fieldType>InputField</fieldType>
-                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>true</isRequired>
                 </fields>
                 <fields>
@@ -3729,7 +4199,6 @@ AND( {!Check_Cedula_Fiscal} = False, {!Check_Comprobante_de_Domicilio} = False, 
                     </defaultValue>
                     <fieldText>Plaza</fieldText>
                     <fieldType>DropdownBox</fieldType>
-                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>true</isRequired>
                 </fields>
                 <fields>
@@ -3783,7 +4252,6 @@ AND( {!Check_Cedula_Fiscal} = False, {!Check_Comprobante_de_Domicilio} = False, 
                     </defaultValue>
                     <fieldText>Phone</fieldText>
                     <fieldType>InputField</fieldType>
-                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>true</isRequired>
                 </fields>
                 <fields>
@@ -3795,7 +4263,6 @@ AND( {!Check_Cedula_Fiscal} = False, {!Check_Comprobante_de_Domicilio} = False, 
                     </defaultValue>
                     <fieldText>Servicio</fieldText>
                     <fieldType>DropdownBox</fieldType>
-                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>true</isRequired>
                 </fields>
                 <fields>
@@ -3807,7 +4274,6 @@ AND( {!Check_Cedula_Fiscal} = False, {!Check_Comprobante_de_Domicilio} = False, 
                     </defaultValue>
                     <fieldText>Type</fieldText>
                     <fieldType>DropdownBox</fieldType>
-                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>true</isRequired>
                 </fields>
                 <fields>
@@ -3819,7 +4285,6 @@ AND( {!Check_Cedula_Fiscal} = False, {!Check_Comprobante_de_Domicilio} = False, 
                     </defaultValue>
                     <fieldText>Tipo de socio de negocio</fieldText>
                     <fieldType>DropdownBox</fieldType>
-                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>true</isRequired>
                 </fields>
                 <fields>
@@ -3862,7 +4327,7 @@ AND( {!Check_Cedula_Fiscal} = False, {!Check_Comprobante_de_Domicilio} = False, 
                 </fields>
                 <fields>
                     <name>CrearAccountAddress</name>
-                    <fieldText>&lt;p&gt;&lt;a href=&quot;https://pak2gologistics--uat.sandbox.lightning.force.com/lightning/o/Account_Address__c/home&quot; rel=&quot;noopener noreferrer&quot; target=&quot;_blank&quot;&gt;Crear Account Address&lt;/a&gt;&lt;/p&gt;</fieldText>
+                    <fieldText>&lt;p&gt;&lt;a href=&quot;https://pak2gologistics.lightning.force.com/lightning/o/Account_Address__c/home&quot; rel=&quot;noopener noreferrer&quot; target=&quot;_blank&quot;&gt;Crear Account Address&lt;/a&gt;&lt;/p&gt;</fieldText>
                     <fieldType>DisplayText</fieldType>
                 </fields>
                 <inputParameters>
@@ -3895,7 +4360,6 @@ AND( {!Check_Cedula_Fiscal} = False, {!Check_Comprobante_de_Domicilio} = False, 
                     </defaultValue>
                     <fieldText>Calle</fieldText>
                     <fieldType>InputField</fieldType>
-                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>true</isRequired>
                 </fields>
                 <fields>
@@ -3906,7 +4370,6 @@ AND( {!Check_Cedula_Fiscal} = False, {!Check_Comprobante_de_Domicilio} = False, 
                     </defaultValue>
                     <fieldText>Ciudad</fieldText>
                     <fieldType>InputField</fieldType>
-                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>true</isRequired>
                 </fields>
                 <fields>
@@ -3917,7 +4380,6 @@ AND( {!Check_Cedula_Fiscal} = False, {!Check_Comprobante_de_Domicilio} = False, 
                     </defaultValue>
                     <fieldText>País</fieldText>
                     <fieldType>InputField</fieldType>
-                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>true</isRequired>
                 </fields>
                 <inputParameters>
@@ -3939,7 +4401,6 @@ AND( {!Check_Cedula_Fiscal} = False, {!Check_Comprobante_de_Domicilio} = False, 
                     </defaultValue>
                     <fieldText>Codigo Postal</fieldText>
                     <fieldType>InputField</fieldType>
-                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>true</isRequired>
                 </fields>
                 <fields>
@@ -3950,7 +4411,6 @@ AND( {!Check_Cedula_Fiscal} = False, {!Check_Comprobante_de_Domicilio} = False, 
                     </defaultValue>
                     <fieldText>Estado</fieldText>
                     <fieldType>InputField</fieldType>
-                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>true</isRequired>
                 </fields>
                 <inputParameters>
@@ -3979,7 +4439,6 @@ AND( {!Check_Cedula_Fiscal} = False, {!Check_Comprobante_de_Domicilio} = False, 
                     </defaultValue>
                     <fieldText>Metodo de Pago</fieldText>
                     <fieldType>DropdownBox</fieldType>
-                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>true</isRequired>
                 </fields>
                 <fields>
@@ -3991,7 +4450,6 @@ AND( {!Check_Cedula_Fiscal} = False, {!Check_Comprobante_de_Domicilio} = False, 
                     </defaultValue>
                     <fieldText>Bank Name</fieldText>
                     <fieldType>DropdownBox</fieldType>
-                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>true</isRequired>
                 </fields>
                 <fields>
@@ -4003,7 +4461,6 @@ AND( {!Check_Cedula_Fiscal} = False, {!Check_Comprobante_de_Domicilio} = False, 
                     </defaultValue>
                     <fieldText>Uso CFDI</fieldText>
                     <fieldType>DropdownBox</fieldType>
-                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>true</isRequired>
                 </fields>
                 <inputParameters>
@@ -4026,7 +4483,6 @@ AND( {!Check_Cedula_Fiscal} = False, {!Check_Comprobante_de_Domicilio} = False, 
                     </defaultValue>
                     <fieldText>Forma de Pago</fieldText>
                     <fieldType>DropdownBox</fieldType>
-                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>true</isRequired>
                 </fields>
                 <fields>
@@ -4037,7 +4493,6 @@ AND( {!Check_Cedula_Fiscal} = False, {!Check_Comprobante_de_Domicilio} = False, 
                     </defaultValue>
                     <fieldText>Bank Account Number</fieldText>
                     <fieldType>InputField</fieldType>
-                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>true</isRequired>
                 </fields>
                 <fields>
@@ -4049,7 +4504,6 @@ AND( {!Check_Cedula_Fiscal} = False, {!Check_Comprobante_de_Domicilio} = False, 
                     </defaultValue>
                     <fieldText>Regimen Fiscal</fieldText>
                     <fieldType>DropdownBox</fieldType>
-                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>true</isRequired>
                 </fields>
                 <inputParameters>
@@ -4077,7 +4531,6 @@ AND( {!Check_Cedula_Fiscal} = False, {!Check_Comprobante_de_Domicilio} = False, 
                     </defaultValue>
                     <fieldText>Monto Credito Solicitado</fieldText>
                     <fieldType>InputField</fieldType>
-                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>true</isRequired>
                     <scale>2</scale>
                 </fields>
@@ -4089,7 +4542,6 @@ AND( {!Check_Cedula_Fiscal} = False, {!Check_Comprobante_de_Domicilio} = False, 
                     </defaultValue>
                     <fieldText>Fecha límite de Factura (fecha limite)</fieldText>
                     <fieldType>InputField</fieldType>
-                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>true</isRequired>
                 </fields>
                 <fields>
@@ -4101,7 +4553,6 @@ AND( {!Check_Cedula_Fiscal} = False, {!Check_Comprobante_de_Domicilio} = False, 
                     </defaultValue>
                     <fieldText>Tipo Evidencia Acuse</fieldText>
                     <fieldType>DropdownBox</fieldType>
-                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>true</isRequired>
                 </fields>
                 <inputParameters>
@@ -4124,7 +4575,6 @@ AND( {!Check_Cedula_Fiscal} = False, {!Check_Comprobante_de_Domicilio} = False, 
                     </defaultValue>
                     <fieldText>Dias Credito</fieldText>
                     <fieldType>DropdownBox</fieldType>
-                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>true</isRequired>
                 </fields>
                 <fields>
@@ -4135,7 +4585,6 @@ AND( {!Check_Cedula_Fiscal} = False, {!Check_Comprobante_de_Domicilio} = False, 
                     </defaultValue>
                     <fieldText>Fecha Recepcion Factura</fieldText>
                     <fieldType>InputField</fieldType>
-                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>true</isRequired>
                 </fields>
                 <fields>
@@ -4147,7 +4596,6 @@ AND( {!Check_Cedula_Fiscal} = False, {!Check_Comprobante_de_Domicilio} = False, 
                     </defaultValue>
                     <fieldText>Requiere Evidencia</fieldText>
                     <fieldType>DropdownBox</fieldType>
-                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>true</isRequired>
                 </fields>
                 <fields>
@@ -4158,7 +4606,6 @@ AND( {!Check_Cedula_Fiscal} = False, {!Check_Comprobante_de_Domicilio} = False, 
                     </defaultValue>
                     <fieldText>Requiere Orden de Compra</fieldText>
                     <fieldType>InputField</fieldType>
-                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>true</isRequired>
                 </fields>
                 <inputParameters>
@@ -4185,7 +4632,6 @@ AND( {!Check_Cedula_Fiscal} = False, {!Check_Comprobante_de_Domicilio} = False, 
                     </defaultValue>
                     <fieldText>Comentarios</fieldText>
                     <fieldType>LargeTextArea</fieldType>
-                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>true</isRequired>
                 </fields>
                 <inputParameters>
@@ -4226,7 +4672,6 @@ AND( {!Check_Cedula_Fiscal} = False, {!Check_Comprobante_de_Domicilio} = False, 
             </defaultValue>
             <fieldText>Razon Social</fieldText>
             <fieldType>InputField</fieldType>
-            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
         </fields>
         <fields>
@@ -4243,7 +4688,6 @@ AND( {!Check_Cedula_Fiscal} = False, {!Check_Comprobante_de_Domicilio} = False, 
                     </defaultValue>
                     <fieldText>Email</fieldText>
                     <fieldType>InputField</fieldType>
-                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>true</isRequired>
                 </fields>
                 <fields>
@@ -4254,7 +4698,6 @@ AND( {!Check_Cedula_Fiscal} = False, {!Check_Comprobante_de_Domicilio} = False, 
                     </defaultValue>
                     <fieldText>TAX ID</fieldText>
                     <fieldType>InputField</fieldType>
-                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>true</isRequired>
                 </fields>
                 <fields>
@@ -4266,7 +4709,6 @@ AND( {!Check_Cedula_Fiscal} = False, {!Check_Comprobante_de_Domicilio} = False, 
                     </defaultValue>
                     <fieldText>Forma de Pago</fieldText>
                     <fieldType>DropdownBox</fieldType>
-                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>true</isRequired>
                 </fields>
                 <fields>
@@ -4278,7 +4720,6 @@ AND( {!Check_Cedula_Fiscal} = False, {!Check_Comprobante_de_Domicilio} = False, 
                     </defaultValue>
                     <fieldText>Bank Name</fieldText>
                     <fieldType>DropdownBox</fieldType>
-                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>true</isRequired>
                 </fields>
                 <fields>
@@ -4290,7 +4731,6 @@ AND( {!Check_Cedula_Fiscal} = False, {!Check_Comprobante_de_Domicilio} = False, 
                     </defaultValue>
                     <fieldText>Regimen Fiscal</fieldText>
                     <fieldType>DropdownBox</fieldType>
-                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>true</isRequired>
                 </fields>
                 <fields>
@@ -4369,7 +4809,6 @@ AND( {!Check_Cedula_Fiscal} = False, {!Check_Comprobante_de_Domicilio} = False, 
                     </defaultValue>
                     <fieldText>Phone</fieldText>
                     <fieldType>InputField</fieldType>
-                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>true</isRequired>
                 </fields>
                 <fields>
@@ -4381,7 +4820,6 @@ AND( {!Check_Cedula_Fiscal} = False, {!Check_Comprobante_de_Domicilio} = False, 
                     </defaultValue>
                     <fieldText>Metodo de Pago</fieldText>
                     <fieldType>DropdownBox</fieldType>
-                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>true</isRequired>
                 </fields>
                 <fields>
@@ -4393,7 +4831,6 @@ AND( {!Check_Cedula_Fiscal} = False, {!Check_Comprobante_de_Domicilio} = False, 
                     </defaultValue>
                     <fieldText>Uso CFDI</fieldText>
                     <fieldType>DropdownBox</fieldType>
-                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>true</isRequired>
                 </fields>
                 <fields>
@@ -4404,7 +4841,6 @@ AND( {!Check_Cedula_Fiscal} = False, {!Check_Comprobante_de_Domicilio} = False, 
                     </defaultValue>
                     <fieldText>Bank Account Number</fieldText>
                     <fieldType>InputField</fieldType>
-                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>true</isRequired>
                 </fields>
                 <fields>
@@ -4416,7 +4852,6 @@ AND( {!Check_Cedula_Fiscal} = False, {!Check_Comprobante_de_Domicilio} = False, 
                     </defaultValue>
                     <fieldText>Servicio</fieldText>
                     <fieldType>DropdownBox</fieldType>
-                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>true</isRequired>
                 </fields>
                 <fields>
@@ -4428,7 +4863,6 @@ AND( {!Check_Cedula_Fiscal} = False, {!Check_Comprobante_de_Domicilio} = False, 
                     </defaultValue>
                     <fieldText>Type</fieldText>
                     <fieldType>DropdownBox</fieldType>
-                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>true</isRequired>
                 </fields>
                 <inputParameters>
@@ -4455,7 +4889,6 @@ AND( {!Check_Cedula_Fiscal} = False, {!Check_Comprobante_de_Domicilio} = False, 
                     </defaultValue>
                     <fieldText>Direccion Fiscal</fieldText>
                     <fieldType>LargeTextArea</fieldType>
-                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>true</isRequired>
                 </fields>
                 <fields>
@@ -4465,7 +4898,6 @@ AND( {!Check_Cedula_Fiscal} = False, {!Check_Comprobante_de_Domicilio} = False, 
                     </defaultValue>
                     <fieldText>Comentarios</fieldText>
                     <fieldType>LargeTextArea</fieldType>
-                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>true</isRequired>
                 </fields>
                 <inputParameters>
@@ -4512,7 +4944,6 @@ AND( {!Check_Cedula_Fiscal} = False, {!Check_Comprobante_de_Domicilio} = False, 
                     </defaultValue>
                     <fieldText>Razon Social</fieldText>
                     <fieldType>InputField</fieldType>
-                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>true</isRequired>
                 </fields>
                 <inputParameters>
@@ -4540,7 +4971,6 @@ AND( {!Check_Cedula_Fiscal} = False, {!Check_Comprobante_de_Domicilio} = False, 
                     </defaultValue>
                     <fieldText>TAX ID</fieldText>
                     <fieldType>InputField</fieldType>
-                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>true</isRequired>
                 </fields>
                 <fields>
@@ -4551,7 +4981,6 @@ AND( {!Check_Cedula_Fiscal} = False, {!Check_Comprobante_de_Domicilio} = False, 
                     </defaultValue>
                     <fieldText>Email</fieldText>
                     <fieldType>InputField</fieldType>
-                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>true</isRequired>
                 </fields>
                 <fields>
@@ -4562,7 +4991,6 @@ AND( {!Check_Cedula_Fiscal} = False, {!Check_Comprobante_de_Domicilio} = False, 
                     </defaultValue>
                     <fieldText>WCA ID</fieldText>
                     <fieldType>InputField</fieldType>
-                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>true</isRequired>
                 </fields>
                 <fields>
@@ -4574,7 +5002,6 @@ AND( {!Check_Cedula_Fiscal} = False, {!Check_Comprobante_de_Domicilio} = False, 
                     </defaultValue>
                     <fieldText>Ejecutivo de Cobranza</fieldText>
                     <fieldType>DropdownBox</fieldType>
-                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>true</isRequired>
                 </fields>
                 <fields>
@@ -4586,7 +5013,6 @@ AND( {!Check_Cedula_Fiscal} = False, {!Check_Comprobante_de_Domicilio} = False, 
                     </defaultValue>
                     <fieldText>Servicio</fieldText>
                     <fieldType>DropdownBox</fieldType>
-                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>true</isRequired>
                 </fields>
                 <fields>
@@ -4598,7 +5024,6 @@ AND( {!Check_Cedula_Fiscal} = False, {!Check_Comprobante_de_Domicilio} = False, 
                     </defaultValue>
                     <fieldText>Type</fieldText>
                     <fieldType>DropdownBox</fieldType>
-                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>true</isRequired>
                 </fields>
                 <inputParameters>
@@ -4620,7 +5045,6 @@ AND( {!Check_Cedula_Fiscal} = False, {!Check_Comprobante_de_Domicilio} = False, 
                     </defaultValue>
                     <fieldText>Phone</fieldText>
                     <fieldType>InputField</fieldType>
-                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>true</isRequired>
                 </fields>
                 <fields>
@@ -4632,7 +5056,6 @@ AND( {!Check_Cedula_Fiscal} = False, {!Check_Comprobante_de_Domicilio} = False, 
                     </defaultValue>
                     <fieldText>Dias Credito</fieldText>
                     <fieldType>DropdownBox</fieldType>
-                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>true</isRequired>
                 </fields>
                 <fields>
@@ -4644,7 +5067,6 @@ AND( {!Check_Cedula_Fiscal} = False, {!Check_Comprobante_de_Domicilio} = False, 
                     </defaultValue>
                     <fieldText>Regimen Fiscal</fieldText>
                     <fieldType>DropdownBox</fieldType>
-                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>true</isRequired>
                 </fields>
                 <fields>
@@ -4655,7 +5077,6 @@ AND( {!Check_Cedula_Fiscal} = False, {!Check_Comprobante_de_Domicilio} = False, 
                     </defaultValue>
                     <fieldText>Fecha limite Factura (fecha limite)</fieldText>
                     <fieldType>InputField</fieldType>
-                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>true</isRequired>
                 </fields>
                 <fields>
@@ -4739,7 +5160,6 @@ AND( {!Check_Cedula_Fiscal} = False, {!Check_Comprobante_de_Domicilio} = False, 
                     </defaultValue>
                     <fieldText>Direccion Fiscal</fieldText>
                     <fieldType>LargeTextArea</fieldType>
-                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>true</isRequired>
                 </fields>
                 <fields>
@@ -4749,7 +5169,6 @@ AND( {!Check_Cedula_Fiscal} = False, {!Check_Comprobante_de_Domicilio} = False, 
                     </defaultValue>
                     <fieldText>Comentarios</fieldText>
                     <fieldType>LargeTextArea</fieldType>
-                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>true</isRequired>
                 </fields>
                 <inputParameters>
@@ -4938,5 +5357,12 @@ AND( {!Check_Cedula_Fiscal} = False, {!Check_Comprobante_de_Domicilio} = False, 
         <value>
             <booleanValue>false</booleanValue>
         </value>
+    </variables>
+    <variables>
+        <name>TipoServicio</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
     </variables>
 </Flow>

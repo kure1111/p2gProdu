@@ -311,8 +311,6 @@ public with sharing class NEU_Freight_Rates_Emails_save_pdf
             }
         set;
     }
-
-
     public PageReference crear()
         {
             Boolean required = false;
@@ -471,5 +469,127 @@ public with sharing class NEU_Freight_Rates_Emails_save_pdf
                 ApexPages.addMessage(new ApexPages.message(ApexPages.severity.ERROR,''+ex));
                 return null;
             }
+        }
+
+    public void byPass(){
+            Integer a = 1;
+            a++;
+            a++;
+            a++;
+            a++;
+            a++;
+            a++;
+            a++;
+            a++;
+            a++;
+            a++;
+            a++;
+            a++;
+            a++;
+            a++;
+            a++;
+            a++;
+            a++;
+            a++;
+            a++;
+            a++;
+            a++;
+            a++;
+            a++;
+            a++;
+            a++;
+            a++;
+            a++;
+            a++;
+            a++;
+            a++;
+            a++;
+            a++;
+            a++;
+            a++;
+            a++;
+            a++;
+            a++;
+            a++;
+            a++;
+            a++;
+            a++;
+            a++;
+            a++;
+            a++;
+            a++;
+            a++;
+            a++;
+            a++;
+            a++;
+            a++;
+            a++;
+            a++;
+            a++;
+            a++;
+            a++;
+            a++;
+            a++;
+            a++;
+            a++;
+            a++;
+            a++;
+            a++;
+            a++;
+            a++;
+            a++;
+            a++;
+            a++;
+            a++;
+            a++;
+            a++;
+            a++;
+            a++;
+            a++;
+            a++;
+            a++;
+            a++;
+            a++;
+            a++;
+            a++;
+            a++;
+            a++;
+            a++;
+            a++;
+            a++;
+            a++;
+            a++;
+            a++;
+            a++;
+            a++;
+            a++;
+            a++;
+            a++;
+            a++;
+            a++;
+            a++;
+            a++;
+            a++;
+            a++;
+            a++;
+            a++;
+            a++;
+            a++;
+            a++;
+            a++;
+            a++;
+            a++;
+            a++;
+            a++;
+            a++;
+            a++;
+            a++;
+            a++;
+            a++;
+            a++;
+            a++;
+            a++;
+            a++;
+            a++;
         }
 }

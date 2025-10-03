@@ -58,15 +58,16 @@
                 <a href="{!$Site.BaseUrl}/apex/NEU_New_Service_Rate_Internal?import_export={!Customer_Quote__c.Id}" target="_top" class="li_step {!step_9}">2. Freight Rates Management</a>
                 <!-- <a href="{!urlCQLPriceList}" target="_top" class="li_step {!step_3}">3. Create Quote Service Lines</a> -->
                 <a href="{!$Site.BaseUrl}/lightning/n/Creaci_n_Quote_Service_Line?c__recordId={!Customer_Quote__c.Id}" target="_top" class="li_step {!step_3}">3. Create Quote Service Lines</a>
+                <a href="{!$Site.BaseUrl}/lightning/n/Asignacion_de_Account_Address?c__recordId={!Customer_Quote__c.Id}" target="_top" class="li_step {!step_3}">4. Asignar Direcciones</a>
                 <!-- <a href="{!$Site.BaseUrl}/apex/NEU_OM_Start_Clearance?id={!Customer_Quote__c.Id}" target="_top" class="li_step {!step_4}">5. Customs Clearance</a> -->
                 <!-- <a href="{!$Site.BaseUrl}/apex/NEU_Aditional_Discounts?id={!Customer_Quote__c.Id}" target="_top" class="li_step {!step_10}" >6. Aditional Discounts</a> -->
-                <a href="{!$Site.BaseUrl}/apex/NEU_Import_Export_Quote_save_pdf?id={!Customer_Quote__c.Id}" target="_top" class="li_step {!step_5}" >4. Generate Quote</a>
+                <a href="{!$Site.BaseUrl}/apex/NEU_Import_Export_Quote_save_pdf?id={!Customer_Quote__c.Id}" target="_top" class="li_step {!step_5}" >5. Generate Quote</a>
                 <div class="secondline">
-                    <a href="{!$Site.BaseUrl}/apex/NEU_MD_Associated_Documents?id={!Customer_Quote__c.Id}" target="_top" class="li_step {!step_6}">5. Associate Documents</a>
+                    <a href="{!$Site.BaseUrl}/apex/NEU_MD_Associated_Documents?id={!Customer_Quote__c.Id}" target="_top" class="li_step {!step_6}">6. Associate Documents</a>
                     <!--<a href="{!$Site.BaseUrl}/apex/NEU_MD_SendDocuments?object_select=import_export_quote&object_id={!Customer_Quote__c.Id}" target="_top" class="li_step {!step_7}"  >9. Send Email</a>-->
-                    <a href="{!$Site.BaseUrl}/apex/NEU_MD_SendDocuments?id={!Customer_Quote__c.Id}" target="_top" class="li_step {!step_7}"  >6. Send Email</a>
+                    <a href="{!$Site.BaseUrl}/apex/NEU_MD_SendDocuments?id={!Customer_Quote__c.Id}" target="_top" class="li_step {!step_7}"  >7. Send Email</a>
                     <a href="{! IF(AND(step_1=='step_inactive', step_8=='step_active'), ($Site.BaseUrl + '/' + url_generate_shipment),
-                            IF( step_1=='step_active', 'javascript:alert(\"It is impossible to create a Shipment from an Import Export Order without Cargo Lines.\")',($Site.BaseUrl + '/' + shipmentID))) }" target="_top" class="li_step {!step_8}" style="display:{!if(Customer_Quote__c.RecordType.Name == 'Import-Export Order' && url_generate_shipment != '','','none')}">7. Generate Shipment</a>
+                            IF( step_1=='step_active', 'javascript:alert(\"It is impossible to create a Shipment from an Import Export Order without Cargo Lines.\")',($Site.BaseUrl + '/' + shipmentID))) }" target="_top" class="li_step {!step_8}" style="display:{!if(Customer_Quote__c.RecordType.Name == 'Import-Export Order' && url_generate_shipment != '','','none')}">8. Generate Shipment</a>
                     <a href="{!$Site.BaseUrl}/apex/NEU_Import_Export_NotifyCommunity?id={!Customer_Quote__c.Id}" target="_top" class="li_step step_notify" style="{!if(showNotifyCommunity,'','display: none;')}">Notify to Customer</a>
                 </div>
             </div>

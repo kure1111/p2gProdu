@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Workflow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <alerts>
+        <fullName>FI_SAP_RESPONSES</fullName>
+        <description>FI SAP RESPONSES</description>
+        <protected>false</protected>
+        <recipients>
+            <recipient>francisco.ochoa@pak2go.com.2019</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>seidy.lopez@pak2go.com</recipient>
+            <type>user</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>unfiled$public/ERROR_FI_SAP_RESPONSE</template>
+    </alerts>
+    <alerts>
+        <fullName>FN_SAP_RESPONSES</fullName>
+        <description>FN SAP RESPONSES</description>
+        <protected>false</protected>
+        <recipients>
+            <recipient>francisco.ochoa@pak2go.com.2019</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>ricardo.ayala@pak2go.com</recipient>
+            <type>user</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>unfiled$public/ERROR_FI_SAP_RESPONSE</template>
+    </alerts>
+</Workflow>

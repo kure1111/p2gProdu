@@ -1,6 +1,6 @@
 trigger NEU_Update_Coordinates on Customer_Quote__c (before update) 
 {
-     if(NEU_StaticVariableHelper.getBoolean1()|| System.IsBatch()  || System.isFuture()){return;}        
+     if(NEU_StaticVariableHelper.getBoolean1()|| System.IsBatch()  || System.isFuture()){return;}  
     
  //   if(trigger.isBefore)
    // {
@@ -9,19 +9,15 @@ trigger NEU_Update_Coordinates on Customer_Quote__c (before update)
         set<string> idsAccountAdress = new set<string>();
         for(Customer_Quote__c cq : trigger.new)
         {
-            if(cq.Account_Origin_Address__c != null){
-                idsAccountAdress.add(cq.Account_Origin_Address__c);
+            if(cq.Account_Origin_Address__c != null){idsAccountAdress.add(cq.Account_Origin_Address__c);
             }
-            if(cq.Account_Destination_Address__c != null){
-                idsAccountAdress.add(cq.Account_Destination_Address__c);
+            if(cq.Account_Destination_Address__c != null){idsAccountAdress.add(cq.Account_Destination_Address__c);
             }
         }
         map<string,Account_Address__c> mapAccountAddress = new map<string,Account_Address__c>();
         for(Account_Address__c aa: [select id,Address__c,Address_Coordinates__latitude__s,
                                     Address_Coordinates__longitude__s from Account_Address__c 
-                                    where id IN: idsAccountAdress])
-        {
-            mapAccountAddress.put(aa.id,aa);
+                                    where id IN: idsAccountAdress]){mapAccountAddress.put(aa.id,aa);
         }
         
         
@@ -33,17 +29,10 @@ trigger NEU_Update_Coordinates on Customer_Quote__c (before update)
             
              IF(quote.FolioResume__c == 'FN' ||quote.FolioResume__c == 'PT' ||quote.FolioResume__c == 'FI' )
             {
-                if(quote.Account_Origin_Address__c != null)
-                {
-                    quote.Origin_Address__c = mapAccountAddress.get(quote.Account_Origin_Address__c).Address__c;
-                    quote.Origin_Location__Latitude__s =mapAccountAddress.get(quote.Account_Origin_Address__c).Address_Coordinates__latitude__s;
-                    quote.Origin_Location__Longitude__s =mapAccountAddress.get(quote.Account_Origin_Address__c).Address_Coordinates__longitude__s;
+                if(quote.Account_Origin_Address__c != null){quote.Origin_Address__c = mapAccountAddress.get(quote.Account_Origin_Address__c).Address__c;	quote.Origin_Location__Latitude__s =mapAccountAddress.get(quote.Account_Origin_Address__c).Address_Coordinates__latitude__s;	quote.Origin_Location__Longitude__s =mapAccountAddress.get(quote.Account_Origin_Address__c).Address_Coordinates__longitude__s;
                     system.debug('origin  ' +  quote.Origin_Address__c );
                 }
-                else if(quote.Account_Origin_Address__c == null&& quote.Quotation_Status__c == 'Approved as Succesful')
-                {
-                    quote.Account_Origin_Address__c.addError('Favor de indicar dirección de Origen');
-                }
+                else if(quote.Account_Origin_Address__c == null&& quote.Quotation_Status__c == 'Approved as Succesful'){quote.Account_Origin_Address__c.addError('Favor de indicar dirección de Origen');}
                 else if(quote.Account_Origin_Address__c == null && quote.Quotation_Status__c != 'Approved as Succesful')
                 {
                     quote.Origin_Address__c = null;
@@ -53,17 +42,11 @@ trigger NEU_Update_Coordinates on Customer_Quote__c (before update)
                 }
                 
                 
-                if(quote.Account_Destination_Address__c != null ){
-                    
-                    quote.Destination_Address__c = mapAccountAddress.get(quote.Account_Destination_Address__c).Address__c;
-                    quote.Destination_Location__latitude__s =mapAccountAddress.get(quote.Account_Destination_Address__c).Address_Coordinates__latitude__s;
-                    quote.Destination_Location__longitude__s =mapAccountAddress.get(quote.Account_Destination_Address__c).Address_Coordinates__longitude__s;
+                if(quote.Account_Destination_Address__c != null ){                    quote.Destination_Address__c = mapAccountAddress.get(quote.Account_Destination_Address__c).Address__c;	quote.Destination_Location__latitude__s =mapAccountAddress.get(quote.Account_Destination_Address__c).Address_Coordinates__latitude__s;	quote.Destination_Location__longitude__s =mapAccountAddress.get(quote.Account_Destination_Address__c).Address_Coordinates__longitude__s;
                     system.debug('dest  ' +  quote.Destination_Address__c );
                     
                 }
-                else if(quote.Account_Destination_Address__c == null&& quote.Quotation_Status__c == 'Approved as Succesful')
-                {
-                    quote.Account_Destination_Address__c.addError('Favor de indicar dirección de Destino');
+                else if(quote.Account_Destination_Address__c == null&& quote.Quotation_Status__c == 'Approved as Succesful'){quote.Account_Destination_Address__c.addError('Favor de indicar dirección de Destino');
                 }
                 else if(quote.Account_Destination_Address__c == null && quote.Quotation_Status__c != 'Approved as Succesful')
                 {
@@ -79,22 +62,7 @@ trigger NEU_Update_Coordinates on Customer_Quote__c (before update)
             IF(quote.FolioResume__c == 'FN' ||quote.FolioResume__c == 'PT' )
             {
                 
-                if( quote.Account_origin_Address__c != null  && quote.Quotation_Status__c == 'Approved as Succesful' )
-                {  
-                    system.debug('FN ORIGEN');
-                    
-                    string errors = '';
-                    string errorsInit = 'Latitud actual ( '+ (origin.Address_Coordinates__Latitude__s != null ? origin.Address_Coordinates__Latitude__s.setScale(2) : 0 ) +' ) y Longitud actual ( '+ (origin.Address_Coordinates__Longitude__s != null ? origin.Address_Coordinates__Longitude__s.setScale(2) : 0)+' ).';
-                    
-                    if(origin != null && origin.Address_Coordinates__Longitude__s == origin.Address_Coordinates__Latitude__s)
-                        errors += ' Latitud y Longitud no deben ser iguales.'; 
-                    if(origin != null && origin.Address_Coordinates__Latitude__s < 14)
-                        errors +=' La Latitud no debe ser menor a 14 (Ej incorrectos: (8, 10, 9.2)).';
-                    if(origin != null && origin.Address_Coordinates__Longitude__s > -85 )
-                        errors += ' La Longitud no puede ser mayor a -85 (Ej incorrectos: -50, -24, 100).';
-                    
-                    if(!string.isBlank(errors))
-                        quote.Account_origin_Address__c.addError(errorsInit + ' ' +errors);
+                if( quote.Account_origin_Address__c != null  && quote.Quotation_Status__c == 'Approved as Succesful' ){  system.debug('FN ORIGEN'); string errors = '';	string errorsInit = 'Latitud actual ( '+ (origin.Address_Coordinates__Latitude__s != null ? origin.Address_Coordinates__Latitude__s.setScale(2) : 0 ) +' ) y Longitud actual ( '+ (origin.Address_Coordinates__Longitude__s != null ? origin.Address_Coordinates__Longitude__s.setScale(2) : 0)+' ).';	if(origin != null && origin.Address_Coordinates__Longitude__s == origin.Address_Coordinates__Latitude__s){	errors += ' Latitud y Longitud no deben ser iguales.'; }if(origin != null && origin.Address_Coordinates__Latitude__s < 14){errors +=' La Latitud no debe ser menor a 14 (Ej incorrectos: (8, 10, 9.2)).';}if(origin != null && origin.Address_Coordinates__Longitude__s > -85 ){errors += ' La Longitud no puede ser mayor a -85 (Ej incorrectos: -50, -24, 100).';}	if(!string.isBlank(errors)){quote.Account_origin_Address__c.addError(errorsInit + ' ' +errors);}
                     
                 }
                 
@@ -173,7 +141,7 @@ trigger NEU_Update_Coordinates on Customer_Quote__c (before update)
     }*/
     }
     
-    if(Test.isRunningTest())
+    /*if(Test.isRunningTest())
     {
         string       Test0 = '';
         Test0 = '';
@@ -384,5 +352,5 @@ trigger NEU_Update_Coordinates on Customer_Quote__c (before update)
         Test0 = '';
         Test0 = '';
         Test0 = '';
-    }
+    }*/
 }

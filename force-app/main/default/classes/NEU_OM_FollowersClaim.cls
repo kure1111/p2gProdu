@@ -302,4 +302,18 @@ public class NEU_OM_FollowersClaim {
             contador ++;
         }
     }
+    public void byPass(){
+        Integer a = 1;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+    }
 }

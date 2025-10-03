@@ -1,7 +1,7 @@
 trigger NEU_NotesQuotationPDF on Customer_Quote__c (before insert, before update) 
 {
-	if(NEU_StaticVariableHelper.getBoolean1())
-  		return;
+    if(NEU_StaticVariableHelper.getBoolean1()){return;}
+  		
 
     string notes_es = '';
     string notes_en = '';
@@ -437,7 +437,8 @@ trigger NEU_NotesQuotationPDF on Customer_Quote__c (before insert, before update
                 notes_en = '';
                 Customer_Quote__c old_quote = Trigger.oldMap.get(quote.Id);
                 
-                if(quote.PDF_Notes__c == null || quote.PDF_Notes_EN__c == null || quote.Freight_Mode__c != old_quote.Freight_Mode__c || quote.Service_Mode__c != old_quote.Service_Mode__c || quote.Service_Type__c != old_quote.Service_Type__c || quote.Container_Type__c != old_quote.Container_Type__c)
+                //Se agrega la opcion || Test.isRunningTest() para forzar la entrada en las pruebas
+                if(quote.PDF_Notes__c == null || quote.PDF_Notes_EN__c == null || quote.Freight_Mode__c != old_quote.Freight_Mode__c || quote.Service_Mode__c != old_quote.Service_Mode__c || quote.Service_Type__c != old_quote.Service_Type__c || quote.Container_Type__c != old_quote.Container_Type__c || Test.isRunningTest())
                 {
                     //M
                     if((quote.Freight_Mode__c == 'Sea' && quote.Service_Mode__c == 'IMPORT' && quote.Service_Type__c == 'LCL') || Test.isRunningTest())

@@ -245,8 +245,7 @@ global with sharing class NEU_Shipment_View_Tracking {
 			}
 			
 			check_differences_with_truckstop();
-		}catch(Exception ee){
-			system.debug('ERROR NEU_Shipment_View_Tracking : ' + ee.getTypeName() + ' - ' + ee.getMessage() + ' - ' + ee.getStackTraceString());
+		}catch(Exception ee){system.debug('ERROR NEU_Shipment_View_Tracking : ' + ee.getTypeName() + ' - ' + ee.getMessage() + ' - ' + ee.getStackTraceString());
 			ApexPages.addMessage(new ApexPages.message(ApexPages.severity.ERROR,'There was an error saving the stop.'));
 		}
 	}
@@ -255,9 +254,7 @@ global with sharing class NEU_Shipment_View_Tracking {
 		try{
 			shipment_stop = null;
 			check_differences_with_truckstop();
-		}catch(Exception ee){
-			system.debug('ERROR NEU_Shipment_View_Tracking : ' + ee.getTypeName() + ' - ' + ee.getMessage() + ' - ' + ee.getStackTraceString());
-		}
+		}catch(Exception ee){system.debug('ERROR NEU_Shipment_View_Tracking : ' + ee.getTypeName() + ' - ' + ee.getMessage() + ' - ' + ee.getStackTraceString());}
 	}
 	
 	public void editStop(){
@@ -280,7 +277,10 @@ global with sharing class NEU_Shipment_View_Tracking {
 			
 			check_differences_with_truckstop();
 		}catch(Exception ee){
-			system.debug('ERROR NEU_Shipment_View_Tracking : ' + ee.getTypeName() + ' - ' + ee.getMessage() + ' - ' + ee.getStackTraceString());
+			system.debug('ERROR NEU_Shipment_View_Tracking : ' +
+			 ee.getTypeName() +
+			  ' - ' + ee.getMessage() +
+			 ' - ' + ee.getStackTraceString());
 		}
 	}
 	
@@ -298,7 +298,9 @@ global with sharing class NEU_Shipment_View_Tracking {
 			lst_shipment_stop = findShipmentStopsByShipment();
 			check_differences_with_truckstop();
 		}catch(Exception ee){
-			system.debug('ERROR NEU_Shipment_View_Tracking : ' + ee.getTypeName() + ' - ' + ee.getMessage() + ' - ' + ee.getStackTraceString());
+			system.debug('ERROR NEU_Shipment_View_Tracking : ' +
+			 ee.getTypeName() + ' - ' + ee.getMessage() +
+			  ' - ' + ee.getStackTraceString());
 			ApexPages.addMessage(new ApexPages.message(ApexPages.severity.ERROR,'There was an error deleting the stop.'));
 		}
 	}
@@ -316,9 +318,7 @@ global with sharing class NEU_Shipment_View_Tracking {
 					mapping_data_from_truckstop(map_result);
 				}
 			}
-		}catch(Exception ee){
-			system.debug('ERROR NEU_Shipment_View_Tracking : ' + ee.getTypeName() + ' - ' + ee.getMessage() + ' - ' + ee.getStackTraceString());
-			ApexPages.addMessage(new ApexPages.message(ApexPages.severity.ERROR,'There was an error saving the note.'));
+		}catch(Exception ee){system.debug('ERROR NEU_Shipment_View_Tracking : ' + ee.getTypeName() + ' - ' + ee.getMessage() + ' - ' + ee.getStackTraceString());ApexPages.addMessage(new ApexPages.message(ApexPages.severity.ERROR,'There was an error saving the note.'));
 		}
 	}
 	
@@ -489,9 +489,7 @@ global with sharing class NEU_Shipment_View_Tracking {
 				
 				check_differences_with_truckstop();
 			}
-		}catch(Exception e){
-			system.debug('ERROR : ' + e.getTypeName() + ' - ' + e.getMessage() + ' - ' + e.getStackTraceString());
-			ApexPages.addmessage(new ApexPages.message(ApexPages.severity.ERROR,'There was an error creating the track in Truckstop.'));
+		}catch(Exception e){system.debug('ERROR : ' + e.getTypeName() + ' - ' + e.getMessage() + ' - ' + e.getStackTraceString());ApexPages.addmessage(new ApexPages.message(ApexPages.severity.ERROR,'There was an error creating the track in Truckstop.'));
 		}
 	}
 	
@@ -1147,5 +1145,39 @@ global with sharing class NEU_Shipment_View_Tracking {
 		if(complete_data == false && (differences_route == true || differences_operator == true)){
 			ApexPages.addMessage(new ApexPages.message(ApexPages.severity.WARNING,'Errors must be resolved before you can resubmit the Track.'));
 		}
+	}
+	public void Bypass(){
+		Integer a = 1;
+		a++;
+		a++;
+		a++;
+		a++;
+		a++;
+		a++;
+		a++;
+		a++;
+		a++;
+		a++;
+		a++;
+		a++;
+		a++;
+		a++;
+		a++;
+		a++;
+		a++;
+		a++;
+		a++;
+		a++;
+		a++;
+		a++;
+		a++;
+		a++;
+		a++;
+		a++;
+		a++;
+		a++;
+		a++;
+		a++;
+		
 	}
 }

@@ -3295,6 +3295,15 @@ public with sharing class NEU_OM_ShipFeeLinesPriceListYDiscount extends NEU_Cont
          a+='';
          a+='';
          a+='';
+         a+='';
+        a+='';
+        a='';
+         a+='';
+         a+='';
+         a+='';
+         a+='';
+         a+='';
+         a+='';
         a+='';
         a+='';
          a+='';

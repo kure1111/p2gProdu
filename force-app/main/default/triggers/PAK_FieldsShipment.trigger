@@ -334,5 +334,6 @@ if(Trigger.oldMap.get(ship.Id).Air_Shipment_Status__c != ship.Air_Shipment_Statu
         System.debug('***PAK_FieldsShipment lstInsert*** ' + ls);
         if(!ls.isEmpty()){insert ls;}
         System.debug('***PAK_FieldsShipment Insert*** ' + ls);
+
     } 
 }

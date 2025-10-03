@@ -22,8 +22,6 @@
                 <elementReference>myVariable_current.Id</elementReference>
             </value>
         </inputParameters>
-        <nameSegment>Shipment__c.FN_Shipment_AwaitingLoad</nameSegment>
-        <versionSegment>1</versionSegment>
     </actionCalls>
     <actionCalls>
         <processMetadataValues>
@@ -47,8 +45,6 @@
                 <elementReference>myVariable_current.Id</elementReference>
             </value>
         </inputParameters>
-        <nameSegment>Shipment__c.FN_Shipment_AwaitingUnLoad</nameSegment>
-        <versionSegment>1</versionSegment>
     </actionCalls>
     <actionCalls>
         <processMetadataValues>
@@ -69,8 +65,6 @@
                 <elementReference>myVariable_current.Id</elementReference>
             </value>
         </inputParameters>
-        <nameSegment>Shipment__c.FN_Shipment_MonFinished</nameSegment>
-        <versionSegment>1</versionSegment>
     </actionCalls>
     <apiVersion>49.0</apiVersion>
     <decisions>

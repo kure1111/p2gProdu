@@ -1,33 +1,39 @@
 /**
- * This class contains unit tests for validating the behavior of Apex classes
- * and triggers.
- *
- * Unit tests are class methods that verify whether a particular piece
- * of code is working properly. Unit test methods take no arguments,
- * commit no data to the database, and are flagged with the testMethod
- * keyword in the method definition.
- *
- * All test methods in an organization are executed whenever Apex code is deployed
- * to a production organization to confirm correctness, ensure code
- * coverage, and prevent regressions. All Apex classes are
- * required to have at least 75% code coverage in order to be deployed
- * to a production organization. In addition, all triggers must have some code coverage.
- * 
- * The @isTest class annotation indicates this class only contains test
- * methods. Classes defined with the @isTest annotation do not count against
- * the organization size limit for all Apex scripts.
- *
- * See the Apex Language Reference for more information about Testing and Code Coverage.
- */
+* This class contains unit tests for validating the behavior of Apex classes
+* and triggers.
+*
+* Unit tests are class methods that verify whether a particular piece
+* of code is working properly. Unit test methods take no arguments,
+* commit no data to the database, and are flagged with the testMethod
+* keyword in the method definition.
+*
+* All test methods in an organization are executed whenever Apex code is deployed
+* to a production organization to confirm correctness, ensure code
+* coverage, and prevent regressions. All Apex classes are
+* required to have at least 75% code coverage in order to be deployed
+* to a production organization. In addition, all triggers must have some code coverage.
+* 
+* The @isTest class annotation indicates this class only contains test
+* methods. Classes defined with the @isTest annotation do not count against
+* the organization size limit for all Apex scripts.
+*
+* See the Apex Language Reference for more information about Testing and Code Coverage.
+*/
 @isTest
 private class NEU_test_Item {
-
-    public static testMethod void test_NEU_OM_CreateBOMExplosionRelations() {//ok
-    	NEU_StaticVariableHelper.setBoolean1(true);
+    
+    @isTest
+    static  void test_NEU_OM_CreateBOMExplosionRelations() {//ok
+        NEU_StaticVariableHelper.setBoolean1(true);
         ApexPages.currentPage().getParameters().put('test', 'test');
-        List<Account> list_accounts = NEU_Utils.getAccounts('Customer,');
-        Account b = list_accounts[0];
+        //List<Account> list_accounts = NEU_Utils.getAccounts('Customer,');
+        Account b = new Account(
+            Name = 'Test Account',        
+            RecordTypeId = Schema.SObjectType.Account.getRecordTypeInfosByName().get('Customer').getRecordTypeId(),
+            OwnerId = UserInfo.getUserId()
+        );
         insert b;
+        
         Product_Family__c c = new Product_Family__c(Name = 'Test acount',Business_Area__c = 'Sales');
         insert c;
         Subfamily__c d = new Subfamily__c(Product_Family__c = c.Id, Name = 'test subfamily');
@@ -36,7 +42,7 @@ private class NEU_test_Item {
         insert d2;
         Sourcing_Item__c item = new Sourcing_Item__c(Name = 'test item', Account_Owner__c = b.Id, Sourcing_Family__c =c.id,Subfamily__c=d.Id);
         insert item;
-         Sourcing_Item__c item2 = new Sourcing_Item__c(Name = 'test item', Account_Owner__c = b.Id, Sourcing_Family__c =c.id,Subfamily__c=d.Id);
+        Sourcing_Item__c item2 = new Sourcing_Item__c(Name = 'test item', Account_Owner__c = b.Id, Sourcing_Family__c =c.id,Subfamily__c=d.Id);
         insert item2;
         BOM_Relation__c bom = new BOM_Relation__c(Input_Item__c= item.Id, Output_Item__c= item.Id,Uds_Input_Ud_Output__c=10);
         insert bom;
@@ -51,10 +57,15 @@ private class NEU_test_Item {
         system.debug( 'Prueba realizada' );
     }
     
-    public static testMethod void test_NEU_OM_UploadImageItem() {//ok
-    	NEU_StaticVariableHelper.setBoolean1(true);
-        List<Account> list_accounts = NEU_Utils.getAccounts('Customer,');
-        Account b = list_accounts[0];
+    @isTest
+    static  void test_NEU_OM_UploadImageItem() {//ok
+        NEU_StaticVariableHelper.setBoolean1(true);
+        //List<Account> list_accounts = NEU_Utils.getAccounts('Customer,');
+        Account b = new Account(
+            Name = 'Test Account',        
+            RecordTypeId = Schema.SObjectType.Account.getRecordTypeInfosByName().get('Customer').getRecordTypeId(),
+            OwnerId = UserInfo.getUserId()
+        );
         insert b;
         Product_Family__c c = new Product_Family__c(Name = 'Test acount',Business_Area__c = 'Sales');
         insert c;
@@ -68,12 +79,17 @@ private class NEU_test_Item {
         system.debug( 'Prueba realizada' );
     }
     
-    static testMethod void NEU_OM_FollowersItem() 
+    @isTest
+    static  void NEU_OM_FollowersItem() 
     {
-    	NEU_StaticVariableHelper.setBoolean1(true);
+        NEU_StaticVariableHelper.setBoolean1(true);
         ApexPages.currentPage().getParameters().put('test', 'test');
-        List<Account> list_accounts = NEU_Utils.getAccounts('Customer,');
-        Account b = list_accounts[0];
+        //List<Account> list_accounts = NEU_Utils.getAccounts('Customer,');
+        Account b = new Account(
+            Name = 'Test Account',        
+            RecordTypeId = Schema.SObjectType.Account.getRecordTypeInfosByName().get('Customer').getRecordTypeId(),
+            OwnerId = UserInfo.getUserId()
+        );
         insert b;
         Contact contacto = new Contact(AccountId = b.Id, LastName='test contact');
         insert contacto;
@@ -93,12 +109,17 @@ private class NEU_test_Item {
         uda.quitarlinea();
     }
     
-       static testMethod void NEU_OM_FollowersItem2() 
+    @isTest
+    static  void NEU_OM_FollowersItem2() 
     {
-    	NEU_StaticVariableHelper.setBoolean1(true);
+        NEU_StaticVariableHelper.setBoolean1(true);
         ApexPages.currentPage().getParameters().put('test', 'test');
-        List<Account> list_accounts = NEU_Utils.getAccounts('Customer,');
-        Account b = list_accounts[0];
+        //List<Account> list_accounts = NEU_Utils.getAccounts('Customer,');
+        Account b = new Account(
+            Name = 'Test Account',        
+            RecordTypeId = Schema.SObjectType.Account.getRecordTypeInfosByName().get('Customer').getRecordTypeId(),
+            OwnerId = UserInfo.getUserId()
+        );
         insert b;
         Contact contacto = new Contact(AccountId = b.Id, LastName='test contact');
         insert contacto;
@@ -126,11 +147,16 @@ private class NEU_test_Item {
         uda.quitarlinea();      
     }
     
-    public static testMethod void NEU_MD_StockGraphic() 
+    @isTest
+    static  void NEU_MD_StockGraphic() 
     {
-    	NEU_StaticVariableHelper.setBoolean1(true);
-        List<Account> list_accounts = NEU_Utils.getAccounts('Customer,');
-        Account account = list_accounts[0];
+        NEU_StaticVariableHelper.setBoolean1(true);
+        //List<Account> list_accounts = NEU_Utils.getAccounts('Customer,');
+        Account account = new Account(
+            Name = 'Test Account',        
+            RecordTypeId = Schema.SObjectType.Account.getRecordTypeInfosByName().get('Customer').getRecordTypeId(),
+            OwnerId = UserInfo.getUserId()
+        );
         insert account;
         
         Sourcing_Item__c item = new Sourcing_Item__c();
@@ -150,6 +176,20 @@ private class NEU_test_Item {
         lista_datos.add(new NEU_MD_StockGraphic.Data('',1,1,1,1,1,1,1));
     }
     
+   @isTest(SeeAllData=true)
+    static void testUploadImageItem() {        
+        Sourcing_Item__c testItem = [SELECT Id FROM Sourcing_Item__c limit 1];        
+        
+        ApexPages.StandardController sc = new ApexPages.StandardController(testItem);
+                
+        Test.startTest();
+        NEU_OM_UploadImageItem controller = new NEU_OM_UploadImageItem(sc);
+        Test.stopTest();
+        
+        PageReference result = controller.return_item();
+        System.assertEquals('/' + testItem.Id, result.getUrl(), 'La URL de retorno no es correcta');
+    }
     
-
+    
+    
 }

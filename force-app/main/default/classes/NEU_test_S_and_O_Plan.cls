@@ -106,6 +106,7 @@ private class NEU_test_S_and_O_Plan {
         make_line_plan.getfamilyList();
         make_line_plan.getfamilyname();
         make_line_plan.setfamilies(null);
+        make_line_plan.byPass();
         
         
         

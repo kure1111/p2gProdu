@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Workflow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <alerts>
+        <fullName>Notificacion_Documento_Cuenta_de_gastos</fullName>
+        <description>Notificación Documento &quot;Cuenta de gastos&quot;</description>
+        <protected>false</protected>
+        <recipients>
+            <recipient>admin2020@force.com</recipient>
+            <type>user</type>
+        </recipients>
+        <senderAddress>no-reply@pak2go.com</senderAddress>
+        <senderType>OrgWideEmailAddress</senderType>
+        <template>unfiled$public/Notificacion_Documento_Cuenta_de_Gastos</template>
+    </alerts>
+</Workflow>

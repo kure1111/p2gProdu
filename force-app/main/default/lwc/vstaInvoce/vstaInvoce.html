@@ -1,0 +1,86 @@
+<template>
+    <lightning-card title="Líneas del invoice Disponibles" icon-name="standard:orders">
+        <div class="slds-p-around_medium">
+            
+            <!-- Botón Crear -->
+            <div class="slds-m-bottom_medium">
+                <lightning-button 
+                    label="Crear" 
+                    variant="brand" 
+                    onclick={handleCreate}
+                    disabled={isCreateDisabled}>
+                </lightning-button>
+                
+                <!-- Contador -->
+                <span class="slds-m-left_small slds-text-color_weak">
+                    {selectedCount} elementos seleccionados
+                </span>
+            </div>
+
+            <!-- Loading Spinner -->
+            <template if:true={isLoading}>
+                <div class="slds-align_absolute-center slds-m-vertical_large">
+                    <lightning-spinner alternative-text="Cargando"></lightning-spinner>
+                </div>
+            </template>
+
+            <!-- Lista de Líneas -->
+            <template if:true={dataLoaded}>
+                <template if:true={lines.length}>
+                    <div class="slds-table slds-table_bordered slds-table_striped">
+                        <table class="slds-table slds-table_cell-buffer">
+                            <thead>
+                                <tr class="slds-line-height_reset">
+                                    <th class="slds-size_1-of-12">
+                                        <lightning-input
+                                            type="checkbox"
+                                            label="Seleccionar todos"
+                                            onchange={handleSelectAll}>
+                                        </lightning-input>
+                                    </th>
+                                    <th class="slds-size_3-of-12">Nombre</th>
+                                    <th class="slds-size_4-of-12">Comentarios</th>
+                                    <th class="slds-size_4-of-12">Campo Control</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <template for:each={lines} for:item="line">
+                                    <tr key={line.Id} class="slds-hint-parent">
+                                        <td>
+                                            <lightning-input
+                                                type="checkbox"
+                                                checked={line.selected}
+                                                onchange={handleCheckboxChange}
+                                                data-id={line.Id}>
+                                            </lightning-input>
+                                        </td>
+                                        <td>{line.Name}</td>
+                                        <td>{line.CommentsServRate__c}</td>
+                                        <td>
+                                            <span if:true={line.Campo_Control__c} class="slds-badge slds-theme_success">True</span>
+                                            <span if:false={line.Campo_Control__c} class="slds-badge slds-theme_warning">False</span>
+                                        </td>
+                                    </tr>
+                                </template>
+                            </tbody>
+                        </table>
+                    </div>
+                </template>
+                
+                <!-- Mensaje cuando no hay datos -->
+                <template if:false={lines.length}>
+                    <div class="slds-align_absolute-center slds-m-vertical_x-large">
+                        <p>No hay líneas de Shipment Fee disponibles.</p>
+                    </div>
+                </template>
+            </template>
+
+            <!-- Mensajes de éxito/error -->
+            <template if:true={message}>
+                <div class="slds-m-top_medium">
+                    <lightning-alert variant={messageVariant} message={message}></lightning-alert>
+                </div>
+            </template>
+        </div>
+    </lightning-card>
+</template>

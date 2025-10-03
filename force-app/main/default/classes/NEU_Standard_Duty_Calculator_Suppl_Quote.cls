@@ -43,7 +43,7 @@ public with sharing class NEU_Standard_Duty_Calculator_Suppl_Quote {
         Supplier_Quote__r.Country_ofDischarge__r.ISO_Code__c, Supplier_Quote__r.Country_ofLoad__r.ISO_Code__c,
         Category_DC__c, Subcategory_DC__c, Product_Item_DC__c, Item__c, Item__r.Category_DC_Value__c, 
         Quantity__c, Item__r.Subcategory_DC_Value__c, Item__r.Product_Item_DC_Value__c,
-        Item__r.HS_Code_Text__c from Supplier_Quote_Line__c where Supplier_Quote__c =: record.Id ];//id =: idlineactualizar
+        Item__r.HS_Code_Text__c, CurrencyIsoCode from Supplier_Quote_Line__c where Supplier_Quote__c =: record.Id ];//id =: idlineactualizar
         
         decimal valoritems = 0;
         contador_de_llamadas = 0;
@@ -247,7 +247,7 @@ public with sharing class NEU_Standard_Duty_Calculator_Suppl_Quote {
                         else
                         {       
                                 return refresh();
-                                break;
+                                //break;
                         }
                     }
                     else

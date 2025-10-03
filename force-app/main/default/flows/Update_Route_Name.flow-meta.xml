@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>64.0</apiVersion>
+    <description>Migrated from the: Update Route Name workflow rule
+Workflow rule description: &quot;</description>
+    <environments>Default</environments>
+    <formulas>
+        <name>Name_RouteFormula</name>
+        <dataType>String</dataType>
+        <expression>MID($Record.Port_Airport_of_Load__r.Name &amp;&apos; - &apos;&amp; 
+IF( AND($Record.First_Leg_Route__c != null, $Record.First_Leg_Route__r.Port_Airport_of_Discharge__c != null), $Record.First_Leg_Route__r.Port_Airport_of_Discharge__r.Name &amp;&apos; - &apos; ,&apos;&apos;)&amp; 
+$Record.Port_Airport_of_Discharge__r.Name &amp;&apos; &apos;, 0, 79)</expression>
+    </formulas>
+    <label>Update Route Name</label>
+    <migratedFromWorkflowRuleName>Update Route Name</migratedFromWorkflowRuleName>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordUpdates>
+        <name>mainUpdate</name>
+        <label>mainUpdate</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <inputAssignments>
+            <field>Name</field>
+            <value>
+                <elementReference>Name_RouteFormula</elementReference>
+            </value>
+        </inputAssignments>
+        <inputReference>$Record</inputReference>
+    </recordUpdates>
+    <start>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>mainUpdate</targetReference>
+        </connector>
+        <object>Carrier_Line_Load_Point__c</object>
+        <recordTriggerType>CreateAndUpdate</recordTriggerType>
+        <triggerType>RecordAfterSave</triggerType>
+    </start>
+    <status>Active</status>
+</Flow>

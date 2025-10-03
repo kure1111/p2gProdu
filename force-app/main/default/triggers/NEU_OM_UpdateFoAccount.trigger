@@ -6,7 +6,15 @@ trigger NEU_OM_UpdateFoAccount on Account (after insert) {
     Set<Id>users=new Set<Id>();
     Set<Id>accounts=new Set<Id>();
     
-    List<Account> cuentas = [select Id, Name, Account_Executive_User__c, OwnerId, CreatedById, LastModifiedById, Account_External_Follower_User__c from Account where Id IN:trigger.new];
+    List<Account> cuentas = [select Id, 
+                             Name,
+                             Account_Executive_User__c,
+                             OwnerId,
+                             CreatedById,
+                             LastModifiedById,
+                             Account_External_Follower_User__c
+                             from Account
+                             where Id IN:trigger.new];
     for(Account obj : cuentas)
     {
         if(obj.Account_Executive_User__c!=null)
@@ -26,11 +34,7 @@ trigger NEU_OM_UpdateFoAccount on Account (after insert) {
     {
         for(Account obj:cuentas)
         {
-            if((obj.Account_Executive_User__c==qi.Id)
-             ||(obj.OwnerId==qi.Id)
-             ||(obj.Account_External_Follower_User__c==qi.Id)
-             ||(obj.CreatedById==qi.Id) 
-             ||(obj.Id==qi.AccountId))
+            if((obj.Account_Executive_User__c==qi.Id)||(obj.OwnerId==qi.Id)||(obj.Account_External_Follower_User__c==qi.Id)||(obj.CreatedById==qi.Id) ||(obj.Id==qi.AccountId))
              {
                 if(string.isEmpty(qi.AccountId))
                 {

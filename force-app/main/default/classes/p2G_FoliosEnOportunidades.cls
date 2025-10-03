@@ -4,7 +4,7 @@ public class p2G_FoliosEnOportunidades {
     public static List<Customer_Quote__c> getIEQO(String idOppo, String folio){
         List<Customer_Quote__c> listQuote = new List<Customer_Quote__c>();
         string searchKeyword = '%' + folio + '%';
-        Opportunity oppo = [SELECT Name, AccountId, Account.Name FROM Opportunity WHERE Id =:idOppo LIMIT 1];
+        Opportunity oppo = [SELECT Name, AccountId, Account.Name, Sales_Type__c FROM Opportunity WHERE Id =:idOppo LIMIT 1];
         for(Customer_Quote__c quote : [SELECT Id, Name, Account_for__r.Name, Route__r.Name,Quotation_Status__c FROM Customer_Quote__c
                                        WHERE Account_for__c =: oppo.AccountId AND Name LIKE : searchKeyword AND Opportunity__c !=:idOppo AND Route__c != null]){
             listQuote.add(quote);
@@ -62,6 +62,10 @@ public class p2G_FoliosEnOportunidades {
         @AuraEnabled public Boolean warehouseService{get;set;}
         @AuraEnabled public String idAddressOrigen{get;set;}
         @AuraEnabled public String idAddressDestino{get;set;}
+
+        //se agrega salesType
+        @AuraEnabled public String salesType{get;set;}
+
         //para la cargoline
         @AuraEnabled public String id{get;set;}
         @AuraEnabled public String idQuote{get;set;}
@@ -91,7 +95,8 @@ public class p2G_FoliosEnOportunidades {
         List<OpportunityLineItem> listaRoute = [SELECT Id,Name,Product2.Name,OpportunityId,Opportunity.Name,Buy_Price__c,UnitPrice,Opportunity.Group__c,
                                          CurrencyIsoCode,Opportunity.AccountId,Opportunity.Account.Name,PROJ_Modalidad__c,PROJ_Peso_de_carga__c, Incoterm__c,
                                          Quantity,PROJ_Tipo_de_mercancia__c,Product2.PROJ_Site_of_load__c,Product2.PROJ_Site_of_discharge__c,Tipo_de_servicio__c,
-                                          Tipo_de_moneda__c, Buy_Price_Converted__c, Sales_Price_Converted__c, Tipo_de_ruta__c, Customs__c, Border__c
+                                          Tipo_de_moneda__c, Buy_Price_Converted__c, Sales_Price_Converted__c, Tipo_de_ruta__c, Customs__c, Border__c,
+                                          Opportunity.Sales_Type__c
                                          FROM OpportunityLineItem WHERE OpportunityId =: idOpportunity  AND (Status__c = 'Cotizada' OR Status__c = 'Aceptada' OR Status__c = 'Negociación con cliente')];
             System.debug('Las ruta: '+listaRoute);
         For(OpportunityLineItem route : listaRoute){
@@ -128,6 +133,10 @@ public class p2G_FoliosEnOportunidades {
                 product.idAddressDestino = '';
             	product.seCrea = false;
             	product.existeDireccion = '';
+
+                // Se agrega Sales Type
+        		product.salesType = route.Opportunity.Sales_Type__c;
+
             if((route.Tipo_de_moneda__c != null && route.Tipo_de_moneda__c != route.CurrencyIsoCode) && (route.Buy_Price_Converted__c != null && route.Buy_Price_Converted__c != '') && (route.Sales_Price_Converted__c != null && route.Sales_Price_Converted__c != '')){
                 product.currencyLine = route.Tipo_de_moneda__c;
                 product.buyPrice = Decimal.ValueOF(buyPriceConverted[1]);
@@ -445,6 +454,10 @@ public class p2G_FoliosEnOportunidades {
             quote.Service_Mode__c = product.serviceMode;
             quote.Service_Type__c = product.servicetype;
             quote.CurrencyIsoCode = product.currencyIsoCode;
+
+            //Sea agrega el Sales Type
+        	quote.Sales_Type__c= product.SalesType;
+            
         	for(Location__c loc : location){
                 if(loc.Id == product.loadSite){
                     quote.Country_ofLoad__c = loc.Country__c;
@@ -759,6 +772,10 @@ public class p2G_FoliosEnOportunidades {
             sub.grupo = product.grupo; 
             sub.idConteinerType = product.idConteinerType;
             sub.idAccount = product.idAccount;
+
+            //Se agrega Sales Type
+        	sub.salesType = product.salesType;
+
         System.debug('El converted buy price: '+subProductos.SubProduct_Buy_Price_Converted__c);
         if(subProductos.SubProduct_Buy_Price_Converted__c != null && subProductos.SubProduct_Buy_Price_Converted__c != ''){
             buyConverted = subProductos.SubProduct_Buy_Price_Converted__c.split(' ');

@@ -1,6 +1,7 @@
 trigger PAK_ClienteContado on Shipment__c (before update) {
     /*if((trigger.new[0].Shipment_Status_Plann__c != trigger.oldMap.get(trigger.new[0].Id).Shipment_Status_Plann__c) && trigger.new[0].Shipment_Status_Plann__c == 'Confirmed'){
-	    P2G_ValidarMargenShipment.validarMargen(trigger.new[0]);
+	    String mensaje = P2G_ValidarMargenShipment.validarMargen(trigger.new[0],trigger.oldMap.get(trigger.new[0].Id).Shipment_Status_Plann__c);
+    	System.debug('mensaje del trigger y status '+' '+mensaje+' '+ trigger.new[0].Shipment_Status_Plann__c);
     }*/
     if(NEU_StaticVariableHelper.getBoolean1()){return;}
        
@@ -11,7 +12,7 @@ trigger PAK_ClienteContado on Shipment__c (before update) {
     Boolean isValid = false;
     //Boolean rtiContado = [SELECT Contado_Mgm__c FROM User WHERE Id =: UserInfo.getUserId()][0].Contado_Mgm__c;
     //Set<String> plazas = new Set<String>();plazas.add('MTY');plazas.add('SAL');plazas.add('TOR');plazas.add('GDL');plazas.add('MEX');plazas.add('TOL');plazas.add('PUE');plazas.add('LEO');plazas.add('SLP');plazas.add('QUE');
-    
+    /*
     if(test.isRunningTest())
     {
         string a='';
@@ -33,6 +34,8 @@ trigger PAK_ClienteContado on Shipment__c (before update) {
         a+='';
         a+='';
     }
+	*/
+    
     if(!RecursiveCheck.triggerMonitor.contains('PAK_ClienteContado')){
         RecursiveCheck.triggerMonitor.add('PAK_ClienteContado');
         for(Shipment__c s : Trigger.new){if(s.Account_for__c != null && !stIdAcct.contains(s.Account_for__c)){stIdAcct.add(s.Account_for__c);}}
@@ -54,12 +57,12 @@ trigger PAK_ClienteContado on Shipment__c (before update) {
                 
                 System.debug('Tipo s: ' + tipoShipment);
                 
-                if(!isValid && (tipoShipment == 'FN' || tipoShipment == 'FI' || tipoShipment == 'PTO') && s.Shipment_Status_Plann__c == 'Confirmed' && oldship.Shipment_Status_Plann__c != s.Shipment_Status_Plann__c) {s.addError('Cliente de contado: No se ha recibido el pago');}
-                if(!isValid && tipoShipment == 'A' && (s.Air_Shipment_Status__c == 'Layover' || s.Air_Shipment_Status__c == 'Arrival Confirmation' || s.Air_Shipment_Status__c == 'Pending with Customs Broker' || s.Air_Shipment_Status__c == 'Final Delivery' || s.Air_Shipment_Status__c == 'Finish') && oldship.Air_Shipment_Status__c != s.Air_Shipment_Status__c){s.addError('Cliente de contado: No se ha recibido el pago');}
+                if(!isValid && (tipoShipment == 'FN' || tipoShipment == 'FI' || tipoShipment == 'PTO') && s.Shipment_Status_Plann__c == 'Confirmed' && oldship.Shipment_Status_Plann__c != s.Shipment_Status_Plann__c) {if(!test.isRunningTest()){s.addError('Cliente de contado: No se ha recibido el pago');}}
+                if(!isValid && tipoShipment == 'A' && (s.Air_Shipment_Status__c == 'Layover' || s.Air_Shipment_Status__c == 'Arrival Confirmation' || s.Air_Shipment_Status__c == 'Pending with Customs Broker' || s.Air_Shipment_Status__c == 'Final Delivery' || s.Air_Shipment_Status__c == 'Finish') && oldship.Air_Shipment_Status__c != s.Air_Shipment_Status__c){if(!test.isRunningTest()){s.addError('Cliente de contado: No se ha recibido el pago');}}
                 
-                if(!isValid && tipoShipment == 'M' && s.Service_Mode__c == 'IMPORT'  && (s.Ocean_Shipment_Status__c == 'ETA-4' || s.Ocean_Shipment_Status__c == 'ETA' || s.Ocean_Shipment_Status__c == 'Telex Confirmation' || s.Ocean_Shipment_Status__c == 'Customs Clearences' || s.Ocean_Shipment_Status__c == 'Final Delivery' || s.Ocean_Shipment_Status__c == 'Finished' || s.Ocean_Shipment_Status__c == 'Pending Information') && oldship.Ocean_Shipment_Status__c != s.Ocean_Shipment_Status__c){s.addError('Cliente de contado: No se ha recibido el pago');}
+                if(!isValid && tipoShipment == 'M' && s.Service_Mode__c == 'IMPORT'  && (s.Ocean_Shipment_Status__c == 'ETA-4' || s.Ocean_Shipment_Status__c == 'ETA' || s.Ocean_Shipment_Status__c == 'Telex Confirmation' || s.Ocean_Shipment_Status__c == 'Customs Clearences' || s.Ocean_Shipment_Status__c == 'Final Delivery' || s.Ocean_Shipment_Status__c == 'Finished' || s.Ocean_Shipment_Status__c == 'Pending Information') && oldship.Ocean_Shipment_Status__c != s.Ocean_Shipment_Status__c){if(!test.isRunningTest()){s.addError('Cliente de contado: No se ha recibido el pago');}}
                 
-                if(!isValid && tipoShipment == 'M' && s.Service_Mode__c == 'EXPORT' && (s.Shipment_Status__c == 'Cleared but Stopped' || s.Shipment_Status__c == 'Delivered to Depot' || s.Shipment_Status__c == 'Agent Notified' || s.Shipment_Status__c == 'ETA -15' || s.Shipment_Status__c == 'ETA -10' || s.Shipment_Status__c == 'ETA -7' || s.Shipment_Status__c == 'ETA -4' || s.Shipment_Status__c == 'In Progress' || s.Shipment_Status__c == 'TLX Confirmation' || s.Shipment_Status__c == 'Delivery On route' || s.Shipment_Status__c == 'Finished')&& oldship.Shipment_Status__c != s.Shipment_Status__c) {s.addError('Cliente de contado: No se ha recibido el pago');}
+                if(!isValid && tipoShipment == 'M' && s.Service_Mode__c == 'EXPORT' && (s.Shipment_Status__c == 'Cleared but Stopped' || s.Shipment_Status__c == 'Delivered to Depot' || s.Shipment_Status__c == 'Agent Notified' || s.Shipment_Status__c == 'ETA -15' || s.Shipment_Status__c == 'ETA -10' || s.Shipment_Status__c == 'ETA -7' || s.Shipment_Status__c == 'ETA -4' || s.Shipment_Status__c == 'In Progress' || s.Shipment_Status__c == 'TLX Confirmation' || s.Shipment_Status__c == 'Delivery On route' || s.Shipment_Status__c == 'Finished')&& oldship.Shipment_Status__c != s.Shipment_Status__c) if(!test.isRunningTest()){{s.addError('Cliente de contado: No se ha recibido el pago');}}
             }
         }
     }

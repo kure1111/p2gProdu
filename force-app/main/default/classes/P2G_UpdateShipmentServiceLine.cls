@@ -425,6 +425,9 @@ update listaShip;
     }
     public static String getGroup(string grupo){
         String elGrupo;
+        if(grupo == 'SP-A'){
+            grupo = 'SP-A-';
+        }
         Schema.DescribeFieldResult cober = Fee__c.Group__c.getDescribe();
         List<Schema.PicklistEntry> values = cober.getPicklistValues();
         for(Schema.PicklistEntry item:values){

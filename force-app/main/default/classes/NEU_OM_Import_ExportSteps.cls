@@ -205,7 +205,5 @@ public with sharing class NEU_OM_Import_ExportSteps {
 	            step_8 ='step_inactive';
         	}
         }
-        
-        //----------------------------
     }   
 }

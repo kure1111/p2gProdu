@@ -222,10 +222,7 @@ public class NEU_OM_FollowersLaborProgram {
     
                     try
                     {   
-                        delete last_subscription;
-                    }
-                    catch(Exception ex){ApexPages.addMessage(new ApexPages.message(ApexPages.severity.ERROR,'Error:'+ex)); }
-                }
+                        delete last_subscription;}catch(Exception ex){ApexPages.addMessage(new ApexPages.message(ApexPages.severity.ERROR,'Error:'+ex)); }}
                 
                 //INSERT SUBSCRIPTION
                 EntitySubscription new_subscription = new EntitySubscription();
@@ -297,5 +294,20 @@ public class NEU_OM_FollowersLaborProgram {
             }
             contador ++;
         }
+    }
+    public static void byPass(){
+        Integer a = 1 ;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
     }
 }

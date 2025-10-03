@@ -29,7 +29,7 @@ public with sharing class NEU_GenerateWEDocSave
     public PageReference crear()
     {
         PageReference pdf = Page.NEU_GenerateWEDoc;
-        pdf.getParameters().put('id',record.Id);
+        pdf.getParameters().put('id',record.Id);	
             
         Blob body;
         

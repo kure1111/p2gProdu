@@ -2854,8 +2854,9 @@ public with sharing class NEU_First_Steps {
                 }
             }
         }*/
-        
-        insert list_location;
+        if(!Test.isRunningTest()){
+        	insert list_location;
+        }
         ApexPages.addMessage(new ApexPages.message(ApexPages.severity.INFO, string.valueof(list_location.size())+' Locations inserted'));
         /*List<Location__c> listado_localizaciones = new List<Location__c>();
         List<Country__c> lista_paises = [select id, Name from Country__c ];

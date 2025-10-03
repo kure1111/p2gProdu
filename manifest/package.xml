@@ -1,15 +1,172 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <Package xmlns="http://soap.sforce.com/2006/04/metadata">
-    <types>
-        <members>CifidQuoteLines</members>
-        <members>CifidShipmentLines</members>
-        <members>Cifid_Test</members>
-        <members>Cifid_updateQuote</members>
-        <members>Cifid_updateQuoteShipment</members>
-        <members>Cifid_updateQuoteShipmentTest</members>
-        <members>PAK_SendCargoLines</members>
-        <members>PakQuoteToCifid</members>
-        <name>ApexClass</name>
-    </types>
-	<version>64.0</version>
+	<types>
+		<members>*</members>
+		<name>ApexClass</name>
+	</types>
+	<types>
+		<members>*</members>
+		<name>ApexPage</name>
+	</types>
+	<types>
+		<members>*</members>
+		<name>ApexTrigger</name>
+	</types>
+	<types>
+		<members>salesforceWs</members>
+		<name>ConnectedApp</name>
+	</types>
+	<types>
+		<members>*</members>
+		<name>Flow</name>
+	</types>
+	<types>
+		<members>*</members>
+		<name>Workflow</name>
+	</types>
+	<types>
+		<members>Account.Activo en Prospectos</members>
+		<members>Account.Alta de Prospecto SAP</members>
+		<members>Account.Customer time visited</members>
+		<members>Account.Fecha Prospeccion</members>
+		<members>Account.Fecha Recuperado</members>
+		<members>Account.First day contact status</members>
+		<members>Account.Last day contact status</members>
+		<members>Account.LeadDescription</members>
+		<members>Account.New Customer</members>
+		<members>Account.New Prospect National</members>
+		<members>Account.Seguimiento Mkt</members>
+		<members>Account.Seguimiento a Mkt Prospecto</members>
+		<members>Account.Update Prospect Mkt</members>
+		<members>Account.customer time contacted</members>
+		<members>Account.fecha potencializaccion</members>
+		<members>Account.shipper and consignee</members>
+		<members>Carrier_Line_Load_Point__c.Update Route Name</members>
+		<members>Customer_Quote__c.Approved Date Time</members>
+		<members>Customer_Quote__c.Approved IMPAK</members>
+		<members>Customer_Quote__c.Awaiting Cost FNQTC</members>
+		<members>Customer_Quote__c.Cotizaccion Proyecto Email</members>
+		<members>Customer_Quote__c.Date Autorizado FP%2FFO</members>
+		<members>Customer_Quote__c.Declined Date time 2</members>
+		<members>Customer_Quote__c.Duplicate</members>
+		<members>Customer_Quote__c.Folios W</members>
+		<members>Customer_Quote__c.New IE Quote</members>
+		<members>Customer_Quote__c.New Order Approved - ES</members>
+		<members>Customer_Quote__c.New Order Approved - EX</members>
+		<members>Customer_Quote__c.New Order Approved - FI</members>
+		<members>Customer_Quote__c.New Order Approved - FN</members>
+		<members>Customer_Quote__c.New Order Approved - FP%2FFO</members>
+		<members>Customer_Quote__c.New Order Approved - PQ</members>
+		<members>Customer_Quote__c.New Order Approved - PTO</members>
+		<members>Customer_Quote__c.New Order Approved - R</members>
+		<members>Customer_Quote__c.New Order Approved - T</members>
+		<members>Customer_Quote__c.New Order Approved - W</members>
+		<members>Customer_Quote__c.New Order Approved AW</members>
+		<members>Customer_Quote__c.New Order Approved Air PQ</members>
+		<members>Customer_Quote__c.New Order Approved WH</members>
+		<members>Customer_Quote__c.New Order Assinged Expo M</members>
+		<members>Customer_Quote__c.New Order Assinged Impo M</members>
+		<members>Customer_Quote__c.New Request to IMPAK</members>
+		<members>Customer_Quote__c.Pricing M Awaiting</members>
+		<members>Customer_Quote__c.Response ROAD ALL</members>
+		<members>Customer_Quote__c.Response Request for IMPAK</members>
+		<members>Customer_Quote__c.Response Request for Pricing Air</members>
+		<members>Customer_Quote__c.Response Request for Pricing PTO</members>
+		<members>Customer_Quote__c.Response Request for Pricing RoadINT</members>
+		<members>Customer_Quote__c.Response Request for Pricing RoadNAT</members>
+		<members>Customer_Quote__c.Response Request for WH</members>
+		<members>Customer_Quote__c.Send Request ROAD</members>
+		<members>Customer_Quote__c.Send Request to Pricing Air</members>
+		<members>Customer_Quote__c.Send Request to Pricing T</members>
+		<members>Customer_Quote__c.Send Request to Pricing WH</members>
+		<members>Customer_Quote__c.Send Request to Pricing_Sea</members>
+		<members>Customer_Quote__c.Sent Awaiting</members>
+		<members>Customer_Quote__c.Time Response Pricing M</members>
+		<members>Customer_Quote__c.approved day F</members>
+		<members>Customer_Quote__c.dia generacion SP</members>
+		<members>Event.Add approved time</members>
+		<members>Import_Export_Fee_Line__c.Calc TarifarioServRate</members>
+		<members>Import_Export_Fee_Line__c.Update ImpakCheck</members>
+		<members>Invoice__c.Cancel Invoice</members>
+		<members>Invoice__c.Fecha Facturado</members>
+		<members>Invoice__c.Fecha cobrado</members>
+		<members>Invoice__c.Update Email Cobranza</members>
+		<members>Invoice__c.Update Invoiced</members>
+		<members>Lead.Lead Email</members>
+		<members>Lead.Primera Tarea</members>
+		<members>Operadores__c.Fecha Validado</members>
+		<members>Operadores__c.Update Validado</members>
+		<members>Opportunity.OPP_Potencial</members>
+		<members>Opportunity.PROJ001_Enviar Correo IC</members>
+		<members>Opportunity.PROJ002_Llenar campo Usuario IC con Marcos Arriaga</members>
+		<members>Opportunity.PROJ003_Cotización de compras</members>
+		<members>Opportunity.PROJ004_VoBo IC</members>
+		<members>Opportunity.PROJ005_Enviar cotización al cliente</members>
+		<members>Opportunity.PROJ006_Finalizacion de Proyecto</members>
+		<members>Opportunity.ejmplo</members>
+		<members>Shipment_Fee_Line__c.Add Service Line</members>
+		<members>Shipment_Fee_Line__c.Add Shipment Serv Lines PILOTO</members>
+		<members>Shipment_Fee_Line__c.IsChanged SellPrice</members>
+		<members>Shipment_Fee_Line__c.Notificación de cambio en Service line</members>
+		<members>Shipment_Fee_Line__c.Service Line Buy Amount is Changed</members>
+		<members>Shipment_Fee_Line__c.Service Line Sell Amount is Changed</members>
+		<members>Shipment_Fee_Line__c.Shipment Finished</members>
+		<members>Shipment_Fee_Line__c.Shipment StatMOnitoreo</members>
+		<members>Shipment_Fee_Line__c.Update Extension Service Name</members>
+		<members>Shipment_Fee_Line__c.Update email Op Executive</members>
+		<members>Shipment__c.A - UpdateShipmentCerrado</members>
+		<members>Shipment__c.Actualizar fecha acuse recibido</members>
+		<members>Shipment__c.Air Shipment Confirmation</members>
+		<members>Shipment__c.All Shipment Create</members>
+		<members>Shipment__c.Cambia estatus cerrado</members>
+		<members>Shipment__c.Cambia estatus cerrado 2</members>
+		<members>Shipment__c.Carta Porte- Servicio Confirmado Invoice</members>
+		<members>Shipment__c.Carta Porte- Servicio Confirmado OC</members>
+		<members>Shipment__c.Date Autorizado FP%2FFO</members>
+		<members>Shipment__c.Date Verify Acuse SAP</members>
+		<members>Shipment__c.Date Verify PakControl</members>
+		<members>Shipment__c.Date time Finished</members>
+		<members>Shipment__c.Devoluciones</members>
+		<members>Shipment__c.Devoluciones2</members>
+		<members>Shipment__c.ETD Impo Modified By</members>
+		<members>Shipment__c.Estatus cerrados</members>
+		<members>Shipment__c.FI - UpdateShipmentCerrado</members>
+		<members>Shipment__c.FI Shipment Confirm</members>
+		<members>Shipment__c.FN - UpdateShipmentCerrado2</members>
+		<members>Shipment__c.FN Shipment In Progress</members>
+		<members>Shipment__c.FN Shipment Pending</members>
+		<members>Shipment__c.FN Shipment Re Assign</members>
+		<members>Shipment__c.FN Shipment Verify PakControl</members>
+		<members>Shipment__c.FP%2FFO Shipment Colocado</members>
+		<members>Shipment__c.Last Modified ETD Expo date</members>
+		<members>Shipment__c.Last Modified ETD Impo date</members>
+		<members>Shipment__c.M - UpdateShipmentCerrado</members>
+		<members>Shipment__c.Modification Status Flight confirmation</members>
+		<members>Shipment__c.Notificacion ATA ETA ETD</members>
+		<members>Shipment__c.Notificacion Gasto Extra</members>
+		<members>Shipment__c.ORDEN DE VENTA - PILOTO</members>
+		<members>Shipment__c.PTO - UpdateShipmentCerrado</members>
+		<members>Shipment__c.PTO Shipment Confirm</members>
+		<members>Shipment__c.R air - UpdateShipmentCerrado</members>
+		<members>Shipment__c.Rating</members>
+		<members>Shipment__c.Rating modification day</members>
+		<members>Shipment__c.Sea Shipment Confirmation</members>
+		<members>Shipment__c.Servicio con Acuse</members>
+		<members>Shipment__c.Shipment Delivery ES01</members>
+		<members>Shipment__c.Shipment Delivery T</members>
+		<members>Shipment__c.Status Closed</members>
+		<members>Shipment__c.Total Sell - Buy Amount is Changed</members>
+		<members>Shipment__c.Update URL Evaluacion CLiente</members>
+		<members>Shipment__c.Update email cobranza</members>
+		<members>Shipment__c.VERIFY PAK CONTROL isChanged</members>
+		<members>Shipment__c.WH Shipment Confirm</members>
+		<members>Traffic__c.Traffic Name</members>
+		<members>Traffic__c.Update ZoneTraffic</members>
+		<members>User.NewUser</members>
+		<members>Warehouse__c.Update Email Manager</members>
+		<members>footprint__FootPrint__c.footprint__FP_AnalysisIsDone</members>
+		<members>footprint__FootPrint__c.footprint__FP_MakeFieldUneditable</members>
+		<name>WorkflowRule</name>
+	</types>
+	<version>55.0</version>
 </Package>

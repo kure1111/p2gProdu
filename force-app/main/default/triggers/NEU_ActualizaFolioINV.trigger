@@ -16,8 +16,6 @@ trigger NEU_ActualizaFolioINV on Invoice__c (before insert, before update)
 
                 List<INV_Counter__c> contador = [SELECT Contador__c FROM INV_Counter__c FOR UPDATE];
 
-                if(!Test.isRunningTest())
-                {
                     //Si hemos cambiado de año reiniciamos el contador, si no es así simplemente lo incrementamos
                     Integer contadorAnual = [SELECT COUNT() FROM Invoice__c WHERE CALENDAR_YEAR(CreatedDate) =: system.today().year()];
 
@@ -31,11 +29,6 @@ trigger NEU_ActualizaFolioINV on Invoice__c (before insert, before update)
                     }
 
                     inv.Numero_Folio__c = contador[0].Contador__c;
-                }
-                else
-                {
-                    inv.Numero_Folio__c = 1;
-                }
 
                 ref += '-'+string.valueof(system.today().year()).right(2)+'-';
                 ref += ('000000' + (inv.Numero_Folio__c != null ? String.valueOf(inv.Numero_Folio__c) : '')).right(6);
@@ -47,13 +40,8 @@ trigger NEU_ActualizaFolioINV on Invoice__c (before insert, before update)
         }
         else if(trigger.isUpdate == true)
         {
-            for(Invoice__c inv : trigger.new)
-            {
-                //No se permite cambiar el Name
-                Invoice__c old_inv = Trigger.oldMap.get(inv.Id);
-
-                inv.Name = old_inv.Name;
-            }
+            for(Invoice__c inv : trigger.new){//No se permite cambiar el Name
+                Invoice__c old_inv = Trigger.oldMap.get(inv.Id);inv.Name = old_inv.Name;}
         }
     }
 }

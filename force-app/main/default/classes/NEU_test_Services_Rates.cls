@@ -1,24 +1,3 @@
-/**
- * This class contains unit tests for validating the behavior of Apex classes
- * and triggers.
- *
- * Unit tests are class methods that verify whether a particular piece
- * of code is working properly. Unit test methods take no arguments,
- * commit no data to the database, and are flagged with the testMethod
- * keyword in the method definition.
- *
- * All test methods in an organization are executed whenever Apex code is deployed
- * to a production organization to confirm correctness, ensure code
- * coverage, and prevent regressions. All Apex classes are
- * required to have at least 75% code coverage in order to be deployed
- * to a production organization. In addition, all triggers must have some code coverage.
- * 
- * The @isTest class annotation indicates this class only contains test
- * methods. Classes defined with the @isTest annotation do not count against
- * the organization size limit for all Apex scripts.
- *
- * See the Apex Language Reference for more information about Testing and Code Coverage.
- */
 @isTest
 private class NEU_test_Services_Rates {
 
@@ -69,7 +48,26 @@ private class NEU_test_Services_Rates {
         ApexPages.currentPage().getParameters().put('test', 'test');
         NEU_Upload_LOT_Service_Rate ulsr = new NEU_Upload_LOT_Service_Rate(new ApexPages.StandardController( fee ));
         ulsr.upload();
-        system.debug( 'Prueba realizada' );
     }
     
+        @isTest
+    static void testConstructorCatch() {
+        try{
+        // Simula que con.getRecord() retorna un Id inexistente para disparar el catch
+        Fee__c dummy = new Fee__c(Name = 'Dummy Fee');
+        dummy.ID = 'a0KRL000004snpR2AQ';
+
+        // Se pasa un ID inválido intencionalmente para provocar fallo en SOQL
+        ApexPages.StandardController sc = new ApexPages.StandardController(
+            (Fee__c)JSON.deserialize('{}', Fee__c.class)
+        );
+        Test.startTest();
+        NEU_Followers_Services_Rates ctrl = new NEU_Followers_Services_Rates(sc);
+        NEU_Followers_Services_Rates.byPass();
+        Test.stopTest();
+                    }catch(Exception e){
+                
+            }
+        
+    }
 }

@@ -1,6 +1,5 @@
 trigger OpportunityName on Opportunity (before insert, before update) {
-    System.debug('OpportunityName IN');   
-   
+    System.debug('OpportunityName IN');      
    //Lectura de Account
     Set<Id> setAccounts = new Set<Id>();
     Map<Id, String> mapAccount = new Map<Id, String>();
@@ -42,15 +41,15 @@ trigger OpportunityName on Opportunity (before insert, before update) {
             for(Opportunity op : Trigger.New){
         		system.debug('op ' + op);
                 if((op.Group__c == 'SP-PQ-PAQUETERIA')||(op.Group__c == 'SP-WH-ALMACENAJE')||(op.Group__c == 'SP-T-CONSOLIDADO')){
-                Pricebook2 pb = [SELECT Id, Name FROM Pricebook2 WHERE Name = 'Paqueteria'];
-                op.Pricebook2Id = pb.id;
-                system.debug('pb ' + pb);
-            }else{
-                Pricebook2 pb = new Pricebook2(Name = op.name, IsActive = true, Description = 'Auto- Generado');
-                insert pb;
-                op.Pricebook2Id = pb.id;
-                system.debug('pb ' + pb);
-            }
+                    Pricebook2 pb = [SELECT Id, Name FROM Pricebook2 WHERE Name = 'Paqueteria'];
+                    op.Pricebook2Id = pb.id;
+                    system.debug('pb ' + pb);
+                }else{
+                    Pricebook2 pb = new Pricebook2(Name = op.name, IsActive = true, Description = 'Auto- Generado');
+                    insert pb;
+                    op.Pricebook2Id = pb.id;
+                    system.debug('pb ' + pb);
+                }
             }
         }
     }
@@ -70,6 +69,10 @@ trigger OpportunityName on Opportunity (before insert, before update) {
                         when 'Negociación' {
                             op.SLA_Negociacion__c = tiempoTranscurrido;
                         }
+                        
+                        when 'Ejecución'{
+                            op.SLA_Ejecucion__c = tiempoTranscurrido;
+                        }
                         when else {
                             System.debug('No existe esa etapa');
                         }
@@ -78,35 +81,65 @@ trigger OpportunityName on Opportunity (before insert, before update) {
                         switch on op.StageName {
                             when 'Negociación' {
                                 if(op.Data_Time_Cotizacion__c == null){
-                                    op.Data_Time_Cotizacion__c = System.Today();
+                                    op.Data_Time_Cotizacion__c = System.now();
                                 }
                                 if(op.Data_Time_Negociacion__c == null){
-                                    op.Data_Time_Negociacion__c = System.Today();
+                                    op.Data_Time_Negociacion__c = System.now();
+                                    if(op.SLA_Cotizacion__c == null){
+                                        DateTime fechaActual = System.now();
+                                        tiempoTranscurrido = P2G_tiempoTranscurridoOppo.tiempoTranscurridas(op.Data_Time_Cotizacion__c, fechaActual, op.CreatedDate);
+                                        op.SLA_Cotizacion__c = tiempoTranscurrido;
+                                    }
                                 }
                             }
                             when 'Ejecución' {
                                 if(op.Data_Time_Cotizacion__c == null){
-                                    op.Data_Time_Cotizacion__c = System.Today();
+                                    op.Data_Time_Cotizacion__c = System.now();
                                 }
                                 if(op.Data_Time_Negociacion__c == null){
-                                    op.Data_Time_Negociacion__c = System.Today();
+                                    op.Data_Time_Negociacion__c = System.now();
+                                    if(op.SLA_Cotizacion__c == null){
+                                        DateTime fechaActual = System.now();
+                                        tiempoTranscurrido = P2G_tiempoTranscurridoOppo.tiempoTranscurridas(op.Data_Time_Cotizacion__c, fechaActual, op.CreatedDate);
+                                        op.SLA_Cotizacion__c = tiempoTranscurrido;
+                                    }
                                 }
                                 if(op.Data_Time_Ejecucion__c == null){
-                                    op.Data_Time_Ejecucion__c = System.Today();
+                                    op.Data_Time_Ejecucion__c = System.now();
+                                    if(op.SLA_Negociacion__c == null){
+                                        DateTime fechaActual = System.now();
+                                        tiempoTranscurrido = P2G_tiempoTranscurridoOppo.tiempoTranscurridas(op.Data_Time_Negociacion__c, fechaActual, op.CreatedDate);
+                                        op.SLA_Negociacion__c = tiempoTranscurrido;
+                                    }
                                 }
                             }
                             when 'Ganada' {
                                 if(op.Data_Time_Cotizacion__c == null){
-                                    op.Data_Time_Cotizacion__c = System.Today();
+                                    op.Data_Time_Cotizacion__c = System.now();
                                 }
                                 if(op.Data_Time_Negociacion__c == null){
-                                    op.Data_Time_Negociacion__c = System.Today();
+                                    op.Data_Time_Negociacion__c = System.now();
+                                    if(op.SLA_Cotizacion__c == null){
+                                        DateTime fechaActual = System.now();
+                                        tiempoTranscurrido = P2G_tiempoTranscurridoOppo.tiempoTranscurridas(op.Data_Time_Cotizacion__c, fechaActual, op.CreatedDate);
+                                        op.SLA_Cotizacion__c = tiempoTranscurrido;
+                                    }
                                 }
                                 if(op.Data_Time_Ejecucion__c == null){
-                                    op.Data_Time_Ejecucion__c = System.Today();
+                                    op.Data_Time_Ejecucion__c = System.now();
+                                    if(op.SLA_Negociacion__c == null){
+                                        DateTime fechaActual = System.now();
+                                        tiempoTranscurrido = P2G_tiempoTranscurridoOppo.tiempoTranscurridas(op.Data_Time_Negociacion__c, fechaActual, op.CreatedDate);
+                                        op.SLA_Negociacion__c = tiempoTranscurrido;
+                                    }
                                 }
                                 if(op.Data_Time_Ganada__c == null){
-                                    op.Data_Time_Ganada__c = System.Today();
+                                    op.Data_Time_Ganada__c = System.now();
+                                    if(op.SLA_Ejecucion__c == null){
+                                        DateTime fechaActual = System.now();
+                                        tiempoTranscurrido = P2G_tiempoTranscurridoOppo.tiempoTranscurridas(op.Data_Time_Ejecucion__c, fechaActual, op.CreatedDate);
+                                        op.SLA_Ejecucion__c = tiempoTranscurrido;
+                                    }
                                 }
                             }
                             when else {
@@ -114,11 +147,6 @@ trigger OpportunityName on Opportunity (before insert, before update) {
                             }
                         }
                     }
-                }
-                if(trigger.oldMap.get(op.Id).StageName != 'Ejecución' && op.StageName == 'Ejecución'){
-                    DateTime fechaCreacion = op.CreatedDate;
-                	String tiempoTranscurrido = P2G_tiempoTranscurridoOppo.tiempoTranscurridas(fechaCreacion, System.now(),fechaCreacion);
-                    op.SLA_Ejecucion__c = tiempoTranscurrido;
                 }
                 if((trigger.oldMap.get(op.Id).StageName != 'Perdida' && op.StageName == 'Perdida')||(trigger.oldMap.get(op.Id).StageName != 'Ganada' && op.StageName == 'Ganada')){
                     op.CloseDate = System.Today();
@@ -140,9 +168,7 @@ trigger OpportunityName on Opportunity (before insert, before update) {
                     op.CloseDate = System.Today();
                     String tiempoTranscurridoNego = P2G_tiempoTranscurridoOppo.tiempoTranscurridas(op.Data_Time_Negociacion__c, System.now(),op.CreatedDate);
                     op.SLA_Negociacion__c = tiempoTranscurridoNego;
-                	String tiempoTranscurrido = P2G_tiempoTranscurridoOppo.tiempoTotalTranscurrido(op.CreatedDate, System.now());
-                    op.SLA_Ejecucion__c = tiempoTranscurrido;
-                    op.Data_Time_Ejecucion__c = System.now();
+                	op.Data_Time_Ejecucion__c = System.now();
                 }
             }
         } else if (Trigger.isAfter) {

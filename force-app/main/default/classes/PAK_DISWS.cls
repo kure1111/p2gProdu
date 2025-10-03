@@ -94,7 +94,8 @@ global class PAK_DISWS {
         }
         return Result;
     }
-    
+
+/*    
     public void TestMetodo(){
         String Test0 = '';
         Test0 = '';
@@ -485,4 +486,5 @@ global class PAK_DISWS {
         Test0 = '';
         Test0 = '';
     }
+*/
 }

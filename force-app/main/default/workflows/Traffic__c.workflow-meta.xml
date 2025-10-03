@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Workflow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fieldUpdates>
+        <fullName>Traffic_Name</fullName>
+        <field>Name</field>
+        <formula>IF(LEN(TEXT(Freight_Mode__c) &amp; &apos; - &apos; &amp; TEXT(Service_Mode__c) &amp; &apos; - &apos; &amp; Site_of_Load__r.Name &amp; &apos; to &apos; &amp; Site_of_Discharge__r.Name) &lt;= 80, TEXT(Freight_Mode__c) &amp; &apos; - &apos; &amp; TEXT(Service_Mode__c) &amp; &apos; - &apos; &amp; Site_of_Load__r.Name &amp; &apos; to &apos; &amp; Site_of_Discharge__r.Name, MID(TEXT(Freight_Mode__c) &amp; &apos; - &apos; &amp; TEXT(Service_Mode__c) &amp; &apos; - &apos; &amp; Site_of_Load__r.Name &amp; &apos; to &apos; &amp; Site_of_Discharge__r.Name, 0, 80))</formula>
+        <name>Traffic Name</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <rules>
+        <fullName>Traffic Name</fullName>
+        <actions>
+            <name>Traffic_Name</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>false</active>
+        <formula>1=1</formula>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+    <rules>
+        <fullName>Update ZoneTraffic</fullName>
+        <active>false</active>
+        <formula>1=1</formula>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+</Workflow>

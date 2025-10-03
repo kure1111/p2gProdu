@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Workflow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fieldUpdates>
+        <fullName>Name_Route</fullName>
+        <field>Name</field>
+        <formula>MID(Port_Airport_of_Load__r.Name &amp;&apos; - &apos;&amp; 
+IF( AND(First_Leg_Route__c != null, First_Leg_Route__r.Port_Airport_of_Discharge__c != null), First_Leg_Route__r.Port_Airport_of_Discharge__r.Name &amp;&apos; - &apos; ,&apos;&apos;)&amp; 
+Port_Airport_of_Discharge__r.Name &amp;&apos; &apos;, 0, 79)</formula>
+        <name>Name Route</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <rules>
+        <fullName>Update Route Name</fullName>
+        <actions>
+            <name>Name_Route</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>false</active>
+        <formula>1=1</formula>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+</Workflow>

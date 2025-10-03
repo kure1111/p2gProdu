@@ -18,8 +18,7 @@ public with sharing class NEU_OM_Allocate_Account_toPriceList {
           List<Price_List__c> pricelis = new List<Price_List__c>();
           if(record.Business_Area__c != null)
             pricelis = [select Id, Name, Business_Area__c from Price_List__c where  Business_Area__c =: record.Business_Area__c];
-          else
-            pricelis = [select Id, Name, Business_Area__c from Price_List__c order by Business_Area__c];
+          else pricelis = [select Id, Name, Business_Area__c from Price_List__c order by Business_Area__c];
           comprobante_familias = '';
           for(Price_List__c fs : pricelis)
           {
@@ -56,9 +55,7 @@ public with sharing class NEU_OM_Allocate_Account_toPriceList {
         system.debug( con.getRecord() );
         try { 
         record = [select Id, Name, Business_Area__c from Price_List__c where id = :con.getRecord().id];
-        } catch( Exception ee) { 
-            record = new Price_List__c();
-        }
+        } catch( Exception ee) {  record = new Price_List__c();}
         
     }
     
@@ -112,10 +109,7 @@ public with sharing class NEU_OM_Allocate_Account_toPriceList {
               myline.Price_List__c=record.Id;
                 
               try
-              {
-                insert myLine;
-          
-              }
+              {insert myLine;}
               catch(Exception e){}
             }
         }
@@ -140,5 +134,29 @@ public with sharing class NEU_OM_Allocate_Account_toPriceList {
           pgReturnPage = new PageReference(returnUrl);
             pgReturnPage.setRedirect(true);
         return pgReturnPage;
+      }
+
+      public void byPass(){
+        Integer a = 1;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
       }
 }

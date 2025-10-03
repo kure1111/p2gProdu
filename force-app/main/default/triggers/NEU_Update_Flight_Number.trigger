@@ -1,6 +1,6 @@
 trigger NEU_Update_Flight_Number on Shipment__c (after insert, after update) 
 {
-    if(NEU_StaticVariableHelper.getBoolean1()){return;}		
+    if(NEU_StaticVariableHelper.getBoolean1()){return;}
 	
     Set<Id>ids=new Set<Id>();
     Map<Id, string> map_shipment_flight_number = new Map<Id, string>();

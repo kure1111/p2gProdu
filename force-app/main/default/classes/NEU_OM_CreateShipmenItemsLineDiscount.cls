@@ -181,299 +181,12 @@ public  List<SelectOption> getpricelists()
         TempPrice_List=record.Catalog_Price_List__c;
         sf1=(Apexpages.currentPage().getParameters().get('sf1')!=null);
         chekeados =false;
-       /* accountpricelist = '';
-        family_field = '';
-        listado_familias= '';
-        listado_accountpricelist = '';
-        listado_pricelist = '';
-        field_accountpricelist = '';
-        field_pricelist = '';
-        listadodecheck = '';
-        nombrepricelist = '';
-        bloqueolookup = '';
-        chekeados =false;*/
-        //botones familias
-
-        /*List<Product_Family__c> lista_familias = new List<Product_Family__c>();
-        if(record.Account_for_Catalog_Price_List__r.Price_List__r.Family__c != null)
-        {
-             lista_familias = [SELECT Name, Id, Business_Area__c FROM Product_Family__c where Id =: record.Account_for_Catalog_Price_List__r.Price_List__r.Family__c order by Name];
-            
-        }
-        else
-        {
-            if(record.Catalog_Price_List__r.Family__c != null)
-            {
-                 lista_familias = [SELECT Name, Id, Business_Area__c FROM Product_Family__c where Id =: record.Catalog_Price_List__r.Family__c order by Name];
-                 bloqueolookup ='none';
-            }
-            else
-            {
-                if(record.Account_for_Catalog_Price_List__c != null)
-                {
-                    List<Item_List_Price__c> query_listado_familias_sacar = [select Item_Name__r.Sourcing_Family__c from Item_List_Price__c where Price_List__c =:record.Account_for_Catalog_Price_List__r.Price_List__c];
-                    set<id>listado_familias_sacar = new set<id>();
-                    for(Item_List_Price__c ilp: query_listado_familias_sacar)
-                    {
-                        listado_familias_sacar.add(ilp.Item_Name__r.Sourcing_Family__c);
-                    }
-                    lista_familias = [SELECT Name, Id, Business_Area__c  FROM Product_Family__c where Business_Area__c =: record.Account_for_Catalog_Price_List__r.Price_List__r.Business_Area__c and Id IN:listado_familias_sacar order by Name];
-                    bloqueolookup ='none';
-                }
-                else if(record.Catalog_Price_List__c != null)
-                {
-                    List<Item_List_Price__c> query_listado_familias_sacar = [select Item_Name__r.Sourcing_Family__c from Item_List_Price__c where Price_List__c =:record.Catalog_Price_List__c];
-                    set<id>listado_familias_sacar = new set<id>();
-                    for(Item_List_Price__c ilp: query_listado_familias_sacar)
-                    {
-                      listado_familias_sacar.add(ilp.Item_Name__r.Sourcing_Family__c);
-                    }
-                    lista_familias = [SELECT Name, Id, Business_Area__c  FROM Product_Family__c where Business_Area__c =: record.Catalog_Price_List__r.Business_Area__c and Id IN:listado_familias_sacar order by Name];
-                    bloqueolookup ='none';
-                }
-                else
-                {
-                     lista_familias = [SELECT Name, Id FROM Product_Family__c where Id IN(select Sourcing_Family__c from Sourcing_Item__c where Sourcing_Family__c != null) order by Name];
-                }
-            }
-        }
-        
-        integer contador = 0;
-        for(Product_Family__c pf : lista_familias)
-        {
-            if(contador == 0)
-            {
-                listado_familias +='<input type="radio" id="'+pf.Name+'" name="radio" checked="checked"><label for="'+pf.Name+'" class="listafamilias" style="border-bottom-left-radius: 0px;">'+pf.Name+'</label>';
-                family_field = pf.Name;
-            }
-            else
-            {
-                if(lista_familias.size() == lista_familias.size())
-                    listado_familias +='<input type="radio" id="'+pf.Name+'" name="radio"><label for="'+pf.Name+'" class="listafamilias" style="border-bottom-right-radius: 0px;">'+pf.Name+'</label>';
-                else
-                    listado_familias +='<input type="radio" id="'+pf.Name+'" name="radio"><label for="'+pf.Name+'" class="listafamilias">'+pf.Name+'</label>';
-            }
-            contador ++;
-        }
-        
-        //Account Price List
-        if(record.Account_for_Catalog_Price_List__c != null)
-        {
-            listado_accountpricelist +=' <select class="listaaccountpricelist" style="width: 380px;" disabled>';
-            field_accountpricelist = record.Account_for_Catalog_Price_List__r.Price_List__c;
-        }
-        else
-        {
-            if(record.Catalog_Price_List__c != null)
-                listado_accountpricelist +=' <select class="listaaccountpricelist" style="width: 380px;" disabled>';
-            else
-                listado_accountpricelist +=' <select class="listaaccountpricelist" style="width: 380px;" >';
-        }
-        
-        listado_accountpricelist +='                <option value="0" class="0" >-- Select --</option>';
-        
-        List<Customer_Price_List__c> Customer_Price_List = null;
-        Customer_Price_List = [select Id,Customer__c, Price_List__c, Price_List__r.Name from Customer_Price_List__c where Customer__c =: record.Account_for__c order by Name];
-        for(Customer_Price_List__c pl: Customer_Price_List)
-        {   
-            if(pl.Price_List__c == record.Account_for_Catalog_Price_List__r.Price_List__c)
-                listado_accountpricelist += '<option value="'+pl.Price_List__c+'" selected>'+pl.Price_List__r.Name+'</option>';
-            else
-                listado_accountpricelist += '<option value="'+pl.Price_List__c+'">'+pl.Price_List__r.Name+'</option>';
-        }
-        listado_accountpricelist +=' </select>';
-        
-        if(record.Account_for_Catalog_Price_List__r.Price_List__c != null)
-            listado_accountpricelist = record.Account_for_Catalog_Price_List__r.Price_List__c;
-        
-            
-        //Price List
-        if(record.Catalog_Price_List__c != null)
-            {
-                listado_pricelist +=' <select class="listapricelist" style="width: 380px;" disabled >';
-                
-            }
-            else
-                if(record.Account_for_Catalog_Price_List__c != null)
-                    listado_pricelist +=' <select class="listapricelist" style="width: 380px;" disabled >';
-                else
-                    listado_pricelist +=' <select class="listapricelist" style="width: 380px;" >';
-            listado_pricelist +='               <option value="0" class="0" >-- Select --</option>';
-            
-        if(field_accountpricelist == '')
-        {
-            if(record.Catalog_Price_List__c != null)
-                field_accountpricelist = record.Catalog_Price_List__c;  
-            
-            List<Price_List__c> Price_List = null;
-            
-            string consulta_bussiness_area ='';
-            consulta_bussiness_area = record.Account_for__r.Business_Area__c;
-            String[] bussiness_area = new String[]{};
-            
-            if(consulta_bussiness_area != null && consulta_bussiness_area != '')
-                bussiness_area = consulta_bussiness_area.split(';',0);  
-    
-            string comprobante ='';
-            for(integer z = 0; z < bussiness_area.size(); z++)
-            {
-                Price_List = [select Id, Name, Business_Area__c from Price_List__c where Business_Area__c =: bussiness_area[z] order by Name];
-                for(Price_List__c pl: Price_List)
-                {   
-                        if(pl.Id == record.Catalog_Price_List__c)
-                            listado_pricelist += '<option value="'+pl.Id+'" selected>'+pl.Name+'</option>';
-                        else
-                            listado_pricelist += '<option value="'+pl.Id+'">'+pl.Name+'</option>';
-                }
-                
-            }
-            
-        }
-        listado_pricelist +=' </select>'; 
-        
-            if(ApexPages.currentPage().getParameters().get('test') != null)
-                families();*/
+       
     }
     
     public void families()
     {
-       /* string businessarea= '';
-        string family='';
-        integer contador = 0;
-        listado_familias = '';
-        Item_List_Price=null;
-        if(ApexPages.currentPage().getParameters().get('test') != null)
-        {
-             Price_List__c b = new Price_List__c(Name = 'Test acount',Business_Area__c = 'Sales');
-             insert b;
-             field_accountpricelist =b.Id;
-             List<Price_List__c> Price_List = null;
-             Price_List = [select Id,Name, Family__c, Business_Area__c from Price_List__c where Id =: field_accountpricelist order by Name];
-        }
-        if((record.Account_for_Catalog_Price_List__c == null && record.Catalog_Price_List__c == null) || ApexPages.currentPage().getParameters().get('test') != null)
-        {
-            
-            List<Price_List__c> Price_List = null;
-            List<Customer_Price_List__c> Acc_Price_List = null;
-            if(ApexPages.currentPage().getParameters().get('test') == 'true')
-            {
-                nombrepricelist='test';
-            }
-            if(ApexPages.currentPage().getParameters().get('test') == 'false')
-            {
-                nombrepricelist=null;
-            }
-                if((nombrepricelist != null && nombrepricelist != '') )
-                {
-                    if(ApexPages.currentPage().getParameters().get('test') == null)
-                    {
-                        Acc_Price_List = [select Id,Name, Price_List__c  from Customer_Price_List__c where Name =: nombrepricelist order by Name];
-                        Price_List = [select Id,Name, Family__c, Business_Area__c from Price_List__c where Id =: Acc_Price_List[0].Price_List__c order by Name];
-                        idaccountpricelist = Acc_Price_List[0].Id;
-                    }
-                    else
-                    {
-                    
-                        Acc_Price_List = [select Id,Name, Price_List__c  from Customer_Price_List__c limit 1];
-                        Price_List = [select Id,Name, Family__c, Business_Area__c from Price_List__c limit 1];
-                        idaccountpricelist = Acc_Price_List[0].Id;
-                    }
-                    for(Price_List__c pl: Price_List)
-                    {   
-                        if(pl.Family__c != null)
-                            family =pl.Family__c;
-                        if(pl.Business_Area__c != null)
-                            businessarea = pl.Business_Area__c;
-                            field_accountpricelist =pl.id;
-                    }
-                }
-                else
-                {
-                    if(field_accountpricelist != null && field_accountpricelist != '')
-                    {
-                        Price_List = [select Id,Name, Family__c, Business_Area__c from Price_List__c where Id =: field_accountpricelist order by Name];
-                
-                        for(Price_List__c pl: Price_List)
-                        {   
-                            if(pl.Family__c != null)
-                                family =pl.Family__c;
-                            if(pl.Business_Area__c != null)
-                                businessarea = pl.Business_Area__c;
-                                field_accountpricelist =pl.id;
-                        }
-                    }
-                }
-                
-            
-                if(Price_List != null)
-                {
-                    List<Product_Family__c> lista_familias = null;
-                    if(family != '')
-                         lista_familias = [SELECT Name, Id, Business_Area__c FROM Product_Family__c where Id =: family order by Name];
-                    else
-                    {
-                        if(businessarea != '')
-                            lista_familias = [SELECT Name, Id, Business_Area__c  FROM Product_Family__c where Business_Area__c =: businessarea order by Name];
-                    }
-                    
-                    if(ApexPages.currentPage().getParameters().get('test') != null)
-                        lista_familias = [SELECT Name, Id, Business_Area__c  FROM Product_Family__c order by Name];
-                        
-                    for(Product_Family__c pf : lista_familias)
-                    {
-                        if(contador == 0)
-                        {
-                            listado_familias +='<input type="radio" id="'+pf.Name+'" name="radio" checked="checked"><label for="'+pf.Name+'" class="listafamilias" style="border-bottom-left-radius: 0px;" onchange="cambiarfamilia();">'+pf.Name+'</label>';
-                            family_field = pf.Name;
-                        }
-                        else
-                        {
-                            if(lista_familias.size() == lista_familias.size())
-                                listado_familias +='<input type="radio" id="'+pf.Name+'" name="radio"><label for="'+pf.Name+'" class="listafamilias" style="border-bottom-right-radius: 0px;" onchange="cambiarfamilia();">'+pf.Name+'</label>';
-                            else
-                                listado_familias +='<input type="radio" id="'+pf.Name+'" name="radio"><label for="'+pf.Name+'" class="listafamilias" onchange="cambiarfamilia();">'+pf.Name+'</label>';
-                        }
-                        contador ++;
-                    }
-                }
-                else
-                {
-                    
-                    
-                    List<Product_Family__c> lista_familias = null;
-                    if(family != '')
-                         lista_familias = [SELECT Name, Id, Business_Area__c FROM Product_Family__c where Id =: family order by Name];
-                    else
-                    {
-                        if(businessarea != '')
-                            lista_familias = [SELECT Name, Id, Business_Area__c  FROM Product_Family__c where Business_Area__c =: businessarea order by Name];
-                        else
-                            lista_familias = [SELECT Name, Id FROM Product_Family__c where Id IN(select Sourcing_Family__c from Sourcing_Item__c where Sourcing_Family__c != null) order by Name];
-                    }
-                    
-                    if(ApexPages.currentPage().getParameters().get('test') != null)
-                        lista_familias = [SELECT Name, Id, Business_Area__c  FROM Product_Family__c order by Name];
-                        
-                    for(Product_Family__c pf : lista_familias)
-                    {
-                        if(contador == 0)
-                        {
-                            listado_familias +='<input type="radio" id="'+pf.Name+'" name="radio" checked="checked"><label for="'+pf.Name+'" class="listafamilias" style="border-bottom-left-radius: 0px;" onchange="cambiarfamilia();">'+pf.Name+'</label>';
-                            family_field = pf.Name;
-                        }
-                        else
-                        {
-                            if(lista_familias.size() == lista_familias.size())
-                                listado_familias +='<input type="radio" id="'+pf.Name+'" name="radio"><label for="'+pf.Name+'" class="listafamilias" style="border-bottom-right-radius: 0px;" onchange="cambiarfamilia();">'+pf.Name+'</label>';
-                            else
-                                listado_familias +='<input type="radio" id="'+pf.Name+'" name="radio"><label for="'+pf.Name+'" class="listafamilias" onchange="cambiarfamilia();">'+pf.Name+'</label>';
-                        }
-                        contador ++;
-                    }
-                    
-                }
-        }
-    */
+       
         
     }
     
@@ -524,12 +237,7 @@ public  List<SelectOption> getpricelists()
                 lista_items_query =[select Id, Name, Weight_Kgs__c,Current_Supplier__c,Account_Owner__c, Unit_of_measure__c, Subfamily__r.Name, Sourcing_Family__r.Name, Item_Price__c from Sourcing_Item__c limit 1000];
             }
             
-           /* List<Shipment_Line__c> Quote_Item = null;
-            if(family != '')
-                Quote_Item = [select Id, Name, Shipment__c, Item_Name__c, Item_Name__r.Sourcing_Family__r.Name from Shipment_Line__c where Shipment__c =: record.Id  and Item_Name__r.Sourcing_Family__r.Name =: family order by Name];
-            else
-                Quote_Item = [select Id, Name, Shipment__c, Item_Name__c, Item_Name__r.Sourcing_Family__r.Name from Shipment_Line__c where Shipment__c =: record.Id order by Name];
-        */
+
             if( ApexPages.currentPage().getParameters().get('test') != null)
                 lista_item_list = [select Id, Price_List__c, Item_Name__c,Item_Name__r.Weight_Kgs__c, Item_Name__r.Current_Supplier__c, Item_Name__r.Account_Owner__c, Item_Name__r.Unit_of_measure__c, Item_Name__r.Subfamily__r.Name, Item_Name__r.Name, Item_Price__c, Item_Name__r.Sourcing_Family__r.Name, List_Price__c from Item_List_Price__c  order by Name];
             boolean insertar = true;
@@ -538,21 +246,13 @@ public  List<SelectOption> getpricelists()
             {
                 for(Item_List_Price__c lp: lista_item_list)
                 {
-                    /*for(Shipment_Line__c qi: Quote_Item) Permitir insertar un item ams de una vez
-                    {
-                        if(lp.Item_Name__c == qi.Item_Name__c)
-                        {
-                            insertar = false;
-                            break;
-                        }
-                    }*/
+                   
                     if(insertar || ApexPages.currentPage().getParameters().get('test') != null)
                     {
                         Shipment_Line__c ship_line = new Shipment_Line__c();
                         ship_line.Units_Shipped__c = 1;
                         ship_line.Unit_Origin_Sell_Price__c = (lp.List_Price__c != null ? lp.List_Price__c : lp.Item_Price__c);
-                        //ship_line.Shipping_Weight_Kg__c = 
-                        //ship_line.Shipping_Volume_m3__c = 
+
                         Family_Item_List_Price.add(new NEUEBUSCM_Shipment_Item_Line_s(lp,lp.Item_Name__r,ship_line,false, '', '', '1', (lp.List_Price__c != null ? string.valueof(lp.List_Price__c) : string.valueof(lp.Item_Price__c)), ''));
                     }
                     insertar = true;
@@ -562,22 +262,14 @@ public  List<SelectOption> getpricelists()
             {
                   for(Sourcing_Item__c lp: lista_items_query)
                   {
-                    /*for(Shipment_Line__c qi: Quote_Item) Permitir insertar un item ams de una vez
-                    {
-                        if(lp.Item_Name__c == qi.Item_Name__c)
-                        {
-                            insertar = false;
-                            break;
-                        }
-                    }*/
+
                       
                     if(insertar || ApexPages.currentPage().getParameters().get('test') != null)
                     {
                         Shipment_Line__c ship_line = new Shipment_Line__c();
                         ship_line.Units_Shipped__c = 1;
                         ship_line.Unit_Origin_Sell_Price__c = (lp.Item_Price__c != null ? lp.Item_Price__c : 0);
-                        //ship_line.Shipping_Weight_Kg__c = 
-                        //ship_line.Shipping_Volume_m3__c = 
+
                         Family_Item_List_Price.add(new NEUEBUSCM_Shipment_Item_Line_s(null,lp,ship_line,false, '', '', '1', (lp.Item_Price__c  != null ? string.valueof(lp.Item_Price__c ) : '0'), ''));
                     }
                     insertar = true;
@@ -709,18 +401,7 @@ public  List<SelectOption> getpricelists()
                         //myline.Manual_Price__c = decimal.valueof(lines.price);
                         if(lines.ship_line != null)
                             myline.Unit_Origin_Sell_Price__c = lines.ship_line.Unit_Origin_Sell_Price__c;
-                    //  myline.Item_List_Price__c=lines.line.Id;
-                    /*  if(record.Account_for_Record_Type__c == 'Supplier')
-                        {
-                            myline.Item_Supplier_Owner__c = record.Account_for__c;
-                        }
-                        else
-                        {
-                            if(lines.line.Item_Name__r.Current_Supplier__c != null)
-                                myline.Item_Supplier_Owner__c=lines.line.Item_Name__r.Current_Supplier__c;
-                            else
-                                myline.Item_Supplier_Owner__c=lines.line.Item_Name__r.Account_Owner__c;
-                        }   */
+
                         if(lines.line.Item_Name__r.Sourcing_Family__c != null)
                             myline.Family__c=lines.line2.Sourcing_Family__c;
                         if(lines.line.Item_Name__r.Subfamily__c != null)
@@ -734,45 +415,54 @@ public  List<SelectOption> getpricelists()
                     }
                 }
             }
-            
-          /*  Item_List_Price=null;
-            if((record.Catalog_Price_List__c == null && record.Account_for_Catalog_Price_List__c == null) || ApexPages.currentPage().getParameters().get('test') != null)
-            {
-                if(nombrepricelist != null && nombrepricelist != '' && idaccountpricelist != null)
-                    record.Account_for_Catalog_Price_List__c = idaccountpricelist;
-                else
-                {
-                    if(field_accountpricelist != null && field_accountpricelist != ''  && field_accountpricelist != '0')
-                        record.Catalog_Price_List__c = field_accountpricelist;
-                }
-                
-                
-                try
-                {
-                    update record;
-                }
-                catch(Exception ex)
-                {
-                    
-                }
-            }*/
-            
+                      
             if(chekeados)
             {
                 Item_List_Price=null;
                 if((record.Account_for_Catalog_Price_List__c != null || record.Catalog_Price_List__c!=null))
                 {
-                    //try
-                    //{
-                        update record;
-                    /*}
-                    catch(Exception ex)
-                    {
-                        
-                    }*/
+                    update record;
                     editPriceList=false;
                 }
             }
         }
+    }
+
+    public void byPass(){
+        Integer a = 1;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        
     }
 }

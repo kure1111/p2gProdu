@@ -70,54 +70,5 @@ public with sharing class NEU_OM_Sup_Quote_OrderSteps {
             step_6 ='step_inactive';
         }
         
-      /*  string nombrequote = record.Name+'%';
-        
-        documentos_asociados = [select Id, Name, Supplier_Quote__c from Associated_Document__c where Supplier_Quote__c =: record.Id and Name like :record.Name+'%'];
-        if(documentos_asociados.size()>0)
-        {
-            step ='ImportExportStep6';
-        }
-        else
-        {
-            if(record.RecordTypeId == Schema.SobjectType.Supplier_Quote__c.getRecordTypeInfosByName().get('Supplier Order').getRecordTypeId())
-            {
-                step ='ImportExportStep5';
-            }
-            else
-            {
-                documentos_asociados = [select Id, Name, Supplier_Quote__c from Associated_Document__c where Supplier_Quote__c =: record.Id];
-                if(documentos_asociados.size()>0)
-                {
-                    step ='ImportExportStep4';
-                }
-                else
-                {
-                    if(hayduty == true)
-                    {
-                        step ='ImportExportStep3';
-                    }
-                    else
-                    {
-                        //COMPROBACIÓN QUOTATION
-                        List<Supplier_Quote_Order_Fee_Line__c> supquorfeeli = new List<Supplier_Quote_Order_Fee_Line__c>();
-                        supquorfeeli = [select Id, Name, Supplier_Quote_Order__c from Supplier_Quote_Order_Fee_Line__c where Supplier_Quote_Order__c =: record.Id];
-                        if(supquorfeeli.size() > 0)
-                        {
-                            step ='ImportExportStep2';
-                        }
-                        else
-                        {
-                            List<Supplier_Quote_Line__c> suquoteitem = new List<Supplier_Quote_Line__c>();
-                            suquoteitem = [select Id, Name, Supplier_Quote__c from Supplier_Quote_Line__c where Supplier_Quote__c =: record.Id];
-                            if(suquoteitem.size() > 0)
-                                step ='ImportExportStep1';
-                            else
-                                step ='ImportExportStep0';
-                
-                        }
-                    }
-                }
-            }
-        }*/
     }   
 }

@@ -29,6 +29,8 @@ private class NEU_test_Family {
         ApexPages.currentPage().getParameters().put('test', 'test');
         NEU_OM_UploadImageProductFamily uipf = new NEU_OM_UploadImageProductFamily(new ApexPages.StandardController( family ));
         uipf.upload();
+        uipf.return_family();
+        uipf.runtest();
         system.debug( 'Prueba realizada' );
     }
 }

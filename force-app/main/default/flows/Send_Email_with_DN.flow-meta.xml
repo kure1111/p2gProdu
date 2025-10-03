@@ -26,8 +26,6 @@
                 <elementReference>BoodyFormula</elementReference>
             </value>
         </inputParameters>
-        <nameSegment>emailSimple</nameSegment>
-        <versionSegment>1</versionSegment>
     </actionCalls>
     <apiVersion>60.0</apiVersion>
     <environments>Default</environments>

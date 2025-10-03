@@ -71,6 +71,8 @@ public class CPV2_Test {
         address.Codigo_Postal_CP__c = direccion.Id;
         address.referencia__c = 'Referencias test';
         address.Type__c = 'Shipping Address';
+        address.status__c = 'Validado';
+        address.Active__c = true; 
         insert address;
         
         Account_Address__c address2 = new Account_Address__c();
@@ -82,6 +84,8 @@ public class CPV2_Test {
         address2.Codigo_Postal_CP__c = direccion.Id;
         address2.referencia__c = 'Referencias test';
         address2.Type__c = 'Shipping Address';
+        address2.status__c = 'Validado';
+        address2.Active__c = true; 
         insert address2;
 
         Container_Type__c ctV = new Container_Type__c();
@@ -258,8 +262,8 @@ public class CPV2_Test {
         new_shipment.Move_Type__c = 'Door to Door';        
         new_shipment.Only_Warehouse_Service__c = false;                    
         new_shipment.Operation_Executive__c = userT.Id; 
-        new_shipment.Destination_Address__c = 'Hola';
-        new_shipment.Origin_Address__c = 'Hola';
+        new_shipment.Destination_Address__c = address.Id;
+        new_shipment.Origin_Address__c = address2.Id;
         new_shipment.Account_Origin_Address__c = address.id;
         new_shipment.Account_Destination_Address__c = address2.id;          
         new_shipment.Shipment_Status_Plann__c = 'Pending';

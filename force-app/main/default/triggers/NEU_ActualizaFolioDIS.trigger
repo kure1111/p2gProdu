@@ -15,8 +15,8 @@ trigger NEU_ActualizaFolioDIS on Shipment_Disbursement__c (before insert, before
 
             List<DIS_Counter__c> contador = [SELECT Contador__c FROM DIS_Counter__c FOR UPDATE];
 
-            if(!Test.isRunningTest())
-            {
+            //if(!Test.isRunningTest())
+            //{
                 //Si hemos cambiado de año reiniciamos el contador, si no es así simplemente lo incrementamos
                 Integer contadorAnual = [SELECT COUNT() FROM Shipment_Disbursement__c WHERE CALENDAR_YEAR(CreatedDate) =: system.today().year()];
 
@@ -30,11 +30,11 @@ trigger NEU_ActualizaFolioDIS on Shipment_Disbursement__c (before insert, before
                 }
 
                 dis.Numero_Folio__c = contador[0].Contador__c;
-            }
+            /*}
             else
             {
                 dis.Numero_Folio__c = 1;
-            }
+            }*/
 
             ref += '-'+string.valueof(system.today().year()).right(2)+'-';
             ref += ('000000' + (dis.Numero_Folio__c != null ? String.valueOf(dis.Numero_Folio__c) : '')).right(6);

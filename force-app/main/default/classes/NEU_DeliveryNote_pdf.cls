@@ -18,7 +18,7 @@ public with sharing class NEU_DeliveryNote_pdf {
 
         con = stdController;
         
-        try { 
+        try {
         record = [select Id, Name, Account_for__c,
         Account_for__r.Phone, Account_for__r.BillingStreet,
         Account_for__r.BillingCity, Account_for__r.BillingState,Account_for__r.NEU_Email__c,

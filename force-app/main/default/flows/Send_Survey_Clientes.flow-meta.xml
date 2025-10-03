@@ -3,10 +3,13 @@
     <actionCalls>
         <name>Email_Encuesta1</name>
         <label>Email Encuesta</label>
-        <locationX>182</locationX>
-        <locationY>792</locationY>
+        <locationX>726</locationX>
+        <locationY>360</locationY>
         <actionName>emailSimple</actionName>
         <actionType>emailSimple</actionType>
+        <connector>
+            <targetReference>Record_Found</targetReference>
+        </connector>
         <flowTransactionModel>CurrentTransaction</flowTransactionModel>
         <inputParameters>
             <name>emailAddresses</name>
@@ -32,15 +35,13 @@
                 <stringValue>00XRQ000001Gtkj2AC</stringValue>
             </value>
         </inputParameters>
-        <nameSegment>emailSimple</nameSegment>
-        <versionSegment>1</versionSegment>
     </actionCalls>
     <apiVersion>61.0</apiVersion>
     <decisions>
         <name>Dias_10_al_13</name>
         <label>Dias 10 al 13</label>
         <locationX>479</locationX>
-        <locationY>468</locationY>
+        <locationY>576</locationY>
         <defaultConnectorLabel>No</defaultConnectorLabel>
         <rules>
             <name>Yes2</name>
@@ -69,10 +70,7 @@
         <name>Lunes_13</name>
         <label>Lunes 13</label>
         <locationX>50</locationX>
-        <locationY>684</locationY>
-        <defaultConnector>
-            <targetReference>Email_Encuesta1</targetReference>
-        </defaultConnector>
+        <locationY>792</locationY>
         <defaultConnectorLabel>No</defaultConnectorLabel>
         <rules>
             <name>Yes3</name>
@@ -98,7 +96,7 @@
         <name>Lunes_o_Viernes</name>
         <label>Lunes o Viernes</label>
         <locationX>248</locationX>
-        <locationY>576</locationY>
+        <locationY>684</locationY>
         <defaultConnectorLabel>No</defaultConnectorLabel>
         <rules>
             <name>Yes_2</name>
@@ -128,7 +126,7 @@
         <name>Record_Found</name>
         <label>Record Found</label>
         <locationX>726</locationX>
-        <locationY>360</locationY>
+        <locationY>468</locationY>
         <defaultConnectorLabel>No</defaultConnectorLabel>
         <rules>
             <name>Yes</name>
@@ -146,14 +144,14 @@
             <label>Yes</label>
         </rules>
     </decisions>
-    <description>Envio automatizado de Encuesta - Clientes</description>
+    <description>Envio automatizado de Encuesta NPS 2024</description>
     <environments>Default</environments>
     <formulas>
         <name>Body_Formua</name>
         <dataType>String</dataType>
         <expression>&quot;Encuesta 2Go Logistics&quot; &amp; BR() &amp; 
 &quot;Tu respuesta a la encuesta es muy importante para nosotros&quot; &amp; BR() &amp; 
-&quot;https://pak2gologistics.my.site.com/2GoEncuesta/survey/runtimeApp.app?invitationId=0KiRQ000000WYZe&amp;surveyName=encuesta_de_servicio_2go_logistics&amp;UUID=e5da9f11-3d0e-4fd2-a28d-79853a447c6c&quot; &amp; BR() &amp; 
+&quot;https://pak2gologistics.my.site.com/2GoEncuesta/survey/runtimeApp.app?invitationId=0KiRQ000000ixM9&amp;surveyName=encuesta_nps_2024&amp;UUID=c70a2715-237b-45d5-b3b6-3a85237eb46c&quot; &amp; BR() &amp; 
 &quot;¡Gracias!&quot;</expression>
     </formulas>
     <formulas>
@@ -224,7 +222,7 @@
         <locationY>252</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Record_Found</targetReference>
+            <targetReference>Email_Encuesta1</targetReference>
         </connector>
         <filterLogic>(1 AND 2) AND (3 AND 4) AND (5 OR 6) AND (7 OR 8 OR 9)</filterLogic>
         <filters>
@@ -330,7 +328,7 @@
         </schedule>
         <triggerType>Scheduled</triggerType>
     </start>
-    <status>Active</status>
+    <status>Draft</status>
     <textTemplates>
         <name>BodyTemplate</name>
         <isViewedAsPlainText>false</isViewedAsPlainText>

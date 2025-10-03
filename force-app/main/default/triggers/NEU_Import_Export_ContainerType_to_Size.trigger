@@ -1,6 +1,6 @@
 trigger NEU_Import_Export_ContainerType_to_Size on Customer_Quote__c (before insert, before update) 
 {
-    if(NEU_StaticVariableHelper.getBoolean1()){return;}		
+    if(NEU_StaticVariableHelper.getBoolean1()){return;}
 	
   if(!RecursiveCheck.triggerMonitor.contains('NEU_Import_Export_ContainerType_to_Size')){
     RecursiveCheck.triggerMonitor.add('NEU_Import_Export_ContainerType_to_Size');

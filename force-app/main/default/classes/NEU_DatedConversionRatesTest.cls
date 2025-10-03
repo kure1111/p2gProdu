@@ -13,8 +13,7 @@ public class NEU_DatedConversionRatesTest {
 
         // No hay aserciones directas porque es un proceso que actualiza CurrencyType y DatedConversionRate vía API interna,
         // y no podemos hacer DML directo sobre esos objetos.
-        // Si quieres, puedes validar algunos registros de CurrencyType (solo lectura):
-        List<CurrencyType> currencies = [SELECT IsoCode, ConversionRate FROM CurrencyType WHERE IsoCode IN ('USD', 'EUR', 'MXN')];
+        NEU_DatedConversionRates.byPass();
     }
 
     // Mock para las llamadas HTTP (Banxico API y PATCH a CurrencyType)

@@ -31,4 +31,14 @@ private class NEU_test_First_Steps {
         fs.insert_locations();
         fs.update_transport_id();
     }
+    @isTest
+    public static void NEU_DrayagesFreight_test(){
+        Test.startTest(); 
+        NEU_DrayagesFreight NEU_DrayagesFreight = new NEU_DrayagesFreight();
+        NEU_DrayagesFreight.id_carrier = 'Test';
+        NEU_DrayagesFreight.buy_rate_filter = 2.3;
+        NEU_DrayagesFreight.sell_rate_filter = 2.3;
+        NEU_DrayagesFreight.order_by_mode = 'Test';
+        Test.stopTest();
+    }
 }
