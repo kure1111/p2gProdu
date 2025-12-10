@@ -7,7 +7,7 @@ Agrega el valor de la variable SingleAccountAddressValue a la colección Account
         <name>Add_a_first_single_value_to_the_list</name>
         <label>Add a first single value to the list</label>
         <locationX>5130</locationX>
-        <locationY>2174</locationY>
+        <locationY>1946</locationY>
         <assignmentItems>
             <assignToReference>SingleAccountAddressValue</assignToReference>
             <operator>Assign</operator>
@@ -32,7 +32,7 @@ Agrega el valor de la variable SingleAccountAddressValue a la colección Account
         <name>Agregar_el_valor_a_la_variable_unitaria</name>
         <label>Agregar el valor a la variable unitaria</label>
         <locationX>1148</locationX>
-        <locationY>3350</locationY>
+        <locationY>3002</locationY>
         <assignmentItems>
             <assignToReference>SingleAccountAddressValue</assignToReference>
             <operator>Assign</operator>
@@ -56,7 +56,7 @@ Agrega el valor de la variable SingleAccountAddressValue a la colección Account
         <name>Asignar_CP_Ruta_actual</name>
         <label>Asignar CP / Ruta actual</label>
         <locationX>4646</locationX>
-        <locationY>3782</locationY>
+        <locationY>3386</locationY>
         <assignmentItems>
             <assignToReference>SingleRecordCPRutas.P2G_CI_Route1__c</assignToReference>
             <operator>Assign</operator>
@@ -423,7 +423,7 @@ Agrega el valor de la variable SingleAccountAddressValue a la colección Account
         <name>Asignar_CP_Ruta_actual_1</name>
         <label>Asignar CP / Ruta actual</label>
         <locationX>754</locationX>
-        <locationY>5198</locationY>
+        <locationY>4658</locationY>
         <assignmentItems>
             <assignToReference>SingleRecordCPRutas.P2G_CI_Route1__c</assignToReference>
             <operator>Assign</operator>
@@ -797,7 +797,7 @@ Agrega el valor de la variable SingleAccountAddressValue a la colección Account
         <name>Asignar_CP_Ruta_actual_2</name>
         <label>Asignar CP / Ruta actual</label>
         <locationX>510</locationX>
-        <locationY>6086</locationY>
+        <locationY>5450</locationY>
         <assignmentItems>
             <assignToReference>SingleRecordCPRutas.P2G_CI_Route1__c</assignToReference>
             <operator>Assign</operator>
@@ -1164,7 +1164,7 @@ Agrega el valor de la variable SingleAccountAddressValue a la colección Account
         <name>Asignar_CP_Ruta_coleccion</name>
         <label>Asignar CP Ruta colección</label>
         <locationX>4646</locationX>
-        <locationY>3902</locationY>
+        <locationY>3494</locationY>
         <assignmentItems>
             <assignToReference>CPRoutesCollection</assignToReference>
             <operator>Add</operator>
@@ -1321,7 +1321,7 @@ Agrega el valor de la variable SingleAccountAddressValue a la colección Account
         <name>Asignar_CP_Ruta_coleccion_2</name>
         <label>Asignar CP Ruta colección</label>
         <locationX>754</locationX>
-        <locationY>5318</locationY>
+        <locationY>4766</locationY>
         <assignmentItems>
             <assignToReference>UpdateCPRoute</assignToReference>
             <operator>Assign</operator>
@@ -1478,7 +1478,7 @@ Agrega el valor de la variable SingleAccountAddressValue a la colección Account
         <name>Asignar_CP_Ruta_coleccion_3</name>
         <label>Asignar CP Ruta colección</label>
         <locationX>1018</locationX>
-        <locationY>5078</locationY>
+        <locationY>4550</locationY>
         <assignmentItems>
             <assignToReference>RouteNames</assignToReference>
             <operator>Add</operator>
@@ -1628,7 +1628,7 @@ Agrega el valor de la variable SingleAccountAddressValue a la colección Account
         <name>Asignar_CP_Ruta_coleccion_4</name>
         <label>Asignar CP Ruta colección</label>
         <locationX>510</locationX>
-        <locationY>6206</locationY>
+        <locationY>5558</locationY>
         <assignmentItems>
             <assignToReference>CPRoutesCollection</assignToReference>
             <operator>Add</operator>
@@ -1785,7 +1785,7 @@ Agrega el valor de la variable SingleAccountAddressValue a la colección Account
         <name>Asignar_Direccion_en_Coleccion</name>
         <label>Asignar Dirección en Colección</label>
         <locationX>436</locationX>
-        <locationY>1574</locationY>
+        <locationY>1406</locationY>
         <assignmentItems>
             <assignToReference>ColeccionCP_Patios</assignToReference>
             <operator>Add</operator>
@@ -1802,7 +1802,7 @@ Agrega el valor de la variable SingleAccountAddressValue a la colección Account
         <name>Asignar_valores_a_SelectedAccountAddressValues</name>
         <label>Asignar valores a SelectedAccountAddressValues</label>
         <locationX>840</locationX>
-        <locationY>3110</locationY>
+        <locationY>2786</locationY>
         <assignmentItems>
             <assignToReference>SelectedAccountAddressValues</assignToReference>
             <operator>Assign</operator>
@@ -1826,7 +1826,7 @@ Agrega el valor de la variable SingleAccountAddressValue a la colección Account
         <name>Assign_selected_values_to_the_SelectedAccountAddressValues</name>
         <label>Assign selected values to the SelectedAccountAddressValues</label>
         <locationX>4822</locationX>
-        <locationY>1934</locationY>
+        <locationY>1730</locationY>
         <assignmentItems>
             <assignToReference>SelectedAccountAddressValues</assignToReference>
             <operator>Assign</operator>
@@ -1850,7 +1850,7 @@ Agrega el valor de la variable SingleAccountAddressValue a la colección Account
         <name>Coleccion_Certificado_de_Proveedor_Patios</name>
         <label>Colección Certificado de Proveedor / Patios</label>
         <locationX>4602</locationX>
-        <locationY>2414</locationY>
+        <locationY>2162</locationY>
         <assignmentItems>
             <assignToReference>CI_CertificadoProveedor_Patios</assignToReference>
             <operator>Add</operator>
@@ -1867,7 +1867,7 @@ Agrega el valor de la variable SingleAccountAddressValue a la colección Account
         <name>Coleccion_Certificado_de_Proveedor_Patios_2</name>
         <label>Colección Certificado de Proveedor / Patios</label>
         <locationX>620</locationX>
-        <locationY>3590</locationY>
+        <locationY>3218</locationY>
         <assignmentItems>
             <assignToReference>CI_CertificadoProveedor_Patios</assignToReference>
             <operator>Add</operator>
@@ -1884,7 +1884,7 @@ Agrega el valor de la variable SingleAccountAddressValue a la colección Account
         <name>Excluir_Direcciones_Utilizadas</name>
         <label>Excluir Direcciones Utilizadas</label>
         <locationX>348</locationX>
-        <locationY>1934</locationY>
+        <locationY>1730</locationY>
         <assignmentItems>
             <assignToReference>Get_Account_Address</assignToReference>
             <operator>RemoveAll</operator>
@@ -1901,7 +1901,7 @@ Agrega el valor de la variable SingleAccountAddressValue a la colección Account
         <name>Reajustar_variables_de_ruta</name>
         <label>Reajustar variables de ruta</label>
         <locationX>4646</locationX>
-        <locationY>4022</locationY>
+        <locationY>3602</locationY>
         <assignmentItems>
             <assignToReference>Ruta1</assignToReference>
             <operator>Add</operator>
@@ -1989,7 +1989,7 @@ Agrega el valor de la variable SingleAccountAddressValue a la colección Account
         <name>Reajustar_variables_de_ruta_2</name>
         <label>Reajustar variables de ruta</label>
         <locationX>754</locationX>
-        <locationY>5438</locationY>
+        <locationY>4874</locationY>
         <assignmentItems>
             <assignToReference>Ruta1</assignToReference>
             <operator>Add</operator>
@@ -2076,7 +2076,7 @@ Agrega el valor de la variable SingleAccountAddressValue a la colección Account
         <name>Reajustar_variables_de_ruta_3</name>
         <label>Reajustar variables de ruta</label>
         <locationX>1018</locationX>
-        <locationY>5198</locationY>
+        <locationY>4658</locationY>
         <assignmentItems>
             <assignToReference>Ruta1</assignToReference>
             <operator>Add</operator>
@@ -2163,7 +2163,7 @@ Agrega el valor de la variable SingleAccountAddressValue a la colección Account
         <name>Reajustar_variables_de_ruta_4</name>
         <label>Reajustar variables de ruta</label>
         <locationX>510</locationX>
-        <locationY>6326</locationY>
+        <locationY>5666</locationY>
         <assignmentItems>
             <assignToReference>Ruta1</assignToReference>
             <operator>Add</operator>
@@ -2250,7 +2250,7 @@ Agrega el valor de la variable SingleAccountAddressValue a la colección Account
         <name>Reset_SelectedAccountAddressValues</name>
         <label>Reset SelectedAccountAddressValues</label>
         <locationX>5130</locationX>
-        <locationY>2294</locationY>
+        <locationY>2054</locationY>
         <assignmentItems>
             <assignToReference>SelectedAccountAddressValues</assignToReference>
             <operator>Assign</operator>
@@ -2268,7 +2268,7 @@ Agrega el valor de la variable SingleAccountAddressValue a la colección Account
         <name>Reset_SelectedAccountAddressValues_1</name>
         <label>Reset SelectedAccountAddressValues</label>
         <locationX>1148</locationX>
-        <locationY>3470</locationY>
+        <locationY>3110</locationY>
         <assignmentItems>
             <assignToReference>SelectedAccountAddressValues</assignToReference>
             <operator>Assign</operator>
@@ -2286,7 +2286,7 @@ Agrega el valor de la variable SingleAccountAddressValue a la colección Account
         <name>Valores_para_el_Certificado_de_Proveedores_Patios</name>
         <label>Valores para el Certificado de Proveedores- Patios</label>
         <locationX>4602</locationX>
-        <locationY>2294</locationY>
+        <locationY>2054</locationY>
         <assignmentItems>
             <assignToReference>CI_SingleCertificadoProveedor_Patios.P2G_CI_CertificacionProveedor__c</assignToReference>
             <operator>Assign</operator>
@@ -2310,7 +2310,7 @@ Agrega el valor de la variable SingleAccountAddressValue a la colección Account
         <name>Valores_para_el_Certificado_de_Proveedores_Patios_1</name>
         <label>Valores para el Certificado de Proveedores- Patios</label>
         <locationX>620</locationX>
-        <locationY>3470</locationY>
+        <locationY>3110</locationY>
         <assignmentItems>
             <assignToReference>CI_SingleCertificadoProveedor_Patios.P2G_CI_CertificacionProveedor__c</assignToReference>
             <operator>Assign</operator>
@@ -2352,7 +2352,7 @@ Agrega el valor de la variable SingleAccountAddressValue a la colección Account
         <name>Actualizo_Proveedor_1</name>
         <label>¿Actualizó Proveedor?</label>
         <locationX>5108</locationX>
-        <locationY>1094</locationY>
+        <locationY>974</locationY>
         <defaultConnector>
             <targetReference>New_Certificado_de_Proveedor</targetReference>
         </defaultConnector>
@@ -2385,7 +2385,7 @@ Agrega el valor de la variable SingleAccountAddressValue a la colección Account
         <name>Actualizo_Proveedor_2</name>
         <label>¿Actualizó Proveedor?</label>
         <locationX>1126</locationX>
-        <locationY>2390</locationY>
+        <locationY>2138</locationY>
         <defaultConnector>
             <targetReference>Seleccionaron_Patios</targetReference>
         </defaultConnector>
@@ -2418,7 +2418,7 @@ Agrega el valor de la variable SingleAccountAddressValue a la colección Account
         <name>Datos_Completados</name>
         <label>¿Datos Completados?</label>
         <locationX>588</locationX>
-        <locationY>2150</locationY>
+        <locationY>1922</locationY>
         <defaultConnector>
             <targetReference>Actualizar_Certificacion</targetReference>
         </defaultConnector>
@@ -2577,7 +2577,7 @@ Agrega el valor de la variable SingleAccountAddressValue a la colección Account
         <name>Datos_Completados_2</name>
         <label>¿Datos Completados?</label>
         <locationX>1126</locationX>
-        <locationY>7718</locationY>
+        <locationY>6914</locationY>
         <defaultConnector>
             <targetReference>Actualizar_Ultimo_Caso_1</targetReference>
         </defaultConnector>
@@ -2736,7 +2736,7 @@ Agrega el valor de la variable SingleAccountAddressValue a la colección Account
         <name>Datos_Completados_3</name>
         <label>¿Datos Completados?</label>
         <locationX>5108</locationX>
-        <locationY>4634</locationY>
+        <locationY>4160</locationY>
         <defaultConnector>
             <targetReference>New_Case_Certificado_de_Proveedor_1</targetReference>
         </defaultConnector>
@@ -2895,7 +2895,7 @@ Agrega el valor de la variable SingleAccountAddressValue a la colección Account
         <name>Experiencia_Digital_o_Salesforce</name>
         <label>¿Experiencia Digital o Salesforce?</label>
         <locationX>2848</locationX>
-        <locationY>158</locationY>
+        <locationY>134</locationY>
         <defaultConnector>
             <targetReference>Proveedor_a_certificar</targetReference>
         </defaultConnector>
@@ -2921,7 +2921,7 @@ Agrega el valor de la variable SingleAccountAddressValue a la colección Account
         <name>Faltan_rutas_en_el_bloque</name>
         <label>¿Faltan rutas en el bloque?</label>
         <locationX>886</locationX>
-        <locationY>4958</locationY>
+        <locationY>4442</locationY>
         <defaultConnector>
             <targetReference>Asignar_CP_Ruta_coleccion_3</targetReference>
         </defaultConnector>
@@ -3010,7 +3010,7 @@ Agrega el valor de la variable SingleAccountAddressValue a la colección Account
         <name>Generaron_nuevas_rutas</name>
         <label>¿Generaron nuevas rutas?</label>
         <locationX>1038</locationX>
-        <locationY>6566</locationY>
+        <locationY>5882</locationY>
         <defaultConnector>
             <targetReference>Actualizar_Certificado_Proveedor</targetReference>
         </defaultConnector>
@@ -3035,7 +3035,7 @@ Agrega el valor de la variable SingleAccountAddressValue a la colección Account
         <name>If_SelectedAccountAddressValues_is_Blank</name>
         <label>If SelectedAccountAddressValues is Blank</label>
         <locationX>4822</locationX>
-        <locationY>2054</locationY>
+        <locationY>1838</locationY>
         <defaultConnector>
             <targetReference>Add_a_first_single_value_to_the_list</targetReference>
         </defaultConnector>
@@ -3061,7 +3061,7 @@ Agrega el valor de la variable SingleAccountAddressValue a la colección Account
         <name>Iterar_Numero_de_Rutas_1</name>
         <label>Iterar Número de Rutas</label>
         <locationX>4778</locationX>
-        <locationY>3542</locationY>
+        <locationY>3170</locationY>
         <defaultConnector>
             <targetReference>Create_CP_Rutas_1</targetReference>
         </defaultConnector>
@@ -3087,7 +3087,7 @@ Agrega el valor de la variable SingleAccountAddressValue a la colección Account
         <name>Iterar_Numero_de_Rutas_2</name>
         <label>Iterar Número de Rutas</label>
         <locationX>774</locationX>
-        <locationY>5846</locationY>
+        <locationY>5234</locationY>
         <defaultConnector>
             <targetReference>Se_actualizan_rutas</targetReference>
         </defaultConnector>
@@ -3113,7 +3113,7 @@ Agrega el valor de la variable SingleAccountAddressValue a la colección Account
         <name>Se_actualizan_rutas</name>
         <label>¿Se actualizan rutas?</label>
         <locationX>1038</locationX>
-        <locationY>5966</locationY>
+        <locationY>5342</locationY>
         <defaultConnector>
             <targetReference>Generaron_nuevas_rutas</targetReference>
         </defaultConnector>
@@ -3139,7 +3139,7 @@ Agrega el valor de la variable SingleAccountAddressValue a la colección Account
         <name>Se_crearan_rutas</name>
         <label>¿Se crearán rutas?</label>
         <locationX>5108</locationX>
-        <locationY>3422</locationY>
+        <locationY>3062</locationY>
         <defaultConnector>
             <targetReference>Actualizar_Numero_de_rutas_frecuentes</targetReference>
         </defaultConnector>
@@ -3164,7 +3164,7 @@ Agrega el valor de la variable SingleAccountAddressValue a la colección Account
         <name>Se_crearan_rutas_2</name>
         <label>¿Se crearán rutas?</label>
         <locationX>1126</locationX>
-        <locationY>4598</locationY>
+        <locationY>4118</locationY>
         <defaultConnector>
             <targetReference>Actualizar_Certificado_Proveedor</targetReference>
         </defaultConnector>
@@ -3197,7 +3197,7 @@ Agrega el valor de la variable SingleAccountAddressValue a la colección Account
         <name>Seleccionaron_direcciones_para_patios</name>
         <label>¿Seleccionaron direcciones para patios?</label>
         <locationX>5108</locationX>
-        <locationY>1814</locationY>
+        <locationY>1622</locationY>
         <defaultConnector>
             <targetReference>Se_crearan_rutas</targetReference>
         </defaultConnector>
@@ -3220,7 +3220,7 @@ Agrega el valor de la variable SingleAccountAddressValue a la colección Account
         <name>Seleccionaron_Patios</name>
         <label>¿Seleccionaron Patios?</label>
         <locationX>1126</locationX>
-        <locationY>2990</locationY>
+        <locationY>2678</locationY>
         <defaultConnector>
             <targetReference>Se_crearan_rutas_2</targetReference>
         </defaultConnector>
@@ -3243,7 +3243,7 @@ Agrega el valor de la variable SingleAccountAddressValue a la colección Account
         <name>SelectedAccountAddress_Is_Null</name>
         <label>¿SelectedAccountAddress Is Null?</label>
         <locationX>840</locationX>
-        <locationY>3230</locationY>
+        <locationY>2894</locationY>
         <defaultConnector>
             <targetReference>Agregar_el_valor_a_la_variable_unitaria</targetReference>
         </defaultConnector>
@@ -3269,7 +3269,7 @@ Agrega el valor de la variable SingleAccountAddressValue a la colección Account
         <name>Tiene_Certificado_de_Proveedor</name>
         <label>¿Tiene Certificado de Proveedor?</label>
         <locationX>2848</locationX>
-        <locationY>854</locationY>
+        <locationY>758</locationY>
         <defaultConnector>
             <targetReference>NEW_Certificacion_Nueva</targetReference>
         </defaultConnector>
@@ -3295,7 +3295,7 @@ Agrega el valor de la variable SingleAccountAddressValue a la colección Account
         <name>Tiene_direcciones_patios</name>
         <label>¿Tiene direcciones patios?</label>
         <locationX>588</locationX>
-        <locationY>1214</locationY>
+        <locationY>1082</locationY>
         <defaultConnector>
             <targetReference>Datos_Completados</targetReference>
         </defaultConnector>
@@ -3321,7 +3321,7 @@ Agrega el valor de la variable SingleAccountAddressValue a la colección Account
         <name>Valor_nulo</name>
         <label>¿Valor nulo?</label>
         <locationX>4514</locationX>
-        <locationY>2630</locationY>
+        <locationY>2354</locationY>
         <defaultConnector>
             <targetReference>Create_Certificacion_de_Proveedor_Patios</targetReference>
         </defaultConnector>
@@ -3347,7 +3347,7 @@ Agrega el valor de la variable SingleAccountAddressValue a la colección Account
         <name>Valor_nulo_2</name>
         <label>¿Valor nulo?</label>
         <locationX>532</locationX>
-        <locationY>3806</locationY>
+        <locationY>3410</locationY>
         <defaultConnector>
             <targetReference>Create_Certificacion_de_Proveedor_Patios_2</targetReference>
         </defaultConnector>
@@ -3373,7 +3373,7 @@ Agrega el valor de la variable SingleAccountAddressValue a la colección Account
         <name>Ya_existen_rutas_frecuentes</name>
         <label>¿Ya existen rutas frecuentes?</label>
         <locationX>774</locationX>
-        <locationY>4718</locationY>
+        <locationY>4226</locationY>
         <defaultConnector>
             <targetReference>Iterar_Numero_de_Rutas_2</targetReference>
         </defaultConnector>
@@ -3493,7 +3493,7 @@ SUBSTITUTE( {!SelectedAccountAddressValues} ,  {!SingleAccountAddressValue}+&quo
         <name>Iteracion_Direccion_Patios</name>
         <label>Iteración Dirección Patios</label>
         <locationX>348</locationX>
-        <locationY>1334</locationY>
+        <locationY>1190</locationY>
         <collectionReference>Get_Direccion_Patios</collectionReference>
         <iterationOrder>Asc</iterationOrder>
         <nextValueConnector>
@@ -3508,7 +3508,7 @@ SUBSTITUTE( {!SelectedAccountAddressValues} ,  {!SingleAccountAddressValue}+&quo
         <name>Loop_AccountAddressCollection_1</name>
         <label>Loop AccountAddressCollection</label>
         <locationX>4514</locationX>
-        <locationY>2174</locationY>
+        <locationY>1946</locationY>
         <collectionReference>AccountAddressCollection</collectionReference>
         <iterationOrder>Asc</iterationOrder>
         <nextValueConnector>
@@ -3523,7 +3523,7 @@ SUBSTITUTE( {!SelectedAccountAddressValues} ,  {!SingleAccountAddressValue}+&quo
         <name>Loop_AccountAddressCollection_2</name>
         <label>Loop AccountAddressCollection</label>
         <locationX>532</locationX>
-        <locationY>3350</locationY>
+        <locationY>3002</locationY>
         <collectionReference>AccountAddressCollection</collectionReference>
         <iterationOrder>Asc</iterationOrder>
         <nextValueConnector>
@@ -3538,7 +3538,7 @@ SUBSTITUTE( {!SelectedAccountAddressValues} ,  {!SingleAccountAddressValue}+&quo
         <name>Rutas_Frecuentes</name>
         <label>Rutas Frecuentes</label>
         <locationX>666</locationX>
-        <locationY>4838</locationY>
+        <locationY>4334</locationY>
         <collectionReference>Get_Rutas_Frecuentes</collectionReference>
         <iterationOrder>Asc</iterationOrder>
         <nextValueConnector>
@@ -3572,7 +3572,7 @@ SUBSTITUTE( {!SelectedAccountAddressValues} ,  {!SingleAccountAddressValue}+&quo
         <name>Create_Certificacion_de_Proveedor_Patios</name>
         <label>Create Certificación de Proveedor / Patios</label>
         <locationX>4602</locationX>
-        <locationY>2750</locationY>
+        <locationY>2462</locationY>
         <connector>
             <targetReference>Se_crearan_rutas</targetReference>
         </connector>
@@ -3586,7 +3586,7 @@ SUBSTITUTE( {!SelectedAccountAddressValues} ,  {!SingleAccountAddressValue}+&quo
         <name>Create_Certificacion_de_Proveedor_Patios_2</name>
         <label>Create Certificación de Proveedor / Patios</label>
         <locationX>620</locationX>
-        <locationY>3926</locationY>
+        <locationY>3518</locationY>
         <connector>
             <targetReference>Se_crearan_rutas_2</targetReference>
         </connector>
@@ -3600,7 +3600,7 @@ SUBSTITUTE( {!SelectedAccountAddressValues} ,  {!SingleAccountAddressValue}+&quo
         <name>Create_CP_Rutas</name>
         <label>Create CP / Rutas</label>
         <locationX>774</locationX>
-        <locationY>6686</locationY>
+        <locationY>5990</locationY>
         <connector>
             <targetReference>Actualizar_Certificado_Proveedor</targetReference>
         </connector>
@@ -3614,7 +3614,7 @@ SUBSTITUTE( {!SelectedAccountAddressValues} ,  {!SingleAccountAddressValue}+&quo
         <name>Create_CP_Rutas_1</name>
         <label>Create CP / Rutas</label>
         <locationX>4910</locationX>
-        <locationY>3662</locationY>
+        <locationY>3278</locationY>
         <connector>
             <targetReference>Actualizar_Numero_de_rutas_frecuentes</targetReference>
         </connector>
@@ -3628,7 +3628,7 @@ SUBSTITUTE( {!SelectedAccountAddressValues} ,  {!SingleAccountAddressValue}+&quo
         <name>New_Case_Certificado_de_Proveedor</name>
         <label>New Case Certificado de Proveedor</label>
         <locationX>4712</locationX>
-        <locationY>4754</locationY>
+        <locationY>4268</locationY>
         <assignRecordIdToReference>certificadoCaso</assignRecordIdToReference>
         <connector>
             <targetReference>Get_New_Case_1</targetReference>
@@ -3685,7 +3685,7 @@ SUBSTITUTE( {!SelectedAccountAddressValues} ,  {!SingleAccountAddressValue}+&quo
         <name>New_Case_Certificado_de_Proveedor_1</name>
         <label>New Case Certificado de Proveedor</label>
         <locationX>5504</locationX>
-        <locationY>4754</locationY>
+        <locationY>4268</locationY>
         <assignRecordIdToReference>certificadoCaso</assignRecordIdToReference>
         <connector>
             <targetReference>Task_1</targetReference>
@@ -3742,7 +3742,7 @@ SUBSTITUTE( {!SelectedAccountAddressValues} ,  {!SingleAccountAddressValue}+&quo
         <name>New_Certificado_de_Proveedor</name>
         <label>New Certificado de Proveedor</label>
         <locationX>5108</locationX>
-        <locationY>1694</locationY>
+        <locationY>1514</locationY>
         <assignRecordIdToReference>certificadoProveedor</assignRecordIdToReference>
         <connector>
             <targetReference>Seleccionaron_direcciones_para_patios</targetReference>
@@ -4069,7 +4069,7 @@ SUBSTITUTE( {!SelectedAccountAddressValues} ,  {!SingleAccountAddressValue}+&quo
         <name>Next_Case_Certificado_de_Proveedor</name>
         <label>Next Case Certificado de Proveedor</label>
         <locationX>1522</locationX>
-        <locationY>8078</locationY>
+        <locationY>7238</locationY>
         <assignRecordIdToReference>certificadoCaso</assignRecordIdToReference>
         <connector>
             <targetReference>Next_Task_Certificado_de_Proveedor</targetReference>
@@ -4120,7 +4120,7 @@ SUBSTITUTE( {!SelectedAccountAddressValues} ,  {!SingleAccountAddressValue}+&quo
         <name>Next_Task_Certificado_de_Proveedor</name>
         <label>Next Task Certificado de Proveedor</label>
         <locationX>1522</locationX>
-        <locationY>8198</locationY>
+        <locationY>7346</locationY>
         <connector>
             <targetReference>Get_New_Case_3</targetReference>
         </connector>
@@ -4153,7 +4153,7 @@ SUBSTITUTE( {!SelectedAccountAddressValues} ,  {!SingleAccountAddressValue}+&quo
         <name>Task_1</name>
         <label>Task</label>
         <locationX>5504</locationX>
-        <locationY>4874</locationY>
+        <locationY>4376</locationY>
         <connector>
             <targetReference>Get_New_Case_2</targetReference>
         </connector>
@@ -4186,7 +4186,7 @@ SUBSTITUTE( {!SelectedAccountAddressValues} ,  {!SingleAccountAddressValue}+&quo
         <name>Current_Loop_Address</name>
         <label>Current Loop Address</label>
         <locationX>436</locationX>
-        <locationY>1454</locationY>
+        <locationY>1298</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Asignar_Direccion_en_Coleccion</targetReference>
@@ -4211,7 +4211,7 @@ SUBSTITUTE( {!SelectedAccountAddressValues} ,  {!SingleAccountAddressValue}+&quo
         <name>Get_Account_Address</name>
         <label>Get Account Address</label>
         <locationX>2848</locationX>
-        <locationY>734</locationY>
+        <locationY>650</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Tiene_Certificado_de_Proveedor</targetReference>
@@ -4236,7 +4236,7 @@ SUBSTITUTE( {!SelectedAccountAddressValues} ,  {!SingleAccountAddressValue}+&quo
         <name>Get_Certificado_de_Proveedores</name>
         <label>Get Certificado de Proveedores</label>
         <locationX>2848</locationX>
-        <locationY>494</locationY>
+        <locationY>434</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Get_Proveedor</targetReference>
@@ -4261,7 +4261,7 @@ SUBSTITUTE( {!SelectedAccountAddressValues} ,  {!SingleAccountAddressValue}+&quo
         <name>Get_Direccion_Patios</name>
         <label>Get Dirección Patios</label>
         <locationX>588</locationX>
-        <locationY>974</locationY>
+        <locationY>866</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Get_Rutas_Frecuentes</targetReference>
@@ -4286,7 +4286,7 @@ SUBSTITUTE( {!SelectedAccountAddressValues} ,  {!SingleAccountAddressValue}+&quo
         <name>Get_Last_Case</name>
         <label>Get Último Caso</label>
         <locationX>1126</locationX>
-        <locationY>7598</locationY>
+        <locationY>6806</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Datos_Completados_2</targetReference>
@@ -4313,7 +4313,7 @@ SUBSTITUTE( {!SelectedAccountAddressValues} ,  {!SingleAccountAddressValue}+&quo
         <name>Get_Last_Task</name>
         <label>Get Last Task</label>
         <locationX>1126</locationX>
-        <locationY>7478</locationY>
+        <locationY>6698</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Get_Last_Case</targetReference>
@@ -4340,7 +4340,7 @@ SUBSTITUTE( {!SelectedAccountAddressValues} ,  {!SingleAccountAddressValue}+&quo
         <name>Get_New_Case_1</name>
         <label>Get New Case</label>
         <locationX>4712</locationX>
-        <locationY>4874</locationY>
+        <locationY>4376</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>msg001</targetReference>
@@ -4365,7 +4365,7 @@ SUBSTITUTE( {!SelectedAccountAddressValues} ,  {!SingleAccountAddressValue}+&quo
         <name>Get_New_Case_2</name>
         <label>Get New Case</label>
         <locationX>5504</locationX>
-        <locationY>4994</locationY>
+        <locationY>4484</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>msg002</targetReference>
@@ -4390,7 +4390,7 @@ SUBSTITUTE( {!SelectedAccountAddressValues} ,  {!SingleAccountAddressValue}+&quo
         <name>Get_New_Case_3</name>
         <label>Get New Case</label>
         <locationX>1522</locationX>
-        <locationY>8318</locationY>
+        <locationY>7454</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>msg005</targetReference>
@@ -4415,7 +4415,7 @@ SUBSTITUTE( {!SelectedAccountAddressValues} ,  {!SingleAccountAddressValue}+&quo
         <name>Get_New_Certificado</name>
         <label>Get New Certificado</label>
         <locationX>5108</locationX>
-        <locationY>4514</locationY>
+        <locationY>4052</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Datos_Completados_3</targetReference>
@@ -4440,7 +4440,7 @@ SUBSTITUTE( {!SelectedAccountAddressValues} ,  {!SingleAccountAddressValue}+&quo
         <name>Get_Proveedor</name>
         <label>Get Proveedor</label>
         <locationX>2848</locationX>
-        <locationY>614</locationY>
+        <locationY>542</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Get_Account_Address</targetReference>
@@ -4469,7 +4469,7 @@ SUBSTITUTE( {!SelectedAccountAddressValues} ,  {!SingleAccountAddressValue}+&quo
         <name>Get_Rutas_Frecuentes</name>
         <label>Get Rutas Frecuentes</label>
         <locationX>588</locationX>
-        <locationY>1094</locationY>
+        <locationY>974</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Tiene_direcciones_patios</targetReference>
@@ -4496,7 +4496,7 @@ SUBSTITUTE( {!SelectedAccountAddressValues} ,  {!SingleAccountAddressValue}+&quo
         <name>Actualizar_Certificado_Proveedor</name>
         <label>Actualizar Certificado Proveedor</label>
         <locationX>1126</locationX>
-        <locationY>7358</locationY>
+        <locationY>6590</locationY>
         <connector>
             <targetReference>Get_Last_Task</targetReference>
         </connector>
@@ -4830,7 +4830,7 @@ SUBSTITUTE( {!SelectedAccountAddressValues} ,  {!SingleAccountAddressValue}+&quo
         <name>Actualizar_Numero_de_rutas_frecuentes</name>
         <label>Actualizar Número de rutas frecuentes</label>
         <locationX>5108</locationX>
-        <locationY>4394</locationY>
+        <locationY>3944</locationY>
         <connector>
             <targetReference>Get_New_Certificado</targetReference>
         </connector>
@@ -4858,7 +4858,7 @@ SUBSTITUTE( {!SelectedAccountAddressValues} ,  {!SingleAccountAddressValue}+&quo
         <name>Actualizar_Proveedor_1</name>
         <label>Actualizar Proveedor</label>
         <locationX>4844</locationX>
-        <locationY>1214</locationY>
+        <locationY>1082</locationY>
         <connector>
             <targetReference>New_Certificado_de_Proveedor</targetReference>
         </connector>
@@ -4892,7 +4892,7 @@ SUBSTITUTE( {!SelectedAccountAddressValues} ,  {!SingleAccountAddressValue}+&quo
         <name>Actualizar_Proveedor_2</name>
         <label>Actualizar Proveedor</label>
         <locationX>862</locationX>
-        <locationY>2510</locationY>
+        <locationY>2246</locationY>
         <connector>
             <targetReference>Seleccionaron_Patios</targetReference>
         </connector>
@@ -4926,7 +4926,7 @@ SUBSTITUTE( {!SelectedAccountAddressValues} ,  {!SingleAccountAddressValue}+&quo
         <name>Actualizar_Ultima_Tarea_1</name>
         <label>Actualizar Última Tarea</label>
         <locationX>1522</locationX>
-        <locationY>7958</locationY>
+        <locationY>7130</locationY>
         <connector>
             <targetReference>Next_Case_Certificado_de_Proveedor</targetReference>
         </connector>
@@ -4954,7 +4954,7 @@ SUBSTITUTE( {!SelectedAccountAddressValues} ,  {!SingleAccountAddressValue}+&quo
         <name>Actualizar_Ultima_Tarea_2</name>
         <label>Actualizar Última Tarea</label>
         <locationX>730</locationX>
-        <locationY>7958</locationY>
+        <locationY>7130</locationY>
         <connector>
             <targetReference>msg004</targetReference>
         </connector>
@@ -4982,7 +4982,7 @@ SUBSTITUTE( {!SelectedAccountAddressValues} ,  {!SingleAccountAddressValue}+&quo
         <name>Actualizar_Ultimo_Caso_1</name>
         <label>Actualizar Último Caso</label>
         <locationX>1522</locationX>
-        <locationY>7838</locationY>
+        <locationY>7022</locationY>
         <connector>
             <targetReference>Actualizar_Ultima_Tarea_1</targetReference>
         </connector>
@@ -5016,7 +5016,7 @@ SUBSTITUTE( {!SelectedAccountAddressValues} ,  {!SingleAccountAddressValue}+&quo
         <name>Actualizar_Ultimo_Caso_2</name>
         <label>Actualizar Último Caso</label>
         <locationX>730</locationX>
-        <locationY>7838</locationY>
+        <locationY>7022</locationY>
         <connector>
             <targetReference>Actualizar_Ultima_Tarea_2</targetReference>
         </connector>
@@ -5056,7 +5056,7 @@ SUBSTITUTE( {!SelectedAccountAddressValues} ,  {!SingleAccountAddressValue}+&quo
         <name>Update_CP_Rutas</name>
         <label>Update CP / Rutas</label>
         <locationX>774</locationX>
-        <locationY>6086</locationY>
+        <locationY>5450</locationY>
         <connector>
             <targetReference>Generaron_nuevas_rutas</targetReference>
         </connector>
@@ -5070,7 +5070,7 @@ SUBSTITUTE( {!SelectedAccountAddressValues} ,  {!SingleAccountAddressValue}+&quo
         <name>Actualizar_Certificacion</name>
         <label>Actualizar Certificación</label>
         <locationX>1126</locationX>
-        <locationY>2270</locationY>
+        <locationY>2030</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -5881,7 +5881,10 @@ SUBSTITUTE( {!SelectedAccountAddressValues} ,  {!SingleAccountAddressValue}+&quo
                     <scale>0</scale>
                     <validationRule>
                         <errorMessage>&lt;p&gt;ERROR: El número es menor al total de rutas registradas ({!Get_Certificado_de_Proveedores.P2G_CI_NoRutasFrecuentes__c}), o se ingresó un valor mayor a 30&lt;/p&gt;</errorMessage>
-                        <formulaExpression>AND( {!UPD_NoRutasFrecuentes}&lt;31, {!UPD_NoRutasFrecuentes}&gt;{!Get_Certificado_de_Proveedores.P2G_CI_NoRutasFrecuentes__c} )</formulaExpression>
+                        <formulaExpression>AND(
+    {!UPD_NoRutasFrecuentes} &lt;= 31,
+    {!UPD_NoRutasFrecuentes} &gt;= {!Get_Certificado_de_Proveedores.P2G_CI_NoRutasFrecuentes__c}
+)</formulaExpression>
                     </validationRule>
                 </fields>
                 <inputParameters>
@@ -5902,7 +5905,7 @@ SUBSTITUTE( {!SelectedAccountAddressValues} ,  {!SingleAccountAddressValue}+&quo
         <name>Actualizar_Rutas_frecuentes_o_negociadas</name>
         <label>Actualizar Rutas frecuentes o negociadas</label>
         <locationX>754</locationX>
-        <locationY>5078</locationY>
+        <locationY>4550</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -7358,7 +7361,7 @@ SUBSTITUTE( {!SelectedAccountAddressValues} ,  {!SingleAccountAddressValue}+&quo
         <name>Mensaje_Error_001</name>
         <label>Mensaje Error 001</label>
         <locationX>7880</locationX>
-        <locationY>614</locationY>
+        <locationY>542</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -7374,7 +7377,7 @@ SUBSTITUTE( {!SelectedAccountAddressValues} ,  {!SingleAccountAddressValue}+&quo
         <name>Mensaje_Error_002</name>
         <label>Mensaje Error 002</label>
         <locationX>7616</locationX>
-        <locationY>734</locationY>
+        <locationY>650</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -7390,7 +7393,7 @@ SUBSTITUTE( {!SelectedAccountAddressValues} ,  {!SingleAccountAddressValue}+&quo
         <name>Mensaje_Error_003</name>
         <label>Mensaje Error 003</label>
         <locationX>7352</locationX>
-        <locationY>854</locationY>
+        <locationY>758</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -7406,7 +7409,7 @@ SUBSTITUTE( {!SelectedAccountAddressValues} ,  {!SingleAccountAddressValue}+&quo
         <name>Mensaje_Error_004</name>
         <label>Mensaje Error 004</label>
         <locationX>5108</locationX>
-        <locationY>1334</locationY>
+        <locationY>1190</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -7422,7 +7425,7 @@ SUBSTITUTE( {!SelectedAccountAddressValues} ,  {!SingleAccountAddressValue}+&quo
         <name>Mensaje_Error_005</name>
         <label>Mensaje Error 005</label>
         <locationX>7088</locationX>
-        <locationY>1814</locationY>
+        <locationY>1622</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -7438,7 +7441,7 @@ SUBSTITUTE( {!SelectedAccountAddressValues} ,  {!SingleAccountAddressValue}+&quo
         <name>Mensaje_Error_006</name>
         <label>Mensaje Error 006</label>
         <locationX>4866</locationX>
-        <locationY>2870</locationY>
+        <locationY>2570</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -7454,7 +7457,7 @@ SUBSTITUTE( {!SelectedAccountAddressValues} ,  {!SingleAccountAddressValue}+&quo
         <name>Mensaje_Error_007</name>
         <label>Mensaje Error 007</label>
         <locationX>5174</locationX>
-        <locationY>3782</locationY>
+        <locationY>3386</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -7470,7 +7473,7 @@ SUBSTITUTE( {!SelectedAccountAddressValues} ,  {!SingleAccountAddressValue}+&quo
         <name>Mensaje_Error_008</name>
         <label>Mensaje Error 008</label>
         <locationX>6824</locationX>
-        <locationY>4514</locationY>
+        <locationY>4052</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -7486,7 +7489,7 @@ SUBSTITUTE( {!SelectedAccountAddressValues} ,  {!SingleAccountAddressValue}+&quo
         <name>Mensaje_Error_009</name>
         <label>Mensaje Error 009</label>
         <locationX>6560</locationX>
-        <locationY>4634</locationY>
+        <locationY>4160</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -7502,7 +7505,7 @@ SUBSTITUTE( {!SelectedAccountAddressValues} ,  {!SingleAccountAddressValue}+&quo
         <name>Mensaje_Error_010</name>
         <label>Mensaje Error 010</label>
         <locationX>6296</locationX>
-        <locationY>4874</locationY>
+        <locationY>4376</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -7518,7 +7521,7 @@ SUBSTITUTE( {!SelectedAccountAddressValues} ,  {!SingleAccountAddressValue}+&quo
         <name>Mensaje_Error_011</name>
         <label>Mensaje Error 011</label>
         <locationX>6032</locationX>
-        <locationY>4994</locationY>
+        <locationY>4484</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -7534,7 +7537,7 @@ SUBSTITUTE( {!SelectedAccountAddressValues} ,  {!SingleAccountAddressValue}+&quo
         <name>Mensaje_Error_012</name>
         <label>Mensaje Error 012</label>
         <locationX>5768</locationX>
-        <locationY>5114</locationY>
+        <locationY>4592</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -7550,7 +7553,7 @@ SUBSTITUTE( {!SelectedAccountAddressValues} ,  {!SingleAccountAddressValue}+&quo
         <name>Mensaje_Error_013</name>
         <label>Mensaje Error 013</label>
         <locationX>5240</locationX>
-        <locationY>4874</locationY>
+        <locationY>4376</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -7566,7 +7569,7 @@ SUBSTITUTE( {!SelectedAccountAddressValues} ,  {!SingleAccountAddressValue}+&quo
         <name>Mensaje_Error_014</name>
         <label>Mensaje Error 014</label>
         <locationX>4976</locationX>
-        <locationY>4994</locationY>
+        <locationY>4484</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -7582,7 +7585,7 @@ SUBSTITUTE( {!SelectedAccountAddressValues} ,  {!SingleAccountAddressValue}+&quo
         <name>Mensaje_Error_015</name>
         <label>Mensaje Error 015</label>
         <locationX>4162</locationX>
-        <locationY>1094</locationY>
+        <locationY>974</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -7598,7 +7601,7 @@ SUBSTITUTE( {!SelectedAccountAddressValues} ,  {!SingleAccountAddressValue}+&quo
         <name>Mensaje_Error_016</name>
         <label>Mensaje Error 016</label>
         <locationX>3898</locationX>
-        <locationY>1214</locationY>
+        <locationY>1082</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -7614,7 +7617,7 @@ SUBSTITUTE( {!SelectedAccountAddressValues} ,  {!SingleAccountAddressValue}+&quo
         <name>Mensaje_Error_017</name>
         <label>Mensaje Error 017</label>
         <locationX>700</locationX>
-        <locationY>1574</locationY>
+        <locationY>1406</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -7630,7 +7633,7 @@ SUBSTITUTE( {!SelectedAccountAddressValues} ,  {!SingleAccountAddressValue}+&quo
         <name>Mensaje_Error_018</name>
         <label>Mensaje Error 018</label>
         <locationX>1126</locationX>
-        <locationY>2630</locationY>
+        <locationY>2354</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -7646,7 +7649,7 @@ SUBSTITUTE( {!SelectedAccountAddressValues} ,  {!SingleAccountAddressValue}+&quo
         <name>Mensaje_Error_019</name>
         <label>Mensaje Error 019</label>
         <locationX>884</locationX>
-        <locationY>4046</locationY>
+        <locationY>3626</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -7662,7 +7665,7 @@ SUBSTITUTE( {!SelectedAccountAddressValues} ,  {!SingleAccountAddressValue}+&quo
         <name>Mensaje_Error_020</name>
         <label>Mensaje Error 020</label>
         <locationX>1038</locationX>
-        <locationY>6206</locationY>
+        <locationY>5558</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -7678,7 +7681,7 @@ SUBSTITUTE( {!SelectedAccountAddressValues} ,  {!SingleAccountAddressValue}+&quo
         <name>Mensaje_Error_021</name>
         <label>Mensaje Error 021</label>
         <locationX>1038</locationX>
-        <locationY>6806</locationY>
+        <locationY>6098</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -7694,7 +7697,7 @@ SUBSTITUTE( {!SelectedAccountAddressValues} ,  {!SingleAccountAddressValue}+&quo
         <name>Mensaje_Error_022</name>
         <label>Mensaje Error 022</label>
         <locationX>3634</locationX>
-        <locationY>7478</locationY>
+        <locationY>6698</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -7710,7 +7713,7 @@ SUBSTITUTE( {!SelectedAccountAddressValues} ,  {!SingleAccountAddressValue}+&quo
         <name>Mensaje_Error_023</name>
         <label>Mensaje Error 023</label>
         <locationX>3370</locationX>
-        <locationY>7598</locationY>
+        <locationY>6806</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -7726,7 +7729,7 @@ SUBSTITUTE( {!SelectedAccountAddressValues} ,  {!SingleAccountAddressValue}+&quo
         <name>Mensaje_Error_024</name>
         <label>Mensaje Error 024</label>
         <locationX>3106</locationX>
-        <locationY>7718</locationY>
+        <locationY>6914</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -7742,7 +7745,7 @@ SUBSTITUTE( {!SelectedAccountAddressValues} ,  {!SingleAccountAddressValue}+&quo
         <name>Mensaje_Error_025</name>
         <label>Mensaje Error 025</label>
         <locationX>2842</locationX>
-        <locationY>7958</locationY>
+        <locationY>7130</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -7758,7 +7761,7 @@ SUBSTITUTE( {!SelectedAccountAddressValues} ,  {!SingleAccountAddressValue}+&quo
         <name>Mensaje_Error_026</name>
         <label>Mensaje Error 026</label>
         <locationX>2578</locationX>
-        <locationY>8078</locationY>
+        <locationY>7238</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -7774,7 +7777,7 @@ SUBSTITUTE( {!SelectedAccountAddressValues} ,  {!SingleAccountAddressValue}+&quo
         <name>Mensaje_Error_027</name>
         <label>Mensaje Error 027</label>
         <locationX>2314</locationX>
-        <locationY>8198</locationY>
+        <locationY>7346</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -7790,7 +7793,7 @@ SUBSTITUTE( {!SelectedAccountAddressValues} ,  {!SingleAccountAddressValue}+&quo
         <name>Mensaje_Error_028</name>
         <label>Mensaje Error 028</label>
         <locationX>2050</locationX>
-        <locationY>8318</locationY>
+        <locationY>7454</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -7806,7 +7809,7 @@ SUBSTITUTE( {!SelectedAccountAddressValues} ,  {!SingleAccountAddressValue}+&quo
         <name>Mensaje_Error_029</name>
         <label>Mensaje Error 029</label>
         <locationX>1786</locationX>
-        <locationY>8438</locationY>
+        <locationY>7562</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -7822,7 +7825,7 @@ SUBSTITUTE( {!SelectedAccountAddressValues} ,  {!SingleAccountAddressValue}+&quo
         <name>Mensaje_Error_030</name>
         <label>Mensaje Error 030</label>
         <locationX>1258</locationX>
-        <locationY>7958</locationY>
+        <locationY>7130</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -7838,7 +7841,7 @@ SUBSTITUTE( {!SelectedAccountAddressValues} ,  {!SingleAccountAddressValue}+&quo
         <name>Mensaje_Error_031</name>
         <label>Mensaje Error 031</label>
         <locationX>994</locationX>
-        <locationY>8078</locationY>
+        <locationY>7238</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -7855,7 +7858,7 @@ SUBSTITUTE( {!SelectedAccountAddressValues} ,  {!SingleAccountAddressValue}+&quo
         <name>msg001</name>
         <label>msg001</label>
         <locationX>4712</locationX>
-        <locationY>4994</locationY>
+        <locationY>4484</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -7872,7 +7875,7 @@ SUBSTITUTE( {!SelectedAccountAddressValues} ,  {!SingleAccountAddressValue}+&quo
         <name>msg002</name>
         <label>msg002</label>
         <locationX>5504</locationX>
-        <locationY>5114</locationY>
+        <locationY>4592</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -7889,7 +7892,7 @@ SUBSTITUTE( {!SelectedAccountAddressValues} ,  {!SingleAccountAddressValue}+&quo
         <name>msg003</name>
         <label>msg003</label>
         <locationX>50</locationX>
-        <locationY>2270</locationY>
+        <locationY>2030</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -7906,7 +7909,7 @@ SUBSTITUTE( {!SelectedAccountAddressValues} ,  {!SingleAccountAddressValue}+&quo
         <name>msg004</name>
         <label>msg004</label>
         <locationX>730</locationX>
-        <locationY>8078</locationY>
+        <locationY>7238</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -7923,7 +7926,7 @@ SUBSTITUTE( {!SelectedAccountAddressValues} ,  {!SingleAccountAddressValue}+&quo
         <name>msg005</name>
         <label>msg005</label>
         <locationX>1522</locationX>
-        <locationY>8438</locationY>
+        <locationY>7562</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -7940,7 +7943,7 @@ SUBSTITUTE( {!SelectedAccountAddressValues} ,  {!SingleAccountAddressValue}+&quo
         <name>NEW_Certificacion_Nueva</name>
         <label>Certificación Nueva</label>
         <locationX>5108</locationX>
-        <locationY>974</locationY>
+        <locationY>866</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -8635,6 +8638,9 @@ SUBSTITUTE( {!SelectedAccountAddressValues} ,  {!SingleAccountAddressValue}+&quo
                 <fields>
                     <name>NEW_NoRutasFrecuentes</name>
                     <dataType>Number</dataType>
+                    <defaultValue>
+                        <numberValue>0.0</numberValue>
+                    </defaultValue>
                     <fieldText>No. de Rutas Frecuentes</fieldText>
                     <fieldType>InputField</fieldType>
                     <isRequired>false</isRequired>
@@ -8662,7 +8668,7 @@ SUBSTITUTE( {!SelectedAccountAddressValues} ,  {!SingleAccountAddressValue}+&quo
         <name>Nuevas_Rutas_frecuentes_o_negociadas_1</name>
         <label>Nuevas Rutas frecuentes o negociadas</label>
         <locationX>4646</locationX>
-        <locationY>3662</locationY>
+        <locationY>3278</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -9908,7 +9914,7 @@ SUBSTITUTE( {!SelectedAccountAddressValues} ,  {!SingleAccountAddressValue}+&quo
         <name>Nuevas_Rutas_frecuentes_o_negociadas_2</name>
         <label>Nuevas Rutas frecuentes o negociadas</label>
         <locationX>510</locationX>
-        <locationY>5966</locationY>
+        <locationY>5342</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -11055,7 +11061,7 @@ SUBSTITUTE( {!SelectedAccountAddressValues} ,  {!SingleAccountAddressValue}+&quo
         <name>Proveedor_a_certificar</name>
         <label>Proveedor a certificar</label>
         <locationX>2936</locationX>
-        <locationY>278</locationY>
+        <locationY>242</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>

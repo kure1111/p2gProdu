@@ -1,7 +1,5 @@
 public with sharing class NEU_DO_pdf {
 
-
-
 	public Customer_Quote__c record;
 	public String string_pdf {get;set;}
 	ApexPages.StandardController con;

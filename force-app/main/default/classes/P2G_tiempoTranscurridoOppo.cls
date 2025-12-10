@@ -18,6 +18,10 @@ public class P2G_tiempoTranscurridoOppo {
                 fechaCreacion = oportunidad.Data_Time_Negociacion__c;
                 tiempoTranscurrido = tiempoTranscurridas(fechaCreacion, fechaActual,oportunidad.CreatedDate);
             }
+            when 'Ejecución' {
+                fechaCreacion = oportunidad.Data_Time_Ejecucion__c;
+                tiempoTranscurrido = tiempoTranscurridas(fechaCreacion, fechaActual,oportunidad.CreatedDate);
+            }
             when else {
                 System.debug('No existe esa etapa');
             }

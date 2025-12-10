@@ -1,0 +1,346 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Workflow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <alerts>
+        <fullName>Add_Services_Line</fullName>
+        <description>Add Services Line</description>
+        <protected>false</protected>
+        <recipients>
+            <type>creator</type>
+        </recipients>
+        <recipients>
+            <field>Email_Sales_ExecutiveSP__c</field>
+            <type>email</type>
+        </recipients>
+        <recipients>
+            <type>owner</type>
+        </recipients>
+        <senderAddress>no-reply@pak2go.com</senderAddress>
+        <senderType>OrgWideEmailAddress</senderType>
+        <template>Services_Line/Add_Service_Line</template>
+    </alerts>
+    <alerts>
+        <fullName>Service_Line_Buy_Amount_is_Change</fullName>
+        <ccEmails>verificacion@pak2go.com</ccEmails>
+        <description>Service Line Buy Amount is Change</description>
+        <protected>false</protected>
+        <recipients>
+            <type>creator</type>
+        </recipients>
+        <recipients>
+            <field>Email_Cobranza_1__c</field>
+            <type>email</type>
+        </recipients>
+        <recipients>
+            <field>Email_Cobranza_2__c</field>
+            <type>email</type>
+        </recipients>
+        <recipients>
+            <field>Email_Cobranza_3__c</field>
+            <type>email</type>
+        </recipients>
+        <recipients>
+            <field>Operations_Executive__c</field>
+            <type>email</type>
+        </recipients>
+        <recipients>
+            <field>LastModifiedById</field>
+            <type>userLookup</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>Services_Line/Service_Line_Sell_Amount_Change</template>
+    </alerts>
+    <alerts>
+        <fullName>Service_Line_Sell_Amount_is_Change</fullName>
+        <ccEmails>facturacion@pak2go.com</ccEmails>
+        <ccEmails>paola.velazquez@pak2go.com</ccEmails>
+        <ccEmails>lorena.quiroga@pak2go.com</ccEmails>
+        <ccEmails>omar.arriaga@pak2go.com</ccEmails>
+        <description>Service Line Sell Amount is Change</description>
+        <protected>false</protected>
+        <recipients>
+            <field>Director_Email__c</field>
+            <type>email</type>
+        </recipients>
+        <recipients>
+            <field>Operations_Executive__c</field>
+            <type>email</type>
+        </recipients>
+        <recipients>
+            <field>LastModifiedById</field>
+            <type>userLookup</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>Services_Line/Service_Line_Sell_Amount_Change</template>
+    </alerts>
+    <fieldUpdates>
+        <fullName>Cobranza_Email_1</fullName>
+        <field>Email_Cobranza_1__c</field>
+        <formula>Import_Export_Quote__r.Account_for__r.Owner.Cobranza_Email__c</formula>
+        <name>Cobranza Email 1</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Cobranza_Email_2</fullName>
+        <field>Email_Cobranza_2__c</field>
+        <formula>Import_Export_Quote__r.Account_for__r.Owner.Cobranza_Email_2__c</formula>
+        <name>Cobranza Email 2</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Cobranza_Email_3</fullName>
+        <field>Email_Cobranza_3__c</field>
+        <formula>Import_Export_Quote__r.Account_for__r.Owner.Cobranza_Email_3__c</formula>
+        <name>Cobranza Email 3</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>IschangedSellPrice</fullName>
+        <field>Count_Modify_Sell_Price__c</field>
+        <formula>IF(ISBLANK( Count_Modify_Sell_Price__c), 1,  Count_Modify_Sell_Price__c + 1)</formula>
+        <name>IschangedSellPrice</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>ShipFinished</fullName>
+        <field>Shipment_Finished__c</field>
+        <literalValue>1</literalValue>
+        <name>ShipFinished</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>StatMonitoreo</fullName>
+        <field>Shipment_Finished__c</field>
+        <literalValue>0</literalValue>
+        <name>StatMonitoreo</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>UpdateExtension_Service_Name</fullName>
+        <field>Extension_Service_Name__c</field>
+        <formula>Service_Rate_Name__r.Name</formula>
+        <name>UpdateExtension Service Name</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_Buy_Price_Modified</fullName>
+        <field>Buy_Price_Modified__c</field>
+        <literalValue>1</literalValue>
+        <name>Update Buy Price Modified</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_Dir_Email</fullName>
+        <field>Director_Email__c</field>
+        <formula>Import_Export_Quote__r.Account_for__r.Owner.Director_Email__c</formula>
+        <name>Update Dir_Email</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_Op_Executive</fullName>
+        <field>Operations_Executive__c</field>
+        <formula>Shipment__r.Operation_Executive__r.Email</formula>
+        <name>Update Op Executive</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_Sell_Price_Modified</fullName>
+        <field>Sell_Price_Modified__c</field>
+        <literalValue>1</literalValue>
+        <name>Update Sell Price Modified</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Update_Status_Shipment</fullName>
+        <field>Status_Shipment_Info__c</field>
+        <formula>&quot;Pendiente de Envío&quot;</formula>
+        <name>Update Status Shipment</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+        <targetObject>Shipment__c</targetObject>
+    </fieldUpdates>
+    <rules>
+        <fullName>Add Service Line</fullName>
+        <actions>
+            <name>Add_Services_Line</name>
+            <type>Alert</type>
+        </actions>
+        <active>true</active>
+        <criteriaItems>
+            <field>Shipment_Fee_Line__c.New_Service_Line__c</field>
+            <operation>equals</operation>
+            <value>True</value>
+        </criteriaItems>
+        <description>Notificacion de creacion de linea adicional en Shipment, que le llegue al email del vendedor y ejecutivo de Servicio al cliente,</description>
+        <triggerType>onCreateOnly</triggerType>
+    </rules>
+    <rules>
+        <fullName>Add Shipment Serv Lines PILOTO</fullName>
+        <actions>
+            <name>Update_Status_Shipment</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>false</active>
+        <description>PILOTO GDL //</description>
+        <formula>AND(   New_Service_Line__c = True,      Shipment__r.Account_for__r.Owner.Workplace__c = &quot;GDL&quot; )</formula>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+    <rules>
+        <fullName>IsChanged SellPrice</fullName>
+        <actions>
+            <name>IschangedSellPrice</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>false</active>
+        <formula>ischanged( Shipment_Sell_Net_Price__c  )</formula>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+    <rules>
+        <fullName>Notificación de cambio en Service line</fullName>
+        <actions>
+            <name>Cambio_en_Service_Line</name>
+            <type>Task</type>
+        </actions>
+        <active>true</active>
+        <formula>Email_Sales_Executive_del_SP__c  = &apos;carlos.soto@pak2go.com&apos;</formula>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+    <rules>
+        <fullName>Service Line Buy Amount is Changed</fullName>
+        <actions>
+            <name>Service_Line_Buy_Amount_is_Change</name>
+            <type>Alert</type>
+        </actions>
+        <actions>
+            <name>Update_Buy_Price_Modified</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <formula>AND  (ISCHANGED(Shipment_Buy_Price__c),  NOT(ISBLANK( PRIORVALUE(Shipment_Buy_Price__c))),  NOT(ISNEW()),  $Profile.Name &lt;&gt; &quot;System Administrator&quot;)</formula>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+    <rules>
+        <fullName>Service Line Sell Amount is Changed</fullName>
+        <actions>
+            <name>Service_Line_Sell_Amount_is_Change</name>
+            <type>Alert</type>
+        </actions>
+        <actions>
+            <name>Cobranza_Email_1</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <actions>
+            <name>Cobranza_Email_2</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <actions>
+            <name>Cobranza_Email_3</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <actions>
+            <name>Update_Dir_Email</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <actions>
+            <name>Update_Sell_Price_Modified</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <formula>AND  (ISCHANGED(Shipment_Sell_Price__c),  NOT(ISBLANK( PRIORVALUE(Shipment_Sell_Price__c))),  NOT(ISNEW()),  $Profile.Name &lt;&gt; &quot;System Administrator&quot;)</formula>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+    <rules>
+        <fullName>Shipment Finished</fullName>
+        <actions>
+            <name>ShipFinished</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>false</active>
+        <criteriaItems>
+            <field>Shipment__c.Shipment_Status_Mon__c</field>
+            <operation>equals</operation>
+            <value>Finished_M</value>
+        </criteriaItems>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+    <rules>
+        <fullName>Shipment StatMOnitoreo</fullName>
+        <actions>
+            <name>StatMonitoreo</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>false</active>
+        <criteriaItems>
+            <field>Shipment__c.Shipment_Status_Mon__c</field>
+            <operation>notEqual</operation>
+            <value>Finished_M</value>
+        </criteriaItems>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+    <rules>
+        <fullName>Update Extension Service Name</fullName>
+        <actions>
+            <name>UpdateExtension_Service_Name</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>false</active>
+        <formula>1=1</formula>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+    <rules>
+        <fullName>Update email Op Executive</fullName>
+        <actions>
+            <name>Update_Op_Executive</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>false</active>
+        <formula>1=1</formula>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+    <tasks>
+        <fullName>Cambio_en_Service_Line</fullName>
+        <assignedTo>admin2020@force.com</assignedTo>
+        <assignedToType>user</assignedToType>
+        <dueDateOffset>0</dueDateOffset>
+        <notifyAssignee>false</notifyAssignee>
+        <offsetFromField>Shipment__c.CreatedDate</offsetFromField>
+        <priority>Normal</priority>
+        <protected>false</protected>
+        <status>Completed</status>
+        <subject>Se generó un cambio en Service Line</subject>
+    </tasks>
+</Workflow>

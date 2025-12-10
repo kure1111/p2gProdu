@@ -36,7 +36,7 @@ public with sharing class NEU_Standard_Duty_Calculator_Shipment {
         Total_Taxes__c, Duty__c, Customs_Value__c, Customs_Incoterm__c, Item_Name__r.Name, Extension_Item_Name__c,
         Import_Export_Quote__r.Country_ofDischarge__r.ISO_Code__c, Import_Export_Quote__r.Country_ofLoad__r.ISO_Code__c, 
         Category_DC__c, Subcategory_DC__c, Product_Item_DC__c, Item_Name__c,  Item_Name__r.Product_Item__c, Item_Name__r.Subcategory__c, Item_Name__r.Category__c,
-        Units_Shipped__c, Additional_Import_Taxes_Amount__c,
+        Units_Shipped__c, Additional_Import_Taxes_Amount__c, CurrencyIsoCode,
         Item_Name__r.HS_Code_Text__c from Shipment_Line__c where Shipment__c =: record.Id];//id =: idlineactualizar
         
         decimal valoritems = 0;
@@ -252,7 +252,7 @@ public with sharing class NEU_Standard_Duty_Calculator_Shipment {
                         else
                         {       
                                 return refresh();
-                                break;
+                                //break;
                         }
                     }
                     else

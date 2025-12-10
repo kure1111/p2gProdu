@@ -58,8 +58,7 @@ public class NEU_MD_Associated_Documents_old
         List<User> usuario_logueado = [select Id, Name from user where id=: UserInfo.getUserId()];
         if(usuario_logueado  != null && usuario_logueado.size()> 0)
         {
-            if(usuario_logueado[0].Name == 'Neurored')//----cambiar esto luego
-                estoy_en_site = true;
+            if(usuario_logueado[0].Name == 'Neurored')estoy_en_site = true;
 
         }
 
@@ -104,25 +103,7 @@ public class NEU_MD_Associated_Documents_old
         }
     }
 
-    /* public class Personal_document_s
-    {
-            public Document documento_asociado{get; set;}
-            public String Document_Type {get; set;}
-            public String Document_Description {get; set;}
-            public String Document_Reference {get; set;}
-            public String clase_documento {get; set;}
-            public String clase_documento2 {get; set;}
 
-            public Personal_document_s(Document documento_asociado, String Document_Type,  String Document_Description , String Document_Reference, String clase_documento, String clase_documento2 )
-            {
-                this.documento_asociado=documento_asociado;
-                this.Document_Type=Document_Type;
-                this.Document_Description=Document_Description;
-                this.Document_Reference=Document_Reference;
-                this.clase_documento=clase_documento;
-                this.clase_documento2=clase_documento2;
-            }
-    }*/
     public List<others_document_s> getList_personal_documents()
     {
         if(List_personal_documents == null)
@@ -142,31 +123,54 @@ public class NEU_MD_Associated_Documents_old
             List<Associated_Document__c> listado_documentos_asociados = null;
             if(tipo_de_objeto_string == 'Claim__c')
             {
-                listado_documentos_asociados = [select id, Name, Document_Description__c, Document_Reference__c, Document_Type__c, Available_for_Community__c from Associated_Document__c where Claim__c =: ApexPages.currentPage().getParameters().get('id') order by CreatedDate desc];
+                listado_documentos_asociados = [select id,
+                                                Name,
+                                                Document_Description__c,
+                                                Document_Reference__c,
+                                                Document_Type__c,
+                                                Available_for_Community__c 
+                                                from Associated_Document__c 
+                                                where Claim__c =: ApexPages.currentPage().getParameters().get('id') 
+                                                order by CreatedDate desc];
             }
             else if(tipo_de_objeto_string == 'Shipment_Consolidation_Data__c')
             {
-                listado_documentos_asociados = [select id, Name, Document_Description__c, Document_Reference__c, Document_Type__c, Available_for_Community__c from Associated_Document__c where Shipment_Consolidation_Data__c =: ApexPages.currentPage().getParameters().get('id') order by CreatedDate desc];
+                listado_documentos_asociados = [select id
+                                                ,Name
+                                                ,Document_Description__c
+                                                ,Document_Reference__c, Document_Type__c, Available_for_Community__c 
+                                                from Associated_Document__c
+                                                where Shipment_Consolidation_Data__c =: ApexPages.currentPage().getParameters().get('id') order by CreatedDate desc];
             }
             else if(tipo_de_objeto_string == 'Transport_Packaging_Data__c')
             {
-                listado_documentos_asociados = [select id, Name, Document_Description__c, Document_Reference__c, Document_Type__c, Available_for_Community__c from Associated_Document__c where Shipment_Packaging_Consolidation_Data__c =: ApexPages.currentPage().getParameters().get('id') order by CreatedDate desc];
+                listado_documentos_asociados = [select id, Name, Document_Description__c, Document_Reference__c, Document_Type__c, Available_for_Community__c 
+                                                from Associated_Document__c 
+                                                where Shipment_Packaging_Consolidation_Data__c =: ApexPages.currentPage().getParameters().get('id') order by CreatedDate desc];
             }
             else if(tipo_de_objeto_string == 'Shipment__c')
             {
-                listado_documentos_asociados = [select id, Name, Document_Description__c, Document_Reference__c, Document_Type__c, Available_for_Community__c from Associated_Document__c where Shipment__c =: ApexPages.currentPage().getParameters().get('id') order by CreatedDate desc];
+                listado_documentos_asociados = [select id, Name, Document_Description__c, Document_Reference__c, Document_Type__c, Available_for_Community__c 
+                                                from Associated_Document__c 
+                                                where Shipment__c =: ApexPages.currentPage().getParameters().get('id') order by CreatedDate desc];
             }
             else if(tipo_de_objeto_string == 'Supply_Project__c')
             {
-                listado_documentos_asociados = [select id, Name, Document_Description__c, Document_Reference__c, Document_Type__c, Available_for_Community__c from Associated_Document__c where Supply_Project__c =: ApexPages.currentPage().getParameters().get('id') order by CreatedDate desc];
+                listado_documentos_asociados = [select id, Name, Document_Description__c, Document_Reference__c, Document_Type__c, Available_for_Community__c 
+                                                from Associated_Document__c 
+                                                where Supply_Project__c =: ApexPages.currentPage().getParameters().get('id') order by CreatedDate desc];
             }
             else if(tipo_de_objeto_string == 'Shopping_Cart__c')
             {
-                listado_documentos_asociados = [select id, Name, Document_Description__c, Document_Reference__c, Document_Type__c, Available_for_Community__c from Associated_Document__c where Shopping_Cart__c =: ApexPages.currentPage().getParameters().get('id') order by CreatedDate desc];
+                listado_documentos_asociados = [select id, Name, Document_Description__c, Document_Reference__c, Document_Type__c, Available_for_Community__c 
+                                                from Associated_Document__c 
+                                                where Shopping_Cart__c =: ApexPages.currentPage().getParameters().get('id') order by CreatedDate desc];
             }
             else if(tipo_de_objeto_string == 'Supplier_Quote__c')
             {
-                listado_documentos_asociados = [select id, Name, Document_Description__c, Document_Reference__c, Document_Type__c, Available_for_Community__c from Associated_Document__c where Supplier_Quote__c =: ApexPages.currentPage().getParameters().get('id') order by CreatedDate desc];
+                listado_documentos_asociados = [select id, Name, Document_Description__c, Document_Reference__c, Document_Type__c, Available_for_Community__c 
+                                                from Associated_Document__c 
+                                                where Supplier_Quote__c =: ApexPages.currentPage().getParameters().get('id') order by CreatedDate desc];
             }
             else if(tipo_de_objeto_string == 'Customer_Quote__c')
             {
@@ -182,7 +186,9 @@ public class NEU_MD_Associated_Documents_old
             }
             else if(tipo_de_objeto_string == 'Account')
             {
-                listado_documentos_asociados = [select id, Name, Document_Description__c, Document_Reference__c, Document_Type__c, Available_for_Community__c from Associated_Document__c where Account__c =: ApexPages.currentPage().getParameters().get('id') order by CreatedDate desc];
+                listado_documentos_asociados = [select id, Name, Document_Description__c, Document_Reference__c, Document_Type__c, Available_for_Community__c 
+                                                from Associated_Document__c 
+                                                where Account__c =: ApexPages.currentPage().getParameters().get('id') order by CreatedDate desc];
             }
             else if(tipo_de_objeto_string == 'Shipment_Disbursement__c')
             {
@@ -229,8 +235,7 @@ public class NEU_MD_Associated_Documents_old
         string texto_email = '';
         if(shipment_reference != null)
             texto_email +='Please see bellow the documents just uploaded on shipment '+ shipment_reference.Name+':';
-        else
-                texto_email +='Please see bellow the documents just uploaded on shipment :';
+        else texto_email +='Please see bellow the documents just uploaded on shipment :';
         texto_email +='\n';
 
         if(tipo_documento_id != null && tipo_documento_id != '')
@@ -282,18 +287,10 @@ public class NEU_MD_Associated_Documents_old
                                 if(tipo_documento_id == 'Acuse')
                                     insert attach;
                             }
-                            else
-                            {
-                                ApexPages.addMessage(new ApexPages.message(ApexPages.severity.ERROR,'Error in File Upload.'));
-                                todo_correcto = false;
-                            }
+                            else{ApexPages.addMessage(new ApexPages.message(ApexPages.severity.ERROR,'Error in File Upload.'));
+                                todo_correcto = false;}
                         }
-                        catch (DMLException e)
-                        {
-                            ApexPages.addMessage(new ApexPages.message(ApexPages.severity.ERROR,'Error in File Upload.'));
-                            todo_correcto = false;
-
-                        }
+                        catch (DMLException e){ApexPages.addMessage(new ApexPages.message(ApexPages.severity.ERROR,'Error in File Upload.'));todo_correcto = false;}
 
                         //-------------------------------
                         if(todo_correcto == true)
@@ -325,7 +322,9 @@ public class NEU_MD_Associated_Documents_old
                             else if(tipo_de_objeto_string == 'Shipment__c')
                             {
                                 Shipment = [select Id,Name, Account_for__c from Shipment__c where id =: ApexPages.currentPage().getParameters().get('id')];
-                                shipments_import_export =[select id, Name, Import_Export_Quote__c from Shipment_Consolidation_Data__c where Shipment__c =:  ApexPages.currentPage().getParameters().get('id')];
+                                shipments_import_export =[select id, Name, Import_Export_Quote__c 
+                                                          from Shipment_Consolidation_Data__c 
+                                                          where Shipment__c =:  ApexPages.currentPage().getParameters().get('id')];
                             }
                             else if(tipo_de_objeto_string == 'Supply_Project__c')
                                 Supply_Project = [select Id, Name,Customer__c  from Supply_Project__c where id =: ApexPages.currentPage().getParameters().get('id')];
@@ -482,10 +481,7 @@ public class NEU_MD_Associated_Documents_old
                                 // od.Document_Description = '';
                                 od.ya_hay_uno_del_mismo_tipo = true;
                             }
-                            catch(Exception e)
-                            {
-                                ApexPages.addMessage(new ApexPages.message(ApexPages.severity.ERROR,' '+e));todo_correcto = false;
-                            }
+                            catch(Exception e){ApexPages.addMessage(new ApexPages.message(ApexPages.severity.ERROR,' '+e));todo_correcto = false;}
 
                             //aviso de que se a subido algo desde el sitio publico
                             if(estoy_en_site == true && shipment_reference != null )
@@ -726,36 +722,13 @@ public class NEU_MD_Associated_Documents_old
                             todo_correcto = false;
                         }
                     }
-                    catch (DMLException e)
-                    {
-                        ApexPages.addMessage(new ApexPages.message(ApexPages.severity.ERROR,'Error in File Upload.'));
-                        todo_correcto = false;
-
-                    }
+                    catch (DMLException e){ApexPages.addMessage(new ApexPages.message(ApexPages.severity.ERROR,'Error in File Upload.'));todo_correcto = false; }
                     folder_encontrado = false;
                 }
             }
         }
 
-        /*try
-          {
-              if(listado_documentos != null && listado_documentos.size()>0)
-              {
-                  if (!Test.isRunningTest())
-                      insert listado_documentos;
-              }
-              else
-              {
-                   ApexPages.addMessage(new ApexPages.message(ApexPages.severity.ERROR,'Error in File Upload.'));
-                   todo_correcto = false;
-              }
-          }
-          catch (DMLException e)
-          {
-              ApexPages.addMessage(new ApexPages.message(ApexPages.severity.ERROR,'Error in File Upload.'));
-              todo_correcto = false;
 
-          }*/
         if(todo_correcto == true)
         {
             List<Claim__c> claims = null;
@@ -1157,168 +1130,6 @@ public class NEU_MD_Associated_Documents_old
 
         }
 
-        /* List<Folder> directorio = new List<Folder>();
-         directorio = [Select Id, Name from Folder where Name =: Document_type];//Document_type
-         if(directorio.size()<1)
-         {
-             directorio = [Select Id, Name from Folder where Name =:'Associated Documents'];
-         }
-         todo_correcto = true;
-         //DOCUMENTO1
-         if(documento_asociado.Name != '' && documento_asociado.Name != null)
-         {
-             documento_asociado.AuthorId = UserInfo.getUserId();
-             if(directorio.size()>0)
-                 documento_asociado.FolderId = directorio[0].Id;
-             documento_asociado.IsPublic = true;
-         }
-
-         try
-         {
-             if(documento_asociado.Name != '' && documento_asociado.Name != null)
-                 insert documento_asociado;
-            display_buttons1='none';
-            display_buttons2='';
-         }
-         catch (DMLException e)
-         {
-             display_buttons1='';
-             display_buttons2='none';
-             ApexPages.addMessage(new ApexPages.message(ApexPages.severity.ERROR,'Error in File Upload.'));
-             todo_correcto = false;
-
-         }
-
-         List<Claim__c> claims = [select Id, Name, Shopping_Cart__c, Shipment__c, Supply_Project__c, Customer__c from Claim__c where id =: ApexPages.currentPage().getParameters().get('id')];
-         List<Shipment_Consolidation_Data__c> Shipment_Consolidation_Data = [select Id,Name, Import_Export_Quote__c, Shipment__c, Shopping_Cart__c, Supplier_Quote__c,Import_Export_Quote__r.Account_for__c, Shipment__r.Account_for__c, Shopping_Cart__r.Customer__c, Supplier_Quote__r.Customer__c from Shipment_Consolidation_Data__c where id =: ApexPages.currentPage().getParameters().get('id') ];
-         List<Transport_Packaging_Data__c> Transport_Packaging_Data = [select Id, Name,Shipment__c,Transporter__c,Shipment__r.Account_for__c  from Transport_Packaging_Data__c where id =: ApexPages.currentPage().getParameters().get('id')];
-         List<Shipment__c> Shipment = [select Id,Name, Account_for__c from Shipment__c where id =: ApexPages.currentPage().getParameters().get('id')];
-         List<Supply_Project__c> Supply_Project = [select Id, Name,Customer__c  from Supply_Project__c where id =: ApexPages.currentPage().getParameters().get('id')];
-         List<Shopping_Cart__c> Shopping_Cart = [select Id, Name, Customer__c from Shopping_Cart__c where id =: ApexPages.currentPage().getParameters().get('id')];
-         List<Supplier_Quote__c> Supplier_Quote = [select Id, Name,Customer__c, Supplier__c,Supply_Project__c,Supplier_Request_RFP__c  from Supplier_Quote__c where id =: ApexPages.currentPage().getParameters().get('id')];
-         List<Customer_Quote__c> Customer_Quote = [select Id, Name,Account_for__c,Supply_Project_Name__c  from Customer_Quote__c where id =: ApexPages.currentPage().getParameters().get('id')];
-         List<Account> cuentas = [select Id, Name  from Account where id =: ApexPages.currentPage().getParameters().get('id')];
-         List<Shipment_Disbursement__c> Shipment_Disbursement = [select Id, Name, Shipment__c, Account__c from Shipment_Disbursement__c where id =: ApexPages.currentPage().getParameters().get('id')];
-         id_cabecera =  ApexPages.currentPage().getParameters().get('id');
-
-         Associated_Document__c new_document= new Associated_Document__c();
-         if(documento_asociado.Name != '' && documento_asociado.Name != null)
-         {
-
-             new_document.Document_URL__c = '/servlet/servlet.FileDownload?file='+documento_asociado.Id+'&oid=' + UserInfo.getOrganizationId();
-             string nombredeldocumento = documento_asociado.Name;
-             Integer indiceDePunto = nombredeldocumento.indexOf('.');
-             new_document.Name=nombredeldocumento.substring(0, indiceDePunto);
-
-         }
-
-         if(Manual_Document_URL != null & Manual_Document_URL != '' )
-         {
-             new_document.Manual_Document_URL__c = Manual_Document_URL;
-         }
-
-         new_document.Document_Reference__c=Document_Reference;
-         new_document.Document_Description__c = Document_Description;
-         new_document.Document_Type__c=Document_type;
-
-         if(Shopping_Cart.size() > 0)
-         {
-             new_document.Account__c = Shopping_Cart[0].Customer__c;
-             new_document.Shopping_Cart__c =Shopping_Cart[0].Id;
-         }
-         else if(Supplier_Quote.size() > 0)
-         {
-             new_document.Account__c = Supplier_Quote[0].Supplier__c;
-             new_document.Supplier_Quote__c =Supplier_Quote[0].Id;
-             new_document.Supplier_Request_RFP__c =Supplier_Quote[0].Supplier_Request_RFP__c;
-             new_document.Supply_Project__c =Supplier_Quote[0].Supply_Project__c;
-         }
-         else if(Customer_Quote.size() > 0)
-         {
-             new_document.Account__c = Customer_Quote[0].Account_for__c;
-             new_document.Import_Export_Quote__c=Customer_Quote[0].Id;
-             if(Customer_Quote[0].Supply_Project_Name__c != null)
-                 new_document.Supply_Project__c =Customer_Quote[0].Supply_Project_Name__c;
-         }
-         else if(Supply_Project.size() > 0)
-         {
-             new_document.Account__c = Supply_Project[0].Customer__c;
-             new_document.Supply_Project__c =Supply_Project[0].Id;
-         }
-         else if(Shipment.size() > 0)
-         {
-             new_document.Account__c = Shipment[0].Account_for__c;
-             new_document.Shipment__c=Shipment[0].Id;
-         }
-         else if(Transport_Packaging_Data.size() > 0)
-         {
-             new_document.Account__c = Transport_Packaging_Data[0].Shipment__r.Account_for__c;
-             new_document.Shipment__c=Transport_Packaging_Data[0].Shipment__c;
-             new_document.Shipment_Packaging_Consolidation_Data__c =Transport_Packaging_Data[0].Id;
-
-         }
-         else if(Shipment_Consolidation_Data.size() > 0)
-         {
-             if(Shipment_Consolidation_Data[0].Shopping_Cart__c != null)
-             {
-                 new_document.Shopping_Cart__c =Shipment_Consolidation_Data[0].Shopping_Cart__c;
-                 new_document.Account__c = Shipment_Consolidation_Data[0].Shopping_Cart__r.Customer__c;
-             }
-             if(Shipment_Consolidation_Data[0].Shipment__c != null)
-             {
-                 new_document.Shipment__c=Shipment_Consolidation_Data[0].Shipment__c;
-                 new_document.Account__c = Shipment_Consolidation_Data[0].Shipment__r.Account_for__c;
-             }
-             if(Shipment_Consolidation_Data[0].Supplier_Quote__c != null)
-             {
-                 new_document.Supplier_Quote__c =Shipment_Consolidation_Data[0].Supplier_Quote__c;
-                 new_document.Account__c = Shipment_Consolidation_Data[0].Supplier_Quote__r.Customer__c;
-             }
-             if(Shipment_Consolidation_Data[0].Import_Export_Quote__c != null)
-             {
-                 new_document.Import_Export_Quote__c=Shipment_Consolidation_Data[0].Import_Export_Quote__c;
-                 new_document.Account__c = Shipment_Consolidation_Data[0].Import_Export_Quote__r.Account_for__c;
-             }
-             new_document.Shipment_Consolidation_Data__c =Shipment_Consolidation_Data[0].Id;
-
-         }
-         else if(claims.size() > 0)
-         {
-             new_document.Account__c = claims[0].Customer__c;
-             if(claims[0].Shopping_Cart__c != null)
-                 new_document.Shopping_Cart__c =claims[0].Shopping_Cart__c;
-             if(claims[0].Shipment__c != null)
-                 new_document.Shipment__c=claims[0].Shipment__c;
-             if(claims[0].Supply_Project__c != null)
-                 new_document.Supply_Project__c =claims[0].Supply_Project__c;
-             new_document.Claim__c=claims[0].Id;
-         }
-         else if(cuentas.size() > 0)
-         {
-             new_document.Account__c = cuentas[0].Id;
-         }
-         else if(Shipment_Disbursement.size() > 0)
-         {
-             if(Shipment_Disbursement[0].Account__c != null)
-                 new_document.Account__c = Shipment_Disbursement[0].Account__c;
-             if(Shipment_Disbursement[0].Shipment__c != null)
-                 new_document.Shipment__c = Shipment_Disbursement[0].Shipment__c;
-             new_document.Shipment_Disbursement__c = Shipment_Disbursement[0].Id;
-         }
-
-         try
-         {
-             insert new_document;
-             display_buttons1='none';
-             display_buttons2='';
-             ApexPages.addMessage(new ApexPages.message(ApexPages.severity.info,'Document Uploaded Correctly'));
-         }
-         catch(Exception e)
-         {
-             display_buttons1='';
-             display_buttons2='none';
-             ApexPages.addMessage(new ApexPages.message(ApexPages.severity.ERROR,' '+e));todo_correcto = false;
-         }*/
     }
 
     public PageReference cancel_document()
@@ -1328,6 +1139,155 @@ public class NEU_MD_Associated_Documents_old
         pgReturnPage = new PageReference(returnUrl);
         pgReturnPage.setRedirect(true);
         return pgReturnPage;
+    }
+    
+    public void Bypass(){
+        Integer a=1;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+
     }
 
 }

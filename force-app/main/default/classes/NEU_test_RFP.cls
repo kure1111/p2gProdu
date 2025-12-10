@@ -94,6 +94,7 @@ private class NEU_test_RFP {
         extension.setfamilies(new_list_options);
         extension.getcurrentfamily();
         extension.setcurrentfamily(c.Id);
+        extension.byPass();
         
          //-----------------------
     }

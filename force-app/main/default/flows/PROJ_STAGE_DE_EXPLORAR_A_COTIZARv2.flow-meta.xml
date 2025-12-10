@@ -41,8 +41,6 @@
                 <booleanValue>true</booleanValue>
             </value>
         </inputParameters>
-        <nameSegment>emailSimple</nameSegment>
-        <versionSegment>1</versionSegment>
     </actionCalls>
     <actionCalls>
         <name>Email_Buy_Price</name>
@@ -82,8 +80,6 @@
                 <booleanValue>true</booleanValue>
             </value>
         </inputParameters>
-        <nameSegment>emailSimple</nameSegment>
-        <versionSegment>1</versionSegment>
     </actionCalls>
     <actionCalls>
         <name>Enviar_correo_a_Compras</name>
@@ -120,8 +116,6 @@
                 <stringValue>Oportunididad {!FI_o_FN} {!$Record.Name}</stringValue>
             </value>
         </inputParameters>
-        <nameSegment>emailSimple</nameSegment>
-        <versionSegment>1</versionSegment>
     </actionCalls>
     <apiVersion>58.0</apiVersion>
     <assignments>

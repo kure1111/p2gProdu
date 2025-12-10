@@ -3,6 +3,7 @@ public class NEU_CloneImportExport_Test {
 
     @testSetup
     static void SetUp(){
+        NEU_StaticVariableHelper.setBoolean1(true);
         List<Account> list_accounts = NEU_Utils.getAccounts('Customer,');
         Account account_test = list_accounts[0];
         account_test.Name = 'Bimbo';
@@ -74,6 +75,72 @@ public class NEU_CloneImportExport_Test {
     {
         Customer_Quote__c importexportquote = [SELECT Id, Name FROM Customer_Quote__c limit 1];
         NEU_StaticVariableHelper.setBoolean1(true);
+        NEU_CloneImportExport ie = new NEU_CloneImportExport(new ApexPages.StandardController( importexportquote ));
+        ie.duplicate_order();
+        ie.back_record();
+        ie.byPass();
+        String res=ie.resultado;
+    }
+    public static testMethod void text_NEU_CloneImportExport()
+    {
+        NEU_StaticVariableHelper.setBoolean1(true);
+
+        List<Account> list_accounts = NEU_Utils.getAccounts('Customer,');
+        Account a = list_accounts[0];
+        insert a;
+        Price_List__c b = new Price_List__c(Name = 'Test acount',Business_Area__c = 'Sales', Items_Account_Owner__c = a.Id);
+        insert b;
+        Product_Family__c c = new Product_Family__c(Name = 'Test acount', Business_Area__c = 'Auto-Parts');
+        insert c;
+        Subfamily__c d = new Subfamily__c(Product_Family__c = c.Id, Name = 'test subfamily');
+        insert d;
+        Sourcing_Item__c g = new Sourcing_Item__c(Name = 'Test item',Subfamily__c = d.Id, Sourcing_Family__c =c.id, Account_Owner__c= a.Id ,  HS_Code_Text__c='56489');
+        insert g;
+        Country__c Country = new Country__c(Name='test country',  ISO_Code__c='EUR');
+        insert Country;
+        Location__c localizacion = new Location__c(Name='test localizacion', City__c='test city', Country__c= country.Id, Subdivision__c='test subdivision', UNLOCODE__c='ABC');
+        insert localizacion;
+        Carrier_Line_Load_Point__c route = new Carrier_Line_Load_Point__c(Name='test',  Country_of_Discharge__c=Country.Id, Country_of_Load__c=Country.Id, Port_Airport_of_Discharge__c=localizacion.Id, Port_Airport_of_Load__c=localizacion.Id);
+        insert route;
+
+        User userT = [select id,managerId, userRole.Name  from user where id =: UserInfo.getUserId() limit 1];
+        Rol_Margen__c rolMargen = TestDataFactory.createRolMargen(userT.userRole.Name);//Director Comercial ,Director Regional
+        Customer_Quote__c importexportquote = new Customer_Quote__c();
+        String recordTypeId = Schema.SObjectType.Customer_Quote__c.getRecordTypeInfosByName().get('Import-Export Quote').getRecordTypeId();
+        importexportquote.RecordTypeId = recordTypeId;
+        importexportquote.Name='.';
+        importexportquote.Account_for__c = a.Id;
+        importexportquote.Team__c = 'P2G';
+        importexportquote.Quotation_Status__c = 'Quote being prepared';
+        importexportquote.Customer_Reference__c = 'hola soy una prueba';
+        importexportquote.Valid_From__c = system.today();
+        importexportquote.Valid_Until__c = system.today();
+        importexportquote.Comercio_Exterior__c = 'No';
+        importexportquote.Catalog_Price_List__c = b.Id;
+        importexportquote.Route__c=route.Id;
+        importexportquote.Freight_Mode__c = 'Road';
+        importexportquote.Service_Mode__c = 'NATIONAL';
+        importexportquote.Service_Type__c = 'FTL';
+        importexportquote.CurrencyIsoCode = 'MXN';
+        importexportquote.ETD__c = Date.today();
+        importexportquote.ETA__c = Date.today();
+        importexportquote.Community_Status__c = 'CUSTOMER CREATED';
+        importexportquote.Pricing_Executive__c= userT.Id;
+        importexportquote.Operations_Exec__c = userT.Id;
+        insert importexportquote;
+        Quote_Item_Line__c quote = new Quote_Item_Line__c(Import_Export_Quote__c = importexportquote.id,Name = 'lineas items', Item_Name__c= g.Id, Customs_Value__c=1000);
+        insert quote;
+        Fee__c fee = new Fee__c(Name = 'test fees', Fee_Category__c = 'Disbursement', Rate_Type__c = 'Fixed', Account_for__c = a.Id);
+        insert fee;
+        Import_Export_Fee_Line__c quote_fee = new Import_Export_Fee_Line__c(Import_Export_Quote__c = importexportquote.id,Name = 'lineas items', Service_Rate_Name__c= fee.Id);
+        insert quote_fee;
+        Fee__c fee1 = new Fee__c(Name = 'test fees', Fee_Category__c = 'Disbursement',  Active__c = true, RecordTypeId = Schema.SobjectType.Fee__c.getRecordTypeInfosByName().get('Local Transport').getRecordTypeId(), Rate_Type__c='Per Container', Standard_Rate__c = true, Account_for__c = a.Id);
+        insert fee1;
+        Fee__c fee2 = new Fee__c(Name = 'test fees', Fee_Category__c = 'Disbursement',  Active__c = true, RecordTypeId = Schema.SobjectType.Fee__c.getRecordTypeInfosByName().get('Sea/Ground Freight').getRecordTypeId(), Rate_Type__c='Per Container', Standard_Rate__c = true, Account_for__c = a.Id);
+        insert fee2;
+        Fee__c fee3 = new Fee__c(Name = 'test fees', Fee_Category__c = 'Disbursement',  Active__c = true, RecordTypeId = Schema.SobjectType.Fee__c.getRecordTypeInfosByName().get('Other Service Charges').getRecordTypeId(), Rate_Type__c='Per Container', Standard_Rate__c = true, Account_for__c = a.Id);
+        insert fee3;
+
         NEU_CloneImportExport ie = new NEU_CloneImportExport(new ApexPages.StandardController( importexportquote ));
         ie.duplicate_order();
         ie.back_record();

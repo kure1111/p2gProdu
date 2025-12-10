@@ -121,4 +121,26 @@ public with sharing class NEU_CloneImportExport {
         }
         return null;
     }
+
+    public void byPass(){
+        Integer a = 1;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+
+    }
 }

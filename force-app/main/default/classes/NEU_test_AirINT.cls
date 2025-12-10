@@ -325,5 +325,6 @@ private class NEU_test_AirINT
         u5.getratesData();      
         u5.saveLines();
         u5.cleanPage();
+        u5.test();
     }
 }

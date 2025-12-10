@@ -19,8 +19,6 @@
                 <elementReference>myVariable_current.Id</elementReference>
             </value>
         </inputParameters>
-        <nameSegment>Account.Notificacion_para_manager</nameSegment>
-        <versionSegment>1</versionSegment>
     </actionCalls>
     <actionCalls>
         <processMetadataValues>
@@ -44,8 +42,6 @@
                 <elementReference>myVariable_current.Id</elementReference>
             </value>
         </inputParameters>
-        <nameSegment>Account.Notificacion_a_usuario_de_cambio_de_owner</nameSegment>
-        <versionSegment>1</versionSegment>
     </actionCalls>
     <apiVersion>49.0</apiVersion>
     <decisions>

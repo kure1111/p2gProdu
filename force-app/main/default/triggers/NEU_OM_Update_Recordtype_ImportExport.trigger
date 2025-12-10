@@ -1,7 +1,6 @@
 trigger NEU_OM_Update_Recordtype_ImportExport on Customer_Quote__c (before insert, before update) {
 
-	if(NEU_StaticVariableHelper.getBoolean1())
-		return; 
+    if(NEU_StaticVariableHelper.getBoolean1()){return;}
 
     if(Test.isRunningTest() || !RecursiveCheck.triggerMonitor.contains('NEU_OM_Update_Recordtype_ImportExport')){
         RecursiveCheck.triggerMonitor.add('NEU_OM_Update_Recordtype_ImportExport');

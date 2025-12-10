@@ -113,7 +113,8 @@ private class NEU_test_Comparable {
 	    }
    	}
 
-    static testMethod void test_NEU_Controller_Comparable() {
+    @isTest
+    static void test_NEU_Controller_Comparable() {
 		NEU_StaticVariableHelper.setBoolean1(true);
 
 		Controller_Comparable mytest=new Controller_Comparable(1);

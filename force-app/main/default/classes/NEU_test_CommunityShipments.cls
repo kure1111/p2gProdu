@@ -25,6 +25,7 @@ public with sharing class NEU_test_CommunityShipments
         insert location_test;
 
         Shipment__c shipment_test = new Shipment__c();
+        shipment_test.Name = 'SP-Test1';
         shipment_test.Account_for__c = account_test.Id;
         shipment_test.Freight_Mode__c = 'Road';
         shipment_test.Service_Mode__c = 'NATIONAL';
@@ -37,9 +38,9 @@ public with sharing class NEU_test_CommunityShipments
         shipment_test.Shipment_Status_Plann__c = 'Confirmed';
         insert shipment_test;
 
-        Shipment__c ship = new Shipment__c(Account_for__c = account_test.Id, Freight_Mode__c='Sea', Service_Mode__c ='Import', Marketplace_Auction__c = true, Only_Warehouse_Service__c = true, Shipment_Status_Plann__c = 'Confirmed', Shipment_Status__c = 'Delivery On route', MBL_Number__c = 'Test', AMS__c = 'Test');
+        Shipment__c ship = new Shipment__c(Name = 'SP-Test2', Account_for__c = account_test.Id, Freight_Mode__c='Sea', Service_Mode__c ='Import', Marketplace_Auction__c = true, Only_Warehouse_Service__c = true, Shipment_Status_Plann__c = 'Confirmed', Shipment_Status__c = 'Delivery On route', MBL_Number__c = 'Test', AMS__c = 'Test');
         insert ship;
-        Shipment__c ship2 = new Shipment__c(Account_for__c = account_test.Id, Freight_Mode__c='Sea', Service_Mode__c ='Import', Marketplace_Auction__c = true, Only_Warehouse_Service__c = true, Shipment_Status_Plann__c = 'Confirmed', Ocean_Shipment_Status__c = 'Telex Confirmation', MBL_Number__c = 'Test', AMS__c = 'Test');
+        Shipment__c ship2 = new Shipment__c(Name = 'SP-Test3', Account_for__c = account_test.Id, Freight_Mode__c='Sea', Service_Mode__c ='Import', Marketplace_Auction__c = true, Only_Warehouse_Service__c = true, Shipment_Status_Plann__c = 'Confirmed', Ocean_Shipment_Status__c = 'Telex Confirmation', MBL_Number__c = 'Test', AMS__c = 'Test');
         insert ship2;
 
         List<NEU_CommunityShipmentsMonitoring.shipment_s> shipments = NEU_CommunityShipmentsMonitoring.getShipments();
@@ -61,6 +62,7 @@ public with sharing class NEU_test_CommunityShipments
         shipment_test.Freight_Mode__c = 'Sea';
         shipment_test.Service_Mode__c = 'Import';
         shipment_test.Only_Warehouse_Service__c = true;
+        shipment_test.Name = 'SP-Test4';
         insert shipment_test;
 
         Shipment_Stop__c new_shipment_stop = new Shipment_Stop__c();

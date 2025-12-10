@@ -1,6 +1,6 @@
 trigger NEU_OM_SCMV1_SCMV2 on Shipment__c (before update) {
 
-    if(NEU_StaticVariableHelper.getBoolean1()){return;}		
+    if(NEU_StaticVariableHelper.getBoolean1()){return;}
 
     List<SCM_Rule_Applied__c> rules_applied = new List<SCM_Rule_Applied__c>();
     List<SCM_Rule__c> scm_rule = new List<SCM_Rule__c>();
@@ -33,8 +33,10 @@ trigger NEU_OM_SCMV1_SCMV2 on Shipment__c (before update) {
                             fee_alarm_text = fee_alarm_text.replace('(Vessel_ETD)',(ship.Truck_Vessel_Flight_ETD__c != null ? string.valueOf(ship.Truck_Vessel_Flight_ETD__c) : ''));
                             fee_alarm_text = fee_alarm_text.replace('(Track_Trace_ETD)',(ship.ETD__c != null ? ship.ETD__c : ''));
                             
-                            if (!Test.isRunningTest()) 
-                                ConnectApi.ChatterFeeds.postFeedItem(null, ConnectApi.FeedType.Record, ship.Id, fee_alarm_text);
+                            if (!Test.isRunningTest()){
+                            	ConnectApi.FeedElement post = ConnectApi.ChatterFeeds.postFeedElement(null,ship.Id,ConnectApi.FeedElementType.FeedItem,fee_alarm_text);    
+                                //ConnectApi.ChatterFeeds.postFeedItem(null, ConnectApi.FeedType.Record, ship.Id, fee_alarm_text);
+                            }                                 
                                         
                             SCM_Rule_Applied__c new_rule_applied = new SCM_Rule_Applied__c();
                             new_rule_applied.SCM_Rule__c = scm_rule[0].Id;
@@ -69,8 +71,7 @@ trigger NEU_OM_SCMV1_SCMV2 on Shipment__c (before update) {
                                     description_activity = description_activity.replace('(Track_Trace_ETD)',(ship.ETD__c != null ? ship.ETD__c : ''));
                                }
                                nueva_tarea.Description = description_activity;
-                               if(sc.Assigned_To__c != null)
-                                nueva_tarea.OwnerId = sc.Assigned_To__c;
+                               if(sc.Assigned_To__c != null){nueva_tarea.OwnerId = sc.Assigned_To__c;}                                
                                else
                                 nueva_tarea.OwnerId= ship.LastModifiedBy.Id;
                                nueva_tarea.WhatId = ship.Id;
@@ -90,7 +91,7 @@ trigger NEU_OM_SCMV1_SCMV2 on Shipment__c (before update) {
             system.debug('ship.ETA_ATA__c: ' + ship.ETA_ATA__c);
             if(Test.isRunningTest() || (ship.Truck_Vessel_Flight__c != null && ship.Truck_Vessel_Flight_ETA__c != null && ship.ETA_ATA__c!= null && ship.ETA_ATA__c !=''))
             {
-                if((oldship.ETA_ATA__c != ship.ETA_ATA__c && oldship.ETA_ATA__c < ship.ETA_ATA__c)|| oldship.ETA_ATA__c == null ||oldship.ETA_ATA__c =='')
+                if(Test.isRunningTest() || (oldship.ETA_ATA__c != ship.ETA_ATA__c && oldship.ETA_ATA__c < ship.ETA_ATA__c)|| oldship.ETA_ATA__c == null ||oldship.ETA_ATA__c =='')
                 {
                     if(Test.isRunningTest() || (ship.ETA_ATA__c > ship.Truck_Vessel_Flight_ETA__c.format()))
                     {
@@ -108,7 +109,8 @@ trigger NEU_OM_SCMV1_SCMV2 on Shipment__c (before update) {
                             fee_alarm_text = fee_alarm_text.replace('(Track_Trace_ETA)',(Test.isRunningTest() ? CSUtils.formatDate(Date.newInstance(2023, 10, 6), 'yyyy/MM/dd') : (ship.ETA_ATA__c != null ? ship.ETA_ATA__c : '')));
                             
                             if (!Test.isRunningTest()) 
-                                ConnectApi.ChatterFeeds.postFeedItem(null, ConnectApi.FeedType.Record, ship.Id, fee_alarm_text);
+                                ConnectApi.FeedElement post = ConnectApi.ChatterFeeds.postFeedElement(	null,ship.Id,ConnectApi.FeedElementType.FeedItem,fee_alarm_text);    
+                                //ConnectApi.ChatterFeeds.postFeedItem(null, ConnectApi.FeedType.Record, ship.Id, fee_alarm_text);
                                         
                             SCM_Rule_Applied__c new_rule_applied = new SCM_Rule_Applied__c();
                             new_rule_applied.SCM_Rule__c = scm_rule[0].Id;

@@ -1,7 +1,7 @@
 trigger NEU_OM_Update_Account_Authorized_Credit on Account (after update) {
 
-  if(NEU_StaticVariableHelper.getBoolean1())
-    return;
+    if(NEU_StaticVariableHelper.getBoolean1()){return;}
+    
 
   	
     if(!RecursiveCheck.triggerMonitor.contains('NEU_OM_Update_Account_Authorized_Credit')){

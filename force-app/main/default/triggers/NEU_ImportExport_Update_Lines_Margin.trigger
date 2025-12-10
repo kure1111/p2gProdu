@@ -17,7 +17,13 @@ trigger NEU_ImportExport_Update_Lines_Margin on Customer_Quote__c (after insert,
             if(ids.size()>0)
             {
                     List<Quote_Item_Line__c>toUpdate=new List<Quote_Item_Line__c>();
-                    for(Quote_Item_Line__c line:[SELECT Id,Import_Export_Quote__c,Margin_at_Destination__c,Import_Export_Quote__r.Margin_at_Destination_by_Default__c FROM Quote_Item_Line__c WHERE (Margin__c=null OR Margin__c=0) AND Import_Export_Quote__c IN:ids])
+                    for(Quote_Item_Line__c line:[SELECT Id,
+                                                 Import_Export_Quote__c,
+                                                 Margin_at_Destination__c,
+                                                 Import_Export_Quote__r.Margin_at_Destination_by_Default__c
+                                                 FROM Quote_Item_Line__c 
+                                                 WHERE (Margin__c=null OR Margin__c=0)
+                                                 AND Import_Export_Quote__c IN:ids])
                         if(line.Import_Export_Quote__r.Margin_at_Destination_by_Default__c!=Trigger.oldMap.get(line.Import_Export_Quote__c).Margin_at_Destination_by_Default__c)
                             if(line.Margin_at_Destination__c!=line.Import_Export_Quote__r.Margin_at_Destination_by_Default__c)
                             {
@@ -45,7 +51,13 @@ trigger NEU_ImportExport_Update_Lines_Margin on Customer_Quote__c (after insert,
             if(ids.size()>0)
             {
                     List<Quote_Item_Line__c>toUpdate=new List<Quote_Item_Line__c>();
-                    for(Quote_Item_Line__c line:[SELECT Id,Import_Export_Quote__c,Margin_at_Destination__c,Import_Export_Quote__r.Margin_at_Destination_by_Default__c FROM Quote_Item_Line__c WHERE (Margin__c=null OR Margin__c=0) AND Import_Export_Quote__c IN:ids])
+                    for(Quote_Item_Line__c line:[SELECT Id,
+                                                 Import_Export_Quote__c,
+                                                 Margin_at_Destination__c,
+                                                 Import_Export_Quote__r.Margin_at_Destination_by_Default__c
+                                                 FROM Quote_Item_Line__c
+                                                 WHERE (Margin__c=null OR Margin__c=0)
+                                                 AND Import_Export_Quote__c IN:ids])
                         if(line.Import_Export_Quote__r.Margin_at_Destination_by_Default__c!=Trigger.oldMap.get(line.Import_Export_Quote__c).Margin_at_Destination_by_Default__c)
                             if(line.Margin_at_Destination__c!=line.Import_Export_Quote__r.Margin_at_Destination_by_Default__c)
                             {

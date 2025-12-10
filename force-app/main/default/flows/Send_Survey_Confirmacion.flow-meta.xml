@@ -11,7 +11,7 @@
         <inputParameters>
             <name>emailAddresses</name>
             <value>
-                <stringValue>alberto.garcia@2gologistics.com, carlos.martinez@2gologistics.com</stringValue>
+                <stringValue>alberto.garcia@2gologistics.com, enrique.betancourt@2gologistics.com</stringValue>
             </value>
         </inputParameters>
         <inputParameters>
@@ -32,8 +32,6 @@
                 <stringValue>00XRQ000001Gtkj2AC</stringValue>
             </value>
         </inputParameters>
-        <nameSegment>emailSimple</nameSegment>
-        <versionSegment>1</versionSegment>
     </actionCalls>
     <apiVersion>61.0</apiVersion>
     <decisions>
@@ -123,7 +121,7 @@
             <label>Yes</label>
         </rules>
     </decisions>
-    <description>Envio automatizado de Encuesta - Confirmacion</description>
+    <description>Se elimina el correo de carlos.martinez y se agrega el correo de enrique.betancourt</description>
     <environments>Default</environments>
     <formulas>
         <name>Body_Formua</name>
@@ -207,7 +205,7 @@
         </schedule>
         <triggerType>Scheduled</triggerType>
     </start>
-    <status>Active</status>
+    <status>Draft</status>
     <textTemplates>
         <name>BodyTemplate</name>
         <isViewedAsPlainText>false</isViewedAsPlainText>

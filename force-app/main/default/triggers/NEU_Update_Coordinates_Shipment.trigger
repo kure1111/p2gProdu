@@ -1,7 +1,6 @@
 trigger NEU_Update_Coordinates_Shipment on Shipment__c (before update) 
 {
-    if(NEU_StaticVariableHelper.getBoolean1()|| System.IsBatch()  || System.isFuture())
-        return; 
+    if(NEU_StaticVariableHelper.getBoolean1()|| System.IsBatch()  || System.isFuture())return; 
     
     //  if(trigger.isBefore)
     //{
@@ -20,8 +19,11 @@ trigger NEU_Update_Coordinates_Shipment on Shipment__c (before update)
             }
         }
         map<string,Account_Address__c> mapAccountAddress = new map<string,Account_Address__c>();
-        for(Account_Address__c aa: [select id,Address__c,Address_Coordinates__latitude__s,
-                                    Address_Coordinates__longitude__s from Account_Address__c 
+        for(Account_Address__c aa: [select id,
+                                    Address__c,
+                                    Address_Coordinates__latitude__s,
+                                    Address_Coordinates__longitude__s 
+                                    from Account_Address__c 
                                     where id IN: idsAccountAdress])
         {
             mapAccountAddress.put(aa.id,aa);
@@ -34,7 +36,7 @@ trigger NEU_Update_Coordinates_Shipment on Shipment__c (before update)
             Account_Address__c origin =  mapAccountAddress.get( quote.Account_origin_Address__c );
             Account_Address__c dest =  mapAccountAddress.get( quote.Account_destination_Address__c );
             
-            IF(quote.Shipment_Type__c.contains('FN')  || quote.Shipment_Type__c.contains('PTO') || quote.Shipment_Type__c.contains('FI') )
+            IF(quote.Shipment_Type__c.contains('FN'))
             {
                 if(quote.Account_Origin_Address__c != null ){
                     quote.Origin_Address__c = mapAccountAddress.get(quote.Account_Origin_Address__c).Address__c;
@@ -74,13 +76,10 @@ trigger NEU_Update_Coordinates_Shipment on Shipment__c (before update)
             }
             
             
-            IF(quote.Shipment_Type__c.contains('FN')  || quote.Shipment_Type__c.contains('PTO'))
+            IF(quote.Shipment_Type__c.contains('FN'))
             {
                 
-                if( quote.Shipment_Status_Plann__c == 'Confirmed'&&
-                   quote.Shipment_Status_Plann__c != oldquote.Shipment_Status_Plann__c &&
-                   quote.Account_origin_Address__c != null )
-                {  
+                if( quote.Shipment_Status_Plann__c == 'Confirmed'&&quote.Shipment_Status_Plann__c != oldquote.Shipment_Status_Plann__c &&quote.Account_origin_Address__c != null ){  
                     system.debug('FN ORIGEN');
                     
                     string errors = '';
@@ -98,10 +97,7 @@ trigger NEU_Update_Coordinates_Shipment on Shipment__c (before update)
                     
                 }
                 
-                if( quote.Shipment_Status_Plann__c == 'Confirmed' && 
-                   quote.Shipment_Status_Plann__c != oldquote.Shipment_Status_Plann__c &&
-                   quote.Account_destination_Address__c != null )
-                {   
+                if( quote.Shipment_Status_Plann__c == 'Confirmed' && quote.Shipment_Status_Plann__c != oldquote.Shipment_Status_Plann__c &&quote.Account_destination_Address__c != null ){   
                     
                     system.debug('FN DEST');
                     
@@ -195,6 +191,7 @@ List<shipment__c> newShipments = Database.query(soqlQuery);*/
     // GenerateDateLoad.GenerarTimeResponseShipment(newShipments,trigger.oldMap);
     //}
     //
+    
      if(Test.isRunningTest())
     {
         string       Test0 = '';
@@ -406,5 +403,5 @@ List<shipment__c> newShipments = Database.query(soqlQuery);*/
         Test0 = '';
         Test0 = '';
         Test0 = '';
-    }
+    }	
 }

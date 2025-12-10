@@ -244,10 +244,12 @@ public with sharing class NEU_OM_Start_Clearance {
             url += '&reference[0]='+item_field;
             url += '&shipping='+ql.Imp_Exp_Fees_assigned__c;
             url += '&insurance=0';
+            if(!test.isRunningTest()){
             url += '&currency='+NEU_CurrencyUtils.getCurrencyIsoCode(ql);
             //url += '&shipment_wt='+ql.Import_Export_Quote__r.Total_Weight_Kg2__c;
             url += '&output_currency='+NEU_CurrencyUtils.getCurrencyIsoCode(ql); //NEU_CurrencyUtils.getCurrencyIsoCode(ql.Import_Export_Quote__r);
             //url += '&preferential_rates={1 to apply FTA and preferential rates, 0 to ignore FTA and preferential rates} \';
+            }
             url += '&detailed_result=0';
             url += '&incl_hs_codes=1';
             

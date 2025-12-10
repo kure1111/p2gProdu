@@ -31,8 +31,8 @@ global class NEU_AsyncOIShipment implements Queueable {
 	Map<String,List<Shipment__c>> shipmentMap=new Map<String,List<Shipment__c>>();
 	for(Shipment__c s:[select Id,OI_Status_Code__c,OI_Status__c,ETD__c,ETA_ATA__c,ATAPOD__c,Origin__c,Origin_Code__c,Final_Discharge__c,Final_Discharge_Code__c,Port_Of_Loading__c,Port_Of_Loading_Code__c
 		,Port_Of_Discharging__c,Port_Of_Discharging_Code__c,Vessel_Name__c,IMO_Number__c,Port_of_Transshipment_1__c,Port_of_Transshipment_Code_1__c,Port_of_Transshipment_2__c
-		,Port_of_Transshipment_Code_2__c,Port_of_Transshipment_3__c,Port_of_Transshipment_Code_3__c,Vessel_1__c,Vessel_Imo_1__c,Vessel_2__c,Vessel_Imo_2__c,Vessel_3__c,Vessel_Imo_3__c
-		,Vessel_4__c,Vessel_Imo_4__c,Truck_Vessel_Latitude__c,Truck_Vessel_Longitude__c,Vessel_Course__c,Vessel_Information__c,External_Reference_OI__c
+		,Port_of_Transshipment_Code_2__c,Port_of_Transshipment_3__c,Port_of_Transshipment_Code_3__c,/*Vessel_1__c,*/Vessel_Imo_1__c,/*Vessel_2__c,*/Vessel_Imo_2__c,/*Vessel_3__c,*/Vessel_Imo_3__c
+		,/*Vessel_4__c,*/Vessel_Imo_4__c,Truck_Vessel_Latitude__c,Truck_Vessel_Longitude__c,Vessel_Course__c,Vessel_Information__c,External_Reference_OI__c
 		from Shipment__c where External_Reference_OI__c=:shipments])
  		if(String.IsNotEmpty(s.External_Reference_OI__c))
  		{
@@ -47,8 +47,8 @@ global class NEU_AsyncOIShipment implements Queueable {
 	Map<String,List<Shipment_Program__c>> shipmentMapP=new Map<String,List<Shipment_Program__c>>();
 	for(Shipment_Program__c s:[select Id,OI_Status_Code__c,OI_Status__c,ETD__c,ETA_ATA__c,ATAPOD__c,Origin__c,Origin_Code__c,Final_Discharge__c,Final_Discharge_Code__c,Port_Of_Loading__c,Port_Of_Loading_Code__c
 		,Port_Of_Discharging__c,Port_Of_Discharging_Code__c,Vessel_Name__c,IMO_Number__c,Port_of_Transshipment_1__c,Port_of_Transshipment_Code_1__c,Port_of_Transshipment_2__c
-		,Port_of_Transshipment_Code_2__c,Port_of_Transshipment_3__c,Port_of_Transshipment_Code_3__c,Vessel_1__c,Vessel_Imo_1__c,Vessel_2__c,Vessel_Imo_2__c,Vessel_3__c,Vessel_Imo_3__c
-		,Vessel_4__c,Vessel_Imo_4__c,Truck_Vessel_Latitude__c,Truck_Vessel_Longitude__c,Vessel_Course__c,Vessel_Information__c,External_Reference_OI__c
+		,Port_of_Transshipment_Code_2__c,Port_of_Transshipment_3__c,Port_of_Transshipment_Code_3__c,/*Vessel_1__c,*/Vessel_Imo_1__c,/*Vessel_2__c,*/Vessel_Imo_2__c,/*Vessel_3__c,*/Vessel_Imo_3__c
+		,/*Vessel_4__c,*/Vessel_Imo_4__c,Truck_Vessel_Latitude__c,Truck_Vessel_Longitude__c,Vessel_Course__c,Vessel_Information__c,External_Reference_OI__c
 		from Shipment_Program__c where External_Reference_OI__c=:shipments])
  		if(String.IsNotEmpty(s.External_Reference_OI__c))
  		{
@@ -579,13 +579,13 @@ global class NEU_AsyncOIShipment implements Queueable {
 			s.Port_of_Transshipment_Code_2__c=Port_of_Transshipment_Code_2;
 			s.Port_of_Transshipment_3__c=Port_of_Transshipment_3;
 			s.Port_of_Transshipment_Code_3__c=Port_of_Transshipment_Code_3;
-			s.Vessel_1__c=Vessel_1;
+			//s.Vessel_1__c=Vessel_1;
 			s.Vessel_Imo_1__c=Vessel_Imo_1;
-			s.Vessel_2__c=Vessel_2;
+			//s.Vessel_2__c=Vessel_2;
 			s.Vessel_Imo_2__c=Vessel_Imo_2;
-			s.Vessel_3__c=Vessel_3;
+			//s.Vessel_3__c=Vessel_3;
 			s.Vessel_Imo_3__c=Vessel_Imo_3;
-			s.Vessel_4__c=Vessel_4;
+			//s.Vessel_4__c=Vessel_4;
 			s.Vessel_Imo_4__c=Vessel_Imo_4;
 			s.Truck_Vessel_Latitude__c=Truck_Vessel_Latitude;
 			s.Truck_Vessel_Longitude__c=Truck_Vessel_Longitude;
@@ -626,13 +626,13 @@ global class NEU_AsyncOIShipment implements Queueable {
 			s.Port_of_Transshipment_Code_2__c=Port_of_Transshipment_Code_2;
 			s.Port_of_Transshipment_3__c=Port_of_Transshipment_3;
 			s.Port_of_Transshipment_Code_3__c=Port_of_Transshipment_Code_3;
-			s.Vessel_1__c=Vessel_1;
+			//s.Vessel_1__c=Vessel_1;
 			s.Vessel_Imo_1__c=Vessel_Imo_1;
-			s.Vessel_2__c=Vessel_2;
+			//s.Vessel_2__c=Vessel_2;
 			s.Vessel_Imo_2__c=Vessel_Imo_2;
-			s.Vessel_3__c=Vessel_3;
+			//s.Vessel_3__c=Vessel_3;
 			s.Vessel_Imo_3__c=Vessel_Imo_3;
-			s.Vessel_4__c=Vessel_4;
+			//s.Vessel_4__c=Vessel_4;
 			s.Vessel_Imo_4__c=Vessel_Imo_4;
 			s.Truck_Vessel_Latitude__c=Truck_Vessel_Latitude;
 			s.Truck_Vessel_Longitude__c=Truck_Vessel_Longitude;

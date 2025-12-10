@@ -59,7 +59,7 @@ public class Cifid_SendUpdateIeq {
         HttpResponse res = h.send(req); 
         return res;
     }
-    
+    /*
     public static void Test(){
         String Test0 = '';
         Test0 = '';
@@ -127,4 +127,5 @@ public class Cifid_SendUpdateIeq {
         Test0 = '';
         Test0 = '';
     }
+	*/
 }

@@ -158,7 +158,7 @@ public with sharing class NEU_MD_PriceComparison
        List<Supplier_Quote__c> listado_supplier_quote = [select Id, Supply_Project__c, 
         Name,
         Customer__c,
-        Customer__r.Business_Area__c,
+        //Customer__r.Business_Area__c,
         Place_of_Delivery__c,
         Place_of_Receipt__c,
         Delivery_Zone__c,
@@ -345,7 +345,7 @@ public with sharing class NEU_MD_PriceComparison
         
         String consulta_lines = '';
         consulta_lines += 'SELECT Id, Name, Supplier_Quote__r.Supply_Project__c, Percent_Duty__c, Imp_Exp_Charges_Assigned_Percent__c, Total_Weight_Kg__c , Supplier_Quote__r.Supplier__c, Total_Volume_m3__c , Supplier__c, Item__r.Name, Quantity__c, Supplier_Quote__r.Supplier__r.Name,';  
-        consulta_lines += ' Unit_of_measure__c, Net_Price__c,Total_Taxes__c , Supplier_Quote__r.MIN_Valid_Until__c, Supplier_Quote__r.Delivery_Zone__c, Active__c, Number_of_Containers__c,  Total_Amount__c, Production_Time_Days__c , Unit_Origin_Price__c, Total_Destination_Amount__c, Unit_Destination_Price__c, Imp_Exp_Charges_Assigned__c, Net_Amount__c, Expense_Amount__c, Supplier_Quote__r.Name, Item__r.Item_Price__c, Supplier_Quote__r.Supplier_Name__c';        
+        consulta_lines += ' Unit_of_measure__c, Net_Price__c,Total_Taxes__c , Supplier_Quote__r.MIN_Valid_Until__c, Supplier_Quote__r.Delivery_Zone__c, Active__c, Number_of_Containers__c,  Total_Amount__c, Production_Time_Days__c , Unit_Origin_Price__c, Total_Destination_Amount__c, Unit_Destination_Price__c, Imp_Exp_Charges_Assigned__c, Net_Amount__c, Expense_Amount__c, Supplier_Quote__r.Name, Item__r.Item_Price__c, Supplier_Quote__r.Supplier_Name__c,CurrencyIsoCode';        
         consulta_lines += ' FROM Supplier_Quote_Line__c'; 
         consulta_lines += ' WHERE Supplier_Quote__r.Supply_Project__c = \''+record.Id+'\'';
        
@@ -404,7 +404,7 @@ public with sharing class NEU_MD_PriceComparison
         List<Supplier_Quote__c> listado_supplier_quote = [select Id, Supply_Project__c, 
         Name,
         Customer__c,
-        Customer__r.Business_Area__c,
+        //Customer__r.Business_Area__c,
         Place_of_Delivery__c,
         Place_of_Receipt__c,
         Delivery_Zone__c,
@@ -545,7 +545,7 @@ public with sharing class NEU_MD_PriceComparison
         Supplier_Quote__r.Country_ofDischarge__r.ISO_Code__c, Supplier_Quote__r.Country_ofLoad__r.ISO_Code__c,
         Category_DC__c, Subcategory_DC__c, Product_Item_DC__c, Item__c, Item__r.Category_DC_Value__c, 
         Quantity__c, Item__r.Subcategory_DC_Value__c, Item__r.Product_Item_DC_Value__c,
-        Item__r.HS_Code_Text__c from Supplier_Quote_Line__c where Supplier_Quote__c =: id_supplier_quote ];//id =: idlineactualizar
+        Item__r.HS_Code_Text__c, CurrencyIsoCode from Supplier_Quote_Line__c where Supplier_Quote__c =: id_supplier_quote ];//id =: idlineactualizar
         
         decimal valoritems = 0;
      //   integer contador_de_llamadas = 0;
@@ -765,7 +765,7 @@ public with sharing class NEU_MD_PriceComparison
                         else
                         {       
                                 return refresh();
-                                break;
+                                //break;
                         }
                     }
                     else

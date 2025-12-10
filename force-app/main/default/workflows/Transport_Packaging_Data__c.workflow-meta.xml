@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Workflow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fieldUpdates>
+        <fullName>Update_Name_Transport_Packaging_Data</fullName>
+        <field>Name</field>
+        <formula>IF(Consolidation_Program__c != null, IF( CONTAINS(Name,Consolidation_Program__r.Name )  == false,  IF( CONTAINS(Name,&quot;-&quot;)==true,Consolidation_Program__r.Name + Name ,Name),Name ),Name)</formula>
+        <name>Update Name Transport Packaging Data</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+</Workflow>

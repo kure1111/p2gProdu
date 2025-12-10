@@ -33,6 +33,16 @@ public class P2G_UpdateShipmentServiceLineTest {
         insert location;
         Container_Type__c container = new Container_Type__c(Name='Super tracto Camion',Type__c='Road',Cargo_Weight_Kg__c=22222);
         insert container;
+        Account_Address__c address = new Account_Address__c();
+        address.Name = 'address test';
+        address.Address__c ='Conocida';
+        address.Address_Coordinates__Latitude__s=  22.023033;
+        address.Address_Coordinates__Longitude__s=-102.285602;
+        address.referencia__c = 'Referencias test';
+        address.Type__c = 'Shipping Address';
+        address.status__c = 'Validado';
+        address.Active__c = true;
+        insert address;
         Customer_Quote__c quote = new Customer_Quote__c();
         String recordTypeId = Schema.SObjectType.Customer_Quote__c.getRecordTypeInfosByName().get('Import-Export Quote').getRecordTypeId();
         quote.RecordTypeId = recordTypeId;
@@ -78,6 +88,8 @@ public class P2G_UpdateShipmentServiceLineTest {
         new_shipment.Site_of_Load__c = location.Id;
         new_shipment.Container_Type__c = container.Id;
         new_shipment.Service_Mode__c = 'NATIONAL';
+        new_shipment.Account_Origin_Address__c = address.Id;
+        new_shipment.Account_Destination_Address__c = address.Id;
         insert new_shipment;
         SAP_Service_Type__c sap = new SAP_Service_Type__c();
         sap.Name = 'SERVICIOS LOGISTICOS FN (IC) (FN)';

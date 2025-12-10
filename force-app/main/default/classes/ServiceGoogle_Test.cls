@@ -38,6 +38,7 @@ public class ServiceGoogle_Test {
         cq.Origin_Location__Longitude__s = -102.285602; 
         cq.Destination_Location__Latitude__s =19.6248115;
         cq.Destination_Location__Longitude__s =-99.18076289999999;
+        cq.Pricing_Executive__c=UserInfo.getUserId();
         
         insert cq;
         

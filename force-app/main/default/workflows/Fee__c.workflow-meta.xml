@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Workflow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <alerts>
+        <fullName>Tarifarios_por_caducar</fullName>
+        <ccEmails>edgar.mendoza@pak2go.com</ccEmails>
+        <ccEmails>alejandro.gomez@pak2go.com</ccEmails>
+        <ccEmails>hector.gonzalez@pak2go.com</ccEmails>
+        <ccEmails>hugo.martinez@pak2go.com</ccEmails>
+        <description>Tarifarios por caducar</description>
+        <protected>false</protected>
+        <senderType>CurrentUser</senderType>
+        <template>unfiled$public/Tarifarios_por_caducar</template>
+    </alerts>
+    <fieldUpdates>
+        <fullName>Update_Fee_Freight_Name</fullName>
+        <field>Name</field>
+        <formula>IF(	ISBLANK(TEXT(Rate_Names_List__c )) ,MID( Port_Airport_of_Load__c &amp;&quot;-&quot;&amp; Port_Airport_of_Discharge__c &amp;&quot; - &quot; &amp; Container_Type__r.Name &amp; Pallet_Type__r.Name ,0,79), Name)</formula>
+        <name>Update Fee Freight Name</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+</Workflow>

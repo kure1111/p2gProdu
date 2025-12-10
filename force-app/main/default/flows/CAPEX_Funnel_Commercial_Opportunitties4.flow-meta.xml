@@ -15,7 +15,7 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>asignar_campana</targetReference>
+            <targetReference>SCREEN_Resumen_Nuevos_Negocios</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -32,7 +32,7 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>asignar_campana</targetReference>
+            <targetReference>SCREEN_Resumen_Nuevos_Negocios</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -236,7 +236,7 @@
             <label>No</label>
         </rules>
     </decisions>
-    <description>se agregó flujo para asignar campaña</description>
+    <description>Se realiza el cambio de Estatus de Contacto por el campo de seguimiento</description>
     <dynamicChoiceSets>
         <name>colonia</name>
         <dataType>String</dataType>
@@ -254,14 +254,6 @@
     </dynamicChoiceSets>
     <dynamicChoiceSets>
         <name>cta_status_rec</name>
-        <dataType>Picklist</dataType>
-        <displayField xsi:nil="true"/>
-        <object xsi:nil="true"/>
-        <picklistField>Estatus_Recuperado__c</picklistField>
-        <picklistObject>Account</picklistObject>
-    </dynamicChoiceSets>
-    <dynamicChoiceSets>
-        <name>ESTATUSDECONTACTO</name>
         <dataType>Picklist</dataType>
         <displayField xsi:nil="true"/>
         <object xsi:nil="true"/>
@@ -291,6 +283,15 @@
         <object xsi:nil="true"/>
         <picklistField>PROJ_Service_Mode__c</picklistField>
         <picklistObject>Opportunity</picklistObject>
+    </dynamicChoiceSets>
+    <dynamicChoiceSets>
+        <description>Se realiza el cambio de Estatus de contacto por Seguimiento</description>
+        <name>Seguimiento</name>
+        <dataType>Picklist</dataType>
+        <displayField xsi:nil="true"/>
+        <object xsi:nil="true"/>
+        <picklistField>SeguimientoProspecto__c</picklistField>
+        <picklistObject>Account</picklistObject>
     </dynamicChoiceSets>
     <dynamicChoiceSets>
         <name>tipodeventa</name>
@@ -493,12 +494,6 @@
             <targetReference>Continuacion_para_crear_opp</targetReference>
         </connector>
         <inputAssignments>
-            <field>Estatus_Recuperado__c</field>
-            <value>
-                <elementReference>ESTATUS_DE_CONTACTO</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
             <field>NEU_Email__c</field>
             <value>
                 <elementReference>email_cte</elementReference>
@@ -526,6 +521,12 @@
             <field>RecordTypeId</field>
             <value>
                 <elementReference>RT_cuenta</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>SeguimientoProspecto__c</field>
+            <value>
+                <elementReference>SeguimientoProspecto</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -773,7 +774,6 @@
                     <dataType>String</dataType>
                     <fieldText>Tipo de servicio</fieldText>
                     <fieldType>DropdownBox</fieldType>
-                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>true</isRequired>
                 </fields>
                 <fields>
@@ -783,7 +783,6 @@
                     <dataType>String</dataType>
                     <fieldText>¿El cliente ya se encuentra registrado?</fieldText>
                     <fieldType>RadioButtons</fieldType>
-                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>true</isRequired>
                 </fields>
                 <inputParameters>
@@ -809,7 +808,6 @@
                     <dataType>String</dataType>
                     <fieldText>Razon social</fieldText>
                     <fieldType>InputField</fieldType>
-                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>true</isRequired>
                 </fields>
                 <fields>
@@ -817,7 +815,6 @@
                     <dataType>String</dataType>
                     <fieldText>RFC (Opcional)</fieldText>
                     <fieldType>InputField</fieldType>
-                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>false</isRequired>
                 </fields>
                 <fields>
@@ -825,7 +822,6 @@
                     <dataType>String</dataType>
                     <fieldText>Telefono</fieldText>
                     <fieldType>InputField</fieldType>
-                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>true</isRequired>
                 </fields>
                 <fields>
@@ -833,7 +829,6 @@
                     <dataType>String</dataType>
                     <fieldText>Email</fieldText>
                     <fieldType>InputField</fieldType>
-                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>true</isRequired>
                 </fields>
                 <fields>
@@ -842,26 +837,23 @@
                     <dataType>String</dataType>
                     <fieldText>Tipo de venta</fieldText>
                     <fieldType>DropdownBox</fieldType>
-                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>true</isRequired>
                 </fields>
                 <fields>
-                    <name>ESTATUS_DE_CONTACTO</name>
-                    <choiceReferences>ESTATUSDECONTACTO</choiceReferences>
+                    <name>SeguimientoProspecto</name>
+                    <choiceReferences>Seguimiento</choiceReferences>
                     <dataType>String</dataType>
                     <defaultValue>
                         <stringValue>Cliente Contactado</stringValue>
                     </defaultValue>
-                    <fieldText>ESTATUS DE CONTACTO</fieldText>
+                    <fieldText>Seguimiento</fieldText>
                     <fieldType>DropdownBox</fieldType>
-                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>false</isRequired>
                 </fields>
                 <fields>
                     <name>ObservacionesComentarios</name>
                     <fieldText>Observaciones y comentarios</fieldText>
                     <fieldType>LargeTextArea</fieldType>
-                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>false</isRequired>
                 </fields>
                 <inputParameters>
@@ -929,7 +921,6 @@
                     <dataType>Currency</dataType>
                     <fieldText>Tamaño de Oportunidad Anual (MX$)</fieldText>
                     <fieldType>InputField</fieldType>
-                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>false</isRequired>
                     <scale>0</scale>
                 </fields>
@@ -1048,7 +1039,6 @@
             <dataType>Currency</dataType>
             <fieldText>Tamaño de Oportunidad Anual (MX$)</fieldText>
             <fieldType>InputField</fieldType>
-            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>false</isRequired>
             <scale>0</scale>
         </fields>
@@ -1060,7 +1050,7 @@
         <name>SCREEN_Resumen_Nuevos_Negocios</name>
         <label>Resumen - Nuevos Negocios</label>
         <locationX>512</locationX>
-        <locationY>2570</locationY>
+        <locationY>2462</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -1109,23 +1099,7 @@
             <targetReference>GetAccount</targetReference>
         </connector>
     </start>
-    <status>Obsolete</status>
-    <subflows>
-        <name>asignar_campana</name>
-        <label>asignar campaña</label>
-        <locationX>512</locationX>
-        <locationY>2462</locationY>
-        <connector>
-            <targetReference>SCREEN_Resumen_Nuevos_Negocios</targetReference>
-        </connector>
-        <flowName>Pantalla_Seleccion_Campana</flowName>
-        <inputAssignments>
-            <name>IdOpportunity</name>
-            <value>
-                <elementReference>Get_Oportunidad_Nuevos_Negocios.Id</elementReference>
-            </value>
-        </inputAssignments>
-    </subflows>
+    <status>Draft</status>
     <variables>
         <description>Detecta si ya se cargó un documento de licitación en la oportunidad</description>
         <name>DocStatusLicitacion</name>

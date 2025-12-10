@@ -10,10 +10,7 @@ public with sharing class NEU_Upload_LOT_Service_Rate {
      if (!Test.isRunningTest()) {
         stdController.AddFields(new String[]
         {
-            'Id',
-            'Name',
-            'LOT__c',
-            'LOT_Url__c'
+            'Id','Name','LOT__c','LOT_Url__c'
         });
      }
      record=(Fee__c)stdController.getRecord();

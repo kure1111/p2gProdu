@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Workflow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <alerts>
+        <fullName>Cancel_invoice</fullName>
+        <ccEmails>nayleth.gonzalez@pak2go.com</ccEmails>
+        <description>Cancel invoice</description>
+        <protected>false</protected>
+        <recipients>
+            <type>creator</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>unfiled$public/Cancelacion_Invoice</template>
+    </alerts>
+    <fieldUpdates>
+        <fullName>Amount_received</fullName>
+        <field>Amount_Received__c</field>
+        <formula>Total_Invoice_SAP__c</formula>
+        <name>Amount received</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Email_cobranza_1</fullName>
+        <field>Email_Cobranza_1__c</field>
+        <formula>Account__r.Owner.Cobranza_Email__c</formula>
+        <name>Email cobranza 1</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Fecha_Facturado</fullName>
+        <field>Fecha_Facturado_1__c</field>
+        <formula>TODAY ()</formula>
+        <name>Fecha Facturado</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Fecha_Pagado</fullName>
+        <field>Fecha_Cobrado__c</field>
+        <formula>TODAY()</formula>
+        <name>Fecha Pagado</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Fecha_cobrado</fullName>
+        <field>Fecha_Cobrado__c</field>
+        <formula>TODAY()</formula>
+        <name>Fecha cobrado</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Invoice_Status</fullName>
+        <field>Invoice_Status__c</field>
+        <literalValue>Received from Sap</literalValue>
+        <name>Invoice Status</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Invoiced_Correctly</fullName>
+        <field>Invoiced_Correctly__c</field>
+        <literalValue>1</literalValue>
+        <name>Invoiced Correctly</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Invoiced_Timbrado</fullName>
+        <field>Invoiced__c</field>
+        <literalValue>1</literalValue>
+        <name>Invoiced - Timbrado</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Received_Date</fullName>
+        <field>Received_Date__c</field>
+        <formula>DATETIMEVALUE( NOW() )</formula>
+        <name>Received Date</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <rules>
+        <fullName>Cancel Invoice</fullName>
+        <actions>
+            <name>Cancel_invoice</name>
+            <type>Alert</type>
+        </actions>
+        <active>false</active>
+        <criteriaItems>
+            <field>Invoice__c.Invoice_Status__c</field>
+            <operation>equals</operation>
+            <value>Cancel</value>
+        </criteriaItems>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+    <rules>
+        <fullName>Fecha Facturado</fullName>
+        <actions>
+            <name>Fecha_Facturado</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>false</active>
+        <criteriaItems>
+            <field>Invoice__c.Invoice_Status__c</field>
+            <operation>contains</operation>
+            <value>Facturado</value>
+        </criteriaItems>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+    <rules>
+        <fullName>Fecha cobrado</fullName>
+        <actions>
+            <name>Fecha_cobrado</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>false</active>
+        <criteriaItems>
+            <field>Invoice__c.Invoice_Status__c</field>
+            <operation>contains</operation>
+            <value>Cobrado</value>
+        </criteriaItems>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+    <rules>
+        <fullName>Update Email Cobranza</fullName>
+        <actions>
+            <name>Email_cobranza_1</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>false</active>
+        <formula>1=1</formula>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+    <rules>
+        <fullName>Update Invoiced</fullName>
+        <actions>
+            <name>Amount_received</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <actions>
+            <name>Invoice_Status</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <actions>
+            <name>Invoiced_Correctly</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <actions>
+            <name>Invoiced_Timbrado</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <actions>
+            <name>Received_Date</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>false</active>
+        <criteriaItems>
+            <field>Invoice__c.Timbrado_Factura_SAP__c</field>
+            <operation>notEqual</operation>
+        </criteriaItems>
+        <description>True Invoiced = Timbrado</description>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+</Workflow>

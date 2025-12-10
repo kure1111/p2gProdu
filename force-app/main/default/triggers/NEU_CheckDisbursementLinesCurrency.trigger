@@ -1,6 +1,5 @@
 trigger NEU_CheckDisbursementLinesCurrency on Shipment_Disbursement__c  (before update) {
-    if(NEU_StaticVariableHelper.getBoolean1())
-        return;
+    if(NEU_StaticVariableHelper.getBoolean1())return;
     
     // Validar que la moneda del disbursement a modificar no es distinta de alguna de sus líneas actuales. 
     if((trigger.isUpdate == true && UserInfo.isMultiCurrencyOrganization()) || Test.isRunningTest())
@@ -76,38 +75,22 @@ trigger NEU_CheckDisbursementLinesCurrency on Shipment_Disbursement__c  (before 
             //ie service
             for(Import_Export_Service_Line_Disbursement__c disbursement_line:query_invoice_lines)
             {
-                if(inv.Id == disbursement_line.Disbursement__c)
-                {
-                    if(NEU_CurrencyUtils.getCurrencyIsoCode(inv) != NEU_CurrencyUtils.getCurrencyIsoCode(disbursement_line))
-                        inv.addError('Currently there are Disbursement Lines with a different Currency');
-                }           
+                if(inv.Id == disbursement_line.Disbursement__c){if(NEU_CurrencyUtils.getCurrencyIsoCode(inv) != NEU_CurrencyUtils.getCurrencyIsoCode(disbursement_line))inv.addError('Currently there are Disbursement Lines with a different Currency');}           
             }  
             //ie item
             for(Import_Export_Cargo_Line_Disbursement__c disbursement_line: query_invoice_cargo_lines )
             {
-                if(inv.Id == disbursement_line.Disbursement__c)
-                {
-                    if(NEU_CurrencyUtils.getCurrencyIsoCode(inv) != NEU_CurrencyUtils.getCurrencyIsoCode(disbursement_line))
-                        inv.addError('Currently there are Disbursement Lines with a different Currency');
-                }           
+                if(inv.Id == disbursement_line.Disbursement__c){if(NEU_CurrencyUtils.getCurrencyIsoCode(inv) != NEU_CurrencyUtils.getCurrencyIsoCode(disbursement_line))inv.addError('Currently there are Disbursement Lines with a different Currency');}           
             }
             //ship service
             for(Shipment_Service_Line_Disbursement__c disbursement_line: query_shipment_invoice_lines )
             {
-                if(inv.Id == disbursement_line.Shipment_Disbursement__c)
-                {
-                    if(NEU_CurrencyUtils.getCurrencyIsoCode(inv) != NEU_CurrencyUtils.getCurrencyIsoCode(disbursement_line))
-                        inv.addError('Currently there are Disbursement Lines with a different Currency');
-                }           
+                if(inv.Id == disbursement_line.Shipment_Disbursement__c){if(NEU_CurrencyUtils.getCurrencyIsoCode(inv) != NEU_CurrencyUtils.getCurrencyIsoCode(disbursement_line))inv.addError('Currently there are Disbursement Lines with a different Currency');}           
             }
             //ship item
             for(Shipment_Item_Line_Disbursement__c disbursement_line: query_Shipment_invoice_cargo_lines )
             {
-                if(inv.Id == disbursement_line.Shipment_Disbursement__c)
-                {
-                    if(NEU_CurrencyUtils.getCurrencyIsoCode(inv) != NEU_CurrencyUtils.getCurrencyIsoCode(disbursement_line))
-                        inv.addError('Currently there are Disbursement Lines with a different Currency');
-                }           
+                if(inv.Id == disbursement_line.Shipment_Disbursement__c){if(NEU_CurrencyUtils.getCurrencyIsoCode(inv) != NEU_CurrencyUtils.getCurrencyIsoCode(disbursement_line))inv.addError('Currently there are Disbursement Lines with a different Currency');}           
             }
         }        
     }

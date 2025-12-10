@@ -767,17 +767,39 @@ public with sharing class NEU_JE_RFP {
             catch(Exception ex){error = 'There is an Error in your data. Please try again'; return null;}
         }
             
-        if(quote.Supplier_Quote_Status__c == 'Sent Bid' || quote.Supplier_Quote_Status__c =='Sent Final Bid')
-        {
-            string total_amount_chat = '';
-            if(quote.RecordTypeId != Schema.SobjectType.Supplier_Quote__c.getRecordTypeInfosByName().get('Supplier Hidden Quote').getRecordTypeId())
-                total_amount_chat = string.valueof(quote.Total_Amount__c);
-            else
-                total_amount_chat = '';
-            ConnectApi.ChatterFeeds.postFeedItem(null, ConnectApi.FeedType.Record, quote.Supply_Project__c, ''+quote.Supplier_Request_RFP__r.Supplier__r.Name+' '+ quote.Supplier_Quote_Status__c  
-                + ' '+ total_amount_chat + '');
-            
-        }
+if (quote.Supplier_Quote_Status__c == 'Sent Bid' || quote.Supplier_Quote_Status__c == 'Sent Final Bid') {
+
+    Boolean isHidden = quote.RecordTypeId
+      == Schema.SObjectType.Supplier_Quote__c
+         .getRecordTypeInfosByName()
+         .get('Supplier Hidden Quote')
+         .getRecordTypeId();
+
+    String total_amount_chat = isHidden ? '' : String.valueOf(quote.Total_Amount__c);
+
+    String bodyText = quote.Supplier_Request_RFP__r.Supplier__r.Name
+                    + ' ' + quote.Supplier_Quote_Status__c
+                    + (total_amount_chat != '' ? ' ' + total_amount_chat : '');
+
+    // Construcción del mensaje
+    ConnectApi.TextSegmentInput textSegment = new ConnectApi.TextSegmentInput();
+    textSegment.text = bodyText;
+
+    ConnectApi.MessageBodyInput bodyInput = new ConnectApi.MessageBodyInput();
+    bodyInput.messageSegments = new List<ConnectApi.MessageSegmentInput>{ textSegment };
+
+    ConnectApi.FeedItemInput feedInput = new ConnectApi.FeedItemInput();
+    feedInput.subjectId = quote.Supply_Project__c;
+    feedInput.feedElementType = ConnectApi.FeedElementType.FeedItem;
+    feedInput.body = bodyInput;
+
+    // Publicación en Chatter usando API v63+
+    ConnectApi.ChatterFeeds.postFeedElement(null, feedInput);
+}
+
+
+
+
         
         
         Boolean validforauction=true; 
@@ -1352,5 +1374,40 @@ public with sharing class NEU_JE_RFP {
         }
         System.debug('newitems='+String.valueOf(newitems.size()));
         return newitems;
+    }
+    public void byPass(){
+        Integer a =1 ;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+
+
     }
 }

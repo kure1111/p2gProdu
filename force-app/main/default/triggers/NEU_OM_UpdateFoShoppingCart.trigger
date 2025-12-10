@@ -5,7 +5,16 @@ trigger NEU_OM_UpdateFoShoppingCart on Shopping_Cart__c (after insert) {
 
     Set<Id>users=new Set<Id>();
     Set<Id>accounts=new Set<Id>();
-    List<Shopping_Cart__c> shopping_cart = [select Id, Name,Customer__c, Customer__r.Account_Executive_User__c, Customer__r.OwnerId, Customer__r.Account_External_Follower_User__c, CreatedById, LastModifiedById from Shopping_Cart__c where Id IN:trigger.new];
+    List<Shopping_Cart__c> shopping_cart = [select Id,
+                                            Name,
+                                            Customer__c,
+                                            Customer__r.Account_Executive_User__c,
+                                            Customer__r.OwnerId,
+                                            Customer__r.Account_External_Follower_User__c,
+                                            CreatedById,
+                                            LastModifiedById 
+                                            from Shopping_Cart__c
+                                            where Id IN:trigger.new];
         
     for(Shopping_Cart__c obj : shopping_cart)
     {
@@ -23,16 +32,15 @@ trigger NEU_OM_UpdateFoShoppingCart on Shopping_Cart__c (after insert) {
     
     String masterCommId=null;
     Map<String,EntitySubscription>entities=new Map<String,EntitySubscription>();
-    for(User qi: [select Id,AccountId from User where Id IN :users OR AccountId IN :accounts])
+    for(User qi: [select Id,
+                  AccountId 
+                  from User 
+                  where Id IN :users 
+                  OR AccountId IN :accounts])
     {
         for(Shopping_Cart__c obj:shopping_cart)
         {
-            if((obj.Customer__r.Account_Executive_User__c==qi.Id)
-             ||(obj.Customer__r.OwnerId==qi.Id)
-             ||(obj.Customer__r.Account_External_Follower_User__c==qi.Id)
-             ||(obj.CreatedById==qi.Id) 
-             ||(obj.Customer__c==qi.AccountId))
-             {
+            if((obj.Customer__r.Account_Executive_User__c==qi.Id)||(obj.Customer__r.OwnerId==qi.Id)||(obj.Customer__r.Account_External_Follower_User__c==qi.Id)||(obj.CreatedById==qi.Id)||(obj.Customer__c==qi.AccountId)){
                 if(string.isEmpty(qi.AccountId))
                 {
                     String key=obj.id+'_'+qi.Id;

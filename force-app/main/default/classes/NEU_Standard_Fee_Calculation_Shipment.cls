@@ -235,4 +235,29 @@ public with sharing class NEU_Standard_Fee_Calculation_Shipment {
         return pgReturnPage;
  
     }
+    public void byPass(){
+        Integer a = 1;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+    }
 }

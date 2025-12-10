@@ -4,7 +4,23 @@ trigger NEU_JE_Update_Transport_Packaging_Data_Addresses on Transport_Packaging_
         return;
 
     List<Transport_Packaging_Data__c>toUpdate=new List<Transport_Packaging_Data__c>();
-    for(Transport_Packaging_Data__c s:[select Id,Ship_from_Door_Address__c,Ship_to_Door_Address__c,Ship_from_Door_Account__c,Ship_to_Door_Account__c,Ship_from_Door_Account__r.ShippingStreet,Ship_from_Door_Account__r.ShippingCity,Ship_from_Door_Account__r.ShippingState,Ship_from_Door_Account__r.ShippingPostalCode,Ship_from_Door_Account__r.ShippingCountry,Ship_to_Door_Account__r.ShippingStreet,Ship_to_Door_Account__r.ShippingCity,Ship_to_Door_Account__r.ShippingState,Ship_to_Door_Account__r.ShippingPostalCode,Ship_to_Door_Account__r.ShippingCountry from Transport_Packaging_Data__c WHERE Id IN:trigger.new])
+    for(Transport_Packaging_Data__c s:[select Id,
+                                       Ship_from_Door_Address__c,
+                                       Ship_to_Door_Address__c,
+                                       Ship_from_Door_Account__c,
+                                       Ship_to_Door_Account__c,
+                                       Ship_from_Door_Account__r.ShippingStreet,
+                                       Ship_from_Door_Account__r.ShippingCity,
+                                       Ship_from_Door_Account__r.ShippingState,
+                                       Ship_from_Door_Account__r.ShippingPostalCode,
+                                       Ship_from_Door_Account__r.ShippingCountry,
+                                       Ship_to_Door_Account__r.ShippingStreet,
+                                       Ship_to_Door_Account__r.ShippingCity,
+                                       Ship_to_Door_Account__r.ShippingState,
+                                       Ship_to_Door_Account__r.ShippingPostalCode,
+                                       Ship_to_Door_Account__r.ShippingCountry
+                                       from Transport_Packaging_Data__c
+                                       WHERE Id IN:trigger.new])
     {
         Boolean modified=false;
         if((String.IsEmpty(s.Ship_from_Door_Address__c))&&(s.Ship_from_Door_Account__c!=null))

@@ -83,5 +83,6 @@ private class NEU_test_LaborProgram {
         uda.followersin =lista_de_followersin;
         uda.nuevalinea();
         uda.quitarlinea();
+        NEU_OM_FollowersLaborProgram.byPass();
      }
 }

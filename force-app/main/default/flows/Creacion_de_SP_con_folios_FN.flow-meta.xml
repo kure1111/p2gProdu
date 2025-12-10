@@ -4,7 +4,7 @@
         <name>Create_new_Shipment</name>
         <label>Create new Shipment</label>
         <locationX>314</locationX>
-        <locationY>539</locationY>
+        <locationY>731</locationY>
         <actionName>NEU_Generate_Shipments</actionName>
         <actionType>apex</actionType>
         <connector>
@@ -17,10 +17,8 @@
                 <elementReference>$Record.Id</elementReference>
             </value>
         </inputParameters>
-        <nameSegment>NEU_Generate_Shipments</nameSegment>
     </actionCalls>
     <apiVersion>54.0</apiVersion>
-    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
     <constants>
         <name>IdLider1_Noroeste_GDL</name>
         <dataType>String</dataType>
@@ -39,7 +37,7 @@
         <name>Definicion_de_Zona</name>
         <label>Definicion de Zona</label>
         <locationX>314</locationX>
-        <locationY>863</locationY>
+        <locationY>1055</locationY>
         <defaultConnectorLabel>Sin Zona</defaultConnectorLabel>
         <rules>
             <name>Zona_Noroeste_y_GDL</name>
@@ -64,7 +62,7 @@
             <label>Zona Noroeste y GDL</label>
         </rules>
         <rules>
-            <name>Zona_PAC_SUR_y_Centro_Norte1</name>
+            <name>Zona_PAC_SUR_y_Centro_Norte</name>
             <conditionLogic>or</conditionLogic>
             <conditions>
                 <leftValueReference>$Record.Route__r.Zona__c</leftValueReference>
@@ -89,7 +87,7 @@
     <decisions>
         <name>status_approved_y_Operation_Executive_null</name>
         <label>status approved y Operation Executive null</label>
-        <locationX>842</locationX>
+        <locationX>578</locationX>
         <locationY>323</locationY>
         <defaultConnectorLabel>No cumple con las condiciones</defaultConnectorLabel>
         <rules>
@@ -114,12 +112,34 @@
             </connector>
             <label>Cumple con las condiciones</label>
         </rules>
+        <rules>
+            <name>Comercio_Exterior_CE</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Quotation_Status__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Approved as Succesful</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Comercio_Exterior__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Si</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Verificar_si_ETD_es_menor_a_24_horas</targetReference>
+            </connector>
+            <label>Comercio Exterior (CE)</label>
+        </rules>
     </decisions>
     <decisions>
         <name>Verificar_si_ETD_es_menor_a_24_horas</name>
         <label>Verificar si ETD es menor a 24 horas</label>
         <locationX>578</locationX>
-        <locationY>431</locationY>
+        <locationY>623</locationY>
         <defaultConnectorLabel>Es mayor a 24 hrs</defaultConnectorLabel>
         <rules>
             <name>ETD_es_menor_a_24_hrs</name>
@@ -137,7 +157,7 @@
             <label>ETD es menor a 24 hrs</label>
         </rules>
     </decisions>
-    <description>Updare Lider en Shipment en campo Operation Executive</description>
+    <description>Se modifica las variables idLider1 y idLider2 con los ids correspondientes de producción</description>
     <environments>Default</environments>
     <formulas>
         <name>ETDMenor24hrs</name>
@@ -169,7 +189,7 @@
         <name>Get_Shipment</name>
         <label>Get Shipment</label>
         <locationX>314</locationX>
-        <locationY>647</locationY>
+        <locationY>839</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Actualizar_folio</targetReference>
@@ -190,7 +210,7 @@
         <name>Actualizar_folio</name>
         <label>Actualizar folio</label>
         <locationX>314</locationX>
-        <locationY>755</locationY>
+        <locationY>947</locationY>
         <connector>
             <targetReference>Definicion_de_Zona</targetReference>
         </connector>
@@ -212,7 +232,7 @@
         <name>Copy_2_of_UpdateShipmentLider1</name>
         <label>UpdateShipmentLider1</label>
         <locationX>314</locationX>
-        <locationY>971</locationY>
+        <locationY>1163</locationY>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
@@ -233,7 +253,7 @@
         <name>Lider1</name>
         <label>UpdateShipmentLider1</label>
         <locationX>50</locationX>
-        <locationY>971</locationY>
+        <locationY>1163</locationY>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
@@ -251,7 +271,7 @@
         <object>Shipment__c</object>
     </recordUpdates>
     <start>
-        <locationX>716</locationX>
+        <locationX>452</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>status_approved_y_Operation_Executive_null</targetReference>

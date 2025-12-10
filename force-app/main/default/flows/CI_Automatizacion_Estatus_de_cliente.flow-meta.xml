@@ -1,39 +1,88 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <apiVersion>56.0</apiVersion>
+    <assignments>
+        <name>RESULTADO_DEBUG</name>
+        <label>RESULTADO DEBUG</label>
+        <locationX>1183</locationX>
+        <locationY>876</locationY>
+        <assignmentItems>
+            <assignToReference>TIEMPOTRANSCURRIDO</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>diasUltimaCotizacion</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Estatus_de_Cliente</targetReference>
+        </connector>
+    </assignments>
     <decisions>
-        <description>Consulta los movimientos del cliente para confirmar si tuvo pérdidas.
-Lost Opp - Closed Lost Opportunity
-NV - No Venta</description>
-        <name>Cotizacion_Cliente</name>
-        <label>Cotizacion del cliente</label>
+        <description>Consulta en que etapa se encuentra el campo Estatus del cliente, para entonces hacer el análisis para la siguiente etapa</description>
+        <name>Estatus_de_Cliente</name>
+        <label>Estatus de Cliente</label>
         <locationX>1403</locationX>
-        <locationY>360</locationY>
-        <defaultConnector>
-            <targetReference>Seguimiento_Cliente</targetReference>
-        </defaultConnector>
+        <locationY>1068</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
-            <name>X60_Dias_sin_cotizacion</name>
-            <conditionLogic>or</conditionLogic>
+            <name>Nuevo</name>
+            <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>diasUltimaCotizacion</leftValueReference>
-                <operator>GreaterThanOrEqualTo</operator>
+                <leftValueReference>$Record.Estatus_de_cliente__c</leftValueReference>
+                <operator>EqualTo</operator>
                 <rightValue>
-                    <numberValue>60.0</numberValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>$Record.SeguimientoProspecto__c</leftValueReference>
-                <operator>NotEqualTo</operator>
-                <rightValue>
-                    <stringValue>Vendido</stringValue>
+                    <stringValue>Nuevo</stringValue>
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Seguimiento_No_Venta</targetReference>
+                <targetReference>Meses_transcurridos</targetReference>
             </connector>
-            <label>60 Días sin cotización</label>
+            <label>Nuevo</label>
+        </rules>
+        <rules>
+            <name>Recurrente</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Estatus_de_cliente__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Recurrente</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Cambio_Total_IEQ_Approved_2</targetReference>
+            </connector>
+            <label>Recurrente</label>
+        </rules>
+        <rules>
+            <name>Perdido</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Estatus_de_cliente__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Perdido</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Cambio_Total_IEQ_Approved_3</targetReference>
+            </connector>
+            <label>Perdido</label>
+        </rules>
+        <rules>
+            <name>Recuperado</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Estatus_de_cliente__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Recuperado</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Cambio_Estatus_de_cliente</targetReference>
+            </connector>
+            <label>Recuperado</label>
         </rules>
     </decisions>
     <decisions>
@@ -41,7 +90,7 @@ NV - No Venta</description>
         <name>Ha_realizado_compras</name>
         <label>¿Ha realizado compras?</label>
         <locationX>182</locationX>
-        <locationY>984</locationY>
+        <locationY>1392</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>Si</name>
@@ -64,7 +113,7 @@ NV - No Venta</description>
         <name>Meses_transcurridos</name>
         <label>Meses transcurridos</label>
         <locationX>380</locationX>
-        <locationY>768</locationY>
+        <locationY>1176</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>X3_Meses</name>
@@ -87,7 +136,7 @@ NV - No Venta</description>
         <name>Meses_transcurridos_2</name>
         <label>Meses transcurridos</label>
         <locationX>974</locationX>
-        <locationY>876</locationY>
+        <locationY>1284</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>X6_Meses</name>
@@ -109,7 +158,7 @@ NV - No Venta</description>
         <name>Meses_Transcurridos_3</name>
         <label>Meses Transcurridos</label>
         <locationX>2030</locationX>
-        <locationY>876</locationY>
+        <locationY>1284</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>X3_Meses_Recuperado</name>
@@ -132,7 +181,7 @@ NV - No Venta</description>
         <name>Nueva_Compra</name>
         <label>¿Nueva Compra?</label>
         <locationX>1502</locationX>
-        <locationY>876</locationY>
+        <locationY>1284</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>SiCompra</name>
@@ -151,81 +200,112 @@ NV - No Venta</description>
         </rules>
     </decisions>
     <decisions>
-        <description>Consulta en que etapa se encuentra el campo Estatus del cliente, para entonces hacer el análisis para la siguiente etapa</description>
-        <name>Seguimiento_Cliente</name>
-        <label>Seguimiento del Cliente</label>
-        <locationX>1403</locationX>
-        <locationY>660</locationY>
+        <description>Consulta los movimientos del cliente para confirmar si no ha habido aprobación de cotizaciones en más de 60 días.</description>
+        <name>Seguimiento_del_cliente</name>
+        <label>Seguimiento del cliente</label>
+        <locationX>1183</locationX>
+        <locationY>576</locationY>
+        <defaultConnector>
+            <targetReference>RESULTADO_DEBUG</targetReference>
+        </defaultConnector>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
-            <name>Nuevo</name>
+            <name>X60_Dias_sin_cotizacion</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>$Record.SeguimientoProspecto__c</leftValueReference>
-                <operator>EqualTo</operator>
+                <leftValueReference>diasUltimaCotizacion</leftValueReference>
+                <operator>GreaterThanOrEqualTo</operator>
                 <rightValue>
-                    <stringValue>Nuevo</stringValue>
+                    <numberValue>60.0</numberValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.SeguimientoProspecto__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>Vendido</stringValue>
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Meses_transcurridos</targetReference>
+                <targetReference>Seguimiento_No_Venta</targetReference>
             </connector>
-            <label>Nuevo</label>
-        </rules>
-        <rules>
-            <name>Recurrente</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>$Record.SeguimientoProspecto__c</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <stringValue>Recurrente</stringValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Cambio_Total_IEQ_Approved_2</targetReference>
-            </connector>
-            <label>Recurrente</label>
-        </rules>
-        <rules>
-            <name>Perdido</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>$Record.SeguimientoProspecto__c</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <stringValue>Perdido</stringValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Cambio_Total_IEQ_Approved_3</targetReference>
-            </connector>
-            <label>Perdido</label>
-        </rules>
-        <rules>
-            <name>Recuperado</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>$Record.SeguimientoProspecto__c</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <stringValue>Recuperado</stringValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Cambio_Estatus_de_cliente</targetReference>
-            </connector>
-            <label>Recuperado</label>
+            <label>60 Días sin cotización</label>
         </rules>
     </decisions>
-    <description>Flujo para automatizar los cambios en el campo &quot;Estatus de cliente&quot; en el objeto Account. 
-Se sustituye el campo de Estatus Cliente y se cambia con el campo de seguimiento</description>
+    <decisions>
+        <description>Consulta si el cliente lleva más de 60 días sin un historial de aprobaciones de folios.</description>
+        <name>Seguimiento_del_cliente_2</name>
+        <label>Seguimiento del cliente</label>
+        <locationX>1623</locationX>
+        <locationY>576</locationY>
+        <defaultConnector>
+            <targetReference>Estatus_de_Cliente</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>X60_Dias_sin_historial_de_aprobaciones</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>diasSinHistorialDeAprobaciones</leftValueReference>
+                <operator>GreaterThanOrEqualTo</operator>
+                <rightValue>
+                    <numberValue>60.0</numberValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.SeguimientoProspecto__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>Vendido</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Seguimiento_No_Venta_2</targetReference>
+            </connector>
+            <label>60 Días sin historial de aprobaciones</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>Consulta si el componente de búsqueda &quot;Ultimo Total IEQ Approved&quot; tiene un historial con las últimas aprobaciones del cliente. Si hay historial, se revisa si la última aprobación fue hace más de 60 días.
+Si no hay historial, eso quiere decir que el cliente no ha hecho movimientos en mucho tiempo, por lo que se procede a consultar si podría cambiarse el seguimiento a &quot;No Venta&quot;</description>
+        <name>Ventas_Aprobadas_en_Account_History</name>
+        <label>¿Ventas Aprobadas en Account History?</label>
+        <locationX>1403</locationX>
+        <locationY>468</locationY>
+        <defaultConnector>
+            <targetReference>Seguimiento_del_cliente_2</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>NO</defaultConnectorLabel>
+        <rules>
+            <name>SI_ApproveHistory</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Ultimo_Total_IEQ_Approved</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Seguimiento_del_cliente</targetReference>
+            </connector>
+            <label>SI</label>
+        </rules>
+    </decisions>
+    <description>Modificación del flujo para que tome el histórico de los cambios de owner de las cuentas cliente VERSIÓN DE 60 DÍAS</description>
     <environments>Default</environments>
     <formulas>
         <description>Formula que consulta si se realizaron compras actualmente. Solo para clientes que estén en el estatus de &quot;Perdido&quot;</description>
         <name>compraDespuesDePerdido</name>
         <dataType>Boolean</dataType>
         <expression>IF( DATEVALUE({!Cambio_Total_IEQ_Approved_3.CreatedDate}) = TODAY(), True, False )</expression>
+    </formulas>
+    <formulas>
+        <description>Calcula el total de días transcurridos desde la creación del cliente. Solo para aquellos clientes que aún no cuentan con un historial de aprobaciones.</description>
+        <name>diasSinHistorialDeAprobaciones</name>
+        <dataType>Number</dataType>
+        <expression>TODAY() - DATEVALUE({!$Record.CreatedDate})</expression>
+        <scale>0</scale>
     </formulas>
     <formulas>
         <description>Calcula el total de días transcurridos desde la última cotización que se generó</description>
@@ -283,11 +363,11 @@ Se sustituye el campo de Estatus Cliente y se cambia con el campo de seguimiento
     </processMetadataValues>
     <processType>AutoLaunchedFlow</processType>
     <recordLookups>
-        <description>Consulta si la cuenta actual ha tenido cambios en el campo Seguimiento.</description>
+        <description>Consulta si la cuenta actual ha tenido cambios en el campo Estatus de cliente.</description>
         <name>Cambio_Estatus_de_cliente</name>
-        <label>Cambio Seguimiento</label>
+        <label>Cambio Estatus de cliente</label>
         <locationX>2030</locationX>
-        <locationY>768</locationY>
+        <locationY>1176</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Meses_Transcurridos_3</targetReference>
@@ -325,7 +405,7 @@ Se sustituye el campo de Estatus Cliente y se cambia con el campo de seguimiento
         <name>Cambio_Total_IEQ_Approved_1</name>
         <label>Cambio Total IEQ Approved</label>
         <locationX>182</locationX>
-        <locationY>876</locationY>
+        <locationY>1284</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Ha_realizado_compras</targetReference>
@@ -354,7 +434,7 @@ Se sustituye el campo de Estatus Cliente y se cambia con el campo de seguimiento
         <name>Cambio_Total_IEQ_Approved_2</name>
         <label>Cambio Total IEQ Approved</label>
         <locationX>974</locationX>
-        <locationY>768</locationY>
+        <locationY>1176</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Meses_transcurridos_2</targetReference>
@@ -392,7 +472,7 @@ Se sustituye el campo de Estatus Cliente y se cambia con el campo de seguimiento
         <name>Cambio_Total_IEQ_Approved_3</name>
         <label>Cambio Total IEQ Approved</label>
         <locationX>1502</locationX>
-        <locationY>768</locationY>
+        <locationY>1176</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Nueva_Compra</targetReference>
@@ -426,16 +506,45 @@ Se sustituye el campo de Estatus Cliente y se cambia con el campo de seguimiento
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <recordLookups>
-        <description>Se consulta la fecha de la última vez que se aprobó una cotización para el cliente</description>
-        <name>Ultimo_Total_IEQ_Approved</name>
-        <label>Último Total IEQ Approved</label>
+        <description>Consulta el Id del Record Type Supply Chain Partner del objeto Account.</description>
+        <name>Get_Account_Record_ID</name>
+        <label>Get Account Record ID</label>
         <locationX>1403</locationX>
         <locationY>252</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Cotizacion_Cliente</targetReference>
+            <targetReference>Ultimo_Total_IEQ_Approved</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
+        <filters>
+            <field>DeveloperName</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Transporter</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>SobjectType</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Account</stringValue>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>RecordType</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
+        <description>Se consulta la fecha de la última vez que se aprobó una cotización para el cliente</description>
+        <name>Ultimo_Total_IEQ_Approved</name>
+        <label>Último Total IEQ Approved</label>
+        <locationX>1403</locationX>
+        <locationY>360</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Ventas_Aprobadas_en_Account_History</targetReference>
+        </connector>
+        <filterLogic>(1 AND 2 AND 3) OR (1 AND 4)</filterLogic>
         <filters>
             <field>Account_History__c</field>
             <operator>EqualTo</operator>
@@ -457,6 +566,13 @@ Se sustituye el campo de Estatus Cliente y se cambia con el campo de seguimiento
                 <stringValue>0</stringValue>
             </value>
         </filters>
+        <filters>
+            <field>FieldsChange__c</field>
+            <operator>Contains</operator>
+            <value>
+                <stringValue>Account Owner</stringValue>
+            </value>
+        </filters>
         <getFirstRecordOnly>true</getFirstRecordOnly>
         <object>Field_History_Tracking__c</object>
         <sortField>CreatedDate</sortField>
@@ -464,13 +580,21 @@ Se sustituye el campo de Estatus Cliente y se cambia con el campo de seguimiento
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <recordUpdates>
-        <description>Actualiza el valor del campo &quot;Seguimiento&quot; a Perdido</description>
+        <description>Actualiza el valor del campo &quot;Estatus de cliente&quot; a Perdido</description>
         <name>Estatus_Cliente_Perdido</name>
-        <label>Seguimiento - Recurrente a Perdido</label>
+        <label>Estatus Cliente - Recurrente a Perdido</label>
         <locationX>842</locationX>
-        <locationY>984</locationY>
+        <locationY>1392</locationY>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>RecordTypeId</field>
+            <operator>NotEqualTo</operator>
+            <value>
+                <elementReference>Get_Account_Record_ID.Id</elementReference>
+            </value>
+        </filters>
         <inputAssignments>
-            <field>SeguimientoProspecto__c</field>
+            <field>Estatus_de_cliente__c</field>
             <value>
                 <stringValue>Perdido</stringValue>
             </value>
@@ -478,13 +602,21 @@ Se sustituye el campo de Estatus Cliente y se cambia con el campo de seguimiento
         <inputReference>$Record</inputReference>
     </recordUpdates>
     <recordUpdates>
-        <description>Actualiza el valor del campo &quot;Seguimiento&quot; a Recuperado</description>
+        <description>Actualiza el valor del campo &quot;Estatus de cliente&quot; a Recuperado</description>
         <name>Estatus_Cliente_Recuperado</name>
-        <label>Seguimiento - Perdido a Recuperado</label>
+        <label>Estatus Cliente - Perdido a Recuperado</label>
         <locationX>1370</locationX>
-        <locationY>984</locationY>
+        <locationY>1392</locationY>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>RecordTypeId</field>
+            <operator>NotEqualTo</operator>
+            <value>
+                <elementReference>Get_Account_Record_ID.Id</elementReference>
+            </value>
+        </filters>
         <inputAssignments>
-            <field>SeguimientoProspecto__c</field>
+            <field>Estatus_de_cliente__c</field>
             <value>
                 <stringValue>Recuperado</stringValue>
             </value>
@@ -492,13 +624,21 @@ Se sustituye el campo de Estatus Cliente y se cambia con el campo de seguimiento
         <inputReference>$Record</inputReference>
     </recordUpdates>
     <recordUpdates>
-        <description>Actualiza el valor del campo &quot;Seguimiento&quot; a Recurrente</description>
+        <description>Actualiza el valor del campo &quot;Estatus de cliente&quot; a Recurrente</description>
         <name>Estatus_Cliente_Recuperado_a_Recurrente</name>
-        <label>Seguimiento - Recuperado a Recurrente</label>
+        <label>Estatus Cliente - Recuperado a Recurrente</label>
         <locationX>1898</locationX>
-        <locationY>984</locationY>
+        <locationY>1392</locationY>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>RecordTypeId</field>
+            <operator>NotEqualTo</operator>
+            <value>
+                <elementReference>Get_Account_Record_ID.Id</elementReference>
+            </value>
+        </filters>
         <inputAssignments>
-            <field>SeguimientoProspecto__c</field>
+            <field>Estatus_de_cliente__c</field>
             <value>
                 <stringValue>Recurrente</stringValue>
             </value>
@@ -506,13 +646,21 @@ Se sustituye el campo de Estatus Cliente y se cambia con el campo de seguimiento
         <inputReference>$Record</inputReference>
     </recordUpdates>
     <recordUpdates>
-        <description>Actualiza el valor del campo &quot;Seguimiento&quot; a Recurrente</description>
+        <description>Actualiza el valor del campo &quot;Estatus de cliente&quot; a Recurrente</description>
         <name>Estatus_Cliente_Recurrente</name>
-        <label>Seguimiento - Nuevo a Recurrente</label>
+        <label>Estatus Cliente - Nuevo a Recurrente</label>
         <locationX>50</locationX>
-        <locationY>1092</locationY>
+        <locationY>1500</locationY>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>RecordTypeId</field>
+            <operator>NotEqualTo</operator>
+            <value>
+                <elementReference>Get_Account_Record_ID.Id</elementReference>
+            </value>
+        </filters>
         <inputAssignments>
-            <field>SeguimientoProspecto__c</field>
+            <field>Estatus_de_cliente__c</field>
             <value>
                 <stringValue>Recurrente</stringValue>
             </value>
@@ -523,15 +671,60 @@ Se sustituye el campo de Estatus Cliente y se cambia con el campo de seguimiento
         <description>Actualiza el campo Seguimiento del registro que desencadena el flujo. El valor se coloca como No Venta.</description>
         <name>Seguimiento_No_Venta</name>
         <label>Seguimiento - No Venta</label>
-        <locationX>1271</locationX>
-        <locationY>468</locationY>
+        <locationX>1051</locationX>
+        <locationY>684</locationY>
         <connector>
-            <targetReference>Seguimiento_Cliente</targetReference>
+            <targetReference>RESULTADO_DEBUG</targetReference>
         </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>RecordTypeId</field>
+            <operator>NotEqualTo</operator>
+            <value>
+                <elementReference>Get_Account_Record_ID.Id</elementReference>
+            </value>
+        </filters>
         <inputAssignments>
             <field>Motivo_no_venta__c</field>
             <value>
                 <stringValue>Falta de seguimiento</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>SeguimientoProspecto__c</field>
+            <value>
+                <stringValue>No Venta</stringValue>
+            </value>
+        </inputAssignments>
+        <inputReference>$Record</inputReference>
+    </recordUpdates>
+    <recordUpdates>
+        <description>Actualiza el campo Seguimiento del registro que desencadena el flujo. El valor se coloca como No Venta.</description>
+        <name>Seguimiento_No_Venta_2</name>
+        <label>Seguimiento - No Venta</label>
+        <locationX>1491</locationX>
+        <locationY>684</locationY>
+        <connector>
+            <targetReference>Estatus_de_Cliente</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>RecordTypeId</field>
+            <operator>NotEqualTo</operator>
+            <value>
+                <elementReference>Get_Account_Record_ID.Id</elementReference>
+            </value>
+        </filters>
+        <inputAssignments>
+            <field>Motivo_no_venta__c</field>
+            <value>
+                <stringValue>Falta de seguimiento</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>SeguimientoProspecto__c</field>
+            <value>
+                <stringValue>No Venta</stringValue>
             </value>
         </inputAssignments>
         <inputReference>$Record</inputReference>
@@ -540,15 +733,22 @@ Se sustituye el campo de Estatus Cliente y se cambia con el campo de seguimiento
         <locationX>1277</locationX>
         <locationY>0</locationY>
         <connector>
-            <targetReference>Ultimo_Total_IEQ_Approved</targetReference>
+            <targetReference>Get_Account_Record_ID</targetReference>
         </connector>
         <object>Account</object>
         <schedule>
-            <frequency>Once</frequency>
+            <frequency>Daily</frequency>
             <startDate>2023-03-22</startDate>
             <startTime>23:45:00.000Z</startTime>
         </schedule>
         <triggerType>Scheduled</triggerType>
     </start>
-    <status>Draft</status>
+    <status>Active</status>
+    <variables>
+        <name>TIEMPOTRANSCURRIDO</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
 </Flow>

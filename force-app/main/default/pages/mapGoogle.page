@@ -50,7 +50,6 @@
 
             // Listener para recibir mensajes del LWC
             window.addEventListener('message', function(event) {
-                console.log('Mensaje recibido en VF Page:', event.data); // Agregar este log
                 if (event.origin === '*' || event.origin.includes('pak2gologistics')) {
                     if (event.data.lat && event.data.lng) {
                         // Actualiza la posición del marcador sin reinicializar el mapa
@@ -63,7 +62,7 @@
 
             function updateMarkerPosition(position) {
                 // Imprimir las coordenadas en la consola para verificar
-                console.debug("Latitud: " + position.lat() + ", Longitud: " + position.lng());
+                //console.debug("Latitud: " + position.lat() + ", Longitud: " + position.lng());
 
                 // Enviar las coordenadas al LWC padre usando postMessage
                 window.parent.postMessage({

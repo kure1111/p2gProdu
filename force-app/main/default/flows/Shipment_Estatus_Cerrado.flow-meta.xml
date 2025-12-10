@@ -23,8 +23,6 @@
                 <elementReference>myVariable_current.Id</elementReference>
             </value>
         </inputParameters>
-        <nameSegment>Shipment__c.Devoluciones</nameSegment>
-        <versionSegment>1</versionSegment>
     </actionCalls>
     <apiVersion>50.0</apiVersion>
     <assignments>

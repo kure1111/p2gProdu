@@ -1,5 +1,5 @@
 trigger NEU_Disable_Approved_Quotes on Customer_Quote__c (before update) {
-    if(NEU_StaticVariableHelper.getBoolean1()){return;}        
+    if(NEU_StaticVariableHelper.getBoolean1()){return;}      
     
     if(!RecursiveCheck.triggerMonitor.contains('NEU_Disable_Approved_Quotes')){
         RecursiveCheck.triggerMonitor.add('NEU_Disable_Approved_Quotes');

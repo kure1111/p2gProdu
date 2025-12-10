@@ -3,11 +3,12 @@ public class p2G_FoliosEnOportunidadesTest {
 	@isTest
     public static void prueba(){
         NEU_StaticVariableHelper.setBoolean1(true);
-        OpportunityLineItem oli = [SELECT OpportunityId , PROJ_Modalidad__c FROM OpportunityLineItem 
+        OpportunityLineItem oli = [SELECT OpportunityId , PROJ_Modalidad__c  FROM OpportunityLineItem 
                                    WHERE OpportunityId != null AND Opportunity.Total_IEQO_Creados__c > 0
                                    LIMIT 1];
         System.debug('OpportunityLineItem: ' + oli);
-        List<Customer_Quote__c> getIEQO = p2G_FoliosEnOportunidades.getIEQO('006RQ00000GlyynYAB','FN-');
+        //metodo getIEQO necesita un id de oportunidad que cumpla con su consulta para que pase
+        List<Customer_Quote__c> getIEQO = p2G_FoliosEnOportunidades.getIEQO(oli.OpportunityId,'FN-');
         String asignar = p2G_FoliosEnOportunidades.asignarFolio(oli.OpportunityId,getIEQO[0].Id);
         List<p2G_FoliosEnOportunidades.wrapperProduct> lista = p2G_FoliosEnOportunidades.getRoute(oli.OpportunityId);
         List<p2G_FoliosEnOportunidades.wrapperProduct> listaCrear = new List<p2G_FoliosEnOportunidades.wrapperProduct>();

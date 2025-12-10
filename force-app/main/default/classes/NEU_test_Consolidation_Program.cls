@@ -32,9 +32,9 @@ private class NEU_test_Consolidation_Program {
         insert shipment_program;
         Shipment_Program_Line__c sl=new Shipment_Program_Line__c(Shipments_Program__c=shipment_program.id);
         insert sl;
-        Shipment__c ship = new Shipment__c(Account_for__c = a.Id, Freight_Mode__c='Sea', Service_Mode__c ='Import', Inbound_Consolidation_Program__c  = shipment_program.Id, Only_Warehouse_Service__c = true);
+        Shipment__c ship = new Shipment__c(Name = 'SP-TS-0001', Account_for__c = a.Id, Freight_Mode__c='Sea', Service_Mode__c ='Import', Inbound_Consolidation_Program__c  = shipment_program.Id, Only_Warehouse_Service__c = true);
         insert ship;
-        Shipment__c ship2 = new Shipment__c(Account_for__c = a.Id, Freight_Mode__c='Sea', Service_Mode__c ='Import', Outbound_Consolidation_Program__c  = shipment_program.Id, Only_Warehouse_Service__c = true);
+        Shipment__c ship2 = new Shipment__c(Name = 'SP-TS-0002', Account_for__c = a.Id, Freight_Mode__c='Sea', Service_Mode__c ='Import', Outbound_Consolidation_Program__c  = shipment_program.Id, Only_Warehouse_Service__c = true);
         insert ship2;
         Shipment_Line__c shipline = new Shipment_Line__c(Shipment__c = ship2.Id, Name= 'test ship line');
         insert shipline;

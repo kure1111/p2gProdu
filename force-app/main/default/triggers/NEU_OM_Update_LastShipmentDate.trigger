@@ -1,6 +1,6 @@
 trigger NEU_OM_Update_LastShipmentDate on Shipment__c (after update) 
 {
-    if(NEU_StaticVariableHelper.getBoolean1()){return;}		
+    if(NEU_StaticVariableHelper.getBoolean1()){return;}	
 	
     if(!RecursiveCheck.triggerMonitor.contains('NEU_OM_Update_LastShipmentDate')){
         RecursiveCheck.triggerMonitor.add('NEU_OM_Update_LastShipmentDate');
@@ -31,17 +31,10 @@ trigger NEU_OM_Update_LastShipmentDate on Shipment__c (after update)
                 } 
             }
             
-            if(toUpdate.size()>0)
-            {
-                try
-                {
-                    update toUpdate.values();
-                }
-                catch(Exception x){ }
-            }
+            if(toUpdate.size()>0){try{update toUpdate.values();}catch(Exception x){ }}
         }
         
-        if(Test.isRunningTest()){
+        /*if(Test.isRunningTest()){
             integer a= 1;
             a= a+1;
             a= a+1;
@@ -81,6 +74,6 @@ trigger NEU_OM_Update_LastShipmentDate on Shipment__c (after update)
             a= a+1;
             a= a+1;
             a= a+1;
-        }
+        }*/
     }
 }

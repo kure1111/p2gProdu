@@ -77,6 +77,8 @@ public class P2G_creacionFolioInternacionalesTest {
 		fleteNacional = P2G_CreacionFoliosWrapper.tipoServicio(fleteNacional);
         fleteNacional.grupo = 'SP-T-CONSOLIDADO';
 		fleteNacional = P2G_CreacionFoliosWrapper.tipoServicio(fleteNacional);
+        fleteNacional.grupo = 'SP-PQ-PAQUETERIA';
+		fleteNacional = P2G_CreacionFoliosWrapper.tipoServicio(fleteNacional);
         Test.stopTest();
     }
 }

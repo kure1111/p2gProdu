@@ -1,6 +1,6 @@
 trigger NEU_Import_Export_Assign_Service_Charges on Customer_Quote__c (after update) 
 {
-    if(NEU_StaticVariableHelper.getBoolean1()){return;}        
+    if(NEU_StaticVariableHelper.getBoolean1()){return;}
     
     
     if(!RecursiveCheck.triggerMonitor.contains('NEU_Import_Export_Assign_Service_Charges')){

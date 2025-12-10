@@ -10,7 +10,7 @@ global class ServiceGoogle {
         system.debug('entramos 2 longDestination ' + longDestination);
         //if(latOrigin > 14 && longOrigin <-85 && latDetination >14 &&  longDestination < -85)
        // {
-            return urlGoogleDist + '?origins='+latOrigin+','+longOrigin+'&destinations='+latDetination+','+longDestination+'&mode=driving&language=es-ES&key=AIzaSyDXXKDGlVqDKf7ewYUxICPXs7gPLRKK9No';
+            return urlGoogleDist + '?origins='+latOrigin+','+longOrigin+'&destinations='+latDetination+','+longDestination+'&mode=driving&language=es-ES&key=AIzaSyDkwLqNdoijG5TO8q9JgMdnXz9yHdEwfWc';
        // }
        // return null;
     }

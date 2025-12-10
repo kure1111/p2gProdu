@@ -12,7 +12,14 @@ trigger NEU_JE_Update_Shipment_Addresses on Shipment__c (before insert, before u
         }
         if(acs.size()>0)
         {
-            Map<Id,Account>accounts=New Map<Id,Account>([select Id,ShippingStreet,ShippingCity,ShippingState,ShippingPostalCode,ShippingCountry from Account where Id IN:acs]);
+            Map<Id,Account>accounts=New Map<Id,Account>([select Id,
+                                                         ShippingStreet,
+                                                         ShippingCity,
+                                                         ShippingState,
+                                                         ShippingPostalCode,
+                                                         ShippingCountry 
+                                                         from Account
+                                                         where Id IN:acs]);
             for(Shipment__c s:trigger.new)
             {
                 system.debug('s.Supplier_Account__c: ' + s.Supplier_Account__c);

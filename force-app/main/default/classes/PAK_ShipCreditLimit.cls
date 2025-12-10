@@ -1,183 +1,101 @@
 public class PAK_ShipCreditLimit {
     
-    public static set<string> lstRateCatAllowed = new set<string>{'Road Freights', 'Air Freights', 'Sea Freights'};
-        public static map<string,Double> mapaShipmentSaldoDisponible {get; set;}
-    public static map<string,Double> mapaTotalShipment {get; set;}
-    /*public static void UpdateCarrier(list<Shipment_Fee_Line__c> lista)
-    {
-        set<string> setShipment =  GenerarSetShipment(lista);
-        map<string,shipment__c> mapCarrier = MapCarrier(setShipment);
-        for(Shipment_Fee_Line__c l : lista){
-            if(mapCarrier != null)
-            {
-                l.Carrier_trg__c = mapCarrier.get(l.Shipment__c).Carrier__c;
-            }
-        }
-    }*/
-    public static void CalcularSaldo(list<Shipment_Fee_Line__c> lista)
-    {
-        String currentShipment = '';
-        Double currentLimit = 0;
-        double total = 0;
-        set<string> setShipment = new  set<string>();
-        mapaTotalShipment = new map<string,Double>();
-        mapaShipmentSaldoDisponible = new map<string,Double>();
-        set<string> setShipment2 =  GenerarSetShipment(lista);
-        calcularSaldoCliente(setShipment2);
-        CalcularImporteLine(lista);
-        for(Shipment_Fee_Line__c l : lista){
-            currentShipment = l.Shipment__c;
-            currentLimit = mapaShipmentSaldoDisponible.get(currentShipment);
-            if(!setShipment.contains(currentShipment))
-            {
-                if(l.Venta_Account__c =='Credito' && lstRateCatAllowed.contains(l.Service_Rate_Category__c)){
-                    total = mapaTotalShipment.get(currentShipment);
-                    currentLimit = currentLimit - total;
-                    if(currentLimit < 0 ){
-                        if(!Test.isRunningTest()){l.addError('No existe crédito disponible para el cliente');} 
-                    }
-                }
-                setShipment.add(currentShipment);
-            }
+    public static Set<String> lstRateCatAllowed = new Set<String>{
+        'Road Freights', 'Air Freights', 'Sea Freights'
+    };
+    
+    // Método principal para UPDATE - procesa lista de registros (BULK)
+    public static void CalcularUpdate(List<Shipment_Fee_Line__c> lineasNuevas, Map<Id, Shipment_Fee_Line__c> mapaLineasViejas) {
+        if (lineasNuevas == null || lineasNuevas.isEmpty() || mapaLineasViejas == null) return;
+        
+        // 1. Filtrar líneas que deben procesarse y tuvieron cambio relevante
+        List<Shipment_Fee_Line__c> lineasAProcesar = new List<Shipment_Fee_Line__c>();
+        Set<Id> shipmentIds = new Set<Id>();
+        
+        for (Shipment_Fee_Line__c lineaNueva : lineasNuevas) {
+            Shipment_Fee_Line__c lineaVieja = mapaLineasViejas.get(lineaNueva.Id);
             
-        }
-    }
-    public static void CalcularUpdate(list<Shipment_Fee_Line__c> lista,map<id,Shipment_Fee_Line__c> RegistrosOld)
-    {
-        String currentShipment = '';
-        Double currentLimit = 0;
-        double total = 0;
-        set<string> setShipment = new set<string>();
-        mapaTotalShipment = new map<string,Double>();
-        mapaShipmentSaldoDisponible = new map<string,Double>();
-        CalcularImporteLineUpdate(lista,RegistrosOld);
-        for(Shipment_Fee_Line__c l : lista){ 
-            currentShipment = l.Shipment__c;
-            currentLimit = mapaShipmentSaldoDisponible.get(currentShipment) == null?0:mapaShipmentSaldoDisponible.get(currentShipment);
-            total =0;
-            if(!setShipment.contains(currentShipment))
-            {
-                if(ValidarCredito(RegistrosOld.get(l.Id),l) && l.Venta_Account__c =='Credito' && lstRateCatAllowed.contains(l.Service_Rate_Category__c)){
-                    total = mapaTotalShipment.get(currentShipment) == null?0:mapaTotalShipment.get(currentShipment);
-                    currentLimit = currentLimit - total;
-                    if(currentLimit < 0 ){
-                        if(!Test.isRunningTest()){l.addError('No existe crédito disponible para el cliente');} 
-                    }
-                }
-                setShipment.add(currentShipment);
+            if (lineaVieja != null && debeProcesarLinea(lineaNueva) && huboCambioRelevante(lineaVieja, lineaNueva)) {
+                lineasAProcesar.add(lineaNueva);
+                shipmentIds.add(lineaNueva.Shipment__c);
             }
+        }
+        
+        if (lineasAProcesar.isEmpty()) return;
+        
+        // 2. Obtener tasa de cambio USD (una sola vez para todos)
+        Decimal tasaUSD = obtenerTasaCambioUSD();
+        
+        // 3. Obtener saldos de todas las cuentas relacionadas (una sola query)
+        Map<Id, Decimal> saldosPorShipment = obtenerSaldosCuentas(shipmentIds);
+        
+        // 4. Procesar cada línea válida
+        for (Shipment_Fee_Line__c lineaNueva : lineasAProcesar) {
+            Shipment_Fee_Line__c lineaVieja = mapaLineasViejas.get(lineaNueva.Id);
+            Decimal saldoDisponible = saldosPorShipment.get(lineaNueva.Shipment__c);
             
-        }     
-    }
-    public static Boolean ValidarCredito(Shipment_Fee_Line__c sflOld, Shipment_Fee_Line__c sfl){
-        Boolean estatus = false;
-        
-        if(sflOld.Shipment_Sell_Price__c != sfl.Shipment_Sell_Price__c || sflOld.CurrencyIsoCode != sfl.CurrencyIsoCode ){estatus = true;}
-        
-        return estatus;
-    }
-    public static void CalcularImporteLine(list<Shipment_Fee_Line__c> lista)
-    {
-        
-        Decimal valor = 0;
-        list<CurrencyType> c =[SELECT ISOCode, ConversionRate FROM CurrencyType WHERE IsActive=TRUE and ISOCode ='USD'];
-        decimal tipoCambio = 1/c.get(0).ConversionRate;
-        for(Shipment_Fee_Line__c l : lista){
-            valor = 0;
-            if(lstRateCatAllowed.contains(l.Service_Rate_Category__c) && mapaTotalShipment.containsKey(l.Shipment__c)){
-                
-                valor = mapaTotalShipment.get(l.Shipment__c);
-                
-                if(l.CurrencyIsoCode	 == 'USD'){
-                    mapaTotalShipment.put(l.Shipment__c,valor + (l.Sell_Amount__c * tipoCambio));  
-                }else{ mapaTotalShipment.put(l.Shipment__c, valor + l.Sell_Amount__c);}
-            }
-            else{
-                if(l.CurrencyIsoCode	 == 'USD'){
-                    mapaTotalShipment.put(l.Shipment__c,l.Sell_Amount__c * tipoCambio);  
-                }else{ mapaTotalShipment.put(l.Shipment__c,l.Sell_Amount__c);}
+            if (saldoDisponible != null) {
+                verificarCreditoLineaIndividual(lineaNueva, lineaVieja, tasaUSD, saldoDisponible);
             }
         }
     }
-    public static void CalcularImporteLineUpdate(list<Shipment_Fee_Line__c> lista,map<id,Shipment_Fee_Line__c> RegistrosOld)
-    {
-        set<string> setShipment =  GenerarSetShipment(lista);
-        list<CurrencyType> c =[SELECT ISOCode, ConversionRate FROM CurrencyType WHERE IsActive=TRUE and ISOCode ='USD'];
-        decimal tipoCambio = 1/c.get(0).ConversionRate;
-        calcularSaldoCliente(setShipment);
-        Decimal valor = 0;
-        Decimal importe = 0;
-        for(Shipment_Fee_Line__c l : [select id,Shipment__c,Sell_Amount__c,Currency_Buy_Price__c,Conversion_Rate_to_Currency_Header__c,CurrencyIsoCode from Shipment_Fee_Line__c where  Service_Rate_Category__c in :lstRateCatAllowed and Shipment__c in :setShipment]){
-            valor = 0;
-            
-            if(RegistrosOld.containsKey(l.Id)){continue;}
-            
-            if(mapaTotalShipment.containsKey(l.Shipment__c)){
-                valor = mapaTotalShipment.get(l.Shipment__c);
-                
-                if(l.CurrencyIsoCode	 == 'USD'){
-                    mapaTotalShipment.put(l.Shipment__c,valor + (l.Sell_Amount__c * l.Conversion_Rate_to_Currency_Header__c));  
-                }else{ mapaTotalShipment.put(l.Shipment__c, valor + l.Sell_Amount__c);}
-            }
-            else{
-                
-                if(l.CurrencyIsoCode	 == 'USD'){
-                    mapaTotalShipment.put(l.Shipment__c,l.Sell_Amount__c * l.Conversion_Rate_to_Currency_Header__c);  
-                }else{ mapaTotalShipment.put(l.Shipment__c,l.Sell_Amount__c);}
-                
-            }
-        }
-        for(Shipment_Fee_Line__c l2 : lista){
-            valor = 0;
-            importe = 0;
-            if(mapaTotalShipment.containsKey(l2.Shipment__c)){
-                valor = mapaTotalShipment.get(l2.Shipment__c);
-                
-                if(l2.CurrencyIsoCode == 'USD'){
-                    importe = l2.Sell_Amount__c * tipoCambio; 
-                    system.debug('Importe Dolares: '+ importe);
-                    mapaTotalShipment.put(l2.Shipment__c,valor + importe);  
-                }else{ mapaTotalShipment.put(l2.Shipment__c, valor + l2.Sell_Amount__c);}
-            }else{ 
-                if(l2.CurrencyIsoCode == 'USD'){
-                    importe = l2.Sell_Amount__c * tipoCambio; 
-                    system.debug('Importe Dolares: '+ importe);
-                    mapaTotalShipment.put(l2.Shipment__c,valor + importe);  
-                }else{ mapaTotalShipment.put(l2.Shipment__c, valor + l2.Sell_Amount__c);}
-            }
-        }
+    
+    // Validar si la línea debe procesarse (sin cambios)
+    private static Boolean debeProcesarLinea(Shipment_Fee_Line__c linea) {
+        return linea.Shipment__c != null 
+            && linea.Venta_Account__c == 'Credito' 
+            && lstRateCatAllowed.contains(linea.Service_Rate_Category__c);
     }
-    private static void calcularSaldoCliente(set<string> setShipment)
-    {
-        if(!setShipment.isempty()){
-            for(shipment__c s : [select id,Account_for__r.Saldo_DisponibleOK__c,Carrier__c from shipment__c where id in :setShipment ])
-            {
-                mapaShipmentSaldoDisponible.put(s.id,s.Account_for__r.Saldo_DisponibleOK__c);
-            }
+    
+    // Validar si hubo cambio relevante (sin cambios)
+    private static Boolean huboCambioRelevante(Shipment_Fee_Line__c lineaVieja, Shipment_Fee_Line__c lineaNueva) {
+        return lineaVieja.Shipment_Sell_Price__c != lineaNueva.Shipment_Sell_Price__c 
+            || lineaVieja.CurrencyIsoCode != lineaNueva.CurrencyIsoCode;
+    }
+    
+    // Obtener tasa de cambio USD -> MXN (sin cambios)
+    private static Decimal obtenerTasaCambioUSD() {
+        CurrencyType usd = [SELECT ConversionRate 
+                            FROM CurrencyType 
+                            WHERE IsActive = TRUE AND IsoCode = 'USD' 
+                            LIMIT 1];
+        return 1 / usd.ConversionRate;
+    }
+    
+    // Obtener saldos de todas las cuentas (NUEVO método bulk)
+    private static Map<Id, Decimal> obtenerSaldosCuentas(Set<Id> shipmentIds) {
+        Map<Id, Decimal> saldosMap = new Map<Id, Decimal>();
+        
+        for (Shipment__c s : [SELECT Id, Account_for__r.Saldo_DisponibleOK__c 
+                              FROM Shipment__c 
+                              WHERE Id IN :shipmentIds]) {
+            saldosMap.put(s.Id, s.Account_for__r.Saldo_DisponibleOK__c);
         }
         
+        return saldosMap;
     }
-    /*private static map<string,shipment__c> MapCarrier(set<string> setShipment)
-    {
-        map<string,shipment__c> mapaCarrier = new  map<string,shipment__c>();
-        if(!setShipment.isempty()){
-            for(shipment__c s : [select id,Carrier__c from shipment__c where id in :setShipment ])
-            {
-                mapaCarrier.put(s.id,s);
-            }
-        }
-        return mapaCarrier;
+    
+    // Verificar crédito para la línea individual (modificado para recibir saldo)
+    private static void verificarCreditoLineaIndividual(Shipment_Fee_Line__c lineaNueva, 
+                                                       Shipment_Fee_Line__c lineaVieja, 
+                                                       Decimal tasaUSD,
+                                                       Decimal saldoDisponible) {
+        // 1. Convertir ambos valores a MXN
+        Decimal valorViejoMXN = convertirAMXN(lineaVieja.Shipment_Sell_Price__c, lineaVieja.CurrencyIsoCode, tasaUSD);
+        Decimal valorNuevoMXN = convertirAMXN(lineaNueva.Shipment_Sell_Price__c, lineaNueva.CurrencyIsoCode, tasaUSD);
         
-    }*/
-    private static set<string> GenerarSetShipment(list<Shipment_Fee_Line__c> lista)
-    {
-        set<string> setShipmentId = new set<string>();
-        for(Shipment_Fee_Line__c l : lista){
-            if(!setShipmentId.contains(l.Shipment__c) && l.Shipment__c != null)
-            {
-                setShipmentId.add(l.Shipment__c); 
-            }
+        // 2. LÓGICA CORRECTA: Liberar el valor viejo y reservar el valor nuevo
+        Decimal saldoDespues = saldoDisponible + valorViejoMXN - valorNuevoMXN;
+        
+        // 3. Verificar si el saldo después sería negativo
+        if(saldoDespues < 0 && !Test.isRunningTest()) {
+            lineaNueva.addError('No existe crédito disponible. Saldo después del cambio: ' + saldoDespues.setScale(2) + ' MXN');
         }
-        return setShipmentId;
+    }
+    
+    // Convertir cualquier valor a MXN (sin cambios)
+    private static Decimal convertirAMXN(Decimal valor, String moneda, Decimal tasaUSD) {
+        if (valor == null) return 0;
+        return (moneda == 'USD') ? valor * tasaUSD : valor;
     }
 }

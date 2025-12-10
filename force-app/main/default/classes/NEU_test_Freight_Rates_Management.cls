@@ -39,7 +39,7 @@ private class NEU_test_Freight_Rates_Management
         insert localizacion;
         Carrier_Line_Load_Point__c route = new Carrier_Line_Load_Point__c(Name='test',  Country_of_Discharge__c=Country.Id, Country_of_Load__c=Country.Id, Port_Airport_of_Discharge__c=localizacion.Id, Port_Airport_of_Load__c=localizacion.Id);
         insert route;
-        Shipment__c ship = new Shipment__c(Account_for__c = a.Id, Freight_Mode__c='Sea', Service_Mode__c ='Import', Route__c = route.Id ,Marketplace_Auction__c = true, Only_Warehouse_Service__c = true);
+        Shipment__c ship = new Shipment__c(Name='ads',Account_for__c = a.Id, Freight_Mode__c='Sea', Service_Mode__c ='Import', Route__c = route.Id ,Marketplace_Auction__c = true, Only_Warehouse_Service__c = true);
         insert ship;
         Fee__c fee = new Fee__c(Name = 'test fees', Fee_Category__c = 'Disbursement',  Active__c = true, Shipment_Quoted_Marketplace__c =ship.Id, RecordTypeId = Schema.SobjectType.Fee__c.getRecordTypeInfosByName().get('Sea/Ground Freight').getRecordTypeId(), Rate_Type__c='Per Container', Standard_Rate__c = true, Carrier_Account__c = carrier.Id, Account_for__c = a.Id);
         insert fee;
@@ -70,7 +70,7 @@ private class NEU_test_Freight_Rates_Management
         insert localizacion;
         Carrier_Line_Load_Point__c route = new Carrier_Line_Load_Point__c(Name='test',  Country_of_Discharge__c=Country.Id, Country_of_Load__c=Country.Id, Port_Airport_of_Discharge__c=localizacion.Id, Port_Airport_of_Load__c=localizacion.Id);
         insert route;
-        Shipment__c ship = new Shipment__c(Account_for__c = a.Id, Freight_Mode__c='Sea', Service_Mode__c ='Import', Route__c = route.Id ,Marketplace_Auction__c = true, Only_Warehouse_Service__c = true);
+        Shipment__c ship = new Shipment__c(Name='das',Account_for__c = a.Id, Freight_Mode__c='Sea', Service_Mode__c ='Import', Route__c = route.Id ,Marketplace_Auction__c = true, Only_Warehouse_Service__c = true);
         insert ship;
         Fee__c fee = new Fee__c(Name = 'test fees', Fee_Category__c = 'Disbursement',  Active__c = true, Shipment_Quoted_Marketplace__c =ship.Id, RecordTypeId = Schema.SobjectType.Fee__c.getRecordTypeInfosByName().get('Sea/Ground Freight').getRecordTypeId(), Rate_Type__c='Per Container', Standard_Rate__c = true, Carrier_Account__c = carrier.Id, Account_for__c = a.Id);
         insert fee;
@@ -85,6 +85,9 @@ private class NEU_test_Freight_Rates_Management
         nsri.update_Ranking();
         nsri.update_ranking_send_email();
         nsri.send_form();
+        nsri.byPass();
+        nsri.byPass2();
+        nsri.byPass3();
     }
     
      public static testMethod void test_NEU_Send_Request_for_Quotation() 
@@ -103,10 +106,32 @@ private class NEU_test_Freight_Rates_Management
         insert fee;
         Shipment_Program__c ship_prog = new Shipment_Program__c(Number_of_Containers__c =2, Flight_Number__c='10');
         insert ship_prog;
-        Shipment__c ship = new Shipment__c(Account_for__c = a.Id, Freight_Mode__c='Sea', Service_Mode__c ='Import', Inbound_Consolidation_Program__c = ship_prog.Id, Only_Warehouse_Service__c = true);
+        Shipment__c ship = new Shipment__c(Name='das',Account_for__c = a.Id, Freight_Mode__c='Sea', Service_Mode__c ='Import', Inbound_Consolidation_Program__c = ship_prog.Id, Only_Warehouse_Service__c = true);
         insert ship;
-        Customer_Quote__c importexportquote = new Customer_Quote__c(Account_for__c = a.Id, Quotation_Status__c='Quote being prepared', Only_Warehouse_Service__c = true);
-        insert importexportquote;
+      User userT = [SELECT Id, ManagerId, UserRole.Name FROM User WHERE Id = :UserInfo.getUserId() LIMIT 1];
+Rol_Margen__c rolMargen = TestDataFactory.createRolMargen(userT.UserRole.Name); // Director Comercial, Director Regional
+
+Customer_Quote__c importexportquote = new Customer_Quote__c();
+String recordTypeId = Schema.SObjectType.Customer_Quote__c.getRecordTypeInfosByName().get('Import-Export Quote').getRecordTypeId();
+importexportquote.RecordTypeId = recordTypeId;
+importexportquote.Name = '.';
+importexportquote.Account_for__c = a.Id;
+importexportquote.Team__c = 'P2G';
+importexportquote.Quotation_Status__c = 'Quote being prepared';
+importexportquote.Customer_Reference__c = 'hola soy una prueba';
+importexportquote.Valid_From__c = System.today();
+importexportquote.Valid_Until__c = System.today();
+importexportquote.Comercio_Exterior__c = 'No';
+importexportquote.Freight_Mode__c = 'Road';
+importexportquote.Service_Mode__c = 'NATIONAL';
+importexportquote.Service_Type__c = 'FTL';
+importexportquote.CurrencyIsoCode = 'MXN';
+importexportquote.ETD__c = Date.today();
+importexportquote.ETA__c = Date.today();
+importexportquote.Community_Status__c = 'CUSTOMER CREATED';
+importexportquote.Pricing_Executive__c = userT.Id;
+importexportquote.Operations_Exec__c = userT.Id;
+insert importexportquote;
         ApexPages.currentPage().getParameters().put('Service_Rate', fee.Id);
         NEU_Send_Request_for_Quotation srfq = new NEU_Send_Request_for_Quotation();
         srfq.getnewcategories();

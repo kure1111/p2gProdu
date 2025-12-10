@@ -1,7 +1,6 @@
 trigger NEU_IE_Service_Update_Conversions on Import_Export_Fee_Line__c (before insert, before update)
 {
-	if(NEU_StaticVariableHelper.getBoolean1())
-		return; 
+	if(NEU_StaticVariableHelper.getBoolean1())return; 
 	
     if(trigger.isInsert)
         NEU_CurrencyUtils.lineBeforeInsert('Customer_Quote__c','Import_Export_Quote__c',trigger.new);

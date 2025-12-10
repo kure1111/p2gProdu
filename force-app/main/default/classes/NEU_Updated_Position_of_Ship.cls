@@ -29,10 +29,27 @@ public class NEU_Updated_Position_of_Ship{
             contenido_del_chat = 'The Container tracking has been updated. For more details see the link bellow  \n '+defaultUrl+'?id='+record.Id;
         }
         
-        public void create_feed()
-        {
-             if(!Test.isRunningTest())
-                ConnectApi.ChatterFeeds.postFeedItem(null, ConnectApi.FeedType.record, record.Id , contenido_del_chat);          
-        }
+public void create_feed() {
+
+        // Crear segmento de texto
+        ConnectApi.TextSegmentInput textSegment = new ConnectApi.TextSegmentInput();
+        textSegment.text = contenido_del_chat;
+
+        // Cuerpo del mensaje
+        ConnectApi.MessageBodyInput messageBody = new ConnectApi.MessageBodyInput();
+        messageBody.messageSegments = new List<ConnectApi.MessageSegmentInput>{ textSegment };
+
+        // Entrada del elemento del feed
+        ConnectApi.FeedItemInput feedItemInput = new ConnectApi.FeedItemInput();
+        feedItemInput.subjectId = record.Id;
+        feedItemInput.feedElementType = ConnectApi.FeedElementType.FeedItem;
+        feedItemInput.body = messageBody;
+
+        // Publicar en el feed del registro
+        ConnectApi.ChatterFeeds.postFeedElement(null, feedItemInput);
+    
+}
+
+
 
 }

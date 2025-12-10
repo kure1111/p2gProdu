@@ -215,7 +215,7 @@ public with sharing class NEU_OM_Start_Clearance_SupplierQuote{
       //  List<String> lista_ids_items = new List<String>();
 
         
-        Shipment_Item_Line = [select Id, Name, Percent_Taxes__c , HS_Code__c, Additional_Import_Taxes_Amount__c,
+        Shipment_Item_Line = [select Id, Name,CurrencyIsoCode, Percent_Taxes__c , HS_Code__c, Additional_Import_Taxes_Amount__c,
         Supplier_Quote__r.Route__r.Country_of_Load__r.ISO_Code__c, Supplier_Quote__r.Route__r.Country_of_Discharge__r.ISO_Code__c, Percent_Duty__c, Total_Amount__c ,Total_Taxes__c ,
         Item__r.Name, Imp_Exp_Charges_Assigned__c, Item__c, Unit_Origin_Price__c, Quantity__c from Supplier_Quote_Line__c where id =: idlineactualizar];
          

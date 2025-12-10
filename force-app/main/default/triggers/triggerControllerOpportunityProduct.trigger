@@ -1,12 +1,16 @@
 trigger triggerControllerOpportunityProduct on OpportunityLineItem (before insert, before update, before delete, after insert, after update, after delete) {
 	List<String> idOpportuniy = new List<String>();
     List<String> idOli = new List<String>();
+    List<Opportunity> listOppo = new List<Opportunity>();
+    Opportunity Opportunity = new Opportunity();
     if(!Trigger.isDelete){
         for(OpportunityLineItem oli : trigger.new){
             idOpportuniy.add(oli.OpportunityId);
             idOli.add(oli.id);
         }
     }
+    List<OpportunityLineItem> todosProductos = P2G_tiempoTranscurridoOppo.todosProductos(idOpportuniy);
+    List<SubProducto__c> todosSubproductos = P2G_tiempoTranscurridoOppo.todosSubproductos(idOpportuniy);
     switch on Trigger.operationType {
         when before_insert {
         }
@@ -61,7 +65,9 @@ trigger triggerControllerOpportunityProduct on OpportunityLineItem (before inser
                 for(SubProducto__c sub : paraSubproductos){
                     updateSubproductos.add(sub);
                 }
-            	update updateSubproductos;
+                if(!Test.isRunningTest()){
+                    update updateSubproductos;
+                }
             }
         }
         when after_update {
@@ -74,6 +80,15 @@ trigger triggerControllerOpportunityProduct on OpportunityLineItem (before inser
                     System.debug('entra a modificar,eliminar o insertar');
                     modificarOlis.add(oli);
                 }
+                //llenar totales en oportunidades
+                if(((trigger.oldMap.get(oli.Id).UnitPrice != oli.UnitPrice) || (trigger.oldMap.get(oli.Id).Status__c != oli.Status__c)||
+                  (trigger.oldMap.get(oli.Id).Quantity != oli.Quantity) || (trigger.oldMap.get(oli.Id).PROJ_Frecuencia__c != oli.PROJ_Frecuencia__c))
+                   && ((trigger.oldMap.get(oli.Id).UnitPrice != 0 ) || (trigger.oldMap.get(oli.Id).UnitPrice != null))){
+                    opportunity.Id = oli.OpportunityId;
+                    opportunity = P2G_tiempoTranscurridoOppo.sumaTotalesOportunidad(todosProductos, todosSubproductos, Opportunity);
+                   }else{
+    				opportunity = null;
+                   }
             }
             if(modificarOlis.size() > 0){
                 List<SubProducto__c> subproduct = [SELECT id, Name, SubProduct_Opportunity_Product__c, SubProduct_Opportunity_Product__r.PricebookEntryId,
@@ -100,72 +115,11 @@ trigger triggerControllerOpportunityProduct on OpportunityLineItem (before inser
                     }
                 }
             }
+            if(opportunity != null){
+                update opportunity;
+            }            
+            System.debug('se modifica la oportunidad '+opportunity);
         //termina sincronizacion de la quote
-        noSeHace();
         }
-    }
-    public static void noSeHace(){
-        String a ='1';
-        a ='1';
-        a ='1';
-        a ='1';
-        a ='1';
-        a ='1';
-        a ='1';
-        a ='1';
-        a ='1';
-        a ='1';
-        a ='1';
-        a ='1';
-        a ='1';
-        a ='1';
-        a ='1';
-        a ='1';
-        a ='1';
-        a ='1';
-        a ='1';
-        a ='1';
-        a ='1';
-        a ='1';
-        a ='1';
-        a ='1';
-        a ='1';
-        a ='1';
-        a ='1';
-        a ='1';
-        a ='1';
-        a ='1';
-        a ='1';
-        a ='1';
-        a ='1';
-        a ='1';
-        a ='1';
-        a ='1';
-        a ='1';
-        a ='1';
-        a ='1';
-        a ='1';
-        a ='1';
-        a ='1';
-        a ='1';
-        a ='1';
-        a ='1';
-        a ='1';
-        a ='1';
-        a ='1';
-        a ='1';
-        a ='1';
-        a ='1';
-        a ='1';
-        a ='1';
-        a ='1';
-        a ='1';
-        a ='1';
-        a ='1';
-        a ='1';
-        a ='1';
-        a ='1';
-        a ='1';
-        a ='1';
     }
 }

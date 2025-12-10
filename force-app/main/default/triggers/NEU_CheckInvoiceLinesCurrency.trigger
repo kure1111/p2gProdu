@@ -80,8 +80,7 @@ trigger NEU_CheckInvoiceLinesCurrency on Invoice__c (before update) {
                 {
                     if(inv.Id == invoice_line.Invoice__c)
                     {
-                        if(NEU_CurrencyUtils.getCurrencyIsoCode(inv) != NEU_CurrencyUtils.getCurrencyIsoCode(invoice_line))
-                            inv.addError('Currently there are Invoice Lines with a different Currency');
+                        if(NEU_CurrencyUtils.getCurrencyIsoCode(inv) != NEU_CurrencyUtils.getCurrencyIsoCode(invoice_line))inv.addError('Currently there are Invoice Lines with a different Currency');
                     }           
                 }  
                 //ie item
@@ -89,8 +88,7 @@ trigger NEU_CheckInvoiceLinesCurrency on Invoice__c (before update) {
                 {
                     if(inv.Id == invoice_line.Invoice__c)
                     {
-                        if(NEU_CurrencyUtils.getCurrencyIsoCode(inv) != NEU_CurrencyUtils.getCurrencyIsoCode(invoice_line))
-                            inv.addError('Currently there are Invoice Lines with a different Currency');
+                        if(NEU_CurrencyUtils.getCurrencyIsoCode(inv) != NEU_CurrencyUtils.getCurrencyIsoCode(invoice_line))inv.addError('Currently there are Invoice Lines with a different Currency');
                     }           
                 }
                 //ship service
@@ -98,8 +96,7 @@ trigger NEU_CheckInvoiceLinesCurrency on Invoice__c (before update) {
                 {
                     if(inv.Id == invoice_line.Invoice__c)
                     {
-                        if(NEU_CurrencyUtils.getCurrencyIsoCode(inv) != NEU_CurrencyUtils.getCurrencyIsoCode(invoice_line))
-                            inv.addError('Currently there are Invoice Lines with a different Currency');
+                        if(NEU_CurrencyUtils.getCurrencyIsoCode(inv) != NEU_CurrencyUtils.getCurrencyIsoCode(invoice_line))inv.addError('Currently there are Invoice Lines with a different Currency');
                     }           
                 }
                 //ship item
@@ -107,8 +104,7 @@ trigger NEU_CheckInvoiceLinesCurrency on Invoice__c (before update) {
                 {
                     if(inv.Id == invoice_line.Invoice__c)
                     {
-                        if(NEU_CurrencyUtils.getCurrencyIsoCode(inv) != NEU_CurrencyUtils.getCurrencyIsoCode(invoice_line))
-                            inv.addError('Currently there are Invoice Lines with a different Currency');
+                        if(NEU_CurrencyUtils.getCurrencyIsoCode(inv) != NEU_CurrencyUtils.getCurrencyIsoCode(invoice_line))inv.addError('Currently there are Invoice Lines with a different Currency');
                     }           
                 }
             }        

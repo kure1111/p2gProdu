@@ -24,7 +24,7 @@ trigger NEU_LaunchIntegrationWC on Carrier_Line_Load_Point__c (before update)
                     
             String emailbody = '';
             emailbody += '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html><head></head><body style="font-family:Arial; font-size:12px;">';
-            emailbody += 'Updating Completed Fees for the Route <strong>'+route.Name+'</strong>, click <a href="'+URL.getSalesforceBaseUrl().toExternalForm()+'/'+route.Id+'">here</a> to see the record.';
+            emailbody += 'Updating Completed Fees for the Route <strong>'+route.Name+'</strong>, click <a href="'+URL.getOrgDomainUrl().toExternalForm()+'/'+route.Id+'">here</a> to see the record.';
             emailbody += '</body></html>';
             
             mail.setHtmlBody(emailbody);

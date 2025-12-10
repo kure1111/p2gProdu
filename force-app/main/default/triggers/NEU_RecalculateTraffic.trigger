@@ -1,8 +1,7 @@
 trigger NEU_RecalculateTraffic on Customer_Quote__c (before insert, before update, after delete) 
 {        
-    /*
     
-    if(NEU_StaticVariableHelper.getBoolean1()){return;}        
+    if(NEU_StaticVariableHelper.getBoolean1()){return;}       
     
     if(!RecursiveCheck.triggerMonitor.contains('NEU_RecalculateTraffic')){
      	RecursiveCheck.triggerMonitor.add('NEU_RecalculateTraffic');
@@ -19,17 +18,12 @@ trigger NEU_RecalculateTraffic on Customer_Quote__c (before insert, before updat
                     {
                         Customer_Quote__c old_quote = (Test.isRunningTest() ? quote : Trigger.oldMap.get(quote.ID));
                         
-                        if(Test.isRunningTest() || ((old_quote.Quotation_Status__c == 'Awaiting costs suppliers' || old_quote.Quotation_Status__c == 'Quote being prepared'
-                        || old_quote.Quotation_Status__c == 'Sent awaiting response' || old_quote.Quotation_Status__c == 'Quote Declined') 
-                        && (quote.Quotation_Status__c == 'Approved as Succesful' || quote.Quotation_Status__c == 'Partially Shipped' 
-                            || quote.Quotation_Status__c == 'Shipped' || quote.Quotation_Status__c == 'Delivered'))){quote.Order_in_Progress_Date__c = system.today();}                            
+                        if(Test.isRunningTest() || ((old_quote.Quotation_Status__c == 'Awaiting costs suppliers' || old_quote.Quotation_Status__c == 'Quote being prepared'|| old_quote.Quotation_Status__c == 'Sent awaiting response' || old_quote.Quotation_Status__c == 'Quote Declined') && (quote.Quotation_Status__c == 'Approved as Succesful' || quote.Quotation_Status__c == 'Partially Shipped' || quote.Quotation_Status__c == 'Shipped' || quote.Quotation_Status__c == 'Delivered'))){quote.Order_in_Progress_Date__c = system.today();}                            
                             
                         if(Test.isRunningTest() || ((old_quote.Quotation_Status__c == 'Approved as Succesful' || old_quote.Quotation_Status__c == 'Partially Shipped' 
                           || old_quote.Quotation_Status__c == 'Shipped' || old_quote.Quotation_Status__c == 'Delivered') && quote.Quotation_Status__c == 'Closed')){quote.Order_Closed_Date__c = system.today();}                            
                             
-                        if(Test.isRunningTest() || (quote.Account_for__c != old_quote.Account_for__c || quote.Site_of_Load__c != old_quote.Site_of_Load__c || quote.Site_of_Discharge__c != old_quote.Site_of_Discharge__c
-                        || quote.Freight_Mode__c != old_quote.Freight_Mode__c || quote.Service_Type__c != old_quote.Service_Type__c || quote.Container_Type__c != old_quote.Container_Type__c
-                        || quote.Service_Mode__c != old_quote.Service_Mode__c))
+                        if(Test.isRunningTest() || (quote.Account_for__c != old_quote.Account_for__c || quote.Site_of_Load__c != old_quote.Site_of_Load__c || quote.Site_of_Discharge__c != old_quote.Site_of_Discharge__c|| quote.Freight_Mode__c != old_quote.Freight_Mode__c || quote.Service_Type__c != old_quote.Service_Type__c || quote.Container_Type__c != old_quote.Container_Type__c|| quote.Service_Mode__c != old_quote.Service_Mode__c))
                         {
                             List<Traffic__c> traffic = [select Id, Name, N_Import_Exports__c from Traffic__c where Account__c =: old_quote.Account_for__c and
                             Site_of_Load__c =: old_quote.Site_of_Load__c and Site_of_Discharge__c =: old_quote.Site_of_Discharge__c
@@ -122,6 +116,5 @@ trigger NEU_RecalculateTraffic on Customer_Quote__c (before insert, before updat
         }else{
         system.debug('No se ejecuta nada en NEU_RecalculateTraffic');
     }
-    }
-    */
+    }    
 }

@@ -36,7 +36,7 @@ public with sharing class NEU_OM_GenerateQuote {
         con = stdController;
         
         try { 
-        record = [select Id, Name, Account_for__c,  Quotation_Status__c, Approved_Date__c, Account_Executive_User__c,Account_for__r.Name,Account_for_Billing_Address__c,Account_for_Shipping_Address__c,Contact__r.Name,SUM_Buy_Origin_Amount_number__c from Customer_Quote__c where id =: con.getRecord().id limit 1 for update];
+        record = [select Id, Name, Account_for__c,  Quotation_Status__c, Approved_Date__c, Account_Executive_User__c,Account_for__r.Name,Account_for_Billing_Address__c,Account_for_Shipping_Address__c,Contact__r.Name,SUM_Buy_Origin_Amount_number__c,CurrencyIsoCode from Customer_Quote__c where id =: con.getRecord().id limit 1 for update];
         } catch( Exception ee) { 
             record = new Customer_Quote__c();
         }

@@ -67,7 +67,9 @@ trigger NEU_MD_SCMR2 on Fee__c (before update)
                         if(id_fq.contains(fql.Import_Export_Quote__c) == false)
                         {
                             if (!Test.isRunningTest()) 
-                                ConnectApi.ChatterFeeds.postFeedItem(null, ConnectApi.FeedType.Record, fql.Import_Export_Quote__c, fee_alarm_text);
+                                ConnectApi.FeedElement post = ConnectApi.ChatterFeeds.postFeedElement(null,fql.Import_Export_Quote__c,ConnectApi.FeedElementType.FeedItem,fee_alarm_text);
+                                //ConnectApi.ChatterFeeds.postFeedItem(null, ConnectApi.FeedType.Record, fql.Import_Export_Quote__c, fee_alarm_text);
+                            	
                             fql.Quote_Sell_Price__c = fee.Fee_Rate__c;
     
                             SCM_Rule_Applied__c new_rule_applied = new SCM_Rule_Applied__c();

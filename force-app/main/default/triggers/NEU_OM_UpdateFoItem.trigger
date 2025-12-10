@@ -3,7 +3,16 @@ trigger NEU_OM_UpdateFoItem on Sourcing_Item__c (after insert) {
     Set<Id>users=new Set<Id>();
     Set<Id>accounts=new Set<Id>(); 
 
-    List<Sourcing_Item__c> sourcing_item=[select Id, Name, Account_Owner__c, Account_Owner__r.Account_Executive_User__c, Account_Owner__r.Account_External_Follower_User__c, Account_Owner__r.OwnerId, CreatedById, LastModifiedById from Sourcing_Item__c where Id IN:trigger.new];
+    List<Sourcing_Item__c> sourcing_item=[select Id, 
+                                          Name,
+                                          Account_Owner__c,
+                                          Account_Owner__r.Account_Executive_User__c,
+                                          Account_Owner__r.Account_External_Follower_User__c,
+                                          Account_Owner__r.OwnerId,
+                                          CreatedById,
+                                          LastModifiedById 
+                                          from Sourcing_Item__c
+                                          where Id IN:trigger.new];
     
     for(Sourcing_Item__c obj : sourcing_item)
     {

@@ -6,7 +6,7 @@
         <name>DocStatusLicitacion_False</name>
         <label>DocStatusLicitacion - False</label>
         <locationX>644</locationX>
-        <locationY>2270</locationY>
+        <locationY>2378</locationY>
         <assignmentItems>
             <assignToReference>DocStatusLicitacion</assignToReference>
             <operator>Assign</operator>
@@ -23,7 +23,7 @@
         <name>DocStatusLicitacion_True</name>
         <label>DocStatusLicitacion - True</label>
         <locationX>380</locationX>
-        <locationY>2270</locationY>
+        <locationY>2378</locationY>
         <assignmentItems>
             <assignToReference>DocStatusLicitacion</assignToReference>
             <operator>Assign</operator>
@@ -108,7 +108,7 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Copy_1_of_Crear_Oportunidad_Nuevos_Negocios</targetReference>
+            <targetReference>Copy_1_of_Sales_Type</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -218,7 +218,7 @@
         <name>Cuenta_con_documento_de_Licitacion</name>
         <label>¿Cuenta con documento de Licitación?</label>
         <locationX>512</locationX>
-        <locationY>2162</locationY>
+        <locationY>2270</locationY>
         <defaultConnector>
             <targetReference>DocStatusLicitacion_False</targetReference>
         </defaultConnector>
@@ -264,6 +264,7 @@
             <label>No</label>
         </rules>
     </decisions>
+    <description>Se agrega el campo de Sales Scenario Type al flujo</description>
     <dynamicChoiceSets>
         <name>colonia</name>
         <dataType>String</dataType>
@@ -328,6 +329,14 @@
         <picklistObject>Opportunity</picklistObject>
     </dynamicChoiceSets>
     <dynamicChoiceSets>
+        <name>Sales_Type_Field</name>
+        <dataType>Picklist</dataType>
+        <displayField xsi:nil="true"/>
+        <object xsi:nil="true"/>
+        <picklistField>Sales_Type__c</picklistField>
+        <picklistObject>Opportunity</picklistObject>
+    </dynamicChoiceSets>
+    <dynamicChoiceSets>
         <name>tipodeventa</name>
         <dataType>Picklist</dataType>
         <displayField xsi:nil="true"/>
@@ -358,12 +367,12 @@
 &quot;SP-FI-FLETE INTER&quot;, &quot;FI&quot;,
 &quot;SP-A-AEREO&quot;, &quot;A&quot;,
 &quot;SP-AW-GLOBAL AEREO&quot;, &quot;AW&quot;,
-&quot;SP-CE-COMERCIO EXT&quot;, &quot;CE&quot;,
-&quot;SP-EX-SEGUROS&quot;, &quot;EX&quot;,
+&quot;SP-CE-COMERCIO EXT&quot;, &quot;CE - Aduanas&quot;,
+&quot;SP-EX-SEGUROS&quot;, &quot;EX-Seguros&quot;,
 &quot;SP-M-MARITIMO&quot;, &quot;M&quot;,
 &quot;SP-PQ-PAQUETERIA&quot;, &quot;PQ&quot;,
-&quot;SP-PTO-PUERTOS&quot;, &quot;PTO&quot;,
-&quot;SP-R-GLOBAL ROUTING&quot;, &quot;R&quot;,
+&quot;SP-PTO-PUERTOS&quot;, &quot;PTO - Puerto&quot;,
+&quot;SP-R-GLOBAL ROUTING&quot;, &quot;R - Global Routing&quot;,
 &quot;SP-SL-SERV LOGISTICO&quot;, &quot; &quot;,
 &quot;SP-T-CONSOLIDADO&quot;, &quot;T&quot;,
 &quot;SP-W-GLOBAL MARITIMO&quot;, &quot;W&quot;,
@@ -397,7 +406,7 @@
         <name>Copy_1_of_Crear_Oportunidad_Nuevos_Negocios</name>
         <label>Copy 1 of Crear Oportunidad - Nuevos Negocios</label>
         <locationX>182</locationX>
-        <locationY>1406</locationY>
+        <locationY>1514</locationY>
         <assignRecordIdToReference>OpportunityID</assignRecordIdToReference>
         <connector>
             <targetReference>SCREEN_Carga_de_Licitacion</targetReference>
@@ -454,6 +463,12 @@
             </value>
         </inputAssignments>
         <inputAssignments>
+            <field>Sales_Type__c</field>
+            <value>
+                <elementReference>Copy_1_of_Sales_Type_Picklist</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
             <field>Service_Type__c</field>
             <value>
                 <elementReference>VeriableSM</elementReference>
@@ -472,7 +487,7 @@
         <name>CRE_Oportunidad_Nuevos_Negocios</name>
         <label>Crear Oportunidad - Nuevos Negocios</label>
         <locationX>842</locationX>
-        <locationY>782</locationY>
+        <locationY>890</locationY>
         <assignRecordIdToReference>OpportunityID</assignRecordIdToReference>
         <connector>
             <targetReference>SCREEN_Carga_de_Licitacion</targetReference>
@@ -526,6 +541,12 @@
             <field>RecordTypeId</field>
             <value>
                 <elementReference>Get_Opportunity_Record_ID1.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Sales_Type__c</field>
+            <value>
+                <elementReference>Sales_Type_Picklist</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -611,7 +632,7 @@
         <name>Crear_tareas</name>
         <label>Crear tareas</label>
         <locationX>512</locationX>
-        <locationY>2462</locationY>
+        <locationY>2570</locationY>
         <connector>
             <targetReference>Seleccion_de_campanas</targetReference>
         </connector>
@@ -653,7 +674,7 @@
         <name>Get_Documentos_Licitacion</name>
         <label>Get Documentos - Licitación</label>
         <locationX>512</locationX>
-        <locationY>2054</locationY>
+        <locationY>2162</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Cuenta_con_documento_de_Licitacion</targetReference>
@@ -675,7 +696,7 @@
         <name>Get_Oportunidad_Nuevos_Negocios</name>
         <label>Get Oportunidad - Nuevos Negocios</label>
         <locationX>512</locationX>
-        <locationY>1946</locationY>
+        <locationY>2054</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Get_Documentos_Licitacion</targetReference>
@@ -733,7 +754,7 @@
         <locationY>674</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>CRE_Oportunidad_Nuevos_Negocios</targetReference>
+            <targetReference>Sales_Type</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -817,11 +838,33 @@
         <showHeader>false</showHeader>
     </screens>
     <screens>
+        <name>Copy_1_of_Sales_Type</name>
+        <label>Copy 1 of Sales Type</label>
+        <locationX>182</locationX>
+        <locationY>1406</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <connector>
+            <targetReference>Copy_1_of_Crear_Oportunidad_Nuevos_Negocios</targetReference>
+        </connector>
+        <fields>
+            <name>Copy_1_of_Sales_Type_Picklist</name>
+            <choiceReferences>Sales_Type_Field</choiceReferences>
+            <dataType>String</dataType>
+            <fieldText>Sales Type</fieldText>
+            <fieldType>DropdownBox</fieldType>
+            <isRequired>false</isRequired>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
         <description>Ventana para mostrar un mensaje por cualquier incidencia que pueda ocurrir al insertar la oportunidad</description>
         <name>FaultMessage</name>
         <label>FaultMessage</label>
         <locationX>1106</locationX>
-        <locationY>890</locationY>
+        <locationY>998</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -838,7 +881,7 @@
         <name>FaultMessage1</name>
         <label>FaultMessage</label>
         <locationX>578</locationX>
-        <locationY>1514</locationY>
+        <locationY>1622</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -873,7 +916,6 @@
                     <dataType>String</dataType>
                     <fieldText>Tipo de servicio</fieldText>
                     <fieldType>DropdownBox</fieldType>
-                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>true</isRequired>
                 </fields>
                 <fields>
@@ -883,7 +925,6 @@
                     <dataType>String</dataType>
                     <fieldText>¿El cliente ya se encuentra registrado?</fieldText>
                     <fieldType>RadioButtons</fieldType>
-                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>true</isRequired>
                 </fields>
                 <inputParameters>
@@ -909,7 +950,6 @@
                     <dataType>String</dataType>
                     <fieldText>Razon social</fieldText>
                     <fieldType>InputField</fieldType>
-                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>true</isRequired>
                 </fields>
                 <fields>
@@ -917,7 +957,6 @@
                     <dataType>String</dataType>
                     <fieldText>RFC (Opcional)</fieldText>
                     <fieldType>InputField</fieldType>
-                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>false</isRequired>
                 </fields>
                 <fields>
@@ -925,7 +964,6 @@
                     <dataType>String</dataType>
                     <fieldText>Telefono</fieldText>
                     <fieldType>InputField</fieldType>
-                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>true</isRequired>
                 </fields>
                 <fields>
@@ -933,7 +971,6 @@
                     <dataType>String</dataType>
                     <fieldText>Email</fieldText>
                     <fieldType>InputField</fieldType>
-                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>true</isRequired>
                 </fields>
                 <fields>
@@ -942,7 +979,6 @@
                     <dataType>String</dataType>
                     <fieldText>Tipo de venta</fieldText>
                     <fieldType>DropdownBox</fieldType>
-                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>true</isRequired>
                 </fields>
                 <fields>
@@ -984,14 +1020,12 @@
                     </defaultValue>
                     <fieldText>ESTATUS DE CONTACTO</fieldText>
                     <fieldType>DropdownBox</fieldType>
-                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>false</isRequired>
                 </fields>
                 <fields>
                     <name>ObservacionesComentarios</name>
                     <fieldText>Observaciones y comentarios</fieldText>
                     <fieldType>LargeTextArea</fieldType>
-                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>false</isRequired>
                 </fields>
                 <inputParameters>
@@ -1059,7 +1093,6 @@
                     <dataType>Date</dataType>
                     <fieldText>Fecha estimada de cierre</fieldText>
                     <fieldType>InputField</fieldType>
-                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>true</isRequired>
                 </fields>
                 <fields>
@@ -1068,7 +1101,6 @@
                     <dataType>String</dataType>
                     <fieldText>Currency</fieldText>
                     <fieldType>DropdownBox</fieldType>
-                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>true</isRequired>
                 </fields>
                 <inputParameters>
@@ -1097,11 +1129,33 @@
         <showHeader>false</showHeader>
     </screens>
     <screens>
+        <name>Sales_Type</name>
+        <label>Sales Type</label>
+        <locationX>842</locationX>
+        <locationY>782</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <connector>
+            <targetReference>CRE_Oportunidad_Nuevos_Negocios</targetReference>
+        </connector>
+        <fields>
+            <name>Sales_Type_Picklist</name>
+            <choiceReferences>Sales_Type_Field</choiceReferences>
+            <dataType>String</dataType>
+            <fieldText>Sales Type</fieldText>
+            <fieldType>DropdownBox</fieldType>
+            <isRequired>false</isRequired>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
         <description>Pantalla para seleccionar y cargar el documento de licitación</description>
         <name>SCREEN_Carga_de_Licitacion</name>
         <label>Carga de Licitación</label>
         <locationX>512</locationX>
-        <locationY>1838</locationY>
+        <locationY>1946</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -1186,7 +1240,6 @@
             <dataType>Date</dataType>
             <fieldText>Fecha estimada de cierre</fieldText>
             <fieldType>InputField</fieldType>
-            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
         </fields>
         <fields>
@@ -1195,7 +1248,6 @@
             <dataType>String</dataType>
             <fieldText>Currency</fieldText>
             <fieldType>DropdownBox</fieldType>
-            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
         </fields>
         <showFooter>true</showFooter>
@@ -1206,7 +1258,7 @@
         <name>SCREEN_Resumen_Nuevos_Negocios</name>
         <label>Resumen - Nuevos Negocios</label>
         <locationX>512</locationX>
-        <locationY>2678</locationY>
+        <locationY>2786</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -1260,7 +1312,7 @@
         <name>Seleccion_de_campanas</name>
         <label>Selección de campañas</label>
         <locationX>512</locationX>
-        <locationY>2570</locationY>
+        <locationY>2678</locationY>
         <connector>
             <targetReference>SCREEN_Resumen_Nuevos_Negocios</targetReference>
         </connector>
