@@ -4,4 +4,6 @@ trigger P2G_altaSap on Response__c (after insert) {
             P2G_altaSpot.processMessage(resp.Message__c);
         }
     }
+    
+    P2G_ChangeCampoControl.main(Trigger.new);
 }
