@@ -89,9 +89,8 @@ global with sharing class WsShipment {
                             }
                         }
                         when 'Finished_M' {
-                            if(ship.Equip_Unloaded__c == null) {
-                                ship.Equip_Unloaded__c = Fecha;
-                            }
+                            ship.Equip_Unloaded__c = Fecha;
+                            ship.Date_time_FN_Finished__c = Fecha;                       
                         }
                         when 'Loading_M' {
                             if(ship.Equip_Loaded__c == null) {
