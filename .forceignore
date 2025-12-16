@@ -10,3 +10,6 @@ package.xml
 
 # LWC Jest
 **/__tests__/**
+
+# Ignorar configuraciones de notificaciones de Apex (causa del error actual)
+**/apexEmailNotifications/
