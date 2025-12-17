@@ -39,4 +39,16 @@
             <section>Custom Links</section>
         </sections>
     </layouts>
+    <validationRules>
+        <errorMessage><!-- QSP-001: Usuario no permitido para modificar este campo. Solicitar la modificación del precio a comercial --></errorMessage>
+        <name>NoModificarQuoteSellPrice</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- No se puede colocar el valor de $1 en este campo --></errorMessage>
+        <name>No_se_acepta_1peso</name>
+    </validationRules>
+    <webLinks>
+        <label><!-- create_service_line --></label>
+        <name>create_service_line</name>
+    </webLinks>
 </CustomObjectTranslation>

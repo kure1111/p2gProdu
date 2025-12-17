@@ -20,4 +20,8 @@
             <section>Custom Links</section>
         </sections>
     </layouts>
+    <webLinks>
+        <label><!-- Create_service_line --></label>
+        <name>Create_service_line</name>
+    </webLinks>
 </CustomObjectTranslation>

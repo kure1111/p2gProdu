@@ -16,4 +16,12 @@
             <section>Custom Links</section>
         </sections>
     </layouts>
+    <validationRules>
+        <errorMessage><!-- CR001 - Solo se pueden poner letras y numeros en el nombre. --></errorMessage>
+        <name>CR001</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- CR002 - Solo se pueden poner letras y numeros en el numero de la placa. --></errorMessage>
+        <name>CR002</name>
+    </validationRules>
 </CustomObjectTranslation>

@@ -44,4 +44,12 @@
         <label><!-- Location --></label>
         <name>Location</name>
     </recordTypes>
+    <validationRules>
+        <errorMessage><!-- ERROR- Location no puede tener coma --></errorMessage>
+        <name>SinComas</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- The field State is required --></errorMessage>
+        <name>Validation_State</name>
+    </validationRules>
 </CustomObjectTranslation>

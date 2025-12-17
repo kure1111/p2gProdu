@@ -3086,7 +3086,6 @@ AND( {!Check_Cedula_Fiscal} = False, {!Check_Comprobante_de_Domicilio} = False, 
                     <dataType>String</dataType>
                     <fieldText>Venta</fieldText>
                     <fieldType>DropdownBox</fieldType>
-                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>true</isRequired>
                 </fields>
                 <inputParameters>
@@ -3261,7 +3260,6 @@ AND( {!Check_Cedula_Fiscal} = False, {!Check_Comprobante_de_Domicilio} = False, 
                     <dataType>String</dataType>
                     <fieldText>Nombre</fieldText>
                     <fieldType>InputField</fieldType>
-                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>true</isRequired>
                 </fields>
                 <fields>
@@ -3288,7 +3286,6 @@ AND( {!Check_Cedula_Fiscal} = False, {!Check_Comprobante_de_Domicilio} = False, 
                     <dataType>String</dataType>
                     <fieldText>Apellido</fieldText>
                     <fieldType>InputField</fieldType>
-                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>true</isRequired>
                 </fields>
                 <fields>
@@ -3333,7 +3330,6 @@ AND( {!Check_Cedula_Fiscal} = False, {!Check_Comprobante_de_Domicilio} = False, 
                     <dataType>String</dataType>
                     <fieldText>Tipo de referencia</fieldText>
                     <fieldType>InputField</fieldType>
-                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>true</isRequired>
                 </fields>
                 <fields>
@@ -3343,7 +3339,6 @@ AND( {!Check_Cedula_Fiscal} = False, {!Check_Comprobante_de_Domicilio} = False, 
                     <dataType>String</dataType>
                     <fieldText>Tipo de Contacto</fieldText>
                     <fieldType>DropdownBox</fieldType>
-                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>true</isRequired>
                 </fields>
                 <inputParameters>
@@ -3387,7 +3382,6 @@ AND( {!Check_Cedula_Fiscal} = False, {!Check_Comprobante_de_Domicilio} = False, 
                     <dataType>String</dataType>
                     <fieldText>Nombre</fieldText>
                     <fieldType>InputField</fieldType>
-                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>true</isRequired>
                 </fields>
                 <fields>
@@ -3414,7 +3408,6 @@ AND( {!Check_Cedula_Fiscal} = False, {!Check_Comprobante_de_Domicilio} = False, 
                     <dataType>String</dataType>
                     <fieldText>Apellido</fieldText>
                     <fieldType>InputField</fieldType>
-                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>true</isRequired>
                 </fields>
                 <fields>
@@ -3459,7 +3452,6 @@ AND( {!Check_Cedula_Fiscal} = False, {!Check_Comprobante_de_Domicilio} = False, 
                     <dataType>String</dataType>
                     <fieldText>Tipo de referencia</fieldText>
                     <fieldType>InputField</fieldType>
-                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>true</isRequired>
                 </fields>
                 <fields>
@@ -3468,7 +3460,6 @@ AND( {!Check_Cedula_Fiscal} = False, {!Check_Comprobante_de_Domicilio} = False, 
                     <dataType>String</dataType>
                     <fieldText>Tipo de Contacto</fieldText>
                     <fieldType>DropdownBox</fieldType>
-                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>true</isRequired>
                 </fields>
                 <inputParameters>
@@ -3633,7 +3624,6 @@ AND( {!Check_Cedula_Fiscal} = False, {!Check_Comprobante_de_Domicilio} = False, 
                     </defaultValue>
                     <fieldText>Razon Social</fieldText>
                     <fieldType>InputField</fieldType>
-                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>true</isRequired>
                 </fields>
                 <inputParameters>
@@ -3661,7 +3651,6 @@ AND( {!Check_Cedula_Fiscal} = False, {!Check_Comprobante_de_Domicilio} = False, 
                     </defaultValue>
                     <fieldText>Email</fieldText>
                     <fieldType>InputField</fieldType>
-                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>true</isRequired>
                 </fields>
                 <fields>
@@ -3672,7 +3661,6 @@ AND( {!Check_Cedula_Fiscal} = False, {!Check_Comprobante_de_Domicilio} = False, 
                     </defaultValue>
                     <fieldText>TAX ID</fieldText>
                     <fieldType>InputField</fieldType>
-                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>true</isRequired>
                 </fields>
                 <fields>
@@ -3684,7 +3672,6 @@ AND( {!Check_Cedula_Fiscal} = False, {!Check_Comprobante_de_Domicilio} = False, 
                     </defaultValue>
                     <fieldText>Servicio Prospecto</fieldText>
                     <fieldType>DropdownBox</fieldType>
-                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>true</isRequired>
                 </fields>
                 <fields>
@@ -3696,7 +3683,6 @@ AND( {!Check_Cedula_Fiscal} = False, {!Check_Comprobante_de_Domicilio} = False, 
                     </defaultValue>
                     <fieldText>Type</fieldText>
                     <fieldType>DropdownBox</fieldType>
-                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>true</isRequired>
                 </fields>
                 <fields>
@@ -3775,7 +3761,6 @@ AND( {!Check_Cedula_Fiscal} = False, {!Check_Comprobante_de_Domicilio} = False, 
                     </defaultValue>
                     <fieldText>Phone</fieldText>
                     <fieldType>InputField</fieldType>
-                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>true</isRequired>
                 </fields>
                 <fields>
@@ -3787,7 +3772,6 @@ AND( {!Check_Cedula_Fiscal} = False, {!Check_Comprobante_de_Domicilio} = False, 
                     </defaultValue>
                     <fieldText>Servicio</fieldText>
                     <fieldType>DropdownBox</fieldType>
-                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>true</isRequired>
                 </fields>
                 <fields>
@@ -3895,7 +3879,6 @@ AND( {!Check_Cedula_Fiscal} = False, {!Check_Comprobante_de_Domicilio} = False, 
                     </defaultValue>
                     <fieldText>Calle</fieldText>
                     <fieldType>InputField</fieldType>
-                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>true</isRequired>
                 </fields>
                 <fields>
@@ -3906,7 +3889,6 @@ AND( {!Check_Cedula_Fiscal} = False, {!Check_Comprobante_de_Domicilio} = False, 
                     </defaultValue>
                     <fieldText>Ciudad</fieldText>
                     <fieldType>InputField</fieldType>
-                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>true</isRequired>
                 </fields>
                 <fields>
@@ -3917,7 +3899,6 @@ AND( {!Check_Cedula_Fiscal} = False, {!Check_Comprobante_de_Domicilio} = False, 
                     </defaultValue>
                     <fieldText>País</fieldText>
                     <fieldType>InputField</fieldType>
-                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>true</isRequired>
                 </fields>
                 <inputParameters>
@@ -3939,7 +3920,6 @@ AND( {!Check_Cedula_Fiscal} = False, {!Check_Comprobante_de_Domicilio} = False, 
                     </defaultValue>
                     <fieldText>Código Postal</fieldText>
                     <fieldType>InputField</fieldType>
-                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>true</isRequired>
                 </fields>
                 <fields>
@@ -3950,7 +3930,6 @@ AND( {!Check_Cedula_Fiscal} = False, {!Check_Comprobante_de_Domicilio} = False, 
                     </defaultValue>
                     <fieldText>Estado</fieldText>
                     <fieldType>InputField</fieldType>
-                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>true</isRequired>
                 </fields>
                 <inputParameters>
@@ -3979,7 +3958,6 @@ AND( {!Check_Cedula_Fiscal} = False, {!Check_Comprobante_de_Domicilio} = False, 
                     </defaultValue>
                     <fieldText>Metodo de Pago</fieldText>
                     <fieldType>DropdownBox</fieldType>
-                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>true</isRequired>
                 </fields>
                 <fields>
@@ -3991,7 +3969,6 @@ AND( {!Check_Cedula_Fiscal} = False, {!Check_Comprobante_de_Domicilio} = False, 
                     </defaultValue>
                     <fieldText>Bank Name</fieldText>
                     <fieldType>DropdownBox</fieldType>
-                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>true</isRequired>
                 </fields>
                 <fields>
@@ -4003,7 +3980,6 @@ AND( {!Check_Cedula_Fiscal} = False, {!Check_Comprobante_de_Domicilio} = False, 
                     </defaultValue>
                     <fieldText>Uso CFDI</fieldText>
                     <fieldType>DropdownBox</fieldType>
-                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>true</isRequired>
                 </fields>
                 <inputParameters>
@@ -4026,7 +4002,6 @@ AND( {!Check_Cedula_Fiscal} = False, {!Check_Comprobante_de_Domicilio} = False, 
                     </defaultValue>
                     <fieldText>Forma de Pago</fieldText>
                     <fieldType>DropdownBox</fieldType>
-                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>true</isRequired>
                 </fields>
                 <fields>
@@ -4037,7 +4012,6 @@ AND( {!Check_Cedula_Fiscal} = False, {!Check_Comprobante_de_Domicilio} = False, 
                     </defaultValue>
                     <fieldText>Bank Account Number</fieldText>
                     <fieldType>InputField</fieldType>
-                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>true</isRequired>
                 </fields>
                 <fields>
@@ -4049,7 +4023,6 @@ AND( {!Check_Cedula_Fiscal} = False, {!Check_Comprobante_de_Domicilio} = False, 
                     </defaultValue>
                     <fieldText>Regimen Fiscal</fieldText>
                     <fieldType>DropdownBox</fieldType>
-                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>true</isRequired>
                 </fields>
                 <inputParameters>
@@ -4076,7 +4049,6 @@ AND( {!Check_Cedula_Fiscal} = False, {!Check_Comprobante_de_Domicilio} = False, 
                     </defaultValue>
                     <fieldText>Comentarios</fieldText>
                     <fieldType>LargeTextArea</fieldType>
-                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>true</isRequired>
                 </fields>
                 <inputParameters>
@@ -4123,7 +4095,6 @@ AND( {!Check_Cedula_Fiscal} = False, {!Check_Comprobante_de_Domicilio} = False, 
                     </defaultValue>
                     <fieldText>Razon Social</fieldText>
                     <fieldType>InputField</fieldType>
-                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>true</isRequired>
                 </fields>
                 <inputParameters>
@@ -4151,7 +4122,6 @@ AND( {!Check_Cedula_Fiscal} = False, {!Check_Comprobante_de_Domicilio} = False, 
                     </defaultValue>
                     <fieldText>TAX ID</fieldText>
                     <fieldType>InputField</fieldType>
-                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>true</isRequired>
                 </fields>
                 <fields>
@@ -4162,7 +4132,6 @@ AND( {!Check_Cedula_Fiscal} = False, {!Check_Comprobante_de_Domicilio} = False, 
                     </defaultValue>
                     <fieldText>Email</fieldText>
                     <fieldType>InputField</fieldType>
-                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>true</isRequired>
                 </fields>
                 <fields>
@@ -4231,7 +4200,6 @@ AND( {!Check_Cedula_Fiscal} = False, {!Check_Comprobante_de_Domicilio} = False, 
                     </defaultValue>
                     <fieldText>Plaza</fieldText>
                     <fieldType>DropdownBox</fieldType>
-                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>true</isRequired>
                 </fields>
                 <fields>
@@ -4285,7 +4253,6 @@ AND( {!Check_Cedula_Fiscal} = False, {!Check_Comprobante_de_Domicilio} = False, 
                     </defaultValue>
                     <fieldText>Phone</fieldText>
                     <fieldType>InputField</fieldType>
-                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>true</isRequired>
                 </fields>
                 <fields>
@@ -4297,7 +4264,6 @@ AND( {!Check_Cedula_Fiscal} = False, {!Check_Comprobante_de_Domicilio} = False, 
                     </defaultValue>
                     <fieldText>Servicio</fieldText>
                     <fieldType>DropdownBox</fieldType>
-                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>true</isRequired>
                 </fields>
                 <fields>
@@ -4309,7 +4275,6 @@ AND( {!Check_Cedula_Fiscal} = False, {!Check_Comprobante_de_Domicilio} = False, 
                     </defaultValue>
                     <fieldText>Type</fieldText>
                     <fieldType>DropdownBox</fieldType>
-                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>true</isRequired>
                 </fields>
                 <fields>
@@ -4321,7 +4286,6 @@ AND( {!Check_Cedula_Fiscal} = False, {!Check_Comprobante_de_Domicilio} = False, 
                     </defaultValue>
                     <fieldText>Tipo de socio de negocio</fieldText>
                     <fieldType>DropdownBox</fieldType>
-                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>true</isRequired>
                 </fields>
                 <fields>
@@ -4397,7 +4361,6 @@ AND( {!Check_Cedula_Fiscal} = False, {!Check_Comprobante_de_Domicilio} = False, 
                     </defaultValue>
                     <fieldText>Calle</fieldText>
                     <fieldType>InputField</fieldType>
-                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>true</isRequired>
                 </fields>
                 <fields>
@@ -4408,7 +4371,6 @@ AND( {!Check_Cedula_Fiscal} = False, {!Check_Comprobante_de_Domicilio} = False, 
                     </defaultValue>
                     <fieldText>Ciudad</fieldText>
                     <fieldType>InputField</fieldType>
-                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>true</isRequired>
                 </fields>
                 <fields>
@@ -4419,7 +4381,6 @@ AND( {!Check_Cedula_Fiscal} = False, {!Check_Comprobante_de_Domicilio} = False, 
                     </defaultValue>
                     <fieldText>País</fieldText>
                     <fieldType>InputField</fieldType>
-                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>true</isRequired>
                 </fields>
                 <inputParameters>
@@ -4441,7 +4402,6 @@ AND( {!Check_Cedula_Fiscal} = False, {!Check_Comprobante_de_Domicilio} = False, 
                     </defaultValue>
                     <fieldText>Codigo Postal</fieldText>
                     <fieldType>InputField</fieldType>
-                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>true</isRequired>
                 </fields>
                 <fields>
@@ -4452,7 +4412,6 @@ AND( {!Check_Cedula_Fiscal} = False, {!Check_Comprobante_de_Domicilio} = False, 
                     </defaultValue>
                     <fieldText>Estado</fieldText>
                     <fieldType>InputField</fieldType>
-                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>true</isRequired>
                 </fields>
                 <inputParameters>
@@ -4481,7 +4440,6 @@ AND( {!Check_Cedula_Fiscal} = False, {!Check_Comprobante_de_Domicilio} = False, 
                     </defaultValue>
                     <fieldText>Metodo de Pago</fieldText>
                     <fieldType>DropdownBox</fieldType>
-                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>true</isRequired>
                 </fields>
                 <fields>
@@ -4493,7 +4451,6 @@ AND( {!Check_Cedula_Fiscal} = False, {!Check_Comprobante_de_Domicilio} = False, 
                     </defaultValue>
                     <fieldText>Bank Name</fieldText>
                     <fieldType>DropdownBox</fieldType>
-                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>true</isRequired>
                 </fields>
                 <fields>
@@ -4505,7 +4462,6 @@ AND( {!Check_Cedula_Fiscal} = False, {!Check_Comprobante_de_Domicilio} = False, 
                     </defaultValue>
                     <fieldText>Uso CFDI</fieldText>
                     <fieldType>DropdownBox</fieldType>
-                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>true</isRequired>
                 </fields>
                 <inputParameters>
@@ -4528,7 +4484,6 @@ AND( {!Check_Cedula_Fiscal} = False, {!Check_Comprobante_de_Domicilio} = False, 
                     </defaultValue>
                     <fieldText>Forma de Pago</fieldText>
                     <fieldType>DropdownBox</fieldType>
-                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>true</isRequired>
                 </fields>
                 <fields>
@@ -4539,7 +4494,6 @@ AND( {!Check_Cedula_Fiscal} = False, {!Check_Comprobante_de_Domicilio} = False, 
                     </defaultValue>
                     <fieldText>Bank Account Number</fieldText>
                     <fieldType>InputField</fieldType>
-                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>true</isRequired>
                 </fields>
                 <fields>
@@ -4551,7 +4505,6 @@ AND( {!Check_Cedula_Fiscal} = False, {!Check_Comprobante_de_Domicilio} = False, 
                     </defaultValue>
                     <fieldText>Regimen Fiscal</fieldText>
                     <fieldType>DropdownBox</fieldType>
-                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>true</isRequired>
                 </fields>
                 <inputParameters>
@@ -4579,7 +4532,6 @@ AND( {!Check_Cedula_Fiscal} = False, {!Check_Comprobante_de_Domicilio} = False, 
                     </defaultValue>
                     <fieldText>Monto Credito Solicitado</fieldText>
                     <fieldType>InputField</fieldType>
-                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>true</isRequired>
                     <scale>2</scale>
                 </fields>
@@ -4591,7 +4543,6 @@ AND( {!Check_Cedula_Fiscal} = False, {!Check_Comprobante_de_Domicilio} = False, 
                     </defaultValue>
                     <fieldText>Fecha límite de Factura (fecha limite)</fieldText>
                     <fieldType>InputField</fieldType>
-                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>true</isRequired>
                 </fields>
                 <fields>
@@ -4603,7 +4554,6 @@ AND( {!Check_Cedula_Fiscal} = False, {!Check_Comprobante_de_Domicilio} = False, 
                     </defaultValue>
                     <fieldText>Tipo Evidencia Acuse</fieldText>
                     <fieldType>DropdownBox</fieldType>
-                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>true</isRequired>
                 </fields>
                 <inputParameters>
@@ -4626,7 +4576,6 @@ AND( {!Check_Cedula_Fiscal} = False, {!Check_Comprobante_de_Domicilio} = False, 
                     </defaultValue>
                     <fieldText>Dias Credito</fieldText>
                     <fieldType>DropdownBox</fieldType>
-                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>true</isRequired>
                 </fields>
                 <fields>
@@ -4637,7 +4586,6 @@ AND( {!Check_Cedula_Fiscal} = False, {!Check_Comprobante_de_Domicilio} = False, 
                     </defaultValue>
                     <fieldText>Fecha Recepcion Factura</fieldText>
                     <fieldType>InputField</fieldType>
-                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>true</isRequired>
                 </fields>
                 <fields>
@@ -4649,7 +4597,6 @@ AND( {!Check_Cedula_Fiscal} = False, {!Check_Comprobante_de_Domicilio} = False, 
                     </defaultValue>
                     <fieldText>Requiere Evidencia</fieldText>
                     <fieldType>DropdownBox</fieldType>
-                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>true</isRequired>
                 </fields>
                 <fields>
@@ -4660,7 +4607,6 @@ AND( {!Check_Cedula_Fiscal} = False, {!Check_Comprobante_de_Domicilio} = False, 
                     </defaultValue>
                     <fieldText>Requiere Orden de Compra</fieldText>
                     <fieldType>InputField</fieldType>
-                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>true</isRequired>
                 </fields>
                 <inputParameters>
@@ -4687,7 +4633,6 @@ AND( {!Check_Cedula_Fiscal} = False, {!Check_Comprobante_de_Domicilio} = False, 
                     </defaultValue>
                     <fieldText>Comentarios</fieldText>
                     <fieldType>LargeTextArea</fieldType>
-                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>true</isRequired>
                 </fields>
                 <inputParameters>
@@ -4728,7 +4673,6 @@ AND( {!Check_Cedula_Fiscal} = False, {!Check_Comprobante_de_Domicilio} = False, 
             </defaultValue>
             <fieldText>Razon Social</fieldText>
             <fieldType>InputField</fieldType>
-            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
         </fields>
         <fields>
@@ -4745,7 +4689,6 @@ AND( {!Check_Cedula_Fiscal} = False, {!Check_Comprobante_de_Domicilio} = False, 
                     </defaultValue>
                     <fieldText>Email</fieldText>
                     <fieldType>InputField</fieldType>
-                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>true</isRequired>
                 </fields>
                 <fields>
@@ -4756,7 +4699,6 @@ AND( {!Check_Cedula_Fiscal} = False, {!Check_Comprobante_de_Domicilio} = False, 
                     </defaultValue>
                     <fieldText>TAX ID</fieldText>
                     <fieldType>InputField</fieldType>
-                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>true</isRequired>
                 </fields>
                 <fields>
@@ -4768,7 +4710,6 @@ AND( {!Check_Cedula_Fiscal} = False, {!Check_Comprobante_de_Domicilio} = False, 
                     </defaultValue>
                     <fieldText>Forma de Pago</fieldText>
                     <fieldType>DropdownBox</fieldType>
-                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>true</isRequired>
                 </fields>
                 <fields>
@@ -4780,7 +4721,6 @@ AND( {!Check_Cedula_Fiscal} = False, {!Check_Comprobante_de_Domicilio} = False, 
                     </defaultValue>
                     <fieldText>Bank Name</fieldText>
                     <fieldType>DropdownBox</fieldType>
-                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>true</isRequired>
                 </fields>
                 <fields>
@@ -4792,7 +4732,6 @@ AND( {!Check_Cedula_Fiscal} = False, {!Check_Comprobante_de_Domicilio} = False, 
                     </defaultValue>
                     <fieldText>Regimen Fiscal</fieldText>
                     <fieldType>DropdownBox</fieldType>
-                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>true</isRequired>
                 </fields>
                 <fields>
@@ -4871,7 +4810,6 @@ AND( {!Check_Cedula_Fiscal} = False, {!Check_Comprobante_de_Domicilio} = False, 
                     </defaultValue>
                     <fieldText>Phone</fieldText>
                     <fieldType>InputField</fieldType>
-                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>true</isRequired>
                 </fields>
                 <fields>
@@ -4883,7 +4821,6 @@ AND( {!Check_Cedula_Fiscal} = False, {!Check_Comprobante_de_Domicilio} = False, 
                     </defaultValue>
                     <fieldText>Metodo de Pago</fieldText>
                     <fieldType>DropdownBox</fieldType>
-                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>true</isRequired>
                 </fields>
                 <fields>
@@ -4895,7 +4832,6 @@ AND( {!Check_Cedula_Fiscal} = False, {!Check_Comprobante_de_Domicilio} = False, 
                     </defaultValue>
                     <fieldText>Uso CFDI</fieldText>
                     <fieldType>DropdownBox</fieldType>
-                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>true</isRequired>
                 </fields>
                 <fields>
@@ -4906,7 +4842,6 @@ AND( {!Check_Cedula_Fiscal} = False, {!Check_Comprobante_de_Domicilio} = False, 
                     </defaultValue>
                     <fieldText>Bank Account Number</fieldText>
                     <fieldType>InputField</fieldType>
-                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>true</isRequired>
                 </fields>
                 <fields>
@@ -4918,7 +4853,6 @@ AND( {!Check_Cedula_Fiscal} = False, {!Check_Comprobante_de_Domicilio} = False, 
                     </defaultValue>
                     <fieldText>Servicio</fieldText>
                     <fieldType>DropdownBox</fieldType>
-                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>true</isRequired>
                 </fields>
                 <fields>
@@ -4930,7 +4864,6 @@ AND( {!Check_Cedula_Fiscal} = False, {!Check_Comprobante_de_Domicilio} = False, 
                     </defaultValue>
                     <fieldText>Type</fieldText>
                     <fieldType>DropdownBox</fieldType>
-                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>true</isRequired>
                 </fields>
                 <inputParameters>
@@ -4957,7 +4890,6 @@ AND( {!Check_Cedula_Fiscal} = False, {!Check_Comprobante_de_Domicilio} = False, 
                     </defaultValue>
                     <fieldText>Direccion Fiscal</fieldText>
                     <fieldType>LargeTextArea</fieldType>
-                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>true</isRequired>
                 </fields>
                 <fields>
@@ -4967,7 +4899,6 @@ AND( {!Check_Cedula_Fiscal} = False, {!Check_Comprobante_de_Domicilio} = False, 
                     </defaultValue>
                     <fieldText>Comentarios</fieldText>
                     <fieldType>LargeTextArea</fieldType>
-                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>true</isRequired>
                 </fields>
                 <inputParameters>
@@ -5014,7 +4945,6 @@ AND( {!Check_Cedula_Fiscal} = False, {!Check_Comprobante_de_Domicilio} = False, 
                     </defaultValue>
                     <fieldText>Razon Social</fieldText>
                     <fieldType>InputField</fieldType>
-                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>true</isRequired>
                 </fields>
                 <inputParameters>
@@ -5042,7 +4972,6 @@ AND( {!Check_Cedula_Fiscal} = False, {!Check_Comprobante_de_Domicilio} = False, 
                     </defaultValue>
                     <fieldText>TAX ID</fieldText>
                     <fieldType>InputField</fieldType>
-                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>true</isRequired>
                 </fields>
                 <fields>
@@ -5053,7 +4982,6 @@ AND( {!Check_Cedula_Fiscal} = False, {!Check_Comprobante_de_Domicilio} = False, 
                     </defaultValue>
                     <fieldText>Email</fieldText>
                     <fieldType>InputField</fieldType>
-                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>true</isRequired>
                 </fields>
                 <fields>
@@ -5064,7 +4992,6 @@ AND( {!Check_Cedula_Fiscal} = False, {!Check_Comprobante_de_Domicilio} = False, 
                     </defaultValue>
                     <fieldText>WCA ID</fieldText>
                     <fieldType>InputField</fieldType>
-                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>true</isRequired>
                 </fields>
                 <fields>
@@ -5076,7 +5003,6 @@ AND( {!Check_Cedula_Fiscal} = False, {!Check_Comprobante_de_Domicilio} = False, 
                     </defaultValue>
                     <fieldText>Ejecutivo de Cobranza</fieldText>
                     <fieldType>DropdownBox</fieldType>
-                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>true</isRequired>
                 </fields>
                 <fields>
@@ -5088,7 +5014,6 @@ AND( {!Check_Cedula_Fiscal} = False, {!Check_Comprobante_de_Domicilio} = False, 
                     </defaultValue>
                     <fieldText>Servicio</fieldText>
                     <fieldType>DropdownBox</fieldType>
-                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>true</isRequired>
                 </fields>
                 <fields>
@@ -5100,7 +5025,6 @@ AND( {!Check_Cedula_Fiscal} = False, {!Check_Comprobante_de_Domicilio} = False, 
                     </defaultValue>
                     <fieldText>Type</fieldText>
                     <fieldType>DropdownBox</fieldType>
-                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>true</isRequired>
                 </fields>
                 <inputParameters>
@@ -5122,7 +5046,6 @@ AND( {!Check_Cedula_Fiscal} = False, {!Check_Comprobante_de_Domicilio} = False, 
                     </defaultValue>
                     <fieldText>Phone</fieldText>
                     <fieldType>InputField</fieldType>
-                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>true</isRequired>
                 </fields>
                 <fields>
@@ -5134,7 +5057,6 @@ AND( {!Check_Cedula_Fiscal} = False, {!Check_Comprobante_de_Domicilio} = False, 
                     </defaultValue>
                     <fieldText>Dias Credito</fieldText>
                     <fieldType>DropdownBox</fieldType>
-                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>true</isRequired>
                 </fields>
                 <fields>
@@ -5146,7 +5068,6 @@ AND( {!Check_Cedula_Fiscal} = False, {!Check_Comprobante_de_Domicilio} = False, 
                     </defaultValue>
                     <fieldText>Regimen Fiscal</fieldText>
                     <fieldType>DropdownBox</fieldType>
-                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>true</isRequired>
                 </fields>
                 <fields>
@@ -5157,7 +5078,6 @@ AND( {!Check_Cedula_Fiscal} = False, {!Check_Comprobante_de_Domicilio} = False, 
                     </defaultValue>
                     <fieldText>Fecha limite Factura (fecha limite)</fieldText>
                     <fieldType>InputField</fieldType>
-                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>true</isRequired>
                 </fields>
                 <fields>
@@ -5241,7 +5161,6 @@ AND( {!Check_Cedula_Fiscal} = False, {!Check_Comprobante_de_Domicilio} = False, 
                     </defaultValue>
                     <fieldText>Direccion Fiscal</fieldText>
                     <fieldType>LargeTextArea</fieldType>
-                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>true</isRequired>
                 </fields>
                 <fields>
@@ -5251,7 +5170,6 @@ AND( {!Check_Cedula_Fiscal} = False, {!Check_Comprobante_de_Domicilio} = False, 
                     </defaultValue>
                     <fieldText>Comentarios</fieldText>
                     <fieldType>LargeTextArea</fieldType>
-                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>true</isRequired>
                 </fields>
                 <inputParameters>

@@ -24,4 +24,8 @@
             <section>Long Fields</section>
         </sections>
     </layouts>
+    <webLinks>
+        <label><!-- Upload_Images --></label>
+        <name>Upload_Images</name>
+    </webLinks>
 </CustomObjectTranslation>

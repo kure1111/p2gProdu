@@ -93,4 +93,12 @@
             <section>Storage &amp; Demurrage Data</section>
         </sections>
     </layouts>
+    <validationRules>
+        <errorMessage><!-- The route must have filled the fields &quot; First Leg Route&quot; and &quot; Second Leg Route&quot; or neither --></errorMessage>
+        <name>Check_First_and_Second_Leg_Route</name>
+    </validationRules>
+    <webLinks>
+        <label><!-- Search_Schedules --></label>
+        <name>Search_Schedules</name>
+    </webLinks>
 </CustomObjectTranslation>

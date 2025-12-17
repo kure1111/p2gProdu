@@ -24,4 +24,12 @@
             <section>Data Visualisation</section>
         </sections>
     </layouts>
+    <webLinks>
+        <label><!-- LTCP_Using_Overall_Factors --></label>
+        <name>LTCP_Using_Overall_Factors</name>
+    </webLinks>
+    <webLinks>
+        <label><!-- Upload_Capacity_Definition --></label>
+        <name>Upload_Capacity_Definition</name>
+    </webLinks>
 </CustomObjectTranslation>

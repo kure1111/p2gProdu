@@ -118,4 +118,20 @@
             <section>Units &amp; Weight</section>
         </sections>
     </layouts>
+    <validationRules>
+        <errorMessage><!-- ERROR CP-001, El producto o servicio requiere un material peligroso y embalaje --></errorMessage>
+        <name>CP001MaterialPeligroso</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- ERROR CP002 : Favor de agregar Pedimento y Fracción Arancelaria --></errorMessage>
+        <name>CP002_Pedimento_y_Fraccion_Arancelaria</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- There is already a Margin at Origin --></errorMessage>
+        <name>Margin_at_Origin_or_Destination</name>
+    </validationRules>
+    <webLinks>
+        <label><!-- Create_cargo_line --></label>
+        <name>Create_cargo_line</name>
+    </webLinks>
 </CustomObjectTranslation>

@@ -258,4 +258,12 @@
         <label><!-- Sourcing Product --></label>
         <name>Sourcing_Product</name>
     </recordTypes>
+    <webLinks>
+        <label><!-- Create_BOM_Explosion_Relation --></label>
+        <name>Create_BOM_Explosion_Relation</name>
+    </webLinks>
+    <webLinks>
+        <label><!-- Upload_Images --></label>
+        <name>Upload_Images</name>
+    </webLinks>
 </CustomObjectTranslation>

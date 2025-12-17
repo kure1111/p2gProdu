@@ -16,4 +16,8 @@
             <section>Custom Links</section>
         </sections>
     </layouts>
+    <validationRules>
+        <errorMessage><!-- Error SubP 001: El campo Reefer esta en true, se requiere llenar el campo temperatura --></errorMessage>
+        <name>Temperatura_Requerido</name>
+    </validationRules>
 </CustomObjectTranslation>

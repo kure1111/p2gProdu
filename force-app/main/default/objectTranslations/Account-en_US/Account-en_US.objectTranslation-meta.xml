@@ -2083,4 +2083,167 @@
         <label><!-- Supplier Owner or Lessee of Vehicule --></label>
         <name>supplier_Owner_or_Lessee</name>
     </recordTypes>
+    <validationRules>
+        <errorMessage><!-- AC001_Agregue el Motivo de No Venta --></errorMessage>
+        <name>AC001_Motivo_de_No_Venta</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- ACC003 - Los propietarios de las cuentas deben ser usuarios con código SlpCode activo. --></errorMessage>
+        <name>ACC003_Owner_whit_SlpCode</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Para este Cliente Ha seleccionado Unidad de Negocio Aéreo, debe capturar Annual Revenue Aéreo. --></errorMessage>
+        <name>Annual_Revenue_Aereo</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Para este Cliente Ha seleccionado Unidad de Negocio Almacenaje, debe capturar Annual Revenue Almacenaje. --></errorMessage>
+        <name>Annual_Revenue_Almacenaje</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Para este Cliente Ha seleccionado Unidad de Negocio Flete Internacional Terrestre, debe capturar Annual Revenue Flete Internacional Terrestre. --></errorMessage>
+        <name>Annual_Revenue_Flete_Internacional_Terre</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Para este Cliente Ha seleccionado Unidad de Negocio Flete Nacional Terrestre, debe capturar Annual Revenue Flete Nacional Terrestre. --></errorMessage>
+        <name>Annual_Revenue_Flete_Nacional_Terrestre</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Para este Cliente Ha seleccionado Unidad de Negocio LTL Nacional, debe capturar Annual Revenue LTL Nacional. --></errorMessage>
+        <name>Annual_Revenue_LTL_Nacional</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Para este Cliente Ha seleccionado Unidad de Negocio Maritimo, debe capturar Annual Revenue Maritimo. --></errorMessage>
+        <name>Annual_Revenue_Maritimo</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Para este Cliente Ha seleccionado Unidad de Negocio Paqueteria, debe capturar Annual Revenue Paqueteria. --></errorMessage>
+        <name>Annual_Revenue_Paqueteria</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Para este Cliente Ha seleccionado Unidad de Negocio Servicio Logistico, debe capturar Annual Revenue Servicio Logistico. --></errorMessage>
+        <name>Annual_Revenue_Servicio_Logistico</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- ERROR: You Can&apos;t Modify fields &quot;Account Source&quot; --></errorMessage>
+        <name>Bloq_Prospecto_Vtas</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage>
+            <!-- ERROR: You Can&apos;t change this &quot;CUSTOMER&quot;
+Please contact Administration Team. -->
+        </errorMessage>
+        <name>Bloq_RecType_Customer</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Para cualquier cambio o modificación del Account Name u Owner favor de comunicarse con su administrador --></errorMessage>
+        <name>Change_AccountName_AND_Owner</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Ha seleccionado Unidad de Negocio Paqueteria, debe capturar Todos los datos del apartado Datos de Recolección. --></errorMessage>
+        <name>Paqueteria_vs_datos_recoleccion</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Ha seleccionado Tipo de Pago = Credito, debe capturar el campo Credit Limit --></errorMessage>
+        <name>Tipo_pago_Credito_vs_Credit_Limit</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Ha seleccionado Tipo de Pago = Credito, debe seleccionar los dias de pago en el campo Credit Terms. --></errorMessage>
+        <name>Tipo_pago_Credito_vs_Credit_Terms</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Si es Cliente Contactado o Visitado debe llenar los campos --></errorMessage>
+        <name>Validate_ClienteContactado</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- DEBES CAPTURAR EL NUMERO DE CHAT --></errorMessage>
+        <name>Validate_Mkt_Chat</name>
+    </validationRules>
+    <webLinks>
+        <label><!-- Allocate_E_Commerce_Offers_to_Account --></label>
+        <name>Allocate_E_Commerce_Offers_to_Account</name>
+    </webLinks>
+    <webLinks>
+        <label><!-- Allocate_Families_Subfamilies_or_Items --></label>
+        <name>Allocate_Families_Subfamilies_or_Items</name>
+    </webLinks>
+    <webLinks>
+        <label><!-- Allocate_Families_Supplied_to_Account --></label>
+        <name>Allocate_Families_Supplied_to_Account</name>
+    </webLinks>
+    <webLinks>
+        <label><!-- Allocate_Price_Lists_to_Account --></label>
+        <name>Allocate_Price_Lists_to_Account</name>
+    </webLinks>
+    <webLinks>
+        <label><!-- AltavistaNews --></label>
+        <name>AltavistaNews</name>
+    </webLinks>
+    <webLinks>
+        <label><!-- Associated_Docs --></label>
+        <name>Associated_Docs</name>
+    </webLinks>
+    <webLinks>
+        <label><!-- Associated_Documents --></label>
+        <name>Associated_Documents</name>
+    </webLinks>
+    <webLinks>
+        <label><!-- Bill_of_Ladings --></label>
+        <name>Bill_of_Ladings</name>
+    </webLinks>
+    <webLinks>
+        <label><!-- GoogleMaps --></label>
+        <name>GoogleMaps</name>
+    </webLinks>
+    <webLinks>
+        <label><!-- GoogleNews --></label>
+        <name>GoogleNews</name>
+    </webLinks>
+    <webLinks>
+        <label><!-- GoogleSearch --></label>
+        <name>GoogleSearch</name>
+    </webLinks>
+    <webLinks>
+        <label><!-- HooversProfile --></label>
+        <name>HooversProfile</name>
+    </webLinks>
+    <webLinks>
+        <label><!-- New_Associated_Document --></label>
+        <name>New_Associated_Document</name>
+    </webLinks>
+    <webLinks>
+        <label><!-- Send_Attachment --></label>
+        <name>Send_Attachment</name>
+    </webLinks>
+    <webLinks>
+        <label><!-- Send_Email_with_Documents --></label>
+        <name>Send_Email_with_Documents</name>
+    </webLinks>
+    <webLinks>
+        <label><!-- Send_to_SAP_Supply_Chain_Partner --></label>
+        <name>Send_to_SAP_Supply_Chain_Partner</name>
+    </webLinks>
+    <webLinks>
+        <label><!-- Show_Billing_Address --></label>
+        <name>Show_Billing_Address</name>
+    </webLinks>
+    <webLinks>
+        <label><!-- Show_Shipping_Address --></label>
+        <name>Show_Shipping_Address</name>
+    </webLinks>
+    <webLinks>
+        <label><!-- Update_SAP --></label>
+        <name>Update_SAP</name>
+    </webLinks>
+    <webLinks>
+        <label><!-- Upload_Logo --></label>
+        <name>Upload_Logo</name>
+    </webLinks>
+    <webLinks>
+        <label><!-- Upload_Packaging_Documents --></label>
+        <name>Upload_Packaging_Documents</name>
+    </webLinks>
+    <webLinks>
+        <label><!-- YahooMaps --></label>
+        <name>YahooMaps</name>
+    </webLinks>
 </CustomObjectTranslation>

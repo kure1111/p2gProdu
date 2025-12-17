@@ -91,4 +91,28 @@
             <section>References &amp; Status</section>
         </sections>
     </layouts>
+    <webLinks>
+        <label><!-- Duplicate_Supply_Project --></label>
+        <name>Duplicate_Supply_Project</name>
+    </webLinks>
+    <webLinks>
+        <label><!-- New_Associated_Document --></label>
+        <name>New_Associated_Document</name>
+    </webLinks>
+    <webLinks>
+        <label><!-- Price_Comparison_Tool --></label>
+        <name>Price_Comparison_Tool</name>
+    </webLinks>
+    <webLinks>
+        <label><!-- Select_Items_to_Supply --></label>
+        <name>Select_Items_to_Supply</name>
+    </webLinks>
+    <webLinks>
+        <label><!-- Select_Suppliers_to_Invite --></label>
+        <name>Select_Suppliers_to_Invite</name>
+    </webLinks>
+    <webLinks>
+        <label><!-- Send_Requests_RFP --></label>
+        <name>Send_Requests_RFP</name>
+    </webLinks>
 </CustomObjectTranslation>

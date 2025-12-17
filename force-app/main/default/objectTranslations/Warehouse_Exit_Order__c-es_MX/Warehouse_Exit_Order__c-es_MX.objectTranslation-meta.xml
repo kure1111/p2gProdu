@@ -20,4 +20,8 @@
             <section>Transport Data</section>
         </sections>
     </layouts>
+    <webLinks>
+        <label><!-- Generate_Warehouse_Docs --></label>
+        <name>Generate_Warehouse_Docs</name>
+    </webLinks>
 </CustomObjectTranslation>

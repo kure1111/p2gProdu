@@ -28,4 +28,16 @@
             <section>Validacion Control Room</section>
         </sections>
     </layouts>
+    <validationRules>
+        <errorMessage><!-- Por seguridad, favor de ingresar al perfil del cliente y modificar la dirección en el apartado de Account Addresses (pestaña Related) --></errorMessage>
+        <name>Capturar_geolocalizacion</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Cuenta validada, no puede modificar la dirección --></errorMessage>
+        <name>Validacion</name>
+    </validationRules>
+    <webLinks>
+        <label><!-- NuevaUbicacion --></label>
+        <name>NuevaUbicacion</name>
+    </webLinks>
 </CustomObjectTranslation>

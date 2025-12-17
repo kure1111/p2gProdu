@@ -58,4 +58,8 @@
             <section>Custom Links</section>
         </sections>
     </layouts>
+    <validationRules>
+        <errorMessage><!-- US001 - Privilegios insufucientes para editar el registro. --></errorMessage>
+        <name>US001_No_cambiar_los_datos</name>
+    </validationRules>
 </CustomObjectTranslation>

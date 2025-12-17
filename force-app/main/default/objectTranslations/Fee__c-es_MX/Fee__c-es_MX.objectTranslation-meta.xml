@@ -107,4 +107,20 @@
         <label><!-- Servicios --></label>
         <name>Servicios</name>
     </recordTypes>
+    <validationRules>
+        <errorMessage><!-- The field &quot;Max Kgs&quot; or &quot;Max M3&quot;  or both must be filled --></errorMessage>
+        <name>Check_Max_Kgs_Max_M3</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage>
+            <!-- Record Type no compatible con SAP Service Type seleccionado.
+
+SOLICITAR ALTA DE TARIFA CON DEPARTAMENTO DE COMPRAS POR MEDIO DE CHATTER -->
+        </errorMessage>
+        <name>Service_Rate_Validation_Rule</name>
+    </validationRules>
+    <webLinks>
+        <label><!-- Attach_File --></label>
+        <name>Attach_File</name>
+    </webLinks>
 </CustomObjectTranslation>

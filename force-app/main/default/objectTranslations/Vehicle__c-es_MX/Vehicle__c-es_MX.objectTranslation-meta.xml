@@ -28,4 +28,12 @@
             <section>Tipo de unidad</section>
         </sections>
     </layouts>
+    <validationRules>
+        <errorMessage><!-- VH001 - El valor de Prima Seguro debe de ser un valor Numérico. --></errorMessage>
+        <name>VH001</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- VH002 - Solo se pueden poner letras y numeros en la placa. --></errorMessage>
+        <name>VH002</name>
+    </validationRules>
 </CustomObjectTranslation>
