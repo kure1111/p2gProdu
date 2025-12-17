@@ -31,20 +31,4 @@
             <section>Fields</section>
         </sections>
     </layouts>
-    <webLinks>
-        <label><!-- Allocate_Account_to_Price_List --></label>
-        <name>Allocate_Account_to_Price_List</name>
-    </webLinks>
-    <webLinks>
-        <label><!-- Allocate_Items_to_Price_List --></label>
-        <name>Allocate_Items_to_Price_List</name>
-    </webLinks>
-    <webLinks>
-        <label><!-- Allocate_families_to_Catalog_Price_List --></label>
-        <name>Allocate_families_to_Catalog_Price_List</name>
-    </webLinks>
-    <webLinks>
-        <label><!-- Capture_Catalog_Price_List --></label>
-        <name>Capture_Catalog_Price_List</name>
-    </webLinks>
 </CustomObjectTranslation>

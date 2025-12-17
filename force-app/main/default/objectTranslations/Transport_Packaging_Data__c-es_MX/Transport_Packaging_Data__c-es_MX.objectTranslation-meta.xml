@@ -40,16 +40,4 @@
             <section>Unallocated Lines</section>
         </sections>
     </layouts>
-    <webLinks>
-        <label><!-- Generate_TDI --></label>
-        <name>Generate_TDI</name>
-    </webLinks>
-    <webLinks>
-        <label><!-- New_Associated_Document --></label>
-        <name>New_Associated_Document</name>
-    </webLinks>
-    <webLinks>
-        <label><!-- Send_Email_with_Documents --></label>
-        <name>Send_Email_with_Documents</name>
-    </webLinks>
 </CustomObjectTranslation>

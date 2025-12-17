@@ -80,32 +80,4 @@
             <section>Waybill Number &amp; Issuing Carrier&apos;s Name and Address</section>
         </sections>
     </layouts>
-    <validationRules>
-        <errorMessage><!-- Other Charges has a maximum of 9 --></errorMessage>
-        <name>Other_Charges_Max_9</name>
-    </validationRules>
-    <validationRules>
-        <errorMessage><!-- Prepaid/Collect House (WT/VAL) must be equal to Prepaid/Collect House (Other) --></errorMessage>
-        <name>WT_VAL_equal_Other_Prepaid_Collect_House</name>
-    </validationRules>
-    <validationRules>
-        <errorMessage><!-- Prepaid / Collect (WT / VAL) must be equal to Prepaid / Collect (Other) --></errorMessage>
-        <name>WT_VAL_equals_Other_Prepaid_Collect</name>
-    </validationRules>
-    <webLinks>
-        <label><!-- Generate_House_Air_Waybill_PDF --></label>
-        <name>Generate_House_Air_Waybill_PDF</name>
-    </webLinks>
-    <webLinks>
-        <label><!-- Generate_Manifest_PDF --></label>
-        <name>Generate_Manifest_PDF</name>
-    </webLinks>
-    <webLinks>
-        <label><!-- Generate_Master_Air_Waybill_PDF --></label>
-        <name>Generate_Master_Air_Waybill_PDF</name>
-    </webLinks>
-    <webLinks>
-        <label><!-- Recalculate --></label>
-        <name>Recalculate</name>
-    </webLinks>
 </CustomObjectTranslation>

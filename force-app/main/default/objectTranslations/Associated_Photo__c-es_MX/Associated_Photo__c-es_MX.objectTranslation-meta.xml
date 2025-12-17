@@ -16,8 +16,4 @@
             <section>Custom Links</section>
         </sections>
     </layouts>
-    <webLinks>
-        <label><!-- Display_Photos --></label>
-        <name>Display_Photos</name>
-    </webLinks>
 </CustomObjectTranslation>

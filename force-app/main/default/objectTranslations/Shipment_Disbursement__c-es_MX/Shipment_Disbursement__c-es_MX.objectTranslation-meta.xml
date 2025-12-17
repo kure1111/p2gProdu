@@ -107,36 +107,4 @@
         <label><!-- Disbursement BLOQ --></label>
         <name>DisbursementStatus</name>
     </recordTypes>
-    <validationRules>
-        <errorMessage><!-- You can’t include these lines because Total(Incl. Vat) in the “Credit Note” Invoice must be negative --></errorMessage>
-        <name>Credit_Note_Negative_Amount</name>
-    </validationRules>
-    <validationRules>
-        <errorMessage><!-- You can´t include these lines because Total (Incl. VAT) in the &quot;Debit Note&quot; Invoice must be positive --></errorMessage>
-        <name>Debit_Note_Positive_Amount</name>
-    </validationRules>
-    <webLinks>
-        <label><!-- Allocate_Lines --></label>
-        <name>Allocate_Lines</name>
-    </webLinks>
-    <webLinks>
-        <label><!-- Cancel_to_SAP --></label>
-        <name>Cancel_to_SAP</name>
-    </webLinks>
-    <webLinks>
-        <label><!-- New_Associated_Document --></label>
-        <name>New_Associated_Document</name>
-    </webLinks>
-    <webLinks>
-        <label><!-- New_Disbursement_Import_Export --></label>
-        <name>New_Disbursement_Import_Export</name>
-    </webLinks>
-    <webLinks>
-        <label><!-- New_Disbursement_Shipment --></label>
-        <name>New_Disbursement_Shipment</name>
-    </webLinks>
-    <webLinks>
-        <label><!-- Send_to_SAP --></label>
-        <name>Send_to_SAP</name>
-    </webLinks>
 </CustomObjectTranslation>

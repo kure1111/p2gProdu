@@ -24,16 +24,4 @@
             <section>Schedule Information</section>
         </sections>
     </layouts>
-    <webLinks>
-        <label><!-- Deactivate --></label>
-        <name>Deactivate</name>
-    </webLinks>
-    <webLinks>
-        <label><!-- Delete --></label>
-        <name>Delete</name>
-    </webLinks>
-    <webLinks>
-        <label><!-- Refresh_Cron_Job --></label>
-        <name>Refresh_Cron_Job</name>
-    </webLinks>
 </CustomObjectTranslation>

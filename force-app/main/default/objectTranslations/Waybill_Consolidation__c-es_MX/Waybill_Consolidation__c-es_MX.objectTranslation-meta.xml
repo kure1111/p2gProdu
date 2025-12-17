@@ -16,8 +16,4 @@
             <section>Custom Links</section>
         </sections>
     </layouts>
-    <validationRules>
-        <errorMessage><!-- Name should have maximum 9 characters. --></errorMessage>
-        <name>Name_max_len_9</name>
-    </validationRules>
 </CustomObjectTranslation>

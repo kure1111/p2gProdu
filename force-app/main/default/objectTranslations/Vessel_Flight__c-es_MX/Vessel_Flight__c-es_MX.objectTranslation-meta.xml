@@ -24,12 +24,4 @@
         <label><!-- Tracking --></label>
         <name>Tracking</name>
     </quickActions>
-    <webLinks>
-        <label><!-- Search_Schedules --></label>
-        <name>Search_Schedules</name>
-    </webLinks>
-    <webLinks>
-        <label><!-- Update_Vessel --></label>
-        <name>Update_Vessel</name>
-    </webLinks>
 </CustomObjectTranslation>

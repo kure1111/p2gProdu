@@ -24,12 +24,4 @@
             <section>Space</section>
         </sections>
     </layouts>
-    <webLinks>
-        <label><!-- Create_Warehouse_Exit_Order --></label>
-        <name>Create_Warehouse_Exit_Order</name>
-    </webLinks>
-    <webLinks>
-        <label><!-- Warehouse_Inventory --></label>
-        <name>Warehouse_Inventory</name>
-    </webLinks>
 </CustomObjectTranslation>

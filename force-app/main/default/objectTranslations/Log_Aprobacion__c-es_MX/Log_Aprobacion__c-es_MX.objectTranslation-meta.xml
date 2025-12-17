@@ -16,8 +16,4 @@
             <section>Custom Links</section>
         </sections>
     </layouts>
-    <validationRules>
-        <errorMessage><!-- LA001: Sin permisos para cambiar el Status a Aprobada --></errorMessage>
-        <name>LA001_Permiso_Aprobar</name>
-    </validationRules>
 </CustomObjectTranslation>

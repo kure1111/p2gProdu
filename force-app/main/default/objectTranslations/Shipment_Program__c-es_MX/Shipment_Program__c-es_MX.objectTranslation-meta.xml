@@ -52,40 +52,4 @@
             <section>Track &amp; Trace</section>
         </sections>
     </layouts>
-    <webLinks>
-        <label><!-- Allocate_Costs_to_Shipments_Service_Lines --></label>
-        <name>Allocate_Costs_to_Shipments_Service_Lines</name>
-    </webLinks>
-    <webLinks>
-        <label><!-- Edit_Shipments_Program --></label>
-        <name>Edit_Shipments_Program</name>
-    </webLinks>
-    <webLinks>
-        <label><!-- Flightradar24_Track_Trace --></label>
-        <name>Flightradar24_Track_Trace</name>
-    </webLinks>
-    <webLinks>
-        <label><!-- Generate_All_Deliveries_Notes --></label>
-        <name>Generate_All_Deliveries_Notes</name>
-    </webLinks>
-    <webLinks>
-        <label><!-- Road_Route_Planning --></label>
-        <name>Road_Route_Planning</name>
-    </webLinks>
-    <webLinks>
-        <label><!-- Send_Email_with_the_Public_Tracking --></label>
-        <name>Send_Email_with_the_Public_Tracking</name>
-    </webLinks>
-    <webLinks>
-        <label><!-- Send_FSR --></label>
-        <name>Send_FSR</name>
-    </webLinks>
-    <webLinks>
-        <label><!-- Upload_Documents --></label>
-        <name>Upload_Documents</name>
-    </webLinks>
-    <webLinks>
-        <label><!-- Upload_Photos --></label>
-        <name>Upload_Photos</name>
-    </webLinks>
 </CustomObjectTranslation>

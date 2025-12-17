@@ -162,40 +162,4 @@
         <label><!-- Supplier Quote --></label>
         <name>Supplier_Quote</name>
     </recordTypes>
-    <webLinks>
-        <label><!-- Automatic_Calculation_of_Duties --></label>
-        <name>Automatic_Calculation_of_Duties</name>
-    </webLinks>
-    <webLinks>
-        <label><!-- Automatic_Calculation_of_Fees --></label>
-        <name>Automatic_Calculation_of_Fees</name>
-    </webLinks>
-    <webLinks>
-        <label><!-- Create_Inventory_Entries --></label>
-        <name>Create_Inventory_Entries</name>
-    </webLinks>
-    <webLinks>
-        <label><!-- Create_Quote_Fee_Lines --></label>
-        <name>Create_Quote_Fee_Lines</name>
-    </webLinks>
-    <webLinks>
-        <label><!-- Duplicate_Supplier_Quote_Order --></label>
-        <name>Duplicate_Supplier_Quote_Order</name>
-    </webLinks>
-    <webLinks>
-        <label><!-- Generate_Delivery_Order --></label>
-        <name>Generate_Delivery_Order</name>
-    </webLinks>
-    <webLinks>
-        <label><!-- New_Associated_Document --></label>
-        <name>New_Associated_Document</name>
-    </webLinks>
-    <webLinks>
-        <label><!-- Search_Schedules --></label>
-        <name>Search_Schedules</name>
-    </webLinks>
-    <webLinks>
-        <label><!-- Send_Email_with_Documents --></label>
-        <name>Send_Email_with_Documents</name>
-    </webLinks>
 </CustomObjectTranslation>

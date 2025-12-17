@@ -16,8 +16,4 @@
             <section>Custom Links</section>
         </sections>
     </layouts>
-    <webLinks>
-        <label><!-- Upload_Source_DB --></label>
-        <name>Upload_Source_DB</name>
-    </webLinks>
 </CustomObjectTranslation>
