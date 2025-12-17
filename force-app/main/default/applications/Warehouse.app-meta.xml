@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomApplication xmlns="http://soap.sforce.com/2006/04/metadata">
+    <defaultLandingTab>standard-home</defaultLandingTab>
+    <formFactors>Large</formFactors>
+    <isNavAutoTempTabsDisabled>false</isNavAutoTempTabsDisabled>
+    <isNavPersonalizationDisabled>false</isNavPersonalizationDisabled>
+    <isNavTabPersistenceDisabled>false</isNavTabPersistenceDisabled>
+    <label>Warehouses</label>
+    <tabs>standard-report</tabs>
+    <tabs>Container_Type__c</tabs>
+    <tabs>Pallet_Type__c</tabs>
+    <tabs>Warehouse__c</tabs>
+    <tabs>Warehouse_Storage_Bin__c</tabs>
+    <tabs>Response__c</tabs>
+    <tabs>FI_Monitoreo</tabs>
+    <tabs>FI_Pending_Shipped</tabs>
+    <tabs>Quotes</tabs>
+    <tabs>QA_Status_Datetimes_Report</tabs>
+    <tabs>FOLIOS_LIBERADOS</tabs>
+    <tabs>Cuotas__c</tabs>
+    <tabs>Rol_Margen__c</tabs>
+    <tabs>Catalogo_SAT__c</tabs>
+    <tabs>Carta_Porte__c</tabs>
+    <tabs>Direccion_RepartoSp__c</tabs>
+    <tabs>Caja_Remolque__c</tabs>
+    <tabs>Meta_Global__c</tabs>
+    <tabs>Debit_Note__c</tabs>
+    <tabs>Event__c</tabs>
+</CustomApplication>

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GlobalValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customValue>
+        <fullName>Flete</fullName>
+        <default>false</default>
+        <label>Flete</label>
+    </customValue>
+    <customValue>
+        <fullName>Maniobra</fullName>
+        <default>false</default>
+        <label>Maniobra</label>
+    </customValue>
+    <customValue>
+        <fullName>Demoras</fullName>
+        <default>false</default>
+        <label>Demoras</label>
+    </customValue>
+    <customValue>
+        <fullName>Repartos</fullName>
+        <default>false</default>
+        <label>Repartos</label>
+    </customValue>
+    <customValue>
+        <fullName>Estadía</fullName>
+        <default>false</default>
+        <label>Estadía</label>
+    </customValue>
+    <customValue>
+        <fullName>Falso</fullName>
+        <default>false</default>
+        <label>Falso</label>
+    </customValue>
+    <customValue>
+        <fullName>Flete local</fullName>
+        <default>false</default>
+        <label>Flete local</label>
+    </customValue>
+    <customValue>
+        <fullName>Cargo adicional</fullName>
+        <default>false</default>
+        <label>Cargo adicional</label>
+    </customValue>
+    <masterLabel>RateNameType</masterLabel>
+    <sorted>false</sorted>
+</GlobalValueSet>

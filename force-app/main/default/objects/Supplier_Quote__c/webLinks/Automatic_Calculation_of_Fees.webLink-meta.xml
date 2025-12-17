@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WebLink xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Automatic_Calculation_of_Fees</fullName>
+    <availability>online</availability>
+    <displayType>button</displayType>
+    <linkType>page</linkType>
+    <masterLabel>Automatic Calculation of Fees</masterLabel>
+    <openType>replace</openType>
+    <page>NEU_Standard_Fee_Calculation</page>
+    <protected>false</protected>
+</WebLink>

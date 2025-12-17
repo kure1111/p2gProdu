@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>65.0</apiVersion>
+    <description>Migrated from the Cambio Account Prospect Name process using Validación Record Type criteria.
+Guarda el valor anterior de Account name cuando estaba en prospect si es que ha sido cambiado</description>
+    <label>Cambio Account Prospect Name_1</label>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordUpdates>
+        <name>myRule_1_A1</name>
+        <label>Update Field Account Prospect</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <inputAssignments>
+            <field>Nombre_Prospect__c</field>
+            <value>
+                <elementReference>$Record.Name</elementReference>
+            </value>
+        </inputAssignments>
+        <inputReference>$Record</inputReference>
+    </recordUpdates>
+    <start>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>myRule_1_A1</targetReference>
+        </connector>
+        <filterFormula>OR(
+
+AND(
+
+ISCHANGED({!$Record.Name} ),
+
+OR(
+{!$Record.Record_Type_Name__c} = &quot;Prospect CS&quot;,
+{!$Record.Record_Type_Name__c} = &quot;Prospect Mkt&quot;,
+{!$Record.Record_Type_Name__c} = &quot;Prospect Bloq&quot;,
+{!$Record.Record_Type_Name__c} = &quot;Prospect&quot;
+
+)
+
+
+
+
+),
+
+AND(
+
+ISBLANK({!$Record.Nombre_Prospect__c}  ),
+OR(
+{!$Record.Record_Type_Name__c} = &quot;Prospect CS&quot;,
+{!$Record.Record_Type_Name__c} = &quot;Prospect Mkt&quot;,
+{!$Record.Record_Type_Name__c} = &quot;Prospect Bloq&quot;,
+{!$Record.Record_Type_Name__c} = &quot;Prospect&quot;
+
+))
+
+
+
+
+
+
+)</filterFormula>
+        <object>Account</object>
+        <recordTriggerType>CreateAndUpdate</recordTriggerType>
+        <triggerType>RecordAfterSave</triggerType>
+    </start>
+    <status>InvalidDraft</status>
+</Flow>

@@ -1,0 +1,54 @@
+<table border="0" cellpadding="5" width="600" cellspacing="5" height="400" >
+<tr valign="top" height="50" >
+<td tEditID="c1r1" style=" background-color:#FFFFFF; color:#000000; bEditID:r3st1; bLabel:main; font-size:12pt; font-family:arial;" aEditID="c1r1" locked="0" >
+<![CDATA[<div style="text-align: center;"><span style="font-family: &quot;Calibri Light&quot;, sans-serif; text-align: start;">**&nbsp;</span><b style="font-family: &quot;Calibri Light&quot;, sans-serif; text-align: start;">Servicio en proceso de Validación</b><span style="font-family: &quot;Calibri Light&quot;, sans-serif; text-align: start;">**</span></div>]]></td>
+</tr>
+<tr valign="top" height="300" >
+<td tEditID="c1r2" style=" background-color:#FFFFFF; color:#000000; bEditID:r3st1; bLabel:main; font-size:12pt; font-family:arial;" aEditID="c1r2" locked="0" >
+<![CDATA[<div style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt;"><p class="MsoNormal" align="center" style="text-align:center;background:white"><u><span style="font-size:12.0pt;font-family:&quot;Calibri Light&quot;,sans-serif;mso-ascii-theme-font:
+major-latin;mso-hansi-theme-font:major-latin;mso-bidi-theme-font:major-latin">&nbsp;</span></u></p>
+
+<p style="margin:0cm"><span style="font-family: &quot;Calibri Light&quot;, sans-serif;">Estimad@ Equipo de comercial, este
+Shipment ha pasado al equipo de Pak control para su validación y existe
+diferencia con la fecha y hora entre lo requerido por su cliente y el
+compromiso por el área operativa. Por favor ponerse en contacto con su
+Operativo y definir acuerdo.</span><span style="font-family:&quot;Calibri Light&quot;,sans-serif;
+mso-ascii-theme-font:major-latin;mso-hansi-theme-font:major-latin;mso-bidi-theme-font:
+major-latin"><o:p></o:p></span></p></div><div style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt;"><font face="arial"><br></font></div><div style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt;"><font face="arial"><br></font></div><div style=""><p style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt; margin: 0cm;"><b style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt;"><span style="font-family: &quot;Calibri Light&quot;, sans-serif;">Folio</span></b><span style="color: rgb(0, 0, 0); font-family: &quot;Calibri Light&quot;, sans-serif; font-size: 12pt;">:&nbsp;</span><font face="Calibri Light, sans-serif">{!Shipment__c.Name}</font><span style="color: rgb(0, 0, 0); font-family: &quot;Calibri Light&quot;, sans-serif; font-size: 12pt;">&nbsp;</span></p>
+
+<p style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt; margin: 0cm;"><b style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt;"><span style="font-family:&quot;Calibri Light&quot;,sans-serif;
+mso-ascii-theme-font:major-latin;mso-hansi-theme-font:major-latin;mso-bidi-theme-font:
+major-latin;mso-fareast-language:EN-US">Cliente</span></b><span style="color: rgb(0, 0, 0); font-family: &quot;Calibri Light&quot;, sans-serif; font-size: 12pt;">:&nbsp;&nbsp;<o:p></o:p></span><font face="Calibri Light, sans-serif">{!Shipment__c.Account_for__c}</font></p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt; background: white;"><b style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt;"><span style="font-size: 12pt; font-family: &quot;Calibri Light&quot;, sans-serif;">Ruta:</span></b><span style="color: rgb(0, 0, 0); font-family: &quot;Calibri Light&quot;, sans-serif; font-size: 12pt;">&nbsp;</span><font face="Calibri Light, sans-serif">{!Shipment__c.Route__c}</font></p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt; background: white;"><b style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt;"><span lang="EN-US" style="font-size: 12pt; font-family: &quot;Calibri Light&quot;, sans-serif;">ETD:&nbsp;</span></b><font face="Calibri Light, sans-serif"><span lang="EN-US" style=""><o:p></o:p></span>{!Shipment__c.ETD_from_Point_of_Load__c}</font></p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt; background: white;"><b style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt;"><span lang="EN-US" style="font-size: 12pt; font-family: &quot;Calibri Light&quot;, sans-serif;">ETD TIME:&nbsp;</span></b><font face="Calibri Light, sans-serif"><span lang="EN-US" style=""><o:p></o:p></span>{!Shipment__c.ETD_Time_from_Point_of_Load__c}</font></p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt; background: white;"><b style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt;"><span lang="EN-US" style="font-size: 12pt; font-family: &quot;Calibri Light&quot;, sans-serif;">ATD:&nbsp;</span></b><font face="Calibri Light, sans-serif"><span lang="EN-US" style=""><o:p></o:p></span>{!Shipment__c.ATD__c}</font></p>
+
+<p class="MsoNormal" style="background: white;"><span style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt;"><span lang="EN-US" style="font-size: 12pt; font-family: &quot;Calibri Light&quot;, sans-serif;"><b>ATD TIME:&nbsp;</b>&nbsp;</span></span><font face="Calibri Light, sans-serif">{!Shipment__c.00N4T000006oUwx}</font></p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt; background: white;"><b style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt;"><span style="font-size: 12pt; font-family: &quot;Calibri Light&quot;, sans-serif;">ETA:&nbsp;</span></b><font face="Calibri Light, sans-serif"><o:p></o:p>{!Shipment__c.ETA_Point_of_Discharge__c}</font></p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt; background: white;"><b style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt;"><span style="font-size: 12pt; font-family: &quot;Calibri Light&quot;, sans-serif;">ETA TIME:&nbsp;</span></b><font face="Calibri Light, sans-serif"><o:p></o:p>{!Shipment__c.ETA_Time_Point_of_Discharge__c}</font></p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt; background: white;"><b style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt;"><span style="font-size: 12pt; font-family: &quot;Calibri Light&quot;, sans-serif;">ATA:&nbsp;</span></b><font face="Calibri Light, sans-serif"><o:p></o:p>{!Shipment__c.ATA__c}</font></p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt; background: white;"><b style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt;"><span style="font-size: 12pt; font-family: &quot;Calibri Light&quot;, sans-serif;">ATA TIME:&nbsp;</span></b><span style="font-family: &quot;Calibri Light&quot;, sans-serif;">{!Shipment__c.00N4T000006oUx2}</span></p>
+
+<p style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt; margin: 0cm;"><b><span lang="EN-US" style="font-family:&quot;Calibri Light&quot;,sans-serif;
+mso-ascii-theme-font:major-latin;mso-hansi-theme-font:major-latin;mso-bidi-theme-font:
+major-latin;mso-ansi-language:EN-US;mso-fareast-language:EN-US">Shipment Estatus
+Planer</span></b><span lang="EN-US" style="font-family:&quot;Calibri Light&quot;,sans-serif;
+mso-ascii-theme-font:major-latin;mso-hansi-theme-font:major-latin;mso-bidi-theme-font:
+major-latin;mso-ansi-language:EN-US;mso-fareast-language:EN-US">:&nbsp;&nbsp;{!Shipment__c.Shipment_Status_Plann__c}</span></p>
+
+<p style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt; margin: 0cm;"><b style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt;"><span lang="EN-US" style="font-family: &quot;Calibri Light&quot;, sans-serif;">Operativo:&nbsp;</span></b><font face="Calibri Light, sans-serif">{!Shipment__c.Operation_Executive__c}</font></p></div><div style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt;"><font face="arial"><br></font></div><div style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt;"><font face="arial"><br></font></div>]]></td>
+</tr>
+<tr valign="top" height="50" >
+<td tEditID="c1r3" style=" background-color:#FFFFFF; color:#000000; bEditID:r3st1; bLabel:main; font-size:12pt; font-family:arial;" aEditID="c1r3" locked="0" >
+<![CDATA[]]></td>
+</tr>
+</table>

@@ -4,11 +4,13 @@ public class CPV2 {
     
     public static Comprobante getComprobante(string shipmentID, string TipoComprobante)
     {
+        
         Comprobante cp = new Comprobante();
         
         try{
             
             DataCP dcp = getDataCP(shipmentID);
+            
             
             if(dcp == null)
                 throw new BaseException('No se encontró información para este shipment.');
@@ -16,6 +18,7 @@ public class CPV2 {
             Company__c emisor = dcp.emisor;
             Customer_Quote__c datosCP=  dcp.datosCPQuote;
             shipment__C  datosCPShip = dcp.datosCPShip;
+            System.debug('dcp.datosCPShip'+dcp.datosCPShip);
             list<Direccion_RepartoSp__c> repartos = dcp.repartos;
             list<Shipment_Line__c> lines =dcp.lines;
             Vehicle__c camion = dcp.camion;
@@ -722,6 +725,7 @@ public class CPV2 {
                                              Service_Mode__c,
                                              
                                              Account_Origin_Address__c,
+                                             Account_Origin_Address__r.Name,
                                              Account_Origin_Address__r.Direcci_n__c,
                                              Account_Origin_Address__r.Calle_cat__c,
                                              Account_Origin_Address__r.Numero_Ext_cp__c,
@@ -745,6 +749,7 @@ public class CPV2 {
                                              Account_Origin_Address__r.Address_Coordinates__longitude__s,
                                              
                                              Account_Destination_Address__c,
+                                             Account_Destination_Address__r.Name,
                                              Account_Destination_Address__r.Direcci_n__c,
                                              Account_Destination_Address__r.Calle_cat__c,
                                              Account_Destination_Address__r.Numero_Ext_cp__c,
@@ -892,11 +897,58 @@ public class CPV2 {
                                              Forwarder__r.Direccion_Principal__r.Referencia__c,
                                              Forwarder__r.Direccion_Principal__r.Folio_Origen_Destino2__c,
                                              
-                                             Datos_Carta_Porte__c
+                                             Datos_Carta_Porte__c,
+                                             Direccion_Alternativa__c
                                              
                                              FROM shipment__C 
                                              where id  =: shipmentID limit 1 ];
             
+            //PROD Kimberly Id:0014T000005QxaZQAS
+            //UAT Cliente ejemplo Id: 0014T00000BIs6PQAT
+            Set<String> KIMBERLY_ACCOUNT_IDS = new Set<String>{'0014T000005QxaZQAS', '0014T00000BIs6PQAT'};
+            
+            Boolean isKimberly = (
+                datosCPShips[0].Account_for__c != null &&
+                KIMBERLY_ACCOUNT_IDS.contains(datosCPShips[0].Account_for__c)
+                );
+            
+            // FLAGS DE ORIGEN Y DESTINO ALTERNATIVO
+            
+            Boolean useAlternativeOrigin = false;
+            Boolean useAlternativeDestination = false;
+            
+            if (isKimberly && String.isNotBlank(datosCPShips[0].Direccion_Alternativa__c)) {
+                String[] partes = datosCPShips[0].Direccion_Alternativa__c.split('\\|');
+                if (partes.size() == 2) {
+                    useAlternativeOrigin = Boolean.valueOf(partes[0]);
+                    useAlternativeDestination = Boolean.valueOf(partes[1]);
+                }
+            }
+            
+            System.debug('Kimberly? ' + isKimberly +
+                ' | ORIGEN ALT? ' + useAlternativeOrigin +
+                ' | DEST ALT? ' + useAlternativeDestination);
+            
+            
+            Map<String, String> mapNewAddress = new Map<String, String>();
+            
+            if (isKimberly) {
+                mapNewAddress = P2G_AlternativeAddress.updateAddresses(
+                    datosCPShips[0],
+                useAlternativeOrigin,
+                useAlternativeDestination
+                    );
+                
+                if (mapNewAddress.containsKey('origen')) {
+                    datosCPShips[0].Account_Origin_Address__c = mapNewAddress.get('origen');
+                }
+                
+                if (mapNewAddress.containsKey('destino')) {
+                    datosCPShips[0].Account_Destination_Address__c = mapNewAddress.get('destino');
+                }
+                
+                
+            }
             
             if(datosCPShips.size()==0)
                 throw new BaseException('No existe información del shipment.');

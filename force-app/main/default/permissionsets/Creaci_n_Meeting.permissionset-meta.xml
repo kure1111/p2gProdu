@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <classAccesses>
+        <apexClass>P2G_EventMeeting</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>P2G_ShowEvents</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <description>Permisos para crear Meeting con nueva modalidad</description>
+    <hasActivationRequired>false</hasActivationRequired>
+    <label>Creación Meeting</label>
+    <tabSettings>
+        <tab>Calendario_de_Eventos</tab>
+        <visibility>Visible</visibility>
+    </tabSettings>
+</PermissionSet>

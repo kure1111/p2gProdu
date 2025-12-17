@@ -17,7 +17,7 @@
             <name>MewUser</name>
             <type>Alert</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <formula>1=1</formula>
         <triggerType>onCreateOnly</triggerType>
     </rules>

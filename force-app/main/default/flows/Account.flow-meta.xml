@@ -19,6 +19,7 @@
                 <elementReference>myVariable_current.Id</elementReference>
             </value>
         </inputParameters>
+        <nameSegment>Account.Notificacion_para_manager</nameSegment>
     </actionCalls>
     <actionCalls>
         <processMetadataValues>
@@ -42,6 +43,7 @@
                 <elementReference>myVariable_current.Id</elementReference>
             </value>
         </inputParameters>
+        <nameSegment>Account.Notificacion_a_usuario_de_cambio_de_owner</nameSegment>
     </actionCalls>
     <apiVersion>49.0</apiVersion>
     <decisions>
@@ -898,7 +900,7 @@
         <object>Account</object>
     </recordUpdates>
     <startElementReference>isChangedDecision6_myRule_5_OwnerId</startElementReference>
-    <status>Active</status>
+    <status>Obsolete</status>
     <variables>
         <name>myVariable_current</name>
         <dataType>SObject</dataType>

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<QuickAction xmlns="http://soap.sforce.com/2006/04/metadata">
+    <height>130</height>
+    <icon>Vessel2</icon>
+    <label>Tracking</label>
+    <optionsCreateFeedItem>false</optionsCreateFeedItem>
+    <page>NEU_Updated_Position_of_Ship</page>
+    <type>VisualforcePage</type>
+    <width>-100</width>
+</QuickAction>

@@ -122,9 +122,6 @@
                                         <div class="slds-truncate">Fecha y Hora Solicitud</div>
                                         </th>
                                         <th class="" scope="col">
-                                        <div class="slds-truncate">Fecha y Hora Respuesta Pricing</div>
-                                        </th>
-                                        <th class="" scope="col">
                                         <div class="slds-truncate">Status</div>
                                         </th>
                                         <th class="" scope="col">
@@ -162,11 +159,6 @@
                                             <td>
                                                 <div class="slds-truncate">
                                                     <lightning-formatted-date-time value={con.Fecha_y_hora_Solicitud__c} year="numeric" month="numeric" day="numeric" hour="2-digit"
-                                            minute="2-digit"></lightning-formatted-date-time></div>
-                                            </td>
-                                            <td>
-                                                <div class="slds-truncate">
-                                                    <lightning-formatted-date-time value={con.Fecha_y_Hora_Respuesta_Pricing__c} year="numeric" month="numeric" day="numeric" hour="2-digit"
                                             minute="2-digit"></lightning-formatted-date-time></div>
                                             </td>
                                         <td>
@@ -347,22 +339,16 @@
                                     <thead>
                                     <tr class="slds-line-height_reset">
                                         <th class="" scope="col">
-                                        <div class="slds-truncate">Date Sernd Request</div>
+                                        <div class="slds-truncate">Name</div>
                                         </th>
                                         <th class="" scope="col">
-                                        <div class="slds-truncate">Data Pricing Responded</div>
+                                        <div class="slds-truncate">Date Send Request</div>
                                         </th>
                                         <th class="" scope="col">
                                         <div class="slds-truncate">Status</div>
                                         </th>
                                         <th class="" scope="col">
-                                        <div class="slds-truncate">Service Line</div>
-                                        </th>
-                                        <th class="" scope="col">
                                         <div class="slds-truncate">Cliente</div>
-                                        </th>
-                                        <th class="" scope="col">
-                                        <div class="slds-truncate">IEQO Name</div>
                                         </th>
                                         <th class="" scope="col">
                                         <div class="slds-truncate">Pricing Executive</div>
@@ -371,19 +357,13 @@
                                         <div class="slds-truncate">Created By</div>
                                         </th>
                                         <th class="" scope="col">
-                                        <div class="slds-truncate">Quote Std. Buy Price</div>
+                                        <div class="slds-truncate">Total Services Std. Buy Amount</div>
                                         </th>
                                         <th class="" scope="col">
-                                        <div class="slds-truncate">Rate Name</div>
-                                        </th>
-                                        <th class="" scope="col">
-                                        <div class="slds-truncate">Buy Rate</div>
+                                        <div class="slds-truncate">Total Services Order Amount</div>
                                         </th>
                                         <th class="" scope="col">
                                         <div class="slds-truncate">Moneda</div>
-                                        </th>
-                                        <th class="" scope="col">
-                                        <div class="slds-truncate">Moneda IEQO</div>
                                         </th>
                                     </tr>
                                     </thead>
@@ -391,66 +371,39 @@
                                     <template for:each={listaIEQOPendiente} for:item="con">
                                         <tr class="slds-hint-parent" key={con.Id}>
                                             <td>
-                                                <div class="slds-truncate">
-                                                    <lightning-formatted-date-time value={con.Import_Export_Quote__r.Date_Send_Request__c} year="numeric" month="numeric" day="numeric" hour="2-digit"
-                                            minute="2-digit"></lightning-formatted-date-time></div>
+                                                <div style="width: max-content;" class="slds-truncate" data-id={con.Id} onclick={abrirIEQO}>
+                                                    <b><em><lightning-button variant="base" label={con.Name} title={con.Name} class="slds-m-left_x-small"></lightning-button>
+                                                    </em></b>
+                                                </div>
                                             </td>
                                             <td>
                                                 <div class="slds-truncate">
-                                                    <lightning-formatted-date-time value={con.Import_Export_Quote__r.Date_Pricing_responded__c} year="numeric" month="numeric" day="numeric" hour="2-digit"
+                                                    <lightning-formatted-date-time value={con.Date_Send_Request__c} year="numeric" month="numeric" day="numeric" hour="2-digit"
                                             minute="2-digit"></lightning-formatted-date-time></div>
                                             </td>
                                         <td>
-                                            <div class="slds-truncate">{con.Import_Export_Quote__r.Quotation_Status__c}</div>
+                                            <div class="slds-truncate">{con.Quotation_Status__c}</div>
                                         </td>
                                         <td>
-                                            <div style="width: max-content;" class="slds-truncate" data-id={con.Id} onclick={abrirServiceLine}>
-                                                <b><em><lightning-button variant="base" label={con.Name} title={con.Name} class="slds-m-left_x-small"></lightning-button>
-                                                </em></b>
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <template if:true={con.Import_Export_Quote__c}>
-                                            <template if:true={con.Import_Export_Quote__r.Account_for__c}>
-                                            <div class="slds-truncate">{con.Import_Export_Quote__r.Account_for__r.Name}</div>
-                                            </template>
+                                            <template if:true={con.Account_for__c}>
+                                                <div class="slds-truncate">{con.Account_for__r.Name}</div>
                                             </template>
                                         </td>
                                         <td>
-                                            <div style="width: max-content;" class="slds-truncate" data-id={con.Import_Export_Quote__c} onclick={abrirIEQO}>
-                                                <b><em><lightning-button variant="base" label={con.Import_Export_Quote__r.Name} title={con.Import_Export_Quote__r.Name} class="slds-m-left_x-small"></lightning-button>
-                                                </em></b>
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <template if:true={con.Import_Export_Quote__c}>
-                                            <template if:true={con.Import_Export_Quote__r.Pricing_Executive__c}>
-                                                <div class="slds-truncate">{con.Import_Export_Quote__r.Pricing_Executive__r.Name}</div>
-                                            </template>
+                                            <template if:true={con.Pricing_Executive__c}>
+                                                <div class="slds-truncate">{con.Pricing_Executive__r.Name}</div>
                                             </template>
                                         </td>
                                         <td>
-                                            <template if:true={con.Import_Export_Quote__c}>
-                                            <template if:true={con.Import_Export_Quote__r.CreatedById}>
-                                            <div class="slds-truncate">{con.Import_Export_Quote__r.CreatedBy.Name}</div>
-                                                </template>
+                                            <template if:true={con.CreatedById}>
+                                                <div class="slds-truncate">{con.CreatedBy.Name}</div>
                                             </template>
                                         </td>
                                         <td>
-                                            <div class="slds-truncate">{con.Quote_Buy_Price__c}</div>
+                                            <div class="slds-truncate">{con.Total_Services_Std_Buy_Amount__c}</div>
                                         </td>
                                         <td>
-                                            <template if:true={con.Service_Rate_Name__c}>
-                                                <div class="slds-truncate">{con.Service_Rate_Name__r.Name}</div>
-                                            </template>
-                                        </td>
-                                        <td>
-                                            <div class="slds-truncate">{con.Buy_Rate__c}</div>
-                                        </td>
-                                        <td>
-                                            <template if:true={con.Import_Export_Quote__c}>
-                                                <div class="slds-truncate">{con.Import_Export_Quote__r.CurrencyIsoCode}</div>
-                                            </template>
+                                            <div class="slds-truncate">{con.Total_Services_Sell_Amount__c}</div>
                                         </td>
                                         <td>
                                             <div class="slds-truncate">{con.CurrencyIsoCode}</div>

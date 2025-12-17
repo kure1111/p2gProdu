@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>Template para la notificación de folios Comercio Exterior en el momento que se genera un Shipment</description>
+    <encodingKey>ISO-8859-1</encodingKey>
+    <letterhead>PAk_Logos</letterhead>
+    <name>Notificación Comercio Exterior - SP Generado</name>
+    <style>freeForm</style>
+    <subject>Notificación CE - Folio a confirmar operación</subject>
+    <textOnly>Se ha aprobado una cotización, y se creó el Shipment {!Customer_Quote__c.Last_Shipment__c} al día {!Customer_Quote__c.LastModifiedDate}
+
+Solicitud de cotización aprobada por: {!Customer_Quote__c.LastModifiedBy}
+Tipo de servicio IMPAK: {!Customer_Quote__c.CE_Tipodeservicio_IMPAK__c}
+Padron IMPAK: {!Customer_Quote__c.IMPAK__c}
+Freight Mode: {!Customer_Quote__c.Freight_Mode__c}
+Border: {!Customer_Quote__c.Border__c}
+Custom: {!Customer_Quote__c.Customs__c}
+Service Mode: {!Customer_Quote__c.Service_Mode__c}
+Service Type: {!Customer_Quote__c.Service_Type__c}
+Sales Incoterm: {!Customer_Quote__c.Sales_Incoterm__c}
+State of Load: {!Customer_Quote__c.State_of_Load__c}
+State of Discharge: {!Customer_Quote__c.State_of_Discharge__c}</textOnly>
+    <type>html</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

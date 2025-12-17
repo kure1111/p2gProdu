@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Scheduler Shipment Service Line</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Scheduler Shipment Services Lines</value>
+    </caseValues>
+    <gender>Neuter</gender>
+    <layouts>
+        <layout>Scheduler Shipment Service Line Layout</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- Mail Configuration --></label>
+            <section>Mail Configuration</section>
+        </sections>
+        <sections>
+            <label><!-- Schedule Information --></label>
+            <section>Schedule Information</section>
+        </sections>
+    </layouts>
+    <webLinks>
+        <label><!-- Deactivate --></label>
+        <name>Deactivate</name>
+    </webLinks>
+    <webLinks>
+        <label><!-- Delete --></label>
+        <name>Delete</name>
+    </webLinks>
+    <webLinks>
+        <label><!-- Refresh_Cron_Job --></label>
+        <name>Refresh_Cron_Job</name>
+    </webLinks>
+</CustomObjectTranslation>

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ProcessFlowMigration xmlns="http://soap.sforce.com/2006/04/metadata">
+    <destinationFlowDefinition>Folios_sin_SP_2</destinationFlowDefinition>
+    <destinationFlowVersion>Folios_sin_SP_2-1</destinationFlowVersion>
+    <developerName>myRule_1_301RQ00000ZzvwUYAR</developerName>
+    <masterLabel>Folios sin SP_2</masterLabel>
+    <migratedCriteriaLabel>Folios sin SP</migratedCriteriaLabel>
+    <migratedCriteriaName>myRule_1</migratedCriteriaName>
+    <processVersion>Folios_sin_SP-1</processVersion>
+</ProcessFlowMigration>

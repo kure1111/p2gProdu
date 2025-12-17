@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Validacion</fullName>
+    <active>false</active>
+    <description>Una vez que control room valida la dirección esta no puede cambiar</description>
+    <errorConditionFormula>ISPICKVAL(status__c, &quot;Validado&quot;)</errorConditionFormula>
+    <errorMessage>Cuenta validada, no puede modificar la dirección</errorMessage>
+</ValidationRule>

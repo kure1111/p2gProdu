@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Certificación Proveedor / Ruta</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Certificación Proveedor / Rutas</value>
+    </caseValues>
+    <gender>Feminine</gender>
+    <layouts>
+        <layout>Certificación Proveedor / Ruta Layout</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- Ruta Frecuente 1 --></label>
+            <section>Ruta Frecuente 1</section>
+        </sections>
+        <sections>
+            <label><!-- Ruta Frecuente 10 --></label>
+            <section>Ruta Frecuente 10</section>
+        </sections>
+        <sections>
+            <label><!-- Ruta Frecuente 2 --></label>
+            <section>Ruta Frecuente 2</section>
+        </sections>
+        <sections>
+            <label><!-- Ruta Frecuente 3 --></label>
+            <section>Ruta Frecuente 3</section>
+        </sections>
+        <sections>
+            <label><!-- Ruta Frecuente 4 --></label>
+            <section>Ruta Frecuente 4</section>
+        </sections>
+        <sections>
+            <label><!-- Ruta Frecuente 5 --></label>
+            <section>Ruta Frecuente 5</section>
+        </sections>
+        <sections>
+            <label><!-- Ruta Frecuente 6 --></label>
+            <section>Ruta Frecuente 6</section>
+        </sections>
+        <sections>
+            <label><!-- Ruta Frecuente 7 --></label>
+            <section>Ruta Frecuente 7</section>
+        </sections>
+        <sections>
+            <label><!-- Ruta Frecuente 8 --></label>
+            <section>Ruta Frecuente 8</section>
+        </sections>
+        <sections>
+            <label><!-- Ruta Frecuente 9 --></label>
+            <section>Ruta Frecuente 9</section>
+        </sections>
+    </layouts>
+</CustomObjectTranslation>

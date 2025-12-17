@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Customer_Reference_Obligatorio</fullName>
+    <active>true</active>
+    <description>Cambia el campo a ser obligatorio para Shipments de tipo M, R, PTO, CE y FI.</description>
+    <errorConditionFormula>AND(
+    ISBLANK( TRIM(Account_Shipment_Reference__c) ),
+    OR(
+       CONTAINS(UPPER( Name),&quot;PTO&quot;),
+       CONTAINS(UPPER( Name),&quot;R&quot;),
+       CONTAINS(UPPER( Name),&quot;M&quot;),
+       CONTAINS(UPPER( Name),&quot;CE&quot;),
+       CONTAINS(UPPER( Name),&quot;FI&quot;)
+      ),
+     NOT(CONTAINS($Profile.Name,&quot;Admin&quot;))
+    )</errorConditionFormula>
+    <errorMessage>El campo Customer Reference necesita llenarse con la informacion apropiada para continuar.</errorMessage>
+</ValidationRule>

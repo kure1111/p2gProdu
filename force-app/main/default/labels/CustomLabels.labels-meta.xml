@@ -1,0 +1,828 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomLabels xmlns="http://soap.sforce.com/2006/04/metadata">
+    <labels>
+        <fullName>Equipo_Comercial_Nuevos_Negocios</fullName>
+        <categories>FLOW,USERID</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Equipo Comercial - Nuevos Negocios</shortDescription>
+        <value>00e4T000000zD9C,00e4T000000lL68,00e4T000000lQvM,00e4T000000lLLJ</value>
+    </labels>
+    <labels>
+        <fullName>GerenteComercialFN</fullName>
+        <categories>FLOW,USERID</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>GerenteComercialFN</shortDescription>
+        <value>0054T000000cUapQAE</value>
+    </labels>
+    <labels>
+        <fullName>GerenteComercialINTER</fullName>
+        <categories>FLOW,USERID</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>GerenteComercialINTER</shortDescription>
+        <value>0054T000000cUbcQAE</value>
+    </labels>
+    <labels>
+        <fullName>GerenteOperacionesFN</fullName>
+        <categories>FLOW,USERID</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>GerenteOperacionesFN</shortDescription>
+        <value>0054T000001ju8UQAQ</value>
+    </labels>
+    <labels>
+        <fullName>GerenteOperacionesINTER</fullName>
+        <categories>FLOW,USERID</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>GerenteOperacionesINTER</shortDescription>
+        <value>0054T000000cUddQAE</value>
+    </labels>
+    <labels>
+        <fullName>LABS_SF_AddQuestion</fullName>
+        <categories>SurveyForce</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Add Question</shortDescription>
+        <value>Add Question</value>
+    </labels>
+    <labels>
+        <fullName>LABS_SF_Anonymous</fullName>
+        <categories>SurveyForce</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Anonymous</shortDescription>
+        <value>Anonymous</value>
+    </labels>
+    <labels>
+        <fullName>LABS_SF_Answer_as</fullName>
+        <categories>SurveyForce</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Answer as</shortDescription>
+        <value>Answer as</value>
+    </labels>
+    <labels>
+        <fullName>LABS_SF_Cancel</fullName>
+        <categories>SurveyForce</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Cancel</shortDescription>
+        <value>Cancel</value>
+    </labels>
+    <labels>
+        <fullName>LABS_SF_Chatter</fullName>
+        <categories>SurveyForce</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Chatter</shortDescription>
+        <value>Chatter</value>
+    </labels>
+    <labels>
+        <fullName>LABS_SF_Chatter_Link</fullName>
+        <categories>SurveyForce</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Chatter Link</shortDescription>
+        <value>Chatter Link</value>
+    </labels>
+    <labels>
+        <fullName>LABS_SF_Community</fullName>
+        <categories>SurveyForce</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Community</shortDescription>
+        <value>Community</value>
+    </labels>
+    <labels>
+        <fullName>LABS_SF_Default_Option_Label</fullName>
+        <categories>SurveyForce</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Default Option Label</shortDescription>
+        <value>--SELECT--</value>
+    </labels>
+    <labels>
+        <fullName>LABS_SF_Detail</fullName>
+        <categories>SurveyForce</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Detail</shortDescription>
+        <value>Detail</value>
+    </labels>
+    <labels>
+        <fullName>LABS_SF_Edit</fullName>
+        <categories>SurveyForce</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Edit</shortDescription>
+        <value>Edit</value>
+    </labels>
+    <labels>
+        <fullName>LABS_SF_Email_Link_Anonymous</fullName>
+        <categories>SurveyForce</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Email Link, Anonymous</shortDescription>
+        <value>Email Link, Anonymous</value>
+    </labels>
+    <labels>
+        <fullName>LABS_SF_Email_Link_w_Contact_Case_Merge</fullName>
+        <categories>SurveyForce</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Email Link w/ Contact &amp; Case Merge</shortDescription>
+        <value>Email Link w/ Contact &amp; Case Merge</value>
+    </labels>
+    <labels>
+        <fullName>LABS_SF_Email_Link_w_Contact_Merge</fullName>
+        <categories>SurveyForce</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Email Link w/ Contact Merge</shortDescription>
+        <value>Email Link w/ Contact Merge</value>
+    </labels>
+    <labels>
+        <fullName>LABS_SF_External_Please_Create_Site</fullName>
+        <categories>SurveyForce</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>For external facing surveys, please create a site first.</shortDescription>
+        <value>For external facing surveys, please create a site first.  You may still create internal surveys without creating a site.</value>
+    </labels>
+    <labels>
+        <fullName>LABS_SF_For_community_assistance_with_Survey_Force</fullName>
+        <categories>SurveyForce</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>For community assistance with Survey Force</shortDescription>
+        <value>For community assistance with Survey Force</value>
+    </labels>
+    <labels>
+        <fullName>LABS_SF_Getting_Help</fullName>
+        <categories>SurveyForce</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Getting Help</shortDescription>
+        <value>Getting Help</value>
+    </labels>
+    <labels>
+        <fullName>LABS_SF_HeaderAndThankYou</fullName>
+        <categories>SurveyForce</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Header and Thank You</shortDescription>
+        <value>Header, Thank You &amp; CSS</value>
+    </labels>
+    <labels>
+        <fullName>LABS_SF_Installation_Guide</fullName>
+        <categories>SurveyForce</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Installation Guide</shortDescription>
+        <value>Installation Guide</value>
+    </labels>
+    <labels>
+        <fullName>LABS_SF_Learn_More</fullName>
+        <categories>SurveyForce</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Learn More</shortDescription>
+        <value>Learn More</value>
+    </labels>
+    <labels>
+        <fullName>LABS_SF_MakeANewSurvey</fullName>
+        <categories>SurveyForce</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Make A New Survey</shortDescription>
+        <value>Make A New Survey</value>
+    </labels>
+    <labels>
+        <fullName>LABS_SF_MakeNewSurvey</fullName>
+        <categories>SurveyForce</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Make New Survey</shortDescription>
+        <value>Make New Survey</value>
+    </labels>
+    <labels>
+        <fullName>LABS_SF_Make_a_Sample_Survey</fullName>
+        <categories>SurveyForce</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Make a Sample Survey</shortDescription>
+        <value>Make a Sample Survey</value>
+    </labels>
+    <labels>
+        <fullName>LABS_SF_Next_Steps</fullName>
+        <categories>SurveyForce</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Next Steps</shortDescription>
+        <value>Next Steps</value>
+    </labels>
+    <labels>
+        <fullName>LABS_SF_Open_Survey_New_Window</fullName>
+        <categories>SurveyForce</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Open Survey New Window</shortDescription>
+        <value>Open Survey (New Window)</value>
+    </labels>
+    <labels>
+        <fullName>LABS_SF_PleaseEnterTheList</fullName>
+        <categories>SurveyForce</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Please enter the list</shortDescription>
+        <value>Please enter the list of answers/responses in the field below. Each value should be separated by a new line.</value>
+    </labels>
+    <labels>
+        <fullName>LABS_SF_Question</fullName>
+        <categories>SurveyForce</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Question</shortDescription>
+        <value>Question</value>
+    </labels>
+    <labels>
+        <fullName>LABS_SF_Required</fullName>
+        <categories>SurveyForce</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Required</shortDescription>
+        <value>required</value>
+    </labels>
+    <labels>
+        <fullName>LABS_SF_RequiredQuestion</fullName>
+        <categories>SurveyForce</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Required Question</shortDescription>
+        <value>Required Question</value>
+    </labels>
+    <labels>
+        <fullName>LABS_SF_Resources</fullName>
+        <categories>SurveyForce</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Resources</shortDescription>
+        <value>Resources</value>
+    </labels>
+    <labels>
+        <fullName>LABS_SF_Results</fullName>
+        <categories>SurveyForce</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Results</shortDescription>
+        <value>Results</value>
+    </labels>
+    <labels>
+        <fullName>LABS_SF_Salesforce_Answers</fullName>
+        <categories>SurveyForce</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Salesforce Answers</shortDescription>
+        <value>the Trailblazer Community</value>
+    </labels>
+    <labels>
+        <fullName>LABS_SF_Save</fullName>
+        <categories>SurveyForce</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Save</shortDescription>
+        <value>Save</value>
+    </labels>
+    <labels>
+        <fullName>LABS_SF_SaveOrder</fullName>
+        <categories>SurveyForce</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Save Order</shortDescription>
+        <value>Save Order</value>
+    </labels>
+    <labels>
+        <fullName>LABS_SF_SelectQuestionType</fullName>
+        <categories>SurveyForce</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Select Question Type</shortDescription>
+        <value>Select Question Type</value>
+    </labels>
+    <labels>
+        <fullName>LABS_SF_Share</fullName>
+        <categories>SurveyForce</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Share</shortDescription>
+        <value>Share</value>
+    </labels>
+    <labels>
+        <fullName>LABS_SF_Share_My_Survey</fullName>
+        <categories>SurveyForce</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Share My Survey</shortDescription>
+        <value>Share My Survey</value>
+    </labels>
+    <labels>
+        <fullName>LABS_SF_Sharing_Options</fullName>
+        <categories>SurveyForce</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Sharing Options</shortDescription>
+        <value>Sharing Options</value>
+    </labels>
+    <labels>
+        <fullName>LABS_SF_SubmitSurvey</fullName>
+        <categories>SurveyForce</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Submit Survey</shortDescription>
+        <value>Submit Survey</value>
+    </labels>
+    <labels>
+        <fullName>LABS_SF_SurveyForceIsOpenSource</fullName>
+        <categories>SurveyForce</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>SurveyForce is OpenSource</shortDescription>
+        <value>Survey Force is Open Source software.  We welcome your issue reports, ideas, documentation, code tweaks and all other participation.</value>
+    </labels>
+    <labels>
+        <fullName>LABS_SF_Survey_Force_is_unsupported</fullName>
+        <categories>SurveyForce</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Survey Force is unsupported</shortDescription>
+        <value>Survey Force is unsupported.</value>
+    </labels>
+    <labels>
+        <fullName>LABS_SF_Survey_Force_on_Github</fullName>
+        <categories>SurveyForce</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Survey Force on Github</shortDescription>
+        <value>Survey Force on Github</value>
+    </labels>
+    <labels>
+        <fullName>LABS_SF_Survey_Submitted_Thank_you</fullName>
+        <categories>SurveyForce</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Your survey has been submitted. Thank you for taking our survey.</shortDescription>
+        <value>Your survey has been submitted. Thank you for taking our survey.</value>
+    </labels>
+    <labels>
+        <fullName>LABS_SF_To_submit_ideas_or_issues</fullName>
+        <categories>SurveyForce</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>To submit ideas or issues</shortDescription>
+        <value>To submit ideas or issues</value>
+    </labels>
+    <labels>
+        <fullName>LABS_SF_User_Guide</fullName>
+        <categories>SurveyForce</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>User Guide</shortDescription>
+        <value>User Guide</value>
+    </labels>
+    <labels>
+        <fullName>LABS_SF_View_Results_In_New_Window</fullName>
+        <categories>SurveyForce</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>View Results In New Window</shortDescription>
+        <value>View Results In New Window</value>
+    </labels>
+    <labels>
+        <fullName>LABS_SF_View_Sample_Survey</fullName>
+        <categories>SurveyForce</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>View Sample Survey</shortDescription>
+        <value>View Sample Survey</value>
+    </labels>
+    <labels>
+        <fullName>LABS_SF_Welcome_to_Survey_Force</fullName>
+        <categories>SurveyForce</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Welcome to Survey Force</shortDescription>
+        <value>Welcome to Survey Force</value>
+    </labels>
+    <labels>
+        <fullName>LABS_SF_X1_Create_a_sample_survey</fullName>
+        <categories>SurveyForce</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>1. Create a sample survey by clicking the button below.</shortDescription>
+        <value>1. Create a sample survey by clicking the button below.</value>
+    </labels>
+    <labels>
+        <fullName>LABS_SF_X2_External_Setup_Site</fullName>
+        <categories>SurveyForce</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>2. Set up a site if you would like to have external-facing surveys.</shortDescription>
+        <value>2. Set up a site if you would like to have external-facing surveys.</value>
+    </labels>
+    <labels>
+        <fullName>LABS_SF_X3_Start_creating_your_first_survey</fullName>
+        <categories>SurveyForce</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>3. Start creating your first survey.</shortDescription>
+        <value>3. Start creating your first survey.</value>
+    </labels>
+    <labels>
+        <fullName>LABS_SF_You_have_already_taken_this_survey</fullName>
+        <categories>SurveyForce</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>You have already taken this survey!</shortDescription>
+        <value>You have already taken this survey!</value>
+    </labels>
+    <labels>
+        <fullName>LABS_SF_Your_next_few_steps_are_easy</fullName>
+        <categories>SurveyForce</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Your next few steps are easy.</shortDescription>
+        <value>Your next few steps are easy.</value>
+    </labels>
+    <labels>
+        <fullName>LABS_SF_please_visit</fullName>
+        <categories>SurveyForce</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>please visit</shortDescription>
+        <value>please visit</value>
+    </labels>
+    <labels>
+        <fullName>LinkEncuesta</fullName>
+        <language>es_MX</language>
+        <protected>false</protected>
+        <shortDescription>LinkEncuestaEvaluacionClientes</shortDescription>
+        <value>https://pak2gologistics.my.site.com/2GoEncuesta/survey/runtimeApp.app?invitationId=0KiRQ000000iYu1&amp;surveyName=encuesta_proveedores_2024&amp;UUID=8bb50ca4-6985-451f-9893-6dba3a945d19</value>
+    </labels>
+    <labels>
+        <fullName>OC_Email_CuentasPorPagar</fullName>
+        <categories>FLOW</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Email Cuentas por pagar</shortDescription>
+        <value>lorena.quiroga@pak2go.com,omar.arriaga@pak2go.com,nayeli.martinez@pak2go.com,jonatan.leal@pak2go.com</value>
+    </labels>
+    <labels>
+        <fullName>Operation_Executive</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Operation Executive</shortDescription>
+        <value>005RQ000000115JYAQ</value>
+    </labels>
+    <labels>
+        <fullName>Operation_Executive2</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Operation Executive 2</shortDescription>
+        <value>0054T000001jpXoQAI</value>
+    </labels>
+    <labels>
+        <fullName>Operation_Executive_CE</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Operation Executive CE</shortDescription>
+        <value>005RQ000002TyhBYAS</value>
+    </labels>
+    <labels>
+        <fullName>QPDF_Aereo</fullName>
+        <categories>Quotation PDF</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>QPDF Aéreo</shortDescription>
+        <value>Air</value>
+    </labels>
+    <labels>
+        <fullName>QPDF_Atencion</fullName>
+        <categories>Quotation PDF</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>QPDF Atención</shortDescription>
+        <value>Brand Name</value>
+    </labels>
+    <labels>
+        <fullName>QPDF_Correo</fullName>
+        <categories>Quotation PDF</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>QPDF Correo</shortDescription>
+        <value>Email</value>
+    </labels>
+    <labels>
+        <fullName>QPDF_Credit_Days</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>QPDF_Credit_Days</shortDescription>
+        <value>Credit Days</value>
+    </labels>
+    <labels>
+        <fullName>QPDF_Divisa</fullName>
+        <categories>Quotation PDF</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>QPDF Divisa</shortDescription>
+        <value>Currency</value>
+    </labels>
+    <labels>
+        <fullName>QPDF_Ejecutivo</fullName>
+        <categories>Quotation PDF</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>QPDF Ejecutivo</shortDescription>
+        <value>Executive</value>
+    </labels>
+    <labels>
+        <fullName>QPDF_Empresa</fullName>
+        <categories>Quotation PDF</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>QPDF Empresa</shortDescription>
+        <value>Company</value>
+    </labels>
+    <labels>
+        <fullName>QPDF_Exportacion</fullName>
+        <categories>Quotation PDF</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>QPDF Exportación</shortDescription>
+        <value>Export</value>
+    </labels>
+    <labels>
+        <fullName>QPDF_Fecha</fullName>
+        <categories>Quotation PDF</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>QPDF Fecha</shortDescription>
+        <value>Date</value>
+    </labels>
+    <labels>
+        <fullName>QPDF_Flete</fullName>
+        <categories>Quotation PDF</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>QPDF Flete</shortDescription>
+        <value>Freight</value>
+    </labels>
+    <labels>
+        <fullName>QPDF_Folio</fullName>
+        <categories>Quotation PDF</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>QPDF Folio</shortDescription>
+        <value>Folio</value>
+    </labels>
+    <labels>
+        <fullName>QPDF_Importacion</fullName>
+        <categories>Quotation PDF</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>QPDF Importación</shortDescription>
+        <value>Import</value>
+    </labels>
+    <labels>
+        <fullName>QPDF_Internacional</fullName>
+        <categories>Quotation PDF</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>QPDF Internacional</shortDescription>
+        <value>International</value>
+    </labels>
+    <labels>
+        <fullName>QPDF_Maritimo</fullName>
+        <categories>Quotation PDF</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>QPDF Marítimo</shortDescription>
+        <value>Sea</value>
+    </labels>
+    <labels>
+        <fullName>QPDF_Movil</fullName>
+        <categories>Quotation PDF</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>QPDF Móvil</shortDescription>
+        <value>Mobile</value>
+    </labels>
+    <labels>
+        <fullName>QPDF_Nacional</fullName>
+        <categories>Quotation PDF</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>QPDF Nacional</shortDescription>
+        <value>National</value>
+    </labels>
+    <labels>
+        <fullName>QPDF_Notas</fullName>
+        <categories>Quotation PDF</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>QPDF Notas</shortDescription>
+        <value>NOTES</value>
+    </labels>
+    <labels>
+        <fullName>QPDF_Oferta_N</fullName>
+        <categories>Quotation PDF</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>QPDF Oferta Nº</shortDescription>
+        <value>Offer Nº</value>
+    </labels>
+    <labels>
+        <fullName>QPDF_Origin</fullName>
+        <categories>Quotation PDF</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>QPDF_Origin</shortDescription>
+        <value>Origin</value>
+    </labels>
+    <labels>
+        <fullName>QPDF_Precio</fullName>
+        <categories>Quotation PDF</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>QPDF Precio</shortDescription>
+        <value>Price</value>
+    </labels>
+    <labels>
+        <fullName>QPDF_Propuesta</fullName>
+        <categories>Quotation PDF</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>QPDF_Propuesta</shortDescription>
+        <value>COMMERCIAL PROPOSAL</value>
+    </labels>
+    <labels>
+        <fullName>QPDF_Service_type</fullName>
+        <categories>Quotation PDF</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>QPDF_Service_type</shortDescription>
+        <value>Folio de Servicio</value>
+    </labels>
+    <labels>
+        <fullName>QPDF_Tarifa</fullName>
+        <categories>Quotation PDF</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>QPDF Tarifa</shortDescription>
+        <value>Rate</value>
+    </labels>
+    <labels>
+        <fullName>QPDF_Telefono</fullName>
+        <categories>Quotation PDF</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>QPDF Teléfono</shortDescription>
+        <value>Phone</value>
+    </labels>
+    <labels>
+        <fullName>QPDF_Terrestre</fullName>
+        <categories>Quotation PDF</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>QPDF Terrestre</shortDescription>
+        <value>Ground</value>
+    </labels>
+    <labels>
+        <fullName>QPDF_Unidades</fullName>
+        <categories>Quotation PDF</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>QPDF_Unidades</shortDescription>
+        <value>Units</value>
+    </labels>
+    <labels>
+        <fullName>QPDF_Vigencia</fullName>
+        <categories>Quotation PDF</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>QPDF Vigencia</shortDescription>
+        <value>Validity</value>
+    </labels>
+    <labels>
+        <fullName>QPDF_destination</fullName>
+        <categories>Quotation PDF</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>QPDF_destination</shortDescription>
+        <value>Destination</value>
+    </labels>
+    <labels>
+        <fullName>QPDF_destionation</fullName>
+        <categories>Quotation PDF</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>QPDF_destionation</shortDescription>
+        <value>Destination</value>
+    </labels>
+    <labels>
+        <fullName>QPDF_executive_data</fullName>
+        <categories>Quotation PDF</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>QPDF_executive_data</shortDescription>
+        <value>EXECUTIVE DATA</value>
+    </labels>
+    <labels>
+        <fullName>QPDF_table_mode</fullName>
+        <categories>Quotation PDF</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>QPDF_table_mode</shortDescription>
+        <value>Modality</value>
+    </labels>
+    <labels>
+        <fullName>QPDF_table_product</fullName>
+        <categories>Quotation PDF</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>QPDF_table_product</shortDescription>
+        <value>Product</value>
+    </labels>
+    <labels>
+        <fullName>QPDF_table_qty</fullName>
+        <categories>Quotation PDF</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>QPDF_table_qty</shortDescription>
+        <value>Quantity</value>
+    </labels>
+    <labels>
+        <fullName>QPDF_table_service</fullName>
+        <categories>Quotation PDF</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>QPDF_table_service</shortDescription>
+        <value>Service</value>
+    </labels>
+    <labels>
+        <fullName>QPDF_table_tp</fullName>
+        <categories>Quotation PDF</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>QPDF_table_tp</shortDescription>
+        <value>T.P.</value>
+    </labels>
+    <labels>
+        <fullName>QPDF_table_up</fullName>
+        <categories>Quotation PDF</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>QPDF_table_up</shortDescription>
+        <value>U.P.</value>
+    </labels>
+    <labels>
+        <fullName>QPDF_table_warning</fullName>
+        <categories>Quotation PDF</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>QPDF_table_warning</shortDescription>
+        <value>Do not risk, ensure your merchandise</value>
+    </labels>
+    <labels>
+        <fullName>QPDF_table_warning_vat</fullName>
+        <categories>Quotation PDF</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>QPDF_table_warning_vat</shortDescription>
+        <value>The quotation does not include VAT</value>
+    </labels>
+    <labels>
+        <fullName>SkipSAPTrigger</fullName>
+        <categories>SAP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>SkipSAPTrigger</shortDescription>
+        <value>False</value>
+    </labels>
+    <labels>
+        <fullName>aprobadorMargenRol</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>aprobador Margen Rol</shortDescription>
+        <value>roberto.ceron@2gologistics.com</value>
+    </labels>
+    <labels>
+        <fullName>excludedSapErrorUserIds</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>excludedSapErrorUserIds</shortDescription>
+        <value>0054T000001iQkXQAU</value>
+    </labels>
+</CustomLabels>

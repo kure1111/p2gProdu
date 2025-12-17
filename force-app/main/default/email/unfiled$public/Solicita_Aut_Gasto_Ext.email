@@ -1,0 +1,14 @@
+<table border="0" cellpadding="5" width="600" cellspacing="5" height="400" >
+<tr valign="top" height="50" >
+<td tEditID="c1r1" style=" background-color:#FFFFFF; bEditID:r3st1; color:#000000; bLabel:main; font-size:12pt; font-family:arial;" aEditID="c1r1" locked="0" >
+<![CDATA[<div style="text-align: center;"><b style=""><font style="background-color: rgb(255, 255, 255);" size="4" color="#ff0000">**SOLICITUD DE AUTORIZACION DE GASTOS EXTRAS EN EL EMBARQUE**</font></b></div>]]></td>
+</tr>
+<tr valign="top" height="300" >
+<td tEditID="c1r2" style=" background-color:#FFFFFF; bEditID:r3st1; color:#000000; bLabel:main; font-size:12pt; font-family:arial;" aEditID="c1r2" locked="0" >
+<![CDATA[<div style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt;"><font face="arial"><br></font></div><div style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt;"><font face="arial"><br></font></div><div style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt;"><font face="arial">Se solicita la Autorizacion de los Gastos Extras en este Embarque, favor de confirmar Recepción de esta Solicitud y continuar con el proceso.</font></div><div style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt;"><font face="arial"><br></font></div><div style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt;"><span style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt;">Shipment:&nbsp;</span><font face="arial"><b>{!Shipment__c.Name}</b></font></div><div style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt;"><br></div><div style="color: rgb(0, 0, 0);"><font face="Times New Roman, Times, serif">Shipment Sell Price (Venta):&nbsp;{!Shipment__c.Total_Services_Sell_Amount__c}</font></div><div style="color: rgb(0, 0, 0);"><font face="Times New Roman, Times, serif">Shipment Buy Price (Costo):&nbsp;{!Shipment__c.Total_Services_Std_Buy_Amount__c}</font></div><div style=""><div style="color: rgb(0, 0, 0); font-size: 12pt;"><br></div></div>]]></td>
+</tr>
+<tr valign="top" height="50" >
+<td tEditID="c1r3" style=" background-color:#FFFFFF; bEditID:r3st1; color:#000000; bLabel:main; font-size:12pt; font-family:arial;" aEditID="c1r3" locked="0" >
+<![CDATA[<div style=""><font face="arial" style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt;">Para mayor detalle consultar:&nbsp;</font><font color="#000099" face="arial">{!Shipment__c.Link}</font></div>]]></td>
+</tr>
+</table>

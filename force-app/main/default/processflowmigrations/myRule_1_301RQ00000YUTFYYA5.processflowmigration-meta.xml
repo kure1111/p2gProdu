@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ProcessFlowMigration xmlns="http://soap.sforce.com/2006/04/metadata">
+    <destinationFlowDefinition>Update_OC_Shipment_B2</destinationFlowDefinition>
+    <destinationFlowVersion>Update_OC_Shipment_B2-1</destinationFlowVersion>
+    <developerName>myRule_1_301RQ00000YUTFYYA5</developerName>
+    <masterLabel>Update OC Shipment B2</masterLabel>
+    <migratedCriteriaLabel>P.O. Number changed</migratedCriteriaLabel>
+    <migratedCriteriaName>myRule_1</migratedCriteriaName>
+    <processVersion>Update_OC_Shipment-1</processVersion>
+</ProcessFlowMigration>

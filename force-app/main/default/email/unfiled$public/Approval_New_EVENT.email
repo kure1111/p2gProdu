@@ -1,0 +1,14 @@
+<table border="0" cellpadding="5" width="600" cellspacing="5" height="400" >
+<tr valign="top" height="50" >
+<td tEditID="c1r1" style=" background-color:#FFFFFF; bEditID:r3st1; color:#000000; bLabel:main; font-size:12pt; font-family:arial;" aEditID="c1r1" locked="0" >
+<![CDATA[<div style="text-align: center;"><span style="font-size: 12pt;"><b style=""><font style="" color="#ff0000">**New Approval Request**</font></b></span></div>]]></td>
+</tr>
+<tr valign="top" height="300" >
+<td tEditID="c1r2" style=" background-color:#FFFFFF; bEditID:r3st1; color:#000000; bLabel:main; font-size:12pt; font-family:arial;" aEditID="c1r2" locked="0" >
+<![CDATA[<font face="arial" style=""><span style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt;">Se ha creado una solicitud para la Aprobacion de una nueva CITA (</span>{!Account.Name}<span style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt;">).</span></font><div style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt;"><br></div><div style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt;">Solicitado por:&nbsp;{!Event.CreatedBy}&nbsp;</div><div style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt;">Inicio:&nbsp;{!Event.StartDateTime} - Fin:&nbsp;{!Event.EndDateTime}</div><div style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt;"><font face="arial"><br></font></div><div style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt;"><font face="arial">Step Process Approval: Pending Approval</font></div><div style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt;"><br></div><div style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt;"><br></div>]]></td>
+</tr>
+<tr valign="top" height="50" >
+<td tEditID="c1r3" style=" background-color:#FFFFFF; bEditID:r3st1; color:#000000; bLabel:main; font-size:12pt; font-family:arial;" aEditID="c1r3" locked="0" >
+<![CDATA[<font face="arial" style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt;"><span style="font-size: 12pt;">Para mayor detalle consultar:</span></font><i style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt;"><font face="arial"><span style="font-size: 12pt;">&nbsp;</span></font></i><font face="arial"><i>{!Event.Link}</i></font>]]></td>
+</tr>
+</table>

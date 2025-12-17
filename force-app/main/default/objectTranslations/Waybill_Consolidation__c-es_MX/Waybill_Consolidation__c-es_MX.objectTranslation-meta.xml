@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Waybill Consolidation</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Waybill Consolidations</value>
+    </caseValues>
+    <gender>Neuter</gender>
+    <layouts>
+        <layout>Waybill Consolidation Layout</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+    </layouts>
+    <validationRules>
+        <errorMessage><!-- Name should have maximum 9 characters. --></errorMessage>
+        <name>Name_max_len_9</name>
+    </validationRules>
+</CustomObjectTranslation>

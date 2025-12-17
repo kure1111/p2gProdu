@@ -14,6 +14,7 @@
                 <elementReference>$Record.Id</elementReference>
             </value>
         </inputParameters>
+        <nameSegment>Invoice__c.Cancel_invoice</nameSegment>
     </actionCalls>
     <apiVersion>64.0</apiVersion>
     <description>Migrated from the: Cancel Invoice workflow rule

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Source DB</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Sources DBs</value>
+    </caseValues>
+    <gender>Neuter</gender>
+    <layouts>
+        <layout>Source DB Layout</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+    </layouts>
+    <webLinks>
+        <label><!-- Upload_Source_DB --></label>
+        <name>Upload_Source_DB</name>
+    </webLinks>
+</CustomObjectTranslation>

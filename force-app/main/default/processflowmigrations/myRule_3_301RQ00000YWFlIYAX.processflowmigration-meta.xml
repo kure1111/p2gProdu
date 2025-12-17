@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ProcessFlowMigration xmlns="http://soap.sforce.com/2006/04/metadata">
+    <destinationFlowDefinition>Shipment_AwaitingLoadV22_1</destinationFlowDefinition>
+    <destinationFlowVersion>Shipment_AwaitingLoadV22_1-1</destinationFlowVersion>
+    <developerName>myRule_3_301RQ00000YWFlIYAX</developerName>
+    <masterLabel>Shipment AwaitingLoadV22_1</masterLabel>
+    <migratedCriteriaLabel>AwiatingUnload</migratedCriteriaLabel>
+    <migratedCriteriaName>myRule_3</migratedCriteriaName>
+    <processVersion>Shipment_AwaitingLoad-4</processVersion>
+</ProcessFlowMigration>

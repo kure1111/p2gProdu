@@ -20,6 +20,7 @@
                 <elementReference>myVariable_current.Id</elementReference>
             </value>
         </inputParameters>
+        <nameSegment>Customer_Quote__c.Margen_Operativo_menor_a_0</nameSegment>
     </actionCalls>
     <actionCalls>
         <processMetadataValues>
@@ -44,6 +45,7 @@
                 <elementReference>myVariable_current.Id</elementReference>
             </value>
         </inputParameters>
+        <nameSegment>Customer_Quote__c.Folios_sin_SP</nameSegment>
     </actionCalls>
     <actionCalls>
         <processMetadataValues>
@@ -68,6 +70,7 @@
                 <elementReference>myVariable_current.Id</elementReference>
             </value>
         </inputParameters>
+        <nameSegment>Customer_Quote__c.Folios_sin_SP</nameSegment>
     </actionCalls>
     <apiVersion>50.0</apiVersion>
     <assignments>

@@ -33,6 +33,7 @@
                 <stringValue>Servicio Confirmado</stringValue>
             </value>
         </inputParameters>
+        <nameSegment>emailSimple</nameSegment>
     </actionCalls>
     <apiVersion>54.0</apiVersion>
     <description>Envia correo a owner de IEQ</description>

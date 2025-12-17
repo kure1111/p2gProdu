@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <encodingKey>ISO-8859-1</encodingKey>
+    <letterhead>Letterhead_Importante</letterhead>
+    <name>Cancelacion Disbursement</name>
+    <style>formalLetter</style>
+    <subject>Solicitud de Cancelacion - {!Shipment_Disbursement__c.Name} - {!Shipment_Disbursement__c.Account__c}</subject>
+    <textOnly>**CANCELAR ORDEN DE COMPRA**
+Favor de confirmar Recepción de esta Solicitud y continUar con el proceso.
+
+Disbursement: {!Shipment_Disbursement__c.Name}
+Shipment:  {!Shipment_Disbursement__c.Shipment_Number__c}
+Carrier: {!Shipment_Disbursement__c.Account__c}
+Status: {!Shipment_Disbursement__c.Disbursement_Status__c}
+
+
+Comentarios: {!Shipment_Disbursement__c.Comments__c}
+Para mayor detalle consultar: {!Shipment_Disbursement__c.Link}</textOnly>
+    <type>html</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

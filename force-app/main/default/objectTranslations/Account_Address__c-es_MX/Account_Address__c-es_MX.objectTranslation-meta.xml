@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Account Address</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Accounts Addresses</value>
+    </caseValues>
+    <gender>Neuter</gender>
+    <layouts>
+        <layout>Account Address Layout</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- Datos Espejo --></label>
+            <section>Datos Espejo</section>
+        </sections>
+        <sections>
+            <label><!-- Dirección Timbrado SAT --></label>
+            <section>Dirección Timbrado SAT</section>
+        </sections>
+        <sections>
+            <label><!-- Validacion Control Room --></label>
+            <section>Validacion Control Room</section>
+        </sections>
+    </layouts>
+    <validationRules>
+        <errorMessage><!-- Por seguridad, favor de ingresar al perfil del cliente y modificar la dirección en el apartado de Account Addresses (pestaña Related) --></errorMessage>
+        <name>Capturar_geolocalizacion</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Cuenta validada, no puede modificar la dirección --></errorMessage>
+        <name>Validacion</name>
+    </validationRules>
+    <webLinks>
+        <label><!-- NuevaUbicacion --></label>
+        <name>NuevaUbicacion</name>
+    </webLinks>
+</CustomObjectTranslation>

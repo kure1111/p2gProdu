@@ -2,6 +2,18 @@
 <ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Validate_Date_time_Finished_monitoreo</fullName>
     <active>true</active>
-    <errorConditionFormula>AND(NOT(ISBLANK(Date_time_FN_Finished__c)),ISCHANGED(Date_time_FN_Finished__c))</errorConditionFormula>
+    <errorConditionFormula>OR(
+   AND(
+       CONTAINS(Name, &quot;FN&quot;),
+       NOT(ISBLANK(Date_time_FN_Finished__c)),
+       ISCHANGED(Date_time_FN_Finished__c),
+       NOT(CONTAINS($Profile.Name,&quot;Admin&quot;))
+       ),
+    AND(
+       NOT(CONTAINS(Name , &quot;FN&quot;)),
+       NOT(ISBLANK(PRIORVALUE(Date_time_FN_Finished__c))),
+       ISCHANGED(Date_time_FN_Finished__c)
+       )
+  )</errorConditionFormula>
     <errorMessage>No se puede modificar la fecha Date time Finished monitoreo</errorMessage>
 </ValidationRule>

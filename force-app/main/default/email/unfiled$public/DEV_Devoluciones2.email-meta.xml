@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <encodingKey>ISO-8859-1</encodingKey>
+    <letterhead>Lettherhead_Notification</letterhead>
+    <name>DEV_Devoluciones2</name>
+    <style>formalLetter</style>
+    <subject>Estatus Devolución</subject>
+    <textOnly>EMBARQUE CON DEVOLUCIÓN
+
+Estimado equipo, este embarque requiere de su seguimiento en el proceso de devolución de mercancía con cliente
+
+
+Favor de confirmar Recepción de esta Solicitud y continuar con el seguimiento.
+
+
+Shipment Status Monitoreo: {!Shipment__c.Shipment_Status_Mon__c}
+
+
+Shipment: {!Shipment__c.Number__c}
+
+Cliente: {!Shipment__c.Account_for__c}
+
+Route: {!Shipment__c.Route__c}
+
+Carrier: {!Shipment__c.Carrier__c}
+
+Operation Executive: {!Shipment__c.Operation_Executive__c}
+
+Sales Executive Account: {!Shipment__c.Account_owner__c}
+
+Special Note 1: {!Shipment__c.Special_Notes__c}</textOnly>
+    <type>html</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

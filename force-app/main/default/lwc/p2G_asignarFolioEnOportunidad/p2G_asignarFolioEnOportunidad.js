@@ -84,6 +84,8 @@ export default class P2G_asignarFolioEnOportunidad extends LightningModal {
             if((this.grupo === 'SP-PQ-PAQUETERIA') || (this.grupo === 'SP-WH-ALMACENAJE') || (this.grupo === 'SP-T-CONSOLIDADO')){
                 console.log('Entra en el if de grupo');
                 this.crearPqWhT = true;
+            }else{
+                this.agregarDireccion = true;
             }
         }else{
             this.foliosParaCrear = this.foliosParaCrear - 1;
@@ -348,5 +350,56 @@ export default class P2G_asignarFolioEnOportunidad extends LightningModal {
     //para crear los tipos PQ, WH, T
     cerrarDirecciones(){
         this.crearPqWhT = false;
+    }
+    //agregar direcciones
+    @track agregarDireccion = false;
+    @track abrirComponenteBusqueda = false;
+    
+    noConoce(){
+        this.agregarDireccion = false;
+        const updatedlistRutas = this.listRutas.map( (item) => { 
+            console.log('El item id: ', item.id ,' el producto ', this.idProducto);
+            if (item.id === this.idProducto) { 
+                return {...item, existeDireccion: 'Sin asignar dirección'};
+            } 
+            return item; });
+        this.listRutas = updatedlistRutas;
+        console.log('la lista mod: ', this.listRutas);
+    }
+    siConoce(){
+        this.agregarDireccion = true;
+        this.abrirComponenteBusqueda = true;
+        //pasar origen y destino
+    }
+    recibirDatos(event) {
+        this.datosRecibidos = event.detail;
+        console.log('Lo que llega: ', this.idProducto);
+        console.log('Datos recibidos:', this.datosRecibidos);
+        if(this.datosRecibidos.seCerro === 'si'){
+            this.agregarDireccion = false;
+            this.abrirComponenteBusqueda = false;
+            const updatedlistRutas = this.listRutas.map( (item) => { 
+                console.log('El item id: ', item.id ,' el producto ', this.idProducto);
+                if (item.id === this.idProducto) { 
+                    return {...item, seCrea:  false,};
+                } 
+                return item; });
+            this.listRutas = updatedlistRutas;
+            console.log('la lista mod: ', this.listRutas);
+        }else{
+            console.log('entra al else');
+            console.log('El origen id: ', this.datosRecibidos.idOrigen ,' el destino id ', this.datosRecibidos.idDestino);
+            const updatedlistRutas = this.listRutas.map( (item) => { 
+                console.log('El item id: ', item.id ,' el producto ', this.idProducto);
+                if (item.id === this.idProducto) { 
+                    return {...item, idAddressOrigen: this.datosRecibidos.idOrigen, idAddressDestino:  this.datosRecibidos.idDestino, existeDireccion: 'Se asigno dirección'};
+                } 
+                return item; });
+            this.listRutas = updatedlistRutas;
+            console.log('la lista mod: ', this.listRutas);
+            this.idProducto = '';
+            this.abrirComponenteBusqueda = false;
+            this.agregarDireccion = false;
+        }
     }
 }

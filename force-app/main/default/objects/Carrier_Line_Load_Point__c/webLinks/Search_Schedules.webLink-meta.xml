@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WebLink xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Search_Schedules</fullName>
+    <availability>online</availability>
+    <displayType>button</displayType>
+    <linkType>javascript</linkType>
+    <masterLabel>Search Ocean Schedules</masterLabel>
+    <openType>onClickJavaScript</openType>
+    <protected>false</protected>
+    <url>if(&apos;{! Carrier_Line_Load_Point__c.Port_Airport_of_Load__c }&apos; == &apos;&apos; || &apos;{! Carrier_Line_Load_Point__c.Country_of_Load__c }&apos; == &apos;&apos; || &apos;{! Carrier_Line_Load_Point__c.Port_Airport_of_Discharge__c }&apos; == &apos;&apos; || &apos;{! Carrier_Line_Load_Point__c.Country_of_Discharge__c }&apos; == &apos;&apos;) 
+{ 
+var message = &apos;FIELDS MISSING:\n\n\n&apos;; 
+
+if(&apos;{!Carrier_Line_Load_Point__c.Port_Airport_of_Load__c}&apos; == &apos;&apos;) 
+message += &apos;Port of Load.\n\n&apos;; 
+if(&apos;{!Carrier_Line_Load_Point__c.Country_of_Load__c}&apos; == &apos;&apos;) 
+message += &apos;Country of Load.\n\n&apos;; 
+if(&apos;{!Carrier_Line_Load_Point__c.Port_Airport_of_Discharge__c}&apos; == &apos;&apos;) 
+message += &apos;Port of Discharge.\n\n&apos;; 
+if(&apos;{!Carrier_Line_Load_Point__c.Country_of_Discharge__c}&apos; == &apos;&apos;) 
+message += &apos;Country of Discharge.\n\n&apos;; 
+
+alert(message); 
+} 
+else 
+{ 
+var pdate=new Date(); 
+
+window.open(&quot;http://www.joc.com/sailings/Sailings-SearchResults?ORIGIN=&quot;+&apos;{!Carrier_Line_Load_Point__c.Port_Airport_of_Load__c}&apos;+&quot;,%20&quot;+&apos;{!Carrier_Line_Load_Point__c.Country_of_Load__c}&apos;+&quot;&amp;direction=&amp;destination=&quot;+&apos;{!Carrier_Line_Load_Point__c.Port_Airport_of_Discharge__c}&apos;+&quot;,%20&quot;+&apos;{!Carrier_Line_Load_Point__c.Country_of_Discharge__c}&apos;+&quot;&amp;carrier=&amp;vesselTypes=&amp;days=30&amp;date=&quot;+(pdate.getMonth()+1)+&quot;/&quot;+pdate.getDate()+&quot;/&quot;+ pdate.getFullYear());
+}</url>
+</WebLink>

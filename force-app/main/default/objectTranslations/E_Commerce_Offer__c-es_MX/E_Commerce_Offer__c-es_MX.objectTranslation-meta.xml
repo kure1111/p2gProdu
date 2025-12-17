@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>E-Commerce Offer</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>E-Commerce Offers</value>
+    </caseValues>
+    <gender>Neuter</gender>
+    <layouts>
+        <layout>E-Commerce Offer Layout</layout>
+        <sections>
+            <label><!-- Common information for Products &amp; Services --></label>
+            <section>Common information for Products &amp; Services</section>
+        </sections>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- Information just for Products --></label>
+            <section>Information just for Products</section>
+        </sections>
+    </layouts>
+</CustomObjectTranslation>

@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Service Rate</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Services Rates</value>
+    </caseValues>
+    <gender>Neuter</gender>
+    <layouts>
+        <layout>Air Freight Layout</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- Followers Administration --></label>
+            <section>Followers Administration</section>
+        </sections>
+        <sections>
+            <label><!-- Route Data --></label>
+            <section>Route Data</section>
+        </sections>
+        <sections>
+            <label><!-- Surcharges --></label>
+            <section>Surcharges</section>
+        </sections>
+        <sections>
+            <label><!-- Tipo Retención SAT --></label>
+            <section>Tipo Retención SAT</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>Local Transport Layout</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- Followers Administration --></label>
+            <section>Followers Administration</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>Other Service Charges Layout</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- Followers Administration --></label>
+            <section>Followers Administration</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>Sea/Ground Freight Layout</layout>
+        <sections>
+            <label><!-- Cost Detail --></label>
+            <section>Cost Detail</section>
+        </sections>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- Route Data --></label>
+            <section>Route Data</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>Service Rate Community Layout</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- Route Data --></label>
+            <section>Route Data</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>Service Rate Layout</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+    </layouts>
+    <recordTypes>
+        <label><!-- Air Freight --></label>
+        <name>Air_Freight</name>
+    </recordTypes>
+    <recordTypes>
+        <label><!-- Sea/Ground Freight --></label>
+        <name>Fee_Freight</name>
+    </recordTypes>
+    <recordTypes>
+        <label><!-- Local Transport --></label>
+        <name>Fee_Local_Transport</name>
+    </recordTypes>
+    <recordTypes>
+        <label><!-- Other Service Charges --></label>
+        <name>Other_Fees</name>
+    </recordTypes>
+    <recordTypes>
+        <label><!-- Servicios --></label>
+        <name>Servicios</name>
+    </recordTypes>
+    <validationRules>
+        <errorMessage><!-- The field &quot;Max Kgs&quot; or &quot;Max M3&quot;  or both must be filled --></errorMessage>
+        <name>Check_Max_Kgs_Max_M3</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage>
+            <!-- Record Type no compatible con SAP Service Type seleccionado.
+
+SOLICITAR ALTA DE TARIFA CON DEPARTAMENTO DE COMPRAS POR MEDIO DE CHATTER -->
+        </errorMessage>
+        <name>Service_Rate_Validation_Rule</name>
+    </validationRules>
+    <webLinks>
+        <label><!-- Attach_File --></label>
+        <name>Attach_File</name>
+    </webLinks>
+</CustomObjectTranslation>

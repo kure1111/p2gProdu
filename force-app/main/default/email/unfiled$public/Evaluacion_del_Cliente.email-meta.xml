@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>Notificacion de Shipment Finalizado - Evaluacion del Cliente</description>
+    <encodingKey>ISO-8859-1</encodingKey>
+    <letterhead>Lettherhead_Notification</letterhead>
+    <name>Evaluacion del Cliente</name>
+    <style>formalLetter</style>
+    <subject>Evaluación del Servicio - {!Shipment__c.Account_for__c}</subject>
+    <textOnly>**EMBARQUE COMPLETADO**
+“Estimado {!Shipment__c.Account_for__c}
+
+Esperamos que haya disfrutado contar con nuestros servicios y ser parte de la familia Pak2Go.
+
+
+Pak2Go se esfuerza continuamente para exceder sus expectativas y hace todo lo posible para asegurar que usted reciba el mejor servicio de ellos.
+
+
+Es por eso que nos es de suma importancia conocer opiniones con relación a su reciente experiencia de servicio el {!Shipment__c.CreatedDate} en nombre de Pak2Go.
+
+
+Para responder a nuestra breve encuesta de Pak2Go, simplemente haga clic en el link a continuación.”
+Para mayor detalle consultar:</textOnly>
+    <type>html</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

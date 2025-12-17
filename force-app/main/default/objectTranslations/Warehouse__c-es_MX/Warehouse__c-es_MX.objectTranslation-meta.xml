@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Warehouse</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Warehouses</value>
+    </caseValues>
+    <gender>Neuter</gender>
+    <layouts>
+        <layout>Warehouse Layout</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- Location --></label>
+            <section>Location</section>
+        </sections>
+        <sections>
+            <label><!-- Space --></label>
+            <section>Space</section>
+        </sections>
+    </layouts>
+    <webLinks>
+        <label><!-- Create_Warehouse_Exit_Order --></label>
+        <name>Create_Warehouse_Exit_Order</name>
+    </webLinks>
+    <webLinks>
+        <label><!-- Warehouse_Inventory --></label>
+        <name>Warehouse_Inventory</name>
+    </webLinks>
+</CustomObjectTranslation>

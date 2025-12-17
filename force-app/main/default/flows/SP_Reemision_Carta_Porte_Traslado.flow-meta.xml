@@ -26,6 +26,7 @@
                 <elementReference>$Record.Operation_Executive__c</elementReference>
             </value>
         </inputParameters>
+        <nameSegment>NewTask</nameSegment>
     </actionCalls>
     <actionCalls>
         <name>Post_Update_Files_Shipment</name>
@@ -50,6 +51,7 @@
                 <elementReference>$Record.Id</elementReference>
             </value>
         </inputParameters>
+        <nameSegment>chatterPost</nameSegment>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </actionCalls>
     <apiVersion>61.0</apiVersion>

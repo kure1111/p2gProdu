@@ -1,0 +1,42 @@
+<table border="0" cellpadding="5" width="600" cellspacing="5" height="400" >
+<tr valign="top" height="50" >
+<td tEditID="c1r1" style=" background-color:#FFFFFF; bEditID:r3st1; color:#000000; bLabel:main; font-size:12pt; font-family:arial;" aEditID="c1r1" locked="0" >
+<![CDATA[<div style="text-align: center;"><b style=""><font color="#666666" size="4" style="background-color: rgb(255, 255, 255);">**EMBARQUE COMPLETADO**</font></b></div>]]></td>
+</tr>
+<tr valign="top" height="300" >
+<td tEditID="c1r2" style=" background-color:#FFFFFF; bEditID:r3st1; color:#000000; bLabel:main; font-size:12pt; font-family:arial;" aEditID="c1r2" locked="0" >
+<![CDATA[<div style=""><div style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt;">
+
+</div><p style="margin:0cm;margin-bottom:.0001pt;background:white;vertical-align:&#10;top"><i><span style='font-family:"Arial",sans-serif;color:#666666'>“<span style="background:white">Estimado&nbsp;&nbsp;</span><u1:p></u1:p>{!Shipment__c.Account_for__c}</span></i><span style='font-family:"Arial",sans-serif;color:black'></span></p><div style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt;">
+
+</div><p style="margin:0cm;margin-bottom:.0001pt;background:white;vertical-align:&#10;top;font-variant-ligatures: normal;font-variant-caps: normal;orphans: 2;&#10;text-align:start;widows: 2;-webkit-text-stroke-width: 0px;text-decoration-style: initial;&#10;text-decoration-color: initial;word-spacing:0px"><i><span style='font-family:&#10;"Arial",sans-serif;color:#666666'>Esperamos que haya disfrutado contar con
+nuestros servicios y ser parte de la familia Pak2Go.</span></i><span style='font-family:"Arial",sans-serif;color:black'></span></p><div style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt;">
+
+<u1:p></u1:p>
+
+</div><p style="margin:0cm;margin-bottom:.0001pt;background:white;vertical-align:&#10;top;font-variant-ligatures: normal;font-variant-caps: normal;orphans: 2;&#10;text-align:start;widows: 2;-webkit-text-stroke-width: 0px;text-decoration-style: initial;&#10;text-decoration-color: initial;word-spacing:0px"><span style='font-family:"Arial",sans-serif;&#10;color:black'>&nbsp;</span></p><div style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt;">
+
+</div><p style="margin:0cm;margin-bottom:.0001pt;background:white;vertical-align:&#10;top;font-variant-ligatures: normal;font-variant-caps: normal;orphans: 2;&#10;text-align:start;widows: 2;-webkit-text-stroke-width: 0px;text-decoration-style: initial;&#10;text-decoration-color: initial;word-spacing:0px"><i><span style='font-family:&#10;"Arial",sans-serif;color:#666666'>Pak2Go se esfuerza continuamente para exceder
+sus expectativas y hace todo lo posible para asegurar que usted reciba el mejor
+servicio de ellos.</span></i><span style='font-family:"Arial",sans-serif;&#10;color:black'></span></p><div style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt;">
+
+<u1:p></u1:p>
+
+</div><p style="margin:0cm;margin-bottom:.0001pt;background:white;vertical-align:&#10;top;font-variant-ligatures: normal;font-variant-caps: normal;orphans: 2;&#10;text-align:start;widows: 2;-webkit-text-stroke-width: 0px;text-decoration-style: initial;&#10;text-decoration-color: initial;word-spacing:0px"><span style='font-family:"Arial",sans-serif;&#10;color:black'>&nbsp;</span></p><div style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt;">
+
+</div><p style="margin:0cm;margin-bottom:.0001pt;background:white;vertical-align:&#10;top;font-variant-ligatures: normal;font-variant-caps: normal;orphans: 2;&#10;text-align:start;widows: 2;-webkit-text-stroke-width: 0px;text-decoration-style: initial;&#10;text-decoration-color: initial;word-spacing:0px"><i><span style='font-family:&#10;"Arial",sans-serif;color:#666666'>Es por eso que nos es de suma importancia
+conocer opiniones con relación a su reciente experiencia de servicio el
+{!Shipment__c.CreatedDate}&nbsp;en nombre de Pak2Go.</span></i><span style='font-family:"Arial",sans-serif;color:black'></span></p><div style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt;">
+
+<u1:p></u1:p>
+
+</div><p style="margin:0cm;margin-bottom:.0001pt;background:white;vertical-align:&#10;top;font-variant-ligatures: normal;font-variant-caps: normal;orphans: 2;&#10;text-align:start;widows: 2;-webkit-text-stroke-width: 0px;text-decoration-style: initial;&#10;text-decoration-color: initial;word-spacing:0px"><span style='font-family:"Arial",sans-serif;&#10;color:black'>&nbsp;</span></p><div style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt;">
+
+</div><p style="margin:0cm;margin-bottom:.0001pt;background:white;vertical-align:&#10;top;font-variant-ligatures: normal;font-variant-caps: normal;orphans: 2;&#10;text-align:start;widows: 2;-webkit-text-stroke-width: 0px;text-decoration-style: initial;&#10;text-decoration-color: initial;word-spacing:0px"><i><span style='font-family:&#10;"Arial",sans-serif;color:#666666'>Para responder a nuestra breve encuesta de
+Pak2Go, simplemente haga clic en el link a continuación.”</span></i></p><p align="center" style="background: white; margin: 0cm 0cm 0pt; font-family: arial; font-size: 12pt; word-spacing: 0px; vertical-align: top; orphans: 2; widows: 2; -webkit-text-stroke-width: 0px;"><font color="#666666">{!Shipment__c.00N4T000005tVdZ}</font><br></p><b></b><i></i><u></u><sub></sub><sup></sup><strike></strike><div style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt;"><font color="#666666"></font><br></div><div style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt;"><br></div><div style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt;"><br></div><div style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt;"><br></div></div>]]></td>
+</tr>
+<tr valign="top" height="50" >
+<td tEditID="c1r3" style=" background-color:#FFFFFF; bEditID:r3st1; color:#000000; bLabel:main; font-size:12pt; font-family:arial;" aEditID="c1r3" locked="0" >
+<![CDATA[<br>]]></td>
+</tr>
+</table>

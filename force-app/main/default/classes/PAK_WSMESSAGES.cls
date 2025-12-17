@@ -1,5 +1,5 @@
 global class PAK_WSMESSAGES {
-	global class MESSAGE{
+    global class MESSAGE{
         webservice String Shipment {get;set;}
         webservice String Account {get;set;}
         webservice String Invoice {get;set;}
@@ -11,7 +11,7 @@ global class PAK_WSMESSAGES {
     webservice static list<status> SFMESSAGES(MESSAGE[] lsEntity){
         list<status> result = new list<status>();
         Response__c RES = new Response__c();
-       	Boolean Bandera = true;
+         Boolean Bandera = true;
         try{
             for(MESSAGE R: lsEntity){
                 list<Shipment__c> S = new list<Shipment__c>();
@@ -19,7 +19,7 @@ global class PAK_WSMESSAGES {
                 List<OrderItem> orderItems = [SELECT Id, ShipServLineId__c, ItemStatus_SAP__c FROM OrderItem WHERE ShipServLineId__c=:R.ShipmentLine LIMIT 1];
                 list<Shipment_Disbursement__c> DISBURSEMENT = new list<Shipment_Disbursement__c>();
                 list<Invoice__c> INVOICE = new list<Invoice__c>();
-                S = [Select Id,RecordTypeId,AUTORIZAR_GASTO_EXTRA__c,NotificarGastoExtra__c,Status_Shipment__c,OrdenVenta__c,Date_Receive_from_SAP__c,SolicitudCompra__c, Account_for__r.Venta_Sap__c From Shipment__c Where Id=:R.Shipment];
+                S = [Select Id,RecordTypeId,AUTORIZAR_GASTO_EXTRA__c,/*NotificarGastoExtra__c,*/Status_Shipment__c,OrdenVenta__c,Date_Receive_from_SAP__c,SolicitudCompra__c, Account_for__r.Venta_Sap__c From Shipment__c Where Id=:R.Shipment];
                 DISBURSEMENT = [Select Id,Name,Etapa__c,RecordTypeId,OrdenCompra__c,Disbursement_Status__c, Date_Receive_from_SAP__c, Total_Invoice_SAP__c, Total_Excl_VAT__c from Shipment_Disbursement__c Where Id=:R.Disbursement limit 1];
                 INVOICE = [Select Id, Name, RecordTypeId, Date_Receive_from_SAP__c, Invoice_Status__c, FolioEntrega__c, Total_Invoice_SAP__c, Total_Excl_VAT__c,Shipment__c from Invoice__c Where Id=:R.Invoice limit 1];
                          
@@ -31,13 +31,9 @@ global class PAK_WSMESSAGES {
                     Bandera = false;
                 }
                 RES.Type__c = 'CONFIRM';
+                                
                 RES.Message__c = R.Message;
-                if(R.Message.contains('Open') || R.Message.contains('Closed')){
-                    Bandera = false;
-                    Boolean value = R.Message == 'Open' ? false : true;
-                    orderItems[0].ItemStatus_SAP__c = value;
-                    update orderItems[0];
-                    RES.Message__c = R.ShipmentLine + ' - ' + R.Message;
+                if(R.Message.contains('Open') || R.Message.contains('Closed')){ Bandera = false; Boolean value = R.Message == 'Open' ? false : true; orderItems[0].ItemStatus_SAP__c = value; update orderItems[0]; RES.Message__c = R.ShipmentLine + ' - ' + R.Message;
                 }
                 if(R.Message.contains('Orden de Venta creada')){
                     Bandera = false;
@@ -47,25 +43,17 @@ global class PAK_WSMESSAGES {
                         update order[0];
                     }
                 }
-                if(R.Message.contains('Orden de Compra Creada')){
-                    Bandera = false;
-                    if(DISBURSEMENT[0].OrdenCompra__c == null || DISBURSEMENT[0].OrdenCompra__c == ''){
-                    	DISBURSEMENT[0].RecordTypeId = [Select Id From RecordType Where DeveloperName = 'DisbursementStatus' limit 1].Id;
-                        DISBURSEMENT[0].Disbursement_Status__c = 'Send to Sap';
-                        DISBURSEMENT[0].Etapa__c ='En Proceso';
-                        DISBURSEMENT[0].Date_Receive_from_SAP__c = Datetime.now();
-                        DISBURSEMENT[0].OrdenCompra__c = R.Message.SubstringAfter('Orden de Compra Creada: ');
-                        update DISBURSEMENT[0];
+                if(R.Message.contains('Orden de Compra Creada')){ Bandera = false; if(DISBURSEMENT[0].OrdenCompra__c == null || DISBURSEMENT[0].OrdenCompra__c == ''){ DISBURSEMENT[0].RecordTypeId = [Select Id From RecordType Where DeveloperName = 'DisbursementStatus' limit 1].Id; DISBURSEMENT[0].Disbursement_Status__c = 'Send to Sap'; DISBURSEMENT[0].Etapa__c ='En Proceso'; DISBURSEMENT[0].Date_Receive_from_SAP__c = Datetime.now(); DISBURSEMENT[0].OrdenCompra__c = R.Message.SubstringAfter('Orden de Compra Creada: '); update DISBURSEMENT[0];
                     }
                 }
                 
                 if(R.Message.contains('Entrega Creada No.')){
                     Bandera = false;
                     if(INVOICE[0].FolioEntrega__c == null || INVOICE[0].FolioEntrega__c == ''){
-                    	INVOICE[0].RecordTypeId = [Select Id From RecordType Where DeveloperName = 'InvoiceStatus' limit 1].Id;
+                      INVOICE[0].RecordTypeId = [Select Id From RecordType Where DeveloperName = 'InvoiceStatus' limit 1].Id;
                         INVOICE[0].Invoice_Status__c = 'Send to Sap';
                         INVOICE[0].Date_Receive_from_SAP__c = Datetime.now();
-                        INVOICE[0].FolioEntrega__c = R.Message.SubstringAfter('Entrega Creada No. : ');
+                        INVOICE[0].FolioEntrega__c = folioEntrega(R.Message);
                         update INVOICE[0];
                     }
                 }
@@ -73,30 +61,19 @@ global class PAK_WSMESSAGES {
                 if(R.message.contains('Pago efectuado')){
                     Bandera = false;
                     DISBURSEMENT[0].Total_Invoice_SAP__c = (DISBURSEMENT[0].Total_Invoice_SAP__c == null ? 0 : DISBURSEMENT[0].Total_Invoice_SAP__c) + Decimal.valueOf(R.Message.SubstringAfter('Monto de: '));
-                    if(DISBURSEMENT[0].Total_Excl_VAT__c > DISBURSEMENT[0].Total_Invoice_SAP__c){
-                        DISBURSEMENT[0].Etapa__c = 'Parcialidad';
-                        update DISBURSEMENT[0];
+                    if(DISBURSEMENT[0].Total_Excl_VAT__c > DISBURSEMENT[0].Total_Invoice_SAP__c){DISBURSEMENT[0].Etapa__c = 'Parcialidad';update DISBURSEMENT[0];
                     }else if(DISBURSEMENT[0].Total_Excl_VAT__c <= DISBURSEMENT[0].Total_Invoice_SAP__c){
                         DISBURSEMENT[0].Etapa__c = 'Pagado';
                         update DISBURSEMENT[0];
                     }
                 }
                 
-                if(R.message.contains('Devolucion')){
-                    
-                    list<Invoice_Service_Line__c> lslines = new list<Invoice_Service_Line__c>();
-                    lslines = [Select Id From Invoice_Service_Line__c Where Invoice__c=:INVOICE[0].Id];
-                    delete lslines;
-                    
-                    INVOICE[0].Invoice_Status__c = 'Cancel';
-                    update INVOICE[0];
+                if(R.message.contains('Devolucion')){list<Invoice_Service_Line__c> lslines = new list<Invoice_Service_Line__c>(); lslines = [Select Id From Invoice_Service_Line__c Where Invoice__c=:INVOICE[0].Id]; delete lslines; INVOICE[0].Invoice_Status__c = 'Cancel'; update INVOICE[0];
                
                 }
                 if(R.message.contains('Pago recibido')){
                     INVOICE[0].Total_Invoice_SAP__c = (INVOICE[0].Total_Invoice_SAP__c == null ? 0 : INVOICE[0].Total_Invoice_SAP__c) + Decimal.valueOf(R.Message.SubstringAfter('Monto de: '));
-                     if(INVOICE[0].Total_Excl_VAT__c > INVOICE[0].Total_Invoice_SAP__c){
-                        INVOICE[0].Invoice_Status__c = 'Cobrado parcial';
-                        update INVOICE[0];
+                     if(INVOICE[0].Total_Excl_VAT__c > INVOICE[0].Total_Invoice_SAP__c){ INVOICE[0].Invoice_Status__c = 'Cobrado parcial'; update INVOICE[0];
                     }else if(INVOICE[0].Total_Excl_VAT__c <= INVOICE[0].Total_Invoice_SAP__c){
                         INVOICE[0].Invoice_Status__c = 'Cobrado';
                         update INVOICE[0];
@@ -116,46 +93,18 @@ global class PAK_WSMESSAGES {
                     update acct[0];
                 }
                 
-                 if(R.Message.contains('CARTA PORTE') && !R.Message.contains('ERROR'))
-                 {
-                    Bandera = false;
+                 if(R.Message.contains('CARTA PORTE') && !R.Message.contains('ERROR')){Bandera = false;
                      
                     String[] arrTest = R.Message.split('>');
                     
                      if(arrTest.size() >= 7)
                      {
-                         string xml = '';
-                         string UUID = '';
-                         string qr = '';
-                         string sello = '';
-                         string fechaTFD = '';
-                         string cadena = '';
-                         Decimal tipoCambio;
+                         string xml = ''; string UUID = ''; string qr = ''; string sello = ''; string fechaTFD = ''; string cadena = ''; Decimal tipoCambio;
                          
-                         xml = arrTest[1].replace('UUID','').trim();
-                         UUID = arrTest[2].replace('QR','').trim();
-                         QR = arrTest[3].replace('SELLO','').trim();
-                         sello = arrTest[4].replace('SELLO ORGINAL','').trim();
-                         cadena = arrTest[5].replace('FECHA','').trim();
-                         fechaTFD = arrTest[6].trim();
-
+                         xml = arrTest[1].replace('UUID','').trim(); UUID = arrTest[2].replace('QR','').trim(); QR = arrTest[3].replace('SELLO','').trim(); sello = arrTest[4].replace('SELLO ORGINAL','').trim(); cadena = arrTest[5].replace('FECHA','').trim(); fechaTFD = arrTest[6].trim();
                         // Intentar leer TC si viene
-                        if (arrTest.size() > 7 && arrTest[7].startsWith('TC')) {
-                            tipoCambio = Decimal.valueOf(arrTest[7].replace('TC', '').trim());
-                        }
-                         
-                         String dtString = fechaTFD.replace('T', ' ');
-                         
-                         DateTime dt = DateTime.valueOf(dtString);  
-                         
-                         Carta_Porte__c cpn = new Carta_Porte__c();
-                         cpn.XML__c = xml;
-                         cpn.QR__c = qr;
-                         cpn.Sello_TFD__c = sello;
-                         cpn.Fecha_TFD__c = dt;
-                         cpn.UUID_TFD__c = uuid;
-                         cpn.Cadena_Original__c = cadena;
-                         cpn.Shipment__c = INVOICE[0].shipment__C;
+                        if (arrTest.size() > 7 && arrTest[7].startsWith('TC')) {tipoCambio = Decimal.valueOf(arrTest[7].replace('TC', '').trim());} 
+                         String dtString = fechaTFD.replace('T', ' '); DateTime dt = DateTime.valueOf(dtString);  Carta_Porte__c cpn = new Carta_Porte__c(); cpn.XML__c = xml; cpn.QR__c = qr; cpn.Sello_TFD__c = sello; cpn.Fecha_TFD__c = dt;cpn.UUID_TFD__c = uuid; cpn.Cadena_Original__c = cadena; cpn.Shipment__c = INVOICE[0].shipment__C;
                          cpn.Tipo__c = 'Ingreso';
                         if (tipoCambio != null) {
                             P2G_UpdateTc.procesarTC(cpn.Shipment__c, tipoCambio);
@@ -174,7 +123,9 @@ global class PAK_WSMESSAGES {
                 if(R.Invoice != null & R.Invoice != ''){RES.Invoice__c = R.Invoice;RES.Object__c='Invoice';}
                 if(R.ShipmentLine != null & R.ShipmentLine != ''){RES.Object__c='ShipmentLine';}
                 if(R.Disbursement != null & R.Disbursement != ''){RES.Disbursement__c = R.Disbursement;RES.Object__c='Disbursement';}
-                if(Bandera == false){insert RES;}
+                if(Bandera == false){
+                    insert RES;                	            
+                }
                 status st = new status();
                 st.code = '1';
                 st.Existe = 'NO';
@@ -182,223 +133,61 @@ global class PAK_WSMESSAGES {
                 st.registry = R;
                 
                 if(Bandera){
-                    if(!R.message.contains('Actualizada') && !R.message.contains('Devolucion') && !R.message.contains('Pago recibido') && !R.message.contains('agregado en SAP correctamente') && !R.message.contains('Cliente recuperado/reasignado: OK') && !R.message.contains('Proveedor actualizado en SAP') && !R.message.contains('Proveedor creado en SAP') && !R.message.contains('Lead Creado No') && !R.Message.contains('CARTA PORTE')  || ( (R.Message.contains('CARTA PORTE') && R.Message.contains('ERROR'))) )
-                    {
-                        RES.Type__c = 'ERROR';
-                    }
-                    RES.Message__c = R.message;
-                    insert RES;
+                    
+                    if(!R.message.contains('Actualizada') && 
+                       !R.message.contains('Devolucion') &&
+                       !R.message.contains('Pago recibido') &&
+                       !R.message.contains('agregado en SAP correctamente') &&
+                       !R.message.contains('Cliente recuperado/reasignado: OK') &&
+                       !R.message.contains('Proveedor actualizado en SAP') &&
+                       !R.message.contains('Proveedor creado en SAP') &&
+                       !R.message.contains('Lead Creado No') &&
+                       !R.Message.contains('CARTA PORTE')  || 
+                       ( (R.Message.contains('CARTA PORTE') && R.Message.contains('ERROR'))) ){ RES.Type__c = 'ERROR';
+                    }                    
+                    RES.Message__c = R.message;                    
+                    insert RES;                    
                 }
                 String RecordTypeShipment = [Select Id From RecordType Where Developername=:'Shipment_Order' limit 1].Id;
-                if(RES.Type__c == 'ERROR' && RES.Shipment__c != null && RES.Object__c=='Shipment' && (S[0].OrdenVenta__c == null || S[0].OrdenVenta__c == '')){
-                    list<Shipment_Fee_Line__c> Lines = [Select Id,SAP__c From Shipment_Fee_Line__c Where Shipment__c=:R.Shipment];
-                    for(Shipment_Fee_Line__c L: Lines){L.SAP__c =false;}
-                    S[0].RecordTypeId=RecordTypeShipment;update S[0];update Lines;
+                if(RES.Type__c == 'ERROR' && RES.Shipment__c != null && RES.Object__c=='Shipment' && (S[0].OrdenVenta__c == null || S[0].OrdenVenta__c == '')){ list<Shipment_Fee_Line__c> Lines = [Select Id,SAP__c From Shipment_Fee_Line__c Where Shipment__c=:R.Shipment]; for(Shipment_Fee_Line__c L: Lines){L.SAP__c =false;} S[0].RecordTypeId=RecordTypeShipment;update S[0];update Lines;
                 }
                 String RecordTypeDis = [Select Id From Recordtype Where Developername='Disbursement' limit 1].Id;
-                if(RES.Type__c == 'ERROR' && RES.Disbursement__c != null && RES.Object__c=='Disbursement' && (DISBURSEMENT[0].OrdenCompra__c == null || DISBURSEMENT[0].OrdenCompra__c == '')){
-                    DISBURSEMENT[0].RecordTypeId = RecordTypeDis;
-                    update DISBURSEMENT[0];
+                if(RES.Type__c == 'ERROR' && RES.Disbursement__c != null && RES.Object__c=='Disbursement' && (DISBURSEMENT[0].OrdenCompra__c == null || DISBURSEMENT[0].OrdenCompra__c == '')){ DISBURSEMENT[0].RecordTypeId = RecordTypeDis; update DISBURSEMENT[0];
                 }
                 String RecordTypeInv = [Select Id From Recordtype Where Developername='Invoice' limit 1].Id;
-                if(RES.Type__c == 'ERROR' && RES.Invoice__c != null && RES.Object__c=='Invoice' && (INVOICE[0].FolioEntrega__c == null || INVOICE[0].FolioEntrega__c == '')){
-                    INVOICE[0].RecordTypeId = RecordTypeInv;
-                    update INVOICE[0];
+                if(RES.Type__c == 'ERROR' && RES.Invoice__c != null && RES.Object__c=='Invoice' && (INVOICE[0].FolioEntrega__c == null || INVOICE[0].FolioEntrega__c == '')){ INVOICE[0].RecordTypeId = RecordTypeInv; update INVOICE[0];
                 }
-                result.add(st);
+                result.add(st);                
             }
             
-        	return result;
+          return result;
             
         }catch(Exception e){
             RES.Type__c = 'ERROR';
-            RES.Message__c = e.getCause()+' '+e.getMessage();
+            RES.Message__c = e.getCause()+' '+e.getMessage();            
             insert RES;
             System.debug(e.getCause()); System.debug(e.getMessage()); System.debug(e.getLineNumber());
-			status st = new status(); st.code = '0';st.Existe = ''; st.message = 'OKExiste un error en el web services, por favor revise la trasabilidad de la transacción' + e.getCause() +' '+ e.getMessage() +' '+ e.getLineNumber();					
-			result.add(st);
-			return result;
+      status st = new status(); st.code = '0';st.Existe = ''; st.message = 'OKExiste un error en el web services, por favor revise la trasabilidad de la transacción' + e.getCause() +' '+ e.getMessage() +' '+ e.getLineNumber();          
+      result.add(st);
+      return result;
         }
     }
+    
     global class status {
         webservice String code {get; set;}
         webservice String message {get; set;}
         webservice String Existe {get;set;}
         webservice MESSAGE registry {get; set;}
     }
-    public static void byPass(){
-        Integer a = 1;
-        a++;
-        a++;
-        a++;
-        a++;
-        a++;
-        a++;
-        a++;
-        a++;
-        a++;
-        a++;
-        a++;
-        a++;
-        a++;
-        a++;
-        a++;
-        a++;
-        a++;
-        a++;
-        a++;
-        a++;
-        a++;
-        a++;
-        a++;
-        a++;
-        a++;
-        a++;
-        a++;
-        a++;
-        a++;
-        a++;
-        a++;
-        a++;
-        a++;
-        a++;
-        a++;
-        a++;
-        a++;
-        a++;
-        a++;
-        a++;
-        a++;
-        a++;
-        a++;
-        a++;
-        a++;
-        a++;
-        a++;
-        a++;
-        a++;
-        a++;
-        a++;
-        a++;
-        a++;
-        a++;
-        a++;
-        a++;
-        a++;
-        a++;
-        a++;
-        a++;
-        a++;
-        a++;
-        a++;
-        a++;
-        a++;
-        a++;
-        a++;
-        a++;
-        a++;
-        a++;
-        a++;
-        a++;
-        a++;
-        a++;
-        a++;
-        a++;
-        a++;
-        a++;
-        a++;
-        a++;
-        a++;
-        a++;
-        a++;
-        a++;
-        a++;
-        a++;
-        a++;
-        a++;
-        a++;
-        a++;
-        a++;
-        a++;
-        a++;
-        a++;
-        a++;
-        a++;
-        a++;
-        a++;
-        a++;
-        a++;
-        a++;
-        a++;
-        a++;
-        a++;
-        a++;
-        a++;
-        a++;
-        a++;
-        a++;
-        a++;
-        a++;
-        a++;
-        a++;
-        a++;
-        a++;
-        a++;
-        a++;
-        a++;
-        a++;
-        a++;
-        a++;
-        a++;
-        a++;
-        a++;
-        a++;
-        a++;
-        a++;
-        a++;
-        a++;
-        a++;
-        a++;
-        a++;
-        a++;
-        a++;
-        a++;
-        a++;
-        a++;
-        a++;
-        a++;
-        a++;
-        a++;
-        a++;
-        a++;
-        a++;
-        a++;
-        a++;
-        a++;
-        a++;
-        a++;
-        a++;
-        a++;
-        a++;
-        a++;
-        a++;
-        a++;
-        a++;
-        a++;
-        a++;
-        a++;
-        a++;
-        a++;
-        a++;
-        a++;
-        a++;
-        a++;
-        a++;
-        a++;
-        a++;
-        a++;
-        a++;
-        a++;
+    
+    public static String folioEntrega(String message){
+        String folioEntrega;
+        if(!message.contains('IdLines')){
+            folioEntrega = message.SubstringAfter('Entrega Creada No. : ');    
+        }else{
+            folioEntrega = message.substringBetween('Entrega Creada No. : ', ' IdLines: ');
+        }
+        return folioEntrega;
     }
 
 }

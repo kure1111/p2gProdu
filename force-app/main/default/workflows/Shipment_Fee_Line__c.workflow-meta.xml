@@ -199,7 +199,7 @@
             <name>Add_Services_Line</name>
             <type>Alert</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <criteriaItems>
             <field>Shipment_Fee_Line__c.New_Service_Line__c</field>
             <operation>equals</operation>
@@ -235,7 +235,7 @@
             <name>Cambio_en_Service_Line</name>
             <type>Task</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <formula>Email_Sales_Executive_del_SP__c  = &apos;carlos.soto@pak2go.com&apos;</formula>
         <triggerType>onAllChanges</triggerType>
     </rules>
@@ -249,7 +249,7 @@
             <name>Update_Buy_Price_Modified</name>
             <type>FieldUpdate</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <formula>AND  (ISCHANGED(Shipment_Buy_Price__c),  NOT(ISBLANK( PRIORVALUE(Shipment_Buy_Price__c))),  NOT(ISNEW()),  $Profile.Name &lt;&gt; &quot;System Administrator&quot;)</formula>
         <triggerType>onAllChanges</triggerType>
     </rules>
@@ -279,7 +279,7 @@
             <name>Update_Sell_Price_Modified</name>
             <type>FieldUpdate</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <formula>AND  (ISCHANGED(Shipment_Sell_Price__c),  NOT(ISBLANK( PRIORVALUE(Shipment_Sell_Price__c))),  NOT(ISNEW()),  $Profile.Name &lt;&gt; &quot;System Administrator&quot;)</formula>
         <triggerType>onAllChanges</triggerType>
     </rules>

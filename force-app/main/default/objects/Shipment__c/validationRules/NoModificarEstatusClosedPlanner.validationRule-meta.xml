@@ -15,9 +15,9 @@ NOT(
 NOT(
 $Profile.Id = &quot;0054T000000cUddQAE&quot;),
 NOT(
-$User.Id = &quot;0054T000001UDyYQAW&quot;),
+$User.Id = &quot;0054T000000cUax&quot;),
 NOT(
-$User.Id = &quot;0054T000000cUax&quot;)
+$User.Id = &quot;005RQ000001fhRp&quot;)
 )</errorConditionFormula>
     <errorMessage>Ya que el registro esta en closed, no se debe modificar el estatus.</errorMessage>
 </ValidationRule>

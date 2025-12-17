@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionCalls>
+        <name>Enviar_a_folios_M</name>
+        <label>Customer_Quote__c.Enviar_a_folios_M</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <actionName>Customer_Quote__c.Enviar_a_folios_M</actionName>
+        <actionType>emailAlert</actionType>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>SObjectRowId</name>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </inputParameters>
+        <nameSegment>Customer_Quote__c.Enviar_a_folios_M</nameSegment>
+    </actionCalls>
+    <apiVersion>64.0</apiVersion>
+    <description>Migrated from the: Pricing M Awaiting workflow rule
+Workflow rule description: &quot;</description>
+    <environments>Default</environments>
+    <label>Pricing M Awaiting</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <start>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Enviar_a_folios_M</targetReference>
+        </connector>
+        <doesRequireRecordChangedToMeetCriteria>true</doesRequireRecordChangedToMeetCriteria>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Quotation_Status__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Sent awaiting response</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>FolioResume__c</field>
+            <operator>Contains</operator>
+            <value>
+                <stringValue>M</stringValue>
+            </value>
+        </filters>
+        <object>Customer_Quote__c</object>
+        <recordTriggerType>CreateAndUpdate</recordTriggerType>
+        <triggerType>RecordAfterSave</triggerType>
+    </start>
+    <status>Active</status>
+</Flow>

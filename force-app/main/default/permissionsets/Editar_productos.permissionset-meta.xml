@@ -57,7 +57,7 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Opportunity.Folio_Mkt__c</field>
+        <field>Opportunity.Folio_Mkt2__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>

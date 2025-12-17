@@ -30,10 +30,10 @@ Workflow rule description: &quot;</description>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
-            <field>Name</field>
+            <field>Id</field>
             <operator>EqualTo</operator>
             <value>
-                <elementReference>$Record__Prior.New_Shipment_Name__c</elementReference>
+                <elementReference>$Record.Shipment__r.Id</elementReference>
             </value>
         </filters>
         <getFirstRecordOnly>true</getFirstRecordOnly>

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SearchCustomization xmlns="http://soap.sforce.com/2006/04/metadata">
+    <channel>GlobalSearch</channel>
+    <masterLabel>PAK2GO_Director_Migrated</masterLabel>
+    <objectToAlwaysSearch>Account</objectToAlwaysSearch>
+    <objectToAlwaysSearch>Shipment__c</objectToAlwaysSearch>
+    <objectToAlwaysSearch>Customer_Quote__c</objectToAlwaysSearch>
+    <objectToAlwaysSearch>Invoice__c</objectToAlwaysSearch>
+    <profile>PAK2GO Director</profile>
+</SearchCustomization>

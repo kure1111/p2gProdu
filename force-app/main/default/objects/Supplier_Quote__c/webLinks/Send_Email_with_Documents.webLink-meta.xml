@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WebLink xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Send_Email_with_Documents</fullName>
+    <availability>online</availability>
+    <displayType>button</displayType>
+    <encodingKey>UTF-8</encodingKey>
+    <height>600</height>
+    <linkType>url</linkType>
+    <masterLabel>Send Email with Documents</masterLabel>
+    <openType>sidebar</openType>
+    <protected>false</protected>
+    <url>/apex/NEU_Generic_SendDocuments?object_select=supplier_quote&amp;object_id={!Supplier_Quote__c.Id}</url>
+</WebLink>

@@ -3,15 +3,15 @@
     <fullName>Proyectos</fullName>
     <isActive>true</isActive>
     <values>
-        <fullName>Closed Lost</fullName>
-        <default>false</default>
-    </values>
-    <values>
         <fullName>Cotización</fullName>
         <default>false</default>
     </values>
     <values>
         <fullName>Ejecución</fullName>
+        <default>false</default>
+    </values>
+    <values>
+        <fullName>Entendimiento</fullName>
         <default>false</default>
     </values>
     <values>

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WebLink xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Create_Quote_Fee_Lines</fullName>
+    <availability>online</availability>
+    <displayType>button</displayType>
+    <height>600</height>
+    <linkType>page</linkType>
+    <masterLabel>Create Quote Fee Lines</masterLabel>
+    <openType>sidebar</openType>
+    <page>NEU_OM_SupQuOr_FeeLinesPriceListDiscount</page>
+    <protected>false</protected>
+</WebLink>

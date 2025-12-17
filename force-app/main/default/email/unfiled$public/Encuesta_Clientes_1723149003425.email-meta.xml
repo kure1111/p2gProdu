@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>Template para enviar encuesta a clientes por email</description>
+    <encodingKey>ISO-8859-1</encodingKey>
+    <name>Encuesta Clientes</name>
+    <style>none</style>
+    <subject>Encuesta Clientes 2Go Logistics</subject>
+    <type>custom</type>
+    <uiType>SFX</uiType>
+</EmailTemplate>

@@ -2,6 +2,11 @@
 <PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
     <description>Conjunto de permisos para el objeto Field History Tracking</description>
     <fieldPermissions>
+        <editable>true</editable>
+        <field>Account.Anos_Experiencia__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>false</editable>
         <field>Field_History_Tracking__c.Account_History__c</field>
         <readable>true</readable>
@@ -84,6 +89,16 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Field_History_Tracking__c.Vehicle_History__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Shipment__c.Equip_Placed__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Shipment__c.Traslado_Ingreso__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <hasActivationRequired>false</hasActivationRequired>

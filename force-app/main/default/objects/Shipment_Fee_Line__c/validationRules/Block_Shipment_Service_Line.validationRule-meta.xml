@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Block_Shipment_Service_Line</fullName>
+    <active>true</active>
+    <description>Bloqueo de edicion cuando campo control esta activo</description>
+    <errorConditionFormula>AND(
+NOT(ISNEW()),
+Campo_Control__c,
+NOT(CONTAINS($Profile.Name,&quot;Admin&quot;))
+)</errorConditionFormula>
+    <errorMessage>No es posible modificar debido a que cuenta con una Orden de Entrega.</errorMessage>
+</ValidationRule>

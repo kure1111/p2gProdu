@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionCalls>
+        <name>Shipment_Delivery_ES01</name>
+        <label>Shipment__c.Shipment_Delivery_ES01</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <actionName>Shipment__c.Shipment_Delivery_ES01</actionName>
+        <actionType>emailAlert</actionType>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>SObjectRowId</name>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </inputParameters>
+        <nameSegment>Shipment__c.Shipment_Delivery_ES01</nameSegment>
+    </actionCalls>
+    <apiVersion>65.0</apiVersion>
+    <description>Migrated from the: Shipment Delivery ES01 workflow rule
+Workflow rule description: Approved--&gt;Shipment--&gt;Delivery--&gt;Finished&quot;</description>
+    <environments>Default</environments>
+    <label>Shipment Delivery ES01</label>
+    <migratedFromWorkflowRuleName>Shipment Delivery ES01</migratedFromWorkflowRuleName>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <start>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Shipment_Delivery_ES01</targetReference>
+        </connector>
+        <doesRequireRecordChangedToMeetCriteria>true</doesRequireRecordChangedToMeetCriteria>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Shipment_Status__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Delivery On route</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>Freight_Mode__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Air</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>Service_Type__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>ENVIO NACIONAL</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>Service_Mode__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>NATIONAL</stringValue>
+            </value>
+        </filters>
+        <object>Shipment__c</object>
+        <recordTriggerType>CreateAndUpdate</recordTriggerType>
+        <triggerType>RecordAfterSave</triggerType>
+    </start>
+    <status>Active</status>
+</Flow>

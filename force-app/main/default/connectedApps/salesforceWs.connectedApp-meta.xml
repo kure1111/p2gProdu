@@ -6,8 +6,12 @@
         <callbackUrl>https://</callbackUrl>
         <consumerKey>3MVG9GYWKbMgBvbxSvgF0dMpO1f61IvgX4Opm7ngKefTciDR65VEKM79EiRB4R1lgAR4voeaP..KtwB0ek9F_</consumerKey>
         <isAdminApproved>false</isAdminApproved>
+        <isClientCredentialEnabled>false</isClientCredentialEnabled>
+        <isCodeCredentialEnabled>false</isCodeCredentialEnabled>
+        <isCodeCredentialPostOnly>false</isCodeCredentialPostOnly>
         <isConsumerSecretOptional>false</isConsumerSecretOptional>
         <isIntrospectAllTokens>false</isIntrospectAllTokens>
+        <isNamedUserJwtEnabled>false</isNamedUserJwtEnabled>
         <isSecretRequiredForRefreshToken>false</isSecretRequiredForRefreshToken>
         <scopes>Api</scopes>
         <scopes>Full</scopes>

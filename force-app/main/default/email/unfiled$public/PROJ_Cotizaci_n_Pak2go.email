@@ -1,0 +1,7 @@
+Buen día 
+{!Account.Name} te enviamos la cotización solicitada.
+
+Quedo a la espera.
+
+{!User.Name}
+{!User.Email}

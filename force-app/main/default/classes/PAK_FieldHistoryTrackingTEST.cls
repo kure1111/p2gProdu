@@ -21,7 +21,27 @@ public class PAK_FieldHistoryTrackingTEST {
 */    
     
    @testSetup static void createObjects() 
-    {              
+    {              /*
+       //Crear un nuevo Rol Margen para la clase Test
+       Rol_Margen__c margen = new Rol_Margen__c();        
+        margen.Name = 'Director Comercial 2';
+        margen.FN_Margen_Operativo__c = 1;
+        margen.FI_Margen_Operativo__c  = 1;
+        margen.FI_LTL_Margen_Operativo__c = 1;
+        margen.PTO_Margen_Operativo__c = 5;
+        margen.M_FCL_Margen_Operativo__c = 1;
+        margen.M_LCL_Margen_Operativo__c = 1;
+        margen.A_Margen_Operativo__c = 1;
+        margen.A_Paq_Margen_Operativo__c = 1;
+        margen.W_WCA_Margen_Operativo__c = 1;
+        margen.AW_WCA_Margen_Operativo__c = 1;
+        margen.R_Margen_Operativo__c = 1;
+        margen.T_Margen_Operativo__c = 1;
+        margen.PQ_Margen_Operativo__c = 1;
+        insert margen;*/
+       //Crear un nuevo Role para la clase test
+       //UserRole r = new UserRole(DeveloperName = 'Director_Comercial_2', Name = 'Director Comercial 2');
+	   //insert r;
        //user        
        User userT = new User();
        userT.FirstName = 'leo';
@@ -34,9 +54,10 @@ public class PAK_FieldHistoryTrackingTEST {
        userT.EmailEncodingKey = 'UTF-8';
        userT.ProfileId = [Select Id from Profile where Name = 'System Administrator'].Id;
        userT.LanguageLocaleKey = 'es_MX';
-       //userT.UserRoleId = [Select Id From UserRole Where Name like 'COMERCIAL%' Limit 1].Id;//
+       userT.SalesEmployer__c = '331';
+       //userT.UserRoleId = [Select Id From UserRole Where Name = 'Director Comercial 2' Limit 1].Id;//
        insert userT;
-
+	   //User userAlbert = [select id,managerId, userRole.Name  from user where id =: UserInfo.getUserId() limit 1];
        //user        
        User user2T = new User();
        user2T.FirstName = 'Pan';
@@ -49,7 +70,7 @@ public class PAK_FieldHistoryTrackingTEST {
        user2T.EmailEncodingKey = 'UTF-8';
        user2T.ProfileId = [Select Id from Profile where Name = 'System Administrator'].Id;
        user2T.LanguageLocaleKey = 'es_MX';
-
+	   userT.SalesEmployer__c = '331';
        insert user2T;
 
        Rol_Margen__c rl = TestDataFactory.createRolMargen('Director Comercial');
@@ -78,6 +99,8 @@ public class PAK_FieldHistoryTrackingTEST {
        accountT.ActiveSap__c = true;
        accountT.Segment__c = 'Nuevo';
        insert accountT; 
+       
+       //INSERTAR DOCUMENTO
        
         
       /////////////////////////////// Objetos para el historico de SP
@@ -413,7 +436,7 @@ public class PAK_FieldHistoryTrackingTEST {
         cl.Material_Peligroso__c = municion.Id;
         cl.Embalaje__c = embalaje.Id;
         insert cl;		
-        Rol_Margen__c rolMargen = TestDataFactory.createRolMargen('Director Comercial');
+        //Rol_Margen__c rolMargen = TestDataFactory.createRolMargen('Director Comercial');
         Test.startTest();
          	folio.Last_Shipment__c = new_shipment.Id;
         	update folio;
@@ -433,7 +456,7 @@ public class PAK_FieldHistoryTrackingTEST {
                                     Recuperado__c, Remote__c, Requiere_Orden_de_Compra__c, Rfcfis_cta__c, Specialist__c, Uso_Portal__c, WebService__c,
                                     SCPVetado__c, AccountSource, Actcons_cta__c, ActiveSap__c, Authorized_Credit__c, Capacitacion_Acuses__c, Capacitacion_Control_Room__c,
                                     Capacitacion_Operaciones__c, Capacitacion_Portal__c, Carban_cta__c, Comdom_cta__c, Convfirm_cta__c, CT_Pat__c, Cuenta_con_instrumentos_de_movimiento_de__c,
-                                    Cuenta_con_SUA_Sistema_nico_de_Autodet__c, Encuesta_SCP__c,Formalt_cta__c,Factvig_cta__c,Estatus_de_cliente__c, Fotext_cta__c, Gps_cta__c, Inerep_cta__c,
+                                    Cuenta_con_SUA_Sistema_nico_de_Autodet__c, Encuesta_SCP__c,Formalt_cta__c,Factvig_cta__c,SeguimientoProspecto__c, Fotext_cta__c, Gps_cta__c, Inerep_cta__c,
                                     Negociacion_de_tarifas__c, Recuperado_SAP__c,Potencializacion__c, Proovedor_validado__c, Prospeccion__c, Prospeccion_Impak__c, Polseg_cta__c,Reasign_Dir__c,
                                     Reasign_Dir_SAP__c, Phone_test__c, Order_to_Cash__c, IDproveesap_cta__c, IVA_16__c, IVA_4__c, Key_Account__c,Folio_Mkt__c,Folio_Mkt_Ok2_del__c,
                                     Factoraje_2__c, Evidencia_de_Visita_del_Vendedor__c, Enviar_encuesta__c, Enviado_SAP__c, SCPCuenta_Espejo__c, Cliente_internacional__c, Cliente_con_cita__c,
@@ -472,7 +495,7 @@ public class PAK_FieldHistoryTrackingTEST {
        	accountFind.Cuenta_con_instrumentos_de_movimiento_de__c = true;
        	accountFind.Cuenta_con_SUA_Sistema_nico_de_Autodet__c = true;
        	accountFind.Encuesta_SCP__c = true;
-       	accountFind.Estatus_de_cliente__c = 'Nuevo';
+       	accountFind.SeguimientoProspecto__c = 'Nuevo';
        	accountFind.Factvig_cta__c = true;
        	accountFind.Formalt_cta__c = true;
        	accountFind.Fotext_cta__c = true;
@@ -549,7 +572,7 @@ public class PAK_FieldHistoryTrackingTEST {
         ship.Reparto__c = True;
         ship.SAP_Invoiced__c = True;
         ship.Sell_Price_Modified__c = True;
-        ship.Shipment_Customer_Evaluate__c = 'www.google.com';
+        //ship.Shipment_Customer_Evaluate__c = 'www.google.com';
         //ship.Name = '.';
         ship.Shipment_Status_Mon__c = 'In Progress';
         ship.Solicitud_de_Maniobras__c = True;

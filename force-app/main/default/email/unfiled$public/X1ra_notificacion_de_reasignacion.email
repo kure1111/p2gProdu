@@ -1,0 +1,29 @@
+<table border="0" cellpadding="5" width="600" cellspacing="5" height="400" >
+<tr valign="top" height="50" >
+<td tEditID="c1r1" style=" background-color:#FFFFFF; color:#000000; bEditID:r3st1; bLabel:main; font-size:12pt; font-family:arial;" aEditID="c1r1" locked="0" >
+<![CDATA[Buen día,]]></td>
+</tr>
+<tr valign="top" height="300" >
+<td tEditID="c1r2" style=" background-color:#FFFFFF; color:#000000; bEditID:r3st1; bLabel:main; font-size:12pt; font-family:arial;" aEditID="c1r2" locked="0" >
+<![CDATA[<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt;"><br></p><p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt;"><font face="arial"><span style="font-size: 12pt;">Debido a un cambio en la estructura comercial se le ha
+asignado la cuenta </span></font><b style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt;">{!Account.Name}</b><font face="arial"><span style="font-size: 12pt;">&nbsp;que tenía de dueñ@ a </span><b>{!Account.Dueno_pasado__c}</b><span style="font-size: 12pt;">, para que se le reasigne a un nuevo asesor que se
+encuentre actualmente activo.<o:p></o:p></span></font></p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt;">Para concretar exitosamente el proceso de <i>handover</i>,
+se le solicitará al nuevo asesor asignado contactar en forma ágil al cliente.
+Favor de asegurar que el contacto se ejecute de la siguiente manera: <o:p></o:p></p><p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt;"><br></p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt; line-height: normal;">•&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <b>Cliente
+Oro:</b> Llamada en 24 horas y visita en los 7 días posterior de asignación <o:p></o:p></p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt; line-height: normal;">•&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <b>Cliente
+Plata</b>: Llamada en 48 horas posterior a asignación<o:p></o:p></p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt; line-height: normal;">•&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <b>Cliente
+Bronce</b>: Llamada en 48 horas posterior a asignación<o:p></o:p></p><p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt; line-height: normal;"><br></p><p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt; line-height: normal;"><a href="https://pak2gologistics.lightning.force.com/lightning/r/Report/00O4T0000027uHhUAI/view?fv0={!Account.Dueno_pasado__c}"><font face="arial"><span style="font-size: 12pt;">Reporte de Cuentas de&nbsp;</span></font><font color="#0000ee" face="arial"><b><u>{!Account.Dueno_pasado__c}</u></b></font></a></p><p class="MsoNormal" style="line-height: normal;"><br></p>]]></td>
+</tr>
+<tr valign="top" height="50" >
+<td tEditID="c1r3" style=" background-color:#FFFFFF; color:#000000; bEditID:r3st1; bLabel:main; font-size:12pt; font-family:arial;" aEditID="c1r3" locked="0" >
+<![CDATA[<br>]]></td>
+</tr>
+</table>

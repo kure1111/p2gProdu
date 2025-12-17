@@ -45,6 +45,7 @@
                 <stringValue>Cambios en el campo Buy Amount</stringValue>
             </value>
         </inputParameters>
+        <nameSegment>emailSimple</nameSegment>
     </actionCalls>
     <actionCalls>
         <description>Alerta de email para los servicios FN</description>
@@ -91,6 +92,7 @@
                 <stringValue>Cambios en el campo Sell Net Amount</stringValue>
             </value>
         </inputParameters>
+        <nameSegment>emailSimple</nameSegment>
     </actionCalls>
     <actionCalls>
         <description>Alerta de email para los servicios INTER</description>
@@ -137,6 +139,7 @@
                 <stringValue>Cambios en el campo Buy Amount</stringValue>
             </value>
         </inputParameters>
+        <nameSegment>emailSimple</nameSegment>
     </actionCalls>
     <actionCalls>
         <description>Alerta de email para los servicios INTER</description>
@@ -183,6 +186,7 @@
                 <stringValue>Cambios en el campo Sell Net Amount</stringValue>
             </value>
         </inputParameters>
+        <nameSegment>emailSimple</nameSegment>
     </actionCalls>
     <apiVersion>56.0</apiVersion>
     <assignments>

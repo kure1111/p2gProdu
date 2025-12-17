@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WebLink xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Comparison</fullName>
+    <availability>online</availability>
+    <displayType>button</displayType>
+    <height>600</height>
+    <linkType>page</linkType>
+    <masterLabel>Comparison</masterLabel>
+    <openType>sidebar</openType>
+    <page>NEU_IE_Comparison_PDF</page>
+    <protected>false</protected>
+</WebLink>

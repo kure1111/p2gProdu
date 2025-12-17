@@ -3,7 +3,7 @@
 @page 
 {
 	margin-top: 1cm;
-	margin-left: 0.0cm;
+	margin-left: 0.1cm;
 	margin-right: 0.0cm;
 	margin-bottom: 2cm;
 
@@ -46,13 +46,13 @@ body
 .header_lvl1_left, .header_lvl2_left, .header_lvl3_left
 {
 	float:left;
-	width:380px;
+	width:230px;
 }
 
 .header_lvl1_right, .header_lvl2_right, .header_lvl3_right
 {
 	float:right;
-	width:380px;
+	width:500px;
 }
 
 .header_lvl2
@@ -72,7 +72,9 @@ body
 
 .logo_carta_porte
 {
-	width:375px;
+	width: 6.5cm;
+	height: 4.2cm;
+	margin-right: 0.4cm;
 }
 
 .info_pedido

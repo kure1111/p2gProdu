@@ -30,3 +30,98 @@
 :host(.custom-green-button) .slds-button {
     background-color: green !important;
 }
+/*para el componente aprobal*/
+.approvalM-modal2 {
+    width: 80%;
+    max-width: 900px;
+    margin: 20px auto;
+    padding: 20px;
+    background: #ffffff;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    border-radius: 8px;
+    font-family: Arial, sans-serif;
+}
+
+.modal-header {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.modal-header h2 {
+    font-size: 24px;
+    font-weight: bold;
+    color: #333;
+}
+
+.modal-body {
+    padding: 20px;
+}
+
+.approvalM-details p {
+    margin: 5px 0;
+    font-size: 14px;
+    color: #555;
+}
+
+.approvalM-link {
+    color: #0070d2;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.approvalM-link:hover {
+    text-decoration: underline;
+}
+
+/* Table Styles */
+.approvalM-table table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    font-size: 14px;
+}
+
+.approvalM-table th,
+.approvalM-table td {
+    padding: 10px;
+    text-align: left;
+    border: 1px solid #ddd;
+}
+
+.approvalM-table th {
+    background: #f4f6f9;
+    font-weight: bold;
+    color: #333;
+}
+
+.approvalM-table tbody tr:hover {
+    background: #f9f9f9;
+}
+
+.approvalM-table td {
+    color: #555;
+}
+
+/* Footer Button Styles */
+.modal-footer {
+    text-align: right;
+    margin-top: 20px;
+}
+
+.btn {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.btn-cancel {
+    background: #e4e6eb;
+    color: #333;
+    transition: background-color 0.3s ease;
+}
+
+.btn-cancel:hover {
+    background: #d0d2d6;
+}

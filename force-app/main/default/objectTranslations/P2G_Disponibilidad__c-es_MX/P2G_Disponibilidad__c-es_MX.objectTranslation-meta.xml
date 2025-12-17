@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Disponibilidad</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Disponibilidades</value>
+    </caseValues>
+    <gender>Feminine</gender>
+    <layouts>
+        <layout>P2G_Disponibilidad Layout</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- Disponibilidad --></label>
+            <section>Disponibilidad</section>
+        </sections>
+        <sections>
+            <label><!-- Información --></label>
+            <section>Información</section>
+        </sections>
+    </layouts>
+</CustomObjectTranslation>

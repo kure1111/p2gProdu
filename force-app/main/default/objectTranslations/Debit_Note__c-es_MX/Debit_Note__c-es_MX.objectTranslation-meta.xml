@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Debit Note</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Debit Notes</value>
+    </caseValues>
+    <gender>Feminine</gender>
+    <layouts>
+        <layout>Debit Note Layout</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- Shipment #1 --></label>
+            <section>Shipment #1</section>
+        </sections>
+        <sections>
+            <label><!-- Shipment #2 --></label>
+            <section>Shipment #2</section>
+        </sections>
+        <sections>
+            <label><!-- Shipment #3 --></label>
+            <section>Shipment #3</section>
+        </sections>
+        <sections>
+            <label><!-- Shipment #4 --></label>
+            <section>Shipment #4</section>
+        </sections>
+        <sections>
+            <label><!-- Shipment #5 --></label>
+            <section>Shipment #5</section>
+        </sections>
+    </layouts>
+</CustomObjectTranslation>

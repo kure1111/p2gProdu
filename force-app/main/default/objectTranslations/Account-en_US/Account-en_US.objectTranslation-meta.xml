@@ -1,0 +1,2249 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <layouts>
+        <layout>Account Layout</layout>
+        <sections>
+            <label><!-- Dirección Carta Porte --></label>
+            <section>Dirección Carta Porte</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>Account Layout RESP</layout>
+        <sections>
+            <label><!-- Dirección Carta Porte --></label>
+            <section>Dirección Carta Porte</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>Aerolínea</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- Datos Carta Porte --></label>
+            <section>Datos Carta Porte</section>
+        </sections>
+        <sections>
+            <label><!-- Domicilio --></label>
+            <section>Domicilio</section>
+        </sections>
+        <sections>
+            <label><!-- Fields --></label>
+            <section>Fields</section>
+        </sections>
+        <sections>
+            <label><!-- Status --></label>
+            <section>Status</section>
+        </sections>
+        <sections>
+            <label><!-- Transportista y Embarcador --></label>
+            <section>Transportista y Embarcador</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>Agente Aduanal Layout</layout>
+        <sections>
+            <label><!-- Adicional --></label>
+            <section>Adicional</section>
+        </sections>
+        <sections>
+            <label><!-- Información General --></label>
+            <section>Información General</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>Commercial Prospect</layout>
+        <sections>
+            <label><!-- Account Information --></label>
+            <section>Account Information</section>
+        </sections>
+        <sections>
+            <label><!-- Address Information --></label>
+            <section>Address Information</section>
+        </sections>
+        <sections>
+            <label><!-- Campos SAP(Obligatorios) --></label>
+            <section>Campos SAP(Obligatorios)</section>
+        </sections>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- Datos de Recolección --></label>
+            <section>Datos de Recolección</section>
+        </sections>
+        <sections>
+            <label><!-- Description Information --></label>
+            <section>Description Information</section>
+        </sections>
+        <sections>
+            <label><!-- Informacion cliente --></label>
+            <section>Informacion cliente</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>Commercial Prospect RESP</layout>
+        <sections>
+            <label><!-- Account Information --></label>
+            <section>Account Information</section>
+        </sections>
+        <sections>
+            <label><!-- Address Information --></label>
+            <section>Address Information</section>
+        </sections>
+        <sections>
+            <label><!-- Campos SAP(Obligatorios) --></label>
+            <section>Campos SAP(Obligatorios)</section>
+        </sections>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- Datos de Recolección --></label>
+            <section>Datos de Recolección</section>
+        </sections>
+        <sections>
+            <label><!-- Description Information --></label>
+            <section>Description Information</section>
+        </sections>
+        <sections>
+            <label><!-- Informacion cliente --></label>
+            <section>Informacion cliente</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>Cuenta Destino</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- Fields --></label>
+            <section>Fields</section>
+        </sections>
+        <sections>
+            <label><!-- Status --></label>
+            <section>Status</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>Customer</layout>
+        <sections>
+            <label><!-- Account Information --></label>
+            <section>Account Information</section>
+        </sections>
+        <sections>
+            <label><!-- Address Information --></label>
+            <section>Address Information</section>
+        </sections>
+        <sections>
+            <label><!-- Anexar Documentación --></label>
+            <section>Anexar Documentación</section>
+        </sections>
+        <sections>
+            <label><!-- Clasificacion --></label>
+            <section>Clasificacion</section>
+        </sections>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- Customer Bank Info --></label>
+            <section>Customer Bank Info</section>
+        </sections>
+        <sections>
+            <label><!-- Customer Categorization &amp; Status --></label>
+            <section>Customer Categorization &amp; Status</section>
+        </sections>
+        <sections>
+            <label><!-- Customer Commercial Info --></label>
+            <section>Customer Commercial Info</section>
+        </sections>
+        <sections>
+            <label><!-- Customer Shipments Info --></label>
+            <section>Customer Shipments Info</section>
+        </sections>
+        <sections>
+            <label><!-- Datos de Recolección --></label>
+            <section>Datos de Recolección</section>
+        </sections>
+        <sections>
+            <label><!-- Description Information --></label>
+            <section>Description Information</section>
+        </sections>
+        <sections>
+            <label><!-- Dirección Fiscal para Facturación y Carta Porte --></label>
+            <section>Dirección Fiscal para Facturación y Carta Porte</section>
+        </sections>
+        <sections>
+            <label><!-- Informacion SAP --></label>
+            <section>Informacion SAP</section>
+        </sections>
+        <sections>
+            <label><!-- Sales Target --></label>
+            <section>Sales Target</section>
+        </sections>
+        <sections>
+            <label><!-- Service Level --></label>
+            <section>Service Level</section>
+        </sections>
+        <sections>
+            <label><!-- System Information --></label>
+            <section>System Information</section>
+        </sections>
+        <sections>
+            <label><!-- Tipos de Servicios Disponibles --></label>
+            <section>Tipos de Servicios Disponibles</section>
+        </sections>
+        <sections>
+            <label><!-- Unidad de Negocio --></label>
+            <section>Unidad de Negocio</section>
+        </sections>
+        <sections>
+            <label><!-- Warrnings --></label>
+            <section>Warrnings</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>Customer (FFWD/IMPORT-EXPORT)</layout>
+        <sections>
+            <label><!-- Account Information --></label>
+            <section>Account Information</section>
+        </sections>
+        <sections>
+            <label><!-- Account Warnings --></label>
+            <section>Account Warnings</section>
+        </sections>
+        <sections>
+            <label><!-- Address Information --></label>
+            <section>Address Information</section>
+        </sections>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- Customer Bank Info --></label>
+            <section>Customer Bank Info</section>
+        </sections>
+        <sections>
+            <label><!-- Customer Categorization &amp; Status --></label>
+            <section>Customer Categorization &amp; Status</section>
+        </sections>
+        <sections>
+            <label><!-- Customer Commercial Info --></label>
+            <section>Customer Commercial Info</section>
+        </sections>
+        <sections>
+            <label><!-- Customer Packaging Info --></label>
+            <section>Customer Packaging Info</section>
+        </sections>
+        <sections>
+            <label><!-- Customer Shipments Info --></label>
+            <section>Customer Shipments Info</section>
+        </sections>
+        <sections>
+            <label><!-- Description Information --></label>
+            <section>Description Information</section>
+        </sections>
+        <sections>
+            <label><!-- Followers Intelligence --></label>
+            <section>Followers Intelligence</section>
+        </sections>
+        <sections>
+            <label><!-- Remarks Freight Rates PDF --></label>
+            <section>Remarks Freight Rates PDF</section>
+        </sections>
+        <sections>
+            <label><!-- Shipments / Status --></label>
+            <section>Shipments / Status</section>
+        </sections>
+        <sections>
+            <label><!-- System Information --></label>
+            <section>System Information</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>Customer (FFWD/IMPORT-EXPORT) RESP</layout>
+        <sections>
+            <label><!-- Account Information --></label>
+            <section>Account Information</section>
+        </sections>
+        <sections>
+            <label><!-- Account Warnings --></label>
+            <section>Account Warnings</section>
+        </sections>
+        <sections>
+            <label><!-- Address Information --></label>
+            <section>Address Information</section>
+        </sections>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- Customer Bank Info --></label>
+            <section>Customer Bank Info</section>
+        </sections>
+        <sections>
+            <label><!-- Customer Categorization &amp; Status --></label>
+            <section>Customer Categorization &amp; Status</section>
+        </sections>
+        <sections>
+            <label><!-- Customer Commercial Info --></label>
+            <section>Customer Commercial Info</section>
+        </sections>
+        <sections>
+            <label><!-- Customer Packaging Info --></label>
+            <section>Customer Packaging Info</section>
+        </sections>
+        <sections>
+            <label><!-- Customer Shipments Info --></label>
+            <section>Customer Shipments Info</section>
+        </sections>
+        <sections>
+            <label><!-- Description Information --></label>
+            <section>Description Information</section>
+        </sections>
+        <sections>
+            <label><!-- Followers Intelligence --></label>
+            <section>Followers Intelligence</section>
+        </sections>
+        <sections>
+            <label><!-- Remarks Freight Rates PDF --></label>
+            <section>Remarks Freight Rates PDF</section>
+        </sections>
+        <sections>
+            <label><!-- Shipments / Status --></label>
+            <section>Shipments / Status</section>
+        </sections>
+        <sections>
+            <label><!-- System Information --></label>
+            <section>System Information</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>Customer (Services)</layout>
+        <sections>
+            <label><!-- Account Information --></label>
+            <section>Account Information</section>
+        </sections>
+        <sections>
+            <label><!-- Address Information --></label>
+            <section>Address Information</section>
+        </sections>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- Customer Bank Info --></label>
+            <section>Customer Bank Info</section>
+        </sections>
+        <sections>
+            <label><!-- Customer Categorization &amp; Status --></label>
+            <section>Customer Categorization &amp; Status</section>
+        </sections>
+        <sections>
+            <label><!-- Customer Commercial Info --></label>
+            <section>Customer Commercial Info</section>
+        </sections>
+        <sections>
+            <label><!-- Description Information --></label>
+            <section>Description Information</section>
+        </sections>
+        <sections>
+            <label><!-- Followers Intelligence --></label>
+            <section>Followers Intelligence</section>
+        </sections>
+        <sections>
+            <label><!-- Shipments / Status --></label>
+            <section>Shipments / Status</section>
+        </sections>
+        <sections>
+            <label><!-- System Information --></label>
+            <section>System Information</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>Customer (Services) RESP</layout>
+        <sections>
+            <label><!-- Account Information --></label>
+            <section>Account Information</section>
+        </sections>
+        <sections>
+            <label><!-- Address Information --></label>
+            <section>Address Information</section>
+        </sections>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- Customer Bank Info --></label>
+            <section>Customer Bank Info</section>
+        </sections>
+        <sections>
+            <label><!-- Customer Categorization &amp; Status --></label>
+            <section>Customer Categorization &amp; Status</section>
+        </sections>
+        <sections>
+            <label><!-- Customer Commercial Info --></label>
+            <section>Customer Commercial Info</section>
+        </sections>
+        <sections>
+            <label><!-- Description Information --></label>
+            <section>Description Information</section>
+        </sections>
+        <sections>
+            <label><!-- Followers Intelligence --></label>
+            <section>Followers Intelligence</section>
+        </sections>
+        <sections>
+            <label><!-- Shipments / Status --></label>
+            <section>Shipments / Status</section>
+        </sections>
+        <sections>
+            <label><!-- System Information --></label>
+            <section>System Information</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>Customer Admin Vtas</layout>
+        <sections>
+            <label><!-- Account Information --></label>
+            <section>Account Information</section>
+        </sections>
+        <sections>
+            <label><!-- Account Warnings --></label>
+            <section>Account Warnings</section>
+        </sections>
+        <sections>
+            <label><!-- Address Information --></label>
+            <section>Address Information</section>
+        </sections>
+        <sections>
+            <label><!-- Anexar Documentación --></label>
+            <section>Anexar Documentación</section>
+        </sections>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- Customer Bank Info --></label>
+            <section>Customer Bank Info</section>
+        </sections>
+        <sections>
+            <label><!-- Customer Categorization &amp; Status --></label>
+            <section>Customer Categorization &amp; Status</section>
+        </sections>
+        <sections>
+            <label><!-- Customer Commercial Info --></label>
+            <section>Customer Commercial Info</section>
+        </sections>
+        <sections>
+            <label><!-- Customer Shipments Info --></label>
+            <section>Customer Shipments Info</section>
+        </sections>
+        <sections>
+            <label><!-- Datos de Recolección --></label>
+            <section>Datos de Recolección</section>
+        </sections>
+        <sections>
+            <label><!-- Description Information --></label>
+            <section>Description Information</section>
+        </sections>
+        <sections>
+            <label><!-- Followers Intelligence --></label>
+            <section>Followers Intelligence</section>
+        </sections>
+        <sections>
+            <label><!-- Shipments / Status --></label>
+            <section>Shipments / Status</section>
+        </sections>
+        <sections>
+            <label><!-- System Information --></label>
+            <section>System Information</section>
+        </sections>
+        <sections>
+            <label><!-- Unidad de Negocio --></label>
+            <section>Unidad de Negocio</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>Customer Admin Vtas RESP</layout>
+        <sections>
+            <label><!-- Account Information --></label>
+            <section>Account Information</section>
+        </sections>
+        <sections>
+            <label><!-- Account Warnings --></label>
+            <section>Account Warnings</section>
+        </sections>
+        <sections>
+            <label><!-- Address Information --></label>
+            <section>Address Information</section>
+        </sections>
+        <sections>
+            <label><!-- Anexar Documentación --></label>
+            <section>Anexar Documentación</section>
+        </sections>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- Customer Bank Info --></label>
+            <section>Customer Bank Info</section>
+        </sections>
+        <sections>
+            <label><!-- Customer Categorization &amp; Status --></label>
+            <section>Customer Categorization &amp; Status</section>
+        </sections>
+        <sections>
+            <label><!-- Customer Commercial Info --></label>
+            <section>Customer Commercial Info</section>
+        </sections>
+        <sections>
+            <label><!-- Customer Shipments Info --></label>
+            <section>Customer Shipments Info</section>
+        </sections>
+        <sections>
+            <label><!-- Datos de Recolección --></label>
+            <section>Datos de Recolección</section>
+        </sections>
+        <sections>
+            <label><!-- Description Information --></label>
+            <section>Description Information</section>
+        </sections>
+        <sections>
+            <label><!-- Followers Intelligence --></label>
+            <section>Followers Intelligence</section>
+        </sections>
+        <sections>
+            <label><!-- Shipments / Status --></label>
+            <section>Shipments / Status</section>
+        </sections>
+        <sections>
+            <label><!-- System Information --></label>
+            <section>System Information</section>
+        </sections>
+        <sections>
+            <label><!-- Unidad de Negocio --></label>
+            <section>Unidad de Negocio</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>Customer Community Layout</layout>
+        <sections>
+            <label><!-- Account Information --></label>
+            <section>Account Information</section>
+        </sections>
+        <sections>
+            <label><!-- Address Information --></label>
+            <section>Address Information</section>
+        </sections>
+        <sections>
+            <label><!-- Anexar Documentación --></label>
+            <section>Anexar Documentación</section>
+        </sections>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- Customer Bank Info --></label>
+            <section>Customer Bank Info</section>
+        </sections>
+        <sections>
+            <label><!-- Customer Categorization &amp; Status --></label>
+            <section>Customer Categorization &amp; Status</section>
+        </sections>
+        <sections>
+            <label><!-- Customer Commercial Info --></label>
+            <section>Customer Commercial Info</section>
+        </sections>
+        <sections>
+            <label><!-- Customer Shipments Info --></label>
+            <section>Customer Shipments Info</section>
+        </sections>
+        <sections>
+            <label><!-- Datos de Recolección --></label>
+            <section>Datos de Recolección</section>
+        </sections>
+        <sections>
+            <label><!-- Description Information --></label>
+            <section>Description Information</section>
+        </sections>
+        <sections>
+            <label><!-- Shipments / Status --></label>
+            <section>Shipments / Status</section>
+        </sections>
+        <sections>
+            <label><!-- System Information --></label>
+            <section>System Information</section>
+        </sections>
+        <sections>
+            <label><!-- Unidad de Negocio --></label>
+            <section>Unidad de Negocio</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>Customer Community Layout RESP</layout>
+        <sections>
+            <label><!-- Account Information --></label>
+            <section>Account Information</section>
+        </sections>
+        <sections>
+            <label><!-- Address Information --></label>
+            <section>Address Information</section>
+        </sections>
+        <sections>
+            <label><!-- Anexar Documentación --></label>
+            <section>Anexar Documentación</section>
+        </sections>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- Customer Bank Info --></label>
+            <section>Customer Bank Info</section>
+        </sections>
+        <sections>
+            <label><!-- Customer Categorization &amp; Status --></label>
+            <section>Customer Categorization &amp; Status</section>
+        </sections>
+        <sections>
+            <label><!-- Customer Commercial Info --></label>
+            <section>Customer Commercial Info</section>
+        </sections>
+        <sections>
+            <label><!-- Customer Shipments Info --></label>
+            <section>Customer Shipments Info</section>
+        </sections>
+        <sections>
+            <label><!-- Datos de Recolección --></label>
+            <section>Datos de Recolección</section>
+        </sections>
+        <sections>
+            <label><!-- Description Information --></label>
+            <section>Description Information</section>
+        </sections>
+        <sections>
+            <label><!-- Shipments / Status --></label>
+            <section>Shipments / Status</section>
+        </sections>
+        <sections>
+            <label><!-- System Information --></label>
+            <section>System Information</section>
+        </sections>
+        <sections>
+            <label><!-- Unidad de Negocio --></label>
+            <section>Unidad de Negocio</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>Customer RESP</layout>
+        <sections>
+            <label><!-- Account Information --></label>
+            <section>Account Information</section>
+        </sections>
+        <sections>
+            <label><!-- Address Information --></label>
+            <section>Address Information</section>
+        </sections>
+        <sections>
+            <label><!-- Anexar Documentación --></label>
+            <section>Anexar Documentación</section>
+        </sections>
+        <sections>
+            <label><!-- Clasificacion --></label>
+            <section>Clasificacion</section>
+        </sections>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- Customer Bank Info --></label>
+            <section>Customer Bank Info</section>
+        </sections>
+        <sections>
+            <label><!-- Customer Categorization &amp; Status --></label>
+            <section>Customer Categorization &amp; Status</section>
+        </sections>
+        <sections>
+            <label><!-- Customer Commercial Info --></label>
+            <section>Customer Commercial Info</section>
+        </sections>
+        <sections>
+            <label><!-- Customer Shipments Info --></label>
+            <section>Customer Shipments Info</section>
+        </sections>
+        <sections>
+            <label><!-- Datos de Recolección --></label>
+            <section>Datos de Recolección</section>
+        </sections>
+        <sections>
+            <label><!-- Description Information --></label>
+            <section>Description Information</section>
+        </sections>
+        <sections>
+            <label><!-- Dirección Fiscal para Facturación y Carta Porte --></label>
+            <section>Dirección Fiscal para Facturación y Carta Porte</section>
+        </sections>
+        <sections>
+            <label><!-- Informacion SAP --></label>
+            <section>Informacion SAP</section>
+        </sections>
+        <sections>
+            <label><!-- Sales Target --></label>
+            <section>Sales Target</section>
+        </sections>
+        <sections>
+            <label><!-- Service Level --></label>
+            <section>Service Level</section>
+        </sections>
+        <sections>
+            <label><!-- System Information --></label>
+            <section>System Information</section>
+        </sections>
+        <sections>
+            <label><!-- Tipos de Servicios Disponibles --></label>
+            <section>Tipos de Servicios Disponibles</section>
+        </sections>
+        <sections>
+            <label><!-- Unidad de Negocio --></label>
+            <section>Unidad de Negocio</section>
+        </sections>
+        <sections>
+            <label><!-- Warrnings --></label>
+            <section>Warrnings</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>Export Company</layout>
+        <sections>
+            <label><!-- Account Information --></label>
+            <section>Account Information</section>
+        </sections>
+        <sections>
+            <label><!-- Address Information --></label>
+            <section>Address Information</section>
+        </sections>
+        <sections>
+            <label><!-- Company Bank Info --></label>
+            <section>Company Bank Info</section>
+        </sections>
+        <sections>
+            <label><!-- Company Categorization &amp; Status --></label>
+            <section>Company Categorization &amp; Status</section>
+        </sections>
+        <sections>
+            <label><!-- Company Commercial Info --></label>
+            <section>Company Commercial Info</section>
+        </sections>
+        <sections>
+            <label><!-- Company Qualification --></label>
+            <section>Company Qualification</section>
+        </sections>
+        <sections>
+            <label><!-- Company Shipments Info --></label>
+            <section>Company Shipments Info</section>
+        </sections>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- Description Information --></label>
+            <section>Description Information</section>
+        </sections>
+        <sections>
+            <label><!-- System Information --></label>
+            <section>System Information</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>Export Company RESP</layout>
+        <sections>
+            <label><!-- Account Information --></label>
+            <section>Account Information</section>
+        </sections>
+        <sections>
+            <label><!-- Address Information --></label>
+            <section>Address Information</section>
+        </sections>
+        <sections>
+            <label><!-- Company Bank Info --></label>
+            <section>Company Bank Info</section>
+        </sections>
+        <sections>
+            <label><!-- Company Categorization &amp; Status --></label>
+            <section>Company Categorization &amp; Status</section>
+        </sections>
+        <sections>
+            <label><!-- Company Commercial Info --></label>
+            <section>Company Commercial Info</section>
+        </sections>
+        <sections>
+            <label><!-- Company Qualification --></label>
+            <section>Company Qualification</section>
+        </sections>
+        <sections>
+            <label><!-- Company Shipments Info --></label>
+            <section>Company Shipments Info</section>
+        </sections>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- Description Information --></label>
+            <section>Description Information</section>
+        </sections>
+        <sections>
+            <label><!-- System Information --></label>
+            <section>System Information</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>MKT Prospect</layout>
+        <sections>
+            <label><!-- Account Information --></label>
+            <section>Account Information</section>
+        </sections>
+        <sections>
+            <label><!-- Address Information --></label>
+            <section>Address Information</section>
+        </sections>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- Customer Categorization &amp; Status --></label>
+            <section>Customer Categorization &amp; Status</section>
+        </sections>
+        <sections>
+            <label><!-- Datos de Account Information requeridos para SAP --></label>
+            <section>Datos de Account Information requeridos para SAP</section>
+        </sections>
+        <sections>
+            <label><!-- Datos de Custommer Categorization &amp; status requeridos para SAP --></label>
+            <section>Datos de Custommer Categorization &amp; status requeridos para SAP</section>
+        </sections>
+        <sections>
+            <label><!-- Datos de Direccion requeridos para SAP --></label>
+            <section>Datos de Direccion requeridos para SAP</section>
+        </sections>
+        <sections>
+            <label><!-- Datos de Recolección --></label>
+            <section>Datos de Recolección</section>
+        </sections>
+        <sections>
+            <label><!-- Datos requeridos de SAP --></label>
+            <section>Datos requeridos de SAP</section>
+        </sections>
+        <sections>
+            <label><!-- Description Information --></label>
+            <section>Description Information</section>
+        </sections>
+        <sections>
+            <label><!-- Dirección SAP --></label>
+            <section>Dirección SAP</section>
+        </sections>
+        <sections>
+            <label><!-- Unidad de Negocio --></label>
+            <section>Unidad de Negocio</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>MKT Prospect RESP</layout>
+        <sections>
+            <label><!-- Account Information --></label>
+            <section>Account Information</section>
+        </sections>
+        <sections>
+            <label><!-- Address Information --></label>
+            <section>Address Information</section>
+        </sections>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- Customer Categorization &amp; Status --></label>
+            <section>Customer Categorization &amp; Status</section>
+        </sections>
+        <sections>
+            <label><!-- Datos de Account Information requeridos para SAP --></label>
+            <section>Datos de Account Information requeridos para SAP</section>
+        </sections>
+        <sections>
+            <label><!-- Datos de Custommer Categorization &amp; status requeridos para SAP --></label>
+            <section>Datos de Custommer Categorization &amp; status requeridos para SAP</section>
+        </sections>
+        <sections>
+            <label><!-- Datos de Direccion requeridos para SAP --></label>
+            <section>Datos de Direccion requeridos para SAP</section>
+        </sections>
+        <sections>
+            <label><!-- Datos de Recolección --></label>
+            <section>Datos de Recolección</section>
+        </sections>
+        <sections>
+            <label><!-- Datos requeridos de SAP --></label>
+            <section>Datos requeridos de SAP</section>
+        </sections>
+        <sections>
+            <label><!-- Description Information --></label>
+            <section>Description Information</section>
+        </sections>
+        <sections>
+            <label><!-- Dirección SAP --></label>
+            <section>Dirección SAP</section>
+        </sections>
+        <sections>
+            <label><!-- Unidad de Negocio --></label>
+            <section>Unidad de Negocio</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>Naviera</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- Datos Carta Porte --></label>
+            <section>Datos Carta Porte</section>
+        </sections>
+        <sections>
+            <label><!-- Domicilio --></label>
+            <section>Domicilio</section>
+        </sections>
+        <sections>
+            <label><!-- Fields --></label>
+            <section>Fields</section>
+        </sections>
+        <sections>
+            <label><!-- Status --></label>
+            <section>Status</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>Prospect</layout>
+        <sections>
+            <label><!-- Account Information --></label>
+            <section>Account Information</section>
+        </sections>
+        <sections>
+            <label><!-- Account Warnings --></label>
+            <section>Account Warnings</section>
+        </sections>
+        <sections>
+            <label><!-- Address Information --></label>
+            <section>Address Information</section>
+        </sections>
+        <sections>
+            <label><!-- Anexar Documentación --></label>
+            <section>Anexar Documentación</section>
+        </sections>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- Customer Bank Info --></label>
+            <section>Customer Bank Info</section>
+        </sections>
+        <sections>
+            <label><!-- Customer Categorization &amp; Status --></label>
+            <section>Customer Categorization &amp; Status</section>
+        </sections>
+        <sections>
+            <label><!-- Customer Commercial Info --></label>
+            <section>Customer Commercial Info</section>
+        </sections>
+        <sections>
+            <label><!-- Customer Shipments Info --></label>
+            <section>Customer Shipments Info</section>
+        </sections>
+        <sections>
+            <label><!-- Datos de Recolección --></label>
+            <section>Datos de Recolección</section>
+        </sections>
+        <sections>
+            <label><!-- Description Information --></label>
+            <section>Description Information</section>
+        </sections>
+        <sections>
+            <label><!-- Dirección Carta Porte --></label>
+            <section>Dirección Carta Porte</section>
+        </sections>
+        <sections>
+            <label><!-- System Information --></label>
+            <section>System Information</section>
+        </sections>
+        <sections>
+            <label><!-- Unidad de Negocio --></label>
+            <section>Unidad de Negocio</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>Prospect Bloq</layout>
+        <sections>
+            <label><!-- Account Information --></label>
+            <section>Account Information</section>
+        </sections>
+        <sections>
+            <label><!-- Address Information --></label>
+            <section>Address Information</section>
+        </sections>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- Customer Categorization &amp; Status --></label>
+            <section>Customer Categorization &amp; Status</section>
+        </sections>
+        <sections>
+            <label><!-- Datos de Recolección --></label>
+            <section>Datos de Recolección</section>
+        </sections>
+        <sections>
+            <label><!-- Description Information --></label>
+            <section>Description Information</section>
+        </sections>
+        <sections>
+            <label><!-- Dirección Principal --></label>
+            <section>Dirección Principal</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>Prospect Bloq RESP</layout>
+        <sections>
+            <label><!-- Account Information --></label>
+            <section>Account Information</section>
+        </sections>
+        <sections>
+            <label><!-- Address Information --></label>
+            <section>Address Information</section>
+        </sections>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- Customer Categorization &amp; Status --></label>
+            <section>Customer Categorization &amp; Status</section>
+        </sections>
+        <sections>
+            <label><!-- Datos de Recolección --></label>
+            <section>Datos de Recolección</section>
+        </sections>
+        <sections>
+            <label><!-- Description Information --></label>
+            <section>Description Information</section>
+        </sections>
+        <sections>
+            <label><!-- Dirección Principal --></label>
+            <section>Dirección Principal</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>Prospect Piloto</layout>
+        <sections>
+            <label><!-- Account Information --></label>
+            <section>Account Information</section>
+        </sections>
+        <sections>
+            <label><!-- Address Information --></label>
+            <section>Address Information</section>
+        </sections>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- Customer Categorization &amp; Status --></label>
+            <section>Customer Categorization &amp; Status</section>
+        </sections>
+        <sections>
+            <label><!-- Datos de Recolección --></label>
+            <section>Datos de Recolección</section>
+        </sections>
+        <sections>
+            <label><!-- Description Information --></label>
+            <section>Description Information</section>
+        </sections>
+        <sections>
+            <label><!-- Unidad de Negocio --></label>
+            <section>Unidad de Negocio</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>Prospect Piloto RESP</layout>
+        <sections>
+            <label><!-- Account Information --></label>
+            <section>Account Information</section>
+        </sections>
+        <sections>
+            <label><!-- Address Information --></label>
+            <section>Address Information</section>
+        </sections>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- Customer Categorization &amp; Status --></label>
+            <section>Customer Categorization &amp; Status</section>
+        </sections>
+        <sections>
+            <label><!-- Datos de Recolección --></label>
+            <section>Datos de Recolección</section>
+        </sections>
+        <sections>
+            <label><!-- Description Information --></label>
+            <section>Description Information</section>
+        </sections>
+        <sections>
+            <label><!-- Unidad de Negocio --></label>
+            <section>Unidad de Negocio</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>Prospect RESP</layout>
+        <sections>
+            <label><!-- Account Information --></label>
+            <section>Account Information</section>
+        </sections>
+        <sections>
+            <label><!-- Account Warnings --></label>
+            <section>Account Warnings</section>
+        </sections>
+        <sections>
+            <label><!-- Address Information --></label>
+            <section>Address Information</section>
+        </sections>
+        <sections>
+            <label><!-- Anexar Documentación --></label>
+            <section>Anexar Documentación</section>
+        </sections>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- Customer Bank Info --></label>
+            <section>Customer Bank Info</section>
+        </sections>
+        <sections>
+            <label><!-- Customer Categorization &amp; Status --></label>
+            <section>Customer Categorization &amp; Status</section>
+        </sections>
+        <sections>
+            <label><!-- Customer Commercial Info --></label>
+            <section>Customer Commercial Info</section>
+        </sections>
+        <sections>
+            <label><!-- Customer Shipments Info --></label>
+            <section>Customer Shipments Info</section>
+        </sections>
+        <sections>
+            <label><!-- Datos de Recolección --></label>
+            <section>Datos de Recolección</section>
+        </sections>
+        <sections>
+            <label><!-- Description Information --></label>
+            <section>Description Information</section>
+        </sections>
+        <sections>
+            <label><!-- Dirección Carta Porte --></label>
+            <section>Dirección Carta Porte</section>
+        </sections>
+        <sections>
+            <label><!-- System Information --></label>
+            <section>System Information</section>
+        </sections>
+        <sections>
+            <label><!-- Unidad de Negocio --></label>
+            <section>Unidad de Negocio</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>Purchase Agent</layout>
+        <sections>
+            <label><!-- Account Information --></label>
+            <section>Account Information</section>
+        </sections>
+        <sections>
+            <label><!-- Address Information --></label>
+            <section>Address Information</section>
+        </sections>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- Description Information --></label>
+            <section>Description Information</section>
+        </sections>
+        <sections>
+            <label><!-- Purchase Agent Bank Info --></label>
+            <section>Purchase Agent Bank Info</section>
+        </sections>
+        <sections>
+            <label><!-- Purchase Agent Categorization &amp; Status --></label>
+            <section>Purchase Agent Categorization &amp; Status</section>
+        </sections>
+        <sections>
+            <label><!-- Purchase Agent Commercial Info --></label>
+            <section>Purchase Agent Commercial Info</section>
+        </sections>
+        <sections>
+            <label><!-- Purchase Agent Qualification --></label>
+            <section>Purchase Agent Qualification</section>
+        </sections>
+        <sections>
+            <label><!-- Purchase Agent Shipments Info --></label>
+            <section>Purchase Agent Shipments Info</section>
+        </sections>
+        <sections>
+            <label><!-- System Information --></label>
+            <section>System Information</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>Purchase Agent RESP</layout>
+        <sections>
+            <label><!-- Account Information --></label>
+            <section>Account Information</section>
+        </sections>
+        <sections>
+            <label><!-- Address Information --></label>
+            <section>Address Information</section>
+        </sections>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- Description Information --></label>
+            <section>Description Information</section>
+        </sections>
+        <sections>
+            <label><!-- Purchase Agent Bank Info --></label>
+            <section>Purchase Agent Bank Info</section>
+        </sections>
+        <sections>
+            <label><!-- Purchase Agent Categorization &amp; Status --></label>
+            <section>Purchase Agent Categorization &amp; Status</section>
+        </sections>
+        <sections>
+            <label><!-- Purchase Agent Commercial Info --></label>
+            <section>Purchase Agent Commercial Info</section>
+        </sections>
+        <sections>
+            <label><!-- Purchase Agent Qualification --></label>
+            <section>Purchase Agent Qualification</section>
+        </sections>
+        <sections>
+            <label><!-- Purchase Agent Shipments Info --></label>
+            <section>Purchase Agent Shipments Info</section>
+        </sections>
+        <sections>
+            <label><!-- System Information --></label>
+            <section>System Information</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>SCP Delphus</layout>
+        <sections>
+            <label><!-- Account Information --></label>
+            <section>Account Information</section>
+        </sections>
+        <sections>
+            <label><!-- Address Information --></label>
+            <section>Address Information</section>
+        </sections>
+        <sections>
+            <label><!-- Anexar documentacion --></label>
+            <section>Anexar documentacion</section>
+        </sections>
+        <sections>
+            <label><!-- Bank Info --></label>
+            <section>Bank Info</section>
+        </sections>
+        <sections>
+            <label><!-- Capacitaciones --></label>
+            <section>Capacitaciones</section>
+        </sections>
+        <sections>
+            <label><!-- Categorization &amp; Status --></label>
+            <section>Categorization &amp; Status</section>
+        </sections>
+        <sections>
+            <label><!-- Clasificacion --></label>
+            <section>Clasificacion</section>
+        </sections>
+        <sections>
+            <label><!-- Commercial Info --></label>
+            <section>Commercial Info</section>
+        </sections>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- Description Information --></label>
+            <section>Description Information</section>
+        </sections>
+        <sections>
+            <label><!-- Informacion Dirección Fiscal --></label>
+            <section>Informacion Dirección Fiscal</section>
+        </sections>
+        <sections>
+            <label><!-- Pak Control --></label>
+            <section>Pak Control</section>
+        </sections>
+        <sections>
+            <label><!-- Permisos SCT --></label>
+            <section>Permisos SCT</section>
+        </sections>
+        <sections>
+            <label><!-- Shipments Info --></label>
+            <section>Shipments Info</section>
+        </sections>
+        <sections>
+            <label><!-- System Information --></label>
+            <section>System Information</section>
+        </sections>
+        <sections>
+            <label><!-- Unidad de Negocio --></label>
+            <section>Unidad de Negocio</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>SCP Delphus RESP</layout>
+        <sections>
+            <label><!-- Account Information --></label>
+            <section>Account Information</section>
+        </sections>
+        <sections>
+            <label><!-- Address Information --></label>
+            <section>Address Information</section>
+        </sections>
+        <sections>
+            <label><!-- Anexar documentacion --></label>
+            <section>Anexar documentacion</section>
+        </sections>
+        <sections>
+            <label><!-- Bank Info --></label>
+            <section>Bank Info</section>
+        </sections>
+        <sections>
+            <label><!-- Capacitaciones --></label>
+            <section>Capacitaciones</section>
+        </sections>
+        <sections>
+            <label><!-- Categorization &amp; Status --></label>
+            <section>Categorization &amp; Status</section>
+        </sections>
+        <sections>
+            <label><!-- Clasificacion --></label>
+            <section>Clasificacion</section>
+        </sections>
+        <sections>
+            <label><!-- Commercial Info --></label>
+            <section>Commercial Info</section>
+        </sections>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- Description Information --></label>
+            <section>Description Information</section>
+        </sections>
+        <sections>
+            <label><!-- Informacion Dirección Fiscal --></label>
+            <section>Informacion Dirección Fiscal</section>
+        </sections>
+        <sections>
+            <label><!-- Pak Control --></label>
+            <section>Pak Control</section>
+        </sections>
+        <sections>
+            <label><!-- Permisos SCT --></label>
+            <section>Permisos SCT</section>
+        </sections>
+        <sections>
+            <label><!-- Shipments Info --></label>
+            <section>Shipments Info</section>
+        </sections>
+        <sections>
+            <label><!-- System Information --></label>
+            <section>System Information</section>
+        </sections>
+        <sections>
+            <label><!-- Unidad de Negocio --></label>
+            <section>Unidad de Negocio</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>Sales Agent</layout>
+        <sections>
+            <label><!-- Account Information --></label>
+            <section>Account Information</section>
+        </sections>
+        <sections>
+            <label><!-- Address Information --></label>
+            <section>Address Information</section>
+        </sections>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- Description Information --></label>
+            <section>Description Information</section>
+        </sections>
+        <sections>
+            <label><!-- Sales Agent Bank Info --></label>
+            <section>Sales Agent Bank Info</section>
+        </sections>
+        <sections>
+            <label><!-- Sales Agent Categorization &amp; Status --></label>
+            <section>Sales Agent Categorization &amp; Status</section>
+        </sections>
+        <sections>
+            <label><!-- Sales Agent Commercial Info --></label>
+            <section>Sales Agent Commercial Info</section>
+        </sections>
+        <sections>
+            <label><!-- Sales Agent Qualification --></label>
+            <section>Sales Agent Qualification</section>
+        </sections>
+        <sections>
+            <label><!-- Sales Agent Shipments Info --></label>
+            <section>Sales Agent Shipments Info</section>
+        </sections>
+        <sections>
+            <label><!-- System Information --></label>
+            <section>System Information</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>Sales Agent RESP</layout>
+        <sections>
+            <label><!-- Account Information --></label>
+            <section>Account Information</section>
+        </sections>
+        <sections>
+            <label><!-- Address Information --></label>
+            <section>Address Information</section>
+        </sections>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- Description Information --></label>
+            <section>Description Information</section>
+        </sections>
+        <sections>
+            <label><!-- Sales Agent Bank Info --></label>
+            <section>Sales Agent Bank Info</section>
+        </sections>
+        <sections>
+            <label><!-- Sales Agent Categorization &amp; Status --></label>
+            <section>Sales Agent Categorization &amp; Status</section>
+        </sections>
+        <sections>
+            <label><!-- Sales Agent Commercial Info --></label>
+            <section>Sales Agent Commercial Info</section>
+        </sections>
+        <sections>
+            <label><!-- Sales Agent Qualification --></label>
+            <section>Sales Agent Qualification</section>
+        </sections>
+        <sections>
+            <label><!-- Sales Agent Shipments Info --></label>
+            <section>Sales Agent Shipments Info</section>
+        </sections>
+        <sections>
+            <label><!-- System Information --></label>
+            <section>System Information</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>Supplier</layout>
+        <sections>
+            <label><!-- Account Information --></label>
+            <section>Account Information</section>
+        </sections>
+        <sections>
+            <label><!-- Address Information --></label>
+            <section>Address Information</section>
+        </sections>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- Description Information --></label>
+            <section>Description Information</section>
+        </sections>
+        <sections>
+            <label><!-- Followers Intelligence --></label>
+            <section>Followers Intelligence</section>
+        </sections>
+        <sections>
+            <label><!-- Shipments / Status --></label>
+            <section>Shipments / Status</section>
+        </sections>
+        <sections>
+            <label><!-- Supplier Bank Info --></label>
+            <section>Supplier Bank Info</section>
+        </sections>
+        <sections>
+            <label><!-- Supplier Categorization &amp; Status --></label>
+            <section>Supplier Categorization &amp; Status</section>
+        </sections>
+        <sections>
+            <label><!-- Supplier Commercial Info --></label>
+            <section>Supplier Commercial Info</section>
+        </sections>
+        <sections>
+            <label><!-- Supplier Qualification --></label>
+            <section>Supplier Qualification</section>
+        </sections>
+        <sections>
+            <label><!-- Supplier Shipments Info --></label>
+            <section>Supplier Shipments Info</section>
+        </sections>
+        <sections>
+            <label><!-- System Information --></label>
+            <section>System Information</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>Supplier (Services)</layout>
+        <sections>
+            <label><!-- Account Information --></label>
+            <section>Account Information</section>
+        </sections>
+        <sections>
+            <label><!-- Address Information --></label>
+            <section>Address Information</section>
+        </sections>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- Description Information --></label>
+            <section>Description Information</section>
+        </sections>
+        <sections>
+            <label><!-- Followers Intelligence --></label>
+            <section>Followers Intelligence</section>
+        </sections>
+        <sections>
+            <label><!-- Shipments / Status --></label>
+            <section>Shipments / Status</section>
+        </sections>
+        <sections>
+            <label><!-- Supplier Bank Info --></label>
+            <section>Supplier Bank Info</section>
+        </sections>
+        <sections>
+            <label><!-- Supplier Categorization &amp; Status --></label>
+            <section>Supplier Categorization &amp; Status</section>
+        </sections>
+        <sections>
+            <label><!-- Supplier Qualification --></label>
+            <section>Supplier Qualification</section>
+        </sections>
+        <sections>
+            <label><!-- System Information --></label>
+            <section>System Information</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>Supplier (Services) RESP</layout>
+        <sections>
+            <label><!-- Account Information --></label>
+            <section>Account Information</section>
+        </sections>
+        <sections>
+            <label><!-- Address Information --></label>
+            <section>Address Information</section>
+        </sections>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- Description Information --></label>
+            <section>Description Information</section>
+        </sections>
+        <sections>
+            <label><!-- Followers Intelligence --></label>
+            <section>Followers Intelligence</section>
+        </sections>
+        <sections>
+            <label><!-- Shipments / Status --></label>
+            <section>Shipments / Status</section>
+        </sections>
+        <sections>
+            <label><!-- Supplier Bank Info --></label>
+            <section>Supplier Bank Info</section>
+        </sections>
+        <sections>
+            <label><!-- Supplier Categorization &amp; Status --></label>
+            <section>Supplier Categorization &amp; Status</section>
+        </sections>
+        <sections>
+            <label><!-- Supplier Qualification --></label>
+            <section>Supplier Qualification</section>
+        </sections>
+        <sections>
+            <label><!-- System Information --></label>
+            <section>System Information</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>Supplier RESP</layout>
+        <sections>
+            <label><!-- Account Information --></label>
+            <section>Account Information</section>
+        </sections>
+        <sections>
+            <label><!-- Address Information --></label>
+            <section>Address Information</section>
+        </sections>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- Description Information --></label>
+            <section>Description Information</section>
+        </sections>
+        <sections>
+            <label><!-- Followers Intelligence --></label>
+            <section>Followers Intelligence</section>
+        </sections>
+        <sections>
+            <label><!-- Shipments / Status --></label>
+            <section>Shipments / Status</section>
+        </sections>
+        <sections>
+            <label><!-- Supplier Bank Info --></label>
+            <section>Supplier Bank Info</section>
+        </sections>
+        <sections>
+            <label><!-- Supplier Categorization &amp; Status --></label>
+            <section>Supplier Categorization &amp; Status</section>
+        </sections>
+        <sections>
+            <label><!-- Supplier Commercial Info --></label>
+            <section>Supplier Commercial Info</section>
+        </sections>
+        <sections>
+            <label><!-- Supplier Qualification --></label>
+            <section>Supplier Qualification</section>
+        </sections>
+        <sections>
+            <label><!-- Supplier Shipments Info --></label>
+            <section>Supplier Shipments Info</section>
+        </sections>
+        <sections>
+            <label><!-- System Information --></label>
+            <section>System Information</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>Supplier lessee or owner CFDI</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- Datos Carta Porte --></label>
+            <section>Datos Carta Porte</section>
+        </sections>
+        <sections>
+            <label><!-- Domicilio --></label>
+            <section>Domicilio</section>
+        </sections>
+        <sections>
+            <label><!-- Fields --></label>
+            <section>Fields</section>
+        </sections>
+        <sections>
+            <label><!-- Status --></label>
+            <section>Status</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>Supply Chain Partner</layout>
+        <sections>
+            <label><!-- Account Information --></label>
+            <section>Account Information</section>
+        </sections>
+        <sections>
+            <label><!-- Address Information --></label>
+            <section>Address Information</section>
+        </sections>
+        <sections>
+            <label><!-- AirWayBill Data --></label>
+            <section>AirWayBill Data</section>
+        </sections>
+        <sections>
+            <label><!-- Bank Info --></label>
+            <section>Bank Info</section>
+        </sections>
+        <sections>
+            <label><!-- Capacitaciones --></label>
+            <section>Capacitaciones</section>
+        </sections>
+        <sections>
+            <label><!-- Categorization &amp; Status --></label>
+            <section>Categorization &amp; Status</section>
+        </sections>
+        <sections>
+            <label><!-- Clasificacion --></label>
+            <section>Clasificacion</section>
+        </sections>
+        <sections>
+            <label><!-- Commercial Info --></label>
+            <section>Commercial Info</section>
+        </sections>
+        <sections>
+            <label><!-- Control --></label>
+            <section>Control</section>
+        </sections>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- Description Information --></label>
+            <section>Description Information</section>
+        </sections>
+        <sections>
+            <label><!-- Dirección Principal --></label>
+            <section>Dirección Principal</section>
+        </sections>
+        <sections>
+            <label><!-- Permisos SCT --></label>
+            <section>Permisos SCT</section>
+        </sections>
+        <sections>
+            <label><!-- Shipments Info --></label>
+            <section>Shipments Info</section>
+        </sections>
+        <sections>
+            <label><!-- System Information --></label>
+            <section>System Information</section>
+        </sections>
+        <sections>
+            <label><!-- Unidad de Negocio --></label>
+            <section>Unidad de Negocio</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>Supply Chain Partner Delphus</layout>
+        <sections>
+            <label><!-- Account Information --></label>
+            <section>Account Information</section>
+        </sections>
+        <sections>
+            <label><!-- Account Warnings --></label>
+            <section>Account Warnings</section>
+        </sections>
+        <sections>
+            <label><!-- Address Information --></label>
+            <section>Address Information</section>
+        </sections>
+        <sections>
+            <label><!-- Anexar Documentación --></label>
+            <section>Anexar Documentación</section>
+        </sections>
+        <sections>
+            <label><!-- Capacitaciones --></label>
+            <section>Capacitaciones</section>
+        </sections>
+        <sections>
+            <label><!-- Clasificacion --></label>
+            <section>Clasificacion</section>
+        </sections>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- Customer Bank Info --></label>
+            <section>Customer Bank Info</section>
+        </sections>
+        <sections>
+            <label><!-- Customer Categorization &amp; Status --></label>
+            <section>Customer Categorization &amp; Status</section>
+        </sections>
+        <sections>
+            <label><!-- Customer Commercial Info --></label>
+            <section>Customer Commercial Info</section>
+        </sections>
+        <sections>
+            <label><!-- Customer Shipments Info --></label>
+            <section>Customer Shipments Info</section>
+        </sections>
+        <sections>
+            <label><!-- Datos de Recolección --></label>
+            <section>Datos de Recolección</section>
+        </sections>
+        <sections>
+            <label><!-- Description Information --></label>
+            <section>Description Information</section>
+        </sections>
+        <sections>
+            <label><!-- Followers Intelligence --></label>
+            <section>Followers Intelligence</section>
+        </sections>
+        <sections>
+            <label><!-- Pak Control --></label>
+            <section>Pak Control</section>
+        </sections>
+        <sections>
+            <label><!-- Sales Target --></label>
+            <section>Sales Target</section>
+        </sections>
+        <sections>
+            <label><!-- Service Level --></label>
+            <section>Service Level</section>
+        </sections>
+        <sections>
+            <label><!-- Shipments / Status --></label>
+            <section>Shipments / Status</section>
+        </sections>
+        <sections>
+            <label><!-- System Information --></label>
+            <section>System Information</section>
+        </sections>
+        <sections>
+            <label><!-- Unidad de Negocio --></label>
+            <section>Unidad de Negocio</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>Supply Chain Partner Delphus RESP</layout>
+        <sections>
+            <label><!-- Account Information --></label>
+            <section>Account Information</section>
+        </sections>
+        <sections>
+            <label><!-- Account Warnings --></label>
+            <section>Account Warnings</section>
+        </sections>
+        <sections>
+            <label><!-- Address Information --></label>
+            <section>Address Information</section>
+        </sections>
+        <sections>
+            <label><!-- Anexar Documentación --></label>
+            <section>Anexar Documentación</section>
+        </sections>
+        <sections>
+            <label><!-- Capacitaciones --></label>
+            <section>Capacitaciones</section>
+        </sections>
+        <sections>
+            <label><!-- Clasificacion --></label>
+            <section>Clasificacion</section>
+        </sections>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- Customer Bank Info --></label>
+            <section>Customer Bank Info</section>
+        </sections>
+        <sections>
+            <label><!-- Customer Categorization &amp; Status --></label>
+            <section>Customer Categorization &amp; Status</section>
+        </sections>
+        <sections>
+            <label><!-- Customer Commercial Info --></label>
+            <section>Customer Commercial Info</section>
+        </sections>
+        <sections>
+            <label><!-- Customer Shipments Info --></label>
+            <section>Customer Shipments Info</section>
+        </sections>
+        <sections>
+            <label><!-- Datos de Recolección --></label>
+            <section>Datos de Recolección</section>
+        </sections>
+        <sections>
+            <label><!-- Description Information --></label>
+            <section>Description Information</section>
+        </sections>
+        <sections>
+            <label><!-- Followers Intelligence --></label>
+            <section>Followers Intelligence</section>
+        </sections>
+        <sections>
+            <label><!-- Pak Control --></label>
+            <section>Pak Control</section>
+        </sections>
+        <sections>
+            <label><!-- Sales Target --></label>
+            <section>Sales Target</section>
+        </sections>
+        <sections>
+            <label><!-- Service Level --></label>
+            <section>Service Level</section>
+        </sections>
+        <sections>
+            <label><!-- Shipments / Status --></label>
+            <section>Shipments / Status</section>
+        </sections>
+        <sections>
+            <label><!-- System Information --></label>
+            <section>System Information</section>
+        </sections>
+        <sections>
+            <label><!-- Unidad de Negocio --></label>
+            <section>Unidad de Negocio</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>Supply Chain Partner RESP</layout>
+        <sections>
+            <label><!-- Account Information --></label>
+            <section>Account Information</section>
+        </sections>
+        <sections>
+            <label><!-- Address Information --></label>
+            <section>Address Information</section>
+        </sections>
+        <sections>
+            <label><!-- AirWayBill Data --></label>
+            <section>AirWayBill Data</section>
+        </sections>
+        <sections>
+            <label><!-- Bank Info --></label>
+            <section>Bank Info</section>
+        </sections>
+        <sections>
+            <label><!-- Capacitaciones --></label>
+            <section>Capacitaciones</section>
+        </sections>
+        <sections>
+            <label><!-- Categorization &amp; Status --></label>
+            <section>Categorization &amp; Status</section>
+        </sections>
+        <sections>
+            <label><!-- Clasificacion --></label>
+            <section>Clasificacion</section>
+        </sections>
+        <sections>
+            <label><!-- Commercial Info --></label>
+            <section>Commercial Info</section>
+        </sections>
+        <sections>
+            <label><!-- Control --></label>
+            <section>Control</section>
+        </sections>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- Description Information --></label>
+            <section>Description Information</section>
+        </sections>
+        <sections>
+            <label><!-- Dirección Principal --></label>
+            <section>Dirección Principal</section>
+        </sections>
+        <sections>
+            <label><!-- Permisos SCT --></label>
+            <section>Permisos SCT</section>
+        </sections>
+        <sections>
+            <label><!-- Shipments Info --></label>
+            <section>Shipments Info</section>
+        </sections>
+        <sections>
+            <label><!-- System Information --></label>
+            <section>System Information</section>
+        </sections>
+        <sections>
+            <label><!-- Unidad de Negocio --></label>
+            <section>Unidad de Negocio</section>
+        </sections>
+    </layouts>
+    <quickActions>
+        <label><!-- ALTA client SAP --></label>
+        <name>ALTA_client_SAP</name>
+    </quickActions>
+    <quickActions>
+        <label><!-- Certificación de proveedor --></label>
+        <name>Certificacion_de_proveedor</name>
+    </quickActions>
+    <quickActions>
+        <label><!-- Child Account --></label>
+        <name>Child_Account</name>
+    </quickActions>
+    <quickActions>
+        <label><!-- Nuevo Evento --></label>
+        <name>Nuevo_Evento</name>
+    </quickActions>
+    <quickActions>
+        <label><!-- Enviar a SAP --></label>
+        <name>Validar_Cliente</name>
+    </quickActions>
+    <recordTypes>
+        <description><!-- Para Comerciales/Cuentas Clave y Operaciones (Pricing/Operaciones) --></description>
+        <label><!-- Agente Aduanal --></label>
+        <name>Agente_Aduanal</name>
+    </recordTypes>
+    <recordTypes>
+        <label><!-- Consignee --></label>
+        <name>Consignee</name>
+    </recordTypes>
+    <recordTypes>
+        <description><!-- Account of the goods or merchandise that are transferred --></description>
+        <label><!-- Account Destination --></label>
+        <name>Cuenta_Destino</name>
+    </recordTypes>
+    <recordTypes>
+        <description><!-- Customers who purchase goods or services from us. Also for Shippers and Consignees. --></description>
+        <label><!-- Customer --></label>
+        <name>Customer</name>
+    </recordTypes>
+    <recordTypes>
+        <description><!-- Companies that are used in some countries (like China) to export the goods of the manufacturers. --></description>
+        <label><!-- Export Company --></label>
+        <name>Export_Company</name>
+    </recordTypes>
+    <recordTypes>
+        <description><!-- Potential Customers --></description>
+        <label><!-- Prospect --></label>
+        <name>Prospect</name>
+    </recordTypes>
+    <recordTypes>
+        <label><!-- Prospect Bloq --></label>
+        <name>Prospect_Bloq</name>
+    </recordTypes>
+    <recordTypes>
+        <label><!-- Prospect Mkt --></label>
+        <name>Prospect_Mkt</name>
+    </recordTypes>
+    <recordTypes>
+        <description><!-- Agents who receive a commission on what we buy from some of our suppliers. --></description>
+        <label><!-- Purchase Agent --></label>
+        <name>Purchase_Agent</name>
+    </recordTypes>
+    <recordTypes>
+        <description><!-- Agents who receive a commission on what we sell to some of our customers. --></description>
+        <label><!-- Sales Agent --></label>
+        <name>Sales_Agent</name>
+    </recordTypes>
+    <recordTypes>
+        <label><!-- Shipper --></label>
+        <name>Shipper</name>
+    </recordTypes>
+    <recordTypes>
+        <description><!-- Suppliers we purchase goods from. --></description>
+        <label><!-- Supplier --></label>
+        <name>Supplier</name>
+    </recordTypes>
+    <recordTypes>
+        <description><!-- Logistic companies that we use to transport our goods. Valid for Carriers, Forwarders, 3PLs,...etc. --></description>
+        <label><!-- Supply Chain Partner --></label>
+        <name>Transporter</name>
+    </recordTypes>
+    <recordTypes>
+        <description><!-- Lessee or owner of the vehicle where the goods or merchandise are transported --></description>
+        <label><!-- Supplier Owner or Lessee of Vehicule --></label>
+        <name>supplier_Owner_or_Lessee</name>
+    </recordTypes>
+    <validationRules>
+        <errorMessage><!-- AC001_Agregue el Motivo de No Venta --></errorMessage>
+        <name>AC001_Motivo_de_No_Venta</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- ACC003 - Los propietarios de las cuentas deben ser usuarios con código SlpCode activo. --></errorMessage>
+        <name>ACC003_Owner_whit_SlpCode</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Para este Cliente Ha seleccionado Unidad de Negocio Aéreo, debe capturar Annual Revenue Aéreo. --></errorMessage>
+        <name>Annual_Revenue_Aereo</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Para este Cliente Ha seleccionado Unidad de Negocio Almacenaje, debe capturar Annual Revenue Almacenaje. --></errorMessage>
+        <name>Annual_Revenue_Almacenaje</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Para este Cliente Ha seleccionado Unidad de Negocio Flete Internacional Terrestre, debe capturar Annual Revenue Flete Internacional Terrestre. --></errorMessage>
+        <name>Annual_Revenue_Flete_Internacional_Terre</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Para este Cliente Ha seleccionado Unidad de Negocio Flete Nacional Terrestre, debe capturar Annual Revenue Flete Nacional Terrestre. --></errorMessage>
+        <name>Annual_Revenue_Flete_Nacional_Terrestre</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Para este Cliente Ha seleccionado Unidad de Negocio LTL Nacional, debe capturar Annual Revenue LTL Nacional. --></errorMessage>
+        <name>Annual_Revenue_LTL_Nacional</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Para este Cliente Ha seleccionado Unidad de Negocio Maritimo, debe capturar Annual Revenue Maritimo. --></errorMessage>
+        <name>Annual_Revenue_Maritimo</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Para este Cliente Ha seleccionado Unidad de Negocio Paqueteria, debe capturar Annual Revenue Paqueteria. --></errorMessage>
+        <name>Annual_Revenue_Paqueteria</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Para este Cliente Ha seleccionado Unidad de Negocio Servicio Logistico, debe capturar Annual Revenue Servicio Logistico. --></errorMessage>
+        <name>Annual_Revenue_Servicio_Logistico</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- ERROR: You Can&apos;t Modify fields &quot;Account Source&quot; --></errorMessage>
+        <name>Bloq_Prospecto_Vtas</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage>
+            <!-- ERROR: You Can&apos;t change this &quot;CUSTOMER&quot;
+Please contact Administration Team. -->
+        </errorMessage>
+        <name>Bloq_RecType_Customer</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Para cualquier cambio o modificación del Account Name u Owner favor de comunicarse con su administrador --></errorMessage>
+        <name>Change_AccountName_AND_Owner</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Ha seleccionado Unidad de Negocio Paqueteria, debe capturar Todos los datos del apartado Datos de Recolección. --></errorMessage>
+        <name>Paqueteria_vs_datos_recoleccion</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Ha seleccionado Tipo de Pago = Credito, debe capturar el campo Credit Limit --></errorMessage>
+        <name>Tipo_pago_Credito_vs_Credit_Limit</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Ha seleccionado Tipo de Pago = Credito, debe seleccionar los dias de pago en el campo Credit Terms. --></errorMessage>
+        <name>Tipo_pago_Credito_vs_Credit_Terms</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Si es Cliente Contactado o Visitado debe llenar los campos --></errorMessage>
+        <name>Validate_ClienteContactado</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- DEBES CAPTURAR EL NUMERO DE CHAT --></errorMessage>
+        <name>Validate_Mkt_Chat</name>
+    </validationRules>
+    <webLinks>
+        <label><!-- Allocate_E_Commerce_Offers_to_Account --></label>
+        <name>Allocate_E_Commerce_Offers_to_Account</name>
+    </webLinks>
+    <webLinks>
+        <label><!-- Allocate_Families_Subfamilies_or_Items --></label>
+        <name>Allocate_Families_Subfamilies_or_Items</name>
+    </webLinks>
+    <webLinks>
+        <label><!-- Allocate_Families_Supplied_to_Account --></label>
+        <name>Allocate_Families_Supplied_to_Account</name>
+    </webLinks>
+    <webLinks>
+        <label><!-- Allocate_Price_Lists_to_Account --></label>
+        <name>Allocate_Price_Lists_to_Account</name>
+    </webLinks>
+    <webLinks>
+        <label><!-- AltavistaNews --></label>
+        <name>AltavistaNews</name>
+    </webLinks>
+    <webLinks>
+        <label><!-- Associated_Docs --></label>
+        <name>Associated_Docs</name>
+    </webLinks>
+    <webLinks>
+        <label><!-- Associated_Documents --></label>
+        <name>Associated_Documents</name>
+    </webLinks>
+    <webLinks>
+        <label><!-- Bill_of_Ladings --></label>
+        <name>Bill_of_Ladings</name>
+    </webLinks>
+    <webLinks>
+        <label><!-- GoogleMaps --></label>
+        <name>GoogleMaps</name>
+    </webLinks>
+    <webLinks>
+        <label><!-- GoogleNews --></label>
+        <name>GoogleNews</name>
+    </webLinks>
+    <webLinks>
+        <label><!-- GoogleSearch --></label>
+        <name>GoogleSearch</name>
+    </webLinks>
+    <webLinks>
+        <label><!-- HooversProfile --></label>
+        <name>HooversProfile</name>
+    </webLinks>
+    <webLinks>
+        <label><!-- New_Associated_Document --></label>
+        <name>New_Associated_Document</name>
+    </webLinks>
+    <webLinks>
+        <label><!-- Send_Attachment --></label>
+        <name>Send_Attachment</name>
+    </webLinks>
+    <webLinks>
+        <label><!-- Send_Email_with_Documents --></label>
+        <name>Send_Email_with_Documents</name>
+    </webLinks>
+    <webLinks>
+        <label><!-- Send_to_SAP_Supply_Chain_Partner --></label>
+        <name>Send_to_SAP_Supply_Chain_Partner</name>
+    </webLinks>
+    <webLinks>
+        <label><!-- Show_Billing_Address --></label>
+        <name>Show_Billing_Address</name>
+    </webLinks>
+    <webLinks>
+        <label><!-- Show_Shipping_Address --></label>
+        <name>Show_Shipping_Address</name>
+    </webLinks>
+    <webLinks>
+        <label><!-- Update_SAP --></label>
+        <name>Update_SAP</name>
+    </webLinks>
+    <webLinks>
+        <label><!-- Upload_Logo --></label>
+        <name>Upload_Logo</name>
+    </webLinks>
+    <webLinks>
+        <label><!-- Upload_Packaging_Documents --></label>
+        <name>Upload_Packaging_Documents</name>
+    </webLinks>
+    <webLinks>
+        <label><!-- YahooMaps --></label>
+        <name>YahooMaps</name>
+    </webLinks>
+</CustomObjectTranslation>

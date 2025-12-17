@@ -51,6 +51,10 @@
                 <behavior>Readonly</behavior>
                 <field>Name_Consumo__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Last_SAP_Response__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>

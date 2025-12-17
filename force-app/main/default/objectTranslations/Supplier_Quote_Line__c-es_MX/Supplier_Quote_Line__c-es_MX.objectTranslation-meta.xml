@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Supplier Quote/Order Line</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Supplier Quote/Order Lines</value>
+    </caseValues>
+    <gender>Neuter</gender>
+    <layouts>
+        <layout>Supplier Quote Line Hidden Layout</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- DC Product Categorization assigned --></label>
+            <section>DC Product Categorization assigned</section>
+        </sections>
+        <sections>
+            <label><!-- Delivery Info --></label>
+            <section>Delivery Info</section>
+        </sections>
+        <sections>
+            <label><!-- Import-Export Charges Assigned and Additional Taxes --></label>
+            <section>Import-Export Charges Assigned and Additional Taxes</section>
+        </sections>
+        <sections>
+            <label><!-- Item &amp; Price References --></label>
+            <section>Item &amp; Price References</section>
+        </sections>
+        <sections>
+            <label><!-- Line References &amp; Status --></label>
+            <section>Line References &amp; Status</section>
+        </sections>
+        <sections>
+            <label><!-- Previous Process References --></label>
+            <section>Previous Process References</section>
+        </sections>
+        <sections>
+            <label><!-- Supplier Packaging &amp; Production Data --></label>
+            <section>Supplier Packaging &amp; Production Data</section>
+        </sections>
+        <sections>
+            <label><!-- Units &amp; Weight --></label>
+            <section>Units &amp; Weight</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>Supplier Quote Line Layout</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- DC Product Categorization assigned --></label>
+            <section>DC Product Categorization assigned</section>
+        </sections>
+        <sections>
+            <label><!-- DC Product Value &amp; Shipping and Insurance (Output Currency) --></label>
+            <section>DC Product Value &amp; Shipping and Insurance (Output Currency)</section>
+        </sections>
+        <sections>
+            <label><!-- Delivery Info --></label>
+            <section>Delivery Info</section>
+        </sections>
+        <sections>
+            <label><!-- Destination Cost --></label>
+            <section>Destination Cost</section>
+        </sections>
+        <sections>
+            <label><!-- Import-Export Charges Assigned and Additional Taxes --></label>
+            <section>Import-Export Charges Assigned and Additional Taxes</section>
+        </sections>
+        <sections>
+            <label><!-- Item &amp; Price References --></label>
+            <section>Item &amp; Price References</section>
+        </sections>
+        <sections>
+            <label><!-- Line References &amp; Status --></label>
+            <section>Line References &amp; Status</section>
+        </sections>
+        <sections>
+            <label><!-- Previous Process References --></label>
+            <section>Previous Process References</section>
+        </sections>
+        <sections>
+            <label><!-- Price &amp; Amount --></label>
+            <section>Price &amp; Amount</section>
+        </sections>
+        <sections>
+            <label><!-- Supplier Packaging &amp; Production Data --></label>
+            <section>Supplier Packaging &amp; Production Data</section>
+        </sections>
+        <sections>
+            <label><!-- Units &amp; Weight --></label>
+            <section>Units &amp; Weight</section>
+        </sections>
+    </layouts>
+    <recordTypes>
+        <label><!-- Supplier Quote/Order Line --></label>
+        <name>Supplier_Quote_Order_Line</name>
+    </recordTypes>
+    <recordTypes>
+        <label><!-- Supplier Quote/Order Line Hidden --></label>
+        <name>Supplier_Quote_Order_Line_Hidden</name>
+    </recordTypes>
+</CustomObjectTranslation>

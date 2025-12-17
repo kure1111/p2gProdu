@@ -473,7 +473,8 @@
                                 </table>
                                 <!--lightning-input required label="Dirección de Descarga" value={unloadingAddress} data-fieldname="unloadingAddress" onchange={handleChange}></lightning-input -->
                             </div>
-
+                            <!--Campos cuando no buscan codigo postal-->
+                            <template if:false={buscaCP}>
                             <div style="width: 100%;">
                                 <lightning-input style="top: -43px;" required label="Tiempo Carga (Horas)" value={timeLoad} data-fieldname="timeLoad" onchange={handleChange} pattern="\d*" title="Ingresa un número entero"  type="number"></lightning-input>
                             </div>
@@ -509,6 +510,45 @@
                                     </lightning-combobox>
                                 </div>
                             </div>
+                            </template>
+                            <!--Campos cuando buscan un codigo postal-->
+                            <template if:true={buscaCP}>
+                            <div style="width: 100%;">
+                                <lightning-input required label="Tiempo Carga (Horas)" value={timeLoad} data-fieldname="timeLoad" onchange={handleChange} pattern="\d*" title="Ingresa un número entero"  type="number"></lightning-input>
+                            </div>
+
+                            <div style="width: 100%;">
+                                <lightning-input required label="Tiempo Descarga (Horas)" value={timeUnload} data-fieldname="timeUnload" onchange={handleChange} pattern="\d*" title="Ingresa un número entero"  type="number"></lightning-input>
+                            </div>
+
+                            <div style="width: 100%;">
+                                <div style="width: 100%;">
+                                    <lightning-combobox required
+                                        label="Tipo de Moneda"
+                                        value={selectedMoneda}
+                                        options={monedaOptions}
+                                        onchange={handleMonedaChange}>
+                                    </lightning-combobox>
+                                </div>
+                            </div>
+
+                            <div style="width: 100%;">
+                                <lightning-input label="Comentarios: " value={comentarios} data-fieldname="comentarios" onchange={handleChange}></lightning-input>
+                            </div>
+
+                            <div style="width: 100%;">
+                                <lightning-input type="number" label="Costo Target del cliente:" value={target} data-fieldname="target" onchange={handleChange}></lightning-input>
+                            </div>
+
+                            <div style="width: 100%;">
+                                <div style="width: 100%;">
+                                    <lightning-combobox 
+                                        label="Incoterm" value={selectedIncoterm}
+                                        options={incotermOptions} onchange={handleIncotermChange}>
+                                    </lightning-combobox>
+                                </div>
+                            </div>
+                            </template>
                         </div>
                         <div>
                             <br><h1>Datos adicionales del servicio</h1><br>

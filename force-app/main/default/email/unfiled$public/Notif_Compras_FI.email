@@ -1,0 +1,65 @@
+<messaging:emailTemplate subject="RFQ - {!relatedTo.Name} - {!relatedTo.Account_for__r.Name}" recipientType="User" relatedToType="Customer_Quote__c">
+<messaging:htmlEmailBody >
+    <html>
+      <body>
+     <p>Estimad@ {!relatedTo.CreatedBy.Name} su Requerimiento de Tarifa ha sido Respondido por el equipo Pricing.</p>
+     <br/>
+     <p>Cotizacion:  {!relatedTo.Name}</p>
+     <p>Cliente: {!relatedTo.Account_for__r.Name}</p>
+     <p>Route: {!relatedTo.Site_of_Load__r.Name} - {!relatedTo.Site_of_Discharge__r.Name}</p>
+     <p>Contestado por: {!relatedTo.Pricing_Executive__r.Name}</p>
+     <p>Venta Total (Sugerida):{!relatedTo.Total_Services_Sell_Amount__c}</p>
+     <p>Costo Total: {!relatedTo.Total_Services_Std_Buy_Amount__c}</p>
+     <p>Profit: {!relatedTo.Services_Margin__c}</p>
+     <p>Equipo:</p>
+<table width="100%">
+<tr>
+<td>Service Line</td>
+<td>New Rate Category</td>
+<td>New Rate Name</td>
+<td>Units</td>
+<td>Quote Sell Price</td>
+<td>Sell Net Amount</td>
+<td>Quote Std. Buy Price</td>
+<td>Std. Buy Amount</td>
+<td>% Profit</td>
+</tr>
+<apex:repeat var="LI" value="{!relatedTo.Import_Export_Fees_Lines__r}">
+<tr>
+<td>{!LI.Name}</td>
+<td>{!LI.New_Rate_Category__c}</td>
+<td>{!LI.New_Rate_Name__c}</td>
+<td>{!LI.Units__c}</td>
+<td>{!LI.Quote_Sell_Price__c}</td>
+<td>{!LI.Sell_Amount__c}</td>
+<td>{!LI.Quote_Buy_Price__c}</td>
+<td>{!LI.Buy_Amount__c}</td>
+<td>{!LI.ProfitServLine__c}</td>
+</tr>
+</apex:repeat>
+</table>
+<br/>
+Observaciones:
+{!relatedTo.Observations__c}
+      </body>
+    </html>
+  </messaging:htmlEmailBody>
+<messaging:plainTextEmailBody >
+Estimad@ {!relatedTo.CreatedBy.Name} su Requerimiento de Tarifa ha sido Respondido por el equipo Pricing.
+
+Cotizacion:  {!relatedTo.Name}
+Cliente: {!relatedTo.Account_for__r.Name}
+Route: {!relatedTo.Site_of_Load__r.Name} - {!relatedTo.Site_of_Discharge__r.Name}
+Contestado por: {!relatedTo.Pricing_Executive__r.Name}
+Venta Total (Sugerida):{!relatedTo.Total_Services_Sell_Amount__c}
+Costo Total: {!relatedTo.Total_Services_Std_Buy_Amount__c}
+Profit: {!relatedTo.Services_Margin__c}
+Equipo:
+<apex:repeat var="LI" value="{!relatedTo.Import_Export_Fees_Lines__r}">
+{!LI.Name} - {!LI.New_Rate_Category__c} - {!LI.New_Rate_Name__c} - {!LI.Units__c} - {!LI.Quote_Sell_Price__c} - {!LI.Sell_Amount__c} - {!LI.Quote_Buy_Price__c} - {!LI.Buy_Amount__c} - {!LI.ProfitServLine__c}
+</apex:repeat>
+
+Observaciones:
+{!relatedTo.Observations__c}
+</messaging:plainTextEmailBody>
+</messaging:emailTemplate>

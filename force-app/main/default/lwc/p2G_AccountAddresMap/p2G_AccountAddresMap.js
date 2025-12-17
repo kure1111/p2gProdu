@@ -87,7 +87,6 @@ export default class P2G_AccountAddresMap extends LightningElement {
                 let rowClass = marker.status === 'Pendiente' ? 'yellow-background' : 'green-background';
                 return { ...marker, rowClass }; // Añades la propiedad rowClass
             });
-            console.log('mapMarkers: ',this.mapMarkers);
         })
         .catch(error => {
             console.log('Error: ', error);
@@ -227,7 +226,6 @@ export default class P2G_AccountAddresMap extends LightningElement {
         addressOption({ direccion: stringList })
         .then(result => {
             this.valor = result;
-            console.log('valor: ', this.valor);
         })
         .catch(error => {
             console.log('Error: ', error);
@@ -302,7 +300,6 @@ export default class P2G_AccountAddresMap extends LightningElement {
     @track direcciones;
 
     getAddresNew() {
-        console.debug('Enrtra getAdreNew');
         getResume({ idAddress: this.valor })
         .then(result => {
             this.direccion = result;
@@ -342,7 +339,6 @@ export default class P2G_AccountAddresMap extends LightningElement {
         addressOptionD({ direccion: stringList })
         .then(result => {
             this.valor = result;
-            console.log('IdDupli: ', this.valor);
             this.getAddresNew();
         })
         .catch(error => {
@@ -357,7 +353,6 @@ export default class P2G_AccountAddresMap extends LightningElement {
     }
 
     getAddresDupli() {
-        console.debug('Enrtra dupli');
         getDuplicates({ codigoPostal: this.codigoPostal, colonia: this.colonia})
         .then(result => {
             this.direcciones = result;
@@ -460,7 +455,6 @@ export default class P2G_AccountAddresMap extends LightningElement {
     handleButtonClick(event) {
         this.isModalOpenEdit = true;
         const markerId = event.currentTarget.dataset.id;
-        console.log('clickkk ',markerId);
         this.idEdit = markerId;
         getResume({ idAddress: markerId })
             .then(result => {
@@ -518,7 +512,7 @@ export default class P2G_AccountAddresMap extends LightningElement {
     @track selectedStatus = 'Todos';
     
     location2User() {
-        getMapMarkersByUser()
+        getMapMarkersByUser({ status: this.selectedStatus })
         .then(result => {
             // Filtrar los resultados si el filtro no es "todos"
             let filteredMarkers = result;
@@ -555,10 +549,10 @@ export default class P2G_AccountAddresMap extends LightningElement {
     
 
     @track statusOptions = [
-        { label: 'Todos', value: 'Todos' },
-        { label: 'Validado', value: 'Validado' },
-        { label: 'Pendiente', value: 'Pendiente' },
-        { label: 'Rechazado', value: 'Rechazado' }
+        { label: 'Mis Ubicaciones', value: 'Todos' },
+        { label: 'Mis Validados', value: 'Validado' },
+        { label: 'Mis Pendientes', value: 'Pendiente' },
+        { label: 'Todas Rechazadas', value: 'Rechazado' }
     ];
 
     // Maneja el cambio en el picklist

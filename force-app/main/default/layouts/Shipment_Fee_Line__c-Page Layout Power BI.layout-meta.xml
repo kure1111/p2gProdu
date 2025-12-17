@@ -107,6 +107,10 @@
                 <behavior>Edit</behavior>
                 <field>SST_Orden_compra__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Campo_Control__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>

@@ -32,7 +32,7 @@ public class P2G_PAK_ShipmentHistoryTest {
         ship.Reparto__c = True;
         ship.SAP_Invoiced__c = True;
         ship.Sell_Price_Modified__c = True;
-        ship.Shipment_Customer_Evaluate__c = 'www.google.com';
+        //ship.Shipment_Customer_Evaluate__c = 'www.google.com';
         //ship.Name = '.';
         ship.Shipment_Status_Mon__c = 'In Progress';
         ship.Solicitud_de_Maniobras__c = True;

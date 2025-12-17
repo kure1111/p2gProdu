@@ -82,12 +82,12 @@ public class ShipmentTriggerHandler extends TriggerHandler {
         if(SPobj.size()>0){
             API_send_SP_to_PakControl.send_SP(SPobj[0].Id);
         }
-        /*
+        
         if (!updatedShipments.isEmpty() && !P2G_llamadoWebHelper.getWebServiceUpdate()){
             P2G_llamadoWebHelper.setWebServiceUpdate(true);
             try{P2G_creacionFolioWs.callSerCon(updatedShipments[0].Id);}catch(Exception e){System.debug('Error P2G_creacionFolioWs.callSerCon: '+e.getLineNumber());}      
         }
-        */
+        
         if(NEU_StaticVariableHelper.getBoolean1() || System.IsBatch() || System.isFuture()||test.isRunningTest())
             return;
         set<string> listaShipment = new set<string>();

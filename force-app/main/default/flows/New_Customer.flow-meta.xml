@@ -14,6 +14,7 @@
                 <elementReference>$Record.Id</elementReference>
             </value>
         </inputParameters>
+        <nameSegment>Account.NewCustomer</nameSegment>
     </actionCalls>
     <apiVersion>64.0</apiVersion>
     <environments>Default</environments>
@@ -74,8 +75,8 @@
             </value>
         </filters>
         <object>Account</object>
-        <recordTriggerType>CreateAndUpdate</recordTriggerType>
+        <recordTriggerType>Create</recordTriggerType>
         <triggerType>RecordAfterSave</triggerType>
     </start>
-    <status>Active</status>
+    <status>Obsolete</status>
 </Flow>

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Line Plan</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Line Plans</value>
+    </caseValues>
+    <gender>Neuter</gender>
+    <layouts>
+        <layout>Labor Program Layout</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- Data Fields for Analytics Integration --></label>
+            <section>Data Fields for Analytics Integration</section>
+        </sections>
+        <sections>
+            <label><!-- Followers --></label>
+            <section>Followers</section>
+        </sections>
+        <sections>
+            <label><!-- Shift Patterns --></label>
+            <section>Shift Patterns</section>
+        </sections>
+        <sections>
+            <label><!-- Time Classification and and Performance --></label>
+            <section>Time Classification and and Performance</section>
+        </sections>
+        <sections>
+            <label><!-- Unutilised Capacity Lossed --></label>
+            <section>Unutilised Capacity Lossed</section>
+        </sections>
+    </layouts>
+</CustomObjectTranslation>

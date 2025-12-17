@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <encodingKey>ISO-8859-1</encodingKey>
+    <letterhead>Lettherhead_Notification</letterhead>
+    <name>Encuestas</name>
+    <style>formalLetter</style>
+    <subject>EMBARQUE COMPLETADO</subject>
+    <textOnly>Estimado {!Account.Name},
+
+
+Agradecemos la confianza puesta en nosotros para la realización del servicio {!Account.Folio_con_encuesta__c} efectuado el {!Account.Date_planner_con_encuesta__c}.
+
+
+Esperamos que la calidad y nivel de servicio obtenidos hayan sido satisfactorios y acorde a sus expectativas.
+
+
+En Pak2Go estamos comprometidos en brindar un servicio integral de soluciones a sus necesidades logísticas con el mayor estándar de calidad, por lo que su opinión es muy importante para nosotros.
+
+
+Lo invitamos a contestar esta breve encuesta para seguir mejorando nuestros servicios.
+
+¡Muchas gracias!
+
+Liga a encuesta
+
+
+
+https://uat-pak2golive.cs35.force.com/encuesta/TakeSurvey?id=a2v2g000000ssdKAAQ&amp;accId={!Account.Id}&amp;caId=none</textOnly>
+    <type>html</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

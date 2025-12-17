@@ -1,0 +1,40 @@
+<table border="0" cellpadding="5" width="600" cellspacing="5" height="400" >
+<tr valign="top" height="50" >
+<td tEditID="c1r1" style=" background-color:#FFFFFF; color:#000000; bEditID:r3st1; bLabel:main; font-size:12pt; font-family:arial;" aEditID="c1r1" locked="0" >
+<![CDATA[<div style="text-align: center;"><b style=""><font style="background-color: rgb(255, 255, 255);" size="4" color="#006600">**Unidad en Sitio de Carga**</font></b></div>]]></td>
+</tr>
+<tr valign="top" height="300" >
+<td tEditID="c1r2" style=" background-color:#FFFFFF; color:#000000; bEditID:r3st1; bLabel:main; font-size:12pt; font-family:arial;" aEditID="c1r2" locked="0" >
+<![CDATA[<div style=""><div style=""><div style="color: rgb(0, 0, 0); font-size: 12pt;"><p style="margin: 0cm 0cm 0.0001pt;"><font face="Arial, sans-serif">Estimad@
+Equipo de comercial y operaciones, este Shipment ha llegado a sitio de Carga,
+por favor validar posibles gastos extras.<o:p></o:p></font></p>
+
+<p style="margin: 0cm 0cm 0.0001pt;"><font face="Arial, sans-serif">&nbsp;<o:p></o:p></font></p>
+
+<p style="margin: 0cm 0cm 0.0001pt;"><font face="Arial, sans-serif">Detalles:&nbsp;</font><span style="font-family: &quot;Calibri Light&quot;, sans-serif;"><o:p></o:p></span></p></div><div style="color: rgb(0, 0, 0); font-size: 12pt; font-family: arial;"><font color="#ff0000"><br></font></div><div style=""><p style="margin: 0cm 0cm 0.0001pt;"><font face="Arial, sans-serif" style="color: rgb(0, 0, 0); font-size: 12pt;">Folio:&nbsp;<o:p></o:p></font><font face="Arial, sans-serif">{!Shipment__c.Name}</font></p>
+
+<p style="margin: 0cm 0cm 0.0001pt;"><font face="Arial, sans-serif" style="color: rgb(0, 0, 0); font-size: 12pt;">Planner:&nbsp;</font><font face="Arial, sans-serif">{!Shipment__c.Operation_Executive__c}</font></p><p style="color: rgb(0, 0, 0); font-size: 12pt; margin: 0cm 0cm 0.0001pt;"><span lang="EN-US" style="font-family: Arial, sans-serif; background-color: white; font-size: 12pt;">Shipment Status Monitoreo:&nbsp;{!Shipment__c.Shipment_Status_Mon__c}</span></p>
+
+<p style="margin: 0cm 0cm 0.0001pt;"><font face="Arial, sans-serif" style="color: rgb(0, 0, 0); font-size: 12pt;">Cliente:&nbsp;<o:p></o:p></font><font face="Arial, sans-serif">{!Shipment__c.Account_for__c}</font></p>
+
+<p style="margin: 0cm 0cm 0.0001pt;"><font face="Arial, sans-serif" style="color: rgb(0, 0, 0); font-size: 12pt;">Ruta:&nbsp;<o:p></o:p></font><font face="Arial, sans-serif">{!Shipment__c.Route__c}</font></p>
+
+<p style="margin: 0cm 0cm 0.0001pt;"><font face="Arial, sans-serif" style="color: rgb(0, 0, 0); font-size: 12pt;">Venta:&nbsp;<o:p></o:p></font><font face="Arial, sans-serif">{!Shipment__c.Total_Services_Sell_Amount__c}</font></p>
+
+<p style="margin: 0cm 0cm 0.0001pt;"><font face="Arial, sans-serif" style="color: rgb(0, 0, 0); font-size: 12pt;">Costo:&nbsp;<o:p></o:p></font><font face="Arial, sans-serif">{!Shipment__c.Total_Services_Std_Buy_Amount__c}</font></p>
+
+<p style="margin: 0cm 0cm 0.0001pt;"><font face="Arial, sans-serif" style="color: rgb(0, 0, 0); font-size: 12pt;">Proveedor:&nbsp;<o:p></o:p></font><font face="Arial, sans-serif">{!Shipment__c.Carrier__c}</font></p>
+
+<p style="margin: 0cm 0cm 0.0001pt; vertical-align: baseline;"><font face="Arial, sans-serif" style="color: rgb(0, 0, 0); font-size: 12pt;">ETD:&nbsp;<o:p></o:p></font><font face="Arial, sans-serif">{!Shipment__c.ETD_from_Point_of_Load__c}</font></p>
+
+<p style="margin: 0cm 0cm 0.0001pt; vertical-align: baseline;"><font face="Arial, sans-serif" style="color: rgb(0, 0, 0); font-size: 12pt;"><span lang="EN-US" style="">ETD Time:&nbsp;</span></font><font face="Arial, sans-serif">{!Shipment__c.ETD_Time_from_Point_of_Load__c}</font></p>
+
+<p style="margin: 0cm 0cm 0.0001pt; vertical-align: baseline;"><font face="Arial, sans-serif" style="color: rgb(0, 0, 0); font-size: 12pt;"><span lang="EN-US" style="">ATD :&nbsp;</span></font><font face="Arial, sans-serif">{!Shipment__c.ATD__c}</font></p>
+
+<p style="margin: 0cm 0cm 0.0001pt;"><font face="Arial, sans-serif" style="color: rgb(0, 0, 0); font-size: 12pt;"><span lang="EN-US" style="">Placed Time:&nbsp;</span></font><font face="Arial, sans-serif">{!Shipment__c.Equip_Placed__c}</font></p></div></div><div style="color: rgb(0, 0, 0); font-size: 12pt;"><div style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt;"><font face="arial" style=""><br></font></div><div style="font-family: arial; color: rgb(0, 0, 0); font-size: 12pt;"><br></div><div style="font-family: arial; color: rgb(0, 0, 0); font-size: 12pt;"><br></div><div style="font-family: arial; color: rgb(0, 0, 0); font-size: 12pt;"><br></div></div></div>]]></td>
+</tr>
+<tr valign="top" height="50" >
+<td tEditID="c1r3" style=" background-color:#FFFFFF; color:#000000; bEditID:r3st1; bLabel:main; font-size:12pt; font-family:arial;" aEditID="c1r3" locked="0" >
+<![CDATA[<font face="arial" style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt;"><span style="font-size: 12pt;">Para mayor detalle consultar:</span></font><i style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt;"><font face="arial"><span style="font-size: 12pt;">&nbsp;</span></font></i><font color="#000099" face="arial"><i>{!Shipment__c.Link}</i></font>]]></td>
+</tr>
+</table>

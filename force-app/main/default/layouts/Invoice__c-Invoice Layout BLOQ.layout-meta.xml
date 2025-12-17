@@ -98,6 +98,10 @@
                 <behavior>Readonly</behavior>
                 <field>Profit_Shipment__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Campo_Control__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>

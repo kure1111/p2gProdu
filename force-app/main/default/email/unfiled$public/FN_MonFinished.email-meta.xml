@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>Notificacion de asignacion de Shipment a Monitoreo</description>
+    <encodingKey>ISO-8859-1</encodingKey>
+    <letterhead>Lettherhead_Notification</letterhead>
+    <name>FN MonFinished</name>
+    <style>formalLetter</style>
+    <subject>Unidad termino Descarga - {!Shipment__c.Name} - {!Shipment__c.Account_for__c}</subject>
+    <textOnly>**Unidad en Sitio de Carga**
+Estimad@ Equipo de comercial y operaciones, este Shipment ha llegado a sitio de Carga, por favor validar posibles gastos extras.
+
+
+Detalles:
+
+
+Folio: {!Shipment__c.Name}
+
+Planner: {!Shipment__c.Operation_Executive__c}
+
+Shipment Status Monitoreo: {!Shipment__c.Shipment_Status_Mon__c}
+
+Cliente: {!Shipment__c.Account_for__c}
+
+Ruta: {!Shipment__c.Route__c}
+
+Venta: {!Shipment__c.Total_Services_Sell_Amount__c}
+
+Costo: {!Shipment__c.Total_Services_Std_Buy_Amount__c}
+
+Proveedor: {!Shipment__c.Carrier__c}
+
+ETD: {!Shipment__c.ETD_from_Point_of_Load__c}
+
+ETD Time: {!Shipment__c.ETD_Time_from_Point_of_Load__c}
+
+ATD : {!Shipment__c.ATD__c}
+
+Placed Time: {!Shipment__c.Equip_Placed__c}
+Para mayor detalle consultar: {!Shipment__c.Link}</textOnly>
+    <type>html</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

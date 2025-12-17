@@ -17,6 +17,7 @@
                 <elementReference>$Record.Id</elementReference>
             </value>
         </inputParameters>
+        <nameSegment>NEU_Generate_Shipments</nameSegment>
     </actionCalls>
     <apiVersion>54.0</apiVersion>
     <constants>

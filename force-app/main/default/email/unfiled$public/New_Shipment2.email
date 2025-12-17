@@ -1,0 +1,26 @@
+<messaging:emailTemplate subject=" New Shipment - {!relatedTo.Name} - {!relatedTo.Account_for__r.Name}" recipientType="User" relatedToType="Shipment__c">
+<messaging:plainTextEmailBody >            
+                    ** NEW SHIPMENT **
+Estimad@ Pagos y Facturacion, este Shipment se ha creado en el Sistema por el equipo de Operaciones. 
+
+Detalles: 
+
+Folio: {!relatedTo.Name} 
+Operations Executive: {!relatedTo.Operation_Executive__r.Name} 
+Customer: {!relatedTo.Account_for__r.Name} 
+Route: {!relatedTo.Route__r.Name} 
+Sell Ammount: {!relatedTo.Total_Services_Sell_Amount__c} 
+Buy Ammount: {!relatedTo.Total_Services_Std_Buy_Amount__c} 
+<apex:repeat var="IE" value="{!relatedTo.Import_Export_Quotes_Orders__r}">
+Account Executive Email 1: {!IE.Account_Executive_Email__c}
+Account Executive Email 2: {!IE.Account_Executive_Email_2__c}
+
+</apex:repeat>
+Service Lines:
+<apex:repeat var="LI" value="{!relatedTo.Invoice_Lines__r}">
+Service Line:{!LI.Name}, Rate Name:{!LI.Service_Rate_Name__r.Name}, Units:{!LI.Units__c}, Sell Net Amount:{!LI.Sell_Amount__c}, Buy Amount:{!LI.Std_Buy_Amount__c}
+</apex:repeat> 
+ 
+Comentarios: {!relatedTo.Status_Observations__c} 
+</messaging:plainTextEmailBody>
+</messaging:emailTemplate>

@@ -1,0 +1,15 @@
+<table border="0" cellpadding="5" width="600" cellspacing="5" height="400" >
+<tr valign="top" height="50" >
+<td tEditID="c1r1" style=" background-color:#FFFFFF; bEditID:r3st1; color:#000000; bLabel:main; font-size:12pt; font-family:arial;" aEditID="c1r1" locked="0" >
+<![CDATA[<div style="text-align: center;"><font size="2"><span style="color: rgb(0, 0, 0); font-family: Arial, sans-serif;"><font style=""><b style="">Shipment con Cambio en
+estatus Closed&nbsp;</b></font></span><font face="Arial, sans-serif" style=""><b style="">por {!Shipment__c.LastModifiedBy}</b></font></font></div>]]></td>
+</tr>
+<tr valign="top" height="300" >
+<td tEditID="c1r2" style=" background-color:#FFFFFF; bEditID:r3st1; color:#000000; bLabel:main; font-size:12pt; font-family:arial;" aEditID="c1r2" locked="0" >
+<![CDATA[<p style="background-color: rgb(255, 255, 255); text-align: justify;"><font style=""><span style="font-family: &quot;Segoe UI&quot;, system-ui, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, sans-serif;"><span style="font-family: Arial, sans-serif;">Estimado equipo de Administración, se notifica que el siguiente servicio,&nbsp;</span></span><font face="Arial, sans-serif" style=""><b><a href="{!Shipment__c.Link}">{!Shipment__c.Name}</a>,</b></font><span style="font-family: Arial, sans-serif;">&nbsp;fue modificado posterior al estatus Closed, por favor darle seguimiento con las áreas de Comercial y Operaciones.</span></font></p><p style="background-color: rgb(255, 255, 255); text-align: justify;"><span style="font-family: Arial, sans-serif;"><br></span></p><p style="background-color: rgb(255, 255, 255); text-align: justify;"><font face="Arial, sans-serif"><b>Cuenta</b>:&nbsp;</font><font face="Arial, sans-serif">{!Shipment__c.Account_for__c}</font></p><p style="background-color: rgb(255, 255, 255); text-align: justify;"><font face="Arial, sans-serif"><b>Última modificación fecha</b>:&nbsp;{!Shipment__c.LastModifiedDate}</font></p><p style="background-color: rgb(255, 255, 255); text-align: justify;"><b style="font-family: Arial, sans-serif;">Última modificación por:&nbsp;</b><font face="Arial, sans-serif">{!Shipment__c.LastModifiedBy}</font></p><p style="background-color: rgb(255, 255, 255); text-align: justify;"><span style="font-family: Arial, sans-serif;"><b>Venta</b>:&nbsp;</span><font face="Arial, sans-serif">{!Shipment__c.Acc_venta__c}</font></p><p style="background-color: rgb(255, 255, 255); text-align: justify;"><span style="font-family: Arial, sans-serif;">&nbsp;</span></p><p style="background-color: rgb(255, 255, 255); text-align: justify;"><span style="font-family: Arial, sans-serif;"><br></span></p><p style="background-color: rgb(255, 255, 255); text-align: justify;"><span style="font-family: Arial, sans-serif;"><font style="">Favor de ingresar al link, para revisar el Shipment</font></span></p>]]></td>
+</tr>
+<tr valign="top" height="50" >
+<td tEditID="c1r3" style=" background-color:#FFFFFF; bEditID:r3st1; color:#000000; bLabel:main; font-size:12pt; font-family:arial;" aEditID="c1r3" locked="0" >
+<![CDATA[]]></td>
+</tr>
+</table>

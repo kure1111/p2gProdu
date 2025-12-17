@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Fecha_Retorno_Contenedor_Obligatorio</fullName>
+    <active>true</active>
+    <description>Hace obligatorio el campo fecha retorno de contenedor para cambiar el shipment status planner a &quot;Confirmed&quot;</description>
+    <errorConditionFormula>AND(
+   CONTAINS(UPPER(Name),&quot;SP-PTO&quot;),
+   OR( 
+      ISPICKVAL(PRIORVALUE(Shipment_Status_Plann__c), &quot;Pending&quot;), 
+      ISPICKVAL(PRIORVALUE(Shipment_Status_Plann__c), &quot;In Progress&quot;)),
+   ISPICKVAL(Shipment_Status_Plann__c, &quot;Confirmed&quot;),
+   ISBLANK( Fecha_Retorno_Contenedor__c)
+   )</errorConditionFormula>
+    <errorDisplayField>Fecha_Retorno_Contenedor__c</errorDisplayField>
+    <errorMessage>Para cambiar el Status a Confirmed, es necesario llenar el campo Fecha Retorno de Contenedor</errorMessage>
+</ValidationRule>

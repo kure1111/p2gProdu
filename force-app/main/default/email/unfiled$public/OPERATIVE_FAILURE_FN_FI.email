@@ -1,0 +1,14 @@
+<table border="0" cellpadding="5" width="600" cellspacing="5" height="400" >
+<tr valign="top" height="50" >
+<td tEditID="c1r1" style=" background-color:#FFFFFF; bEditID:r3st1; color:#000000; bLabel:main; font-size:12pt; font-family:arial;" aEditID="c1r1" locked="0" >
+<![CDATA[<div style="text-align: center;"><span style="font-size: 12pt; background-color: rgb(255, 255, 0);"><b style=""><font color="#ff0000">** OPERATIVE FAILURE **</font></b></span></div>]]></td>
+</tr>
+<tr valign="top" height="300" >
+<td tEditID="c1r2" style=" background-color:#FFFFFF; bEditID:r3st1; color:#000000; bLabel:main; font-size:12pt; font-family:arial;" aEditID="c1r2" locked="0" >
+<![CDATA[<div><br></div><div>Estatus (Planner):&nbsp;{!Shipment__c.Shipment_Status_Plann__c}</div><div><div>Estatus (Monitoreo):&nbsp;{!Shipment__c.Shipment_Status_Mon__c}</div></div><div><br></div><div><br></div><div>Folio:&nbsp;{!Shipment__c.Name}</div><div>Cliente:&nbsp;{!Shipment__c.Account_for__c}</div><div>Planner:&nbsp;{!Shipment__c.Operation_Executive__c}</div><div><br></div><div><br></div><div><br></div><div><br></div><div><br></div><div><br></div><div>Detalles: {!Shipment__c.Link}</div>]]></td>
+</tr>
+<tr valign="top" height="50" >
+<td tEditID="c1r3" style=" background-color:#FFFFFF; bEditID:r3st1; color:#000000; bLabel:main; font-size:12pt; font-family:arial;" aEditID="c1r3" locked="0" >
+<![CDATA[]]></td>
+</tr>
+</table>

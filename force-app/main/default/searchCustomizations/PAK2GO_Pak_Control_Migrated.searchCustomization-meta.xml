@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SearchCustomization xmlns="http://soap.sforce.com/2006/04/metadata">
+    <channel>GlobalSearch</channel>
+    <masterLabel>PAK2GO_Pak_Control_Migrated</masterLabel>
+    <objectToAlwaysSearch>Shipment__c</objectToAlwaysSearch>
+    <profile>PAK2GO Pak Control</profile>
+</SearchCustomization>

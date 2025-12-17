@@ -1,0 +1,45 @@
+<table border="0" cellpadding="5" width="600" cellspacing="5" height="400" >
+<tr valign="top" height="50" >
+<td tEditID="c1r1" style=" background-color:#FFFFFF; color:#000000; bEditID:r3st1; bLabel:main; font-size:12pt; font-family:arial;" aEditID="c1r1" locked="0" >
+<![CDATA[<div style="text-align: center;"><font style=""><b style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt;">**</b><font face="arial" style=""><b style=""><span style="background-color: rgb(255, 255, 255);"><font color="#3333ff">Cotización De Proyecto</font></span>&nbsp;</b></font><b style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt;">**</b></font></div>]]></td>
+</tr>
+<tr valign="top" height="300" >
+<td tEditID="c1r2" style=" background-color:#FFFFFF; color:#000000; bEditID:r3st1; bLabel:main; font-size:12pt; font-family:arial;" aEditID="c1r2" locked="0" >
+<![CDATA[<p style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt; margin: 0cm;"><span style="font-family: Calibri, sans-serif;">Estimado Equipo
+de <b><i>Inteligencia Comercial</i></b> este folio esta siendo solicitado
+cotizar por su departamento, por favor valida información y continuar el
+proceso con equipo de Compras.</span><span style="font-family:&quot;Calibri&quot;,sans-serif;
+mso-ascii-theme-font:minor-latin;mso-hansi-theme-font:minor-latin;mso-bidi-theme-font:
+minor-latin"><o:p></o:p></span></p>
+
+<p style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt; margin: 0cm;"><span style="font-family: Calibri, sans-serif;">&nbsp;</span><span style="font-family:&quot;Calibri&quot;,sans-serif;mso-ascii-theme-font:minor-latin;
+mso-hansi-theme-font:minor-latin;mso-bidi-theme-font:minor-latin"><o:p></o:p></span></p>
+
+<p style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt; margin: 0cm;"><span lang="EN-US" style="font-family: Calibri, sans-serif;">Detalles: </span><span lang="EN-US" style="font-family:
+&quot;Calibri&quot;,sans-serif;mso-ascii-theme-font:minor-latin;mso-hansi-theme-font:
+minor-latin;mso-bidi-theme-font:minor-latin;mso-ansi-language:EN-US"><o:p></o:p></span></p>
+
+<p style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt; margin: 0cm;"><span lang="EN-US" style="font-family: Calibri, sans-serif;">&nbsp;</span><span lang="EN-US" style="font-family:&quot;Calibri&quot;,sans-serif;
+mso-ascii-theme-font:minor-latin;mso-hansi-theme-font:minor-latin;mso-bidi-theme-font:
+minor-latin;mso-ansi-language:EN-US"><o:p></o:p></span></p>
+
+<p style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt; margin: 0cm;"><b><span lang="EN-US" style="font-family: Calibri, sans-serif;">Folio:</span></b><span lang="EN-US" style="font-family: Calibri, sans-serif;">&nbsp;{!Customer_Quote__c.Name}</span></p>
+
+<p style="margin: 0cm;"><b style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt;"><span style="font-family: Calibri, sans-serif;">Pricing:</span></b><span style="color: rgb(0, 0, 0); font-family: Calibri, sans-serif; font-size: 12pt;">&nbsp;<o:p></o:p></span><font face="Calibri, sans-serif">{!Customer_Quote__c.Pricing_Executive__c}</font></p>
+
+<p style="margin: 0cm;"><b style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt;"><span style="font-family: Calibri, sans-serif;">Cliente:</span></b><font face="Calibri, sans-serif"><b>{!Customer_Quote__c.Account_for__c}</b></font></p>
+
+<p style="margin: 0cm;"><b style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt;"><span style="font-family: Calibri, sans-serif;">Solicitante:</span></b><span style="color: rgb(0, 0, 0); font-family: Calibri, sans-serif; font-size: 12pt;">&nbsp;</span><font face="Calibri, sans-serif">{!Customer_Quote__c.Account_Executive_User__c}</font></p>
+
+<p style="margin: 0cm;"><b style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt;"><span style="font-family: Calibri, sans-serif;">Ruta:</span></b><span style="color: rgb(0, 0, 0); font-family: Calibri, sans-serif; font-size: 12pt;">&nbsp;<o:p></o:p></span><font face="Calibri, sans-serif">{!Customer_Quote__c.Route__c}</font></p>
+
+<p style="margin: 0cm;"><b style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt;"><span style="font-family: Calibri, sans-serif;">Fecha
+de Solicitud:</span></b><span style="color: rgb(0, 0, 0); font-family: Calibri, sans-serif; font-size: 12pt;">&nbsp;</span><font color="#3e3e3c" face="Calibri, sans-serif"><span style="background-color: rgb(255, 255, 255);">{!Customer_Quote__c.Date_Send_Request__c}</span></font></p>
+
+<b style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt;"><span style="font-size: 10pt; font-family: Calibri, sans-serif;">Observaciones:&nbsp;</span></b><font face="Calibri, sans-serif"><span style="font-size: 13.3333px;"><b>{!Customer_Quote__c.Status_Observations__c}</b></span></font><br><div style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt;"><font face="arial"><br></font><div><div><div style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt;"><br></div><div style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt;"><br></div></div></div></div>]]></td>
+</tr>
+<tr valign="top" height="50" >
+<td tEditID="c1r3" style=" background-color:#FFFFFF; color:#000000; bEditID:r3st1; bLabel:main; font-size:12pt; font-family:arial;" aEditID="c1r3" locked="0" >
+<![CDATA[<font face="arial" style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt;"><span style="font-size: 12pt;">Para mayor detalle consultar:</span></font><i style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt;"><font face="arial"><span style="font-size: 12pt;">&nbsp;</span></font></i><font face="arial"><i>{!Customer_Quote__c.Link}</i></font>]]></td>
+</tr>
+</table>

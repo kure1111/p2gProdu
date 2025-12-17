@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <encodingKey>ISO-8859-1</encodingKey>
+    <letterhead>Lettherhead_Notification</letterhead>
+    <name>1ra notificacion de reasignacion</name>
+    <style>formalLetter</style>
+    <subject>Listado de cuentas de usuario</subject>
+    <textOnly>Buen día,
+
+
+
+Debido a un cambio en la estructura comercial se le ha asignado la cuenta {!Account.Name} que tenía de dueñ@ a un asesor comercial de su región,  para que se le reasigne a un nuevo asesor que se encuentre actualmente activo.
+
+Para concretar exitosamente el proceso de handover, se le solicitará al nuevo asesor asignado contactar en forma ágil al cliente. Favor de asegurar que el contacto se ejecute de la siguiente manera:
+
+
+
+• Cliente Oro: Llamada en 24 horas y visita en los 7 días posterior de asignación
+
+• Cliente Plata: Llamada en 48 horas posterior a asignación
+
+• Cliente Bronce: Llamada en 48 horas posterior a asignación
+
+
+Nota: En caso de que no se reasigne la cuenta a un nuevo asesor activo, se reenviará este correo en 6 horas</textOnly>
+    <type>html</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

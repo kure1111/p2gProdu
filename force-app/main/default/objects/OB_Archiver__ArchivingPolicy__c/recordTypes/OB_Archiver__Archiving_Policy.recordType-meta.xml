@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RecordType xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>OB_Archiver__Archiving_Policy</fullName>
+    <active>true</active>
+    <description>Configure a policy to archive and remove data, either directly from Salesforce or from data you&apos;ve imported. In the next step, select your data source.</description>
+    <label>Archive Policy</label>
+</RecordType>

@@ -1,0 +1,105 @@
+<template>
+    <lightning-card  title="Crear Producto">
+        <div class="slds-p-horizontal_small">
+            <template if:true={seleccionProducto}>
+                <div class="slds-grid slds-gutters">
+                    <div class="slds-col slds-scrollable_x">
+                        <p>Seleccione de la tabla el producto que requiere agregar a la oportunidad:</p><br>
+                        <table class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_striped">
+                            <thead>
+                                <tr class="slds-line-height_reset">
+                                    <th class="" scope="col">
+                                        <div class="slds-truncate">Producto</div>
+                                    </th>
+                                    <th class="" scope="col">
+                                        <div class="slds-truncate">Precio de lista</div>
+                                    </th>
+                                    <th class="" scope="col">
+                                        <div class="slds-truncate">Precio de Compra</div>
+                                    </th>
+                                    <th class="" scope="col">
+                                        <div class="slds-truncate">Moneda</div>
+                                    </th>
+                                    <th class="" scope="col">
+                                        <div class="slds-truncate">Libro de precios</div>
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <template for:each={listaProductos} for:item="con">
+                                    <tr class="slds-hint-parent" data-id={con.Id} data-name={con.Name} key={con.Id} onclick={seleccionaProducto}>
+                                        <td>
+                                            <div class="slds-truncate">{con.Name}</div>
+                                        </td>
+                                        <td>
+                                            <div class="slds-truncate">{con.UnitPrice}</div>
+                                        </td>
+                                        <td>
+                                            <div class="slds-truncate">{con.PROJ_Buy_Price__c}</div>
+                                        </td>
+                                        <td>
+                                            <div class="slds-truncate">{con.Product2.CurrencyIsoCode}</div>
+                                        </td>
+                                        <td>
+                                            <div class="slds-truncate">{con.Pricebook2.Name}</div>
+                                        </td>
+                                    </tr>
+                                </template>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </template>
+            <template if:true={formularioProducto}>
+                <div class="slds-grid slds-gutters">
+                    <div class="slds-col slds-size_9-of-12">
+                        <lightning-input label="Producto:" value={nameProducto} type="text" disabled></lightning-input>
+                    </div>
+                    <div class="slds-col slds-size_3-of-12">
+                        <lightning-combobox  label="Tipo Moneda:" value={valueMoneda}
+                            options={optionsMoneda} onchange={agregarMoneda} required=""></lightning-combobox>
+                    </div>
+                </div>
+                <div class="slds-grid slds-gutters">
+                    <div class="slds-col slds-size_6-of-12">
+                        <lightning-combobox  label="Status:" value={valueStatus}
+                            options={optionsStatus} onchange={agregarStatus} required=""></lightning-combobox>
+                    </div>
+                    <div class="slds-col slds-size_6-of-12">
+                        <lightning-input label="Precio de Venta:" placeholder="$0" 
+                                    required="" onchange={agregarPrecioVenta} type="money"></lightning-input>
+                    </div>
+                </div>
+                <div class="slds-grid slds-gutters">
+                    <div class="slds-col slds-size_6-of-12">
+                        <lightning-input label="Cantidad:"
+                                    required="" onchange={agregarCantidad} type="number"></lightning-input>
+                    </div>
+                    <div class="slds-col slds-size_6-of-12">
+                        <lightning-combobox  label="Frecuencia:" value={valueFrecuencia}
+                            options={optionsFrecuencia} onchange={agregarFrecuencia} required=""></lightning-combobox>
+                    </div>
+                </div>
+                <div class="slds-grid slds-gutters">
+                    <div class="slds-col slds-size_12-of-12">
+                        <p>Comentarios:</p>
+                        <lightning-input-rich-text 
+                        onchange={agregarComentario}> </lightning-input-rich-text>
+                    </div>
+                </div>
+            </template>
+        </div>
+        <footer class="slds-modal__footer">
+            <button class="slds-button slds-button_neutral" onclick={regresaOppo} title="Cancel">Cancel</button>
+            <template if:true={formularioProducto}>
+                <lightning-button label="Atras" onclick={volverProductos} class="slds-m-left_x-small"></lightning-button>
+                <template if:false={dioClic}>
+                    <lightning-button label="Agregar Producto" onclick={clicCrearProducto} class="slds-m-left_x-small"></lightning-button>
+                </template>
+                <template if:true={dioClic}>
+                    <lightning-button label="Agregar Producto" onclick={clicCrearProducto} class="slds-m-left_x-small" disabled></lightning-button>
+                </template>
+            </template>
+        </footer>
+    </lightning-card>
+</template>

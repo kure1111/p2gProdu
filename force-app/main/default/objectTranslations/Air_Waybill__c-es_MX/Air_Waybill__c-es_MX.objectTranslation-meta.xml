@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Waybill</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Waybills</value>
+    </caseValues>
+    <gender>Neuter</gender>
+    <layouts>
+        <layout>Waybill Layout</layout>
+        <sections>
+            <label><!-- Accounting Information &amp; Currency --></label>
+            <section>Accounting Information &amp; Currency</section>
+        </sections>
+        <sections>
+            <label><!-- Airline --></label>
+            <section>Airline</section>
+        </sections>
+        <sections>
+            <label><!-- Carrier&apos;s Agent --></label>
+            <section>Carrier&apos;s Agent</section>
+        </sections>
+        <sections>
+            <label><!-- Charges (Other at Origin) --></label>
+            <section>Charges (Other at Origin)</section>
+        </sections>
+        <sections>
+            <label><!-- Charges (Weight/Valuation) --></label>
+            <section>Charges (Weight/Valuation)</section>
+        </sections>
+        <sections>
+            <label><!-- Consignee --></label>
+            <section>Consignee</section>
+        </sections>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- Declared Values &amp; Insurance --></label>
+            <section>Declared Values &amp; Insurance</section>
+        </sections>
+        <sections>
+            <label><!-- Handling Information --></label>
+            <section>Handling Information</section>
+        </sections>
+        <sections>
+            <label><!-- Nature of Goods --></label>
+            <section>Nature of Goods</section>
+        </sections>
+        <sections>
+            <label><!-- Other Charges --></label>
+            <section>Other Charges</section>
+        </sections>
+        <sections>
+            <label><!-- Routing --></label>
+            <section>Routing</section>
+        </sections>
+        <sections>
+            <label><!-- Shipper --></label>
+            <section>Shipper</section>
+        </sections>
+        <sections>
+            <label><!-- Shipper Certification &amp; Carrier Execution --></label>
+            <section>Shipper Certification &amp; Carrier Execution</section>
+        </sections>
+        <sections>
+            <label><!-- Total Charges --></label>
+            <section>Total Charges</section>
+        </sections>
+        <sections>
+            <label><!-- Waybill Lines Summary --></label>
+            <section>Waybill Lines Summary</section>
+        </sections>
+        <sections>
+            <label><!-- Waybill Number &amp; Issuing Carrier&apos;s Name and Address --></label>
+            <section>Waybill Number &amp; Issuing Carrier&apos;s Name and Address</section>
+        </sections>
+    </layouts>
+    <validationRules>
+        <errorMessage><!-- Other Charges has a maximum of 9 --></errorMessage>
+        <name>Other_Charges_Max_9</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Prepaid/Collect House (WT/VAL) must be equal to Prepaid/Collect House (Other) --></errorMessage>
+        <name>WT_VAL_equal_Other_Prepaid_Collect_House</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Prepaid / Collect (WT / VAL) must be equal to Prepaid / Collect (Other) --></errorMessage>
+        <name>WT_VAL_equals_Other_Prepaid_Collect</name>
+    </validationRules>
+    <webLinks>
+        <label><!-- Generate_House_Air_Waybill_PDF --></label>
+        <name>Generate_House_Air_Waybill_PDF</name>
+    </webLinks>
+    <webLinks>
+        <label><!-- Generate_Manifest_PDF --></label>
+        <name>Generate_Manifest_PDF</name>
+    </webLinks>
+    <webLinks>
+        <label><!-- Generate_Master_Air_Waybill_PDF --></label>
+        <name>Generate_Master_Air_Waybill_PDF</name>
+    </webLinks>
+    <webLinks>
+        <label><!-- Recalculate --></label>
+        <name>Recalculate</name>
+    </webLinks>
+</CustomObjectTranslation>

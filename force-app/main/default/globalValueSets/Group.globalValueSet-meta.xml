@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GlobalValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customValue>
+        <fullName>Almacen</fullName>
+        <default>false</default>
+        <label>Almacen</label>
+    </customValue>
+    <customValue>
+        <fullName>Consolidado</fullName>
+        <default>false</default>
+        <label>Consolidado</label>
+    </customValue>
+    <customValue>
+        <fullName>Fletes</fullName>
+        <default>false</default>
+        <label>Fletes</label>
+    </customValue>
+    <customValue>
+        <fullName>Inter Aereo</fullName>
+        <default>false</default>
+        <label>Inter Aereo</label>
+    </customValue>
+    <customValue>
+        <fullName>Inter Mar</fullName>
+        <default>false</default>
+        <label>Inter Mar</label>
+    </customValue>
+    <customValue>
+        <fullName>Inter Terr</fullName>
+        <default>false</default>
+        <label>Inter Terr</label>
+    </customValue>
+    <customValue>
+        <fullName>Paqueterias</fullName>
+        <default>false</default>
+        <label>Paqueterias</label>
+    </customValue>
+    <customValue>
+        <fullName>Puertos</fullName>
+        <default>false</default>
+        <label>Puertos</label>
+    </customValue>
+    <customValue>
+        <fullName>Seguro</fullName>
+        <default>false</default>
+        <label>Seguro</label>
+    </customValue>
+    <customValue>
+        <fullName>Serv Log</fullName>
+        <default>false</default>
+        <label>Serv Log</label>
+    </customValue>
+    <masterLabel>Group</masterLabel>
+    <sorted>false</sorted>
+</GlobalValueSet>

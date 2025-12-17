@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Shipment Cargo Line</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Shipment Cargo Lines</value>
+    </caseValues>
+    <gender>Neuter</gender>
+    <layouts>
+        <layout>Shipment Cargo Line Layout</layout>
+        <sections>
+            <label><!-- Allocation on Disbursements and Invoices --></label>
+            <section>Allocation on Disbursements and Invoices</section>
+        </sections>
+        <sections>
+            <label><!-- Consolidation References --></label>
+            <section>Consolidation References</section>
+        </sections>
+        <sections>
+            <label><!-- Cross-Docking Info --></label>
+            <section>Cross-Docking Info</section>
+        </sections>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- DC Output (Output Currency) --></label>
+            <section>DC Output (Output Currency)</section>
+        </sections>
+        <sections>
+            <label><!-- DC Product Categorization assigned --></label>
+            <section>DC Product Categorization assigned</section>
+        </sections>
+        <sections>
+            <label><!-- DC Product Value &amp; Shipping and Insurance (Output Currency) --></label>
+            <section>DC Product Value &amp; Shipping and Insurance (Output Currency)</section>
+        </sections>
+        <sections>
+            <label><!-- Datos Carta Porte --></label>
+            <section>Datos Carta Porte</section>
+        </sections>
+        <sections>
+            <label><!-- Destination Cost (Output Currency) --></label>
+            <section>Destination Cost (Output Currency)</section>
+        </sections>
+        <sections>
+            <label><!-- Final Weight and Volume --></label>
+            <section>Final Weight and Volume</section>
+        </sections>
+        <sections>
+            <label><!-- Item &amp; Price References --></label>
+            <section>Item &amp; Price References</section>
+        </sections>
+        <sections>
+            <label><!-- Line References &amp; Status --></label>
+            <section>Line References &amp; Status</section>
+        </sections>
+        <sections>
+            <label><!-- Previous Process References --></label>
+            <section>Previous Process References</section>
+        </sections>
+        <sections>
+            <label><!-- Product Value --></label>
+            <section>Product Value</section>
+        </sections>
+        <sections>
+            <label><!-- Supplier Packaging Data (If previous process = Supplier Quote or Imp-Exp Quote) --></label>
+            <section>Supplier Packaging Data (If previous process = Supplier Quote or Imp-Exp Quote)</section>
+        </sections>
+        <sections>
+            <label><!-- Units Shipped,  Weight and Volume --></label>
+            <section>Units Shipped,  Weight and Volume</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>Shipment Cargo Line Layout Community</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- Final Weight and Volume --></label>
+            <section>Final Weight and Volume</section>
+        </sections>
+        <sections>
+            <label><!-- Item &amp; Price References --></label>
+            <section>Item &amp; Price References</section>
+        </sections>
+        <sections>
+            <label><!-- Line References &amp; Status --></label>
+            <section>Line References &amp; Status</section>
+        </sections>
+        <sections>
+            <label><!-- Units Shipped,  Weight and Volume --></label>
+            <section>Units Shipped,  Weight and Volume</section>
+        </sections>
+    </layouts>
+</CustomObjectTranslation>

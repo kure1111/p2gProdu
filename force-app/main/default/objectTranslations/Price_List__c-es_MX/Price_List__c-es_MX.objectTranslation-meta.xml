@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Catalog Price List</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Catalog Price Lists</value>
+    </caseValues>
+    <gender>Neuter</gender>
+    <layouts>
+        <layout>Catalog Price List CP Layout</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- Fields --></label>
+            <section>Fields</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>Catalog Price List Layout</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- Fields --></label>
+            <section>Fields</section>
+        </sections>
+    </layouts>
+    <webLinks>
+        <label><!-- Allocate_Account_to_Price_List --></label>
+        <name>Allocate_Account_to_Price_List</name>
+    </webLinks>
+    <webLinks>
+        <label><!-- Allocate_Items_to_Price_List --></label>
+        <name>Allocate_Items_to_Price_List</name>
+    </webLinks>
+    <webLinks>
+        <label><!-- Allocate_families_to_Catalog_Price_List --></label>
+        <name>Allocate_families_to_Catalog_Price_List</name>
+    </webLinks>
+    <webLinks>
+        <label><!-- Capture_Catalog_Price_List --></label>
+        <name>Capture_Catalog_Price_List</name>
+    </webLinks>
+</CustomObjectTranslation>

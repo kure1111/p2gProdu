@@ -12,34 +12,173 @@
     z-index: 10000;
 }
 
-.approval-box {
-    width: 700px; /* Ajusta el ancho según sea necesario */
-    height: 350px; /* Ajusta la altura según sea necesario */
-    background-color: white;
+.description {
+    margin-bottom: 20px; /* Agrega espacio entre este elemento y el siguiente */
+}
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f9;
+    margin: 0;
     padding: 20px;
+}
+
+.approval-box {
+    background-color: white;
+    border: 1px solid #dcdcdc;
     border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
-    text-align: center;
+    padding: 20px;
+    margin: 20px auto;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    width: 600px; /* Ajusta el ancho según sea necesario */
+    height: 350px; /* Ajusta la altura según sea necesario */
 }
-
-.input-section {
-    margin-bottom: 20px;
-}
-
 .reason-input {
     width: 100%;
     height: 100px; /* Ajusta la altura según sea necesario */
 }
-
 .description-text {
-    font-size: 20px; /* Ajusta el tamaño de la letra según sea necesario */
+    font-size: 20px;
+    color: #333333;
 }
 
-.description-text::after {
-    content: '\A'; /* Agrega un salto de línea */
-    white-space: pre;
+.approval-info-table {
+    display: table;
+    width: 100%;
+    border-spacing: 0 10px;
 }
 
-.description {
-    margin-bottom: 20px; /* Agrega espacio entre este elemento y el siguiente */
+.approval-info-table p {
+    display: table-row;
+}
+
+.approval-info-table span {
+    display: table-cell;
+    font-weight: bold;
+    color: #0070d2;
+    vertical-align: middle;
+    padding-right: 10px;
+}
+
+.approval-info-table .value {
+    display: table-cell;
+    color: #555555;
+    vertical-align: middle;
+}
+
+.button-section {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.button-section button {
+    background-color: #0070d2;
+    color: #ffffff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.button-section button:hover {
+    background-color: #005bb5;
+}
+/*para el componente aprobal*/
+.approvalM-modal {
+    width: 80%;
+    max-width: 900px;
+    margin: 20px auto;
+    padding: 20px;
+    background: #ffffff;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    border-radius: 8px;
+    font-family: Arial, sans-serif;
+}
+
+.modal-header {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.modal-header h2 {
+    font-size: 24px;
+    font-weight: bold;
+    color: #333;
+}
+
+.modal-body {
+    padding: 20px;
+}
+
+.approvalM-details p {
+    margin: 5px 0;
+    font-size: 14px;
+    color: #555;
+}
+
+.approvalM-link {
+    color: #0070d2;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.approvalM-link:hover {
+    text-decoration: underline;
+}
+
+/* Table Styles */
+.approvalM-table table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    font-size: 14px;
+}
+
+.approvalM-table th,
+.approvalM-table td {
+    padding: 10px;
+    text-align: left;
+    border: 1px solid #ddd;
+}
+
+.approvalM-table th {
+    background: #f4f6f9;
+    font-weight: bold;
+    color: #333;
+}
+
+.approvalM-table tbody tr:hover {
+    background: #f9f9f9;
+}
+
+.approvalM-table td {
+    color: #555;
+}
+
+/* Footer Button Styles */
+.modal-footer {
+    text-align: right;
+    margin-top: 20px;
+}
+
+.btn {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.btn-cancel {
+    background: #e4e6eb;
+    color: #333;
+    transition: background-color 0.3s ease;
+}
+
+.btn-cancel:hover {
+    background: #d0d2d6;
+}
+.approval-button {
+    margin-right: 5%; /* Puedes ajustar el valor según sea necesario */
 }

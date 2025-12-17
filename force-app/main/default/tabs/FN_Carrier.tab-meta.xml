@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomTab xmlns="http://soap.sforce.com/2006/04/metadata">
+    <label>FN - Carrier</label>
+    <motif>Custom98: Truck</motif>
+    <page>PK2_FN_TABLA_CLIENT</page>
+</CustomTab>

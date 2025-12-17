@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>65.0</apiVersion>
+    <description>Migrated from the: VERIFY PAK CONTROL isChanged workflow rule
+Workflow rule description: Detecta cuando se actualiza el check VERIFY PAK CONTROL al valor de True&quot;</description>
+    <label>VERIFY PAK CONTROL isChanged</label>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordUpdates>
+        <description>Acción que actualiza el check ValidacionPak del objeto Shipment, al valor de verdadero. Solo cuando el campo VERIFY PAK CONTROL ha sido activdao.</description>
+        <name>mainUpdate</name>
+        <label>mainUpdate</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <inputAssignments>
+            <field>VerificacionPak__c</field>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </inputAssignments>
+        <inputReference>$Record</inputReference>
+    </recordUpdates>
+    <start>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>mainUpdate</targetReference>
+        </connector>
+        <filterFormula>AND(
+ ISCHANGED( {!$Record.VERIFY_PAK_CONTROL__c} ),
+ {!$Record.VERIFY_PAK_CONTROL__c} = True
+)</filterFormula>
+        <object>Shipment__c</object>
+        <recordTriggerType>CreateAndUpdate</recordTriggerType>
+        <triggerType>RecordBeforeSave</triggerType>
+    </start>
+    <status>Active</status>
+</Flow>

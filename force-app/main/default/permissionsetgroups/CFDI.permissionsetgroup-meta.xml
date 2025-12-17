@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PermissionSetGroup xmlns="http://soap.sforce.com/2006/04/metadata">
+    <hasActivationRequired>false</hasActivationRequired>
+    <label>CFDI</label>
+    <permissionSets>Account_Comercial_Carta_Porte</permissionSets>
+    <permissionSets>CATALOGO_SAT</permissionSets>
+    <permissionSets>CP_Catalogo_SAT</permissionSets>
+    <permissionSets>CP_IECL</permissionSets>
+    <permissionSets>CP_Operadores</permissionSets>
+    <permissionSets>CP_Shimpent</permissionSets>
+    <permissionSets>CP_Vehiculos</permissionSets>
+    <permissionSets>Carta_Porte</permissionSets>
+    <permissionSets>IEQ_Carta_Porte</permissionSets>
+    <status>Updated</status>
+</PermissionSetGroup>

@@ -16,6 +16,9 @@ export default class P2g_Advertencia extends LightningElement {
     @track datos;
     previousValue;
     isReasonValid = false;
+    //para mostrar mensaje margen
+    @track OpenMessageMargen = false;
+    @track datoRecibido;
 
     @wire(getRecord, { recordId: '$recordId', fields: [WARNING_FIELD, NAME_FIELD] })
     wiredRecord({ error, data }) {
@@ -81,8 +84,16 @@ export default class P2g_Advertencia extends LightningElement {
                 if (result && Object.keys(result).length > 0){
                     console.log('¡Si mostar solicitud!');
                     this.datos = result;
-                    this.showApprovalSection = true;
-                    this.warningMessage2 = true;
+                    if(this.datos.motivoSolicitud__c === 'Solicitud de confirmación por Margen'){
+                        this.OpenMessageMargen = true;
+                        this.showApprovalSection = false;
+                        this.warningMessage2 = false;
+                        console.log('que pasa: ', this.datos.motivoSolicitud__c,' ',this.OpenMessageMargen, this.showApprovalSection, this.warningMessage2);
+                    }else{
+                        this.showApprovalSection = true;
+                        this.warningMessage2 = true;
+                        this.OpenMessageMargen = false;
+                    }
 
                 } else {
                     console.log('Noooo mostar !');
@@ -93,5 +104,12 @@ export default class P2g_Advertencia extends LightningElement {
             .catch(error => {
                 console.error('Error al llamar a la función mostrarAdvertencia:', error);
             });
+    }
+    cerrarMargen(event) {
+        this.datoRecibido = event.detail;
+        console.log('Datos recibidos:', this.datoRecibido);
+        if(this.datoRecibido.seCerro === 'si'){
+            this.OpenMessageMargen = false;
+        }
     }
 }

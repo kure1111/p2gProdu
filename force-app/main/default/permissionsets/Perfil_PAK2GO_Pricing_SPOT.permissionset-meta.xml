@@ -1,5 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <classAccesses>
+        <apexClass>NEU_Generate_Shipments</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>P2G_UpdateShipmentServiceLine</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
     <description>Permission Set que contiene los permisos del perfil PAK2GO Pricing para los SPOT</description>
     <fieldPermissions>
         <editable>true</editable>
@@ -7438,7 +7446,7 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>Opportunity.Folio_Mkt__c</field>
+        <field>Opportunity.Folio_Mkt2__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -10493,11 +10501,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Shipment__c.Agency_Fee__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
         <field>Shipment__c.Agent_Account__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -10883,27 +10886,7 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Shipment__c.Direcci_n_de_Reparto_2__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>Shipment__c.Direcci_n_de_Reparto_4__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
         <field>Shipment__c.Direccion_Monitoreo__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>Shipment__c.Direccion_de_Reparto_3__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>Shipment__c.Direccion_de_Reparto_5__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -11448,11 +11431,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Shipment__c.N__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
         <field>Shipment__c.Name_Cliente__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -11838,6 +11816,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Shipment__c.Reason_for_declined__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Shipment__c.Recepci_n_Acuses__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -12062,11 +12045,6 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>true</editable>
-        <field>Shipment__c.Shipment_Customer_Evaluate__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
         <editable>false</editable>
         <field>Shipment__c.Shipment_Service_Rate__c</field>
         <readable>true</readable>
@@ -12134,11 +12112,6 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Shipment__c.Special_NotesFN__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>Shipment__c.Special_Notes_3__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -15994,6 +15967,10 @@
         <object>sansancard__SSCard__c</object>
         <viewAllRecords>false</viewAllRecords>
     </objectPermissions>
+    <pageAccesses>
+        <apexPage>NEU_Generate_Shipments</apexPage>
+        <enabled>true</enabled>
+    </pageAccesses>
     <recordTypeVisibilities>
         <recordType>Account.Consignee</recordType>
         <visible>true</visible>

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomApplication xmlns="http://soap.sforce.com/2006/04/metadata">
+    <brand>
+        <headerColor>#FFEE00</headerColor>
+        <logo>Logo</logo>
+        <logoVersion>1</logoVersion>
+        <shouldOverrideOrgTheme>false</shouldOverrideOrgTheme>
+    </brand>
+    <formFactors>Large</formFactors>
+    <isNavAutoTempTabsDisabled>false</isNavAutoTempTabsDisabled>
+    <isNavPersonalizationDisabled>false</isNavPersonalizationDisabled>
+    <isNavTabPersistenceDisabled>false</isNavTabPersistenceDisabled>
+    <label>Freight Rates Upload Lightning</label>
+    <navType>Standard</navType>
+    <tabs>standard-Account</tabs>
+    <tabs>Fee__c</tabs>
+    <tabs>Container_Type__c</tabs>
+    <tabs>Carrier_Line_Load_Point__c</tabs>
+    <tabs>Customer_Quote__c</tabs>
+    <tabs>Shipment__c</tabs>
+    <tabs>Rol_Margen__c</tabs>
+    <tabs>Catalogo_SAT__c</tabs>
+    <tabs>Carta_Porte__c</tabs>
+    <tabs>Direccion_RepartoSp__c</tabs>
+    <tabs>Caja_Remolque__c</tabs>
+    <tabs>Meta_Global__c</tabs>
+    <tabs>Debit_Note__c</tabs>
+    <tabs>Event__c</tabs>
+    <uiType>Lightning</uiType>
+</CustomApplication>

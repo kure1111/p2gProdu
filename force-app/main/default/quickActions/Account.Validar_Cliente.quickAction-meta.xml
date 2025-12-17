@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<QuickAction xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>Acción para iniciar la validación del cliente. Después de validarse los datos, se envía automáticamente a SAP el cliente.</description>
+    <flowDefinition>P2G_Validacion_Clientes_SAP</flowDefinition>
+    <label>Enviar a SAP</label>
+    <optionsCreateFeedItem>false</optionsCreateFeedItem>
+    <type>Flow</type>
+</QuickAction>

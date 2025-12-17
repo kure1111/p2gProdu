@@ -3,6 +3,11 @@
     <description>Permission Set que restringe la edición del campo Comprador en el objeto Account.
 Esto con la finalidad que no todos puedan reasignar el comprador</description>
     <fieldPermissions>
+        <editable>true</editable>
+        <field>Account.Anos_Experiencia__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>false</editable>
         <field>Account.Comprador__c</field>
         <readable>true</readable>

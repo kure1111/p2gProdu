@@ -1,0 +1,14 @@
+<table border="0" cellpadding="5" width="600" cellspacing="5" height="400" >
+<tr valign="top" height="50" >
+<td tEditID="c1r1" style=" background-color:#FFFFFF; bEditID:r3st1; color:#000000; bLabel:main; font-size:12pt; font-family:arial;" aEditID="c1r1" locked="0" >
+<![CDATA[<b style="text-align: center;"><font face="Arial, sans-serif">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; *You Request has been Responsed*</font></b>]]></td>
+</tr>
+<tr valign="top" height="300" >
+<td tEditID="c1r2" style=" background-color:#FFFFFF; bEditID:r3st1; color:#000000; bLabel:main; font-size:12pt; font-family:arial;" aEditID="c1r2" locked="0" >
+<![CDATA[Estimad@&nbsp;{!Customer_Quote__c.Account_Executive_User__c} &nbsp;su Requerimiento de Tarifa ha sido Respondido por el equipo de Pricing.&nbsp;<div><br></div><div>Cotización:&nbsp; &nbsp; &nbsp; &nbsp; {!Customer_Quote__c.Name}</div><div>Cliente:&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; {!Customer_Quote__c.Account_for__c}</div><div>Route:&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;{!Customer_Quote__c.Route__c}</div><div><br></div><div>Solicitado por:&nbsp;&nbsp;{!Customer_Quote__c.Account_Executive_User__c}</div><div><br></div><div>Contestado por:&nbsp;{!Customer_Quote__c.Pricing_Executive__c}</div>]]></td>
+</tr>
+<tr valign="top" height="50" >
+<td tEditID="c1r3" style=" background-color:#FFFFFF; bEditID:r3st1; color:#000000; bLabel:main; font-size:12pt; font-family:arial;" aEditID="c1r3" locked="0" >
+<![CDATA[<font face="arial" style="font-size: 12pt;">Para mayor detalle consultar:</font><i style="font-size: 12pt;">&nbsp;</i><font face="arial"><i><b>{!Shipment__c.Link}</b></i></font>]]></td>
+</tr>
+</table>

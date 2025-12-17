@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Route</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Routes</value>
+    </caseValues>
+    <gender>Neuter</gender>
+    <layouts>
+        <layout>Route</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- Freight Rates Management --></label>
+            <section>Freight Rates Management</section>
+        </sections>
+        <sections>
+            <label><!-- Integration with WebCargoNet (WCN) --></label>
+            <section>Integration with WebCargoNet (WCN)</section>
+        </sections>
+        <sections>
+            <label><!-- Route --></label>
+            <section>Route</section>
+        </sections>
+        <sections>
+            <label><!-- Route Data --></label>
+            <section>Route Data</section>
+        </sections>
+        <sections>
+            <label><!-- Sea and Air Freight Rates Integrations --></label>
+            <section>Sea and Air Freight Rates Integrations</section>
+        </sections>
+        <sections>
+            <label><!-- Storage &amp; Demurrage Data --></label>
+            <section>Storage &amp; Demurrage Data</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>Route Community Layout</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- Route --></label>
+            <section>Route</section>
+        </sections>
+        <sections>
+            <label><!-- Route Data --></label>
+            <section>Route Data</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>Route Layout</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>SHPR - Route</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- Freight Rates Management --></label>
+            <section>Freight Rates Management</section>
+        </sections>
+        <sections>
+            <label><!-- Integration with WebCargoNet (WCN) --></label>
+            <section>Integration with WebCargoNet (WCN)</section>
+        </sections>
+        <sections>
+            <label><!-- Route --></label>
+            <section>Route</section>
+        </sections>
+        <sections>
+            <label><!-- Route Data --></label>
+            <section>Route Data</section>
+        </sections>
+        <sections>
+            <label><!-- Sea and Air Freight Rates Integrations --></label>
+            <section>Sea and Air Freight Rates Integrations</section>
+        </sections>
+        <sections>
+            <label><!-- Storage &amp; Demurrage Data --></label>
+            <section>Storage &amp; Demurrage Data</section>
+        </sections>
+    </layouts>
+    <validationRules>
+        <errorMessage><!-- The route must have filled the fields &quot; First Leg Route&quot; and &quot; Second Leg Route&quot; or neither --></errorMessage>
+        <name>Check_First_and_Second_Leg_Route</name>
+    </validationRules>
+    <webLinks>
+        <label><!-- Search_Schedules --></label>
+        <name>Search_Schedules</name>
+    </webLinks>
+</CustomObjectTranslation>

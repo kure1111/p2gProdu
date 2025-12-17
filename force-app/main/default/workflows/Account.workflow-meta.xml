@@ -434,7 +434,7 @@
             <name>Seguimiento_a_Mkt_Prospecto</name>
             <type>Alert</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <formula>AND(   OR(     ISNEW(),     ISCHANGED( SeguimientoProspecto__c )   ),Record_Type_Name__c = &quot;Prospect Mkt&quot;)</formula>
         <triggerType>onAllChanges</triggerType>
     </rules>

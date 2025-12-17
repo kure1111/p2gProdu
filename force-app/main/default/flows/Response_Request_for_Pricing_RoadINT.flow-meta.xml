@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionCalls>
+        <name>Response_Request_for_Pricing_RoadINT</name>
+        <label>Customer_Quote__c.Response_Request_for_Pricing_RoadINT</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <actionName>Customer_Quote__c.Response_Request_for_Pricing_RoadINT</actionName>
+        <actionType>emailAlert</actionType>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>SObjectRowId</name>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </inputParameters>
+        <nameSegment>Customer_Quote__c.Response_Request_for_Pricing_RoadINT</nameSegment>
+    </actionCalls>
+    <apiVersion>64.0</apiVersion>
+    <description>Migrated from the: Response Request for Pricing RoadINT workflow rule
+Workflow rule description: &quot;</description>
+    <environments>Default</environments>
+    <label>Response Request for Pricing RoadINT</label>
+    <migratedFromWorkflowRuleName>Response Request for Pricing RoadINT</migratedFromWorkflowRuleName>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <start>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Response_Request_for_Pricing_RoadINT</targetReference>
+        </connector>
+        <doesRequireRecordChangedToMeetCriteria>true</doesRequireRecordChangedToMeetCriteria>
+        <filterLogic>1 AND 2 AND (3 OR 4)</filterLogic>
+        <filters>
+            <field>Quotation_Status__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Sent awaiting response</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>Freight_Mode__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Road</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>Name</field>
+            <operator>StartsWith</operator>
+            <value>
+                <stringValue>FI</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>Name</field>
+            <operator>StartsWith</operator>
+            <value>
+                <stringValue>R</stringValue>
+            </value>
+        </filters>
+        <object>Customer_Quote__c</object>
+        <recordTriggerType>CreateAndUpdate</recordTriggerType>
+        <triggerType>RecordAfterSave</triggerType>
+    </start>
+    <status>Active</status>
+</Flow>

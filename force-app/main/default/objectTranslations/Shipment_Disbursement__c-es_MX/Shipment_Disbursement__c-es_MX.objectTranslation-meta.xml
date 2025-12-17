@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Disbursement</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Disbursements</value>
+    </caseValues>
+    <gender>Neuter</gender>
+    <layouts>
+        <layout>Copy of Shipment Disbursement Layout BLOK</layout>
+        <sections>
+            <label><!-- Comments and Instruction --></label>
+            <section>Comments and Instruction</section>
+        </sections>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- Freight &amp; Cargo Data --></label>
+            <section>Freight &amp; Cargo Data</section>
+        </sections>
+        <sections>
+            <label><!-- Import-Export Data --></label>
+            <section>Import-Export Data</section>
+        </sections>
+        <sections>
+            <label><!-- Información de Nota Crédito --></label>
+            <section>Información de Nota Crédito</section>
+        </sections>
+        <sections>
+            <label><!-- New Section --></label>
+            <section>New Section</section>
+        </sections>
+        <sections>
+            <label><!-- Payment Approval Control --></label>
+            <section>Payment Approval Control</section>
+        </sections>
+        <sections>
+            <label><!-- Payment Data --></label>
+            <section>Payment Data</section>
+        </sections>
+        <sections>
+            <label><!-- Shipment Data --></label>
+            <section>Shipment Data</section>
+        </sections>
+        <sections>
+            <label><!-- Supplier Invoice Payment Tracking --></label>
+            <section>Supplier Invoice Payment Tracking</section>
+        </sections>
+        <sections>
+            <label><!-- Supplier Invoice Resume --></label>
+            <section>Supplier Invoice Resume</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>Shipment Disbursement Layout</layout>
+        <sections>
+            <label><!-- Comments and Instruction --></label>
+            <section>Comments and Instruction</section>
+        </sections>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- Freight &amp; Cargo Data --></label>
+            <section>Freight &amp; Cargo Data</section>
+        </sections>
+        <sections>
+            <label><!-- Import-Export Data --></label>
+            <section>Import-Export Data</section>
+        </sections>
+        <sections>
+            <label><!-- Información de Nota Crédito --></label>
+            <section>Información de Nota Crédito</section>
+        </sections>
+        <sections>
+            <label><!-- Payment Approval Control --></label>
+            <section>Payment Approval Control</section>
+        </sections>
+        <sections>
+            <label><!-- Payment Data --></label>
+            <section>Payment Data</section>
+        </sections>
+        <sections>
+            <label><!-- Shipment Data --></label>
+            <section>Shipment Data</section>
+        </sections>
+        <sections>
+            <label><!-- Supplier Invoice Payment Tracking --></label>
+            <section>Supplier Invoice Payment Tracking</section>
+        </sections>
+        <sections>
+            <label><!-- Supplier Invoice Resume --></label>
+            <section>Supplier Invoice Resume</section>
+        </sections>
+    </layouts>
+    <recordTypes>
+        <label><!-- Disbursement --></label>
+        <name>Disbursement</name>
+    </recordTypes>
+    <recordTypes>
+        <label><!-- Disbursement BLOQ --></label>
+        <name>DisbursementStatus</name>
+    </recordTypes>
+    <validationRules>
+        <errorMessage><!-- You can’t include these lines because Total(Incl. Vat) in the “Credit Note” Invoice must be negative --></errorMessage>
+        <name>Credit_Note_Negative_Amount</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- You can´t include these lines because Total (Incl. VAT) in the &quot;Debit Note&quot; Invoice must be positive --></errorMessage>
+        <name>Debit_Note_Positive_Amount</name>
+    </validationRules>
+    <webLinks>
+        <label><!-- Allocate_Lines --></label>
+        <name>Allocate_Lines</name>
+    </webLinks>
+    <webLinks>
+        <label><!-- Cancel_to_SAP --></label>
+        <name>Cancel_to_SAP</name>
+    </webLinks>
+    <webLinks>
+        <label><!-- New_Associated_Document --></label>
+        <name>New_Associated_Document</name>
+    </webLinks>
+    <webLinks>
+        <label><!-- New_Disbursement_Import_Export --></label>
+        <name>New_Disbursement_Import_Export</name>
+    </webLinks>
+    <webLinks>
+        <label><!-- New_Disbursement_Shipment --></label>
+        <name>New_Disbursement_Shipment</name>
+    </webLinks>
+    <webLinks>
+        <label><!-- Send_to_SAP --></label>
+        <name>Send_to_SAP</name>
+    </webLinks>
+</CustomObjectTranslation>

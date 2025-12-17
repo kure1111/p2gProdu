@@ -438,6 +438,7 @@ export default class P2G_creacionFolioWhAlmacenaje extends LightningModal {
     } 
     registroCurrency(event){
         this.wrapperCargoLine.currencyIsoCode = event.target.value;
+        this.valueCurrency = event.target.value;
     }
     registroTotalShippingVolume(event){
         this.wrapperCargoLine.totalShipping = event.target.value;

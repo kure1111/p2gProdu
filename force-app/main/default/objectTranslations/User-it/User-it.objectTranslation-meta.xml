@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fieldSets>
+        <label><!-- PersonalInfo_EPIM --></label>
+        <name>PersonalInfo_EPIM</name>
+    </fieldSets>
+    <layouts>
+        <layout>Neurored User Layout</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- Import-Export Properties --></label>
+            <section>Import-Export Properties</section>
+        </sections>
+        <sections>
+            <label><!-- Shopping Cart Properties --></label>
+            <section>Shopping Cart Properties</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>User Layout</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- Customizations --></label>
+            <section>Customizations</section>
+        </sections>
+        <sections>
+            <label><!-- Metas Ventas --></label>
+            <section>Metas Ventas</section>
+        </sections>
+        <sections>
+            <label><!-- States --></label>
+            <section>States</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>User Profile Layout</layout>
+        <layoutType>UserAlt</layoutType>
+        <sections>
+            <label><!-- About --></label>
+            <section>About</section>
+        </sections>
+        <sections>
+            <label><!-- Background --></label>
+            <section>Background</section>
+        </sections>
+        <sections>
+            <label><!-- Contact --></label>
+            <section>Contact</section>
+        </sections>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+    </layouts>
+    <validationRules>
+        <errorMessage><!-- US001 - Privilegios insufucientes para editar el registro. --></errorMessage>
+        <name>US001_No_cambiar_los_datos</name>
+    </validationRules>
+</CustomObjectTranslation>

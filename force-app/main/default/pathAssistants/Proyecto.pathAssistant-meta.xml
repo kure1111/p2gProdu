@@ -5,11 +5,26 @@
     <fieldName>StageName</fieldName>
     <masterLabel>Proyecto</masterLabel>
     <pathAssistantSteps>
-        <fieldNames>CloseDate</fieldNames>
-        <fieldNames>Requerimientos_especialesNew__c</fieldNames>
-        <fieldNames>Comentarios_Otros__c</fieldNames>
-        <fieldNames>Total_Amount_del__c</fieldNames>
-        <picklistValueName>Prospectar</picklistValueName>
+        <fieldNames>Estado_Cotizacion__c</fieldNames>
+        <info>&lt;p&gt;Para pasar a la etapa Negociación se debe cumplir con los siguientes pasos en el siguiente orden.&lt;/p&gt;&lt;p&gt;&lt;strong style=&quot;font-size: 13px;&quot;&gt;PASOS:&lt;/strong&gt;&lt;/p&gt;&lt;ol&gt;&lt;li&gt;El usuario IC/Pricing debe colocar el costo Buy Price en los productos y en los Subproductos.&lt;/li&gt;&lt;li&gt;El e&lt;span style=&quot;font-size: 13px;&quot;&gt;jecutivo &lt;/span&gt;comerciar debe colocar el costo Sell Price&lt;span style=&quot;font-size: 13px;&quot;&gt; en los productos y en los Subproductos.&lt;/span&gt;&lt;/li&gt;&lt;/ol&gt;</info>
+        <picklistValueName>Cotización</picklistValueName>
+    </pathAssistantSteps>
+    <pathAssistantSteps>
+        <fieldNames>Estado_Ejecucion__c</fieldNames>
+        <info>&lt;p&gt;En esta Etapa la Oportunidad ya esta esta ganada.&lt;/p&gt;&lt;p&gt;&lt;strong style=&quot;font-size: 13px;&quot;&gt;Pasos&lt;/strong&gt;&lt;/p&gt;&lt;ol&gt;&lt;li&gt;Se debe asignar un ejecutivo SAC o Ejecutivo comercial responsable del seguimiento de la cuenta y las rutas de esta oportunidad. (Nota: Puede ser el Owner de la cuenta)&lt;/li&gt;&lt;li&gt;Utilizar el modulo Cargar Folios para crear las Ordenes de Trabajo / IEQO.&lt;/li&gt;&lt;/ol&gt;</info>
+        <picklistValueName>Ejecución</picklistValueName>
+    </pathAssistantSteps>
+    <pathAssistantSteps>
+        <fieldNames>Fecha_Estimada_Cierre__c</fieldNames>
+        <fieldNames>Estado_Entendimiento__c</fieldNames>
+        <info>&lt;p&gt;Para pasar a la etapa Cotización se debe cumplir con los siguientes pasos.&lt;/p&gt;&lt;p&gt;&lt;strong style=&quot;font-size: 13px;&quot;&gt;PASOS:&lt;/strong&gt;&lt;/p&gt;&lt;ol&gt;&lt;li&gt;Ejecutivo comercial debe realizar la creación de Productos (Rutas a Cotizar)&lt;/li&gt;&lt;/ol&gt;</info>
+        <picklistValueName>Entendimiento</picklistValueName>
+    </pathAssistantSteps>
+    <pathAssistantSteps>
+        <fieldNames>Estado_Negociacion__c</fieldNames>
+        <fieldNames>Realizacion_de_Kickoff__c</fieldNames>
+        <info>&lt;p&gt;Para pasar a la etapa Ejecución debe de cumplir con los siguientes pasos.&lt;/p&gt;&lt;p&gt;&lt;strong style=&quot;font-size: 13px;&quot;&gt;PASOS:&lt;/strong&gt;&lt;/p&gt;&lt;ol&gt;&lt;li&gt;Genera el PDF de cotización.&lt;/li&gt;&lt;li&gt;Envía el PDF de la cotización al cliente&lt;/li&gt;&lt;li&gt;Negociar con el cliente.&lt;/li&gt;&lt;li&gt;Cambia el status de los productos acorde a las necesidades (Aceptada, Rechazada, Negociación con el cliente).&lt;/li&gt;&lt;li&gt;Acepta la cotización&lt;/li&gt;&lt;li&gt;Realizar alta de cliente en SAP o Validar que la cuenta este actualizada.&lt;/li&gt;&lt;li&gt;Realiza junta de &lt;span style=&quot;font-size: 12px;&quot;&gt; Kickoff&lt;/span&gt;&lt;/li&gt;&lt;/ol&gt;</info>
+        <picklistValueName>Negociación</picklistValueName>
     </pathAssistantSteps>
     <recordTypeName>Proyectos</recordTypeName>
 </PathAssistant>

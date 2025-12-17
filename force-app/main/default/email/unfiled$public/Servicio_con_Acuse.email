@@ -1,0 +1,81 @@
+<table border="0" cellpadding="5" width="600" cellspacing="5" height="400" >
+<tr valign="top" height="50" >
+<td tEditID="c1r1" style=" background-color:#FFFFFF; color:#000000; bEditID:r3st1; bLabel:main; font-size:12pt; font-family:arial;" aEditID="c1r1" locked="0" >
+<![CDATA[<div style="text-align: center;"><b style="font-size: 12pt;"><span style="font-size: 12pt; font-family: &quot;Calibri Light&quot;, sans-serif;">Servicio
+con Acuse recibido</span></b></div>]]></td>
+</tr>
+<tr valign="top" height="300" >
+<td tEditID="c1r2" style=" background-color:#FFFFFF; color:#000000; bEditID:r3st1; bLabel:main; font-size:12pt; font-family:arial;" aEditID="c1r2" locked="0" >
+<![CDATA[<div align="center">
+
+<table class="MsoNormalTable" border="0" cellspacing="0" cellpadding="0" width="500" style="width:375.0pt;mso-cellspacing:0cm;mso-yfti-tbllook:1184;mso-padding-alt:
+ 0cm 0cm 0cm 0cm">
+ <tbody><tr style="mso-yfti-irow:0;mso-yfti-firstrow:yes;mso-yfti-lastrow:yes;
+  height:225.0pt">
+  <td valign="top" style="background:white;padding:0cm 0cm 0cm 0cm;height:225.0pt">
+  <table class="MsoNormalTable" border="0" cellspacing="5" cellpadding="0" width="600" style="width:450.0pt;mso-cellspacing:3.7pt;mso-yfti-tbllook:1184;mso-padding-alt:
+   0cm 0cm 0cm 0cm">
+   <tbody><tr style="mso-yfti-irow:0;mso-yfti-firstrow:yes;height:37.5pt">
+    <td valign="top" style="background:white;padding:3.75pt 3.75pt 3.75pt 3.75pt;
+    height:37.5pt">
+    <p class="MsoNormal" align="center" style="mso-margin-top-alt:auto;mso-margin-bottom-alt:
+    auto;text-align:center;background:white"><br></p>
+    </td>
+   </tr>
+   <tr style="mso-yfti-irow:1;height:225.0pt">
+    <td valign="top" style="background:white;padding:3.75pt 3.75pt 3.75pt 3.75pt;
+    height:225.0pt;bEditID:r3st1;bLabel:main">
+    <p class="MsoNormal" style="mso-margin-top-alt:auto;mso-margin-bottom-alt:
+    auto;background:white"><span style="font-size:12.0pt;font-family:&quot;Calibri Light&quot;,sans-serif;
+    color:black">Estimad@ Equipo de comercial,&nbsp;</span><span style="font-size:12.0pt;font-family:&quot;Arial&quot;,sans-serif;color:black"><o:p></o:p></span></p>
+    <p class="MsoNormal" style="mso-margin-top-alt:auto;mso-margin-bottom-alt:
+    auto;background:white"><span style="font-size:12.0pt;font-family:&quot;Arial&quot;,sans-serif;
+    color:black"><o:p>&nbsp;</o:p></span></p>
+    <p class="MsoNormal" style="mso-margin-top-alt:auto;mso-margin-bottom-alt:
+    auto;background:white"><span style="font-size:12.0pt;font-family:&quot;Calibri Light&quot;,sans-serif;
+    color:black">Este Shipment ha recibido su acuse satisfactoriamente, su
+    cliente requiere OC para Facturar, por favor conciliar N° y proceder con su
+    Invoice.</span><span style="font-size:12.0pt;font-family:&quot;Arial&quot;,sans-serif;
+    color:black"><o:p></o:p></span></p>
+    <p class="MsoNormal" style="mso-margin-top-alt:auto;mso-margin-bottom-alt:
+    auto;background:white"><span style="font-size:12.0pt;font-family:&quot;Arial&quot;,sans-serif;
+    color:black"><o:p>&nbsp;</o:p></span></p>
+    <p><span style="font-size:12.0pt;font-family:&quot;Calibri Light&quot;,sans-serif;
+    color:black">Detalles: </span><span style="font-size:12.0pt;font-family:
+    &quot;Arial&quot;,sans-serif;color:black"><o:p></o:p></span></p>
+    <p><span style="font-size:12.0pt;font-family:&quot;Calibri Light&quot;,sans-serif;
+    color:black">&nbsp;</span><span style="font-size:12.0pt;font-family:&quot;Arial&quot;,sans-serif;
+    color:black"><o:p></o:p></span></p>
+    <p><b><span style="font-size:12.0pt;font-family:&quot;Calibri Light&quot;,sans-serif;
+    color:black">Folio</span></b><span style="font-size:12.0pt;font-family:
+    &quot;Calibri Light&quot;,sans-serif;color:black">:&nbsp;</span><font face="Calibri Light, sans-serif">{!Shipment__c.Name}</font></p>
+    <p><b><span style="font-size:12.0pt;font-family:&quot;Calibri Light&quot;,sans-serif;
+    color:black;mso-fareast-language:EN-US">Cliente</span></b><span style="font-size:12.0pt;font-family:&quot;Calibri Light&quot;,sans-serif;color:black">:&nbsp;</span><font face="Calibri Light, sans-serif">{!Shipment__c.Account_for__c}</font></p>
+    <p><b><span style="font-size:12.0pt;font-family:&quot;Calibri Light&quot;,sans-serif;
+    color:black">Ruta:</span></b><span style="font-size:12.0pt;font-family:
+    &quot;Calibri Light&quot;,sans-serif;color:black">&nbsp;</span><font face="Calibri Light, sans-serif">{!Shipment__c.Route__c}</font></p>
+    <p><b><span style="font-size:12.0pt;font-family:&quot;Calibri Light&quot;,sans-serif;
+    color:black">Venta:&nbsp;</span></b><font face="Calibri Light, sans-serif">{!Shipment__c.Total_Services_Sell_Amount__c}</font></p>
+    <p><b><span style="font-size:12.0pt;font-family:&quot;Calibri Light&quot;,sans-serif;
+    color:black;mso-fareast-language:EN-US">Estatus Acuse SAP</span></b><span style="font-size:12.0pt;font-family:&quot;Calibri Light&quot;,sans-serif;color:black">:&nbsp;</span><font face="Calibri Light, sans-serif">{!Shipment__c.Status_Acuse_SAP__c}</font></p>
+    <p><b><span style="font-size:12.0pt;font-family:&quot;Calibri Light&quot;,sans-serif;
+    color:black">DATE ACUSE RECIBIDO</span></b><span style="font-size:12.0pt;
+    font-family:&quot;Calibri Light&quot;,sans-serif;color:black">:&nbsp;</span><font face="Calibri Light, sans-serif">{!Shipment__c.Date_Verify_Acuse_SAPTxt__c}</font></p>
+    </td>
+   </tr>
+   <tr style="mso-yfti-irow:2;mso-yfti-lastrow:yes;height:37.5pt">
+    <td valign="top" style="background:white;padding:3.75pt 3.75pt 3.75pt 3.75pt;
+    height:37.5pt;bEditID:r3st1;bLabel:main"></td>
+   </tr>
+  </tbody></table>
+  </td>
+ </tr>
+</tbody></table>
+
+</div>]]></td>
+</tr>
+<tr valign="top" height="50" >
+<td tEditID="c1r3" style=" background-color:#FFFFFF; color:#000000; bEditID:r3st1; bLabel:main; font-size:12pt; font-family:arial;" aEditID="c1r3" locked="0" >
+<![CDATA[]]></td>
+</tr>
+</table>

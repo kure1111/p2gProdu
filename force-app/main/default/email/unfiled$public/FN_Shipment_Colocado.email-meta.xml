@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>Notificacion de asignacion de Shipment a Monitoreo</description>
+    <encodingKey>ISO-8859-1</encodingKey>
+    <letterhead>Lettherhead_Notification</letterhead>
+    <name>FN Shipment Colocado</name>
+    <style>formalLetter</style>
+    <subject>Shipment Colocado - {!Shipment__c.Name} - {!Shipment__c.Account_for__c}</subject>
+    <textOnly>**New Order has been assign to You**
+Estimad@ Equipo Operaciones una nueva Orden Confirmada ha sido asignada a Uds.
+
+Order: {!Customer_Quote__c.Name}
+Cliente: {!Account.Name}
+Route: {!Customer_Quote__c.Site_of_Load__c} - {!Customer_Quote__c.Site_of_Discharge__c}
+
+Solicitado por: {!Customer_Quote__c.CreatedBy}
+
+Detalles:
+Freight Mode: {!Customer_Quote__c.Freight_Mode__c}
+Service Mode: {!Customer_Quote__c.Service_Mode__c}
+Total Item Units: {!Customer_Quote__c.Total_Items_Units__c}
+Total Weight (kg): {!Customer_Quote__c.Total_Weight_Kg2__c}
+Total Volume (m3): {!Customer_Quote__c.Total_Volume_m3_2__c}
+
+Comentarios: {!Customer_Quote__c.Status_Observations__c}
+Para mayor detalle consultar: {!Customer_Quote__c.Link}</textOnly>
+    <type>html</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

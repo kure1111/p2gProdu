@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WebLink xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>LTCP_Using_Overall_Factors</fullName>
+    <availability>online</availability>
+    <displayType>button</displayType>
+    <height>600</height>
+    <linkType>page</linkType>
+    <masterLabel>LTCP - Using Overall Factors</masterLabel>
+    <openType>noSidebar</openType>
+    <page>NEU_Make_Line_Plan</page>
+    <protected>false</protected>
+</WebLink>
