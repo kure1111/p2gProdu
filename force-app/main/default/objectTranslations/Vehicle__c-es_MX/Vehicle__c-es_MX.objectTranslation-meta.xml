@@ -9,4 +9,23 @@
         <value>Vehicles</value>
     </caseValues>
     <gender>Neuter</gender>
+    <layouts>
+        <layout>Vehicle Layout</layout>
+        <sections>
+            <label><!-- Cajas / Remolques --></label>
+            <section>Cajas / Remolques</section>
+        </sections>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- Datos Carta Porte --></label>
+            <section>Datos Carta Porte</section>
+        </sections>
+        <sections>
+            <label><!-- Tipo de unidad --></label>
+            <section>Tipo de unidad</section>
+        </sections>
+    </layouts>
 </CustomObjectTranslation>

@@ -41,7 +41,7 @@
 		<name>AppMenu</name>
 	</types>
 	<types>
-		<members>ISE_IDV</members>
+		<members>*</members>
 		<name>ApplicationSubtypeDefinition</name>
 	</types>
 	<types>
@@ -49,8 +49,7 @@
 		<name>ApprovalProcess</name>
 	</types>
 	<types>
-		<members>Lead.Prospecto MKT</members>
-		<members>Lead.test</members>
+		<members>*</members>
 		<name>AssignmentRule</name>
 	</types>
 	<types>
@@ -82,17 +81,11 @@
 		<name>BrandingSet</name>
 	</types>
 	<types>
-		<members>Case.No show</members>
-		<members>Case.Support Process Certificación Proveedores</members>
-		<members>Lead.Lead</members>
-		<members>Lead.Lead Mkt</members>
-		<members>Lead.ePaklead</members>
-		<members>Opportunity.Proyectos</members>
-		<members>Opportunity.Standar Opportunity</members>
+		<members>*</members>
 		<name>BusinessProcess</name>
 	</types>
 	<types>
-		<members>IDV_Audit</members>
+		<members>*</members>
 		<name>BusinessProcessTypeDefinition</name>
 	</types>
 	<types>
@@ -108,8 +101,7 @@
 		<name>CampaignInfluenceModel</name>
 	</types>
 	<types>
-		<members>mule__dataloader_io2_oauth_c4sCanvas</members>
-		<members>mule__dataloaderio_v2_oauth_c4sCanvas</members>
+		<members>*</members>
 		<name>CanvasMetadata</name>
 	</types>
 	<types>
@@ -177,7 +169,7 @@
 		<name>CustomHelpMenuSection</name>
 	</types>
 	<types>
-		<members>Customer_Quote__c.Quotation_Status__c,CreatedDate</members>
+		<members>*</members>
 		<name>CustomIndex</name>
 	</types>
 	<types>
@@ -225,9 +217,7 @@
 		<name>EclairGeoData</name>
 	</types>
 	<types>
-		<members>CreacionFolioEmail</members>
-		<members>EmailToSalesforce</members>
-		<members>NEU_TRAXON_ChampEmail</members>
+		<members>*</members>
 		<name>EmailServicesFunction</name>
 	</types>
 	<types>
@@ -381,11 +371,11 @@
 		<name>EmailTemplate</name>
 	</types>
 	<types>
-		<members>Case.Escalated Developer</members>
+		<members>*</members>
 		<name>EscalationRule</name>
 	</types>
 	<types>
-		<members>Case</members>
+		<members>*</members>
 		<name>EscalationRules</name>
 	</types>
 	<types>
@@ -393,11 +383,11 @@
 		<name>ExperienceBundle</name>
 	</types>
 	<types>
-		<members>ISE_IDVAudit</members>
+		<members>*</members>
 		<name>ExplainabilityActionDefinition</name>
 	</types>
 	<types>
-		<members>ISE_IDVAudit</members>
+		<members>*</members>
 		<name>ExplainabilityActionVersion</name>
 	</types>
 	<types>
@@ -409,8 +399,7 @@
 		<name>ExternalServiceRegistration</name>
 	</types>
 	<types>
-		<members>Rule695a6bcdc7f2e7ac54b1457a898276060cb53eeaed8cdcedb18f0354ef52485b</members>
-		<members>Rulef53ba5039e087a1f4f6b65128beae9f319ddc7e9e4f887dd04f349dcd0f02ed7</members>
+		<members>*</members>
 		<name>FieldRestrictionRule</name>
 	</types>
 	<types>
@@ -434,18 +423,7 @@
 		<name>FlowDefinition</name>
 	</types>
 	<types>
-		<members>LineItemQuantityProductDate</members>
-		<members>LineItemQuantityScheduleDate</members>
-		<members>LineItemRevenueProductDate</members>
-		<members>LineItemRevenueScheduleDate</members>
-		<members>OpportunityLineItemQuantity</members>
-		<members>OpportunityLineItemRevenue</members>
-		<members>OpportunityQuantity</members>
-		<members>OpportunityQuantityProductDate</members>
-		<members>OpportunityQuantityScheduleDate</members>
-		<members>OpportunityRevenue</members>
-		<members>OpportunityRevenueProductDate</members>
-		<members>OpportunityRevenueScheduleDate</members>
+		<members>*</members>
 		<name>ForecastingType</name>
 	</types>
 	<types>
@@ -469,7 +447,7 @@
 		<name>HomePageLayout</name>
 	</types>
 	<types>
-		<members>IframeWhiteListUrlSettings</members>
+		<members>*</members>
 		<name>IframeWhiteListUrlSettings</name>
 	</types>
 	<types>
@@ -481,19 +459,11 @@
 		<name>Layout</name>
 	</types>
 	<types>
-		<members>LeadConvertSettings</members>
+		<members>*</members>
 		<name>LeadConvertSettings</name>
 	</types>
 	<types>
-		<members>Letterhead_IMPAK</members>
-		<members>Letterhead_Importante</members>
-		<members>Letterhead_Notification_03</members>
-		<members>Letterhead_PakSYSTEM</members>
-		<members>Lettherhead_Notification</members>
-		<members>Lettherhead_Notification02</members>
-		<members>PAk_Logos</members>
-		<members>Piloto</members>
-		<members>prueba</members>
+		<members>*</members>
 		<name>Letterhead</name>
 	</types>
 	<types>
@@ -517,9 +487,7 @@
 		<name>LiveChatSensitiveDataRule</name>
 	</types>
 	<types>
-		<members>cms_document</members>
-		<members>cms_image</members>
-		<members>news</members>
+		<members>*</members>
 		<name>ManagedContentType</name>
 	</types>
 	<types>
@@ -527,14 +495,7 @@
 		<name>ManagedTopics</name>
 	</types>
 	<types>
-		<members>Account.Account_Name_Rule</members>
-		<members>Account.Standard_Account_Match_Rule_v1_0</members>
-		<members>Contact.Standard_Contact_Match_Rule_v1_1</members>
-		<members>Delivery_Zone__c.Standard_Zipcodes_Matching_Rule</members>
-		<members>Lead.Standard_Lead_Match_Rule_v1_0</members>
-		<members>Operadores__c.Duplicate_Operadores_matching_rule</members>
-		<members>Traffic__c.Duplicate_Traffics</members>
-		<members>Vessel_Flight__c.duplicate_Vessel_matching_rule</members>
+		<members>*.Account_Name_Rule</members>
 		<name>MatchingRule</name>
 	</types>
 	<types>
@@ -586,12 +547,7 @@
 		<name>PermissionSet</name>
 	</types>
 	<types>
-		<members>CFDI</members>
-		<members>CFDI_2</members>
-		<members>CP_Comercial_Carta_porte</members>
-		<members>MFA_Comercial</members>
-		<members>MFA_PAK2GO</members>
-		<members>force__ScaleCenterUsers</members>
+		<members>*</members>
 		<name>PermissionSetGroup</name>
 	</types>
 	<types>
@@ -611,23 +567,7 @@
 		<name>PostTemplate</name>
 	</types>
 	<types>
-		<members>myRule_1_301RQ00000YTgBaYAL</members>
-		<members>myRule_1_301RQ00000YUPOrYAP</members>
-		<members>myRule_1_301RQ00000YUR8vYAH</members>
-		<members>myRule_1_301RQ00000YUT5tYAH</members>
-		<members>myRule_1_301RQ00000YUTFYYA5</members>
-		<members>myRule_1_301RQ00000YUd5BYAT</members>
-		<members>myRule_1_301RQ00000YUeCXYA1</members>
-		<members>myRule_1_301RQ00000YUf5NYAT</members>
-		<members>myRule_1_301RQ00000YWFlIYAX</members>
-		<members>myRule_1_301RQ00000ZzvwUYAR</members>
-		<members>myRule_3_301RQ00000YTgBaYAL</members>
-		<members>myRule_3_301RQ00000YUd5BYAT</members>
-		<members>myRule_3_301RQ00000YWFlIYAX</members>
-		<members>myRule_5_301RQ00000YTgBaYAL</members>
-		<members>myRule_5_301RQ00000YUd5BYAT</members>
-		<members>myRule_5_301RQ00000YWFlIYAX</members>
-		<members>myRule_9_301RQ00000YUd5BYAT</members>
+		<members>*</members>
 		<name>ProcessFlowMigration</name>
 	</types>
 	<types>
@@ -663,83 +603,7 @@
 		<name>RecordActionDeployment</name>
 	</types>
 	<types>
-		<members>Account.Agente_Aduanal</members>
-		<members>Account.Consignee</members>
-		<members>Account.Cuenta_Destino</members>
-		<members>Account.Customer</members>
-		<members>Account.Export_Company</members>
-		<members>Account.Prospect</members>
-		<members>Account.Prospect_Bloq</members>
-		<members>Account.Prospect_Mkt</members>
-		<members>Account.Purchase_Agent</members>
-		<members>Account.Sales_Agent</members>
-		<members>Account.Shipper</members>
-		<members>Account.Supplier</members>
-		<members>Account.Transporter</members>
-		<members>Account.supplier_Owner_or_Lessee</members>
-		<members>Case.Certificacion_de_Proveedores</members>
-		<members>Case.NoShow</members>
-		<members>Catalogo_SAT__c.Codigo_Postal</members>
-		<members>Catalogo_SAT__c.Colonia</members>
-		<members>Catalogo_SAT__c.Configuracion_Autotrasporte</members>
-		<members>Catalogo_SAT__c.Cve_Transporte</members>
-		<members>Catalogo_SAT__c.Estaciones</members>
-		<members>Catalogo_SAT__c.Estado</members>
-		<members>Catalogo_SAT__c.Fraccion_Arancelaria</members>
-		<members>Catalogo_SAT__c.Localidad</members>
-		<members>Catalogo_SAT__c.Material_Peligroso</members>
-		<members>Catalogo_SAT__c.Municipio</members>
-		<members>Catalogo_SAT__c.Pais</members>
-		<members>Catalogo_SAT__c.Productos_y_Servicios_cP</members>
-		<members>Catalogo_SAT__c.Sin_Categoria</members>
-		<members>Catalogo_SAT__c.Tipo_Embalaje</members>
-		<members>Catalogo_SAT__c.Tipo_de_Estacion</members>
-		<members>Catalogo_SAT__c.Tipo_de_Permiso</members>
-		<members>Catalogo_SAT__c.Tipo_de_Remolque</members>
-		<members>Catalogo_SAT__c.Unidad_Peso</members>
-		<members>Collection__c.Documentary_Credit_Collection</members>
-		<members>Collection__c.Simple_Collection</members>
-		<members>Customer_Quote__c.Import_Export_Order</members>
-		<members>Customer_Quote__c.Import_Export_Quote</members>
-		<members>Event.Completed</members>
-		<members>Event.Event_Bloq</members>
-		<members>Event.In_Progress</members>
-		<members>Fee__c.Air_Freight</members>
-		<members>Fee__c.Fee_Freight</members>
-		<members>Fee__c.Fee_Local_Transport</members>
-		<members>Fee__c.Other_Fees</members>
-		<members>Fee__c.Servicios</members>
-		<members>Invoice__c.Invoice</members>
-		<members>Invoice__c.InvoiceStatus</members>
-		<members>Lead.Lead</members>
-		<members>Lead.Lead_Mkt</members>
-		<members>Lead.ePakLead</members>
-		<members>Location__c.Direccion_Reparto</members>
-		<members>Location__c.Location</members>
-		<members>OB_Archiver__ArchivingPolicy__c.OB_Archiver__Archiving_Policy</members>
-		<members>OB_Archiver__ArchivingPolicy__c.OB_Archiver__Purge_Policy</members>
-		<members>Opportunity.Proyectos</members>
-		<members>Opportunity.Standar_Opportunity</members>
-		<members>Quote.Proyecto</members>
-		<members>Quote.Quote_Standar</members>
-		<members>Shipment_Disbursement__c.Disbursement</members>
-		<members>Shipment_Disbursement__c.DisbursementStatus</members>
-		<members>Shipment__c.ShipmentStatus</members>
-		<members>Shipment__c.Shipment_Order</members>
-		<members>Shipment__c.Shipment_Quote</members>
-		<members>Shipment__c.Shipment_Request</members>
-		<members>Shipment__c.Shipment_Status_Bloq_Contado</members>
-		<members>Shipment__c.WCA_Shipment_Order</members>
-		<members>Sourcing_Item__c.SKU_Product</members>
-		<members>Sourcing_Item__c.Service</members>
-		<members>Sourcing_Item__c.Sourcing_Product</members>
-		<members>Supplier_Quote_Line__c.Supplier_Quote_Order_Line</members>
-		<members>Supplier_Quote_Line__c.Supplier_Quote_Order_Line_Hidden</members>
-		<members>Supplier_Quote__c.Supplier_Hidden_Quote</members>
-		<members>Supplier_Quote__c.Supplier_Order</members>
-		<members>Supplier_Quote__c.Supplier_Quote</members>
-		<members>Task.Bloq</members>
-		<members>Task.Meeting</members>
+		<members>*</members>
 		<name>RecordType</name>
 	</types>
 	<types>
@@ -747,54 +611,7 @@
 		<name>RedirectWhitelistUrl</name>
 	</types>
 	<types>
-		<members>API_QR_Server</members>
-		<members>API_google_charts</members>
-		<members>AssociatedDocuments_AmazonS3</members>
-		<members>Barcode</members>
-		<members>Cifid</members>
-		<members>Cifid2</members>
-		<members>ControlRoom</members>
-		<members>Currency_Integration</members>
-		<members>Currency_Integration_2</members>
-		<members>Currency_Integration_Pak2Go</members>
-		<members>CustomDuty</members>
-		<members>CustomDutyS</members>
-		<members>GetRecursoConfiable</members>
-		<members>GoogleMaps</members>
-		<members>Main</members>
-		<members>Main2</members>
-		<members>Main3</members>
-		<members>Marinetraffic</members>
-		<members>OI</members>
-		<members>OIs</members>
-		<members>Production_Account</members>
-		<members>Production_Provisioning</members>
-		<members>Production_eSignature</members>
-		<members>RecursoConfiable</members>
-		<members>S3</members>
-		<members>S3_standart</members>
-		<members>SalesforceArchive</members>
-		<members>Shipfinder</members>
-		<members>Traxon</members>
-		<members>Truckstop_RateMate</members>
-		<members>Truckstop_RateMate_Production</members>
-		<members>Truckstop_Tracking_Geography</members>
-		<members>Truckstop_Tracking_Geography_Production</members>
-		<members>Vesselfinder</members>
-		<members>WS_SAP</members>
-		<members>banxico2</members>
-		<members>cartaPorte</members>
-		<members>cl_eme__Production</members>
-		<members>cl_eme__Sandbox</members>
-		<members>einsteinplay__Einstein_Platform_Services</members>
-		<members>getTokenSF</members>
-		<members>pak2go</members>
-		<members>pak2godevelop</members>
-		<members>pak2gologistics</members>
-		<members>pak2gologisticsqa</members>
-		<members>pak2gologisticsuat</members>
-		<members>salesforceEndpoint</members>
-		<members>sandboxsf</members>
+		<members>*</members>
 		<name>RemoteSiteSetting</name>
 	</types>
 	<types>
@@ -814,18 +631,7 @@
 		<name>Scontrol</name>
 	</types>
 	<types>
-		<members>Administrador_del_sistema_Migrated</members>
-		<members>OTAS_Migrated</members>
-		<members>OTAS_Migrated2</members>
-		<members>OTAS_Migrated3</members>
-		<members>OTAS_Migrated4</members>
-		<members>OTAS_Migrated5</members>
-		<members>PAK2GO_Comercial_Migrated</members>
-		<members>PAK2GO_Director_Migrated</members>
-		<members>PAK2GO_Operaciones_Migrated</members>
-		<members>PAK2GO_Pak_Control_Migrated</members>
-		<members>PAK2GO_Pricing_Migrated</members>
-		<members>PAK2GO_Representante_SAC_Migrated</members>
+		<members>*</members>
 		<name>SearchCustomization</name>
 	</types>
 	<types>
@@ -833,12 +639,11 @@
 		<name>Settings</name>
 	</types>
 	<types>
-		<members>Survey__c.Survey_Guest</members>
+		<members>*</members>
 		<name>SharingGuestRule</name>
 	</types>
 	<types>
-		<members>Account.Guest_Users_Track_and_Trace</members>
-		<members>Warehouse__c.All_internal_users_guest_user</members>
+		<members>*</members>
 		<name>SharingOwnerRule</name>
 	</types>
 	<types>
@@ -874,9 +679,7 @@
 		<name>TopicsForObjects</name>
 	</types>
 	<types>
-		<members>2GoEncuesta.Customer_Members</members>
-		<members>2GoEncuesta.Members_without_contribution</members>
-		<members>2GoEncuesta.Partner_and_Customer_members</members>
+		<members>*</members>
 		<name>UserCriteria</name>
 	</types>
 	<types>
@@ -884,308 +687,15 @@
 		<name>Workflow</name>
 	</types>
 	<types>
-		<members>Account.Active</members>
-		<members>Account.Cliente_Perdido</members>
-		<members>Account.Customer_time_visited</members>
-		<members>Account.Fecha_Prospeccion</members>
-		<members>Account.First_day_contact_status</members>
-		<members>Account.Last_day_contact_status</members>
-		<members>Account.LeadDescription</members>
-		<members>Account.Manager_Email</members>
-		<members>Account.NewCustomer</members>
-		<members>Account.Seguimiento_Mkt</members>
-		<members>Account.Update_Active</members>
-		<members>Account.Update_Fecha_Recuperado</members>
-		<members>Account.Update_Recuperado</members>
-		<members>Account.customer_time_contacted</members>
-		<members>Account.fecha_potencializaccion</members>
-		<members>Account_E_Commerce_Offer__c.Update_Account_E_Commerce_Offer_Name</members>
-		<members>BOM_Relation__c.Over_Write_BOM_Relation</members>
-		<members>Carrier_Line_Load_Point__c.Name_Route</members>
-		<members>Catalog_Family__c.Update_Name</members>
-		<members>Customer_Price_List__c.Update_Customer_Price_List_Name</members>
-		<members>Customer_Quote__c.Approved_Date_Time</members>
-		<members>Customer_Quote__c.Approved_IMPAK</members>
-		<members>Customer_Quote__c.Approved_Update_Approved_Date</members>
-		<members>Customer_Quote__c.Awaiting_Cost_FNQTC</members>
-		<members>Customer_Quote__c.Checa</members>
-		<members>Customer_Quote__c.Check_Send_Response_Req</members>
-		<members>Customer_Quote__c.Clean_Approved_Check</members>
-		<members>Customer_Quote__c.Date_Autorizado_FP_FO</members>
-		<members>Customer_Quote__c.Date_Awaiting_Cost</members>
-		<members>Customer_Quote__c.Date_Awaiting_Costs</members>
-		<members>Customer_Quote__c.Date_Awaiting_Costs1</members>
-		<members>Customer_Quote__c.Date_Send_Request</members>
-		<members>Customer_Quote__c.Declined_Date_time</members>
-		<members>Customer_Quote__c.Declined_Date_time_2</members>
-		<members>Customer_Quote__c.Email_Manager_Sales_Exec</members>
-		<members>Customer_Quote__c.Facturado_AdminVtas</members>
-		<members>Customer_Quote__c.Prueba_Workflows</members>
-		<members>Customer_Quote__c.Send_Awaiting</members>
-		<members>Customer_Quote__c.Sent_Awaiting_Response</members>
-		<members>Customer_Quote__c.Update_Approved</members>
-		<members>Customer_Quote__c.Update_Approved_Date</members>
-		<members>Customer_Quote__c.Update_Approved_DateTime</members>
-		<members>Customer_Quote__c.Update_Asistente_Vtas</members>
-		<members>Customer_Quote__c.Update_Awaiting</members>
-		<members>Customer_Quote__c.Update_Awaiting_FNQTC</members>
-		<members>Customer_Quote__c.Update_Date_Invoice_Checked</members>
-		<members>Customer_Quote__c.Update_Pricing_Responded</members>
-		<members>Customer_Quote__c.Update_Responded_Pricing</members>
-		<members>Customer_Quote__c.Update_Responded_Pricing3</members>
-		<members>Customer_Quote__c.Update_Responded_Pricing4</members>
-		<members>Customer_Quote__c.Update_Responded_Pricing_Road_Nat</members>
-		<members>Customer_Quote__c.Update_Response_Request_WH</members>
-		<members>Customer_Quote__c.Update_Send_Request</members>
-		<members>Customer_Quote__c.Update_Send_RequestRoad</members>
-		<members>Customer_Quote__c.Update_Send_RequestSea</members>
-		<members>Customer_Quote__c.Update_Send_Request_Road_Nat</members>
-		<members>Customer_Quote__c.Update_Send_Request_WH</members>
-		<members>Customer_Quote__c.Update_cobranza_email</members>
-		<members>Customer_Quote__c.Update_date_send_request</members>
-		<members>Customer_Quote__c.Update_send_requestok</members>
-		<members>Customer_Quote__c.approved_day</members>
-		<members>Customer_Quote__c.bypass</members>
-		<members>Customer_Quote__c.shipment_generation_day</members>
-		<members>Event.Add_approved_time</members>
-		<members>Fee_Offer__c.Update_Name_Fee_Offer</members>
-		<members>Fee__c.Update_Fee_Freight_Name</members>
-		<members>Import_Export_Fee_Line__c.Update_FNQTC</members>
-		<members>Import_Export_Fee_Line__c.Update_ImpakCheck</members>
-		<members>Import_Export_Fee_Line__c.Update_TarifarioServRate</members>
-		<members>Invoice__c.Amount_received</members>
-		<members>Invoice__c.Email_cobranza_1</members>
-		<members>Invoice__c.Fecha_Facturado</members>
-		<members>Invoice__c.Fecha_Pagado</members>
-		<members>Invoice__c.Fecha_cobrado</members>
-		<members>Invoice__c.Invoice_Status</members>
-		<members>Invoice__c.Invoiced_Correctly</members>
-		<members>Invoice__c.Invoiced_Timbrado</members>
-		<members>Invoice__c.Received_Date</members>
-		<members>Item_Pallet_Type__c.Update_Name_Item_Pallet_Type</members>
-		<members>Item_Program__c.Over_Write_Item_Program_Step</members>
-		<members>Items_to_Supply__c.Name_Item_to_Supply</members>
-		<members>Lead.Description</members>
-		<members>Lead.LeadDescription</members>
-		<members>Lead.LeadEmail</members>
-		<members>Lead.ServiceTypeTxt</members>
-		<members>Operadores__c.Update_Validado</members>
-		<members>Operadores__c.Update_Validado_Pak_Control</members>
-		<members>Operadores__c.Update_fecha_validado</members>
-		<members>Opportunity.Asignar_Usuario_IC</members>
-		<members>Opportunity.Asignar_a_Marcos</members>
-		<members>Pallet_Container_Type__c.Update_Name_Pallet_Container_Type</members>
-		<members>SCM_Rule_Applied__c.Name_SCM_Rule_Applied</members>
-		<members>Shipment_Consolidation_Data__c.Carrier_Email</members>
-		<members>Shipment_Fee_Line__c.Cobranza_Email_1</members>
-		<members>Shipment_Fee_Line__c.Cobranza_Email_2</members>
-		<members>Shipment_Fee_Line__c.Cobranza_Email_3</members>
-		<members>Shipment_Fee_Line__c.IschangedSellPrice</members>
-		<members>Shipment_Fee_Line__c.ShipFinished</members>
-		<members>Shipment_Fee_Line__c.StatMonitoreo</members>
-		<members>Shipment_Fee_Line__c.UpdateExtension_Service_Name</members>
-		<members>Shipment_Fee_Line__c.Update_Buy_Price_Modified</members>
-		<members>Shipment_Fee_Line__c.Update_Dir_Email</members>
-		<members>Shipment_Fee_Line__c.Update_Op_Executive</members>
-		<members>Shipment_Fee_Line__c.Update_Sell_Price_Modified</members>
-		<members>Shipment_Fee_Line__c.Update_Status_Shipment</members>
-		<members>Shipment__c.Account_email</members>
-		<members>Shipment__c.Activar_VerificacionPak</members>
-		<members>Shipment__c.Actualizar_fecha_acuse_recibido</members>
-		<members>Shipment__c.Carrier_Email</members>
-		<members>Shipment__c.Cerrar_estatus</members>
-		<members>Shipment__c.Clean_Special_Notes</members>
-		<members>Shipment__c.Clean_Status_Monitoreo</members>
-		<members>Shipment__c.Clean_Verify</members>
-		<members>Shipment__c.Clean_Verify_Reassign</members>
-		<members>Shipment__c.Date_Aut_GastoExt</members>
-		<members>Shipment__c.Date_Autorizado_FP_FO</members>
-		<members>Shipment__c.Date_Confirmed</members>
-		<members>Shipment__c.Date_Confirmed_PTO</members>
-		<members>Shipment__c.Date_Verify_Acuse_SAP</members>
-		<members>Shipment__c.Date_Verify_PakControl</members>
-		<members>Shipment__c.Date_status_cosed</members>
-		<members>Shipment__c.Date_time_status_monitoreo</members>
-		<members>Shipment__c.ETD_EXPO_CREATED_BY</members>
-		<members>Shipment__c.ETD_Impo_Modified_By</members>
-		<members>Shipment__c.Last_Modified_ETD_Expo_date</members>
-		<members>Shipment__c.Last_Modified_ETD_Impo_date</members>
-		<members>Shipment__c.Modification_Status_Flight_confirmation</members>
-		<members>Shipment__c.RED</members>
-		<members>Shipment__c.Rating_modification_day</members>
-		<members>Shipment__c.ShipmentHBLNumber</members>
-		<members>Shipment__c.UPDATE_WP_PLANNER_TXT</members>
-		<members>Shipment__c.UpdateCheckSPCerrado</members>
-		<members>Shipment__c.Update_Asistente_Vtas</members>
-		<members>Shipment__c.Update_Date_Deactive_Monitoring</members>
-		<members>Shipment__c.Update_Email_Cobranza</members>
-		<members>Shipment__c.Update_Email_Cobranza2</members>
-		<members>Shipment__c.Update_Email_Manager</members>
-		<members>Shipment__c.Update_Finished</members>
-		<members>Shipment__c.Update_IHC</members>
-		<members>Shipment__c.Update_Rating</members>
-		<members>Shipment__c.Update_SP_Evaluated</members>
-		<members>Shipment__c.Update_SP_Finished</members>
-		<members>Shipment__c.Update_SendtoSap</members>
-		<members>Shipment__c.Update_Shipment_recordtype</members>
-		<members>Shipment__c.Verify_Clean_Field</members>
-		<members>Shipment__c.YELLOW</members>
-		<members>Shopping_Cart_line__c.Update_Account_for_Record_Type_TEXT</members>
-		<members>Shopping_Cart_line__c.Update_Shopping_Cart_Line_Name</members>
-		<members>Shopping_Cart_line__c.Update_Shopping_Cart_Status_TEXT</members>
-		<members>Supplier_Quote_Line__c.Update_Supplier_Quote_Line_Name</members>
-		<members>Traffic__c.Traffic_Name</members>
-		<members>Transport_Packaging_Data__c.Update_Name_Transport_Packaging_Data</members>
-		<members>Warehouse__c.Update_Email_ManagerWH</members>
+		<members>*</members>
 		<name>WorkflowFieldUpdate</name>
 	</types>
 	<types>
-		<members>Account.Activo en Prospectos</members>
-		<members>Account.Alta de Prospecto SAP</members>
-		<members>Account.Customer time visited</members>
-		<members>Account.Fecha Prospeccion</members>
-		<members>Account.Fecha Recuperado</members>
-		<members>Account.First day contact status</members>
-		<members>Account.Last day contact status</members>
-		<members>Account.LeadDescription</members>
-		<members>Account.New Customer</members>
-		<members>Account.New Prospect National</members>
-		<members>Account.Seguimiento Mkt</members>
-		<members>Account.Seguimiento a Mkt Prospecto</members>
-		<members>Account.Update Prospect Mkt</members>
-		<members>Account.customer time contacted</members>
-		<members>Account.fecha potencializaccion</members>
-		<members>Account.shipper and consignee</members>
-		<members>Carrier_Line_Load_Point__c.Update Route Name</members>
-		<members>Customer_Quote__c.Approved Date Time</members>
-		<members>Customer_Quote__c.Approved IMPAK</members>
-		<members>Customer_Quote__c.Awaiting Cost FNQTC</members>
-		<members>Customer_Quote__c.Cotizaccion Proyecto Email</members>
-		<members>Customer_Quote__c.Date Autorizado FP%2FFO</members>
-		<members>Customer_Quote__c.Declined Date time 2</members>
-		<members>Customer_Quote__c.Duplicate</members>
-		<members>Customer_Quote__c.Folios W</members>
-		<members>Customer_Quote__c.New IE Quote</members>
-		<members>Customer_Quote__c.New Order Approved - ES</members>
-		<members>Customer_Quote__c.New Order Approved - EX</members>
-		<members>Customer_Quote__c.New Order Approved - FI</members>
-		<members>Customer_Quote__c.New Order Approved - FN</members>
-		<members>Customer_Quote__c.New Order Approved - FP%2FFO</members>
-		<members>Customer_Quote__c.New Order Approved - PQ</members>
-		<members>Customer_Quote__c.New Order Approved - PTO</members>
-		<members>Customer_Quote__c.New Order Approved - R</members>
-		<members>Customer_Quote__c.New Order Approved - T</members>
-		<members>Customer_Quote__c.New Order Approved - W</members>
-		<members>Customer_Quote__c.New Order Approved AW</members>
-		<members>Customer_Quote__c.New Order Approved Air PQ</members>
-		<members>Customer_Quote__c.New Order Approved WH</members>
-		<members>Customer_Quote__c.New Order Assinged Expo M</members>
-		<members>Customer_Quote__c.New Order Assinged Impo M</members>
-		<members>Customer_Quote__c.New Request to IMPAK</members>
-		<members>Customer_Quote__c.Pricing M Awaiting</members>
-		<members>Customer_Quote__c.Response ROAD ALL</members>
-		<members>Customer_Quote__c.Response Request for IMPAK</members>
-		<members>Customer_Quote__c.Response Request for Pricing Air</members>
-		<members>Customer_Quote__c.Response Request for Pricing PTO</members>
-		<members>Customer_Quote__c.Response Request for Pricing RoadINT</members>
-		<members>Customer_Quote__c.Response Request for Pricing RoadNAT</members>
-		<members>Customer_Quote__c.Response Request for WH</members>
-		<members>Customer_Quote__c.Send Request ROAD</members>
-		<members>Customer_Quote__c.Send Request to Pricing Air</members>
-		<members>Customer_Quote__c.Send Request to Pricing T</members>
-		<members>Customer_Quote__c.Send Request to Pricing WH</members>
-		<members>Customer_Quote__c.Send Request to Pricing_Sea</members>
-		<members>Customer_Quote__c.Sent Awaiting</members>
-		<members>Customer_Quote__c.Time Response Pricing M</members>
-		<members>Customer_Quote__c.approved day F</members>
-		<members>Customer_Quote__c.dia generacion SP</members>
-		<members>Event.Add approved time</members>
-		<members>Import_Export_Fee_Line__c.Calc TarifarioServRate</members>
-		<members>Import_Export_Fee_Line__c.Update ImpakCheck</members>
-		<members>Invoice__c.Cancel Invoice</members>
-		<members>Invoice__c.Fecha Facturado</members>
-		<members>Invoice__c.Fecha cobrado</members>
-		<members>Invoice__c.Update Email Cobranza</members>
-		<members>Invoice__c.Update Invoiced</members>
-		<members>Lead.Lead Email</members>
-		<members>Lead.Primera Tarea</members>
-		<members>Operadores__c.Fecha Validado</members>
-		<members>Operadores__c.Update Validado</members>
-		<members>Opportunity.OPP_Potencial</members>
-		<members>Opportunity.PROJ001_Enviar Correo IC</members>
-		<members>Opportunity.PROJ002_Llenar campo Usuario IC con Marcos Arriaga</members>
-		<members>Opportunity.PROJ003_Cotización de compras</members>
-		<members>Opportunity.PROJ004_VoBo IC</members>
-		<members>Opportunity.PROJ005_Enviar cotización al cliente</members>
-		<members>Opportunity.PROJ006_Finalizacion de Proyecto</members>
-		<members>Opportunity.ejmplo</members>
-		<members>Shipment_Fee_Line__c.Add Service Line</members>
-		<members>Shipment_Fee_Line__c.Add Shipment Serv Lines PILOTO</members>
-		<members>Shipment_Fee_Line__c.IsChanged SellPrice</members>
-		<members>Shipment_Fee_Line__c.Notificación de cambio en Service line</members>
-		<members>Shipment_Fee_Line__c.Service Line Buy Amount is Changed</members>
-		<members>Shipment_Fee_Line__c.Service Line Sell Amount is Changed</members>
-		<members>Shipment_Fee_Line__c.Shipment Finished</members>
-		<members>Shipment_Fee_Line__c.Shipment StatMOnitoreo</members>
-		<members>Shipment_Fee_Line__c.Update Extension Service Name</members>
-		<members>Shipment_Fee_Line__c.Update email Op Executive</members>
-		<members>Shipment__c.A - UpdateShipmentCerrado</members>
-		<members>Shipment__c.Actualizar fecha acuse recibido</members>
-		<members>Shipment__c.Air Shipment Confirmation</members>
-		<members>Shipment__c.All Shipment Create</members>
-		<members>Shipment__c.Cambia estatus cerrado</members>
-		<members>Shipment__c.Cambia estatus cerrado 2</members>
-		<members>Shipment__c.Carta Porte- Servicio Confirmado Invoice</members>
-		<members>Shipment__c.Carta Porte- Servicio Confirmado OC</members>
-		<members>Shipment__c.Date Autorizado FP%2FFO</members>
-		<members>Shipment__c.Date Verify Acuse SAP</members>
-		<members>Shipment__c.Date Verify PakControl</members>
-		<members>Shipment__c.Date time Finished</members>
-		<members>Shipment__c.Devoluciones</members>
-		<members>Shipment__c.Devoluciones2</members>
-		<members>Shipment__c.ETD Impo Modified By</members>
-		<members>Shipment__c.Estatus cerrados</members>
-		<members>Shipment__c.FI - UpdateShipmentCerrado</members>
-		<members>Shipment__c.FI Shipment Confirm</members>
-		<members>Shipment__c.FN - UpdateShipmentCerrado2</members>
-		<members>Shipment__c.FN Shipment In Progress</members>
-		<members>Shipment__c.FN Shipment Pending</members>
-		<members>Shipment__c.FN Shipment Re Assign</members>
-		<members>Shipment__c.FN Shipment Verify PakControl</members>
-		<members>Shipment__c.FP%2FFO Shipment Colocado</members>
-		<members>Shipment__c.Last Modified ETD Expo date</members>
-		<members>Shipment__c.Last Modified ETD Impo date</members>
-		<members>Shipment__c.M - UpdateShipmentCerrado</members>
-		<members>Shipment__c.Modification Status Flight confirmation</members>
-		<members>Shipment__c.Notificacion ATA ETA ETD</members>
-		<members>Shipment__c.Notificacion Gasto Extra</members>
-		<members>Shipment__c.ORDEN DE VENTA - PILOTO</members>
-		<members>Shipment__c.PTO - UpdateShipmentCerrado</members>
-		<members>Shipment__c.PTO Shipment Confirm</members>
-		<members>Shipment__c.R air - UpdateShipmentCerrado</members>
-		<members>Shipment__c.Rating</members>
-		<members>Shipment__c.Rating modification day</members>
-		<members>Shipment__c.Sea Shipment Confirmation</members>
-		<members>Shipment__c.Servicio con Acuse</members>
-		<members>Shipment__c.Shipment Delivery ES01</members>
-		<members>Shipment__c.Shipment Delivery T</members>
-		<members>Shipment__c.Status Closed</members>
-		<members>Shipment__c.Total Sell - Buy Amount is Changed</members>
-		<members>Shipment__c.Update URL Evaluacion CLiente</members>
-		<members>Shipment__c.Update email cobranza</members>
-		<members>Shipment__c.VERIFY PAK CONTROL isChanged</members>
-		<members>Shipment__c.WH Shipment Confirm</members>
-		<members>Traffic__c.Traffic Name</members>
-		<members>Traffic__c.Update ZoneTraffic</members>
-		<members>User.NewUser</members>
-		<members>Warehouse__c.Update Email Manager</members>
+		<members>*</members>
 		<name>WorkflowRule</name>
 	</types>
 	<types>
-		<members>Lead.Primer_contacto_al_lead</members>
-		<members>Opportunity.Estatus_en_Cotizaci_n_de_Compras</members>
-		<members>Opportunity.First_Contact_with_Customer</members>
-		<members>Shipment_Fee_Line__c.Cambio_en_Service_Line</members>
+		<members>*</members>
 		<name>WorkflowTask</name>
 	</types>
 	<version>58.0</version>

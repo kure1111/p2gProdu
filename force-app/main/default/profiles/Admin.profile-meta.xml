@@ -7760,16 +7760,6 @@
         <visible>true</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>
-        <default>false</default>
-        <recordType>OB_Archiver__ArchivingPolicy__c.OB_Archiver__Archiving_Policy</recordType>
-        <visible>false</visible>
-    </recordTypeVisibilities>
-    <recordTypeVisibilities>
-        <default>false</default>
-        <recordType>OB_Archiver__ArchivingPolicy__c.OB_Archiver__Purge_Policy</recordType>
-        <visible>false</visible>
-    </recordTypeVisibilities>
-    <recordTypeVisibilities>
         <default>true</default>
         <personAccountDefault>true</personAccountDefault>
         <recordType>Opportunity.Proyectos</recordType>
