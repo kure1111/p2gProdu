@@ -48,6 +48,7 @@
                 <stringValue>Se modificó el carrier de la línea {!$Record.Name} del Shipment {!Get_Shipment.Name}</stringValue>
             </value>
         </inputParameters>
+        <nameSegment>emailSimple</nameSegment>
     </actionCalls>
     <apiVersion>57.0</apiVersion>
     <decisions>

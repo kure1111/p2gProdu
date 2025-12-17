@@ -6578,11 +6578,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>Shipment__c.Agency_Fee__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
         <field>Shipment__c.Agent_Account__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -6967,28 +6962,8 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>true</editable>
-        <field>Shipment__c.Direcci_n_de_Reparto_2__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>Shipment__c.Direcci_n_de_Reparto_4__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
         <editable>false</editable>
         <field>Shipment__c.Direccion_Monitoreo__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>Shipment__c.Direccion_de_Reparto_3__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>Shipment__c.Direccion_de_Reparto_5__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -7538,11 +7513,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Shipment__c.N__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
         <field>Shipment__c.Name_Cliente__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -7923,6 +7893,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Shipment__c.Reason_for_declined__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Shipment__c.Recepci_n_Acuses__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -8153,11 +8128,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>Shipment__c.Shipment_Customer_Evaluate__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
         <field>Shipment__c.Shipment_Service_Rate__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -8224,11 +8194,6 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Shipment__c.Special_NotesFN__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>Shipment__c.Special_Notes_3__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>

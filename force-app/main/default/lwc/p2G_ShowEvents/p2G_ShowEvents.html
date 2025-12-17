@@ -1,0 +1,15 @@
+<template>
+    <lightning-button label="Crear Evento"
+                      variant="brand"
+                      class="slds-m-top_small"
+                      onclick={handleShowLWC}>
+    </lightning-button>
+
+    <template if:true={showLWC}>
+        <c-p2-G_-Create-event-calendar></c-p2-G_-Create-event-calendar>
+    </template>
+
+    <div style="background:#ffffff; height: 600px; width: 100%;" class="slds-grid">
+        <div id="calendar" class="fullcalendarjs" style="height: 100%;"></div>
+    </div>
+</template>

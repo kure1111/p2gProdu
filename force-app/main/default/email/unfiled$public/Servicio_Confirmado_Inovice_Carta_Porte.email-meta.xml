@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>false</available>
+    <description>Un servicio a sido confirmado y esta listo para generarse la Orden de compra</description>
+    <encodingKey>ISO-8859-1</encodingKey>
+    <name>Servicio Confirmado Inovice Carta Porte</name>
+    <style>formalLetter</style>
+    <subject>SERVICIO CONFIRMADO</subject>
+    <textOnly>Buen día {!Opportunity.CreatedBy},
+
+Se le informa que el proyecto &quot;{!Opportunity.Name}&quot; ha llegado al estatus de &quot;Cotización de compras&quot;. Favor de proceder a enviar la cotizacion final al cliente.</textOnly>
+    <type>custom</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

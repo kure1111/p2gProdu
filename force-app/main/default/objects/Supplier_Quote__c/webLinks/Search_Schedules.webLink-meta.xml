@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WebLink xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Search_Schedules</fullName>
+    <availability>online</availability>
+    <displayType>link</displayType>
+    <linkType>javascript</linkType>
+    <masterLabel>Search Schedules</masterLabel>
+    <openType>onClickJavaScript</openType>
+    <protected>false</protected>
+    <url>if(&apos;{! Supplier_Quote__c.Port_Airport_of_Load__c}&apos; == &apos;&apos; || &apos;{! Supplier_Quote__c.Country_of_Load__c}&apos; == &apos;&apos; || &apos;{! Supplier_Quote__c.Port_Airport_of_Discharge__c}&apos; == &apos;&apos; || &apos;{! Supplier_Quote__c.Country_of_Discharge__c }&apos; == &apos;&apos; || (&apos;{! Supplier_Quote__c.Vessel_Flight_ETD_Point_of_Load__c}&apos; == &apos;&apos;)) 
+{ 
+var message = &apos;FIELDS MISSING:\n\n\n&apos;; 
+
+if(&apos;{!Supplier_Quote__c.Port_Airport_of_Load__c}&apos; == &apos;&apos;) 
+message += &apos;Port of Load.\n\n&apos;; 
+if(&apos;{!Supplier_Quote__c.Country_of_Load__c}&apos; == &apos;&apos;) 
+message += &apos;Country of Load.\n\n&apos;; 
+if(&apos;{!Supplier_Quote__c.Port_Airport_of_Discharge__c}&apos; == &apos;&apos;) 
+message += &apos;Port of Discharge.\n\n&apos;; 
+if(&apos;{!Supplier_Quote__c.Country_of_Discharge__c}&apos; == &apos;&apos;) 
+message += &apos;Country of Discharge.\n\n&apos;; 
+if(&apos;{!Supplier_Quote__c.Vessel_Flight_ETD_Point_of_Load__c}&apos; == &apos;&apos;) 
+message += &apos;Vessel / Fly ETD from Point of Load.&apos;; 
+
+alert(message); 
+} 
+else 
+{ 
+if(&apos;{!Supplier_Quote__c.Vessel_Flight_ETD_Point_of_Load__c}&apos; != null &amp;&amp; &apos;{!Supplier_Quote__c.Vessel_Flight_ETD_Point_of_Load__c}&apos; != &apos;&apos;) 
+{ 
+fecha = &apos;{!Supplier_Quote__c.Vessel_Flight_ETD_Point_of_Load__c}&apos;; 
+} 
+
+
+var pfecha=new Array(); 
+pfecha = fecha.split(&apos;/&apos;); 
+
+if(&apos;{! Supplier_Quote__c.Carrier_JOC_Sailings_List__c }&apos; != null &amp;&amp; &apos;{! Supplier_Quote__c.Carrier_JOC_Sailings_List__c }&apos; != &quot;&quot;) 
+{ 
+window.open(&quot;http://www.jocsailings.com/GlobalSailingSchedules/SailingScheduleResults.aspx?ORIGIN=&quot;+&apos;{!Supplier_Quote__c.Port_Airport_of_Load__c}&apos;+&quot;%2C+&quot;+&apos;{!Supplier_Quote__c.Country_of_Load__c}&apos;+&quot;&amp;DEST=&quot;+&apos;{!Supplier_Quote__c.Port_Airport_of_Discharge__c}&apos;+&quot;%2C+&quot;+&apos;{!Supplier_Quote__c.Country_of_Discharge__c}&apos;+&quot;&amp;CNAME=&quot;+&apos;{!Supplier_Quote__c.Carrier_JOC_Sailings_List__c}&apos;+&quot;&amp;DR=60&amp;DT=&quot;+pfecha[2]+&quot;%2f&quot;+pfecha[1]+&quot;%2f&quot;+pfecha[0]+&quot;&amp;VT=Container%2c&quot;,&quot;Buscador_Navieras&quot;);
+} 
+else 
+{ 
+window.open(&quot;http://www.jocsailings.com/GlobalSailingSchedules/SailingScheduleResults.aspx?ORIGIN=&quot;+&apos;{!Supplier_Quote__c.Port_Airport_of_Load__c}&apos;+&quot;%2C+&quot;+&apos;{!Supplier_Quote__c.Country_of_Load__c}&apos;+&quot;&amp;DEST=&quot;+&apos;{!Supplier_Quote__c.Port_Airport_of_Discharge__c}&apos;+&quot;%2C+&quot;+&apos;{!Supplier_Quote__c.Country_of_Discharge__c}&apos;+&quot;&amp;DR=60&amp;DT=&quot;+pfecha[2]+&quot;%2f&quot;+pfecha[1]+&quot;%2f&quot;+pfecha[0]+&quot;&amp;VT=Container%2c&quot;,&quot;Buscador_Navieras&quot;); 
+} 
+}</url>
+</WebLink>

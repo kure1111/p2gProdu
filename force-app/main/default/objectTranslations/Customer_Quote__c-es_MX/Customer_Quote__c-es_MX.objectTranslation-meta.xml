@@ -1,0 +1,790 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Import-Export Quote/Order</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Import-Export Quotes/Orders</value>
+    </caseValues>
+    <gender>Neuter</gender>
+    <layouts>
+        <layout>Import-Export Order Layout</layout>
+        <sections>
+            <label><!-- Account Warnings --></label>
+            <section>Account Warnings</section>
+        </sections>
+        <sections>
+            <label><!-- Cargo &amp; Packaging Resume --></label>
+            <section>Cargo &amp; Packaging Resume</section>
+        </sections>
+        <sections>
+            <label><!-- Commercial Info --></label>
+            <section>Commercial Info</section>
+        </sections>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- Fields --></label>
+            <section>Fields</section>
+        </sections>
+        <sections>
+            <label><!-- Financial Data --></label>
+            <section>Financial Data</section>
+        </sections>
+        <sections>
+            <label><!-- Followers Intelligence --></label>
+            <section>Followers Intelligence</section>
+        </sections>
+        <sections>
+            <label><!-- Freight Rates Management --></label>
+            <section>Freight Rates Management</section>
+        </sections>
+        <sections>
+            <label><!-- IMPAK --></label>
+            <section>IMPAK</section>
+        </sections>
+        <sections>
+            <label><!-- Import-Export DC Taxes Resume --></label>
+            <section>Import-Export DC Taxes Resume</section>
+        </sections>
+        <sections>
+            <label><!-- Import-Export Quote Services Resume --></label>
+            <section>Import-Export Quote Services Resume</section>
+        </sections>
+        <sections>
+            <label><!-- Invoicing &amp; Collection Status --></label>
+            <section>Invoicing &amp; Collection Status</section>
+        </sections>
+        <sections>
+            <label><!-- Landing Prices &amp; Profit at Destination --></label>
+            <section>Landing Prices &amp; Profit at Destination</section>
+        </sections>
+        <sections>
+            <label><!-- Last Shipment --></label>
+            <section>Last Shipment</section>
+        </sections>
+        <sections>
+            <label><!-- Long fields --></label>
+            <section>Long fields</section>
+        </sections>
+        <sections>
+            <label><!-- New Section --></label>
+            <section>New Section</section>
+        </sections>
+        <sections>
+            <label><!-- Quote References &amp; Status --></label>
+            <section>Quote References &amp; Status</section>
+        </sections>
+        <sections>
+            <label><!-- Route &amp; Schedule Data --></label>
+            <section>Route &amp; Schedule Data</section>
+        </sections>
+        <sections>
+            <label><!-- Supply Chain Monitoring --></label>
+            <section>Supply Chain Monitoring</section>
+        </sections>
+        <sections>
+            <label><!-- Track &amp; Trace --></label>
+            <section>Track &amp; Trace</section>
+        </sections>
+        <sections>
+            <label><!-- Transport Data --></label>
+            <section>Transport Data</section>
+        </sections>
+        <sections>
+            <label><!-- Units, Prices &amp; Profit at Origin --></label>
+            <section>Units, Prices &amp; Profit at Origin</section>
+        </sections>
+        <sections>
+            <label><!-- Warehouse Data --></label>
+            <section>Warehouse Data</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>Import-Export Order Pak2 FP/FO</layout>
+        <sections>
+            <label><!-- Account Warnings --></label>
+            <section>Account Warnings</section>
+        </sections>
+        <sections>
+            <label><!-- Cargo &amp; Packaging Resume --></label>
+            <section>Cargo &amp; Packaging Resume</section>
+        </sections>
+        <sections>
+            <label><!-- Commercial Info --></label>
+            <section>Commercial Info</section>
+        </sections>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- Followers Administration --></label>
+            <section>Followers Administration</section>
+        </sections>
+        <sections>
+            <label><!-- Freight Rates Management --></label>
+            <section>Freight Rates Management</section>
+        </sections>
+        <sections>
+            <label><!-- IMPAK --></label>
+            <section>IMPAK</section>
+        </sections>
+        <sections>
+            <label><!-- Import-Export Quote Services Resume --></label>
+            <section>Import-Export Quote Services Resume</section>
+        </sections>
+        <sections>
+            <label><!-- Long fields --></label>
+            <section>Long fields</section>
+        </sections>
+        <sections>
+            <label><!-- New Section --></label>
+            <section>New Section</section>
+        </sections>
+        <sections>
+            <label><!-- Quote References &amp; Status --></label>
+            <section>Quote References &amp; Status</section>
+        </sections>
+        <sections>
+            <label><!-- Route &amp; Schedule Data --></label>
+            <section>Route &amp; Schedule Data</section>
+        </sections>
+        <sections>
+            <label><!-- Transport Data --></label>
+            <section>Transport Data</section>
+        </sections>
+        <sections>
+            <label><!-- Units, Prices &amp; Profit at Origin --></label>
+            <section>Units, Prices &amp; Profit at Origin</section>
+        </sections>
+        <sections>
+            <label><!-- Warehouse Data --></label>
+            <section>Warehouse Data</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>Import-Export Order Pak2 ORDER</layout>
+        <sections>
+            <label><!-- Account Warnings --></label>
+            <section>Account Warnings</section>
+        </sections>
+        <sections>
+            <label><!-- Cargo &amp; Packaging Resume --></label>
+            <section>Cargo &amp; Packaging Resume</section>
+        </sections>
+        <sections>
+            <label><!-- Carta Porte --></label>
+            <section>Carta Porte</section>
+        </sections>
+        <sections>
+            <label><!-- Commercial Info --></label>
+            <section>Commercial Info</section>
+        </sections>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- Datos de Mercancias --></label>
+            <section>Datos de Mercancias</section>
+        </sections>
+        <sections>
+            <label><!-- IMPAK --></label>
+            <section>IMPAK</section>
+        </sections>
+        <sections>
+            <label><!-- Import-Export Quote Services Resume --></label>
+            <section>Import-Export Quote Services Resume</section>
+        </sections>
+        <sections>
+            <label><!-- Long fields --></label>
+            <section>Long fields</section>
+        </sections>
+        <sections>
+            <label><!-- Margen Operativo --></label>
+            <section>Margen Operativo</section>
+        </sections>
+        <sections>
+            <label><!-- New Section --></label>
+            <section>New Section</section>
+        </sections>
+        <sections>
+            <label><!-- Quote References &amp; Status --></label>
+            <section>Quote References &amp; Status</section>
+        </sections>
+        <sections>
+            <label><!-- Route &amp; Schedule Data --></label>
+            <section>Route &amp; Schedule Data</section>
+        </sections>
+        <sections>
+            <label><!-- Transport Data --></label>
+            <section>Transport Data</section>
+        </sections>
+        <sections>
+            <label><!-- Ubicaciones --></label>
+            <section>Ubicaciones</section>
+        </sections>
+        <sections>
+            <label><!-- Warehouse Data --></label>
+            <section>Warehouse Data</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>Import-Export Order Pak2 ORDER ADMIN</layout>
+        <sections>
+            <label><!-- Account Warnings --></label>
+            <section>Account Warnings</section>
+        </sections>
+        <sections>
+            <label><!-- Campos No Visibles --></label>
+            <section>Campos No Visibles</section>
+        </sections>
+        <sections>
+            <label><!-- Cargo &amp; Packaging Resume --></label>
+            <section>Cargo &amp; Packaging Resume</section>
+        </sections>
+        <sections>
+            <label><!-- Carta Porte --></label>
+            <section>Carta Porte</section>
+        </sections>
+        <sections>
+            <label><!-- Commercial Info --></label>
+            <section>Commercial Info</section>
+        </sections>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- Datos de Mercancias --></label>
+            <section>Datos de Mercancias</section>
+        </sections>
+        <sections>
+            <label><!-- IMPAK --></label>
+            <section>IMPAK</section>
+        </sections>
+        <sections>
+            <label><!-- Import-Export Quote Services Resume --></label>
+            <section>Import-Export Quote Services Resume</section>
+        </sections>
+        <sections>
+            <label><!-- Long fields --></label>
+            <section>Long fields</section>
+        </sections>
+        <sections>
+            <label><!-- Margen Operativo --></label>
+            <section>Margen Operativo</section>
+        </sections>
+        <sections>
+            <label><!-- New Section --></label>
+            <section>New Section</section>
+        </sections>
+        <sections>
+            <label><!-- Quote References &amp; Status --></label>
+            <section>Quote References &amp; Status</section>
+        </sections>
+        <sections>
+            <label><!-- Route &amp; Schedule Data --></label>
+            <section>Route &amp; Schedule Data</section>
+        </sections>
+        <sections>
+            <label><!-- Transport Data --></label>
+            <section>Transport Data</section>
+        </sections>
+        <sections>
+            <label><!-- Ubicaciones --></label>
+            <section>Ubicaciones</section>
+        </sections>
+        <sections>
+            <label><!-- Warehouse Data --></label>
+            <section>Warehouse Data</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>Import-Export Order Pak2 QUOTE</layout>
+        <sections>
+            <label><!-- Cargo &amp; Packaging Resume --></label>
+            <section>Cargo &amp; Packaging Resume</section>
+        </sections>
+        <sections>
+            <label><!-- Carta Porte --></label>
+            <section>Carta Porte</section>
+        </sections>
+        <sections>
+            <label><!-- Commercial Info --></label>
+            <section>Commercial Info</section>
+        </sections>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- Followers Administration --></label>
+            <section>Followers Administration</section>
+        </sections>
+        <sections>
+            <label><!-- IMPAK --></label>
+            <section>IMPAK</section>
+        </sections>
+        <sections>
+            <label><!-- Import-Export Quote Services Resume --></label>
+            <section>Import-Export Quote Services Resume</section>
+        </sections>
+        <sections>
+            <label><!-- Long fields --></label>
+            <section>Long fields</section>
+        </sections>
+        <sections>
+            <label><!-- New Section --></label>
+            <section>New Section</section>
+        </sections>
+        <sections>
+            <label><!-- PAK Executives --></label>
+            <section>PAK Executives</section>
+        </sections>
+        <sections>
+            <label><!-- Quote References &amp; Status --></label>
+            <section>Quote References &amp; Status</section>
+        </sections>
+        <sections>
+            <label><!-- Route &amp; Schedule Data --></label>
+            <section>Route &amp; Schedule Data</section>
+        </sections>
+        <sections>
+            <label><!-- Transport Data --></label>
+            <section>Transport Data</section>
+        </sections>
+        <sections>
+            <label><!-- Ubicaciones --></label>
+            <section>Ubicaciones</section>
+        </sections>
+        <sections>
+            <label><!-- Units, Prices &amp; Profit at Origin --></label>
+            <section>Units, Prices &amp; Profit at Origin</section>
+        </sections>
+        <sections>
+            <label><!-- Warehouse Data --></label>
+            <section>Warehouse Data</section>
+        </sections>
+    </layouts>
+    <quickActions>
+        <label><!-- Approval --></label>
+        <name>Aprobacion_del_Director</name>
+    </quickActions>
+    <quickActions>
+        <label><!-- Asignar Cuenta --></label>
+        <name>Asignar_Cuenta</name>
+    </quickActions>
+    <quickActions>
+        <label><!-- Asignar Direcciones --></label>
+        <name>Asignar_Direcciones</name>
+    </quickActions>
+    <quickActions>
+        <label><!-- Crear Nuevo Service Line --></label>
+        <name>Crear_Nuevo_Service_Line</name>
+    </quickActions>
+    <quickActions>
+        <label><!-- Create Quote Service Lines (N) --></label>
+        <name>Create_Quote_Service_Lines_N</name>
+    </quickActions>
+    <quickActions>
+        <label><!-- Create Reparto --></label>
+        <name>Create_Reparto</name>
+    </quickActions>
+    <quickActions>
+        <label><!-- Folios vinculados --></label>
+        <name>Folios_vinculados</name>
+    </quickActions>
+    <quickActions>
+        <label><!-- Declined --></label>
+        <name>MotivosDeclinacionFolios</name>
+    </quickActions>
+    <recordTypes>
+        <description><!-- For Import-Export Quotes approved. --></description>
+        <label><!-- Import-Export Order --></label>
+        <name>Import_Export_Order</name>
+    </recordTypes>
+    <recordTypes>
+        <description><!-- For Import-Export Quotes not approved. --></description>
+        <label><!-- Import-Export Quote --></label>
+        <name>Import_Export_Quote</name>
+    </recordTypes>
+    <validationRules>
+        <errorMessage>
+            <!-- MARGEN OPERATIVO ES MENOR A TU LIMITE DE AUTORIZACIÓN PARA FOLIO &quot;AW&quot; 
+*Favor de Contactar a la Gerencia o Dirección de Ventas. -->
+        </errorMessage>
+        <name>AW_Margen_Operativo</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage>
+            <!-- MARGEN OPERATIVO ES MENOR A TU LIMITE DE AUTORIZACIÓN PARA FOLIO &quot;A&quot; 
+*Favor de Contactar a la Gerencia o Dirección de Ventas. -->
+        </errorMessage>
+        <name>A_Margen_Operativo</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Seleccionar Account Destination Address --></errorMessage>
+        <name>Addresses_Destination</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Seleccionar Account Origin Address --></errorMessage>
+        <name>Addresses_Origin</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage>
+            <!-- CP001: Error  CLAVE DE UNIDAD DE PESO 
+(Debes de capturar la clave de unidad de peso) -->
+        </errorMessage>
+        <name>CP001_Clave_de_Unidad_de_Peso</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- ERROR: No puedes cambar el Cliente cuando la cotizacion esta en estatus &quot;Approved as Succesful&quot; y estatus &quot;Shipped&quot; --></errorMessage>
+        <name>CambioCliente</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- CE-001 Para Folios CE se requiere agregar Tipo de Servicio --></errorMessage>
+        <name>Comercio_Exterior_Obligatorio001</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- CE-002 Para Folios CE se requiere agregar Padron Impak --></errorMessage>
+        <name>Comercio_Exterior_Obligatorio002</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- CE-003 Para Folios CE se requiere agregar Sales Incoterm --></errorMessage>
+        <name>Comercio_Exterior_Obligatorio003</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Los campos de origin location y destination location no pueden estar vacíos. --></errorMessage>
+        <name>CoordenadasNoPuedenSer0</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- El campo Customer Reference no puede tener caracteres especiales. Solo incluir números y letras. --></errorMessage>
+        <name>Customer_Reference_Validation</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- ERROR!  You Can´t Modify, Status is Declined --></errorMessage>
+        <name>Declined_bloq_register</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- No puede estar vacío los campos de Destination Location, Longitud y Latitud --></errorMessage>
+        <name>DestinationLocationMustNotBeEmpty</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage>
+            <!-- MARGEN OPERATIVO ES MENOR A TU LIMITE DE AUTORIZACIÓN PARA FOLIO &quot;FI-LTL&quot; 
+*Favor de Contactar a la Gerencia o Dirección de Ventas. -->
+        </errorMessage>
+        <name>FI_LTL_Margen_Operativo</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage>
+            <!-- MARGEN OPERATIVO ES MENOR A TU LIMITE DE AUTORIZACIÓN PARA FOLIO &quot;FI&quot; 
+*Favor de Contactar a la Gerencia o Dirección de Ventas. -->
+        </errorMessage>
+        <name>FI_Margen_Operativo</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- El campo de Account Origin Address, no puede estar vacío. --></errorMessage>
+        <name>FN_Addresses</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage>
+            <!-- MARGEN OPERATIVO ES MENOR A TU LIMITE DE AUTORIZACIÓN PARA &quot;FN&quot; 
+*Favor de Contactar a la Gerencia o Dirección de Ventas -->
+        </errorMessage>
+        <name>FN_Margen_Operativo</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- IMP001 - No es posible editar los campos de &quot;site of load&quot;, &quot;site of discharge&quot;, &quot;Origin Location&quot; o &quot;Destination Location&quot; una vez que el Shipment relacionado esta en Confirmed --></errorMessage>
+        <name>IMP001_Folio_con_SP_en_Confirmed</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- This Service Type is not compatible with the current Service Mode --></errorMessage>
+        <name>Import_Export_Service_Type_Control</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- AO-001 ERROR: Se requiere asignar la cuenta a un usuario con perfil comercial. Esta cuenta pertenece a &quot;Actualización Sistemas 2021&quot; --></errorMessage>
+        <name>Invalid_AccountOwner</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage>
+            <!-- MARGEN OPERATIVO ES MENOR A TU LIMITE DE AUTORIZACION PARA FOLIO &quot;M&quot; 
+*Favor de Contactar a la Gerencia o Dirección de Ventas. -->
+        </errorMessage>
+        <name>M_Margen_Operativo</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- NACC-001: Para aprobar el folio, el campo Acount for (Customer) no debe ser &quot;Cotizador&quot;. --></errorMessage>
+        <name>NoAprobarClienteCotizador</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- FD-001: Para declinar el folio, utilizar el botón &quot;Declined&quot; ubicado en la parte superior. --></errorMessage>
+        <name>NoDeclinarFolio</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- FD-002: No es posible re-abrir el folio una vez ha sido pasado al estatus &quot;Quote Declined&quot;. --></errorMessage>
+        <name>NoReabrirFolio</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- ERROR DF-002: Colocar la fecha esperada por el cliente --></errorMessage>
+        <name>Obligatorio_FECHA_ESPERADA</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- ERROR DF-001: Colocar la tarifa esperada por el cliente --></errorMessage>
+        <name>Obligatorio_TARIFA_ESPERADA</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Freight Mode is required if &quot;Only Warehouse Service&quot; isn&apos;t checked --></errorMessage>
+        <name>Only_Warehouse_Service_Freight_Mode</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Service Mode is required if &quot;Only Warehouse Service&quot; isn&apos;t checked --></errorMessage>
+        <name>Only_Warehouse_Service_Service_Mode</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Service Type is required if &quot;Only Warehouse Service&quot; isn&apos;t checked --></errorMessage>
+        <name>Only_Warehouse_Service_Service_Type</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- El campo Total Services Order Amount debe ser mayor a 0 --></errorMessage>
+        <name>Order_Amount_debe_ser_mayor_a_0</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- No puede estar vacío los campos de Origin Location, Longitud y Latitud --></errorMessage>
+        <name>OriginLocationMustNotBeEmpty</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage>
+            <!-- MARGEN OPERATIVO ES MENOR A TU LIMITE DE AUTORIZACIÓN PARA &quot;PTO&quot; 
+*Favor de Contactar a la Gerencia o Dirección de Ventas -->
+        </errorMessage>
+        <name>PTO_Margen_Operativo</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage>
+            <!-- MARGEN OPERATIVO ES MENOR A TU LIMITE DE AUTORIZACIÓN PARA FOLIO &quot;R&quot; 
+*Favor de Contactar a la Gerencia o Dirección de Ventas. -->
+        </errorMessage>
+        <name>R_Margen_Operativo</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- State is required for this Country --></errorMessage>
+        <name>State_of_Discharge</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- State is required for this Country --></errorMessage>
+        <name>State_of_Load</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Total Services Std. Buy Amount debe ser mayor a 0 --></errorMessage>
+        <name>VALIDATION_BUY_AMOUNT_0</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- [VCNA] Cliente con crédito insuficiente --></errorMessage>
+        <name>Validacion_de_Credito_new_approved</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- [VCA] Cliente con crédito insuficiente --></errorMessage>
+        <name>Validacion_de_Credito_para_approved</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- ERROR: No se puede realizar la siguiente accion: Modify, Duplicate, Delete --></errorMessage>
+        <name>Validate_Approved</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage>
+            <!-- ERROR:
+No se puede Aprobar si es un &quot;Prospecto&quot; -->
+        </errorMessage>
+        <name>Validate_Approved_Customer_no_Prospect</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage>
+            <!-- ERROR: &quot;CUSTOMER&quot; Required Purchase Order
+Please contact Administrative team
+(Para este Cliente se Requiere de Orden de Compra) -->
+        </errorMessage>
+        <name>Validate_Approved_PurchaseOrder</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- ERROR: La Cotizacion no puede ser Aprobada sin elegir al Shipper o Conginee --></errorMessage>
+        <name>Validate_Approved_With_Shipper</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- !!ERROR: Must be Contain &quot;CARGO LINES&quot; --></errorMessage>
+        <name>Validate_Approved_Without_Cargo_Lines</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- ERROR: La Cotizacion no puede ser Aprobada sin elegir al Shipper o Conginee --></errorMessage>
+        <name>Validate_Approved_with_Consignee</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- ERROR: MUST BE DEFINE AWAITING LOAD TIME --></errorMessage>
+        <name>Validate_Awaiting_Load_Time</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- ERROR: MUST BE DEFINE AWAITING UNLOAD TIME --></errorMessage>
+        <name>Validate_Awaiting_Unload_Time</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- !!ERROR: Capturar &quot;CARGO LINES&quot; --></errorMessage>
+        <name>Validate_Awaiting_Without_Cargo_Lines</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- ERROR: Para FI&apos;s y CE debes elegir la Aduana de Cruce (Campo &quot;Border&quot; y &quot;Customs&quot;) --></errorMessage>
+        <name>Validate_Border</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- ERROR: Para FI&apos;s y CE debes elegir la Aduana de Cruce (Campo &quot;Border&quot; y &quot;Customs&quot;) --></errorMessage>
+        <name>Validate_Customs</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- ERROR: Must be specified reassons for declined Quote --></errorMessage>
+        <name>Validate_Declined_with_reasons</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- ERROR: Debe capturar Direcciones de Recoleccion y Entrega --></errorMessage>
+        <name>Validate_FN_with_Destination_Address</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- ERROR: Debe capturar Direcciones de Recoleccion y Entrega --></errorMessage>
+        <name>Validate_FN_with_Origin_Address</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Si requiere Seguro favor de Capturar el Valor de la Mercancia (Merchandise value) --></errorMessage>
+        <name>Validate_Merch_value</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- No tiene permiso para Aprobar este Folio! --></errorMessage>
+        <name>Validate_Quotation_Status</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- ERROR: Mulst be choose PRICING EXECUTIVE --></errorMessage>
+        <name>Validate_Response_with_Pricing_Exec</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- ERROR: Debe especificar el motivo por el cual el Cliente No Requiere Seguro!! --></errorMessage>
+        <name>Validate_Seguro_NO</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- ERROR: No se puede Aprovar sin crear las Service Lines --></errorMessage>
+        <name>Validate_Without_Service_Lines</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- the date must be greater than ETD --></errorMessage>
+        <name>Validation_Date_ETD</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage>
+            <!-- MARGEN OPERATIVO ES MENOR A TU LIMITE DE AUTORIZACIÓN PARA FOLIO &quot;W&quot; 
+*Favor de Contactar a la Gerencia o Dirección de Ventas. -->
+        </errorMessage>
+        <name>W_Margen_Operativo</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- La dirección debe tener el status&apos;Validado&apos; para poder proceder --></errorMessage>
+        <name>ubicacion_validada</name>
+    </validationRules>
+    <webLinks>
+        <label><!-- Associate_Documents --></label>
+        <name>Associate_Documents</name>
+    </webLinks>
+    <webLinks>
+        <label><!-- Automatic_Calculation_of_Duties --></label>
+        <name>Automatic_Calculation_of_Duties</name>
+    </webLinks>
+    <webLinks>
+        <label><!-- Automatic_Calculation_of_Fees --></label>
+        <name>Automatic_Calculation_of_Fees</name>
+    </webLinks>
+    <webLinks>
+        <label><!-- CE001_PDF_Tarifas0 --></label>
+        <name>CE001_PDF_Tarifas0</name>
+    </webLinks>
+    <webLinks>
+        <label><!-- Calculate_Margin_at_Destination --></label>
+        <name>Calculate_Margin_at_Destination</name>
+    </webLinks>
+    <webLinks>
+        <label><!-- Comparison --></label>
+        <name>Comparison</name>
+    </webLinks>
+    <webLinks>
+        <label><!-- Create_Cargo_Lines --></label>
+        <name>Create_Cargo_Lines</name>
+    </webLinks>
+    <webLinks>
+        <label><!-- Create_Quote_Service_Lines --></label>
+        <name>Create_Quote_Service_Lines</name>
+    </webLinks>
+    <webLinks>
+        <label><!-- Create_cargo_line --></label>
+        <name>Create_cargo_line</name>
+    </webLinks>
+    <webLinks>
+        <label><!-- Create_service_line --></label>
+        <name>Create_service_line</name>
+    </webLinks>
+    <webLinks>
+        <label><!-- Customer_Order_Confirmation --></label>
+        <name>Customer_Order_Confirmation</name>
+    </webLinks>
+    <webLinks>
+        <label><!-- Customs_Clearance --></label>
+        <name>Customs_Clearance</name>
+    </webLinks>
+    <webLinks>
+        <label><!-- Duplicate_Import_Export_Quote_Order --></label>
+        <name>Duplicate_Import_Export_Quote_Order</name>
+    </webLinks>
+    <webLinks>
+        <label><!-- Generate_DO_Pdf --></label>
+        <name>Generate_DO_Pdf</name>
+    </webLinks>
+    <webLinks>
+        <label><!-- Generate_Quote --></label>
+        <name>Generate_Quote</name>
+    </webLinks>
+    <webLinks>
+        <label><!-- Generate_Shipment --></label>
+        <name>Generate_Shipment</name>
+    </webLinks>
+    <webLinks>
+        <label><!-- Generate_Shipment_btn --></label>
+        <name>Generate_Shipment_btn</name>
+    </webLinks>
+    <webLinks>
+        <label><!-- Generate_Suppliers_Orders --></label>
+        <name>Generate_Suppliers_Orders</name>
+    </webLinks>
+    <webLinks>
+        <label><!-- New_Associated_Document --></label>
+        <name>New_Associated_Document</name>
+    </webLinks>
+    <webLinks>
+        <label><!-- Search_Schedules --></label>
+        <name>Search_Schedules</name>
+    </webLinks>
+    <webLinks>
+        <label><!-- Send_Email --></label>
+        <name>Send_Email</name>
+    </webLinks>
+    <webLinks>
+        <label><!-- Send_Email_with_Documents --></label>
+        <name>Send_Email_with_Documents</name>
+    </webLinks>
+    <webLinks>
+        <label><!-- Split_Quotation --></label>
+        <name>Split_Quotation</name>
+    </webLinks>
+    <webLinks>
+        <label><!-- View_Route --></label>
+        <name>View_Route</name>
+    </webLinks>
+</CustomObjectTranslation>

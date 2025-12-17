@@ -910,7 +910,7 @@ public with sharing class NEU_Create_Invoice_Service_Item extends NEU_Controller
             if(LinesS==null)
             {
                 LinesS=new List<LineS_s>();
-                List<Shipment_Fee_Line__c> slines=[select Id,Name,Service_Rate_Category__c,Shipment_Sell_Price__c,Sell_Amount__c,Min_Amount__c,Service_Rate_Name__r.Group__c, Service_Rate_Name__r.SAP_Service_Type__c, Service_Rate_Name__r.Name,Rate_Type__c,Units__c,Shipment_Buy_Price__c,Std_Buy_Amount__c,Invoice_Outstanding_Balance__c, Conversion_Rate_to_Currency_Header__c, Shipment__c, Shipment__r.Name, CurrencyIsoCode from Shipment_Fee_Line__c where Import_Export_Quote__c=:record.Import_Export_Quote_Order__c order by Shipment__r.Name asc, Name asc];
+                List<Shipment_Fee_Line__c> slines=[select Id,Name,Service_Rate_Category__c,Shipment_Sell_Price__c,Sell_Amount__c,Min_Amount__c,Service_Rate_Name__r.Group__c, Service_Rate_Name__r.SAP_Service_Type__c, Service_Rate_Name__r.Name,Rate_Type__c,Units__c,Shipment_Buy_Price__c,Std_Buy_Amount__c,Invoice_Outstanding_Balance__c, Conversion_Rate_to_Currency_Header__c, Shipment__c, Shipment__r.Name, CurrencyIsoCode from Shipment_Fee_Line__c where Import_Export_Quote__c=:record.Import_Export_Quote_Order__c AND Campo_Control__c!=true order by Shipment__r.Name asc, Name asc];
                 List<Invoice_Service_Line__c> dlines=[select Id,Name,Amount__c,Invoice__c,Shipment_Service_Line__c,Shipment_Service_Line__r.Sell_Amount__c, Shipment_Service_Line__r.Shipment_Sell_Price__c, CurrencyIsoCode from Invoice_Service_Line__c where Invoice__c=:record.Id];
                 for(Shipment_Fee_Line__c sline:slines) 
                 {

@@ -64,14 +64,6 @@
         <description>Enviar email a departamento de compras</description>
         <protected>false</protected>
         <recipients>
-            <recipient>carlos.martinez@pak2go.com</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>miguel.olivo@pak2go.com</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
             <recipient>omar.rojo@pak2go.com</recipient>
             <type>user</type>
         </recipients>
@@ -136,7 +128,7 @@
             <name>First_Contact_with_Customer</name>
             <type>Task</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <criteriaItems>
             <field>Opportunity.RecordTypeId</field>
             <operation>equals</operation>
@@ -159,7 +151,7 @@
             <name>Asignar_Usuario_IC</name>
             <type>FieldUpdate</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <criteriaItems>
             <field>Opportunity.StageName</field>
             <operation>equals</operation>
@@ -261,7 +253,7 @@
             <name>Enviar_email_a_comercial</name>
             <type>Alert</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <criteriaItems>
             <field>Opportunity.StageName</field>
             <operation>equals</operation>

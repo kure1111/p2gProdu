@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Field History Tracking</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Fields History Tracking</value>
+    </caseValues>
+    <gender>Feminine</gender>
+    <layouts>
+        <layout>Field History Tracking Layout</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- Related Record --></label>
+            <section>Related Record</section>
+        </sections>
+        <sections>
+            <label><!-- Tracking Info --></label>
+            <section>Tracking Info</section>
+        </sections>
+    </layouts>
+</CustomObjectTranslation>

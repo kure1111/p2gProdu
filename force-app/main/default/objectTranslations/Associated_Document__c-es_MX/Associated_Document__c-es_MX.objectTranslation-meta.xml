@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Associated Document</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Associated Documents</value>
+    </caseValues>
+    <gender>Neuter</gender>
+    <layouts>
+        <layout>Associate Document Layout</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- Document Relations --></label>
+            <section>Document Relations</section>
+        </sections>
+        <sections>
+            <label><!-- Followers Administration --></label>
+            <section>Followers Administration</section>
+        </sections>
+    </layouts>
+</CustomObjectTranslation>

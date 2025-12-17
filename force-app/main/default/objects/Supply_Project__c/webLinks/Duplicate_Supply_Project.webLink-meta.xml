@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WebLink xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Duplicate_Supply_Project</fullName>
+    <availability>online</availability>
+    <displayType>button</displayType>
+    <height>600</height>
+    <linkType>page</linkType>
+    <masterLabel>Duplicate Supply Project</masterLabel>
+    <openType>noSidebar</openType>
+    <page>NEU_Clone_Supply_Projects</page>
+    <protected>false</protected>
+</WebLink>

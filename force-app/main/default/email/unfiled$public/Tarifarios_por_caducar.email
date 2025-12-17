@@ -1,0 +1,61 @@
+<table border="0" cellpadding="5" width="600" cellspacing="5" height="400" >
+<tr valign="top" height="50" >
+<td tEditID="c1r1" style=" background-color:#FFFFFF; color:#000000; bEditID:r3st1; bLabel:main; font-size:12pt; font-family:arial;" aEditID="c1r1" locked="0" >
+<![CDATA[<div style="text-align: center;"><font face="Arial, sans-serif" style=""><b style="color: rgb(0, 0, 0); font-size: 13.3333px;">Tarifarios por Expirar&nbsp;&nbsp;</b></font></div>]]></td>
+</tr>
+<tr valign="top" height="300" >
+<td tEditID="c1r2" style=" background-color:#FFFFFF; color:#000000; bEditID:r3st1; bLabel:main; font-size:12pt; font-family:arial;" aEditID="c1r2" locked="0" >
+<![CDATA[<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt; text-align: justify;"></p><p style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt; margin: 0cm;"><span style="font-family:&quot;Calibri&quot;,sans-serif;mso-ascii-theme-font:
+minor-latin;mso-fareast-font-family:+mn-ea;mso-hansi-theme-font:minor-latin;
+mso-bidi-theme-font:minor-latin;color:black;mso-font-kerning:12.0pt">Estimado Equipo
+de <b><i>COMPRAS Y SUMINISTRO</i></b> las tarifas que se mencionan a
+continuación queda con 30 días de vigencia, por favor validar y actualizar
+costos en sistemas.</span><span style="font-family:&quot;Calibri&quot;,sans-serif;
+mso-ascii-theme-font:minor-latin;mso-hansi-theme-font:minor-latin;mso-bidi-theme-font:
+minor-latin"><o:p></o:p></span></p>
+
+<p style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt; margin: 0cm;"><span style="font-family:&quot;Calibri&quot;,sans-serif;mso-ascii-theme-font:
+minor-latin;mso-fareast-font-family:+mn-ea;mso-hansi-theme-font:minor-latin;
+mso-bidi-theme-font:minor-latin;color:black;mso-font-kerning:12.0pt">&nbsp;</span><span style="font-family:&quot;Calibri&quot;,sans-serif;mso-ascii-theme-font:minor-latin;
+mso-hansi-theme-font:minor-latin;mso-bidi-theme-font:minor-latin"><o:p></o:p></span></p>
+
+<p style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt; margin: 0cm;"><span style="font-family:&quot;Calibri&quot;,sans-serif;mso-ascii-theme-font:
+minor-latin;mso-fareast-font-family:+mn-ea;mso-hansi-theme-font:minor-latin;
+mso-bidi-theme-font:minor-latin;color:black;mso-font-kerning:12.0pt">Detalles: </span><span style="font-family:&quot;Calibri&quot;,sans-serif;mso-ascii-theme-font:minor-latin;
+mso-hansi-theme-font:minor-latin;mso-bidi-theme-font:minor-latin"><o:p></o:p></span></p>
+
+<p style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt; margin: 0cm;"><span style="font-family:&quot;Calibri&quot;,sans-serif;mso-ascii-theme-font:
+minor-latin;mso-fareast-font-family:+mn-ea;mso-hansi-theme-font:minor-latin;
+mso-bidi-theme-font:minor-latin;color:black;mso-font-kerning:12.0pt">&nbsp;</span><span style="font-family:&quot;Calibri&quot;,sans-serif;mso-ascii-theme-font:minor-latin;
+mso-hansi-theme-font:minor-latin;mso-bidi-theme-font:minor-latin"><o:p></o:p></span></p>
+
+<p style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt; margin: 0cm;"><b><span lang="EN-US" style="font-family:&quot;Calibri&quot;,sans-serif;
+mso-ascii-theme-font:minor-latin;mso-fareast-font-family:+mn-ea;mso-hansi-theme-font:
+minor-latin;mso-bidi-theme-font:minor-latin;color:black;mso-font-kerning:12.0pt;
+mso-ansi-language:EN-US">Service rate:</span></b><span lang="EN-US" style="font-family:&quot;Calibri&quot;,sans-serif;mso-ascii-theme-font:minor-latin;
+mso-fareast-font-family:+mn-ea;mso-hansi-theme-font:minor-latin;mso-bidi-theme-font:
+minor-latin;color:black;mso-font-kerning:12.0pt;mso-ansi-language:EN-US">&nbsp;&nbsp;{!Fee__c.Name}</span></p>
+
+<p style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt; margin: 0cm;"><b style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt;"><span style="font-family:&quot;Calibri&quot;,sans-serif;
+mso-ascii-theme-font:minor-latin;mso-fareast-font-family:+mn-ea;mso-hansi-theme-font:
+minor-latin;mso-bidi-theme-font:minor-latin;color:black;mso-font-kerning:12.0pt">Proveedor:&nbsp;</span></b><font face="Calibri, sans-serif"><b>{!Fee__c.Carrier_Account__c}</b></font></p>
+
+<p style="margin: 0cm;"><b style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt;"><span style="font-family:&quot;Calibri&quot;,sans-serif;
+mso-ascii-theme-font:minor-latin;mso-fareast-font-family:+mn-ea;mso-hansi-theme-font:
+minor-latin;mso-bidi-theme-font:minor-latin;color:black;mso-font-kerning:12.0pt">Costo:</span></b><span style="color: black; font-family: Calibri, sans-serif; font-size: 12pt;">&nbsp;<o:p></o:p></span><font face="Calibri, sans-serif">{!Fee__c.Buy_Rate__c}</font></p>
+
+<p style="margin: 0cm;"><b style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt;"><span style="font-family:&quot;Calibri&quot;,sans-serif;
+mso-ascii-theme-font:minor-latin;mso-fareast-font-family:+mn-ea;mso-hansi-theme-font:
+minor-latin;mso-bidi-theme-font:minor-latin;color:black;mso-font-kerning:12.0pt">Fecha
+de vencimiento:&nbsp;<o:p></o:p></span></b><font face="Calibri, sans-serif"><b>{!Fee__c.Valid_Until__c}</b></font></p>
+
+<p class="MsoNormal" align="center" style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt; text-align: center; background: white;"><u><span style="font-size:12.0pt;font-family:&quot;Calibri&quot;,sans-serif;mso-ascii-theme-font:
+minor-latin;mso-hansi-theme-font:minor-latin;mso-bidi-theme-font:minor-latin"><o:p><span style="text-decoration:none">&nbsp;</span></o:p></span></u></p>
+
+<p class="MsoNormal" align="center" style="text-align: center; background: white;"><font face="Calibri, sans-serif"><u>{!Fee__c.Link}</u></font></p><br><p style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt;"></p>]]></td>
+</tr>
+<tr valign="top" height="50" >
+<td tEditID="c1r3" style=" background-color:#FFFFFF; color:#000000; bEditID:r3st1; bLabel:main; font-size:12pt; font-family:arial;" aEditID="c1r3" locked="0" >
+<![CDATA[]]></td>
+</tr>
+</table>

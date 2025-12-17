@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GlobalValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customValue>
+        <fullName>Cross Selling</fullName>
+        <default>false</default>
+        <label>Cross Selling</label>
+    </customValue>
+    <description>Contiene los tipos de ventas. Ejemplo: Cross Selling</description>
+    <masterLabel>Sales Type</masterLabel>
+    <sorted>false</sorted>
+</GlobalValueSet>

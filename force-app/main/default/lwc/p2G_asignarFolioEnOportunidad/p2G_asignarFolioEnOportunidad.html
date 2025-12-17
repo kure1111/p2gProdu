@@ -174,6 +174,9 @@
                                     <th class="" scope="col">
                                     <div class="slds-truncate">Se Crea?</div>
                                     </th>
+                                    <th class="" scope="col">
+                                        <div class="slds-truncate">Estado Direccion</div>
+                                    </th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -201,6 +204,9 @@
                                             <div class="slds-truncate">
                                                 <lightning-input type="checkbox" checked={con.seCrea} onchange={clicSeCrea}></lightning-input>
                                             </div>
+                                        </td>
+                                        <td>
+                                            <div class="slds-truncate">{con.existeDireccion}</div>
                                         </td>
                                     </tr>
                                 </template>
@@ -345,6 +351,33 @@
                             </footer>
                         </div>
                     </section>
+                </template>
+                <template if:true={agregarDireccion}>
+                    <section role="dialog" class="slds-modal slds-fade-in-open">
+                        <div class="slds-modal__container">
+                        <div  style="border: 2px solid black;">
+                            <header class="slds-modal__header">
+                                <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close" onclick={cerrarDirecciones}>
+                                    <lightning-icon icon-name="utility:close" alternative-text="close" variant="inverse" size="small" ></lightning-icon>
+                                    <span class="slds-assistive-text">Close</span>
+                                </button>
+                            </header>
+                            <div class="slds-modal__content slds-p-around_medium">
+                                <div class="slds-grid slds-wrap slds-gutters slds-grid_align-center">
+                                    <div class="slds-col slds-size_12-of-12" style="font-size: 20px; text-align: center;">
+                                        <p>Antes de crear la cotización puede agregar las direcciones de Origen y Destino.</p>
+                                        <p>¿Conoces las direcciones de origen y destino?</p><br>
+                                        <lightning-button label="Si" title="Non-primary action" onclick={siConoce} class="slds-m-left_x-small"></lightning-button>
+                                        <lightning-button label="No" title="Non-primary action" onclick={noConoce} class="slds-m-left_x-small"></lightning-button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        </div>
+                    </section>
+                </template>
+                <template if:true={abrirComponenteBusqueda}>
+                  <c-p2-G_-Asignar-Account-Address-Map conoce-direccion={abrirComponenteBusqueda} onresultados={recibirDatos}></c-p2-G_-Asignar-Account-Address-Map>
                 </template>
                 <div  class="slds-grid slds-gutters slds-grid_align-center">
                     <br><br>

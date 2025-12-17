@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>65.0</apiVersion>
+    <description>Migrated from the: Rating modification day workflow rule
+Workflow rule description: &quot;</description>
+    <environments>Default</environments>
+    <formulas>
+        <name>Rating_modification_dayFormula</name>
+        <dataType>DateTime</dataType>
+        <expression>Now()</expression>
+    </formulas>
+    <label>Rating modification day</label>
+    <migratedFromWorkflowRuleName>Rating modification day</migratedFromWorkflowRuleName>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordUpdates>
+        <name>mainUpdate</name>
+        <label>mainUpdate</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <inputAssignments>
+            <field>Date_reating__c</field>
+            <value>
+                <elementReference>Rating_modification_dayFormula</elementReference>
+            </value>
+        </inputAssignments>
+        <inputReference>$Record</inputReference>
+    </recordUpdates>
+    <start>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>mainUpdate</targetReference>
+        </connector>
+        <doesRequireRecordChangedToMeetCriteria>true</doesRequireRecordChangedToMeetCriteria>
+        <filterLogic>(1 OR 2 OR 3 OR 4 OR 5)</filterLogic>
+        <filters>
+            <field>Rating__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Poor</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>Rating__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Average</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>Rating__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Good</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>Rating__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Very Good</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>Rating__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Excellent</stringValue>
+            </value>
+        </filters>
+        <object>Shipment__c</object>
+        <recordTriggerType>CreateAndUpdate</recordTriggerType>
+        <triggerType>RecordAfterSave</triggerType>
+    </start>
+    <status>Obsolete</status>
+</Flow>

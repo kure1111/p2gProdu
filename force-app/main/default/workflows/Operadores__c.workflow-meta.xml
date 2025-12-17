@@ -36,7 +36,7 @@
             <name>Update_fecha_validado</name>
             <type>FieldUpdate</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <criteriaItems>
             <field>Operadores__c.Validado__c</field>
             <operation>equals</operation>
@@ -50,7 +50,7 @@
             <name>Update_Validado_Pak_Control</name>
             <type>FieldUpdate</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <criteriaItems>
             <field>Operadores__c.Validado__c</field>
             <operation>equals</operation>

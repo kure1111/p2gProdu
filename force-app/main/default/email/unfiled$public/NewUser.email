@@ -1,0 +1,6 @@
+Name:{!User.Username}
+Profile:{!User.Profile}
+Team:{!User.Team__c}
+SlpCode:{!User.SalesEmployer__c}
+Region:{!User.Zona_Comercial__c}
+License:{!User.Type_License__c}

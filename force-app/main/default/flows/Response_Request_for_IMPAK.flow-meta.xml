@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionCalls>
+        <name>Response_Request_for_IMPAK</name>
+        <label>Customer_Quote__c.Response_Request_for_IMPAK</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <actionName>Customer_Quote__c.Response_Request_for_IMPAK</actionName>
+        <actionType>emailAlert</actionType>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>SObjectRowId</name>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </inputParameters>
+        <nameSegment>Customer_Quote__c.Response_Request_for_IMPAK</nameSegment>
+    </actionCalls>
+    <apiVersion>65.0</apiVersion>
+    <description>Migrated from the: Response Request for IMPAK workflow rule
+Workflow rule description: &quot;</description>
+    <environments>Default</environments>
+    <label>Response Request for IMPAK</label>
+    <migratedFromWorkflowRuleName>Response Request for IMPAK</migratedFromWorkflowRuleName>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <start>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Response_Request_for_IMPAK</targetReference>
+        </connector>
+        <doesRequireRecordChangedToMeetCriteria>true</doesRequireRecordChangedToMeetCriteria>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Quotation_Status__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Sent awaiting response</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>IMPAK__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Si</stringValue>
+            </value>
+        </filters>
+        <object>Customer_Quote__c</object>
+        <recordTriggerType>CreateAndUpdate</recordTriggerType>
+        <triggerType>RecordAfterSave</triggerType>
+    </start>
+    <status>Active</status>
+</Flow>

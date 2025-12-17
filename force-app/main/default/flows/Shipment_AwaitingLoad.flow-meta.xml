@@ -22,6 +22,7 @@
                 <elementReference>myVariable_current.Id</elementReference>
             </value>
         </inputParameters>
+        <nameSegment>Shipment__c.FN_Shipment_AwaitingLoad</nameSegment>
     </actionCalls>
     <actionCalls>
         <processMetadataValues>
@@ -45,6 +46,7 @@
                 <elementReference>myVariable_current.Id</elementReference>
             </value>
         </inputParameters>
+        <nameSegment>Shipment__c.FN_Shipment_AwaitingUnLoad</nameSegment>
     </actionCalls>
     <actionCalls>
         <processMetadataValues>
@@ -65,6 +67,7 @@
                 <elementReference>myVariable_current.Id</elementReference>
             </value>
         </inputParameters>
+        <nameSegment>Shipment__c.FN_Shipment_MonFinished</nameSegment>
     </actionCalls>
     <apiVersion>49.0</apiVersion>
     <decisions>
@@ -236,7 +239,7 @@ ISPICKVAL({!myVariable_current.Shipment_Status_Mon__c} , &quot;Finished_M&quot;)
     </processMetadataValues>
     <processType>Workflow</processType>
     <startElementReference>myDecision</startElementReference>
-    <status>Active</status>
+    <status>Obsolete</status>
     <variables>
         <name>myVariable_current</name>
         <dataType>SObject</dataType>

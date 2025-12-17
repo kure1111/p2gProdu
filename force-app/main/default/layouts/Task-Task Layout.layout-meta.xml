@@ -45,6 +45,10 @@
                 <behavior>Edit</behavior>
                 <field>Segmentacion__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>TipoMeeting__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
@@ -232,9 +236,6 @@
         </quickActionListItems>
         <quickActionListItems>
             <quickActionName>NewTask</quickActionName>
-        </quickActionListItems>
-        <quickActionListItems>
-            <quickActionName>footprint__NewTask</quickActionName>
         </quickActionListItems>
         <quickActionListItems>
             <quickActionName>Task.EditDescription</quickActionName>

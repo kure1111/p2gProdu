@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionCalls>
+        <name>Send_Request_to_Pricing_T</name>
+        <label>Customer_Quote__c.Send_Request_to_Pricing_T</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <actionName>Customer_Quote__c.Send_Request_to_Pricing_T</actionName>
+        <actionType>emailAlert</actionType>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>SObjectRowId</name>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </inputParameters>
+        <nameSegment>Customer_Quote__c.Send_Request_to_Pricing_T</nameSegment>
+    </actionCalls>
+    <apiVersion>65.0</apiVersion>
+    <description>Migrated from the: Send Request to Pricing T workflow rule
+Workflow rule description: &quot;</description>
+    <environments>Default</environments>
+    <label>Send Request to Pricing T</label>
+    <migratedFromWorkflowRuleName>Send Request to Pricing T</migratedFromWorkflowRuleName>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <start>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Send_Request_to_Pricing_T</targetReference>
+        </connector>
+        <doesRequireRecordChangedToMeetCriteria>true</doesRequireRecordChangedToMeetCriteria>
+        <filterFormula>AND(
+ISPICKVAL({!$Record.Quotation_Status__c},&quot;Awaiting costs suppliers&quot;), 
+ISPICKVAL({!$Record.Freight_Mode__c}, &quot;Road&quot;), 
+{!$Record.RecordType.Name} = &quot;Import-Export Quote&quot;, 
+ISPICKVAL({!$Record.Service_Mode__c}, &quot;NATIONAL&quot;), 
+ISPICKVAL({!$Record.Service_Type__c}, &quot;TARIMAS&quot;)
+)</filterFormula>
+        <object>Customer_Quote__c</object>
+        <recordTriggerType>CreateAndUpdate</recordTriggerType>
+        <triggerType>RecordAfterSave</triggerType>
+    </start>
+    <status>Active</status>
+</Flow>

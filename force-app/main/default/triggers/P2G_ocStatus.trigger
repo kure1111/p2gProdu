@@ -8,4 +8,8 @@ trigger P2G_ocStatus on Response__c (after insert) {
     if(!listMessages.isEmpty()){
         P2g_updateServiceLineOC.inOcStatus(listMessages);    
     }
+    if (Trigger.isAfter && Trigger.isInsert && !Trigger.new.isEmpty()) {
+        Response__c primerRegistro = Trigger.new[0];
+        P2G_EmailServiceError.enviarEmailPorError(primerRegistro);
+    }
 }

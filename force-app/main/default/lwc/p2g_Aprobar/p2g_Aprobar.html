@@ -1,5 +1,5 @@
 <template>
-    <div class="container">
+    <div if:false={approvalMargen} class="container">
         <table class="approval-info-table">
             <tbody>
                 <tr>
@@ -53,6 +53,55 @@
         <div class="button-container">
             <lightning-button variant="destructive" label="Rechazar" onclick={handleApprove} class="approval-button"></lightning-button>
             <lightning-button variant="neutral" label="Aprobar" onclick={handleApprove} style="background-color: green;"></lightning-button>
+        </div>
+    </div>
+    <div if:true={approvalMargen}>
+        
+        <div class="approvalM-modal">
+            <div class="modal-body">
+                <div class="approvalM-details">
+                    <p><strong>Solicitud de Aprobación:</strong><span>{spName}</span></p>
+                    <p><strong>Planner:</strong> {operationExe}</p>
+                    <p><strong>ETD:</strong> {etd}</p>
+                    <p><strong>Total Sell Price:</strong> {totalSell}</p>
+                    <p><strong>Total Buy Price:</strong> {totalBuy}</p>
+                    <p><strong>Margen:</strong> {margen}</p>
+                    <p><strong>Motivo de Aprobación:</strong> Solicitud de confirmación por Margen</p>
+                </div>
+        
+                <div class="approvalM-table slds-scrollable_x">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Carrier</th>
+                                <th>Rate Name</th>
+                                <th>Route</th>
+                                <th>Container Type</th>
+                                <th>Buy Rate</th>
+                                <th>Sell Rate</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <template for:each={data} for:item="item">
+                                <tr key={item.id}>
+                                    <td>{item.ServiceLineName}</td>
+                                    <td>{item.Carrier}</td>
+                                    <td>{item.RateName}</td>
+                                    <td>{item.Route}</td>
+                                    <td>{item.ContainerType}</td>
+                                    <td>{item.BuyAmount}</td>
+                                    <td>{item.sellRate}</td>
+                                </tr>
+                            </template>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <lightning-button variant="destructive" label="Rechazar" onclick={handleApprove} class="approval-button"></lightning-button>
+                <lightning-button variant="neutral" label="Aprobar" onclick={handleApprove} style="background-color: green;"></lightning-button>
+            </div>
         </div>
     </div>
 </template>

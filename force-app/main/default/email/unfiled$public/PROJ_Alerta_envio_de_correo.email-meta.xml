@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>Alerta que se envía a creador de oportunidad para avisarle que proyecto llega a estatus de Envio de Correo</description>
+    <encodingKey>ISO-8859-1</encodingKey>
+    <letterhead>Lettherhead_Notification</letterhead>
+    <name>PROJ_Alerta envio de correo</name>
+    <style>formalLetter</style>
+    <subject>*Estatus en Envio de Correo*</subject>
+    <textOnly>Buen día {!Opportunity.CreatedBy},
+
+Se le informa que el proyecto &quot;{!Opportunity.Name}&quot; ha llegado al estatus de &quot;Envio de correo&quot;. Favor de proceder a enviar la cotizacion final al cliente.</textOnly>
+    <type>html</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

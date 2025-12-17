@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GlobalValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customValue>
+        <fullName>FCL</fullName>
+        <default>false</default>
+        <label>FCL</label>
+    </customValue>
+    <customValue>
+        <fullName>LCL</fullName>
+        <default>false</default>
+        <label>LCL</label>
+    </customValue>
+    <customValue>
+        <fullName>FTL</fullName>
+        <default>false</default>
+        <label>FTL</label>
+    </customValue>
+    <customValue>
+        <fullName>LTL</fullName>
+        <default>false</default>
+        <label>LTL</label>
+    </customValue>
+    <customValue>
+        <fullName>INTERMODAL</fullName>
+        <default>false</default>
+        <label>INTERMODAL</label>
+    </customValue>
+    <customValue>
+        <fullName>SEA FREIGHT</fullName>
+        <default>false</default>
+        <label>SEA FREIGHT</label>
+    </customValue>
+    <customValue>
+        <fullName>ROAD FREIGHT</fullName>
+        <default>false</default>
+        <label>ROAD FREIGHT</label>
+    </customValue>
+    <masterLabel>Service Product</masterLabel>
+    <sorted>false</sorted>
+</GlobalValueSet>

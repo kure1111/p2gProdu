@@ -36,10 +36,6 @@
         <label>Information</label>
         <layoutColumns>
             <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Shipment_Customer_Evaluate__c</field>
-            </layoutItems>
-            <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>URL_Shipment__c</field>
             </layoutItems>
@@ -85,7 +81,11 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>N__c</field>
+                <field>Campo_Control__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Direccion_Alternativa__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns/>
@@ -100,6 +100,14 @@
             <layoutItems>
                 <behavior>Required</behavior>
                 <field>Name</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Shipment_Padre__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Sales_Type__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
@@ -516,10 +524,6 @@
                 <behavior>Edit</behavior>
                 <field>Special_NotesFN__c</field>
             </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Special_Notes_3__c</field>
-            </layoutItems>
         </layoutColumns>
         <style>OneColumn</style>
     </layoutSections>
@@ -695,6 +699,13 @@
         <style>TwoColumnsTopToBottom</style>
     </layoutSections>
     <relatedLists>
+        <fields>CASES.CASE_NUMBER</fields>
+        <fields>CASES.SUBJECT</fields>
+        <fields>CASES.CREATED_DATE</fields>
+        <fields>CASES.PRIORITY</fields>
+        <relatedList>Case.Shipment__c</relatedList>
+    </relatedLists>
+    <relatedLists>
         <relatedList>RelatedNoteList</relatedList>
     </relatedLists>
     <relatedLists>
@@ -740,11 +751,10 @@
         <fields>NAME</fields>
         <fields>Service_Rate_Name__c</fields>
         <fields>Orden_Compra__c</fields>
-        <fields>SST_Estatus_orden_compra__c</fields>
         <fields>Sap_Service_Type__c</fields>
-        <fields>Shipment_Sell_Price__c</fields>
         <fields>Carrier__c</fields>
         <fields>Sap_Service_Type_Buy__c</fields>
+        <fields>Shipment_Sell_Price__c</fields>
         <fields>Shipment_Buy_Price__c</fields>
         <fields>Units__c</fields>
         <relatedList>Shipment_Fee_Line__c.Shipment__c</relatedList>

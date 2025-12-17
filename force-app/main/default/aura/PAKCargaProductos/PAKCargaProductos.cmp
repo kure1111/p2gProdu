@@ -27,7 +27,7 @@
                     
                 
                       <lightning:formattedUrl 
-        value="https://pak2gologistics--uat.my.salesforce.com/sfc/p/0R000000MBcG/a/0R0000000QU7/P.iogtl9F_xg1gCZmXvjWEG_33tSMA7pOpSkBvtQtWA"
+        value="https://pak2gologistics.my.salesforce.com/sfc/p/4T000000DybZ/a/RQ0000069whG/FcsjEGS81gmfySmaZWMgGKo9kBgd_T3uoRv.QS9Alyg"
         label="Descargar template"
         target="_blank" /> 
                 </form>

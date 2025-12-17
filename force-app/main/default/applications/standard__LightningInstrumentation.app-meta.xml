@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomApplication xmlns="http://soap.sforce.com/2006/04/metadata">
+    <formFactors>Large</formFactors>
+    <isNavAutoTempTabsDisabled>false</isNavAutoTempTabsDisabled>
+    <isNavPersonalizationDisabled>false</isNavPersonalizationDisabled>
+    <isNavTabPersistenceDisabled>false</isNavTabPersistenceDisabled>
+    <label>LightningInstrumentation</label>
+    <navType>Standard</navType>
+    <tabs>standard-LightningInstrumentation</tabs>
+    <tabs>Carrier_Line_Load_Point__c</tabs>
+    <tabs>FOLIOS_LIBERADOS</tabs>
+    <tabs>Cuotas__c</tabs>
+    <tabs>Rol_Margen__c</tabs>
+    <tabs>Catalogo_SAT__c</tabs>
+    <tabs>Carta_Porte__c</tabs>
+    <tabs>Direccion_RepartoSp__c</tabs>
+    <tabs>Caja_Remolque__c</tabs>
+    <tabs>Meta_Global__c</tabs>
+    <tabs>Debit_Note__c</tabs>
+    <tabs>Event__c</tabs>
+    <uiType>Lightning</uiType>
+</CustomApplication>

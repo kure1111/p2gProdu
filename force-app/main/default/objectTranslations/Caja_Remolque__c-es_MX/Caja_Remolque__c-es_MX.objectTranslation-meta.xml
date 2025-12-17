@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Caja / Remolque</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Cajas / Remolques</value>
+    </caseValues>
+    <gender>Feminine</gender>
+    <layouts>
+        <layout>Caja / Remolque Layout</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+    </layouts>
+    <validationRules>
+        <errorMessage><!-- CR001 - Solo se pueden poner letras y numeros en el nombre. --></errorMessage>
+        <name>CR001</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- CR002 - Solo se pueden poner letras y numeros en el numero de la placa. --></errorMessage>
+        <name>CR002</name>
+    </validationRules>
+</CustomObjectTranslation>

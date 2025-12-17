@@ -31,7 +31,7 @@ export default class P2G_MonitoreoDisponibilidad extends LightningElement {
         this.obtenerDisponibilidades();
         setInterval(() => {
             this.obtenerDisponibilidades();
-        }, 3000); // 60 segundos
+        }, 300000); // 60 segundos
     }
 
     obtenerDisponibilidades(){

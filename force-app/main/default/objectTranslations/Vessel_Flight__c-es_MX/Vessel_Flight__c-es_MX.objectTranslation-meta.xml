@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Vessel</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Vessels</value>
+    </caseValues>
+    <gender>Neuter</gender>
+    <layouts>
+        <layout>Vessel  Layout</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- Last Position Information --></label>
+            <section>Last Position Information</section>
+        </sections>
+    </layouts>
+    <quickActions>
+        <label><!-- Tracking --></label>
+        <name>Tracking</name>
+    </quickActions>
+    <webLinks>
+        <label><!-- Search_Schedules --></label>
+        <name>Search_Schedules</name>
+    </webLinks>
+    <webLinks>
+        <label><!-- Update_Vessel --></label>
+        <name>Update_Vessel</name>
+    </webLinks>
+</CustomObjectTranslation>

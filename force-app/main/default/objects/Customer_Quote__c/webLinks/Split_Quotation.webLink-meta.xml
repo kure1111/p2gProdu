@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WebLink xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Split_Quotation</fullName>
+    <availability>online</availability>
+    <displayType>button</displayType>
+    <height>600</height>
+    <linkType>page</linkType>
+    <masterLabel>Split Quotation</masterLabel>
+    <openType>sidebar</openType>
+    <page>NEU_Split_Quotation</page>
+    <protected>false</protected>
+</WebLink>

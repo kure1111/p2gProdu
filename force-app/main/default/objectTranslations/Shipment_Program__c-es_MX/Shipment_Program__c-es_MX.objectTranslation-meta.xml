@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Shipments Program</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Shipments Programs</value>
+    </caseValues>
+    <gender>Neuter</gender>
+    <layouts>
+        <layout>Consolidation Program Layout</layout>
+        <sections>
+            <label><!-- Air Freight Data --></label>
+            <section>Air Freight Data</section>
+        </sections>
+        <sections>
+            <label><!-- Container Track &amp; Trace --></label>
+            <section>Container Track &amp; Trace</section>
+        </sections>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- Freight Rates Management --></label>
+            <section>Freight Rates Management</section>
+        </sections>
+        <sections>
+            <label><!-- Rail Freight Data --></label>
+            <section>Rail Freight Data</section>
+        </sections>
+        <sections>
+            <label><!-- Road Freight Data --></label>
+            <section>Road Freight Data</section>
+        </sections>
+        <sections>
+            <label><!-- Road Route --></label>
+            <section>Road Route</section>
+        </sections>
+        <sections>
+            <label><!-- Sea Freight Data --></label>
+            <section>Sea Freight Data</section>
+        </sections>
+        <sections>
+            <label><!-- Shipments Program Services Summary --></label>
+            <section>Shipments Program Services Summary</section>
+        </sections>
+        <sections>
+            <label><!-- Track &amp; Trace --></label>
+            <section>Track &amp; Trace</section>
+        </sections>
+    </layouts>
+    <webLinks>
+        <label><!-- Allocate_Costs_to_Shipments_Service_Lines --></label>
+        <name>Allocate_Costs_to_Shipments_Service_Lines</name>
+    </webLinks>
+    <webLinks>
+        <label><!-- Edit_Shipments_Program --></label>
+        <name>Edit_Shipments_Program</name>
+    </webLinks>
+    <webLinks>
+        <label><!-- Flightradar24_Track_Trace --></label>
+        <name>Flightradar24_Track_Trace</name>
+    </webLinks>
+    <webLinks>
+        <label><!-- Generate_All_Deliveries_Notes --></label>
+        <name>Generate_All_Deliveries_Notes</name>
+    </webLinks>
+    <webLinks>
+        <label><!-- Road_Route_Planning --></label>
+        <name>Road_Route_Planning</name>
+    </webLinks>
+    <webLinks>
+        <label><!-- Send_Email_with_the_Public_Tracking --></label>
+        <name>Send_Email_with_the_Public_Tracking</name>
+    </webLinks>
+    <webLinks>
+        <label><!-- Send_FSR --></label>
+        <name>Send_FSR</name>
+    </webLinks>
+    <webLinks>
+        <label><!-- Upload_Documents --></label>
+        <name>Upload_Documents</name>
+    </webLinks>
+    <webLinks>
+        <label><!-- Upload_Photos --></label>
+        <name>Upload_Photos</name>
+    </webLinks>
+</CustomObjectTranslation>

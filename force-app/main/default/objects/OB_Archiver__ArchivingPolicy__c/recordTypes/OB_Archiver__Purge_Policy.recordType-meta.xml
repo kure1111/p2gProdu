@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RecordType xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>OB_Archiver__Purge_Policy</fullName>
+    <active>true</active>
+    <description>Create a policy to remove objects from your archive database. You can ensure compliance with data removal, bypass the original expiration date determined when the data was archived, and permanently delete the data.</description>
+    <label>Purge Policy</label>
+</RecordType>

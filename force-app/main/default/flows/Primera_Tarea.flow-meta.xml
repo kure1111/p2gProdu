@@ -32,6 +32,7 @@
                 <elementReference>$Record.OwnerId</elementReference>
             </value>
         </inputParameters>
+        <nameSegment>NewTask</nameSegment>
     </actionCalls>
     <apiVersion>64.0</apiVersion>
     <environments>Default</environments>

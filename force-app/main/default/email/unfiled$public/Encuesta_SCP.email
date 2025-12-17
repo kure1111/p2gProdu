@@ -1,0 +1,30 @@
+<table border="0" cellpadding="5" width="600" cellspacing="5" height="400" >
+<tr valign="top" height="50" >
+<td tEditID="c1r1" style=" background-color:#FFFFFF; color:#000000; bEditID:r3st1; bLabel:main; font-size:12pt; font-family:arial;" aEditID="c1r1" locked="0" >
+<![CDATA[Estimado&nbsp;{!Account.Name},]]></td>
+</tr>
+<tr valign="top" height="300" >
+<td tEditID="c1r2" style=" background-color:#FFFFFF; color:#000000; bEditID:r3st1; bLabel:main; font-size:12pt; font-family:arial;" aEditID="c1r2" locked="0" >
+<![CDATA[<font face="arial"><span style="font-size: 12pt;">En Pak2Go estamos
+comprometidos&nbsp;en generar confianza y una excelente relación laboral
+con&nbsp;nuestros&nbsp;socios logísticos, nuestros proveedores. Por lo que su
+opinión es muy importante para nosotros.&nbsp;
+
+</span></font><p class="paragraph" style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt; margin: 0cm 0cm 0cm 36pt; vertical-align: baseline; user-select: text; -webkit-user-drag: none; -webkit-tap-highlight-color: transparent; overflow-wrap: break-word; font-kerning: none;" align="left"><span data-contrast="auto" style="user-select: text;-webkit-user-drag: none;-webkit-tap-highlight-color: transparent;
+font-variant-ligatures: none !important"><span style="user-select: text;
+-webkit-user-drag: none;-webkit-tap-highlight-color: transparent">&nbsp;&nbsp;</span></span></p><div style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt;"><span data-contrast="auto" style="user-select: text;-webkit-user-drag: none;-webkit-tap-highlight-color: transparent;
+font-variant-ligatures: none !important"><span style="user-select: text;
+-webkit-user-drag: none;-webkit-tap-highlight-color: transparent">Lo invitamos
+a contestar esta breve encuesta para seguir mejorando nuestros servicios. <br></span></span></div><div style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt;"><span data-contrast="auto" style="user-select: text;-webkit-user-drag: none;-webkit-tap-highlight-color: transparent;
+font-variant-ligatures: none !important"><span style="user-select: text;
+-webkit-user-drag: none;-webkit-tap-highlight-color: transparent"><br></span></span></div>
+
+<p class="paragraph" style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt; margin: 0cm 0cm 0cm 36pt; vertical-align: baseline; user-select: text; -webkit-user-drag: none; -webkit-tap-highlight-color: transparent; overflow-wrap: break-word; font-kerning: none;" align="left"><span data-contrast="auto" style="user-select: text;-webkit-user-drag: none;-webkit-tap-highlight-color: transparent;
+font-variant-ligatures: none !important"><span style="user-select: text;
+-webkit-user-drag: none;-webkit-tap-highlight-color: transparent">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ¡Muchas gracias!</span></span></p><div style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt;"><br></div><div style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt;"><a href="https://pak2golive.secure.force.com/encuesta/TakeSurvey?id=a3B4T000000XltKUAS&amp;accId={!Account.Id}&amp;caId=none">Liga a encuesta</a></div><div style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt;"><br></div>]]></td>
+</tr>
+<tr valign="top" height="50" >
+<td tEditID="c1r3" style=" background-color:#FFFFFF; color:#000000; bEditID:r3st1; bLabel:main; font-size:12pt; font-family:arial;" aEditID="c1r3" locked="0" >
+<![CDATA[]]></td>
+</tr>
+</table>

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WebLink xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Upload_Source_DB</fullName>
+    <availability>online</availability>
+    <displayType>button</displayType>
+    <height>600</height>
+    <linkType>page</linkType>
+    <masterLabel>Upload Source DB</masterLabel>
+    <openType>sidebar</openType>
+    <page>NEU_Upload_Source_DB</page>
+    <protected>false</protected>
+</WebLink>

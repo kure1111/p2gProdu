@@ -115,21 +115,15 @@
     </alerts>
     <alerts>
         <fullName>Estatus_cerrado_cambia</fullName>
-        <ccEmails>Msalinas@pak2go.com</ccEmails>
-        <ccEmails>ayesa.garcia@pak2go.com</ccEmails>
         <ccEmails>nallely.villarreal@pak2go.com</ccEmails>
         <description>Estatus cerrado cambia</description>
         <protected>false</protected>
         <recipients>
-            <recipient>brandom.gonzalez@pak2go.com</recipient>
+            <recipient>alberto.garcia2@pak2go.com</recipient>
             <type>user</type>
         </recipients>
         <recipients>
-            <recipient>carlos.martinez@pak2go.com</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>nayeli.martinez@pak2go.com</recipient>
+            <recipient>cesar.rodriguez@2gologistics.com</recipient>
             <type>user</type>
         </recipients>
         <senderType>CurrentUser</senderType>
@@ -442,15 +436,22 @@
     </alerts>
     <alerts>
         <fullName>Servicio_Confirmado_del_Shipment</fullName>
-        <ccEmails>Lorena.quiroga@pak2go.com</ccEmails>
-        <ccEmails>Omar.arreaga@pak2go.com</ccEmails>
-        <ccEmails>nayely.martinez@pak2go.com</ccEmails>
-        <ccEmails>luis.leos@pak2go.com</ccEmails>
-        <ccEmails>nayleth.gonzalez@pak2go.com</ccEmails>
         <description>Servicio Confirmado del Shipment</description>
         <protected>false</protected>
         <recipients>
             <recipient>admin2020@force.com</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>efrain.ramos@pak2go.com</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>ivan.martinez@2gologistics.com</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>ivan.vega@2gologistics.com</recipient>
             <type>user</type>
         </recipients>
         <senderType>CurrentUser</senderType>
@@ -981,16 +982,6 @@
         <reevaluateOnChange>false</reevaluateOnChange>
     </fieldUpdates>
     <fieldUpdates>
-        <fullName>Update_URL_Evaluacion_CLiente</fullName>
-        <field>Shipment_Customer_Evaluate__c</field>
-        <formula>&quot;http://pak2golive.force.com/pakservicesurvey/?shipid=&quot;&amp; URL_Shipment__c</formula>
-        <name>Update URL Evaluacion CLiente</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>Formula</operation>
-        <protected>false</protected>
-        <reevaluateOnChange>false</reevaluateOnChange>
-    </fieldUpdates>
-    <fieldUpdates>
         <fullName>Verify_Clean_Field</fullName>
         <field>VERIFY_ACUSE_SAP__c</field>
         <literalValue>0</literalValue>
@@ -1016,7 +1007,7 @@
             <name>UpdateCheckSPCerrado</name>
             <type>FieldUpdate</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <criteriaItems>
             <field>Shipment__c.Freight_Mode__c</field>
             <operation>equals</operation>
@@ -1035,7 +1026,7 @@
             <name>Actualizar_fecha_acuse_recibido</name>
             <type>FieldUpdate</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <formula>AND( ISNULL( Fecha_de_Acuse_Recibido__c ) ,  VERIFY_ACUSE_SAP__c =true)</formula>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
@@ -1045,7 +1036,7 @@
             <name>Air_Shipment_Confirmation</name>
             <type>Alert</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <criteriaItems>
             <field>Shipment__c.Air_Shipment_Status__c</field>
             <operation>equals</operation>
@@ -1068,7 +1059,7 @@
             <name>Carrier_Email</name>
             <type>FieldUpdate</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <formula>1=1</formula>
         <triggerType>onAllChanges</triggerType>
     </rules>
@@ -1078,7 +1069,7 @@
             <name>Estatus_cerrado_cambia</name>
             <type>Alert</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <formula>ISCHANGED( Estatus_Cerrado__c ) &amp;&amp; Estatus_Cerrado__c = False</formula>
         <triggerType>onAllChanges</triggerType>
     </rules>
@@ -1107,7 +1098,7 @@
             <name>Servicio_Confirmado_del_Shipment2</name>
             <type>Alert</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <criteriaItems>
             <field>Shipment__c.Shipment_Status_Plann__c</field>
             <operation>equals</operation>
@@ -1121,7 +1112,7 @@
             <name>Servicio_Confirmado_del_Shipment</name>
             <type>Alert</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <criteriaItems>
             <field>Shipment__c.Shipment_Status_Plann__c</field>
             <operation>equals</operation>
@@ -1135,7 +1126,7 @@
             <name>Date_Autorizado_FP_FO</name>
             <type>FieldUpdate</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <criteriaItems>
             <field>Shipment__c.AUTORIZADO_FP_FO__c</field>
             <operation>equals</operation>
@@ -1171,7 +1162,7 @@
             <name>Date_Verify_PakControl</name>
             <type>FieldUpdate</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <criteriaItems>
             <field>Shipment__c.VERIFY_PAK_CONTROL__c</field>
             <operation>equals</operation>
@@ -1189,7 +1180,7 @@
             <name>Date_time_status_monitoreo</name>
             <type>FieldUpdate</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <criteriaItems>
             <field>Shipment__c.Shipment_Status_Mon__c</field>
             <operation>equals</operation>
@@ -1204,7 +1195,7 @@
             <name>Devoluciones</name>
             <type>Alert</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <criteriaItems>
             <field>Shipment__c.Devolucion__c</field>
             <operation>equals</operation>
@@ -1218,7 +1209,7 @@
             <name>Email_de_status_finalizado</name>
             <type>Alert</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <booleanFilter>1 OR 2 OR 3 OR  4 OR 5</booleanFilter>
         <criteriaItems>
             <field>Shipment__c.Estatus_de_Finalizado__c</field>
@@ -1253,7 +1244,7 @@
             <name>ETD_Impo_Modified_By</name>
             <type>FieldUpdate</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <criteriaItems>
             <field>Shipment__c.Ocean_Shipment_Status__c</field>
             <operation>equals</operation>
@@ -1267,7 +1258,7 @@
             <name>Cerrar_estatus</name>
             <type>FieldUpdate</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <booleanFilter>1 OR 2 OR 3 OR 4</booleanFilter>
         <criteriaItems>
             <field>Shipment__c.Air_Shipment_Status__c</field>
@@ -1297,7 +1288,7 @@
             <name>UpdateCheckSPCerrado</name>
             <type>FieldUpdate</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <criteriaItems>
             <field>Shipment__c.ShipmentService__c</field>
             <operation>contains</operation>
@@ -1320,7 +1311,7 @@
             <name>Date_Confirmed</name>
             <type>FieldUpdate</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <criteriaItems>
             <field>Shipment__c.Shipment_Status_Plann__c</field>
             <operation>equals</operation>
@@ -1343,7 +1334,7 @@
             <name>UpdateCheckSPCerrado</name>
             <type>FieldUpdate</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <criteriaItems>
             <field>Shipment__c.ShipmentService__c</field>
             <operation>equals</operation>
@@ -1362,7 +1353,7 @@
             <name>FN_Shipment_InProgress</name>
             <type>Alert</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <criteriaItems>
             <field>Shipment__c.Shipment_Status_Plann__c</field>
             <operation>equals</operation>
@@ -1376,7 +1367,7 @@
             <name>FN_Shipment_Pending</name>
             <type>Alert</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <criteriaItems>
             <field>Shipment__c.Shipment_Status_Plann__c</field>
             <operation>equals</operation>
@@ -1416,7 +1407,7 @@
             <name>Shipment_Verify_Pak_Control</name>
             <type>Alert</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <criteriaItems>
             <field>Shipment__c.VERIFY_PAK_CONTROL__c</field>
             <operation>equals</operation>
@@ -1444,7 +1435,7 @@
             <name>Last_Modified_ETD_Expo_date</name>
             <type>FieldUpdate</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <criteriaItems>
             <field>Shipment__c.Shipment_Status__c</field>
             <operation>equals</operation>
@@ -1458,7 +1449,7 @@
             <name>Last_Modified_ETD_Impo_date</name>
             <type>FieldUpdate</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <criteriaItems>
             <field>Shipment__c.Ocean_Shipment_Status__c</field>
             <operation>equals</operation>
@@ -1472,7 +1463,7 @@
             <name>UpdateCheckSPCerrado</name>
             <type>FieldUpdate</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <booleanFilter>(1 AND 2) OR 3</booleanFilter>
         <criteriaItems>
             <field>Shipment__c.ShipmentService__c</field>
@@ -1497,7 +1488,7 @@
             <name>Modification_Status_Flight_confirmation</name>
             <type>FieldUpdate</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <criteriaItems>
             <field>Shipment__c.Air_Shipment_Status__c</field>
             <operation>equals</operation>
@@ -1511,7 +1502,7 @@
             <name>Notificacion_Comercial_de_ETA_ATA_ETD</name>
             <type>Alert</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <criteriaItems>
             <field>Shipment__c.ATA_ETA_notification__c</field>
             <operation>equals</operation>
@@ -1525,7 +1516,7 @@
             <name>Autoriza_Gasto_Extra</name>
             <type>Alert</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <criteriaItems>
             <field>Shipment__c.NotificarGastoExtra__c</field>
             <operation>equals</operation>
@@ -1539,7 +1530,7 @@
             <name>ORDEN_DE_VENTA_PILOTO</name>
             <type>Alert</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <formula>AND(      Account_for__r.Owner.Workplace__c = &quot;GDL&quot;,      OrdenVenta__c  &lt;&gt; &quot;&quot;,      Acc_venta__c  = &quot;Credito&quot;      )</formula>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
@@ -1549,7 +1540,7 @@
             <name>UpdateCheckSPCerrado</name>
             <type>FieldUpdate</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <criteriaItems>
             <field>Shipment__c.ShipmentService__c</field>
             <operation>contains</operation>
@@ -1568,7 +1559,7 @@
             <name>Date_Confirmed_PTO</name>
             <type>FieldUpdate</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <criteriaItems>
             <field>Shipment__c.Shipment_Status_Plann__c</field>
             <operation>equals</operation>
@@ -1586,7 +1577,7 @@
             <name>UpdateCheckSPCerrado</name>
             <type>FieldUpdate</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <criteriaItems>
             <field>Shipment__c.ShipmentService__c</field>
             <operation>contains</operation>
@@ -1610,7 +1601,7 @@
             <name>Update_Rating</name>
             <type>FieldUpdate</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <criteriaItems>
             <field>Shipment__c.Rating__c</field>
             <operation>notEqual</operation>
@@ -1623,7 +1614,7 @@
             <name>Rating_modification_day</name>
             <type>FieldUpdate</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <criteriaItems>
             <field>Shipment__c.Rating__c</field>
             <operation>equals</operation>
@@ -1637,7 +1628,7 @@
             <name>Sea_Shipment_Confirmation</name>
             <type>Alert</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <booleanFilter>1 OR (2)</booleanFilter>
         <criteriaItems>
             <field>Shipment__c.Shipment_Status__c</field>
@@ -1657,7 +1648,7 @@
             <name>Servicio_con_Acuse</name>
             <type>Alert</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <criteriaItems>
             <field>Shipment__c.VERIFY_ACUSE_SAP__c</field>
             <operation>equals</operation>
@@ -1675,7 +1666,7 @@
             <name>Shipment_Delivery_ES01</name>
             <type>Alert</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <criteriaItems>
             <field>Shipment__c.Shipment_Status__c</field>
             <operation>equals</operation>
@@ -1705,7 +1696,7 @@
             <name>Shipment_Delivery_T</name>
             <type>Alert</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <criteriaItems>
             <field>Shipment__c.Shipment_Status__c</field>
             <operation>equals</operation>
@@ -1724,7 +1715,7 @@
             <name>Date_status_cosed</name>
             <type>FieldUpdate</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <booleanFilter>1 OR 2 OR 3 OR 4</booleanFilter>
         <criteriaItems>
             <field>Shipment__c.Shipment_Status_Plann__c</field>
@@ -1754,17 +1745,13 @@
             <name>Total_Sell_Amount_Change</name>
             <type>Alert</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <formula>AND(  OR(  ISNEW(),  ISCHANGED( Total_Services_Sell_Amount__c  ),ISCHANGED(  Total_Services_Std_Buy_Amount__c ) ),  NOT(ISBLANK(TEXT(Total_Services_Sell_Amount__c )))  )</formula>
         <triggerType>onAllChanges</triggerType>
     </rules>
     <rules>
         <fullName>Update URL Evaluacion CLiente</fullName>
-        <actions>
-            <name>Update_URL_Evaluacion_CLiente</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <active>true</active>
+        <active>false</active>
         <formula>1=1</formula>
         <triggerType>onAllChanges</triggerType>
     </rules>
@@ -1778,7 +1765,7 @@
             <name>Update_Email_Cobranza2</name>
             <type>FieldUpdate</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <formula>1=1</formula>
         <triggerType>onAllChanges</triggerType>
     </rules>
@@ -1788,7 +1775,7 @@
             <name>Activar_VerificacionPak</name>
             <type>FieldUpdate</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <description>Detecta cuando se actualiza el check VERIFY PAK CONTROL al valor de True</description>
         <formula>AND(
  ISCHANGED( VERIFY_PAK_CONTROL__c ),
@@ -1798,7 +1785,7 @@
     </rules>
     <rules>
         <fullName>WH Shipment Confirm</fullName>
-        <active>true</active>
+        <active>false</active>
         <criteriaItems>
             <field>Shipment__c.Shipment_Status_Plann__c</field>
             <operation>equals</operation>

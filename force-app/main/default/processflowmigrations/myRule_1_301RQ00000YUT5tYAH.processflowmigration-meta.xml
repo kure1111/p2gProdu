@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ProcessFlowMigration xmlns="http://soap.sforce.com/2006/04/metadata">
+    <destinationFlowDefinition>Cambio_Account_Prospect_Name_1</destinationFlowDefinition>
+    <destinationFlowVersion>Cambio_Account_Prospect_Name_1-1</destinationFlowVersion>
+    <developerName>myRule_1_301RQ00000YUT5tYAH</developerName>
+    <masterLabel>Cambio Account Prospect Name_1</masterLabel>
+    <migratedCriteriaLabel>Validación Record Type</migratedCriteriaLabel>
+    <migratedCriteriaName>myRule_1</migratedCriteriaName>
+    <processVersion>Cambio_Account_Prospect_Name-3</processVersion>
+</ProcessFlowMigration>

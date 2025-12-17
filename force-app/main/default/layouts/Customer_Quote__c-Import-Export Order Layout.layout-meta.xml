@@ -8,7 +8,7 @@
     <customButtons>Generate_Suppliers_Orders</customButtons>
     <customButtons>Comparison</customButtons>
     <customButtons>Duplicate_Import_Export_Quote_Order</customButtons>
-    <excludeButtons>Clone</excludeButtons>
+    <excludeButtons>OpenSlackRecordChannel</excludeButtons>
     <excludeButtons>Submit</excludeButtons>
     <layoutSections>
         <customLabel>false</customLabel>
@@ -152,6 +152,10 @@
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>ETD_Time__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Sales_Type__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
@@ -342,6 +346,10 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Observations__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Observations_Long__c</field>
             </layoutItems>
         </layoutColumns>
         <style>OneColumn</style>
@@ -1057,6 +1065,11 @@
             <actionName>Split_Quotation</actionName>
             <actionType>CustomButton</actionType>
             <sortOrder>23</sortOrder>
+        </platformActionListItems>
+        <platformActionListItems>
+            <actionName>Clone</actionName>
+            <actionType>StandardButton</actionType>
+            <sortOrder>24</sortOrder>
         </platformActionListItems>
     </platformActionList>
     <quickActionList>

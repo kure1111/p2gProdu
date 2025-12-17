@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Import-Export Cargo Line</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Import-Export Cargo Lines</value>
+    </caseValues>
+    <gender>Neuter</gender>
+    <layouts>
+        <layout>Import-Export Cargo Line Depurado</layout>
+        <sections>
+            <label><!-- Carta Porte --></label>
+            <section>Carta Porte</section>
+        </sections>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- Delivery Info --></label>
+            <section>Delivery Info</section>
+        </sections>
+        <sections>
+            <label><!-- Item &amp; Price References --></label>
+            <section>Item &amp; Price References</section>
+        </sections>
+        <sections>
+            <label><!-- Line References &amp; Status --></label>
+            <section>Line References &amp; Status</section>
+        </sections>
+        <sections>
+            <label><!-- Long DC Output Fields --></label>
+            <section>Long DC Output Fields</section>
+        </sections>
+        <sections>
+            <label><!-- Units &amp; Weight --></label>
+            <section>Units &amp; Weight</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>Import-Export Cargo Line Layout</layout>
+        <sections>
+            <label><!-- Allocation on Disbursements and Invoices --></label>
+            <section>Allocation on Disbursements and Invoices</section>
+        </sections>
+        <sections>
+            <label><!-- Buy info and other Line Expenses --></label>
+            <section>Buy info and other Line Expenses</section>
+        </sections>
+        <sections>
+            <label><!-- Carta Porte --></label>
+            <section>Carta Porte</section>
+        </sections>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- DC Output --></label>
+            <section>DC Output</section>
+        </sections>
+        <sections>
+            <label><!-- Delivery Info --></label>
+            <section>Delivery Info</section>
+        </sections>
+        <sections>
+            <label><!-- Item &amp; Price References --></label>
+            <section>Item &amp; Price References</section>
+        </sections>
+        <sections>
+            <label><!-- Line References &amp; Status --></label>
+            <section>Line References &amp; Status</section>
+        </sections>
+        <sections>
+            <label><!-- Long DC Output Fields --></label>
+            <section>Long DC Output Fields</section>
+        </sections>
+        <sections>
+            <label><!-- Price &amp; Margin at Destination --></label>
+            <section>Price &amp; Margin at Destination</section>
+        </sections>
+        <sections>
+            <label><!-- Prices &amp; Margin at Origin --></label>
+            <section>Prices &amp; Margin at Origin</section>
+        </sections>
+        <sections>
+            <label><!-- Supplier Packaging &amp; Production Data (If previous process = Supplier Quote) --></label>
+            <section>Supplier Packaging &amp; Production Data (If previous process = Supplier Quote)</section>
+        </sections>
+        <sections>
+            <label><!-- Units &amp; Weight --></label>
+            <section>Units &amp; Weight</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>Import-Export Cargo Line Layout Community</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- Item &amp; Price References --></label>
+            <section>Item &amp; Price References</section>
+        </sections>
+        <sections>
+            <label><!-- Line References &amp; Status --></label>
+            <section>Line References &amp; Status</section>
+        </sections>
+        <sections>
+            <label><!-- Long DC Output Fields --></label>
+            <section>Long DC Output Fields</section>
+        </sections>
+        <sections>
+            <label><!-- Units &amp; Weight --></label>
+            <section>Units &amp; Weight</section>
+        </sections>
+    </layouts>
+    <validationRules>
+        <errorMessage><!-- ERROR CP-001, El producto o servicio requiere un material peligroso y embalaje --></errorMessage>
+        <name>CP001MaterialPeligroso</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- ERROR CP002 : Favor de agregar Pedimento y Fracción Arancelaria --></errorMessage>
+        <name>CP002_Pedimento_y_Fraccion_Arancelaria</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- There is already a Margin at Origin --></errorMessage>
+        <name>Margin_at_Origin_or_Destination</name>
+    </validationRules>
+    <webLinks>
+        <label><!-- Create_cargo_line --></label>
+        <name>Create_cargo_line</name>
+    </webLinks>
+</CustomObjectTranslation>

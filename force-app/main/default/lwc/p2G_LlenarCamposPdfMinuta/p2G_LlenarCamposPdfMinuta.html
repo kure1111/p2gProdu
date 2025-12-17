@@ -1,0 +1,123 @@
+<template>
+    <lightning-card  title="Crear PDF Minuta">
+        <template if:true={infoEvento}>
+            <div class="slds-p-horizontal_small">
+                <br><h2><b>Información General</b></h2><br>
+                <div class="slds-grid slds-gutters">
+                    <div class="slds-col slds-size_6-of-12">
+                        <lightning-input label="Fecha y Hora de Inicio:" value={infoEvento.StartDateTime} type="datetime" disabled></lightning-input>
+                    </div>
+                    <div class="slds-col slds-size_6-of-12">
+                        <lightning-input label="Fecha y Hora de Fin:" value={infoEvento.EndDateTime} type="datetime" disabled></lightning-input>
+                    </div>
+                </div>
+                <div class="slds-grid slds-gutters">
+                    <div class="slds-col slds-size_6-of-12">
+                        <lightning-input label="Motivo:" value={infoEvento.Motivo_Minuta__c} type="text" disabled></lightning-input>
+                    </div>
+                    <div class="slds-col slds-size_6-of-12">
+                        <div onkeyup={searchKeyContacto}>
+                          <lightning-input label="Contacto:" value={contactoName} type="search"></lightning-input>
+                        </div>
+                        <table if:true={showSideContacto}
+                          class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_striped">
+                          <thead>
+                            <tr class="slds-line-height_reset">
+                              <th class="" scope="col">
+                                <div class="slds-truncate">Nombre</div>
+                              </th>
+                              <th class="" scope="col">
+                                <div class="slds-truncate">Cuenta</div>
+                              </th>
+                              <th class="" scope="col">
+                                <div class="slds-truncate">Record Type</div>
+                              </th>
+                              <th class="" scope="col">
+                                <div class="slds-truncate">CustumerId</div>
+                              </th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <template for:each={sideRecordsContacto} for:item="con">
+                              <tr class="slds-hint-parent" data-id={con.Id} key={con.Id} data-name={con.Name} onclick={SideSelectContacto}>
+                                <td>
+                                  <div class="slds-truncate">{con.Name}</div>
+                                </td>
+                                <td>
+                                    <template if:true={con.Account}>
+                                        <div class="slds-truncate">{con.Account.Name}</div>
+                                    </template>
+                                </td>
+                                <td>
+                                    <template if:true={con.Account}>
+                                        <div class="slds-truncate">{con.Account.Record_Type_Name__c}</div>
+                                    </template>
+                                </td>
+                                <td>
+                                    <template if:true={con.Account}>
+                                        <div class="slds-truncate">{con.Account.Customer_Id__c}</div>
+                                    </template>
+                                </td>
+                              </tr>
+                            </template>
+                          </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="slds-grid slds-gutters">
+                    <div class="slds-col slds-size_6-of-12">
+                        <lightning-input label="Lugar:" placeholder="lugar de la reunión" 
+                                    onchange={agregarLugar}  value={infoEvento.Location} type="text"></lightning-input>
+                    </div>
+                    <div class="slds-col slds-size_6-of-12">
+                        <lightning-input label="Moderador:" value={infoEvento.Owner.Name} type="text" disabled></lightning-input>
+                    </div>
+                </div>
+                <div class="slds-grid slds-gutters">
+                    <div class="slds-col slds-size_6-of-12">
+                        <lightning-input label="Titulo:" value={infoEvento.Subject} type="text" disabled></lightning-input>
+                    </div>
+                    <div class="slds-col slds-size_6-of-12">
+                        <lightning-input label="Tipo de Reunión:" value={infoEvento.TipoMeeting__c} type="text" disabled></lightning-input>
+                    </div>
+                </div>
+                <br><h2><b>Notas</b></h2><br>
+                <div class="slds-grid slds-gutters">
+                    <div class="slds-col slds-size_12-of-12">
+                        <lightning-textarea label="Notas / Comentarios de Visita:" placeholder="Escriba Notas o Comentarios de Visita" 
+                        onchange={agregarNotas}  value={infoEvento.Comments_Pric__c}></lightning-textarea>
+                    </div>
+                </div>
+                <br><h2><b>Temas Pendientes</b></h2><br>
+                <div class="slds-grid slds-gutters">
+                    <div class="slds-col slds-size_12-of-12">
+                        <lightning-textarea label="Temas Pendientes:" placeholder="Escriba temas pendientes" 
+                        onchange={agregarTemasP}  value={infoEvento.Temas_Pendientes__c}></lightning-textarea>
+                    </div>
+                </div>
+                <br><h2><b>Próxima Reunión</b></h2><br>
+                <div class="slds-grid slds-gutters">
+                    <div class="slds-col slds-size_4-of-12">
+                        <lightning-combobox  label="Frecuencia:" value={valueFrecuencia}
+                                    options={optionsFrecuencia} onchange={agregarFrecuencia}></lightning-combobox>
+                    </div>
+                    <div class="slds-col slds-size_4-of-12">
+                        <lightning-input label="Fecha y Hora de Inicio:" onchange={agregarInicioProximo} type="datetime"></lightning-input>
+                    </div>
+                    <div class="slds-col slds-size_4-of-12">
+                        <lightning-input label="Fecha y Hora de Fin:" onchange={agregarFinProximo} type="datetime"></lightning-input>
+                    </div>
+                </div>
+            </div>
+        </template>
+        <footer class="slds-modal__footer">
+            <button class="slds-button slds-button_neutral" onclick={regresaEvent} title="Cancel">Cancel</button>
+            <template if:false={clicCreaPDF}>
+                <lightning-button label="Generar Minuta" onclick={clicCrearMinuta} class="slds-m-left_x-small"></lightning-button>
+            </template>
+            <template if:true={clicCreaPDF}>
+                <lightning-button label="Generar Minuta" onclick={clicCrearMinuta} class="slds-m-left_x-small" disabled></lightning-button>
+            </template>
+        </footer>
+    </lightning-card>
+</template>

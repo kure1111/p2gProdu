@@ -35,6 +35,7 @@
                 <stringValue>Oportunididad en cotizar {!FI_o_FN} {!$Record.Name}</stringValue>
             </value>
         </inputParameters>
+        <nameSegment>emailSimple</nameSegment>
     </actionCalls>
     <apiVersion>58.0</apiVersion>
     <assignments>

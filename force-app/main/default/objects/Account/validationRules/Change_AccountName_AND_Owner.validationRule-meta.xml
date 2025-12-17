@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Change_AccountName_AND_Owner</fullName>
+    <active>true</active>
+    <errorConditionFormula>AND(
+OR(
+ISCHANGED(Name),
+ISCHANGED(OwnerId)
+),
+NOT(BEGINS($Profile.Id, &quot;00e4T000000zD9C&quot;)),
+BEGINS(RecordTypeId, &quot;0124T000000PTuQ&quot;)
+)</errorConditionFormula>
+    <errorMessage>Para cualquier cambio o modificación del Account Name u Owner favor de comunicarse con su administrador</errorMessage>
+</ValidationRule>

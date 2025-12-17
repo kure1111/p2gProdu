@@ -1,0 +1,36 @@
+<table border="0" cellpadding="5" width="600" cellspacing="5" height="400" >
+<tr valign="top" height="50" >
+<td tEditID="c1r1" style=" background-color:#FFFFFF; color:#000000; bEditID:r3st1; bLabel:main; font-size:12pt; font-family:arial;" aEditID="c1r1" locked="0" >
+<![CDATA[<div style="text-align: center;"><br></div>]]></td>
+</tr>
+<tr valign="top" height="300" >
+<td tEditID="c1r2" style=" background-color:#FFFFFF; color:#000000; bEditID:r3st1; bLabel:main; font-size:12pt; font-family:arial;" aEditID="c1r2" locked="0" >
+<![CDATA[<div style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt;"><p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt;"><font style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt;" face="arial"><span style="font-size: 12pt;">Estimado&nbsp;</span></font><font face="arial"><b>{!Account.Name}</b></font><span style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt;">,&nbsp;</span></p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt;"><o:p>&nbsp;</o:p></p><br><p class="MsoListParagraph">Agradecemos la confianza puesta en nosotros
+para la realización del servicio logístico.</p>
+
+<p class="MsoListParagraph"><span style="mso-spacerun:yes">&nbsp;</span></p>
+
+<p class="MsoListParagraph">Esperamos que la calidad y nivel de servicio
+obtenidos hayan sido satisfactorios y acorde a sus expectativas.</p>
+
+<p class="MsoListParagraph"><span style="mso-spacerun:yes">&nbsp;</span></p>
+
+<p class="MsoListParagraph">En Pak2Go estamos comprometidos en brindar un
+servicio integral de soluciones a sus necesidades logísticas con el mayor
+estándar de calidad, por lo que su opinión es muy importante para nosotros.</p>
+
+<p class="MsoListParagraph"><span style="mso-spacerun:yes">&nbsp;</span></p>
+
+<p class="MsoListParagraph">Lo invitamos a contestar esta breve encuesta
+para seguir mejorando nuestros servicios.</p><p class="MsoListParagraph"><br></p>
+
+<p class="MsoListParagraph"><span style="mso-spacerun:yes">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span>¡Muchas gracias!</p><p class="MsoListParagraph"><br></p><p class="MsoListParagraph"><a href="https://pak2golive.secure.force.com/encuesta/TakeSurvey?id=a3B4T000000XltKUAS&amp;accId={!Account.Id}&amp;caId=none">Liga a encuesta</a></p><p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt; text-align: center;"></p></div><div style=""><p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt; text-align: center;"><br></p></div>]]></td>
+</tr>
+<tr valign="top" height="50" >
+<td tEditID="c1r3" style=" background-color:#FFFFFF; color:#000000; bEditID:r3st1; bLabel:main; font-size:12pt; font-family:arial;" aEditID="c1r3" locked="0" >
+<![CDATA[]]></td>
+</tr>
+</table>

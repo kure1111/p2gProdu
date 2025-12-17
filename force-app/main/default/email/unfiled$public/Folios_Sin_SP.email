@@ -1,0 +1,14 @@
+<table border="0" cellpadding="5" width="600" cellspacing="5" height="400" >
+<tr valign="top" height="50" >
+<td tEditID="c1r1" style=" background-color:#FFFFFF; bEditID:r3st1; color:#000000; bLabel:main; font-size:12pt; font-family:arial;" aEditID="c1r1" locked="0" >
+<![CDATA[<div style="text-align: center;"><font style="" color="#ff0000"><b style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt;">**</b><font face="arial"><b>Cotización sin Shipment</b></font><b style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt;">&nbsp;**</b></font></div>]]></td>
+</tr>
+<tr valign="top" height="300" >
+<td tEditID="c1r2" style=" background-color:#FFFFFF; bEditID:r3st1; color:#000000; bLabel:main; font-size:12pt; font-family:arial;" aEditID="c1r2" locked="0" >
+<![CDATA[<font face="arial" style=""><span style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt;">La </span><span style="font-size: 12pt;">Cotización&nbsp; </span>{!Customer_Quote__c.Name}<span style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt;">&nbsp;&nbsp;no se a generado el shipment favor de revisar el folio pendiente:</span></font><div><font face="arial"><br></font></div><div><font face="arial">Datos:</font></div><div><font face="arial">Ruta:&nbsp;{!Customer_Quote__c.Route__c}</font></div><div><font face="arial">Cliente:&nbsp;{!Customer_Quote__c.Account_for__c}</font></div><div><font face="arial"><br></font><div><div><div style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt;"><br></div><div style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt;"><br></div></div></div></div>]]></td>
+</tr>
+<tr valign="top" height="50" >
+<td tEditID="c1r3" style=" background-color:#FFFFFF; bEditID:r3st1; color:#000000; bLabel:main; font-size:12pt; font-family:arial;" aEditID="c1r3" locked="0" >
+<![CDATA[<font face="arial" style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt;"><span style="font-size: 12pt;">Para mayor detalle consultar:</span></font><i style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt;"><font face="arial"><span style="font-size: 12pt;">&nbsp;</span></font></i><font face="arial"><i>{!Event.Link}</i></font>]]></td>
+</tr>
+</table>

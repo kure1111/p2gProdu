@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ProcessFlowMigration xmlns="http://soap.sforce.com/2006/04/metadata">
+    <destinationFlowDefinition>Account_1</destinationFlowDefinition>
+    <destinationFlowVersion>Account_1-1</destinationFlowVersion>
+    <developerName>myRule_5_301RQ00000YUd5BYAT</developerName>
+    <masterLabel>Account_1</masterLabel>
+    <migratedCriteriaLabel>Cambió de owner a manager</migratedCriteriaLabel>
+    <migratedCriteriaName>myRule_5</migratedCriteriaName>
+    <processVersion>Account-3</processVersion>
+</ProcessFlowMigration>

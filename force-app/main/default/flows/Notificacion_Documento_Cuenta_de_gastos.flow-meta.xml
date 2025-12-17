@@ -15,6 +15,7 @@
                 <elementReference>$Record.Id</elementReference>
             </value>
         </inputParameters>
+        <nameSegment>Associated_Document__c.Notificacion_Documento_Cuenta_de_gastos</nameSegment>
     </actionCalls>
     <apiVersion>55.0</apiVersion>
     <decisions>

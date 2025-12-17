@@ -66,8 +66,7 @@
                     <a href="{!$Site.BaseUrl}/apex/NEU_MD_Associated_Documents?id={!Customer_Quote__c.Id}" target="_top" class="li_step {!step_6}">6. Associate Documents</a>
                     <!--<a href="{!$Site.BaseUrl}/apex/NEU_MD_SendDocuments?object_select=import_export_quote&object_id={!Customer_Quote__c.Id}" target="_top" class="li_step {!step_7}"  >9. Send Email</a>-->
                     <a href="{!$Site.BaseUrl}/apex/NEU_MD_SendDocuments?id={!Customer_Quote__c.Id}" target="_top" class="li_step {!step_7}"  >7. Send Email</a>
-                    <a href="{! IF(AND(step_1=='step_inactive', step_8=='step_active'), ($Site.BaseUrl + '/' + url_generate_shipment),
-                            IF( step_1=='step_active', 'javascript:alert(\"It is impossible to create a Shipment from an Import Export Order without Cargo Lines.\")',($Site.BaseUrl + '/' + shipmentID))) }" target="_top" class="li_step {!step_8}" style="display:{!if(Customer_Quote__c.RecordType.Name == 'Import-Export Order' && url_generate_shipment != '','','none')}">8. Generate Shipment</a>
+                    
                     <a href="{!$Site.BaseUrl}/apex/NEU_Import_Export_NotifyCommunity?id={!Customer_Quote__c.Id}" target="_top" class="li_step step_notify" style="{!if(showNotifyCommunity,'','display: none;')}">Notify to Customer</a>
                 </div>
             </div>

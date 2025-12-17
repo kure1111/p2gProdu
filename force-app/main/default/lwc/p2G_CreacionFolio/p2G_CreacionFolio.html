@@ -103,6 +103,18 @@
   </div>
   <div><br></div> 
   <div class="slds-grid slds-grid_align-center slds-gutters">
+      <div class="slds-col" style="width:80px;"></div>
+      <div class="slds-col" style="width:120px;">
+          <lightning-button variant="brand" 
+          label="PQ - PAQUETERIA" 
+          title="PQ - PAQUETERIA"  
+          onclick={folioPaqueteria}
+          style="--sds-c-button-line-height:1;" stretch></lightning-button>
+      </div>
+      <div class="slds-col" style="width:90px;"></div>
+  </div>
+  <div><br></div> 
+  <div class="slds-grid slds-grid_align-center slds-gutters">
       <div class="slds-col">
           <lightning-button variant="brand" 
           label="CARGA MASIVA"
@@ -196,7 +208,7 @@
                   <div class="slds-col slds-size_6-of-12">
                     <div onkeyup={searchKeyAccount2}>
                       <lightning-input id="sapServiceType" label="Sap service Type:" placeholder="Buscar Sap service Type" 
-                          required="" value={searchSST} type="search" disabled></lightning-input>
+                          required="" value={searchSST} type="search"></lightning-input>
                     </div>
                     <table if:true={showSST} class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_striped">
                         <thead>
@@ -258,184 +270,381 @@
                       </div>
                     </div>
                     <div class="slds-col slds-size_1-of-1"><br></div> 
-                    <div class="slds-grid slds-wrap slds-gutters slds-grid_align-center">
-                      <div class="slds-col slds-size_1-of-1 colorSection">
-                        <h1>Route & Schedule Data</h1>
+                    <template if:true={preguntaDireccion}>
+                      <div class="slds-grid slds-wrap slds-gutters slds-grid_align-center">
+                        <div class="slds-col slds-size_1-of-1 colorSection">
+                          <h1>Route & Schedule Data</h1>
+                        </div>
+                        <div class="slds-col slds-size_1-of-1"><br></div> 
+                        <div class="slds-col slds-size_12-of-12" style="font-size: 20px; text-align: center;">
+                            <p>Para poder colocar una ruta es necesario que responda a la pregunta.</p>
+                            <p><span style="color: red;">*</span> ¿Conoces las direcciones de origen y destino?</p><br>
+                            <lightning-button label="Si" title="Non-primary action" onclick={siConoce} class="slds-m-left_x-small"></lightning-button>
+                            <lightning-button label="No" title="Non-primary action" onclick={noConoce} class="slds-m-left_x-small"></lightning-button>
+                        </div>
                       </div>
                       <div class="slds-col slds-size_1-of-1"><br></div> 
-                      <div class="slds-col slds-size_6-of-12">
-                          <div onkeyup={searchKeyLoad}>
-                            <lightning-input id="SiteofLoad" label="Site of Load:" placeholder="Buscar Site of Load" 
-                                required="" value={searchValueLoad} type="search"></lightning-input>
+                    </template>
+                    <template if:true={abrirComponenteBusqueda}>
+                      <c-p2-G_-Asignar-Account-Address-Map conoce-direccion={abrirComponenteBusqueda} onresultados={recibirDatos}></c-p2-G_-Asignar-Account-Address-Map>
+                    </template>
+                    <template if:true={conoceDireccion}>
+                      <div class="slds-grid slds-wrap slds-gutters slds-grid_align-center">
+                        <div class="slds-col slds-size_1-of-1 colorSection">
+                          <h1>Route</h1>
+                        </div>
+                          <div class="slds-col slds-size_1-of-1"><br></div>
+                          <div class="slds-col slds-size_6-of-12">
+                            <lightning-input label="Account Address Origen:"
+                                value={nameOrigen} type="search" disabled></lightning-input>
                           </div>
-                          <table if:true={showSideLoad} class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_striped">
-                              <thead>
-                                 <tr class="slds-line-height_reset">
-                                    <th class="" scope="col">
-                                       <div class="slds-truncate" title="First Name">Name</div>
-                                    </th>
-                                    <th class="" scope="col">
-                                       <div class="slds-truncate" title="Last Name">Country</div>
-                                    </th>
-                                    <th class="" scope="col">
-                                       <div class="slds-truncate" title="Last Name">State</div>
-                                    </th>
-                                 </tr>
-                              </thead>
-                              <tbody>
-                                 <template for:each={sideRecordsLoad} for:item="con">
-                                    <tr class="slds-hint-parent" data-id={con.Id} key={con.Id} onclick={SideSelectLoad}> 
-                                       <td>
-                                          <div class="slds-truncate">{con.Name}</div>
-                                       </td>
-                                       <template lwc:if={con.Country__c}>
-                                        <td>
-                                            <div class="slds-truncate">{con.Country__r.Name}</div>
-                                        </td>
-                                      </template>
-
-                                       <template lwc:if={con.State__c}>
-                                           <td>
-                                               <div class="slds-truncate">{con.State__r.Name}</div>
-                                           </td>
-                                       </template>
+                          <div class="slds-col slds-size_6-of-12">
+                            <lightning-input label="Account Address Destino:"
+                                value={nameDestino} type="search" disabled></lightning-input>
+                          </div>
+                          <div class="slds-col slds-size_1-of-1"><br></div>
+                          <div class="slds-col slds-size_6-of-12">
+                            <lightning-input label="Site of Load:"
+                              disabled value={searchValueLoad} type="search"></lightning-input>
+                          </div>
+                          <div class="slds-col slds-size_6-of-12">
+                            <lightning-input label="Site of Discharge:"
+                              disabled value={searchValueDischarge} type="search"></lightning-input>
+                          </div>
+                          <div class="slds-col slds-size_1-of-1"><br></div>
+                          <div class="slds-col slds-size_6-of-12">
+                            <lightning-input label="Codigo Postal Origen:"
+                              disabled value={codigoPostalOrigen} type="search"></lightning-input>
+                          </div>
+                          <div class="slds-col slds-size_6-of-12">
+                            <lightning-input label="Codigo Postal Destino:"
+                            disabled value={codigoPostalDestino} type="search"></lightning-input>
+                          </div>
+                          <div class="slds-col slds-size_1-of-1"><br></div> 
+                          <div class="slds-col slds-size_6-of-12">
+                            <lightning-layout>
+                                <lightning-layout-item padding="around-small">
+                                    <div class="header-column">
+                                        <p class="field-title">Calle: {calleOrigen}</p>
+                                        <p class="field-title">Numero Exterior: {numeroExteriorOrigen}</p>
+                                        <p class="field-title">Numero Interior: {numeroInteriorOrigen}</p>
+                                        <p class="field-title">Codigo Postal: {codigoPostalOrigen}</p>
+                                        <p class="field-title">Colonia: {coloniaOrigen}</p>
+                                        <p class="field-title">Municipio: {municipioOrigen}</p>
+                                        <p class="field-title">Localidad: {localidadOrigen}</p>
+                                        <p class="field-title">Estado: {estadoOrigen}</p>
+                                        <p class="field-title">Pais: {paisOrigen}</p>
+                                        <p class="field-title">Folio: {folioAddressOrigen}</p>
+                                    </div>
+                                </lightning-layout-item>
+                            </lightning-layout>
+                          </div>
+                          <div class="slds-col slds-size_6-of-12">
+                            <lightning-layout>
+                                <lightning-layout-item padding="around-small">
+                                    <div class="header-column">
+                                        <p class="field-title">Calle: {calleDestino}</p>
+                                        <p class="field-title">Numero Exterior: {numeroExteriorDestino}</p>
+                                        <p class="field-title">Numero Interior: {numeroInteriorDestino}</p>
+                                        <p class="field-title">Codigo Postal: {codigoPostalDestino}</p>
+                                        <p class="field-title">Colonia: {coloniaDestino}</p>
+                                        <p class="field-title">Municipio: {municipioDestino}</p>
+                                        <p class="field-title">Localidad: {localidadDestino}</p>
+                                        <p class="field-title">Estado: {estadoDestino}</p>
+                                        <p class="field-title">Pais: {paisDestino}</p>
+                                        <p class="field-title">Folio: {folioAddressDestino}</p>
+                                    </div>
+                                </lightning-layout-item>
+                            </lightning-layout>
+                          </div>
+                          <div class="slds-col slds-size_12-of-12">
+                            <lightning-layout>
+                                <lightning-layout-item padding="around-small">
+                                    <div class="header-column">
+                                        <p class="field-title">Ruta: {ruta}</p>
+                                    </div>
+                                </lightning-layout-item>
+                            </lightning-layout>
+                          </div>
+                      </div>
+                        <div class="slds-col slds-size_1-of-1"><br></div> 
+                        <div class="slds-grid slds-wrap slds-gutters slds-grid_align-center">
+                          <div class="slds-col slds-size_1-of-1 colorSection">
+                            <h1>Schedule Data</h1>
+                          </div>
+                          <div class="slds-col slds-size_1-of-1"><br></div> 
+                            <div class="slds-col slds-size_6-of-12">
+                                  <lightning-input type="date" required="" label="ETD:"
+                                  onchange={registroETD} value={ETD}></lightning-input>
+                            </div>
+                            <div class="slds-col slds-size_6-of-12">
+                                  <lightning-input type="date" required="" label="ETA:"
+                                  onchange={registroETA} value={ETA}></lightning-input>
+                              </div>
+                              <div class="slds-col slds-size_1-of-1"><br></div> 
+                              <div class="slds-col slds-size_6-of-12">
+                                <lightning-input type="time" label="Awaiting load time"
+                                onchange={registroloadtime} value={loadtime}></lightning-input>
+                              </div>
+                              <div class="slds-col slds-size_6-of-12">
+                                <lightning-input type="time" name="UnloadTime" label="Awaiting unload time"
+                                onchange={registrounloadtime} value={unloadtime}></lightning-input>
+                                </div>
+                            </div>
+                            <div class="slds-col slds-size_1-of-1"><br></div> 
+                            <div class="slds-grid slds-wrap slds-gutters">
+                              <div class="slds-col slds-size_6-of-12">
+                                <div onkeyup={searchKeyContainerType}>
+                                  <lightning-input label="Container Type:" placeholder="Buscar container type"
+                                    value={searchValueContainerType} type="search" required=""></lightning-input>
+                                </div>
+                                <table if:true={showSideContainerType}
+                                  class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_striped">
+                                  <thead>
+                                    <tr class="slds-line-height_reset">
+                                      <th class="" scope="col">
+                                        <div class="slds-truncate">Container Type</div>
+                                      </th>
+                                      <th class="" scope="col">
+                                        <div class="slds-truncate">Cargo Weight (Kg)</div>
+                                      </th>
+                                      <th class="" scope="col">
+                                        <div class="slds-truncate">Cargo Volume (m3)</div>
+                                      </th>
                                     </tr>
-                                 </template>
-                              </tbody>
-                            </table>
-                        </div>
-                      <div class="slds-col slds-size_6-of-12">
-                        <div onkeyup={searchKeyDischarge}>
-                          <lightning-input id="SiteofDischarge" label="Site of Discharge:" placeholder="Buscar Site of Discharge" 
-                              required="" value={searchValueDischarge} type="search"></lightning-input>
-                        </div>
-                        <table if:true={showSideDischarge} class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_striped">
-                            <thead>
-                               <tr class="slds-line-height_reset">
-                                  <th class="" scope="col">
-                                     <div class="slds-truncate" title="First Name">Name</div>
-                                  </th>
-                                  <th class="" scope="col">
-                                     <div class="slds-truncate" title="Last Name">Country</div>
-                                  </th>
-                                  <th class="" scope="col">
-                                     <div class="slds-truncate" title="Last Name">State</div>
-                                  </th>
-                               </tr>
-                            </thead>
-                            <tbody>
-                               <template for:each={sideRecordsDischarge} for:item="con">
-                                  <tr class="slds-hint-parent" data-id={con.Id} key={con.Id} onclick={SideSelectDischarge}> 
-                                     <td>
-                                        <div class="slds-truncate">{con.Name}</div>
-                                     </td>
-                                     <template lwc:if={con.Country__c}>
-                                      <td>
-                                          <div class="slds-truncate">{con.Country__r.Name}</div>
-                                      </td>
-                                  </template>
-                                     <template lwc:if={con.State__c}>
-                                         <td>
-                                             <div class="slds-truncate">{con.State__r.Name}</div>
-                                         </td>
-                                     </template>
+                                  </thead>
+                                  <tbody>
+                                    <template for:each={sideRecordsContainerType} for:item="con">
+                                      <tr class="slds-hint-parent" data-id={con.Id} key={con.Id} onclick={SideSelectContainerType}>
+                                        <td>
+                                          <div class="slds-truncate">{con.Name}</div>
+                                        </td>
+                                        <td>
+                                          <div class="slds-truncate">{con.Cargo_Weight_Kg__c}</div>
+                                        </td>
+                                        <td>
+                                          <div class="slds-truncate">{con.Cargo_Volume_m3__c}</div>
+                                        </td>
+                                      </tr>
+                                    </template>
+                                  </tbody>
+                                </table>
+                              </div>
+                            <div class="slds-col slds-size_6-of-12">
+                              <div onkeyup={searchKeyClaveUnidadPeso}>
+                                <lightning-input label="Clave de unidad de Peso:" placeholder="Pallet"
+                                  value={searchValueClaveUnidadPeso} type="search" oncommit={handleCleanClaveUnidadPeso} required=""></lightning-input>
+                              </div>
+                              <table if:true={showSideClaveUnidadPeso}
+                                class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_striped">
+                                <thead>
+                                  <tr class="slds-line-height_reset">
+                                    <th class="" scope="col">
+                                      <div class="slds-truncate">Clave Sat</div>
+                                    </th>
+                                    <th class="" scope="col">
+                                      <div class="slds-truncate">Nombre</div>
+                                    </th>
+                
                                   </tr>
-                               </template>
-                            </tbody>
-                          </table>
-                      </div>
-                      <div class="slds-col slds-size_1-of-1"><br></div> 
-                      <div class="slds-col slds-size_6-of-12">
-                            <lightning-input type="date" id="ETD" required="" label="ETD:"
-                            onchange={registroETD} value={ETD}></lightning-input>
-                      </div>
-                      <div class="slds-col slds-size_6-of-12">
-                            <lightning-input type="date" id="ETA" required="" label="ETA:"
-                            onchange={registroETA} value={ETA}></lightning-input>
+                                </thead>
+                                <tbody>
+                                  <template for:each={sideRecordsClaveUnidadPeso} for:item="con">
+                                    <tr class="slds-hint-parent" data-id={con.Id} key={con.Id} onclick={SideSelectClaveUnidadPeso}>
+                                      <td>
+                                        <div class="slds-truncate">{con.Clave_SAT__c}</div>
+                                      </td>
+                                      <td>
+                                        <div class="slds-truncate">{con.Name}</div>
+                                      </td>
+                                    </tr>
+                                  </template>
+                                </tbody>
+                              </table>
+                            </div>
+                          </div>
+                        <div class="slds-col slds-size_1-of-1"><br></div>
+                    </template>
+                    <template if:true={noConoceDireccion}>
+                      <div class="slds-grid slds-wrap slds-gutters slds-grid_align-center">
+                        <div class="slds-col slds-size_1-of-1 colorSection">
+                          <h1>Route & Schedule Data</h1>
                         </div>
                         <div class="slds-col slds-size_1-of-1"><br></div> 
                         <div class="slds-col slds-size_6-of-12">
-                          <lightning-input type="time" id="LoadTime" label="Awaiting load time"
-                          onchange={registroloadtime} value={loadtime}></lightning-input>
-                        </div>
-                        <div class="slds-col slds-size_6-of-12">
-                          <lightning-input type="time" name="UnloadTime" label="Awaiting unload time"
-                          onchange={registrounloadtime} value={unloadtime}></lightning-input>
+                            <div onkeyup={searchKeyLoad}>
+                              <lightning-input label="Site of Load:" placeholder="Buscar Site of Load" 
+                                  required="" value={searchValueLoad} type="search"></lightning-input>
+                            </div>
+                            <table if:true={showSideLoad} class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_striped">
+                                <thead>
+                                  <tr class="slds-line-height_reset">
+                                      <th class="" scope="col">
+                                        <div class="slds-truncate" title="First Name">Name</div>
+                                      </th>
+                                      <th class="" scope="col">
+                                        <div class="slds-truncate" title="Last Name">Country</div>
+                                      </th>
+                                      <th class="" scope="col">
+                                        <div class="slds-truncate" title="Last Name">State</div>
+                                      </th>
+                                  </tr>
+                                </thead>
+                                <tbody>
+                                  <template for:each={sideRecordsLoad} for:item="con">
+                                      <tr class="slds-hint-parent" data-id={con.Id} key={con.Id} onclick={SideSelectLoad}> 
+                                        <td>
+                                            <div class="slds-truncate">{con.Name}</div>
+                                        </td>
+                                        <template lwc:if={con.Country__c}>
+                                          <td>
+                                              <div class="slds-truncate">{con.Country__r.Name}</div>
+                                          </td>
+                                        </template>
+
+                                        <template lwc:if={con.State__c}>
+                                            <td>
+                                                <div class="slds-truncate">{con.State__r.Name}</div>
+                                            </td>
+                                        </template>
+                                      </tr>
+                                  </template>
+                                </tbody>
+                              </table>
                           </div>
-                      </div>
-                      <div class="slds-col slds-size_1-of-1"><br></div> 
-                      <div class="slds-grid slds-wrap slds-gutters">
                         <div class="slds-col slds-size_6-of-12">
-                          <div onkeyup={searchKeyContainerType}>
-                            <lightning-input id="ContainerType" label="Container Type:" placeholder="Buscar container type"
-                              value={searchValueContainerType} type="search" required=""></lightning-input>
+                          <div onkeyup={searchKeyDischarge}>
+                            <lightning-input label="Site of Discharge:" placeholder="Buscar Site of Discharge" 
+                                required="" value={searchValueDischarge} type="search"></lightning-input>
                           </div>
-                          <table if:true={showSideContainerType}
-                            class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_striped">
-                            <thead>
-                              <tr class="slds-line-height_reset">
-                                <th class="" scope="col">
-                                  <div class="slds-truncate">Container Type</div>
-                                </th>
-                                <th class="" scope="col">
-                                  <div class="slds-truncate">Cargo Weight (Kg)</div>
-                                </th>
-                                <th class="" scope="col">
-                                  <div class="slds-truncate">Cargo Volume (m3)</div>
-                                </th>
-                              </tr>
-                            </thead>
-                            <tbody>
-                              <template for:each={sideRecordsContainerType} for:item="con">
-                                <tr class="slds-hint-parent" data-id={con.Id} key={con.Id} onclick={SideSelectContainerType}>
-                                  <td>
-                                    <div class="slds-truncate">{con.Name}</div>
-                                  </td>
-                                  <td>
-                                    <div class="slds-truncate">{con.Cargo_Weight_Kg__c}</div>
-                                  </td>
-                                  <td>
-                                    <div class="slds-truncate">{con.Cargo_Volume_m3__c}</div>
-                                  </td>
+                          <table if:true={showSideDischarge} class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_striped">
+                              <thead>
+                                <tr class="slds-line-height_reset">
+                                    <th class="" scope="col">
+                                      <div class="slds-truncate" title="First Name">Name</div>
+                                    </th>
+                                    <th class="" scope="col">
+                                      <div class="slds-truncate" title="Last Name">Country</div>
+                                    </th>
+                                    <th class="" scope="col">
+                                      <div class="slds-truncate" title="Last Name">State</div>
+                                    </th>
                                 </tr>
-                              </template>
-                            </tbody>
-                          </table>
-                        </div>
-            
-                        <div class="slds-col slds-size_6-of-12">
-                          <div onkeyup={searchKeyClaveUnidadPeso}>
-                            <lightning-input id="ClaveUnidadPeso" label="Clave de unidad de Peso:" placeholder="Pallet"
-                              value={searchValueClaveUnidadPeso} type="search" oncommit={handleCleanClaveUnidadPeso} required=""></lightning-input>
+                              </thead>
+                              <tbody>
+                                <template for:each={sideRecordsDischarge} for:item="con">
+                                    <tr class="slds-hint-parent" data-id={con.Id} key={con.Id} onclick={SideSelectDischarge}> 
+                                      <td>
+                                          <div class="slds-truncate">{con.Name}</div>
+                                      </td>
+                                      <template lwc:if={con.Country__c}>
+                                        <td>
+                                            <div class="slds-truncate">{con.Country__r.Name}</div>
+                                        </td>
+                                    </template>
+                                      <template lwc:if={con.State__c}>
+                                          <td>
+                                              <div class="slds-truncate">{con.State__r.Name}</div>
+                                          </td>
+                                      </template>
+                                    </tr>
+                                </template>
+                              </tbody>
+                            </table>
                           </div>
-                          <table if:true={showSideClaveUnidadPeso}
-                            class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_striped">
-                            <thead>
-                              <tr class="slds-line-height_reset">
-                                <th class="" scope="col">
-                                  <div class="slds-truncate">Clave Sat</div>
-                                </th>
-                                <th class="" scope="col">
-                                  <div class="slds-truncate">Nombre</div>
-                                </th>
-            
-                              </tr>
-                            </thead>
-                            <tbody>
-                              <template for:each={sideRecordsClaveUnidadPeso} for:item="con">
-                                <tr class="slds-hint-parent" data-id={con.Id} key={con.Id} onclick={SideSelectClaveUnidadPeso}>
-                                  <td>
-                                    <div class="slds-truncate">{con.Clave_SAT__c}</div>
-                                  </td>
-                                  <td>
-                                    <div class="slds-truncate">{con.Name}</div>
-                                  </td>
+                          <div class="slds-col slds-size_1-of-1"><br></div> 
+                          <div class="slds-col slds-size_6-of-12">
+                                <lightning-input type="date" required="" label="ETD:"
+                                onchange={registroETD} value={ETD}></lightning-input>
+                          </div>
+                          <div class="slds-col slds-size_6-of-12">
+                                <lightning-input type="date" required="" label="ETA:"
+                                onchange={registroETA} value={ETA}></lightning-input>
+                            </div>
+                            <div class="slds-col slds-size_1-of-1"><br></div> 
+                            <div class="slds-col slds-size_6-of-12">
+                              <lightning-input type="time" label="Awaiting load time"
+                              onchange={registroloadtime} value={loadtime}></lightning-input>
+                            </div>
+                            <div class="slds-col slds-size_6-of-12">
+                              <lightning-input type="time" name="UnloadTime" label="Awaiting unload time"
+                              onchange={registrounloadtime} value={unloadtime}></lightning-input>
+                              </div>
+                          </div>
+                          <div class="slds-col slds-size_1-of-1"><br></div> 
+                          <div class="slds-grid slds-wrap slds-gutters">
+                            <div class="slds-col slds-size_6-of-12">
+                              <div onkeyup={searchKeyContainerType}>
+                                <lightning-input label="Container Type:" placeholder="Buscar container type"
+                                  value={searchValueContainerType} type="search" required=""></lightning-input>
+                              </div>
+                              <table if:true={showSideContainerType}
+                                class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_striped">
+                                <thead>
+                                  <tr class="slds-line-height_reset">
+                                    <th class="" scope="col">
+                                      <div class="slds-truncate">Container Type</div>
+                                    </th>
+                                    <th class="" scope="col">
+                                      <div class="slds-truncate">Cargo Weight (Kg)</div>
+                                    </th>
+                                    <th class="" scope="col">
+                                      <div class="slds-truncate">Cargo Volume (m3)</div>
+                                    </th>
+                                  </tr>
+                                </thead>
+                                <tbody>
+                                  <template for:each={sideRecordsContainerType} for:item="con">
+                                    <tr class="slds-hint-parent" data-id={con.Id} key={con.Id} onclick={SideSelectContainerType}>
+                                      <td>
+                                        <div class="slds-truncate">{con.Name}</div>
+                                      </td>
+                                      <td>
+                                        <div class="slds-truncate">{con.Cargo_Weight_Kg__c}</div>
+                                      </td>
+                                      <td>
+                                        <div class="slds-truncate">{con.Cargo_Volume_m3__c}</div>
+                                      </td>
+                                    </tr>
+                                  </template>
+                                </tbody>
+                              </table>
+                            </div>
+                          <div class="slds-col slds-size_6-of-12">
+                            <div onkeyup={searchKeyClaveUnidadPeso}>
+                              <lightning-input label="Clave de unidad de Peso:" placeholder="Pallet"
+                                value={searchValueClaveUnidadPeso} type="search" oncommit={handleCleanClaveUnidadPeso} required=""></lightning-input>
+                            </div>
+                            <table if:true={showSideClaveUnidadPeso}
+                              class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_striped">
+                              <thead>
+                                <tr class="slds-line-height_reset">
+                                  <th class="" scope="col">
+                                    <div class="slds-truncate">Clave Sat</div>
+                                  </th>
+                                  <th class="" scope="col">
+                                    <div class="slds-truncate">Nombre</div>
+                                  </th>
+              
                                 </tr>
-                              </template>
-                            </tbody>
-                          </table>
+                              </thead>
+                              <tbody>
+                                <template for:each={sideRecordsClaveUnidadPeso} for:item="con">
+                                  <tr class="slds-hint-parent" data-id={con.Id} key={con.Id} onclick={SideSelectClaveUnidadPeso}>
+                                    <td>
+                                      <div class="slds-truncate">{con.Clave_SAT__c}</div>
+                                    </td>
+                                    <td>
+                                      <div class="slds-truncate">{con.Name}</div>
+                                    </td>
+                                  </tr>
+                                </template>
+                              </tbody>
+                            </table>
+                          </div>
                         </div>
-                      </div>
+                        <div class="slds-col slds-size_1-of-1"><br></div> 
+                      </template>
                       <div class="slds-col slds-size_1-of-1"><br></div> 
                       <div class="slds-grid slds-wrap slds-gutters slds-grid_align-center">
                         <div class="slds-col slds-size_1-of-1 colorSection">

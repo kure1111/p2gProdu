@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionCalls>
+        <name>New_Order_Assinged_T</name>
+        <label>Customer_Quote__c.New_Order_Assinged_T</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <actionName>Customer_Quote__c.New_Order_Assinged_T</actionName>
+        <actionType>emailAlert</actionType>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>SObjectRowId</name>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </inputParameters>
+        <nameSegment>Customer_Quote__c.New_Order_Assinged_T</nameSegment>
+    </actionCalls>
+    <apiVersion>64.0</apiVersion>
+    <description>Migrated from the: New Order Approved - T workflow rule
+Workflow rule description: &quot;</description>
+    <environments>Default</environments>
+    <label>New Order Approved - T</label>
+    <migratedFromWorkflowRuleName>New Order Approved - T</migratedFromWorkflowRuleName>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <start>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>New_Order_Assinged_T</targetReference>
+        </connector>
+        <doesRequireRecordChangedToMeetCriteria>true</doesRequireRecordChangedToMeetCriteria>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Quotation_Status__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Approved as Succesful</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>Freight_Mode__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Road</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>Name</field>
+            <operator>StartsWith</operator>
+            <value>
+                <stringValue>T</stringValue>
+            </value>
+        </filters>
+        <object>Customer_Quote__c</object>
+        <recordTriggerType>CreateAndUpdate</recordTriggerType>
+        <triggerType>RecordAfterSave</triggerType>
+    </start>
+    <status>Active</status>
+</Flow>

@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionCalls>
+        <name>Send_Request_to_Pricing_Air2</name>
+        <label>Customer_Quote__c.Send_Request_to_Pricing_Air2</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <actionName>Customer_Quote__c.Send_Request_to_Pricing_Air2</actionName>
+        <actionType>emailAlert</actionType>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>SObjectRowId</name>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </inputParameters>
+        <nameSegment>Customer_Quote__c.Send_Request_to_Pricing_Air2</nameSegment>
+    </actionCalls>
+    <apiVersion>65.0</apiVersion>
+    <description>Migrated from the: Send Request to Pricing Air workflow rule
+Workflow rule description: &quot;</description>
+    <environments>Default</environments>
+    <formulas>
+        <name>Update_Send_RequestFormula</name>
+        <dataType>DateTime</dataType>
+        <expression>NOW()</expression>
+    </formulas>
+    <label>Send Request to Pricing Air</label>
+    <migratedFromWorkflowRuleName>Send Request to Pricing Air</migratedFromWorkflowRuleName>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordUpdates>
+        <name>mainUpdate</name>
+        <label>mainUpdate</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Send_Request_to_Pricing_Air2</targetReference>
+        </connector>
+        <inputAssignments>
+            <field>Date_Send_Request__c</field>
+            <value>
+                <elementReference>Update_Send_RequestFormula</elementReference>
+            </value>
+        </inputAssignments>
+        <inputReference>$Record</inputReference>
+    </recordUpdates>
+    <start>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>mainUpdate</targetReference>
+        </connector>
+        <doesRequireRecordChangedToMeetCriteria>true</doesRequireRecordChangedToMeetCriteria>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Freight_Mode__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Air</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>Quotation_Status__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Awaiting costs suppliers</stringValue>
+            </value>
+        </filters>
+        <object>Customer_Quote__c</object>
+        <recordTriggerType>CreateAndUpdate</recordTriggerType>
+        <triggerType>RecordAfterSave</triggerType>
+    </start>
+    <status>Active</status>
+</Flow>

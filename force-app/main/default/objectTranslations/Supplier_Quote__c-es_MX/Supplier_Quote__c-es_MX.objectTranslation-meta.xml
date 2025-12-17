@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Supplier Quote/Order</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Suppliers Quotes/Orders</value>
+    </caseValues>
+    <gender>Neuter</gender>
+    <layouts>
+        <layout>Supplier Hidden Quote Layout</layout>
+        <sections>
+            <label><!-- Buyer Info checked by Supplier --></label>
+            <section>Buyer Info checked by Supplier</section>
+        </sections>
+        <sections>
+            <label><!-- Commercial Info --></label>
+            <section>Commercial Info</section>
+        </sections>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- Fields --></label>
+            <section>Fields</section>
+        </sections>
+        <sections>
+            <label><!-- Followers Administration --></label>
+            <section>Followers Administration</section>
+        </sections>
+        <sections>
+            <label><!-- Import Export Services --></label>
+            <section>Import Export Services</section>
+        </sections>
+        <sections>
+            <label><!-- Previous Process References --></label>
+            <section>Previous Process References</section>
+        </sections>
+        <sections>
+            <label><!-- Quality Observations --></label>
+            <section>Quality Observations</section>
+        </sections>
+        <sections>
+            <label><!-- References &amp; Status --></label>
+            <section>References &amp; Status</section>
+        </sections>
+        <sections>
+            <label><!-- Route &amp; Vessel (Voyage) / Fleight Data --></label>
+            <section>Route &amp; Vessel (Voyage) / Fleight Data</section>
+        </sections>
+        <sections>
+            <label><!-- Transport Data --></label>
+            <section>Transport Data</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>Supplier Order Layout</layout>
+        <sections>
+            <label><!-- Buyer Info checked by Supplier --></label>
+            <section>Buyer Info checked by Supplier</section>
+        </sections>
+        <sections>
+            <label><!-- Commercial Info --></label>
+            <section>Commercial Info</section>
+        </sections>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- Fields --></label>
+            <section>Fields</section>
+        </sections>
+        <sections>
+            <label><!-- Followers Administration --></label>
+            <section>Followers Administration</section>
+        </sections>
+        <sections>
+            <label><!-- Import Export Services --></label>
+            <section>Import Export Services</section>
+        </sections>
+        <sections>
+            <label><!-- Previous Process References --></label>
+            <section>Previous Process References</section>
+        </sections>
+        <sections>
+            <label><!-- Quality Observations --></label>
+            <section>Quality Observations</section>
+        </sections>
+        <sections>
+            <label><!-- References &amp; Status --></label>
+            <section>References &amp; Status</section>
+        </sections>
+        <sections>
+            <label><!-- Route &amp; Vessel (Voyage) / Fleight Data --></label>
+            <section>Route &amp; Vessel (Voyage) / Fleight Data</section>
+        </sections>
+        <sections>
+            <label><!-- Transport Data --></label>
+            <section>Transport Data</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>Supplier Quote Layout</layout>
+        <sections>
+            <label><!-- Buyer Info checked by Supplier --></label>
+            <section>Buyer Info checked by Supplier</section>
+        </sections>
+        <sections>
+            <label><!-- Commercial Info --></label>
+            <section>Commercial Info</section>
+        </sections>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- Fields --></label>
+            <section>Fields</section>
+        </sections>
+        <sections>
+            <label><!-- Followers Administration --></label>
+            <section>Followers Administration</section>
+        </sections>
+        <sections>
+            <label><!-- Import Export Services --></label>
+            <section>Import Export Services</section>
+        </sections>
+        <sections>
+            <label><!-- Previous Process References --></label>
+            <section>Previous Process References</section>
+        </sections>
+        <sections>
+            <label><!-- Quality Control --></label>
+            <section>Quality Control</section>
+        </sections>
+        <sections>
+            <label><!-- References &amp; Status --></label>
+            <section>References &amp; Status</section>
+        </sections>
+        <sections>
+            <label><!-- Route &amp; Vessel (Voyage) / Fleight Data --></label>
+            <section>Route &amp; Vessel (Voyage) / Fleight Data</section>
+        </sections>
+        <sections>
+            <label><!-- Transport Data --></label>
+            <section>Transport Data</section>
+        </sections>
+    </layouts>
+    <recordTypes>
+        <label><!-- Supplier Hidden Quote --></label>
+        <name>Supplier_Hidden_Quote</name>
+    </recordTypes>
+    <recordTypes>
+        <label><!-- Supplier Order --></label>
+        <name>Supplier_Order</name>
+    </recordTypes>
+    <recordTypes>
+        <label><!-- Supplier Quote --></label>
+        <name>Supplier_Quote</name>
+    </recordTypes>
+    <webLinks>
+        <label><!-- Automatic_Calculation_of_Duties --></label>
+        <name>Automatic_Calculation_of_Duties</name>
+    </webLinks>
+    <webLinks>
+        <label><!-- Automatic_Calculation_of_Fees --></label>
+        <name>Automatic_Calculation_of_Fees</name>
+    </webLinks>
+    <webLinks>
+        <label><!-- Create_Inventory_Entries --></label>
+        <name>Create_Inventory_Entries</name>
+    </webLinks>
+    <webLinks>
+        <label><!-- Create_Quote_Fee_Lines --></label>
+        <name>Create_Quote_Fee_Lines</name>
+    </webLinks>
+    <webLinks>
+        <label><!-- Duplicate_Supplier_Quote_Order --></label>
+        <name>Duplicate_Supplier_Quote_Order</name>
+    </webLinks>
+    <webLinks>
+        <label><!-- Generate_Delivery_Order --></label>
+        <name>Generate_Delivery_Order</name>
+    </webLinks>
+    <webLinks>
+        <label><!-- New_Associated_Document --></label>
+        <name>New_Associated_Document</name>
+    </webLinks>
+    <webLinks>
+        <label><!-- Search_Schedules --></label>
+        <name>Search_Schedules</name>
+    </webLinks>
+    <webLinks>
+        <label><!-- Send_Email_with_Documents --></label>
+        <name>Send_Email_with_Documents</name>
+    </webLinks>
+</CustomObjectTranslation>

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Traffic</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Traffics</value>
+    </caseValues>
+    <gender>Neuter</gender>
+    <layouts>
+        <layout>Traffic Layout</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- Projection --></label>
+            <section>Projection</section>
+        </sections>
+        <sections>
+            <label><!-- Projection Objective Accomplish --></label>
+            <section>Projection Objective Accomplish</section>
+        </sections>
+        <sections>
+            <label><!-- Route --></label>
+            <section>Route</section>
+        </sections>
+        <sections>
+            <label><!-- Traffic Type --></label>
+            <section>Traffic Type</section>
+        </sections>
+    </layouts>
+</CustomObjectTranslation>

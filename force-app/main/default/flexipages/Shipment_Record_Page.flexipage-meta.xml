@@ -4,12 +4,121 @@
         <itemInstances>
             <componentInstance>
                 <componentInstanceProperties>
+                    <name>actionNames</name>
+                    <valueList>
+                        <valueListItems>
+                            <value>Clone</value>
+                            <visibilityRule>
+                                <criteria>
+                                    <leftValue>{!$User.Profile.Name}</leftValue>
+                                    <operator>CONTAINS</operator>
+                                    <rightValue>Admin</rightValue>
+                                </criteria>
+                            </visibilityRule>
+                        </valueListItems>
+                        <valueListItems>
+                            <value>Shipment__c.Change_Service_Lines</value>
+                        </valueListItems>
+                        <valueListItems>
+                            <value>Shipment__c.AprobarAura</value>
+                        </valueListItems>
+                        <valueListItems>
+                            <value>Shipment__c.Crear_Shipment_Service_Line</value>
+                        </valueListItems>
+                        <valueListItems>
+                            <value>CustomButton.Shipment__c.Create_Cargo_Lines</value>
+                        </valueListItems>
+                        <valueListItems>
+                            <value>CustomButton.Shipment__c.Create_Service_Lines</value>
+                        </valueListItems>
+                        <valueListItems>
+                            <value>Shipment__c.Folios_vinculados</value>
+                        </valueListItems>
+                        <valueListItems>
+                            <value>Shipment__c.Create_RepartoSP</value>
+                        </valueListItems>
+                        <valueListItems>
+                            <value>Shipment__c.Create_Service_Lines_N</value>
+                        </valueListItems>
+                        <valueListItems>
+                            <value>CustomButton.Shipment__c.Upload_Documents</value>
+                        </valueListItems>
+                        <valueListItems>
+                            <value>CustomButton.Shipment__c.Bill_of_Lading</value>
+                        </valueListItems>
+                        <valueListItems>
+                            <value>CustomButton.Shipment__c.Truckstop_Tracking</value>
+                        </valueListItems>
+                        <valueListItems>
+                            <value>CustomButton.Shipment__c.Generate_HBL</value>
+                        </valueListItems>
+                        <valueListItems>
+                            <value>CustomButton.Shipment__c.Instruction_Letter</value>
+                        </valueListItems>
+                        <valueListItems>
+                            <value>CustomButton.Shipment__c.Send_Email</value>
+                        </valueListItems>
+                        <valueListItems>
+                            <value>CustomButton.Shipment__c.Send_to_Order</value>
+                        </valueListItems>
+                        <valueListItems>
+                            <value>Global.NewTask</value>
+                        </valueListItems>
+                        <valueListItems>
+                            <value>Global.NewEvent</value>
+                        </valueListItems>
+                        <valueListItems>
+                            <value>Global.LogACall</value>
+                        </valueListItems>
+                        <valueListItems>
+                            <value>FeedItem.ContentNote</value>
+                        </valueListItems>
+                        <valueListItems>
+                            <value>FeedItem.TextPost</value>
+                        </valueListItems>
+                        <valueListItems>
+                            <value>FeedItem.ContentPost</value>
+                        </valueListItems>
+                        <valueListItems>
+                            <value>Global.NewContact</value>
+                        </valueListItems>
+                        <valueListItems>
+                            <value>Global.NewOpportunity</value>
+                        </valueListItems>
+                        <valueListItems>
+                            <value>Global.NewLead</value>
+                        </valueListItems>
+                        <valueListItems>
+                            <value>FeedItem.PollPost</value>
+                        </valueListItems>
+                        <valueListItems>
+                            <value>PrintableView</value>
+                        </valueListItems>
+                        <valueListItems>
+                            <value>Submit</value>
+                        </valueListItems>
+                        <valueListItems>
+                            <value>CustomButton.Shipment__c.Return_Import_Export_Quote</value>
+                        </valueListItems>
+                        <valueListItems>
+                            <value>CustomButton.Shipment__c.Send_Attachments</value>
+                        </valueListItems>
+                        <valueListItems>
+                            <value>Shipment__c.Modificacion_de_datos_Carta_Porte</value>
+                        </valueListItems>
+                    </valueList>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
                     <name>collapsed</name>
                     <value>false</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>enableActionsConfiguration</name>
-                    <value>false</value>
+                    <value>true</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>enableActionsInNative</name>
+                    <value>true</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>hideChatterActions</name>
@@ -233,6 +342,19 @@
     <flexiPageRegions>
         <itemInstances>
             <componentInstance>
+                <componentName>p2g_AccountAddressSee</componentName>
+                <identifier>c_p2g_AccountAddressSee</identifier>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.Account_for_Customer_Name__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>KIMBERLY-CLARK DE MEXICO</rightValue>
+                    </criteria>
+                </visibilityRule>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
                 <componentName>lWC_Verificacion_Pak_Control</componentName>
                 <identifier>c_lWC_Verificacion_Pak_Control</identifier>
             </componentInstance>
@@ -253,6 +375,38 @@
             <componentInstance>
                 <componentName>CmpCargaCargoLinesShipment</componentName>
                 <identifier>c_CmpCargaCargoLinesShipment1</identifier>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentName>p2G_MessageCasesNoShow</componentName>
+                <identifier>c_p2G_MessageCasesNoShow</identifier>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>parentFieldApiName</name>
+                    <value>Shipment__c.Id</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>relatedListApiName</name>
+                    <value>Casos__r</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>relatedListComponentOverride</name>
+                    <value>NONE</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>rowsToDisplay</name>
+                    <value>10</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>showActionBar</name>
+                    <value>true</value>
+                </componentInstanceProperties>
+                <componentName>force:relatedListSingleContainer</componentName>
+                <identifier>force_relatedListSingleContainer8</identifier>
             </componentInstance>
         </itemInstances>
         <itemInstances>

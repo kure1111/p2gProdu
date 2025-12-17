@@ -374,12 +374,12 @@ trigger PAK_ShipmentHistory on Shipment__c (after update) {
                         aux = aux + 1;
                     }
                     //CAMPO Shipment Customer Evaluate
-                    if(ship.Shipment_Customer_Evaluate__c != oldShipment.Shipment_Customer_Evaluate__c){
+                    /*if(ship.Shipment_Customer_Evaluate__c != oldShipment.Shipment_Customer_Evaluate__c){
                         FieldLabel += String.valueOf(aux) + '. Shipment Customer Evaluate<br/>';
                         OriginalValues += String.valueOf(aux) + '. ' + oldShipment.Shipment_Customer_Evaluate__c + '<br/>';
                         NewValues += String.valueOf(aux) + '. ' + ship.Shipment_Customer_Evaluate__c + '<br/>';
                         aux = aux + 1;
-                    }
+                    }*/
                     //CAMPO Shipment Number
                     if(ship.Name != oldShipment.Name){
                         FieldLabel += String.valueOf(aux) + '. Shipment Number<br/>';

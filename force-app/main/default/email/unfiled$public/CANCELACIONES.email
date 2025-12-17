@@ -1,0 +1,14 @@
+<table border="0" cellpadding="5" width="600" cellspacing="5" height="400" >
+<tr valign="top" height="50" >
+<td tEditID="c1r1" style=" background-color:#FFFFFF; bEditID:r3st1; color:#000000; bLabel:main; font-size:12pt; font-family:arial;" aEditID="c1r1" locked="0" >
+<![CDATA[<div style="text-align: center;"><span style="font-size: 12pt;"><b style=""><font color="#ff0000">EMBARQUE CANCELADO</font></b></span></div>]]></td>
+</tr>
+<tr valign="top" height="300" >
+<td tEditID="c1r2" style=" background-color:#FFFFFF; bEditID:r3st1; color:#000000; bLabel:main; font-size:12pt; font-family:arial;" aEditID="c1r2" locked="0" >
+<![CDATA[<div style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt;">Estimado equipo de Cobranza, Pagos y Comercial se ha cancelado el siguiente servicio</div><div style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt;"><br></div><div style=""><font face="arial" style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt;"><span style="font-size: 12pt;">Estatus Actual:&nbsp;</span></font><font face="arial">{!Shipment__c.Shipment_Status_Plann__c}</font></div><div style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt;"><br></div><font face="arial" style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt;"><span style="font-size: 12pt;">Folio:&nbsp;&nbsp;</span></font><font face="arial">{!Shipment__c.Name}</font><div style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt;">Planner:&nbsp;{!Shipment__c.CreatedBy}&nbsp;</div><div style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt;">Cliente:&nbsp;{!Shipment__c.Account_for_Customer_Name__c}</div><div style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt;">Ruta:&nbsp;{!Shipment__c.Route__c}</div><div style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt;">Cancelado por:&nbsp;{!Shipment__c.Cancelled_by__c}</div><div style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt;"><br></div><div style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt;"><br></div><div style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt;"><b>Comentarios</b>:&nbsp;{!Shipment__c.Status_Observations__c}</div><div style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt;"><br></div>]]></td>
+</tr>
+<tr valign="top" height="50" >
+<td tEditID="c1r3" style=" background-color:#FFFFFF; bEditID:r3st1; color:#000000; bLabel:main; font-size:12pt; font-family:arial;" aEditID="c1r3" locked="0" >
+<![CDATA[<span style="color: rgb(0, 0, 0); font-family: arial; font-size: 16px; background-color: rgb(255, 255, 255);">Para mayor detalle consultar:&nbsp;</span><font face="arial">{!Shipment__c.Link}</font>]]></td>
+</tr>
+</table>

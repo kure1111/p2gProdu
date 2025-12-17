@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GlobalValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customValue>
+        <fullName>FTL</fullName>
+        <default>false</default>
+        <label>FTL</label>
+    </customValue>
+    <customValue>
+        <fullName>LTL</fullName>
+        <default>false</default>
+        <label>LTL</label>
+    </customValue>
+    <customValue>
+        <fullName>FCL</fullName>
+        <default>false</default>
+        <label>FCL</label>
+    </customValue>
+    <customValue>
+        <fullName>LCL</fullName>
+        <default>false</default>
+        <label>LCL</label>
+    </customValue>
+    <customValue>
+        <fullName>PAQUETERIA</fullName>
+        <default>false</default>
+        <label>PAQUETERIA</label>
+    </customValue>
+    <customValue>
+        <fullName>CARGA</fullName>
+        <default>false</default>
+        <label>CARGA</label>
+    </customValue>
+    <customValue>
+        <fullName>TARIMAS</fullName>
+        <default>false</default>
+        <label>TARIMAS</label>
+    </customValue>
+    <customValue>
+        <fullName>FP</fullName>
+        <default>false</default>
+        <label>FP</label>
+    </customValue>
+    <customValue>
+        <fullName>FO</fullName>
+        <default>false</default>
+        <label>FO</label>
+    </customValue>
+    <customValue>
+        <fullName>MAYOREO</fullName>
+        <default>false</default>
+        <label>MAYOREO</label>
+    </customValue>
+    <customValue>
+        <fullName>ENVIO NACIONAL</fullName>
+        <default>false</default>
+        <label>ENVIO NACIONAL</label>
+    </customValue>
+    <customValue>
+        <fullName>EXTRAS</fullName>
+        <default>false</default>
+        <label>EXTRAS</label>
+    </customValue>
+    <customValue>
+        <fullName>-</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>-</label>
+    </customValue>
+    <customValue>
+        <fullName>LCL Cargo</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>LCL Cargo</label>
+    </customValue>
+    <masterLabel>Service Type</masterLabel>
+    <sorted>false</sorted>
+</GlobalValueSet>

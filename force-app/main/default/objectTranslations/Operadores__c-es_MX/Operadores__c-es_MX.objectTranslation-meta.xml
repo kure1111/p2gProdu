@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Operadores</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Operadores</value>
+    </caseValues>
+    <gender>Neuter</gender>
+    <layouts>
+        <layout>Operadores Layout</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- Datos Carta Porte --></label>
+            <section>Datos Carta Porte</section>
+        </sections>
+        <sections>
+            <label><!-- Datos Medicos --></label>
+            <section>Datos Medicos</section>
+        </sections>
+        <sections>
+            <label><!-- Datos de la Unidad --></label>
+            <section>Datos de la Unidad</section>
+        </sections>
+        <sections>
+            <label><!-- Domicilio del Operador --></label>
+            <section>Domicilio del Operador</section>
+        </sections>
+        <sections>
+            <label><!-- Truckstop --></label>
+            <section>Truckstop</section>
+        </sections>
+    </layouts>
+</CustomObjectTranslation>

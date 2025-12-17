@@ -1,0 +1,269 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Item</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Items</value>
+    </caseValues>
+    <gender>Neuter</gender>
+    <layouts>
+        <layout>Item Community Layout</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- Long Fields --></label>
+            <section>Long Fields</section>
+        </sections>
+        <sections>
+            <label><!-- Packaging Data --></label>
+            <section>Packaging Data</section>
+        </sections>
+        <sections>
+            <label><!-- Principal Item Information --></label>
+            <section>Principal Item Information</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>Item SKU Product Layout</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- Customer Order Forecast --></label>
+            <section>Customer Order Forecast</section>
+        </sections>
+        <sections>
+            <label><!-- Customs Product Categorization --></label>
+            <section>Customs Product Categorization</section>
+        </sections>
+        <sections>
+            <label><!-- Data for E-Commerce --></label>
+            <section>Data for E-Commerce</section>
+        </sections>
+        <sections>
+            <label><!-- Demand Forecasting, Inventory &amp; Order Policy --></label>
+            <section>Demand Forecasting, Inventory &amp; Order Policy</section>
+        </sections>
+        <sections>
+            <label><!-- Demand Tracking --></label>
+            <section>Demand Tracking</section>
+        </sections>
+        <sections>
+            <label><!-- Followers Administration --></label>
+            <section>Followers Administration</section>
+        </sections>
+        <sections>
+            <label><!-- Inventory movements historical data --></label>
+            <section>Inventory movements historical data</section>
+        </sections>
+        <sections>
+            <label><!-- Long Fields --></label>
+            <section>Long Fields</section>
+        </sections>
+        <sections>
+            <label><!-- MRP Data --></label>
+            <section>MRP Data</section>
+        </sections>
+        <sections>
+            <label><!-- Packaging Data --></label>
+            <section>Packaging Data</section>
+        </sections>
+        <sections>
+            <label><!-- Position --></label>
+            <section>Position</section>
+        </sections>
+        <sections>
+            <label><!-- Principal Item Information --></label>
+            <section>Principal Item Information</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>Item SKU Product Layout - Advanced</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- Customs Product Categorization --></label>
+            <section>Customs Product Categorization</section>
+        </sections>
+        <sections>
+            <label><!-- Data for E-Commerce --></label>
+            <section>Data for E-Commerce</section>
+        </sections>
+        <sections>
+            <label><!-- Demand Tracking --></label>
+            <section>Demand Tracking</section>
+        </sections>
+        <sections>
+            <label><!-- Field Demand Forecasting, Inventory &amp; Order Policy --></label>
+            <section>Field Demand Forecasting, Inventory &amp; Order Policy</section>
+        </sections>
+        <sections>
+            <label><!-- Field Order Forecast --></label>
+            <section>Field Order Forecast</section>
+        </sections>
+        <sections>
+            <label><!-- Followers Administration --></label>
+            <section>Followers Administration</section>
+        </sections>
+        <sections>
+            <label><!-- Inventory movements historical data --></label>
+            <section>Inventory movements historical data</section>
+        </sections>
+        <sections>
+            <label><!-- Long Fields --></label>
+            <section>Long Fields</section>
+        </sections>
+        <sections>
+            <label><!-- MRP Data --></label>
+            <section>MRP Data</section>
+        </sections>
+        <sections>
+            <label><!-- Packaging Data --></label>
+            <section>Packaging Data</section>
+        </sections>
+        <sections>
+            <label><!-- Position --></label>
+            <section>Position</section>
+        </sections>
+        <sections>
+            <label><!-- Principal Item Information --></label>
+            <section>Principal Item Information</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>Item SKU Product Layout - Standard</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- Customs Product Categorization --></label>
+            <section>Customs Product Categorization</section>
+        </sections>
+        <sections>
+            <label><!-- Data for E-Commerce --></label>
+            <section>Data for E-Commerce</section>
+        </sections>
+        <sections>
+            <label><!-- Followers Administration --></label>
+            <section>Followers Administration</section>
+        </sections>
+        <sections>
+            <label><!-- Inventory movements historical data --></label>
+            <section>Inventory movements historical data</section>
+        </sections>
+        <sections>
+            <label><!-- Long Fields --></label>
+            <section>Long Fields</section>
+        </sections>
+        <sections>
+            <label><!-- Packaging Data --></label>
+            <section>Packaging Data</section>
+        </sections>
+        <sections>
+            <label><!-- Position --></label>
+            <section>Position</section>
+        </sections>
+        <sections>
+            <label><!-- Principal Item Information --></label>
+            <section>Principal Item Information</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>Item Service Layout</layout>
+        <sections>
+            <label><!-- Common information for Products &amp; Services --></label>
+            <section>Common information for Products &amp; Services</section>
+        </sections>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- Data for E-Commerce --></label>
+            <section>Data for E-Commerce</section>
+        </sections>
+        <sections>
+            <label><!-- Demand Forecasting --></label>
+            <section>Demand Forecasting</section>
+        </sections>
+        <sections>
+            <label><!-- Long Fields --></label>
+            <section>Long Fields</section>
+        </sections>
+        <sections>
+            <label><!-- MRP Data --></label>
+            <section>MRP Data</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>Item Sourcing Product Layout</layout>
+        <sections>
+            <label><!-- Common information for Products &amp; Services --></label>
+            <section>Common information for Products &amp; Services</section>
+        </sections>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- Customs Product Categorization --></label>
+            <section>Customs Product Categorization</section>
+        </sections>
+        <sections>
+            <label><!-- Data for E-Commerce --></label>
+            <section>Data for E-Commerce</section>
+        </sections>
+        <sections>
+            <label><!-- Demand Forecasting, Inventory &amp; Order Policy --></label>
+            <section>Demand Forecasting, Inventory &amp; Order Policy</section>
+        </sections>
+        <sections>
+            <label><!-- Long Fields --></label>
+            <section>Long Fields</section>
+        </sections>
+        <sections>
+            <label><!-- MRP Data --></label>
+            <section>MRP Data</section>
+        </sections>
+        <sections>
+            <label><!-- Packaging Data --></label>
+            <section>Packaging Data</section>
+        </sections>
+        <sections>
+            <label><!-- Position --></label>
+            <section>Position</section>
+        </sections>
+    </layouts>
+    <recordTypes>
+        <description><!-- For Products, Equipment, Components, Ingredients,...that needs Inventory Management. --></description>
+        <label><!-- SKU Product --></label>
+        <name>SKU_Product</name>
+    </recordTypes>
+    <recordTypes>
+        <description><!-- For Services and other non fisical Items. --></description>
+        <label><!-- Service --></label>
+        <name>Service</name>
+    </recordTypes>
+    <recordTypes>
+        <description><!-- For products that we don&apos;t manage inventory. --></description>
+        <label><!-- Sourcing Product --></label>
+        <name>Sourcing_Product</name>
+    </recordTypes>
+    <webLinks>
+        <label><!-- Create_BOM_Explosion_Relation --></label>
+        <name>Create_BOM_Explosion_Relation</name>
+    </webLinks>
+    <webLinks>
+        <label><!-- Upload_Images --></label>
+        <name>Upload_Images</name>
+    </webLinks>
+</CustomObjectTranslation>

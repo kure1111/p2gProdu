@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Supplier Request</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Supplier Requests</value>
+    </caseValues>
+    <gender>Neuter</gender>
+    <layouts>
+        <layout>Supplier Request (RFP) Layout</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- Followers Administration --></label>
+            <section>Followers Administration</section>
+        </sections>
+        <sections>
+            <label><!-- Supplier Quote --></label>
+            <section>Supplier Quote</section>
+        </sections>
+    </layouts>
+</CustomObjectTranslation>

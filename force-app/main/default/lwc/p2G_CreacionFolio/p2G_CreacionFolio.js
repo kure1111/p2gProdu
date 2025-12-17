@@ -31,6 +31,7 @@ import folioW from "c/p2G_creacionFolioGlobalMaritimo";
 import folioR from "c/p2G_creacionFolioGlobalRouting";
 import folioAW from "c/p2G_creacionFolioGlobalAereo";
 import folioCE from "c/p2G_creacionFolioComercioExterior";
+import folioPQ from "c/p2G_CreacionFoliosPaqueteria";
 
 export default class P2G_CreacionFolio extends LightningElement {
     //lista de cargo line
@@ -880,5 +881,89 @@ openCargaMasiva(){
             label: 'Modal Heading'
         });
         console.log(result);
+    }
+    async folioPaqueteria() {
+        console.log('id es: ', this.recordId);
+        const result = await folioPQ.open({
+            size: 'medium',
+            description: 'Modal para cargar',
+            recordId: this.recordId,
+            label: 'Modal Heading'
+        });
+        console.log(result);
+    }
+    //modificación para account addres
+    @track preguntaDireccion = true;
+    @track conoceDireccion = false;
+    @track noConoceDireccion = false;
+    @track datosRecibidos;
+    @track abrirComponenteBusqueda = false;
+    //botones pregunta
+    noConoce(){
+        this.noConoceDireccion = true;
+        this.preguntaDireccion = false;
+        this.conoceDireccion = false;
+        this.abrirComponenteBusqueda = false;
+    }
+    siConoce(){
+        this.abrirComponenteBusqueda = true;
+        this.preguntaDireccion = false;
+        this.conoceDireccion = false;
+        this.NoconoceDireccion = false;
+    }
+    recibirDatos(event) {
+        this.datosRecibidos = event.detail;
+        console.log('Datos recibidos:', this.datosRecibidos);
+        if(this.datosRecibidos.seCerro === 'si'){
+            this.abrirComponenteBusqueda = false;
+            this.preguntaDireccion = true;
+            this.conoceDireccion = false;
+            this.NoconoceDireccion = false;
+        }else{
+            this.abrirComponenteBusqueda = false;
+            this.preguntaDireccion = false;
+            this.conoceDireccion = true;
+            this.NoconoceDireccion = false;
+            this.mapearDatosRecibidos(this.datosRecibidos);
+        }
+    }
+    mapearDatosRecibidos(datosRecibidos){
+        this.wrapperFolio.AccountOriginAddress = datosRecibidos.idOrigen;
+        this.nameOrigen = datosRecibidos.nameOrigen;
+        this.wrapperFolio.idSideLoad = datosRecibidos.idSiteOrigen;
+        this.searchValueLoad = datosRecibidos.nameSiteOrigen;
+        this.calleOrigen = datosRecibidos.calleOrigen;
+        this.numeroExteriorOrigen = datosRecibidos.numeroExteriorOrigen;
+        this.numeroInteriorOrigen = datosRecibidos.numeroInteriorOrigen;
+        this.codigoPostalOrigen = datosRecibidos.codigoPostalOrigen;
+        this.coloniaOrigen = datosRecibidos.coloniaOrigen;
+        this.municipioOrigen = datosRecibidos.municipioOrigen;
+        this.localidadOrigen = datosRecibidos.localidadOrigen;
+        this.estadoOrigen = datosRecibidos.estadoOrigen;
+        this.paisOrigen = datosRecibidos.paisOrigen;
+        this.folioAddressOrigen = datosRecibidos.folioAddressOrigen;
+        this.latitudOrigen = datosRecibidos.latitudOrigen;
+        this.longitudOrigen = datosRecibidos.longitudOrigen;
+        this.wrapperFolio.AccountDestinAddress = datosRecibidos.idDestino;
+        this.nameDestino = datosRecibidos.nameDestino;
+        this.wrapperFolio.idSideDischarged = datosRecibidos.idSiteDestino;
+        this.searchValueDischarge = datosRecibidos.nameSiteDestino;
+        this.calleDestino = datosRecibidos.calleDestino;
+        this.numeroExteriorDestino = datosRecibidos.numeroExteriorDestino;
+        this.numeroInteriorDestino = datosRecibidos.numeroInteriorDestino;
+        this.codigoPostalDestino = datosRecibidos.codigoPostalDestino;
+        this.coloniaDestino = datosRecibidos.coloniaDestino;
+        this.municipioDestino = datosRecibidos.municipioDestino;
+        this.localidadDestino = datosRecibidos.localidadDestino;
+        this.estadoDestino = datosRecibidos.estadoDestino;
+        this.paisDestino = datosRecibidos.paisDestino;
+        this.folioAddressDestino = datosRecibidos.folioAddressDestino;
+        this.latitudDestino = datosRecibidos.latitudDestino;
+        this.longitudDestino = datosRecibidos.longitudDestino;
+        this.ruta = datosRecibidos.ruta;
+        this.abrirComponenteBusqueda = false;
+        this.preguntaDireccion = false;
+        this.conoceDireccion = true;
+        this.NoconoceDireccion = false;
     }
 }

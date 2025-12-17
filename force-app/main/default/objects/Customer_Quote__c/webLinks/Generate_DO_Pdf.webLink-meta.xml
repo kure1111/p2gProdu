@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WebLink xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Generate_DO_Pdf</fullName>
+    <availability>online</availability>
+    <displayType>button</displayType>
+    <linkType>javascript</linkType>
+    <masterLabel>Generate DO Pdf</masterLabel>
+    <openType>onClickJavaScript</openType>
+    <protected>false</protected>
+    <url>window.open(&apos;{!$Site.BaseUrl}/apex/NEU_DO_save_pdf?id={!Customer_Quote__c.Id}&apos;, &apos;_blank&apos;);</url>
+</WebLink>

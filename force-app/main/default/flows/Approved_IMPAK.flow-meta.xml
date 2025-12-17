@@ -14,6 +14,7 @@
                 <elementReference>$Record.Id</elementReference>
             </value>
         </inputParameters>
+        <nameSegment>Customer_Quote__c.Impak_Approved</nameSegment>
     </actionCalls>
     <apiVersion>64.0</apiVersion>
     <description>Migrated from the: Approved IMPAK workflow rule

@@ -35,6 +35,7 @@
                 <stringValue>00XRQ000001Gtkj2AC</stringValue>
             </value>
         </inputParameters>
+        <nameSegment>emailSimple</nameSegment>
     </actionCalls>
     <apiVersion>61.0</apiVersion>
     <decisions>

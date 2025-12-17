@@ -1,0 +1,62 @@
+<table border="0" cellpadding="5" width="600" cellspacing="5" height="400" >
+<tr valign="top" height="50" >
+<td tEditID="c1r1" style=" background-color:#FFFFFF; bEditID:r3st1; color:#000000; bLabel:main; font-size:12pt; font-family:arial;" aEditID="c1r1" locked="0" >
+<![CDATA[<div style="text-align: center;"><b style="font-size: 12pt;"><span style="font-size: 12pt; font-family: Arial, sans-serif;">ESTATUS DE EMBARQUE CON DEVOLUCIÓN</span></b></div>]]></td>
+</tr>
+<tr valign="top" height="300" >
+<td tEditID="c1r2" style=" background-color:#FFFFFF; bEditID:r3st1; color:#000000; bLabel:main; font-size:12pt; font-family:arial;" aEditID="c1r2" locked="0" >
+<![CDATA[<div align="center">
+
+<table class="MsoNormalTable" border="0" cellspacing="0" cellpadding="0" width="500" style="width:375.0pt;mso-cellspacing:0cm;mso-yfti-tbllook:1184;mso-padding-alt:
+ 0cm 0cm 0cm 0cm"><tbody><tr style="mso-yfti-irow:0;mso-yfti-firstrow:yes;mso-yfti-lastrow:yes;
+  height:225.0pt"><td valign="top" style="background:white;padding:0cm 0cm 0cm 0cm;height:225.0pt"><table class="MsoNormalTable" border="0" cellspacing="5" cellpadding="0" width="600" style="width:450.0pt;mso-cellspacing:3.7pt;mso-yfti-tbllook:1184;mso-padding-alt:
+   3.75pt 3.75pt 3.75pt 3.75pt"><tbody>
+   <tr style="mso-yfti-irow:1;height:225.0pt">
+    <td valign="top" style="background:white;padding:3.75pt 3.75pt 3.75pt 3.75pt;
+    height:225.0pt;bEditID:r3st1;bLabel:main" teditid="c1r2" aeditid="c1r2" locked="0">
+    <p class="MsoNormal" style="mso-margin-top-alt:auto;mso-margin-bottom-alt:
+    auto;text-align:justify"><span style="font-family: Arial, sans-serif; font-size: 12pt;">&nbsp;</span></p>
+    <p class="MsoNormal" style="mso-margin-top-alt:auto;mso-margin-bottom-alt:
+    auto"><span lang="EN-US" style="font-size:12.0pt;font-family:&quot;Arial&quot;,sans-serif;
+    color:black;mso-ansi-language:EN-US">Shipment Status Monitoreo:&nbsp;<b>{!Shipment__c.Shipment_Status_Mon__c}</b></span></p>
+    <p class="MsoNormal" style="mso-margin-top-alt:auto;mso-margin-bottom-alt:
+    auto"><span lang="EN-US" style="font-size:12.0pt;font-family:&quot;Arial&quot;,sans-serif;
+    color:black;mso-ansi-language:EN-US"><u1:p>&nbsp;</u1:p></span><span style="font-size:12.0pt;font-family:&quot;Arial&quot;,sans-serif;color:black"><o:p></o:p></span></p><p class="MsoNormal" style="mso-margin-top-alt:auto;mso-margin-bottom-alt:
+    auto"><span lang="EN-US" style="font-size:12.0pt;font-family:&quot;Arial&quot;,sans-serif;
+    color:black;mso-ansi-language:EN-US"><u1:p>Estatus de devolución:&nbsp;&nbsp;{!Shipment__c.Estatus_de_Finalizado__c}</u1:p></span></p><p class="MsoNormal" style="mso-margin-top-alt:auto;mso-margin-bottom-alt:
+    auto"><span lang="EN-US" style="font-size:12.0pt;font-family:&quot;Arial&quot;,sans-serif;
+    color:black;mso-ansi-language:EN-US"><u1:p><br></u1:p></span></p><p class="MsoNormal" style="mso-margin-top-alt:auto;mso-margin-bottom-alt:
+    auto"><span lang="EN-US" style="font-size:12.0pt;font-family:&quot;Arial&quot;,sans-serif;
+    color:black;mso-ansi-language:EN-US"><u1:p>Shipment:&nbsp;<b><a href="https://pak2gologistics--c.documentforce.com/email/{!Shipment__c.Link}">{!Shipment__c.Name}</a></b></u1:p></span></p>
+    <p class="MsoNormal" style="mso-margin-top-alt:auto;mso-margin-bottom-alt:
+    auto"><span lang="EN-US" style="font-size:12.0pt;font-family:&quot;Arial&quot;,sans-serif;
+    color:black;mso-ansi-language:EN-US">Shipment:&nbsp;<b>{!Shipment__c.Number__c}</b></span></p>
+    <p class="MsoNormal" style="mso-margin-top-alt:auto;mso-margin-bottom-alt:
+    auto"><span style="font-size:12.0pt;font-family:&quot;Arial&quot;,sans-serif;
+    color:black">Cliente:&nbsp;<o:p></o:p></span><font face="Arial, sans-serif"><b>{!Shipment__c.Account_for__c}</b></font></p>
+    <p class="MsoNormal" style="mso-margin-top-alt:auto;mso-margin-bottom-alt:
+    auto"><span style="font-size:12.0pt;font-family:&quot;Arial&quot;,sans-serif;
+    color:black">Route:&nbsp;<b><o:p></o:p></b></span><font face="Arial, sans-serif"><b>{!Shipment__c.Route__c}</b></font></p>
+    <p class="MsoNormal" style="mso-margin-top-alt:auto;mso-margin-bottom-alt:
+    auto"><span style="font-size:12.0pt;font-family:&quot;Arial&quot;,sans-serif;
+    color:black">Carrier:&nbsp;<b><o:p></o:p></b></span><font face="Arial, sans-serif"><b>{!Shipment__c.Carrier__c}</b></font></p>
+    <p class="MsoNormal" style="mso-margin-top-alt:auto;mso-margin-bottom-alt:
+    auto"><span lang="EN-US" style="font-size:12.0pt;font-family:&quot;Arial&quot;,sans-serif;
+    color:black;mso-ansi-language:EN-US">Operation Executive:&nbsp;<b>{!Shipment__c.Operation_Executive__c}</b></span></p>
+    <p class="MsoNormal" style="mso-margin-top-alt:auto;mso-margin-bottom-alt:
+    auto"><span lang="EN-US" style="font-size:12.0pt;font-family:&quot;Arial&quot;,sans-serif;
+    color:black;mso-ansi-language:EN-US">Sales Executive Account: <b>{!Shipment__c.Account_owner__c}</b></span></p>
+    <p class="MsoNormal" style="mso-margin-top-alt:auto;mso-margin-bottom-alt:
+    auto"><span style="font-size:12.0pt;font-family:&quot;Arial&quot;,sans-serif;
+    color:black">Special Note 1:&nbsp;<o:p></o:p></span><font face="Arial, sans-serif"><b>{!Shipment__c.Special_Notes__c}</b></font></p><p class="MsoNormal" style="mso-margin-top-alt:auto;mso-margin-bottom-alt:
+    auto"><font face="Arial, sans-serif"><b><br></b></font></p><p class="MsoNormal" style="mso-margin-top-alt:auto;mso-margin-bottom-alt:
+    auto"><font face="Arial, sans-serif"><b><br></b></font></p><p class="MsoNormal" style="mso-margin-top-alt:auto;mso-margin-bottom-alt:
+    auto"><font face="Arial, sans-serif"><b>Fecha de Inicio de Devolución:&nbsp;{!Shipment__c.Fecha_final_devolucion__c}</b></font></p></td></tr></tbody></table></td></tr></tbody></table>
+
+</div>]]></td>
+</tr>
+<tr valign="top" height="50" >
+<td tEditID="c1r3" style=" background-color:#FFFFFF; bEditID:r3st1; color:#000000; bLabel:main; font-size:12pt; font-family:arial;" aEditID="c1r3" locked="0" >
+<![CDATA[]]></td>
+</tr>
+</table>

@@ -1,6 +1,10 @@
 trigger SendToSAP on OrderItem (after insert, after update, after delete) {
+    String skipLabel = System.Label.SkipSAPTrigger;
+    if(skipLabel == 'true') {
+        System.debug('SendToSAP trigger skipped by Custom Label');
+        return;
+    }
     Set<Id> orders;
-    System.debug('SendToSAP Trigger');
     if(Trigger.isInsert || Trigger.isUpdate){
         orders = new Set<Id>();
         for(OrderItem l : Trigger.New){
@@ -8,7 +12,6 @@ trigger SendToSAP on OrderItem (after insert, after update, after delete) {
                 orders.add(l.OrderId);
             }
         }
-        System.debug('SendToSAP Trigger orders: ' + orders);
         if(orders.size()>0){
             SendOrderSAP.sendToSap(orders);
         }

@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionCalls>
+        <name>Email_de_status_finalizado</name>
+        <label>Shipment__c.Email_de_status_finalizado</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <actionName>Shipment__c.Email_de_status_finalizado</actionName>
+        <actionType>emailAlert</actionType>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>SObjectRowId</name>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </inputParameters>
+        <nameSegment>Shipment__c.Email_de_status_finalizado</nameSegment>
+    </actionCalls>
+    <apiVersion>65.0</apiVersion>
+    <description>Migrated from the: Devoluciones2 workflow rule
+Workflow rule description: &quot;</description>
+    <environments>Default</environments>
+    <label>Devoluciones2</label>
+    <migratedFromWorkflowRuleName>Devoluciones2</migratedFromWorkflowRuleName>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <start>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Email_de_status_finalizado</targetReference>
+        </connector>
+        <doesRequireRecordChangedToMeetCriteria>true</doesRequireRecordChangedToMeetCriteria>
+        <filterLogic>1 OR 2 OR 3 OR  4 OR 5</filterLogic>
+        <filters>
+            <field>Estatus_de_Finalizado__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Entregado a cliente</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>Estatus_de_Finalizado__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Venta interna</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>Estatus_de_Finalizado__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Descuento al proveedor</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>Estatus_de_Finalizado__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Donación</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>Estatus_de_Finalizado__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Perdida</stringValue>
+            </value>
+        </filters>
+        <object>Shipment__c</object>
+        <recordTriggerType>CreateAndUpdate</recordTriggerType>
+        <triggerType>RecordAfterSave</triggerType>
+    </start>
+    <status>Active</status>
+</Flow>

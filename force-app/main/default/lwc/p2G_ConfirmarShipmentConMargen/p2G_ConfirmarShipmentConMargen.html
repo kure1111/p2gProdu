@@ -4,6 +4,36 @@
             <lightning-toast title="Advertencia" message='El margen es menor a lo que puede el usuario confirmar, se envia solicitar aprobación al lider' variant="warning"></lightning-toast>
         </div>
         <div class="approval-box">
+        <div class="description">
+            <p class="description-text">Es necesario la aprobación del lider ya que el margen es menor al que se permite.</p>
+        </div>
+        <div class="approval-info-table">
+            <p>
+                <span>Shipment:</span>
+                <span class="value" id="nombre">{nombre}</span>
+            </p>
+            <p>
+                <span>Costo Buy Price:</span>
+                <span class="value" id="buyPrice">{formattedBuy}</span>
+            </p>
+            <p>
+                <span>Costo Sell Price:</span>
+                <span class="value" id="sellPrice">{formattedSell}</span>
+            </p>
+            <p>
+                <span>Profit:</span>
+                <span class="value" id="margen">{margen}</span>
+            </p>
+            <p>
+                <span>Motivo:</span>
+                <span class="value">Solicitud de confirmación por Margen</span>
+            </p>
+            <div class="button-section">
+                <lightning-button label="Cerrar" onclick={Cerrar} variant="brand"></lightning-button>
+            </div>
+        </div>
+    </div>
+        <!--div class="approval-box">
             <div class="description">
                 <p class="description-text">Es necesario la aprobación del lider ya que el margen es menor al que se permite.</p>
             </div>
@@ -33,6 +63,58 @@
                 <div class="button-section">
                     <lightning-button label="Cerrar" onclick={Cerrar} variant="brand"></lightning-button>
                 </div>
+            </div>
+        </div-->
+    </div>
+    <div if:true={approvalMargen}>
+        <div class="approvalM-modal">
+            <div class="modal-header">
+                <h2>Aprobar</h2>
+            </div>
+            <div class="modal-body">
+                <div class="approvalM-details">
+                    <p><strong>Solicitud de Aprobación:</strong> <span onclick={abrirSP} class="approvalM-link">nameSP</span></p>
+                    <p><strong>Planner:</strong> {planner}</p>
+                    <p><strong>ETD:</strong> {etd}</p>
+                    <p><strong>Total Sell Price:</strong> {totalSell}</p>
+                    <p><strong>Total Buy Price:</strong> {totalBuy}</p>
+                    <p><strong>Margen:</strong> {margen}</p>
+                    <p><strong>Motivo de Aprobación:</strong> Solicitud de confirmación por Margen</p>
+                </div>
+        
+                <div class="approvalM-table">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th></th>
+                                <th>Carrier</th>
+                                <th>Rate Name</th>
+                                <th>Route</th>
+                                <th>Container Type</th>
+                                <th>Buy Rate</th>
+                                <th>Sell Rate</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <template for:each={data} for:item="item">
+                                <tr key={item.id}>
+                                    <td>{item.ServiceLineName}</td>
+                                    <td>{item.Carrier}</td>
+                                    <td>{item.RateName}</td>
+                                    <td>{item.Route}</td>
+                                    <td>{item.ContainerType}</td>
+                                    <td>{item.BuyAmount}</td>
+                                    <td>{item.sellRate}</td>
+                                </tr>
+                            </template>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <lightning-button variant="destructive" label="Rechazar" onclick={handleApprove} class="approval-button"></lightning-button>
+            <lightning-button variant="neutral" label="Aprobar" onclick={handleApprove} style="background-color: green;"></lightning-button>
+                <button onclick={Cerrar} class="btn btn-cancel">Cerrar</button>
             </div>
         </div>
     </div>

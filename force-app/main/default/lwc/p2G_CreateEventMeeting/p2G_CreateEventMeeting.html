@@ -1,0 +1,145 @@
+<template>
+<lightning-card title="Crear Evento" icon-name="standard:event">
+<div class="slds-p-around_medium">
+    
+    <template if:true={isLoading}>
+        <lightning-spinner alternative-text="Cargando..." size="medium"></lightning-spinner>
+    </template>
+    
+    <template if:false={isLoading}>
+        <template if:true={showInicio}>
+            <lightning-combobox label="Tipo de Evento"
+                                value={subject}
+                                options={subjectOptions}
+                                onchange={handleSubjectChange}
+                                required >
+            </lightning-combobox>
+
+            <template if:true={showMeetingType}>
+                <lightning-combobox label="Tipo de Meeting"
+                                    value={meetingType}
+                                    options={meetingTypeOptions}
+                                    onchange={handleMeetingTypeChange}>
+                </lightning-combobox>
+            </template>
+            <lightning-button label="Siguiente"
+                                variant="brand"
+                                class="slds-m-top_small"
+                                onclick={handleNext}>
+            </lightning-button>
+        </template>
+
+        <template if:true={showButtons}>
+            <div class="slds-grid slds-wrap slds-m-bottom_small">
+                <lightning-button label="Prospección" variant="brand" class="slds-col slds-size_1-of-1 slds-medium-size_1-of-3 slds-p-around_x-small" onclick={handleProspeccionClick}></lightning-button>
+                <lightning-button label="Seguimiento" variant="brand" class="slds-col slds-size_1-of-1 slds-medium-size_1-of-3 slds-p-around_x-small" onclick={handleSeguimientoClick}></lightning-button>
+                <lightning-button label="Ejecución" variant="brand" class="slds-col slds-size_1-of-1 slds-medium-size_1-of-3 slds-p-around_x-small" onclick={handleEjecucionClick}></lightning-button>
+            </div>
+        </template>
+        
+        <template if:true={showButtonsExistentClients}>
+            <div class="slds-grid slds-wrap slds-m-bottom_small">
+                <lightning-button label="Desarrollo Comercial" 
+                                    variant="brand" 
+                                    class="slds-col slds-size_1-of-1 slds-medium-size_1-of-4 custom-button" 
+                                    onclick={handleDesarolloComercialClick}>
+                </lightning-button>
+                
+                <lightning-button label="Desempeño de Servicio" 
+                                    variant="brand" 
+                                    class="slds-col slds-size_1-of-1 slds-medium-size_1-of-4 custom-button" 
+                                    onclick={handleDesempeñoServicioClick}>
+                </lightning-button>
+                
+                <lightning-button label="Revisión de Negocio" 
+                                    variant="brand" 
+                                    class="slds-col slds-size_1-of-1 slds-medium-size_1-of-4 custom-button" 
+                                    onclick={handleRevisiónNegocioClick}>
+                </lightning-button>
+                
+                <lightning-button label="Gestión Administrativa" 
+                                    variant="brand" 
+                                    class="slds-col slds-size_1-of-1 slds-medium-size_1-of-4 custom-button" 
+                                    onclick={handleGestionAdministrativaClick}>
+                </lightning-button>
+            </div>
+        </template>
+                        
+        <template if:true={showFormCreateEvent}>
+            <template if:true={showOpps}>
+                <div class="datatable-container">
+                    <lightning-datatable
+                        key-field="Id"
+                        data={opportunities}
+                        columns={opportunityColumns}
+                        onrowselection={handleOpportunitySelect}
+                        max-row-selection="1">
+                    </lightning-datatable>
+                </div>
+            </template>
+
+            <lightning-input label="Relacionado a" value={recordName} disabled></lightning-input>
+            <lightning-input label="Asignado a" value={userName} disabled></lightning-input>
+
+            <lightning-combobox label="Tipo de Evento"
+                                value={subject}
+                                options={subjectOptions}
+                                onchange={handleSubjectChange}
+                                disabled>
+            </lightning-combobox>
+
+            <template if:true={showMeetingType}>
+                <lightning-combobox label="Tipo de Meeting"
+                                    value={meetingType}
+                                    options={meetingTypeOptions}
+                                    onchange={handleMeetingTypeChange}
+                                    disabled>
+                </lightning-combobox>
+            </template>
+
+            <lightning-input label="Motivo"
+                                value={reason}
+                                disabled>
+            </lightning-input>
+
+            <lightning-combobox label="Frecuencia"
+                                value={frequency}
+                                options={frequencyOptions}
+                                onchange={handleFrequencyChange}>
+            </lightning-combobox>
+
+            <lightning-input type="datetime-local"
+                            label="Fecha y Hora de Inicio"
+                            value={startDateTime}
+                            onchange={handleStartDateChange}
+                            required>
+            </lightning-input>
+
+            <lightning-input type="datetime-local"
+                            label="Fecha y Hora de Fin"
+                            value={endDateTime}
+                            onchange={handleEndDateChange}
+                            required>
+            </lightning-input>
+
+            <div class="slds-grid slds-wrap">
+                <div class="slds-col slds-size_1-of-2">
+                    <lightning-button label="Crear Evento"
+                        variant="brand"
+                        class="slds-m-top_small"
+                        onclick={handleSubmit}>
+                    </lightning-button>
+                </div>
+                <div class="slds-col slds-size_1-of-2">
+                    <lightning-button label="Regresar"
+                        variant="brand"
+                        class="slds-m-top_small"
+                        onclick={handleReturn}>
+                    </lightning-button>
+                </div>
+            </div>
+        </template>
+    </template>
+</div>
+</lightning-card>
+</template>

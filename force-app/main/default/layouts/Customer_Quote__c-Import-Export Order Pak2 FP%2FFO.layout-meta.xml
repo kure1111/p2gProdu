@@ -10,6 +10,7 @@
     <customButtons>Comparison</customButtons>
     <customButtons>Duplicate_Import_Export_Quote_Order</customButtons>
     <excludeButtons>Clone</excludeButtons>
+    <excludeButtons>OpenSlackRecordChannel</excludeButtons>
     <excludeButtons>Submit</excludeButtons>
     <layoutSections>
         <customLabel>false</customLabel>
@@ -134,6 +135,10 @@
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>ETD_Time__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Sales_Type__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
@@ -315,6 +320,10 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Observations__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Observations_Long__c</field>
             </layoutItems>
         </layoutColumns>
         <style>OneColumn</style>
@@ -886,14 +895,14 @@
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
-        <fields>Fee_Category__c</fields>
-        <fields>Fee_Description__c</fields>
         <fields>Account_for__c</fields>
+        <fields>Route__c</fields>
+        <fields>Fee_Category__c</fields>
         <fields>Container_Type__c</fields>
         <fields>Rate_Type__c</fields>
         <fields>Carrier_Account__c</fields>
         <fields>Fee_Rate__c</fields>
-        <fields>Port_Airport__c</fields>
+        <fields>Buy_Rate__c</fields>
         <fields>Active__c</fields>
         <relatedList>Fee__c.Import_Export_Quoted_Marketplace__c</relatedList>
     </relatedLists>

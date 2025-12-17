@@ -17,6 +17,7 @@
                 <elementReference>recordId</elementReference>
             </value>
         </inputParameters>
+        <nameSegment>APX_ValidacionCliente</nameSegment>
     </actionCalls>
     <apiVersion>54.0</apiVersion>
     <assignments>

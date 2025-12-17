@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <encodingKey>UTF-8</encodingKey>
+    <letterhead>Letterhead_PakSYSTEM</letterhead>
+    <name>Install Request</name>
+    <style>formalLetter</style>
+    <subject>{!Case.CaseNumber} - {!Case.TEAM__c}</subject>
+    <textOnly>{!Case.CaseNumber}
+
+Subject: {!Case.Subject}
+Status Request: {!Case.Status}
+
+Comments:
+{!Case.Last_Case_Comment}
+
+{!Case.Link}</textOnly>
+    <type>html</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

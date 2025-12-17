@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<AnimationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <animationFrequency>always</animationFrequency>
+    <developerName>StatusQuote</developerName>
+    <isActive>true</isActive>
+    <masterLabel>StatusQuote</masterLabel>
+    <recordTypeContext>Custom</recordTypeContext>
+    <recordTypeName>Import_Export_Quote</recordTypeName>
+    <sobjectType>Customer_Quote__c</sobjectType>
+    <targetField>Quotation_Status__c</targetField>
+    <targetFieldChangeToValues>Approved as Succesful</targetFieldChangeToValues>
+</AnimationRule>

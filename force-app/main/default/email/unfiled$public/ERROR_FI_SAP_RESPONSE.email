@@ -1,0 +1,14 @@
+<table border="0" cellpadding="5" width="600" cellspacing="5" height="400" >
+<tr valign="top" height="50" >
+<td tEditID="c1r1" style=" background-color:#FFFFFF; color:#000000; bEditID:r3st1; bLabel:main; font-size:12pt; font-family:arial;" aEditID="c1r1" locked="0" >
+<![CDATA[<div style="text-align: center;"><span style="background-color: rgb(255, 255, 0);"><b style=""><font color="#ff0000" style="" size="5">** <font style="">ERROR</font> **</font></b></span></div>]]></td>
+</tr>
+<tr valign="top" height="300" >
+<td tEditID="c1r2" style=" background-color:#FFFFFF; color:#000000; bEditID:r3st1; bLabel:main; font-size:12pt; font-family:arial;" aEditID="c1r2" locked="0" >
+<![CDATA[<font face="Arial, sans-serif" style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt;">Se ha realizado Send to SAP para el folio:&nbsp;&nbsp;{!Response__c.Shipment__c} sin embargo la respuesta es de tipo <b>ERROR</b><br></font><div style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt;"><font face="Arial, sans-serif"><br></font></div><div style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt;"><font face="Arial, sans-serif">Respuesta de SAP:</font></div><div style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt;"><font color="#ff0000" face="Arial, sans-serif"><b>{!Response__c.Message__c}</b></font></div><div style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt;"><font color="#ff0000" face="Arial, sans-serif"><b>{!Response__c.Message_2__c}</b></font></div><div style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt;"><font face="Arial, sans-serif"><br></font></div><div style=""><font face="arial" style="">Created: {!Response__c.CreatedDate}</font><span style="font-family: arial;">, {!Response__c.CreatedBy}</span></div>]]></td>
+</tr>
+<tr valign="top" height="50" >
+<td tEditID="c1r3" style=" background-color:#FFFFFF; color:#000000; bEditID:r3st1; bLabel:main; font-size:12pt; font-family:arial;" aEditID="c1r3" locked="0" >
+<![CDATA[Link:&nbsp;{!Response__c.Link}]]></td>
+</tr>
+</table>

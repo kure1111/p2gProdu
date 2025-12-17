@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Catalogo SAT</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Catalogos SAT</value>
+    </caseValues>
+    <gender>Feminine</gender>
+    <layouts>
+        <layout>Catalogo SAT Layout</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+    </layouts>
+    <recordTypes>
+        <description><!-- Catalogo del SAT c_Colonias --></description>
+        <label><!-- Codigo Postal --></label>
+        <name>Codigo_Postal</name>
+    </recordTypes>
+    <recordTypes>
+        <description><!-- Catalogo el Sat c_Colonias --></description>
+        <label><!-- Colonia --></label>
+        <name>Colonia</name>
+    </recordTypes>
+    <recordTypes>
+        <description><!-- Catálogo de configuración autotransporte federal --></description>
+        <label><!-- Configuracion Autotransporte --></label>
+        <name>Configuracion_Autotrasporte</name>
+    </recordTypes>
+    <recordTypes>
+        <description><!-- Catálogo de la clave del transporte Versión 1.0 --></description>
+        <label><!-- Cve Transporte --></label>
+        <name>Cve_Transporte</name>
+    </recordTypes>
+    <recordTypes>
+        <description><!-- Catálogo de tipo de estación --></description>
+        <label><!-- Estaciones --></label>
+        <name>Estaciones</name>
+    </recordTypes>
+    <recordTypes>
+        <description><!-- Describe el Estado con base al catalogo SAT c_Estado --></description>
+        <label><!-- Estado --></label>
+        <name>Estado</name>
+    </recordTypes>
+    <recordTypes>
+        <description><!-- Catalogo de Fracción Arancelaria --></description>
+        <label><!-- Fraccion Arancelaria --></label>
+        <name>Fraccion_Arancelaria</name>
+    </recordTypes>
+    <recordTypes>
+        <description><!-- Describe la localidad con base al catalogo SAT c_Localidad --></description>
+        <label><!-- Localidad --></label>
+        <name>Localidad</name>
+    </recordTypes>
+    <recordTypes>
+        <description><!-- Catálogo de materiales peligrosos --></description>
+        <label><!-- Material Peligroso --></label>
+        <name>Material_Peligroso</name>
+    </recordTypes>
+    <recordTypes>
+        <description><!-- Describe el municipio con base al catálogo c_municipio --></description>
+        <label><!-- Municipio --></label>
+        <name>Municipio</name>
+    </recordTypes>
+    <recordTypes>
+        <description><!-- Describe el Pais --></description>
+        <label><!-- Pais --></label>
+        <name>Pais</name>
+    </recordTypes>
+    <recordTypes>
+        <description><!-- Catálogo de productos y servicios carta porte --></description>
+        <label><!-- Productos y Servicios cP --></label>
+        <name>Productos_y_Servicios_cP</name>
+    </recordTypes>
+    <recordTypes>
+        <description><!-- Default --></description>
+        <label><!-- Sin Categoria --></label>
+        <name>Sin_Categoria</name>
+    </recordTypes>
+    <recordTypes>
+        <description><!-- Catálogo de tipo de embalaje --></description>
+        <label><!-- Tipo de Embalaje --></label>
+        <name>Tipo_Embalaje</name>
+    </recordTypes>
+    <recordTypes>
+        <description><!-- Catálogo de tipo de estación --></description>
+        <label><!-- Tipo de Estacion --></label>
+        <name>Tipo_de_Estacion</name>
+    </recordTypes>
+    <recordTypes>
+        <description><!-- Catálogo tipo permiso --></description>
+        <label><!-- Tipo de Permiso --></label>
+        <name>Tipo_de_Permiso</name>
+    </recordTypes>
+    <recordTypes>
+        <description><!-- Catálogo de tipo de remolque --></description>
+        <label><!-- Tipo de Remolque --></label>
+        <name>Tipo_de_Remolque</name>
+    </recordTypes>
+    <recordTypes>
+        <description><!-- Catálogo de unidades de medida y embalaje --></description>
+        <label><!-- Unidad Peso --></label>
+        <name>Unidad_Peso</name>
+    </recordTypes>
+</CustomObjectTranslation>

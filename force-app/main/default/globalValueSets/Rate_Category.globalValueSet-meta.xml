@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GlobalValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customValue>
+        <fullName>Sea Freights</fullName>
+        <default>false</default>
+        <label>Sea Freights</label>
+    </customValue>
+    <customValue>
+        <fullName>Air Freights</fullName>
+        <default>false</default>
+        <label>Air Freights</label>
+    </customValue>
+    <customValue>
+        <fullName>Road Freights</fullName>
+        <default>false</default>
+        <label>Road Freights</label>
+    </customValue>
+    <customValue>
+        <fullName>Railway Freights</fullName>
+        <default>false</default>
+        <label>Railway Freights</label>
+    </customValue>
+    <customValue>
+        <fullName>Multimodal Freights</fullName>
+        <default>false</default>
+        <label>Multimodal Freights</label>
+    </customValue>
+    <customValue>
+        <fullName>POL Charges</fullName>
+        <default>false</default>
+        <label>POL Charges</label>
+    </customValue>
+    <customValue>
+        <fullName>POD Charges</fullName>
+        <default>false</default>
+        <label>POD Charges</label>
+    </customValue>
+    <customValue>
+        <fullName>Warehouse</fullName>
+        <default>false</default>
+        <label>Warehouse</label>
+    </customValue>
+    <customValue>
+        <fullName>Drayages</fullName>
+        <default>false</default>
+        <label>Drayages</label>
+    </customValue>
+    <customValue>
+        <fullName>Other Service Charges</fullName>
+        <default>false</default>
+        <label>Other Service Charges</label>
+    </customValue>
+    <customValue>
+        <fullName>Clearing Costs</fullName>
+        <default>false</default>
+        <label>Clearing Costs</label>
+    </customValue>
+    <customValue>
+        <fullName>IATA Air Freights</fullName>
+        <default>false</default>
+        <label>IATA Air Freights</label>
+    </customValue>
+    <masterLabel>Rate Category</masterLabel>
+    <sorted>false</sorted>
+</GlobalValueSet>

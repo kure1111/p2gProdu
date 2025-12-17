@@ -1,0 +1,30 @@
+<messaging:emailTemplate subject=" Shipment Verify - {!relatedTo.Name} - {!relatedTo.Account_for__r.Name}" recipientType="User" relatedToType="Shipment__c">
+<messaging:plainTextEmailBody >
+             ** VERIFICADO PAKCONTROL** 
+Estimad@ Equipo de Operaciones, Pagos y Facturacion, este Shipment ha sido Verificado por Pak Control. 
+
+Detalles: 
+
+Folio: {!relatedTo.Name} 
+Planner: {!relatedTo.Operation_Executive__r.Name} 
+Cliente: {!relatedTo.Account_for__r.Name} 
+Ruta: {!relatedTo.Route__r.Name} 
+Venta: {!relatedTo.Total_Services_Sell_Amount__c} 
+Costo: {!relatedTo.Total_Services_Std_Buy_Amount__c} 
+Profit: {!relatedTo.Total_Standard_Profit__c} 
+Proveedor: {!relatedTo.Carrier__r.Name}
+<apex:repeat var="IE" value="{!relatedTo.Import_Export_Quotes_Orders__r}">
+Account Executive Email: {!IE.Account_Executive_Email__c}
+Account Executive Email 2: {!IE.Account_Executive_Email_2__c}
+
+</apex:repeat>
+Service Lines:
+<apex:repeat var="LI" value="{!relatedTo.Invoice_Lines__r}">
+Service Line:{!LI.Name}, Rate Name:{!LI.Service_Rate_Name__r.Name}, Units:{!LI.Units__c}, Sell Net Amount:{!LI.Sell_Amount__c}, Buy Amount:{!LI.Std_Buy_Amount__c}
+</apex:repeat> 
+ 
+Fecha/hora Verificado: {!relatedTo.Date_Verify_PakControlTxt__c} 
+
+Comentarios: {!relatedTo.Status_Observations__c} 
+</messaging:plainTextEmailBody>
+</messaging:emailTemplate>

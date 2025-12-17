@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomTab xmlns="http://soap.sforce.com/2006/04/metadata">
+    <label>Service Line History</label>
+    <motif>Custom95: Stopwatch</motif>
+    <page>PAK_HistoriaShipmentServiceLine</page>
+</CustomTab>

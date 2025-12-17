@@ -1,0 +1,102 @@
+<template>
+    <lightning-card title="Direcciones a Timbrar">
+        <div class="slds-p-around_medium">
+            
+            <template if:true={isLoading}>
+                <div class="slds-align_absolute-center">
+                    <lightning-spinner alternative-text="Loading"></lightning-spinner>
+                </div>
+            </template>
+
+            <template if:true={error}>
+                <div class="slds-notify slds-notify_alert slds-theme_error">
+                    Error: {errorMessage}
+                </div>
+            </template>
+
+            <template if:false={isLoading}>
+                <div class="slds-grid slds-wrap slds-gutters">
+                    
+                    <!-- Origen -->
+                    <div class="slds-col slds-size_1-of-2">
+                        <div class="slds-box">
+                            <div class="slds-text-align_center slds-m-bottom_small">
+                                <h3 class="slds-text-heading_small">Origen</h3>
+                            </div>
+                            
+                            <template if:true={hasOriginData}>
+                                <div class="slds-text-align_center slds-m-bottom_small">
+                                    <lightning-input 
+                                        type="checkbox" 
+                                        label="Seleccionar Origen"
+                                        checked={originChecked}
+                                        onchange={handleOriginChange}>
+                                    </lightning-input>
+                                </div>
+                                <div class="slds-m-top_small">
+                                    <div><strong>Nombre:</strong> {origin.nombre}</div>
+                                    <div><strong>Calle:</strong> {origin.calle}</div>
+                                    <div><strong>Número Exterior:</strong> {origin.numeroExt}</div>
+                                    <div><strong>Colonia:</strong> {origin.colonia}</div>
+                                    <div><strong>Código Postal:</strong> {origin.codigoPostal}</div>
+                                </div>
+                            </template>
+                            
+                            <template if:false={hasOriginData}>
+                                <div class="slds-notify slds-notify_alert slds-theme_info slds-m-top_small">
+                                    No se encontraron datos de origen. Se usarán los valores originales.
+                                </div>
+                            </template>
+                        </div>
+                    </div>
+
+                    <!-- Destino -->
+                    <div class="slds-col slds-size_1-of-2">
+                        <div class="slds-box">
+                            <div class="slds-text-align_center slds-m-bottom_small">
+                                <h3 class="slds-text-heading_small">Destino</h3>
+                            </div>
+                            
+                            <template if:true={hasDestinationData}>
+                                <div class="slds-text-align_center slds-m-bottom_small">
+                                    <lightning-input 
+                                        type="checkbox" 
+                                        label="Seleccionar Destino"
+                                        checked={destinationChecked}
+                                        onchange={handleDestinationChange}>
+                                    </lightning-input>
+                                </div>
+                                <div class="slds-m-top_small">
+                                    <div><strong>Nombre:</strong> {destination.nombre}</div>
+                                    <div><strong>Calle:</strong> {destination.calle}</div>
+                                    <div><strong>Número Exterior:</strong> {destination.numeroExt}</div>
+                                    <div><strong>Colonia:</strong> {destination.colonia}</div>
+                                    <div><strong>Código Postal:</strong> {destination.codigoPostal}</div>
+                                </div>
+                            </template>
+                            
+                            <template if:false={hasDestinationData}>
+                                <div class="slds-notify slds-notify_alert slds-theme_info slds-m-top_small">
+                                    No se encontraron datos de destino. Se usarán los valores originales.
+                                </div>
+                            </template>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- Botón OK -->
+                <div class="slds-text-align_center slds-m-top_medium">
+                    <lightning-button
+                        label="OK"
+                        variant="brand"
+                        onclick={handleOkClick}
+                        disabled={isOkButtonDisabled}>
+                    </lightning-button>
+                </div>
+
+            </template>
+
+        </div>
+    </lightning-card>
+</template>

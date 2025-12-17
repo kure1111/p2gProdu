@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionCalls>
+        <name>FirstContactWithCustomer</name>
+        <label>FirstContactWithCustomer</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <actionName>NewTask</actionName>
+        <actionType>quickAction</actionType>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>contextId</name>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>Subject</name>
+            <value>
+                <stringValue>First Contact with Customer</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>ActivityDate</name>
+            <value>
+                <elementReference>Opportunity_DueDate</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>OwnerId</name>
+            <value>
+                <elementReference>$Record.OwnerId</elementReference>
+            </value>
+        </inputParameters>
+        <nameSegment>NewTask</nameSegment>
+    </actionCalls>
+    <apiVersion>64.0</apiVersion>
+    <description>Migrado del Workflow Rule: OPP_Potencial</description>
+    <environments>Default</environments>
+    <formulas>
+        <name>Opportunity_DueDate</name>
+        <dataType>Date</dataType>
+        <expression>{!$Record.CreatedDate} + 2</expression>
+    </formulas>
+    <interviewLabel>OPP_Potencial {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>OPP_Potencial</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <start>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>FirstContactWithCustomer</targetReference>
+        </connector>
+        <filterFormula>AND({!$Record.RecordType.Name} = &quot;Standar Opportunity&quot;, ISPICKVAL({!$Record.StageName}, &quot;Potencial&quot;))</filterFormula>
+        <object>Opportunity</object>
+        <recordTriggerType>Create</recordTriggerType>
+        <triggerType>RecordAfterSave</triggerType>
+    </start>
+    <status>Active</status>
+    <textTemplates>
+        <name>PrimerContactoNuevaOportunidad</name>
+        <isViewedAsPlainText>false</isViewedAsPlainText>
+        <text>&lt;p&gt;Primer Contacto a nueva Oportunidad{!$Record.AccountId}&lt;/p&gt;</text>
+    </textTemplates>
+</Flow>

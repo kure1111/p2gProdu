@@ -1,0 +1,17 @@
+.datatable-container {
+    max-height: 200px;
+    overflow-y: auto;
+}
+
+.slds-grid.slds-wrap .slds-col {
+    padding: 0.5rem;
+}
+
+.slds-grid.slds-wrap .slds-col {
+    padding: 0.5rem;
+}
+
+.custom-button {
+    width: 100%; 
+    margin-bottom: 0.5rem;
+}

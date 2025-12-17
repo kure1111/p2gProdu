@@ -736,6 +736,9 @@
                         <div class="slds-truncate" title="Nombre">Status</div>
                     </th>
                     <th scope="col">
+                        <div class="slds-truncate" title="Nombre">Motivo Rechazo</div>
+                    </th>
+                    <th scope="col">
                         <div class="slds-truncate" title="Calle">Calle y Número</div>
                     </th>
                     <th scope="col">
@@ -779,6 +782,11 @@
                         </td>
                         <td>
                             <div class="slds-truncate" title={marker.status}>{marker.status}</div>
+                        </td>
+                        <td>
+                            <template if:true={marker.motivo}>
+                                <div class="slds-truncate" title={marker.Motivo_rechazo__c}>{marker.motivo}</div>
+                            </template>
                         </td>
                         <td>
                             <div class="slds-truncate" title={marker.calle}>{marker.calle} {marker.numero}</div>

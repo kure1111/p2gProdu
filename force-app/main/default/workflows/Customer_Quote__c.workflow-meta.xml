@@ -1437,7 +1437,7 @@
             <name>Approved_Date_Time</name>
             <type>FieldUpdate</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <criteriaItems>
             <field>Customer_Quote__c.Quotation_Status__c</field>
             <operation>equals</operation>
@@ -1496,7 +1496,7 @@
             <name>Cotizaci_n_de_proyecto</name>
             <type>Alert</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <criteriaItems>
             <field>Customer_Quote__c.Cotizacion_Proyecto__c</field>
             <operation>equals</operation>
@@ -1514,7 +1514,7 @@
             <name>Date_Autorizado_FP_FO</name>
             <type>FieldUpdate</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <criteriaItems>
             <field>Customer_Quote__c.AUTORIZADO_FP_FO__c</field>
             <operation>equals</operation>
@@ -1533,7 +1533,7 @@
             <name>Declined_Date_time_2</name>
             <type>FieldUpdate</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <criteriaItems>
             <field>Customer_Quote__c.Quotation_Status__c</field>
             <operation>equals</operation>
@@ -1582,7 +1582,7 @@
             <name>Email_Manager_Sales_Exec</name>
             <type>FieldUpdate</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <criteriaItems>
             <field>Customer_Quote__c.RecordTypeId</field>
             <operation>equals</operation>
@@ -1596,7 +1596,7 @@
             <name>New_Order_Assinged_ES</name>
             <type>Alert</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <criteriaItems>
             <field>Customer_Quote__c.Quotation_Status__c</field>
             <operation>equals</operation>
@@ -1620,7 +1620,7 @@
             <name>New_Order_Assinged_EX</name>
             <type>Alert</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <criteriaItems>
             <field>Customer_Quote__c.Quotation_Status__c</field>
             <operation>equals</operation>
@@ -1643,7 +1643,7 @@
             <name>Update_Approved</name>
             <type>FieldUpdate</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <criteriaItems>
             <field>Customer_Quote__c.Quotation_Status__c</field>
             <operation>equals</operation>
@@ -1676,7 +1676,7 @@
             <name>Update_Approved_Date</name>
             <type>FieldUpdate</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <criteriaItems>
             <field>Customer_Quote__c.Quotation_Status__c</field>
             <operation>equals</operation>
@@ -1705,7 +1705,7 @@
             <name>New_Order_Assinged_FP_FO</name>
             <type>Alert</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <criteriaItems>
             <field>Customer_Quote__c.Quotation_Status__c</field>
             <operation>equals</operation>
@@ -1724,7 +1724,7 @@
             <name>New_Order_Assinged_PQ</name>
             <type>Alert</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <criteriaItems>
             <field>Customer_Quote__c.Quotation_Status__c</field>
             <operation>equals</operation>
@@ -1748,7 +1748,7 @@
             <name>New_Order_Assinged</name>
             <type>Alert</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <criteriaItems>
             <field>Customer_Quote__c.Quotation_Status__c</field>
             <operation>equals</operation>
@@ -1772,7 +1772,7 @@
             <name>Approved_R</name>
             <type>Alert</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <criteriaItems>
             <field>Customer_Quote__c.Quotation_Status__c</field>
             <operation>equals</operation>
@@ -1791,7 +1791,7 @@
             <name>New_Order_Assinged_T</name>
             <type>Alert</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <criteriaItems>
             <field>Customer_Quote__c.Quotation_Status__c</field>
             <operation>equals</operation>
@@ -1815,7 +1815,7 @@
             <name>Approved_AW</name>
             <type>Alert</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <criteriaItems>
             <field>Customer_Quote__c.Quotation_Status__c</field>
             <operation>equals</operation>
@@ -1834,7 +1834,7 @@
             <name>Approved_AW</name>
             <type>Alert</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <criteriaItems>
             <field>Customer_Quote__c.Quotation_Status__c</field>
             <operation>equals</operation>
@@ -1853,7 +1853,7 @@
             <name>New_Order_Assinged_Air_PQ</name>
             <type>Alert</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <criteriaItems>
             <field>Customer_Quote__c.Quotation_Status__c</field>
             <operation>equals</operation>
@@ -1877,7 +1877,7 @@
             <name>New_Order_Assinged_WH</name>
             <type>Alert</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <criteriaItems>
             <field>Customer_Quote__c.Only_Warehouse_Service__c</field>
             <operation>equals</operation>
@@ -1901,7 +1901,7 @@
             <name>New_Order_Assinged_Expo_M</name>
             <type>Alert</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <criteriaItems>
             <field>Customer_Quote__c.Quotation_Status__c</field>
             <operation>equals</operation>
@@ -1925,7 +1925,7 @@
             <name>New_Order_Assinged_IMPO_M</name>
             <type>Alert</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <criteriaItems>
             <field>Customer_Quote__c.Quotation_Status__c</field>
             <operation>equals</operation>
@@ -1954,7 +1954,7 @@
             <name>Send_Request_to_IMPAK</name>
             <type>Alert</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <criteriaItems>
             <field>Customer_Quote__c.IMPAK__c</field>
             <operation>equals</operation>
@@ -1973,7 +1973,7 @@
             <name>Enviar_a_folios_M</name>
             <type>Alert</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <criteriaItems>
             <field>Customer_Quote__c.Quotation_Status__c</field>
             <operation>equals</operation>
@@ -1992,7 +1992,7 @@
             <name>Update_Pricing_Responded</name>
             <type>FieldUpdate</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <criteriaItems>
             <field>Customer_Quote__c.Freight_Mode__c</field>
             <operation>equals</operation>
@@ -2011,7 +2011,7 @@
             <name>Response_Request_for_IMPAK</name>
             <type>Alert</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <criteriaItems>
             <field>Customer_Quote__c.Quotation_Status__c</field>
             <operation>equals</operation>
@@ -2034,7 +2034,7 @@
             <name>Update_Responded_Pricing3</name>
             <type>FieldUpdate</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <criteriaItems>
             <field>Customer_Quote__c.Quotation_Status__c</field>
             <operation>equals</operation>
@@ -2053,7 +2053,7 @@
             <name>Response_Request_PTO</name>
             <type>Alert</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <criteriaItems>
             <field>Customer_Quote__c.Quotation_Status__c</field>
             <operation>equals</operation>
@@ -2077,7 +2077,7 @@
             <name>Response_Request_for_Pricing_RoadINT</name>
             <type>Alert</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <criteriaItems>
             <field>Customer_Quote__c.Quotation_Status__c</field>
             <operation>equals</operation>
@@ -2101,7 +2101,7 @@
             <name>Response_Request_for_Pricing_Road_NAT</name>
             <type>Alert</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <criteriaItems>
             <field>Customer_Quote__c.Quotation_Status__c</field>
             <operation>equals</operation>
@@ -2129,7 +2129,7 @@
             <name>Update_Response_Request_WH</name>
             <type>FieldUpdate</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <criteriaItems>
             <field>Customer_Quote__c.Only_Warehouse_Service__c</field>
             <operation>equals</operation>
@@ -2153,7 +2153,7 @@
             <name>Date_Send_Request</name>
             <type>FieldUpdate</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <criteriaItems>
             <field>Customer_Quote__c.Freight_Mode__c</field>
             <operation>equals</operation>
@@ -2176,7 +2176,7 @@
             <name>Update_Send_Request</name>
             <type>FieldUpdate</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <criteriaItems>
             <field>Customer_Quote__c.Freight_Mode__c</field>
             <operation>equals</operation>
@@ -2195,7 +2195,7 @@
             <name>Send_Request_to_Pricing_T</name>
             <type>Alert</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <criteriaItems>
             <field>Customer_Quote__c.Quotation_Status__c</field>
             <operation>equals</operation>
@@ -2229,7 +2229,7 @@
             <name>Update_Send_Request_WH</name>
             <type>FieldUpdate</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <criteriaItems>
             <field>Customer_Quote__c.Only_Warehouse_Service__c</field>
             <operation>equals</operation>
@@ -2257,7 +2257,7 @@
             <name>Update_Send_RequestSea</name>
             <type>FieldUpdate</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <criteriaItems>
             <field>Customer_Quote__c.Quotation_Status__c</field>
             <operation>equals</operation>
@@ -2280,7 +2280,7 @@
             <name>Sent_Awaiting_Response</name>
             <type>FieldUpdate</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <criteriaItems>
             <field>Customer_Quote__c.Quotation_Status__c</field>
             <operation>contains</operation>
@@ -2290,7 +2290,7 @@
     </rules>
     <rules>
         <fullName>Time Response Pricing M</fullName>
-        <active>true</active>
+        <active>false</active>
         <criteriaItems>
             <field>Customer_Quote__c.Quotation_Status__c</field>
             <operation>equals</operation>
@@ -2336,7 +2336,7 @@
             <name>approved_day</name>
             <type>FieldUpdate</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <criteriaItems>
             <field>Customer_Quote__c.Quotation_Status__c</field>
             <operation>equals</operation>
@@ -2350,7 +2350,7 @@
             <name>shipment_generation_day</name>
             <type>FieldUpdate</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <criteriaItems>
             <field>Customer_Quote__c.Quotation_Status__c</field>
             <operation>equals</operation>

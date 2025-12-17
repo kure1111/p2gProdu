@@ -28,7 +28,7 @@ public class PAK_SendToOrder {
                                                 Service_Rate_Name__r.SAP_Service_Type__r.Name, Service_Rate_Name__r.SAP_Service_Type__r.VAT__c, Currency_Buy_Price__c, Conversion_Rate_to_Buy_Currency_Header__c,
                                                 Service_Rate_Name__r.SAP_Service_Type__r.VAT_Withholding__c,Record_Locked__c
                                                 From Shipment_Fee_Line__c 
-                                                Where Shipment__c=:IdShipment /*and SAP__c=false*/];
+                                                Where Shipment__c=:IdShipment AND Campo_Control__c!=true /*and SAP__c=false*/];
             
             system.debug('lines 1 : ' + lines);
             

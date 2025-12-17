@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Location</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Locations</value>
+    </caseValues>
+    <gender>Neuter</gender>
+    <layouts>
+        <layout>Dirección de Reparto</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- Datos Carta Porte --></label>
+            <section>Datos Carta Porte</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>Location Community Layout</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>Location Layout</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+    </layouts>
+    <recordTypes>
+        <description><!-- Dirección de Repartos a partir el Origen --></description>
+        <label><!-- Dirección de Reparto --></label>
+        <name>Direccion_Reparto</name>
+    </recordTypes>
+    <recordTypes>
+        <description><!-- Location Default --></description>
+        <label><!-- Location --></label>
+        <name>Location</name>
+    </recordTypes>
+    <validationRules>
+        <errorMessage><!-- ERROR- Location no puede tener coma --></errorMessage>
+        <name>SinComas</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- The field State is required --></errorMessage>
+        <name>Validation_State</name>
+    </validationRules>
+</CustomObjectTranslation>

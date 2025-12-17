@@ -1,0 +1,42 @@
+<table border="0" cellpadding="5" width="600" cellspacing="5" height="400" >
+<tr valign="top" height="50" >
+<td tEditID="c1r1" style=" background-color:#FFFFFF; color:#000000; bEditID:r3st1; bLabel:main; font-size:12pt; font-family:arial;" aEditID="c1r1" locked="0" >
+<![CDATA[<div style="text-align: center;"><b style="font-size: 12pt;"><span style="font-size:10.0pt;font-family:&quot;Arial&quot;,sans-serif;
+mso-fareast-font-family:&quot;Times New Roman&quot;;mso-ansi-language:ES-MX;mso-fareast-language:
+EN-US;mso-bidi-language:AR-SA">Folio Aprobado con Margen Operativo inferior a
+0%</span></b></div>]]></td>
+</tr>
+<tr valign="top" height="300" >
+<td tEditID="c1r2" style=" background-color:#FFFFFF; color:#000000; bEditID:r3st1; bLabel:main; font-size:12pt; font-family:arial;" aEditID="c1r2" locked="0" >
+<![CDATA[<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt; text-align: justify;"><span style="color:black">Estimado
+Director General, se notifica que el siguiente folio fue aprobado con un margen
+Operativo inferior a 0% para su correspondiente seguimiento con Direccion
+Comercial<o:p></o:p></span></p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt; text-align: justify;"><span style="color:black"><o:p>&nbsp;</o:p></span></p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt;"><span style="color:black"><o:p>&nbsp;</o:p></span></p>
+
+<p class="MsoNormal" style=""><span style="color: black; font-family: arial; font-size: 12pt;">Folio:&nbsp;<b><o:p></o:p></b></span><font face="arial"><b><a href="{!Customer_Quote__c.Link}">{!Customer_Quote__c.Name}</a></b></font></p>
+
+<p class="MsoNormal" style=""><span style="color: black; font-family: arial; font-size: 12pt;">Cliente:&nbsp;<b><o:p></o:p></b></span><font face="arial"><b>{!Customer_Quote__c.Account_for__c}</b></font></p>
+
+<p class="MsoNormal" style=""><span style="color: black; font-family: arial; font-size: 12pt;">Account Owner:&nbsp;<b><o:p></o:p></b></span><font face="arial"><b>{!Customer_Quote__c.Account_Executive_User__c}</b></font></p>
+
+<p class="MsoNormal" style=""><span style="color: black; font-family: arial; font-size: 12pt;">Route:&nbsp;</span><font face="arial"><b>{!Customer_Quote__c.Route__c}</b></font></p>
+
+<p class="MsoNormal" style=""><span style="color: black; font-family: arial; font-size: 12pt;">Venta:&nbsp;</span><font face="arial"><b>{!Customer_Quote__c.Total_Services_Sell_Amount__c}</b></font></p>
+
+<p class="MsoNormal" style=""><span style="color: black; font-family: arial; font-size: 12pt;">Costo:&nbsp;<b><o:p></o:p></b></span><font face="arial"><b>{!Customer_Quote__c.Total_Services_Std_Buy_Amount__c}</b></font></p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt;"><span lang="EN-US" style="color:black;mso-ansi-language:EN-US">Margen
+Operativo %:&nbsp;<b>{!Customer_Quote__c.Margen_Operativo__c}</b></span></p>
+
+<p class="MsoNormal" style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt;"><span lang="EN-US" style="color:black;mso-ansi-language:EN-US">Approved
+Date Time:&nbsp;<b>{!Customer_Quote__c.Approved_Date_time01__c}</b><o:p></o:p></span></p>]]></td>
+</tr>
+<tr valign="top" height="50" >
+<td tEditID="c1r3" style=" background-color:#FFFFFF; color:#000000; bEditID:r3st1; bLabel:main; font-size:12pt; font-family:arial;" aEditID="c1r3" locked="0" >
+<![CDATA[]]></td>
+</tr>
+</table>

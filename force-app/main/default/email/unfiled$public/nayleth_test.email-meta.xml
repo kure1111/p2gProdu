@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>pruebas de WF´S</description>
+    <encodingKey>ISO-8859-1</encodingKey>
+    <letterhead>Lettherhead_Notification02</letterhead>
+    <name>nayleth test</name>
+    <style>formalLetter</style>
+    <subject>NAYLETH TEST</subject>
+    <textOnly>TITULO A PROGRAMAR
+N° Shipment: {!Shipment__c.Name}
+Cliente: {!Shipment__c.Account_for__c}
+
+Para mayor información: {!Shipment__c.Link}</textOnly>
+    <type>html</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

@@ -112,10 +112,6 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>Estatus_Recuperado__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
                 <field>Obsycom_cta__c</field>
             </layoutItems>
             <layoutItems>
@@ -133,10 +129,6 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Estatus_de_Alta__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Estatus_de_cliente__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
@@ -231,7 +223,7 @@
         <label>Description Information</label>
         <layoutColumns>
             <layoutItems>
-                <behavior>Edit</behavior>
+                <behavior>Readonly</behavior>
                 <field>Description</field>
             </layoutItems>
         </layoutColumns>

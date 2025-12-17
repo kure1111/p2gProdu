@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GlobalValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customValue>
+        <fullName>SP-A-AEREO</fullName>
+        <default>false</default>
+        <label>SP-A-AEREO</label>
+    </customValue>
+    <customValue>
+        <fullName>SP-AW-GLOBAL AEREO</fullName>
+        <default>false</default>
+        <label>SP-AW-GLOBAL AEREO</label>
+    </customValue>
+    <customValue>
+        <fullName>SP-CE-COMERCIO EXT</fullName>
+        <default>false</default>
+        <label>SP-CE-COMERCIO EXT</label>
+    </customValue>
+    <customValue>
+        <fullName>SP-EX-SEGUROS</fullName>
+        <default>false</default>
+        <label>SP-EX-SEGUROS</label>
+    </customValue>
+    <customValue>
+        <fullName>SP-FI-FLETE INTER</fullName>
+        <default>false</default>
+        <label>SP-FI-FLETE INTER</label>
+    </customValue>
+    <customValue>
+        <fullName>SP-FN-FLETE NACIONAL</fullName>
+        <default>false</default>
+        <label>SP-FN-FLETE NACIONAL</label>
+    </customValue>
+    <customValue>
+        <fullName>SP-M-MARITIMO</fullName>
+        <default>false</default>
+        <label>SP-M-MARITIMO</label>
+    </customValue>
+    <customValue>
+        <fullName>SP-PQ-PAQUETERIA</fullName>
+        <default>false</default>
+        <label>SP-PQ-PAQUETERIA</label>
+    </customValue>
+    <customValue>
+        <fullName>SP-PTO-PUERTOS</fullName>
+        <default>false</default>
+        <label>SP-PTO-PUERTOS</label>
+    </customValue>
+    <customValue>
+        <fullName>SP-R-GLOBAL ROUTING</fullName>
+        <default>false</default>
+        <label>SP-R-GLOBAL ROUTING</label>
+    </customValue>
+    <customValue>
+        <fullName>SP-SL-SERV LOGISTICO</fullName>
+        <default>false</default>
+        <label>SP-SL-SERV LOGISTICO</label>
+    </customValue>
+    <customValue>
+        <fullName>SP-T-CONSOLIDADO</fullName>
+        <default>false</default>
+        <label>SP-T-CONSOLIDADO</label>
+    </customValue>
+    <customValue>
+        <fullName>SP-W-GLOBAL MARITIMO</fullName>
+        <default>false</default>
+        <label>SP-W-GLOBAL MARITIMO</label>
+    </customValue>
+    <customValue>
+        <fullName>SP-WH-ALMACENAJE</fullName>
+        <default>false</default>
+        <label>SP-WH-ALMACENAJE</label>
+    </customValue>
+    <customValue>
+        <fullName>Warehouse</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Warehouse</label>
+    </customValue>
+    <customValue>
+        <fullName>Almacen</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Almacen</label>
+    </customValue>
+    <customValue>
+        <fullName>SP-ES-SERV ESPECIAL</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>SP-ES-SERV ESPECIAL</label>
+    </customValue>
+    <customValue>
+        <fullName>SP-SL- SERV LOGISTICO</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>SP-SL- SERV LOGISTICO</label>
+    </customValue>
+    <customValue>
+        <fullName>Consolidado</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Consolidado</label>
+    </customValue>
+    <customValue>
+        <fullName>Fletes</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Fletes</label>
+    </customValue>
+    <customValue>
+        <fullName>Inter Aereo</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Inter Aereo</label>
+    </customValue>
+    <customValue>
+        <fullName>Inter Mar</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Inter Mar</label>
+    </customValue>
+    <customValue>
+        <fullName>Inter Terr</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Inter Terr</label>
+    </customValue>
+    <customValue>
+        <fullName>Paqueterias</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Paqueterias</label>
+    </customValue>
+    <customValue>
+        <fullName>Puertos</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Puertos</label>
+    </customValue>
+    <customValue>
+        <fullName>Seguro</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Seguro</label>
+    </customValue>
+    <customValue>
+        <fullName>Serv Log</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Serv Log</label>
+    </customValue>
+    <customValue>
+        <fullName>Aduanales</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Aduanales</label>
+    </customValue>
+    <customValue>
+        <fullName>IMPAK</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>IMPAK</label>
+    </customValue>
+    <customValue>
+        <fullName>Other Service Charges</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Other Service Charges</label>
+    </customValue>
+    <customValue>
+        <fullName>Mayoreo</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Mayoreo</label>
+    </customValue>
+    <description>SAP Service Type Groups</description>
+    <masterLabel>GroupGVS</masterLabel>
+    <sorted>false</sorted>
+</GlobalValueSet>

@@ -10,7 +10,9 @@ NOT(
 OR(
 $Profile.Id = &quot;00e4T000000zD9C&quot;,
 $UserRole.Id = &quot;00E4T000000gi4H&quot;,
-$UserRole.Id = &quot;00E4T000000ga5l&quot;
+$UserRole.Id = &quot;00E4T000000ga5l&quot;,
+$UserRole.Name= &quot;Gerente Comercial&quot;,
+$User.Username = &quot;alexis.villanueva@pak2go.com&quot;
 )
 ),
 OR(

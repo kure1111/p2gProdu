@@ -16,7 +16,7 @@
             <name>Add_approved_time</name>
             <type>FieldUpdate</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <criteriaItems>
             <field>Event.Status_Event__c</field>
             <operation>equals</operation>

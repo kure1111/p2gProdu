@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WebLink xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Duplicate_Supplier_Quote_Order</fullName>
+    <availability>online</availability>
+    <displayType>button</displayType>
+    <height>600</height>
+    <linkType>page</linkType>
+    <masterLabel>Duplicate Supplier Quote/Order</masterLabel>
+    <openType>sidebar</openType>
+    <page>NEU_CloneSupplierQuoteOrder</page>
+    <protected>false</protected>
+</WebLink>

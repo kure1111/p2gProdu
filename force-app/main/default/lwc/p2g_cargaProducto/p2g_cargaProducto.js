@@ -699,6 +699,7 @@ export default class P2g_cargaProducto extends LightningModal {
         }
 
     // guardar Registro extras
+    @track buscaCP = false;
     //CpOrigen
     @track searchCpOrigen = '';
     @track CpOrigenId = '';
@@ -707,6 +708,7 @@ export default class P2g_cargaProducto extends LightningModal {
     cpOrigenSelect(event){
         this.searchCpOrigen = event.currentTarget.dataset.name;
         this.showCpOrigen = false;
+        this.buscaCP = false;
         this.CpOrigenId = event.currentTarget.dataset.id;
         this.obj.idCpOrigen  = event.currentTarget.dataset.id;
         this.obj.direccionCarga = event.currentTarget.dataset.name;
@@ -716,6 +718,7 @@ export default class P2g_cargaProducto extends LightningModal {
         this.CpOrigenId='';
         if (this.searchCpOrigen.length >= 3) {
             this.showCpOrigen = true;
+            this.buscaCP = true;
             getCp({cp: this.searchCpOrigen})
                 .then(result => {
                     this.listCpOrigen = result;
@@ -727,6 +730,7 @@ export default class P2g_cargaProducto extends LightningModal {
         }
         else{
             this.showCpOrigen = false;
+            this.buscaCP = false;
         }
     }
 
@@ -739,6 +743,7 @@ export default class P2g_cargaProducto extends LightningModal {
         this.CpDestinoId = '';
         if (this.searchCpDestino.length >= 3) {
             this.showCpDestino = true;
+            this.buscaCP = true;
             getCp({cp: this.searchCpDestino })
                 .then(result => {
                     this.listCpDestino = result;
@@ -749,11 +754,13 @@ export default class P2g_cargaProducto extends LightningModal {
                 });
         } else {
             this.showCpDestino = false;
+            this.buscaCP = false;
         }
     }
     cpDestinoSelect(event){
         this.searchCpDestino = event.currentTarget.dataset.name;
         this.showCpDestino = false;
+        this.buscaCP = false;
         this.cpDestinoId = event.currentTarget.dataset.id;
         this.obj.idCpDestino = event.currentTarget.dataset.id;
         this.obj.direccionDescarga = event.currentTarget.dataset.name;

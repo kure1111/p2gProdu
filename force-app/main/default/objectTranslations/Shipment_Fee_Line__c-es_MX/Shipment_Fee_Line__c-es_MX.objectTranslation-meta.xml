@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Shipment Service Line</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Shipment Service Lines</value>
+    </caseValues>
+    <gender>Neuter</gender>
+    <layouts>
+        <layout>Page Layout Power BI</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- Sell &amp; Costs --></label>
+            <section>Sell &amp; Costs</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>Shipment Service Line Layout</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- SAP Information --></label>
+            <section>SAP Information</section>
+        </sections>
+        <sections>
+            <label><!-- Sell &amp; Costs --></label>
+            <section>Sell &amp; Costs</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>Shipment Service Line Layout Community</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+    </layouts>
+    <validationRules>
+        <errorMessage><!-- No es posible modificar debido a que cuenta con una Orden de Entrega. --></errorMessage>
+        <name>Block_Shipment_Service_Line</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Crédito del cliente insuficiente. Hablar con el departamento de créditos* --></errorMessage>
+        <name>LimiteCreditoNoDisponible</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- No se puede cargar una línea de venta si aún no tiene asignado el Carrier* --></errorMessage>
+        <name>LineaVenta_SinCarrier</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- No se puede modificar el Precio de venta / Costo si el Shipment esta en estatus &quot;Closed&quot; --></errorMessage>
+        <name>NoModificarPreciosVentaCompra</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- SSP-001: Usuario no permitido para modificar este campo. Solicitar la modificación del precio a comercial --></errorMessage>
+        <name>NoModificarShipmentSellPrice</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- No se puede colocar el valor de $1 en este campo --></errorMessage>
+        <name>No_se_acepta_1peso_SP</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- No se pueden crear Service Lines si el Shipment esta en estatus &quot;Closed&quot; --></errorMessage>
+        <name>Nueva_ServiceStatus_Closed</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- SSLN Cliente sin crédito disponible --></errorMessage>
+        <name>Nueva_con_credito</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Cliente sin crédito disponible --></errorMessage>
+        <name>Nueva_sin_credito</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- NO SE PUEDE MODIFICAR EN ESTATUS FINISHED --></errorMessage>
+        <name>Validate_Fisnished</name>
+    </validationRules>
+    <workflowTasks>
+        <name>Cambio_en_Service_Line</name>
+        <subject><!-- Se generó un cambio en Service Line --></subject>
+    </workflowTasks>
+</CustomObjectTranslation>

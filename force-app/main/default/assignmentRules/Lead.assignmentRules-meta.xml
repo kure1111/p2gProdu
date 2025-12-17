@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<AssignmentRules xmlns="http://soap.sforce.com/2006/04/metadata">
+    <assignmentRule>
+        <fullName>Prospecto MKT</fullName>
+        <active>false</active>
+        <ruleEntry>
+            <assignedTo>alberto.garcia2@pak2go.com</assignedTo>
+            <assignedToType>User</assignedToType>
+            <formula>Owner:User.Username = &apos;carlos.martinez@pak2go.com&apos;</formula>
+        </ruleEntry>
+    </assignmentRule>
+    <assignmentRule>
+        <fullName>test</fullName>
+        <active>false</active>
+    </assignmentRule>
+</AssignmentRules>

@@ -5,8 +5,8 @@
     <customButtons>Allocate_Price_Lists_to_Account</customButtons>
     <customButtons>New_Associated_Document</customButtons>
     <customButtons>Send_Email_with_Documents</customButtons>
-    <excludeButtons>DataDotComClean</excludeButtons>
-    <excludeButtons>DataDotComCompanyHierarchy</excludeButtons>
+    <excludeButtons>DataDotComAccountInsights</excludeButtons>
+    <excludeButtons>OpenSlackRecordChannel</excludeButtons>
     <layoutSections>
         <customLabel>true</customLabel>
         <detailHeading>false</detailHeading>
@@ -166,10 +166,6 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Estatus_de_Alta__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Estatus_de_cliente__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>

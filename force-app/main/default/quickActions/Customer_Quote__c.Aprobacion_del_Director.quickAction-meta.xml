@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<QuickAction xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>Asiste al director en la aprobación del folio</description>
+    <flowDefinition>Folio_Aprobacion_Directores</flowDefinition>
+    <label>Approval</label>
+    <optionsCreateFeedItem>false</optionsCreateFeedItem>
+    <type>Flow</type>
+</QuickAction>

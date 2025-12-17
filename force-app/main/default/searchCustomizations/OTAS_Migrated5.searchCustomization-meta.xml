@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SearchCustomization xmlns="http://soap.sforce.com/2006/04/metadata">
+    <channel>GlobalSearch</channel>
+    <masterLabel>OTAS_Migrated5</masterLabel>
+    <objectToAlwaysSearch>Account</objectToAlwaysSearch>
+    <objectToAlwaysSearch>Operadores__c</objectToAlwaysSearch>
+    <objectToAlwaysSearch>Shipment__c</objectToAlwaysSearch>
+    <objectToAlwaysSearch>Customer_Quote__c</objectToAlwaysSearch>
+    <objectToAlwaysSearch>Opportunity</objectToAlwaysSearch>
+    <profile>PAK_Experiencia cliente</profile>
+</SearchCustomization>

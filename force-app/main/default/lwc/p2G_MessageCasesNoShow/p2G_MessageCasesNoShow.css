@@ -1,0 +1,15 @@
+.warning-card {
+    background-color: orange;
+}
+
+.warning-card lightning-card {
+    background-color: transparent;
+    color: black;
+    background-color: orange;
+}
+.txtBody {
+    color: black;
+}
+:host {
+    --sds-c-card-color-background: orange;
+}

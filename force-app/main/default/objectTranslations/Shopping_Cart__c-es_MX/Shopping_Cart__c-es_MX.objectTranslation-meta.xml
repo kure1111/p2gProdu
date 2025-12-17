@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Field Order</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Field Orders</value>
+    </caseValues>
+    <gender>Neuter</gender>
+    <layouts>
+        <layout>Field Order Layout</layout>
+        <sections>
+            <label><!-- Commercial Info --></label>
+            <section>Commercial Info</section>
+        </sections>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- Followers Administration --></label>
+            <section>Followers Administration</section>
+        </sections>
+        <sections>
+            <label><!-- Lines Resume --></label>
+            <section>Lines Resume</section>
+        </sections>
+        <sections>
+            <label><!-- References &amp; Status --></label>
+            <section>References &amp; Status</section>
+        </sections>
+    </layouts>
+    <webLinks>
+        <label><!-- New_Associated_Document --></label>
+        <name>New_Associated_Document</name>
+    </webLinks>
+</CustomObjectTranslation>

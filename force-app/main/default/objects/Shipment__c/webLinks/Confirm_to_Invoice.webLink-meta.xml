@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WebLink xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Confirm_to_Invoice</fullName>
+    <availability>online</availability>
+    <displayType>button</displayType>
+    <height>600</height>
+    <linkType>page</linkType>
+    <masterLabel>Confirm to Invoice</masterLabel>
+    <openType>sidebar</openType>
+    <page>NEU_ShipmentConfirmToInvoice</page>
+    <protected>false</protected>
+</WebLink>

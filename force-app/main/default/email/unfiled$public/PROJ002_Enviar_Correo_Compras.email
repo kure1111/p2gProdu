@@ -1,0 +1,14 @@
+<table border="0" cellpadding="5" width="600" cellspacing="5" height="400" >
+<tr valign="top" height="50" >
+<td tEditID="c1r1" style=" background-color:#FFFFFF; color:#000000; bEditID:r3st1; bLabel:main; font-size:12pt; font-family:arial;" aEditID="c1r1" locked="0" >
+<![CDATA[<div style="text-align: center;"><span style="font-size: 12pt;"><b>Cotización de Proyecto</b></span></div>]]></td>
+</tr>
+<tr valign="top" height="300" >
+<td tEditID="c1r2" style=" background-color:#FFFFFF; color:#000000; bEditID:r3st1; bLabel:main; font-size:12pt; font-family:arial;" aEditID="c1r2" locked="0" >
+<![CDATA[<div style="font-size: 12pt;"><span style="font-family: Calibri, sans-serif;">Estimado Equipo de&nbsp;</span><b style="font-family: Calibri, sans-serif;"><i>Compras</i></b><span style="font-family: Calibri, sans-serif;">&nbsp;el proyecto</span><span style="font-size: 12pt;">&nbsp;</span><b style="font-size: 12pt;"><a href="https://pak2gologistics--uat.my.salesforce.com/p/email/template/EmailTemplateEditorUi/{!Opportunity.Link}">{!Opportunity.Name}</a></b><span style="font-size: 12pt;">,</span><span style="font-family: Calibri, sans-serif; font-size: 12pt;">esta solicitando cotización por su departamento, por favor valida información para continuar el proceso.</span></div><div style="font-size: 12pt;"><span style="font-family: Calibri, sans-serif; font-size: 12pt;"><br></span></div><div><font style="font-size: 12pt;">{!Opportunity.Name}</font></div><div><font face="Calibri, sans-serif">{!Opportunity.OwnerFirstName}</font></div>]]></td>
+</tr>
+<tr valign="top" height="50" >
+<td tEditID="c1r3" style=" background-color:#FFFFFF; color:#000000; bEditID:r3st1; bLabel:main; font-size:12pt; font-family:arial;" aEditID="c1r3" locked="0" >
+<![CDATA[<font face="arial" style="font-size: 12pt;">Para mayor detalle consultar:</font><i style="font-size: 12pt;">&nbsp;</i><font face="arial"><i>{!Opportunity.Link}</i></font>]]></td>
+</tr>
+</table>

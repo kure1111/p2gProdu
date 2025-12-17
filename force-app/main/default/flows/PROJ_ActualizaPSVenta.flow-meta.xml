@@ -14,6 +14,7 @@
                 <elementReference>$Record.OpportunityId</elementReference>
             </value>
         </inputParameters>
+        <nameSegment>P2G_tiempoTranscurridoOppo</nameSegment>
     </actionCalls>
     <apiVersion>58.0</apiVersion>
     <assignments>
