@@ -65,6 +65,37 @@
             <targetReference>Con_Lineas</targetReference>
         </connector>
     </assignments>
+    <customErrors>
+        <name>Copy_1_of_Sin_Service_Line</name>
+        <label>Copy 1 of Sin Service Line</label>
+        <locationX>842</locationX>
+        <locationY>1247</locationY>
+        <customErrorMessages>
+            <errorMessage>IMP004 - El Folio {!$Record.Name} debe tener Service Line cargadas para cambiar de etapa a &quot;Approed as Succesful&quot;</errorMessage>
+            <isFieldError>false</isFieldError>
+        </customErrorMessages>
+    </customErrors>
+    <customErrors>
+        <description>Error Menssage - Service Line sin Quote Sell Price</description>
+        <name>Service_Line</name>
+        <label>Service Line</label>
+        <locationX>314</locationX>
+        <locationY>1247</locationY>
+        <customErrorMessages>
+            <errorMessage>IMP004 - Las Service Line deben tener Quote Sell Price mayor a 0 - Revisar Service Line &quot;{!ServiceLineName}&quot;</errorMessage>
+            <isFieldError>false</isFieldError>
+        </customErrorMessages>
+    </customErrors>
+    <customErrors>
+        <name>Sin_Service_Line</name>
+        <label>Sin Service Line</label>
+        <locationX>50</locationX>
+        <locationY>1247</locationY>
+        <customErrorMessages>
+            <errorMessage>IMP004 - El Folio {!$Record.Name} debe tener Service Line cargadas para cambiar de etapa a &quot;Approed as Succesful&quot;</errorMessage>
+            <isFieldError>false</isFieldError>
+        </customErrorMessages>
+    </customErrors>
     <decisions>
         <name>Quote_Sell_Price</name>
         <label>Quote Sell Price</label>

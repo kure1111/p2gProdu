@@ -5135,6 +5135,7 @@ SUBSTITUTE( {!SelectedAccountAddressValues} ,  {!SingleAccountAddressValue}+&quo
                     </defaultValue>
                     <fieldText>Años de experiencia</fieldText>
                     <fieldType>InputField</fieldType>
+                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>false</isRequired>
                     <scale>1</scale>
                 </fields>
@@ -5146,6 +5147,7 @@ SUBSTITUTE( {!SelectedAccountAddressValues} ,  {!SingleAccountAddressValue}+&quo
                     </defaultValue>
                     <fieldText>Dirección oficinas administrativas</fieldText>
                     <fieldType>InputField</fieldType>
+                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>false</isRequired>
                 </fields>
                 <inputParameters>
@@ -5167,6 +5169,7 @@ SUBSTITUTE( {!SelectedAccountAddressValues} ,  {!SingleAccountAddressValue}+&quo
                     </defaultValue>
                     <fieldText>Fecha de Visita</fieldText>
                     <fieldType>InputField</fieldType>
+                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>false</isRequired>
                 </fields>
                 <fields>
@@ -5197,6 +5200,7 @@ SUBSTITUTE( {!SelectedAccountAddressValues} ,  {!SingleAccountAddressValue}+&quo
                     </defaultValue>
                     <fieldText>No. De patios</fieldText>
                     <fieldType>InputField</fieldType>
+                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>false</isRequired>
                     <scale>0</scale>
                 </fields>
@@ -5224,6 +5228,7 @@ SUBSTITUTE( {!SelectedAccountAddressValues} ,  {!SingleAccountAddressValue}+&quo
                     <dataType>String</dataType>
                     <fieldText>Dirección de Patios</fieldText>
                     <fieldType>MultiSelectPicklist</fieldType>
+                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>false</isRequired>
                 </fields>
                 <inputParameters>
@@ -5252,6 +5257,7 @@ SUBSTITUTE( {!SelectedAccountAddressValues} ,  {!SingleAccountAddressValue}+&quo
                     </defaultValue>
                     <fieldText>No. De Operadores</fieldText>
                     <fieldType>InputField</fieldType>
+                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>false</isRequired>
                     <scale>0</scale>
                 </fields>
@@ -5263,6 +5269,7 @@ SUBSTITUTE( {!SelectedAccountAddressValues} ,  {!SingleAccountAddressValue}+&quo
                     </defaultValue>
                     <fieldText>Promedio de Antigüedad</fieldText>
                     <fieldType>InputField</fieldType>
+                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>false</isRequired>
                 </fields>
                 <fields>
@@ -5273,6 +5280,7 @@ SUBSTITUTE( {!SelectedAccountAddressValues} ,  {!SingleAccountAddressValue}+&quo
                     </defaultValue>
                     <fieldText>Promedio de Experiencia</fieldText>
                     <fieldType>InputField</fieldType>
+                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>false</isRequired>
                 </fields>
                 <fields>
@@ -5285,6 +5293,7 @@ SUBSTITUTE( {!SelectedAccountAddressValues} ,  {!SingleAccountAddressValue}+&quo
                     </defaultValue>
                     <fieldText>Capacitaciones</fieldText>
                     <fieldType>DropdownBox</fieldType>
+                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>false</isRequired>
                 </fields>
                 <fields>
@@ -5297,6 +5306,7 @@ SUBSTITUTE( {!SelectedAccountAddressValues} ,  {!SingleAccountAddressValue}+&quo
                     </defaultValue>
                     <fieldText>Examen antidoping</fieldText>
                     <fieldType>DropdownBox</fieldType>
+                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>false</isRequired>
                 </fields>
                 <inputParameters>
@@ -5320,6 +5330,7 @@ SUBSTITUTE( {!SelectedAccountAddressValues} ,  {!SingleAccountAddressValue}+&quo
                     </defaultValue>
                     <fieldText>Certificaciones ( Varias )</fieldText>
                     <fieldType>DropdownBox</fieldType>
+                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>false</isRequired>
                 </fields>
                 <fields>
@@ -5332,6 +5343,7 @@ SUBSTITUTE( {!SelectedAccountAddressValues} ,  {!SingleAccountAddressValue}+&quo
                     </defaultValue>
                     <fieldText>Certificaciones ( R - Control)</fieldText>
                     <fieldType>DropdownBox</fieldType>
+                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>false</isRequired>
                 </fields>
                 <fields>
@@ -5344,6 +5356,7 @@ SUBSTITUTE( {!SelectedAccountAddressValues} ,  {!SingleAccountAddressValue}+&quo
                     </defaultValue>
                     <fieldText>Certificaciones ( SUA )</fieldText>
                     <fieldType>DropdownBox</fieldType>
+                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>false</isRequired>
                 </fields>
                 <inputParameters>
@@ -5372,6 +5385,7 @@ SUBSTITUTE( {!SelectedAccountAddressValues} ,  {!SingleAccountAddressValue}+&quo
                     </defaultValue>
                     <fieldText>Tractocamión</fieldText>
                     <fieldType>InputField</fieldType>
+                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>false</isRequired>
                     <scale>0</scale>
                 </fields>
@@ -5383,6 +5397,7 @@ SUBSTITUTE( {!SelectedAccountAddressValues} ,  {!SingleAccountAddressValue}+&quo
                     </defaultValue>
                     <fieldText>Nissan</fieldText>
                     <fieldType>InputField</fieldType>
+                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>false</isRequired>
                     <scale>0</scale>
                 </fields>
@@ -5394,6 +5409,7 @@ SUBSTITUTE( {!SelectedAccountAddressValues} ,  {!SingleAccountAddressValue}+&quo
                     </defaultValue>
                     <fieldText>3.5 Tons</fieldText>
                     <fieldType>InputField</fieldType>
+                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>false</isRequired>
                     <scale>0</scale>
                 </fields>
@@ -5405,6 +5421,7 @@ SUBSTITUTE( {!SelectedAccountAddressValues} ,  {!SingleAccountAddressValue}+&quo
                     </defaultValue>
                     <fieldText>Rabón</fieldText>
                     <fieldType>InputField</fieldType>
+                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>false</isRequired>
                     <scale>0</scale>
                 </fields>
@@ -5416,6 +5433,7 @@ SUBSTITUTE( {!SelectedAccountAddressValues} ,  {!SingleAccountAddressValue}+&quo
                     </defaultValue>
                     <fieldText>Thorton ABIERTO</fieldText>
                     <fieldType>InputField</fieldType>
+                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>false</isRequired>
                     <scale>0</scale>
                 </fields>
@@ -5427,6 +5445,7 @@ SUBSTITUTE( {!SelectedAccountAddressValues} ,  {!SingleAccountAddressValue}+&quo
                     </defaultValue>
                     <fieldText>Plana 40&apos; 3 EJES</fieldText>
                     <fieldType>InputField</fieldType>
+                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>false</isRequired>
                     <scale>0</scale>
                 </fields>
@@ -5438,6 +5457,7 @@ SUBSTITUTE( {!SelectedAccountAddressValues} ,  {!SingleAccountAddressValue}+&quo
                     </defaultValue>
                     <fieldText>Plana 48&apos;</fieldText>
                     <fieldType>InputField</fieldType>
+                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>false</isRequired>
                     <scale>0</scale>
                 </fields>
@@ -5449,6 +5469,7 @@ SUBSTITUTE( {!SelectedAccountAddressValues} ,  {!SingleAccountAddressValue}+&quo
                     </defaultValue>
                     <fieldText>Plana (otro)</fieldText>
                     <fieldType>InputField</fieldType>
+                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>false</isRequired>
                     <scale>0</scale>
                 </fields>
@@ -5460,6 +5481,7 @@ SUBSTITUTE( {!SelectedAccountAddressValues} ,  {!SingleAccountAddressValue}+&quo
                     </defaultValue>
                     <fieldText>Thermo 53&apos;</fieldText>
                     <fieldType>InputField</fieldType>
+                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>false</isRequired>
                     <scale>0</scale>
                 </fields>
@@ -5471,6 +5493,7 @@ SUBSTITUTE( {!SelectedAccountAddressValues} ,  {!SingleAccountAddressValue}+&quo
                     </defaultValue>
                     <fieldText>Thermo 48&apos;</fieldText>
                     <fieldType>InputField</fieldType>
+                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>false</isRequired>
                     <scale>0</scale>
                 </fields>
@@ -5482,6 +5505,7 @@ SUBSTITUTE( {!SelectedAccountAddressValues} ,  {!SingleAccountAddressValue}+&quo
                     </defaultValue>
                     <fieldText>Caja Seca 53&apos;</fieldText>
                     <fieldType>InputField</fieldType>
+                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>false</isRequired>
                     <scale>0</scale>
                 </fields>
@@ -5493,6 +5517,7 @@ SUBSTITUTE( {!SelectedAccountAddressValues} ,  {!SingleAccountAddressValue}+&quo
                     </defaultValue>
                     <fieldText>Caja Seca 48&apos;</fieldText>
                     <fieldType>InputField</fieldType>
+                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>false</isRequired>
                     <scale>0</scale>
                 </fields>
@@ -5504,6 +5529,7 @@ SUBSTITUTE( {!SelectedAccountAddressValues} ,  {!SingleAccountAddressValue}+&quo
                     </defaultValue>
                     <fieldText>Full 40&apos;</fieldText>
                     <fieldType>InputField</fieldType>
+                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>false</isRequired>
                     <scale>0</scale>
                 </fields>
@@ -5515,6 +5541,7 @@ SUBSTITUTE( {!SelectedAccountAddressValues} ,  {!SingleAccountAddressValue}+&quo
                     </defaultValue>
                     <fieldText>Otro FULL DE PLANAS</fieldText>
                     <fieldType>InputField</fieldType>
+                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>false</isRequired>
                     <scale>0</scale>
                 </fields>
@@ -5537,6 +5564,7 @@ SUBSTITUTE( {!SelectedAccountAddressValues} ,  {!SingleAccountAddressValue}+&quo
                     </defaultValue>
                     <fieldText>Modelo Tractocamión</fieldText>
                     <fieldType>InputField</fieldType>
+                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>false</isRequired>
                 </fields>
                 <fields>
@@ -5547,6 +5575,7 @@ SUBSTITUTE( {!SelectedAccountAddressValues} ,  {!SingleAccountAddressValue}+&quo
                     </defaultValue>
                     <fieldText>Modelo Nissan</fieldText>
                     <fieldType>InputField</fieldType>
+                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>false</isRequired>
                 </fields>
                 <fields>
@@ -5557,6 +5586,7 @@ SUBSTITUTE( {!SelectedAccountAddressValues} ,  {!SingleAccountAddressValue}+&quo
                     </defaultValue>
                     <fieldText>Modelo 3.5 Tons</fieldText>
                     <fieldType>InputField</fieldType>
+                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>false</isRequired>
                 </fields>
                 <fields>
@@ -5567,6 +5597,7 @@ SUBSTITUTE( {!SelectedAccountAddressValues} ,  {!SingleAccountAddressValue}+&quo
                     </defaultValue>
                     <fieldText>Modelo Rabón</fieldText>
                     <fieldType>InputField</fieldType>
+                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>false</isRequired>
                 </fields>
                 <fields>
@@ -5577,6 +5608,7 @@ SUBSTITUTE( {!SelectedAccountAddressValues} ,  {!SingleAccountAddressValue}+&quo
                     </defaultValue>
                     <fieldText>Modelo Thorton ABIERTO</fieldText>
                     <fieldType>InputField</fieldType>
+                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>false</isRequired>
                 </fields>
                 <fields>
@@ -5587,6 +5619,7 @@ SUBSTITUTE( {!SelectedAccountAddressValues} ,  {!SingleAccountAddressValue}+&quo
                     </defaultValue>
                     <fieldText>Modelo Plana 40&apos; 3 EJES</fieldText>
                     <fieldType>InputField</fieldType>
+                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>false</isRequired>
                 </fields>
                 <fields>
@@ -5597,6 +5630,7 @@ SUBSTITUTE( {!SelectedAccountAddressValues} ,  {!SingleAccountAddressValue}+&quo
                     </defaultValue>
                     <fieldText>Modelo Plana 48&apos;</fieldText>
                     <fieldType>InputField</fieldType>
+                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>false</isRequired>
                 </fields>
                 <fields>
@@ -5607,6 +5641,7 @@ SUBSTITUTE( {!SelectedAccountAddressValues} ,  {!SingleAccountAddressValue}+&quo
                     </defaultValue>
                     <fieldText>Modelo Plana (otro)</fieldText>
                     <fieldType>InputField</fieldType>
+                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>false</isRequired>
                 </fields>
                 <fields>
@@ -5617,6 +5652,7 @@ SUBSTITUTE( {!SelectedAccountAddressValues} ,  {!SingleAccountAddressValue}+&quo
                     </defaultValue>
                     <fieldText>Modelo Thermo 53&apos;</fieldText>
                     <fieldType>InputField</fieldType>
+                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>false</isRequired>
                 </fields>
                 <fields>
@@ -5627,6 +5663,7 @@ SUBSTITUTE( {!SelectedAccountAddressValues} ,  {!SingleAccountAddressValue}+&quo
                     </defaultValue>
                     <fieldText>Modelo Thermo 48&apos;</fieldText>
                     <fieldType>InputField</fieldType>
+                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>false</isRequired>
                 </fields>
                 <fields>
@@ -5637,6 +5674,7 @@ SUBSTITUTE( {!SelectedAccountAddressValues} ,  {!SingleAccountAddressValue}+&quo
                     </defaultValue>
                     <fieldText>Modelo Caja Seca 53&apos;</fieldText>
                     <fieldType>InputField</fieldType>
+                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>false</isRequired>
                 </fields>
                 <fields>
@@ -5647,6 +5685,7 @@ SUBSTITUTE( {!SelectedAccountAddressValues} ,  {!SingleAccountAddressValue}+&quo
                     </defaultValue>
                     <fieldText>Modelo Caja Seca 48&apos;</fieldText>
                     <fieldType>InputField</fieldType>
+                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>false</isRequired>
                 </fields>
                 <fields>
@@ -5657,6 +5696,7 @@ SUBSTITUTE( {!SelectedAccountAddressValues} ,  {!SingleAccountAddressValue}+&quo
                     </defaultValue>
                     <fieldText>Modelo Full 40&apos;</fieldText>
                     <fieldType>InputField</fieldType>
+                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>false</isRequired>
                 </fields>
                 <fields>
@@ -5667,6 +5707,7 @@ SUBSTITUTE( {!SelectedAccountAddressValues} ,  {!SingleAccountAddressValue}+&quo
                     </defaultValue>
                     <fieldText>Modelo Otro FULL DE PLANAS</fieldText>
                     <fieldType>InputField</fieldType>
+                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>false</isRequired>
                 </fields>
                 <inputParameters>
@@ -5696,6 +5737,7 @@ SUBSTITUTE( {!SelectedAccountAddressValues} ,  {!SingleAccountAddressValue}+&quo
                     </defaultValue>
                     <fieldText>¿Cuenta con proceso de mantenimiento preventivo?</fieldText>
                     <fieldType>DropdownBox</fieldType>
+                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>false</isRequired>
                 </fields>
                 <fields>
@@ -5708,6 +5750,7 @@ SUBSTITUTE( {!SelectedAccountAddressValues} ,  {!SingleAccountAddressValue}+&quo
                     </defaultValue>
                     <fieldText>¿Cuenta con taller propio?</fieldText>
                     <fieldType>DropdownBox</fieldType>
+                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>false</isRequired>
                 </fields>
                 <fields>
@@ -5720,6 +5763,7 @@ SUBSTITUTE( {!SelectedAccountAddressValues} ,  {!SingleAccountAddressValue}+&quo
                     </defaultValue>
                     <fieldText>¿Cuenta con bitácoras de mantenimiento?</fieldText>
                     <fieldType>DropdownBox</fieldType>
+                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>false</isRequired>
                 </fields>
                 <fields>
@@ -5732,6 +5776,7 @@ SUBSTITUTE( {!SelectedAccountAddressValues} ,  {!SingleAccountAddressValue}+&quo
                     </defaultValue>
                     <fieldText>¿Cuenta con monitoreo propio?</fieldText>
                     <fieldType>DropdownBox</fieldType>
+                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>false</isRequired>
                 </fields>
                 <fields>
@@ -5744,6 +5789,7 @@ SUBSTITUTE( {!SelectedAccountAddressValues} ,  {!SingleAccountAddressValue}+&quo
                     </defaultValue>
                     <fieldText>¿Sistema de rastreo satelital?</fieldText>
                     <fieldType>DropdownBox</fieldType>
+                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>false</isRequired>
                 </fields>
                 <inputParameters>
@@ -5765,6 +5811,7 @@ SUBSTITUTE( {!SelectedAccountAddressValues} ,  {!SingleAccountAddressValue}+&quo
                     </defaultValue>
                     <fieldText>Explicar proceso de mantenimiento preventivo</fieldText>
                     <fieldType>InputField</fieldType>
+                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>false</isRequired>
                     <visibilityRule>
                         <conditionLogic>and</conditionLogic>
@@ -5785,6 +5832,7 @@ SUBSTITUTE( {!SelectedAccountAddressValues} ,  {!SingleAccountAddressValue}+&quo
                     </defaultValue>
                     <fieldText>¿Dónde realiza sus mantenimientos?</fieldText>
                     <fieldType>InputField</fieldType>
+                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>false</isRequired>
                     <visibilityRule>
                         <conditionLogic>and</conditionLogic>
@@ -5807,6 +5855,7 @@ SUBSTITUTE( {!SelectedAccountAddressValues} ,  {!SingleAccountAddressValue}+&quo
                     </defaultValue>
                     <fieldText>¿Cuenta con unidad de rescate?</fieldText>
                     <fieldType>DropdownBox</fieldType>
+                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>false</isRequired>
                 </fields>
                 <fields>
@@ -5817,6 +5866,7 @@ SUBSTITUTE( {!SelectedAccountAddressValues} ,  {!SingleAccountAddressValue}+&quo
                     </defaultValue>
                     <fieldText>Detallar proceso de monitoreo y turnos</fieldText>
                     <fieldType>InputField</fieldType>
+                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>false</isRequired>
                 </fields>
                 <fields>
@@ -5827,6 +5877,7 @@ SUBSTITUTE( {!SelectedAccountAddressValues} ,  {!SingleAccountAddressValue}+&quo
                     </defaultValue>
                     <fieldText>Nombre de la compañía de GPS</fieldText>
                     <fieldType>InputField</fieldType>
+                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>false</isRequired>
                     <visibilityRule>
                         <conditionLogic>and</conditionLogic>
@@ -5860,6 +5911,7 @@ SUBSTITUTE( {!SelectedAccountAddressValues} ,  {!SingleAccountAddressValue}+&quo
             </defaultValue>
             <fieldText>¿Cuenta con la aplicación Transportista Pak2go?</fieldText>
             <fieldType>DropdownBox</fieldType>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>false</isRequired>
         </fields>
         <fields>
@@ -5877,6 +5929,7 @@ SUBSTITUTE( {!SelectedAccountAddressValues} ,  {!SingleAccountAddressValue}+&quo
                     </defaultValue>
                     <fieldText>No. de Rutas Frecuentes</fieldText>
                     <fieldType>InputField</fieldType>
+                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>false</isRequired>
                     <scale>0</scale>
                     <validationRule>
@@ -5986,6 +6039,7 @@ SUBSTITUTE( {!SelectedAccountAddressValues} ,  {!SingleAccountAddressValue}+&quo
                     </defaultValue>
                     <fieldText>Volumen {!Ruta1}</fieldText>
                     <fieldType>InputField</fieldType>
+                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>false</isRequired>
                     <scale>0</scale>
                 </fields>
@@ -5999,6 +6053,7 @@ SUBSTITUTE( {!SelectedAccountAddressValues} ,  {!SingleAccountAddressValue}+&quo
                     </defaultValue>
                     <fieldText>Ruta negociada {!Ruta1}</fieldText>
                     <fieldType>DropdownBox</fieldType>
+                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>false</isRequired>
                 </fields>
                 <inputParameters>
@@ -6052,6 +6107,7 @@ SUBSTITUTE( {!SelectedAccountAddressValues} ,  {!SingleAccountAddressValue}+&quo
                     </defaultValue>
                     <fieldText>Tarifa {!Ruta1}</fieldText>
                     <fieldType>InputField</fieldType>
+                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>false</isRequired>
                     <scale>2</scale>
                 </fields>
@@ -6128,6 +6184,7 @@ SUBSTITUTE( {!SelectedAccountAddressValues} ,  {!SingleAccountAddressValue}+&quo
                     </defaultValue>
                     <fieldText>Volumen {!Ruta2}</fieldText>
                     <fieldType>InputField</fieldType>
+                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>false</isRequired>
                     <scale>0</scale>
                 </fields>
@@ -6141,6 +6198,7 @@ SUBSTITUTE( {!SelectedAccountAddressValues} ,  {!SingleAccountAddressValue}+&quo
                     </defaultValue>
                     <fieldText>Ruta negociada {!Ruta2}</fieldText>
                     <fieldType>DropdownBox</fieldType>
+                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>false</isRequired>
                 </fields>
                 <inputParameters>
@@ -6194,6 +6252,7 @@ SUBSTITUTE( {!SelectedAccountAddressValues} ,  {!SingleAccountAddressValue}+&quo
                     </defaultValue>
                     <fieldText>Tarifa {!Ruta2}</fieldText>
                     <fieldType>InputField</fieldType>
+                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>false</isRequired>
                     <scale>2</scale>
                 </fields>
@@ -6270,6 +6329,7 @@ SUBSTITUTE( {!SelectedAccountAddressValues} ,  {!SingleAccountAddressValue}+&quo
                     </defaultValue>
                     <fieldText>Volumen {!Ruta3}</fieldText>
                     <fieldType>InputField</fieldType>
+                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>false</isRequired>
                     <scale>0</scale>
                 </fields>
@@ -6283,6 +6343,7 @@ SUBSTITUTE( {!SelectedAccountAddressValues} ,  {!SingleAccountAddressValue}+&quo
                     </defaultValue>
                     <fieldText>Ruta negociada {!Ruta3}</fieldText>
                     <fieldType>DropdownBox</fieldType>
+                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>false</isRequired>
                 </fields>
                 <inputParameters>
@@ -6336,6 +6397,7 @@ SUBSTITUTE( {!SelectedAccountAddressValues} ,  {!SingleAccountAddressValue}+&quo
                     </defaultValue>
                     <fieldText>Tarifa {!Ruta3}</fieldText>
                     <fieldType>InputField</fieldType>
+                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>false</isRequired>
                     <scale>2</scale>
                 </fields>
@@ -6412,6 +6474,7 @@ SUBSTITUTE( {!SelectedAccountAddressValues} ,  {!SingleAccountAddressValue}+&quo
                     </defaultValue>
                     <fieldText>Volumen {!Ruta4}</fieldText>
                     <fieldType>InputField</fieldType>
+                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>false</isRequired>
                     <scale>0</scale>
                 </fields>
@@ -6425,6 +6488,7 @@ SUBSTITUTE( {!SelectedAccountAddressValues} ,  {!SingleAccountAddressValue}+&quo
                     </defaultValue>
                     <fieldText>Ruta negociada {!Ruta4}</fieldText>
                     <fieldType>DropdownBox</fieldType>
+                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>false</isRequired>
                 </fields>
                 <inputParameters>
@@ -6478,6 +6542,7 @@ SUBSTITUTE( {!SelectedAccountAddressValues} ,  {!SingleAccountAddressValue}+&quo
                     </defaultValue>
                     <fieldText>Tarifa {!Ruta4}</fieldText>
                     <fieldType>InputField</fieldType>
+                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>false</isRequired>
                     <scale>2</scale>
                 </fields>
@@ -6554,6 +6619,7 @@ SUBSTITUTE( {!SelectedAccountAddressValues} ,  {!SingleAccountAddressValue}+&quo
                     </defaultValue>
                     <fieldText>Volumen {!Ruta5}</fieldText>
                     <fieldType>InputField</fieldType>
+                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>false</isRequired>
                     <scale>0</scale>
                 </fields>
@@ -6567,6 +6633,7 @@ SUBSTITUTE( {!SelectedAccountAddressValues} ,  {!SingleAccountAddressValue}+&quo
                     </defaultValue>
                     <fieldText>Ruta negociada {!Ruta5}</fieldText>
                     <fieldType>DropdownBox</fieldType>
+                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>false</isRequired>
                 </fields>
                 <inputParameters>
@@ -6620,6 +6687,7 @@ SUBSTITUTE( {!SelectedAccountAddressValues} ,  {!SingleAccountAddressValue}+&quo
                     </defaultValue>
                     <fieldText>Tarifa {!Ruta5}</fieldText>
                     <fieldType>InputField</fieldType>
+                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>false</isRequired>
                     <scale>2</scale>
                 </fields>
@@ -6696,6 +6764,7 @@ SUBSTITUTE( {!SelectedAccountAddressValues} ,  {!SingleAccountAddressValue}+&quo
                     </defaultValue>
                     <fieldText>Volumen {!Ruta6}</fieldText>
                     <fieldType>InputField</fieldType>
+                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>false</isRequired>
                     <scale>0</scale>
                 </fields>
@@ -6709,6 +6778,7 @@ SUBSTITUTE( {!SelectedAccountAddressValues} ,  {!SingleAccountAddressValue}+&quo
                     </defaultValue>
                     <fieldText>Ruta negociada {!Ruta6}</fieldText>
                     <fieldType>DropdownBox</fieldType>
+                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>false</isRequired>
                 </fields>
                 <inputParameters>
@@ -6762,6 +6832,7 @@ SUBSTITUTE( {!SelectedAccountAddressValues} ,  {!SingleAccountAddressValue}+&quo
                     </defaultValue>
                     <fieldText>Tarifa {!Ruta6}</fieldText>
                     <fieldType>InputField</fieldType>
+                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>false</isRequired>
                     <scale>2</scale>
                 </fields>
@@ -6838,6 +6909,7 @@ SUBSTITUTE( {!SelectedAccountAddressValues} ,  {!SingleAccountAddressValue}+&quo
                     </defaultValue>
                     <fieldText>Volumen {!Ruta7}</fieldText>
                     <fieldType>InputField</fieldType>
+                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>false</isRequired>
                     <scale>0</scale>
                 </fields>
@@ -6851,6 +6923,7 @@ SUBSTITUTE( {!SelectedAccountAddressValues} ,  {!SingleAccountAddressValue}+&quo
                     </defaultValue>
                     <fieldText>Ruta negociada {!Ruta7}</fieldText>
                     <fieldType>DropdownBox</fieldType>
+                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>false</isRequired>
                 </fields>
                 <inputParameters>
@@ -6904,6 +6977,7 @@ SUBSTITUTE( {!SelectedAccountAddressValues} ,  {!SingleAccountAddressValue}+&quo
                     </defaultValue>
                     <fieldText>Tarifa {!Ruta7}</fieldText>
                     <fieldType>InputField</fieldType>
+                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>false</isRequired>
                     <scale>2</scale>
                 </fields>
@@ -6980,6 +7054,7 @@ SUBSTITUTE( {!SelectedAccountAddressValues} ,  {!SingleAccountAddressValue}+&quo
                     </defaultValue>
                     <fieldText>Volumen {!Ruta8}</fieldText>
                     <fieldType>InputField</fieldType>
+                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>false</isRequired>
                     <scale>0</scale>
                 </fields>
@@ -6993,6 +7068,7 @@ SUBSTITUTE( {!SelectedAccountAddressValues} ,  {!SingleAccountAddressValue}+&quo
                     </defaultValue>
                     <fieldText>Ruta negociada {!Ruta8}</fieldText>
                     <fieldType>DropdownBox</fieldType>
+                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>false</isRequired>
                 </fields>
                 <inputParameters>
@@ -7046,6 +7122,7 @@ SUBSTITUTE( {!SelectedAccountAddressValues} ,  {!SingleAccountAddressValue}+&quo
                     </defaultValue>
                     <fieldText>Tarifa {!Ruta8}</fieldText>
                     <fieldType>InputField</fieldType>
+                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>false</isRequired>
                     <scale>2</scale>
                 </fields>
@@ -7122,6 +7199,7 @@ SUBSTITUTE( {!SelectedAccountAddressValues} ,  {!SingleAccountAddressValue}+&quo
                     </defaultValue>
                     <fieldText>Volumen {!Ruta9}</fieldText>
                     <fieldType>InputField</fieldType>
+                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>false</isRequired>
                     <scale>0</scale>
                 </fields>
@@ -7135,6 +7213,7 @@ SUBSTITUTE( {!SelectedAccountAddressValues} ,  {!SingleAccountAddressValue}+&quo
                     </defaultValue>
                     <fieldText>Ruta negociada {!Ruta9}</fieldText>
                     <fieldType>DropdownBox</fieldType>
+                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>false</isRequired>
                 </fields>
                 <inputParameters>
@@ -7188,6 +7267,7 @@ SUBSTITUTE( {!SelectedAccountAddressValues} ,  {!SingleAccountAddressValue}+&quo
                     </defaultValue>
                     <fieldText>Tarifa {!Ruta9}</fieldText>
                     <fieldType>InputField</fieldType>
+                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>false</isRequired>
                     <scale>2</scale>
                 </fields>
@@ -7264,6 +7344,7 @@ SUBSTITUTE( {!SelectedAccountAddressValues} ,  {!SingleAccountAddressValue}+&quo
                     </defaultValue>
                     <fieldText>Volumen {!Ruta10}</fieldText>
                     <fieldType>InputField</fieldType>
+                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>false</isRequired>
                     <scale>0</scale>
                 </fields>
@@ -7277,6 +7358,7 @@ SUBSTITUTE( {!SelectedAccountAddressValues} ,  {!SingleAccountAddressValue}+&quo
                     </defaultValue>
                     <fieldText>Ruta negociada {!Ruta10}</fieldText>
                     <fieldType>DropdownBox</fieldType>
+                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>false</isRequired>
                 </fields>
                 <inputParameters>
@@ -7330,6 +7412,7 @@ SUBSTITUTE( {!SelectedAccountAddressValues} ,  {!SingleAccountAddressValue}+&quo
                     </defaultValue>
                     <fieldText>Tarifa {!Ruta10}</fieldText>
                     <fieldType>InputField</fieldType>
+                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>false</isRequired>
                     <scale>2</scale>
                 </fields>
@@ -8008,6 +8091,7 @@ SUBSTITUTE( {!SelectedAccountAddressValues} ,  {!SingleAccountAddressValue}+&quo
                     </defaultValue>
                     <fieldText>Años de experiencia</fieldText>
                     <fieldType>InputField</fieldType>
+                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>false</isRequired>
                     <scale>1</scale>
                 </fields>
@@ -8016,6 +8100,7 @@ SUBSTITUTE( {!SelectedAccountAddressValues} ,  {!SingleAccountAddressValue}+&quo
                     <dataType>String</dataType>
                     <fieldText>Dirección oficinas administrativas</fieldText>
                     <fieldType>InputField</fieldType>
+                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>false</isRequired>
                 </fields>
                 <inputParameters>
@@ -8034,6 +8119,7 @@ SUBSTITUTE( {!SelectedAccountAddressValues} ,  {!SingleAccountAddressValue}+&quo
                     <dataType>Date</dataType>
                     <fieldText>Fecha de Visita</fieldText>
                     <fieldType>InputField</fieldType>
+                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>false</isRequired>
                 </fields>
                 <fields>
@@ -8061,6 +8147,7 @@ SUBSTITUTE( {!SelectedAccountAddressValues} ,  {!SingleAccountAddressValue}+&quo
                     <dataType>Number</dataType>
                     <fieldText>No. De patios</fieldText>
                     <fieldType>InputField</fieldType>
+                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>false</isRequired>
                     <scale>0</scale>
                 </fields>
@@ -8089,6 +8176,7 @@ SUBSTITUTE( {!SelectedAccountAddressValues} ,  {!SingleAccountAddressValue}+&quo
                     <fieldText>Dirección de Patios</fieldText>
                     <fieldType>MultiSelectPicklist</fieldType>
                     <helpText>&lt;p&gt;Para seleccionar varios valores hacer clic en una opción y deslizar el cursor. También funciona dejar presionada la tecla control (Ctrl) antes de seleccionar la dirección&lt;/p&gt;</helpText>
+                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>false</isRequired>
                 </fields>
                 <inputParameters>
@@ -8114,6 +8202,7 @@ SUBSTITUTE( {!SelectedAccountAddressValues} ,  {!SingleAccountAddressValue}+&quo
                     <dataType>Number</dataType>
                     <fieldText>No. De Operadores</fieldText>
                     <fieldType>InputField</fieldType>
+                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>false</isRequired>
                     <scale>0</scale>
                 </fields>
@@ -8122,6 +8211,7 @@ SUBSTITUTE( {!SelectedAccountAddressValues} ,  {!SingleAccountAddressValue}+&quo
                     <dataType>String</dataType>
                     <fieldText>Promedio de Antigüedad</fieldText>
                     <fieldType>InputField</fieldType>
+                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>false</isRequired>
                 </fields>
                 <fields>
@@ -8129,6 +8219,7 @@ SUBSTITUTE( {!SelectedAccountAddressValues} ,  {!SingleAccountAddressValue}+&quo
                     <dataType>String</dataType>
                     <fieldText>Promedio de Experiencia</fieldText>
                     <fieldType>InputField</fieldType>
+                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>false</isRequired>
                 </fields>
                 <fields>
@@ -8138,6 +8229,7 @@ SUBSTITUTE( {!SelectedAccountAddressValues} ,  {!SingleAccountAddressValue}+&quo
                     <dataType>String</dataType>
                     <fieldText>Capacitaciones</fieldText>
                     <fieldType>DropdownBox</fieldType>
+                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>false</isRequired>
                 </fields>
                 <fields>
@@ -8147,6 +8239,7 @@ SUBSTITUTE( {!SelectedAccountAddressValues} ,  {!SingleAccountAddressValue}+&quo
                     <dataType>String</dataType>
                     <fieldText>Examen antidoping</fieldText>
                     <fieldType>DropdownBox</fieldType>
+                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>false</isRequired>
                 </fields>
                 <inputParameters>
@@ -8167,6 +8260,7 @@ SUBSTITUTE( {!SelectedAccountAddressValues} ,  {!SingleAccountAddressValue}+&quo
                     <dataType>String</dataType>
                     <fieldText>Certificaciones ( Varias )</fieldText>
                     <fieldType>DropdownBox</fieldType>
+                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>false</isRequired>
                 </fields>
                 <fields>
@@ -8176,6 +8270,7 @@ SUBSTITUTE( {!SelectedAccountAddressValues} ,  {!SingleAccountAddressValue}+&quo
                     <dataType>String</dataType>
                     <fieldText>Certificaciones ( R - Control)</fieldText>
                     <fieldType>DropdownBox</fieldType>
+                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>false</isRequired>
                 </fields>
                 <fields>
@@ -8185,6 +8280,7 @@ SUBSTITUTE( {!SelectedAccountAddressValues} ,  {!SingleAccountAddressValue}+&quo
                     <dataType>String</dataType>
                     <fieldText>Certificaciones ( SUA )</fieldText>
                     <fieldType>DropdownBox</fieldType>
+                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>false</isRequired>
                 </fields>
                 <inputParameters>
@@ -8213,6 +8309,7 @@ SUBSTITUTE( {!SelectedAccountAddressValues} ,  {!SingleAccountAddressValue}+&quo
                     </defaultValue>
                     <fieldText>Tractocamión</fieldText>
                     <fieldType>InputField</fieldType>
+                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>false</isRequired>
                     <scale>0</scale>
                 </fields>
@@ -8224,6 +8321,7 @@ SUBSTITUTE( {!SelectedAccountAddressValues} ,  {!SingleAccountAddressValue}+&quo
                     </defaultValue>
                     <fieldText>Nissan</fieldText>
                     <fieldType>InputField</fieldType>
+                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>false</isRequired>
                     <scale>0</scale>
                 </fields>
@@ -8235,6 +8333,7 @@ SUBSTITUTE( {!SelectedAccountAddressValues} ,  {!SingleAccountAddressValue}+&quo
                     </defaultValue>
                     <fieldText>3.5 Tons</fieldText>
                     <fieldType>InputField</fieldType>
+                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>false</isRequired>
                     <scale>0</scale>
                 </fields>
@@ -8246,6 +8345,7 @@ SUBSTITUTE( {!SelectedAccountAddressValues} ,  {!SingleAccountAddressValue}+&quo
                     </defaultValue>
                     <fieldText>Rabón</fieldText>
                     <fieldType>InputField</fieldType>
+                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>false</isRequired>
                     <scale>0</scale>
                 </fields>
@@ -8257,6 +8357,7 @@ SUBSTITUTE( {!SelectedAccountAddressValues} ,  {!SingleAccountAddressValue}+&quo
                     </defaultValue>
                     <fieldText>Thorton ABIERTO</fieldText>
                     <fieldType>InputField</fieldType>
+                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>false</isRequired>
                     <scale>0</scale>
                 </fields>
@@ -8268,6 +8369,7 @@ SUBSTITUTE( {!SelectedAccountAddressValues} ,  {!SingleAccountAddressValue}+&quo
                     </defaultValue>
                     <fieldText>Plana 40&apos; 3 EJES</fieldText>
                     <fieldType>InputField</fieldType>
+                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>false</isRequired>
                     <scale>0</scale>
                 </fields>
@@ -8279,6 +8381,7 @@ SUBSTITUTE( {!SelectedAccountAddressValues} ,  {!SingleAccountAddressValue}+&quo
                     </defaultValue>
                     <fieldText>Plana 48&apos;</fieldText>
                     <fieldType>InputField</fieldType>
+                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>false</isRequired>
                     <scale>0</scale>
                 </fields>
@@ -8290,6 +8393,7 @@ SUBSTITUTE( {!SelectedAccountAddressValues} ,  {!SingleAccountAddressValue}+&quo
                     </defaultValue>
                     <fieldText>Plana (otro)</fieldText>
                     <fieldType>InputField</fieldType>
+                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>false</isRequired>
                     <scale>0</scale>
                 </fields>
@@ -8301,6 +8405,7 @@ SUBSTITUTE( {!SelectedAccountAddressValues} ,  {!SingleAccountAddressValue}+&quo
                     </defaultValue>
                     <fieldText>Thermo 53&apos;</fieldText>
                     <fieldType>InputField</fieldType>
+                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>false</isRequired>
                     <scale>0</scale>
                 </fields>
@@ -8312,6 +8417,7 @@ SUBSTITUTE( {!SelectedAccountAddressValues} ,  {!SingleAccountAddressValue}+&quo
                     </defaultValue>
                     <fieldText>Thermo 48&apos;</fieldText>
                     <fieldType>InputField</fieldType>
+                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>false</isRequired>
                     <scale>0</scale>
                 </fields>
@@ -8323,6 +8429,7 @@ SUBSTITUTE( {!SelectedAccountAddressValues} ,  {!SingleAccountAddressValue}+&quo
                     </defaultValue>
                     <fieldText>Caja Seca 53&apos;</fieldText>
                     <fieldType>InputField</fieldType>
+                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>false</isRequired>
                     <scale>0</scale>
                 </fields>
@@ -8334,6 +8441,7 @@ SUBSTITUTE( {!SelectedAccountAddressValues} ,  {!SingleAccountAddressValue}+&quo
                     </defaultValue>
                     <fieldText>Caja Seca 48&apos;</fieldText>
                     <fieldType>InputField</fieldType>
+                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>false</isRequired>
                     <scale>0</scale>
                 </fields>
@@ -8345,6 +8453,7 @@ SUBSTITUTE( {!SelectedAccountAddressValues} ,  {!SingleAccountAddressValue}+&quo
                     </defaultValue>
                     <fieldText>Full 40&apos;</fieldText>
                     <fieldType>InputField</fieldType>
+                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>false</isRequired>
                     <scale>0</scale>
                 </fields>
@@ -8356,6 +8465,7 @@ SUBSTITUTE( {!SelectedAccountAddressValues} ,  {!SingleAccountAddressValue}+&quo
                     </defaultValue>
                     <fieldText>Otro FULL DE PLANAS</fieldText>
                     <fieldType>InputField</fieldType>
+                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>false</isRequired>
                     <scale>0</scale>
                 </fields>
@@ -8375,6 +8485,7 @@ SUBSTITUTE( {!SelectedAccountAddressValues} ,  {!SingleAccountAddressValue}+&quo
                     <dataType>String</dataType>
                     <fieldText>Modelo Tractocamión</fieldText>
                     <fieldType>InputField</fieldType>
+                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>false</isRequired>
                 </fields>
                 <fields>
@@ -8382,6 +8493,7 @@ SUBSTITUTE( {!SelectedAccountAddressValues} ,  {!SingleAccountAddressValue}+&quo
                     <dataType>String</dataType>
                     <fieldText>Modelo Nissan</fieldText>
                     <fieldType>InputField</fieldType>
+                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>false</isRequired>
                 </fields>
                 <fields>
@@ -8389,6 +8501,7 @@ SUBSTITUTE( {!SelectedAccountAddressValues} ,  {!SingleAccountAddressValue}+&quo
                     <dataType>String</dataType>
                     <fieldText>Modelo 3.5 Tons</fieldText>
                     <fieldType>InputField</fieldType>
+                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>false</isRequired>
                 </fields>
                 <fields>
@@ -8396,6 +8509,7 @@ SUBSTITUTE( {!SelectedAccountAddressValues} ,  {!SingleAccountAddressValue}+&quo
                     <dataType>String</dataType>
                     <fieldText>Modelo Rabón</fieldText>
                     <fieldType>InputField</fieldType>
+                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>false</isRequired>
                 </fields>
                 <fields>
@@ -8403,6 +8517,7 @@ SUBSTITUTE( {!SelectedAccountAddressValues} ,  {!SingleAccountAddressValue}+&quo
                     <dataType>String</dataType>
                     <fieldText>Modelo Thorton ABIERTO</fieldText>
                     <fieldType>InputField</fieldType>
+                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>false</isRequired>
                 </fields>
                 <fields>
@@ -8410,6 +8525,7 @@ SUBSTITUTE( {!SelectedAccountAddressValues} ,  {!SingleAccountAddressValue}+&quo
                     <dataType>String</dataType>
                     <fieldText>Modelo Plana 40&apos; 3 EJES</fieldText>
                     <fieldType>InputField</fieldType>
+                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>false</isRequired>
                 </fields>
                 <fields>
@@ -8417,6 +8533,7 @@ SUBSTITUTE( {!SelectedAccountAddressValues} ,  {!SingleAccountAddressValue}+&quo
                     <dataType>String</dataType>
                     <fieldText>Modelo Plana 48&apos;</fieldText>
                     <fieldType>InputField</fieldType>
+                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>false</isRequired>
                 </fields>
                 <fields>
@@ -8424,6 +8541,7 @@ SUBSTITUTE( {!SelectedAccountAddressValues} ,  {!SingleAccountAddressValue}+&quo
                     <dataType>String</dataType>
                     <fieldText>Modelo Plana (otro)</fieldText>
                     <fieldType>InputField</fieldType>
+                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>false</isRequired>
                 </fields>
                 <fields>
@@ -8431,6 +8549,7 @@ SUBSTITUTE( {!SelectedAccountAddressValues} ,  {!SingleAccountAddressValue}+&quo
                     <dataType>String</dataType>
                     <fieldText>Modelo Thermo 53&apos;</fieldText>
                     <fieldType>InputField</fieldType>
+                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>false</isRequired>
                 </fields>
                 <fields>
@@ -8438,6 +8557,7 @@ SUBSTITUTE( {!SelectedAccountAddressValues} ,  {!SingleAccountAddressValue}+&quo
                     <dataType>String</dataType>
                     <fieldText>Modelo Thermo 48&apos;</fieldText>
                     <fieldType>InputField</fieldType>
+                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>false</isRequired>
                 </fields>
                 <fields>
@@ -8445,6 +8565,7 @@ SUBSTITUTE( {!SelectedAccountAddressValues} ,  {!SingleAccountAddressValue}+&quo
                     <dataType>String</dataType>
                     <fieldText>Modelo Caja Seca 53&apos;</fieldText>
                     <fieldType>InputField</fieldType>
+                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>false</isRequired>
                 </fields>
                 <fields>
@@ -8452,6 +8573,7 @@ SUBSTITUTE( {!SelectedAccountAddressValues} ,  {!SingleAccountAddressValue}+&quo
                     <dataType>String</dataType>
                     <fieldText>Modelo Caja Seca 48&apos;</fieldText>
                     <fieldType>InputField</fieldType>
+                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>false</isRequired>
                 </fields>
                 <fields>
@@ -8459,6 +8581,7 @@ SUBSTITUTE( {!SelectedAccountAddressValues} ,  {!SingleAccountAddressValue}+&quo
                     <dataType>String</dataType>
                     <fieldText>Modelo Full 40&apos;</fieldText>
                     <fieldType>InputField</fieldType>
+                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>false</isRequired>
                 </fields>
                 <fields>
@@ -8466,6 +8589,7 @@ SUBSTITUTE( {!SelectedAccountAddressValues} ,  {!SingleAccountAddressValue}+&quo
                     <dataType>String</dataType>
                     <fieldText>Modelo Otro FULL DE PLANAS</fieldText>
                     <fieldType>InputField</fieldType>
+                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>false</isRequired>
                 </fields>
                 <inputParameters>
@@ -8492,6 +8616,7 @@ SUBSTITUTE( {!SelectedAccountAddressValues} ,  {!SingleAccountAddressValue}+&quo
                     <dataType>String</dataType>
                     <fieldText>¿Cuenta con proceso de mantenimiento preventivo?</fieldText>
                     <fieldType>DropdownBox</fieldType>
+                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>false</isRequired>
                 </fields>
                 <fields>
@@ -8501,6 +8626,7 @@ SUBSTITUTE( {!SelectedAccountAddressValues} ,  {!SingleAccountAddressValue}+&quo
                     <dataType>String</dataType>
                     <fieldText>¿Cuenta con taller propio?</fieldText>
                     <fieldType>DropdownBox</fieldType>
+                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>false</isRequired>
                 </fields>
                 <fields>
@@ -8510,6 +8636,7 @@ SUBSTITUTE( {!SelectedAccountAddressValues} ,  {!SingleAccountAddressValue}+&quo
                     <dataType>String</dataType>
                     <fieldText>¿Cuenta con bitácoras de mantenimiento?</fieldText>
                     <fieldType>DropdownBox</fieldType>
+                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>false</isRequired>
                 </fields>
                 <fields>
@@ -8519,6 +8646,7 @@ SUBSTITUTE( {!SelectedAccountAddressValues} ,  {!SingleAccountAddressValue}+&quo
                     <dataType>String</dataType>
                     <fieldText>¿Cuenta con monitoreo propio?</fieldText>
                     <fieldType>DropdownBox</fieldType>
+                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>false</isRequired>
                 </fields>
                 <fields>
@@ -8528,6 +8656,7 @@ SUBSTITUTE( {!SelectedAccountAddressValues} ,  {!SingleAccountAddressValue}+&quo
                     <dataType>String</dataType>
                     <fieldText>¿Sistema de rastreo satelital?</fieldText>
                     <fieldType>DropdownBox</fieldType>
+                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>false</isRequired>
                 </fields>
                 <inputParameters>
@@ -8546,6 +8675,7 @@ SUBSTITUTE( {!SelectedAccountAddressValues} ,  {!SingleAccountAddressValue}+&quo
                     <dataType>String</dataType>
                     <fieldText>Explicar proceso de mantenimiento preventivo</fieldText>
                     <fieldType>InputField</fieldType>
+                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>false</isRequired>
                     <visibilityRule>
                         <conditionLogic>and</conditionLogic>
@@ -8563,6 +8693,7 @@ SUBSTITUTE( {!SelectedAccountAddressValues} ,  {!SingleAccountAddressValue}+&quo
                     <dataType>String</dataType>
                     <fieldText>¿Dónde realiza sus mantenimientos?</fieldText>
                     <fieldType>InputField</fieldType>
+                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>false</isRequired>
                     <visibilityRule>
                         <conditionLogic>and</conditionLogic>
@@ -8582,6 +8713,7 @@ SUBSTITUTE( {!SelectedAccountAddressValues} ,  {!SingleAccountAddressValue}+&quo
                     <dataType>String</dataType>
                     <fieldText>¿Cuenta con unidad de rescate?</fieldText>
                     <fieldType>DropdownBox</fieldType>
+                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>false</isRequired>
                 </fields>
                 <fields>
@@ -8589,6 +8721,7 @@ SUBSTITUTE( {!SelectedAccountAddressValues} ,  {!SingleAccountAddressValue}+&quo
                     <dataType>String</dataType>
                     <fieldText>Detallar proceso de monitoreo y turnos</fieldText>
                     <fieldType>InputField</fieldType>
+                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>false</isRequired>
                 </fields>
                 <fields>
@@ -8596,6 +8729,7 @@ SUBSTITUTE( {!SelectedAccountAddressValues} ,  {!SingleAccountAddressValue}+&quo
                     <dataType>String</dataType>
                     <fieldText>Nombre de la compañía de GPS</fieldText>
                     <fieldType>InputField</fieldType>
+                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>false</isRequired>
                     <visibilityRule>
                         <conditionLogic>and</conditionLogic>
@@ -8626,6 +8760,7 @@ SUBSTITUTE( {!SelectedAccountAddressValues} ,  {!SingleAccountAddressValue}+&quo
             <dataType>String</dataType>
             <fieldText>¿Cuenta con la aplicación Transportista Pak2go?</fieldText>
             <fieldType>DropdownBox</fieldType>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>false</isRequired>
         </fields>
         <fields>
@@ -8643,6 +8778,7 @@ SUBSTITUTE( {!SelectedAccountAddressValues} ,  {!SingleAccountAddressValue}+&quo
                     </defaultValue>
                     <fieldText>No. de Rutas Frecuentes</fieldText>
                     <fieldType>InputField</fieldType>
+                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>false</isRequired>
                     <scale>0</scale>
                     <validationRule>
@@ -8740,6 +8876,7 @@ SUBSTITUTE( {!SelectedAccountAddressValues} ,  {!SingleAccountAddressValue}+&quo
                     <dataType>Number</dataType>
                     <fieldText>Volumen {!Ruta1}</fieldText>
                     <fieldType>InputField</fieldType>
+                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>false</isRequired>
                     <scale>0</scale>
                 </fields>
@@ -8750,6 +8887,7 @@ SUBSTITUTE( {!SelectedAccountAddressValues} ,  {!SingleAccountAddressValue}+&quo
                     <dataType>String</dataType>
                     <fieldText>Ruta negociada {!Ruta1}</fieldText>
                     <fieldType>DropdownBox</fieldType>
+                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>false</isRequired>
                 </fields>
                 <inputParameters>
@@ -8794,6 +8932,7 @@ SUBSTITUTE( {!SelectedAccountAddressValues} ,  {!SingleAccountAddressValue}+&quo
                     <dataType>Currency</dataType>
                     <fieldText>Tarifa {!Ruta1}</fieldText>
                     <fieldType>InputField</fieldType>
+                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>false</isRequired>
                     <scale>2</scale>
                 </fields>
@@ -8861,6 +9000,7 @@ SUBSTITUTE( {!SelectedAccountAddressValues} ,  {!SingleAccountAddressValue}+&quo
                     <dataType>Number</dataType>
                     <fieldText>Volumen {!Ruta2}</fieldText>
                     <fieldType>InputField</fieldType>
+                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>false</isRequired>
                     <scale>0</scale>
                 </fields>
@@ -8871,6 +9011,7 @@ SUBSTITUTE( {!SelectedAccountAddressValues} ,  {!SingleAccountAddressValue}+&quo
                     <dataType>String</dataType>
                     <fieldText>Ruta negociada {!Ruta2}</fieldText>
                     <fieldType>DropdownBox</fieldType>
+                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>false</isRequired>
                 </fields>
                 <inputParameters>
@@ -8915,6 +9056,7 @@ SUBSTITUTE( {!SelectedAccountAddressValues} ,  {!SingleAccountAddressValue}+&quo
                     <dataType>Currency</dataType>
                     <fieldText>Tarifa {!Ruta2}</fieldText>
                     <fieldType>InputField</fieldType>
+                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>false</isRequired>
                     <scale>2</scale>
                 </fields>
@@ -8982,6 +9124,7 @@ SUBSTITUTE( {!SelectedAccountAddressValues} ,  {!SingleAccountAddressValue}+&quo
                     <dataType>Number</dataType>
                     <fieldText>Volumen {!Ruta3}</fieldText>
                     <fieldType>InputField</fieldType>
+                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>false</isRequired>
                     <scale>0</scale>
                 </fields>
@@ -8992,6 +9135,7 @@ SUBSTITUTE( {!SelectedAccountAddressValues} ,  {!SingleAccountAddressValue}+&quo
                     <dataType>String</dataType>
                     <fieldText>Ruta negociada {!Ruta3}</fieldText>
                     <fieldType>DropdownBox</fieldType>
+                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>false</isRequired>
                 </fields>
                 <inputParameters>
@@ -9036,6 +9180,7 @@ SUBSTITUTE( {!SelectedAccountAddressValues} ,  {!SingleAccountAddressValue}+&quo
                     <dataType>Currency</dataType>
                     <fieldText>Tarifa {!Ruta3}</fieldText>
                     <fieldType>InputField</fieldType>
+                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>false</isRequired>
                     <scale>2</scale>
                 </fields>
@@ -9103,6 +9248,7 @@ SUBSTITUTE( {!SelectedAccountAddressValues} ,  {!SingleAccountAddressValue}+&quo
                     <dataType>Number</dataType>
                     <fieldText>Volumen {!Ruta4}</fieldText>
                     <fieldType>InputField</fieldType>
+                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>false</isRequired>
                     <scale>0</scale>
                 </fields>
@@ -9113,6 +9259,7 @@ SUBSTITUTE( {!SelectedAccountAddressValues} ,  {!SingleAccountAddressValue}+&quo
                     <dataType>String</dataType>
                     <fieldText>Ruta negociada {!Ruta4}</fieldText>
                     <fieldType>DropdownBox</fieldType>
+                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>false</isRequired>
                 </fields>
                 <inputParameters>
@@ -9157,6 +9304,7 @@ SUBSTITUTE( {!SelectedAccountAddressValues} ,  {!SingleAccountAddressValue}+&quo
                     <dataType>Currency</dataType>
                     <fieldText>Tarifa {!Ruta4}</fieldText>
                     <fieldType>InputField</fieldType>
+                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>false</isRequired>
                     <scale>2</scale>
                 </fields>
@@ -9224,6 +9372,7 @@ SUBSTITUTE( {!SelectedAccountAddressValues} ,  {!SingleAccountAddressValue}+&quo
                     <dataType>Number</dataType>
                     <fieldText>Volumen {!Ruta5}</fieldText>
                     <fieldType>InputField</fieldType>
+                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>false</isRequired>
                     <scale>0</scale>
                 </fields>
@@ -9234,6 +9383,7 @@ SUBSTITUTE( {!SelectedAccountAddressValues} ,  {!SingleAccountAddressValue}+&quo
                     <dataType>String</dataType>
                     <fieldText>Ruta negociada {!Ruta5}</fieldText>
                     <fieldType>DropdownBox</fieldType>
+                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>false</isRequired>
                 </fields>
                 <inputParameters>
@@ -9278,6 +9428,7 @@ SUBSTITUTE( {!SelectedAccountAddressValues} ,  {!SingleAccountAddressValue}+&quo
                     <dataType>Currency</dataType>
                     <fieldText>Tarifa {!Ruta5}</fieldText>
                     <fieldType>InputField</fieldType>
+                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>false</isRequired>
                     <scale>2</scale>
                 </fields>
@@ -9345,6 +9496,7 @@ SUBSTITUTE( {!SelectedAccountAddressValues} ,  {!SingleAccountAddressValue}+&quo
                     <dataType>Number</dataType>
                     <fieldText>Volumen {!Ruta6}</fieldText>
                     <fieldType>InputField</fieldType>
+                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>false</isRequired>
                     <scale>0</scale>
                 </fields>
@@ -9355,6 +9507,7 @@ SUBSTITUTE( {!SelectedAccountAddressValues} ,  {!SingleAccountAddressValue}+&quo
                     <dataType>String</dataType>
                     <fieldText>Ruta negociada {!Ruta6}</fieldText>
                     <fieldType>DropdownBox</fieldType>
+                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>false</isRequired>
                 </fields>
                 <inputParameters>
@@ -9399,6 +9552,7 @@ SUBSTITUTE( {!SelectedAccountAddressValues} ,  {!SingleAccountAddressValue}+&quo
                     <dataType>Currency</dataType>
                     <fieldText>Tarifa {!Ruta6}</fieldText>
                     <fieldType>InputField</fieldType>
+                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>false</isRequired>
                     <scale>2</scale>
                 </fields>
@@ -9466,6 +9620,7 @@ SUBSTITUTE( {!SelectedAccountAddressValues} ,  {!SingleAccountAddressValue}+&quo
                     <dataType>Number</dataType>
                     <fieldText>Volumen {!Ruta7}</fieldText>
                     <fieldType>InputField</fieldType>
+                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>false</isRequired>
                     <scale>0</scale>
                 </fields>
@@ -9476,6 +9631,7 @@ SUBSTITUTE( {!SelectedAccountAddressValues} ,  {!SingleAccountAddressValue}+&quo
                     <dataType>String</dataType>
                     <fieldText>Ruta negociada {!Ruta7}</fieldText>
                     <fieldType>DropdownBox</fieldType>
+                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>false</isRequired>
                 </fields>
                 <inputParameters>
@@ -9520,6 +9676,7 @@ SUBSTITUTE( {!SelectedAccountAddressValues} ,  {!SingleAccountAddressValue}+&quo
                     <dataType>Currency</dataType>
                     <fieldText>Tarifa {!Ruta7}</fieldText>
                     <fieldType>InputField</fieldType>
+                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>false</isRequired>
                     <scale>2</scale>
                 </fields>
@@ -9587,6 +9744,7 @@ SUBSTITUTE( {!SelectedAccountAddressValues} ,  {!SingleAccountAddressValue}+&quo
                     <dataType>Number</dataType>
                     <fieldText>Volumen {!Ruta8}</fieldText>
                     <fieldType>InputField</fieldType>
+                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>false</isRequired>
                     <scale>0</scale>
                 </fields>
@@ -9597,6 +9755,7 @@ SUBSTITUTE( {!SelectedAccountAddressValues} ,  {!SingleAccountAddressValue}+&quo
                     <dataType>String</dataType>
                     <fieldText>Ruta negociada {!Ruta8}</fieldText>
                     <fieldType>DropdownBox</fieldType>
+                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>false</isRequired>
                 </fields>
                 <inputParameters>
@@ -9641,6 +9800,7 @@ SUBSTITUTE( {!SelectedAccountAddressValues} ,  {!SingleAccountAddressValue}+&quo
                     <dataType>Currency</dataType>
                     <fieldText>Tarifa {!Ruta8}</fieldText>
                     <fieldType>InputField</fieldType>
+                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>false</isRequired>
                     <scale>2</scale>
                 </fields>
@@ -9708,6 +9868,7 @@ SUBSTITUTE( {!SelectedAccountAddressValues} ,  {!SingleAccountAddressValue}+&quo
                     <dataType>Number</dataType>
                     <fieldText>Volumen {!Ruta9}</fieldText>
                     <fieldType>InputField</fieldType>
+                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>false</isRequired>
                     <scale>0</scale>
                 </fields>
@@ -9718,6 +9879,7 @@ SUBSTITUTE( {!SelectedAccountAddressValues} ,  {!SingleAccountAddressValue}+&quo
                     <dataType>String</dataType>
                     <fieldText>Ruta negociada {!Ruta9}</fieldText>
                     <fieldType>DropdownBox</fieldType>
+                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>false</isRequired>
                 </fields>
                 <inputParameters>
@@ -9762,6 +9924,7 @@ SUBSTITUTE( {!SelectedAccountAddressValues} ,  {!SingleAccountAddressValue}+&quo
                     <dataType>Currency</dataType>
                     <fieldText>Tarifa {!Ruta9}</fieldText>
                     <fieldType>InputField</fieldType>
+                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>false</isRequired>
                     <scale>2</scale>
                 </fields>
@@ -9829,6 +9992,7 @@ SUBSTITUTE( {!SelectedAccountAddressValues} ,  {!SingleAccountAddressValue}+&quo
                     <dataType>Number</dataType>
                     <fieldText>Volumen {!Ruta10}</fieldText>
                     <fieldType>InputField</fieldType>
+                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>false</isRequired>
                     <scale>0</scale>
                 </fields>
@@ -9839,6 +10003,7 @@ SUBSTITUTE( {!SelectedAccountAddressValues} ,  {!SingleAccountAddressValue}+&quo
                     <dataType>String</dataType>
                     <fieldText>Ruta negociada {!Ruta10}</fieldText>
                     <fieldType>DropdownBox</fieldType>
+                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>false</isRequired>
                 </fields>
                 <inputParameters>
@@ -9883,6 +10048,7 @@ SUBSTITUTE( {!SelectedAccountAddressValues} ,  {!SingleAccountAddressValue}+&quo
                     <dataType>Currency</dataType>
                     <fieldText>Tarifa {!Ruta10}</fieldText>
                     <fieldType>InputField</fieldType>
+                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>false</isRequired>
                     <scale>2</scale>
                 </fields>
@@ -9986,6 +10152,7 @@ SUBSTITUTE( {!SelectedAccountAddressValues} ,  {!SingleAccountAddressValue}+&quo
                     <dataType>Number</dataType>
                     <fieldText>Volumen {!Ruta1}</fieldText>
                     <fieldType>InputField</fieldType>
+                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>false</isRequired>
                     <scale>0</scale>
                 </fields>
@@ -9996,6 +10163,7 @@ SUBSTITUTE( {!SelectedAccountAddressValues} ,  {!SingleAccountAddressValue}+&quo
                     <dataType>String</dataType>
                     <fieldText>Ruta negociada {!Ruta1}</fieldText>
                     <fieldType>DropdownBox</fieldType>
+                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>false</isRequired>
                 </fields>
                 <inputParameters>
@@ -10040,6 +10208,7 @@ SUBSTITUTE( {!SelectedAccountAddressValues} ,  {!SingleAccountAddressValue}+&quo
                     <dataType>Currency</dataType>
                     <fieldText>Tarifa {!Ruta1}</fieldText>
                     <fieldType>InputField</fieldType>
+                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>false</isRequired>
                     <scale>2</scale>
                 </fields>
@@ -10097,6 +10266,7 @@ SUBSTITUTE( {!SelectedAccountAddressValues} ,  {!SingleAccountAddressValue}+&quo
                     <dataType>Number</dataType>
                     <fieldText>Volumen {!Ruta2}</fieldText>
                     <fieldType>InputField</fieldType>
+                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>false</isRequired>
                     <scale>0</scale>
                 </fields>
@@ -10107,6 +10277,7 @@ SUBSTITUTE( {!SelectedAccountAddressValues} ,  {!SingleAccountAddressValue}+&quo
                     <dataType>String</dataType>
                     <fieldText>Ruta negociada {!Ruta2}</fieldText>
                     <fieldType>DropdownBox</fieldType>
+                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>false</isRequired>
                 </fields>
                 <inputParameters>
@@ -10151,6 +10322,7 @@ SUBSTITUTE( {!SelectedAccountAddressValues} ,  {!SingleAccountAddressValue}+&quo
                     <dataType>Currency</dataType>
                     <fieldText>Tarifa {!Ruta2}</fieldText>
                     <fieldType>InputField</fieldType>
+                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>false</isRequired>
                     <scale>0</scale>
                 </fields>
@@ -10208,6 +10380,7 @@ SUBSTITUTE( {!SelectedAccountAddressValues} ,  {!SingleAccountAddressValue}+&quo
                     <dataType>Number</dataType>
                     <fieldText>Volumen {!Ruta3}</fieldText>
                     <fieldType>InputField</fieldType>
+                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>false</isRequired>
                     <scale>0</scale>
                 </fields>
@@ -10218,6 +10391,7 @@ SUBSTITUTE( {!SelectedAccountAddressValues} ,  {!SingleAccountAddressValue}+&quo
                     <dataType>String</dataType>
                     <fieldText>Ruta negociada {!Ruta3}</fieldText>
                     <fieldType>DropdownBox</fieldType>
+                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>false</isRequired>
                 </fields>
                 <inputParameters>
@@ -10262,6 +10436,7 @@ SUBSTITUTE( {!SelectedAccountAddressValues} ,  {!SingleAccountAddressValue}+&quo
                     <dataType>Currency</dataType>
                     <fieldText>Tarifa {!Ruta3}</fieldText>
                     <fieldType>InputField</fieldType>
+                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>false</isRequired>
                     <scale>0</scale>
                 </fields>
@@ -10319,6 +10494,7 @@ SUBSTITUTE( {!SelectedAccountAddressValues} ,  {!SingleAccountAddressValue}+&quo
                     <dataType>Number</dataType>
                     <fieldText>Volumen {!Ruta4}</fieldText>
                     <fieldType>InputField</fieldType>
+                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>false</isRequired>
                     <scale>0</scale>
                 </fields>
@@ -10329,6 +10505,7 @@ SUBSTITUTE( {!SelectedAccountAddressValues} ,  {!SingleAccountAddressValue}+&quo
                     <dataType>String</dataType>
                     <fieldText>Ruta negociada {!Ruta4}</fieldText>
                     <fieldType>DropdownBox</fieldType>
+                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>false</isRequired>
                 </fields>
                 <inputParameters>
@@ -10373,6 +10550,7 @@ SUBSTITUTE( {!SelectedAccountAddressValues} ,  {!SingleAccountAddressValue}+&quo
                     <dataType>Currency</dataType>
                     <fieldText>Tarifa {!Ruta4}</fieldText>
                     <fieldType>InputField</fieldType>
+                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>false</isRequired>
                     <scale>0</scale>
                 </fields>
@@ -10430,6 +10608,7 @@ SUBSTITUTE( {!SelectedAccountAddressValues} ,  {!SingleAccountAddressValue}+&quo
                     <dataType>Number</dataType>
                     <fieldText>Volumen {!Ruta5}</fieldText>
                     <fieldType>InputField</fieldType>
+                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>false</isRequired>
                     <scale>0</scale>
                 </fields>
@@ -10440,6 +10619,7 @@ SUBSTITUTE( {!SelectedAccountAddressValues} ,  {!SingleAccountAddressValue}+&quo
                     <dataType>String</dataType>
                     <fieldText>Ruta negociada {!Ruta5}</fieldText>
                     <fieldType>DropdownBox</fieldType>
+                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>false</isRequired>
                 </fields>
                 <inputParameters>
@@ -10484,6 +10664,7 @@ SUBSTITUTE( {!SelectedAccountAddressValues} ,  {!SingleAccountAddressValue}+&quo
                     <dataType>Currency</dataType>
                     <fieldText>Tarifa {!Ruta5}</fieldText>
                     <fieldType>InputField</fieldType>
+                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>false</isRequired>
                     <scale>0</scale>
                 </fields>
@@ -10541,6 +10722,7 @@ SUBSTITUTE( {!SelectedAccountAddressValues} ,  {!SingleAccountAddressValue}+&quo
                     <dataType>Number</dataType>
                     <fieldText>Volumen {!Ruta6}</fieldText>
                     <fieldType>InputField</fieldType>
+                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>false</isRequired>
                     <scale>0</scale>
                 </fields>
@@ -10551,6 +10733,7 @@ SUBSTITUTE( {!SelectedAccountAddressValues} ,  {!SingleAccountAddressValue}+&quo
                     <dataType>String</dataType>
                     <fieldText>Ruta negociada {!Ruta6}</fieldText>
                     <fieldType>DropdownBox</fieldType>
+                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>false</isRequired>
                 </fields>
                 <inputParameters>
@@ -10595,6 +10778,7 @@ SUBSTITUTE( {!SelectedAccountAddressValues} ,  {!SingleAccountAddressValue}+&quo
                     <dataType>Currency</dataType>
                     <fieldText>Tarifa {!Ruta6}</fieldText>
                     <fieldType>InputField</fieldType>
+                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>false</isRequired>
                     <scale>0</scale>
                 </fields>
@@ -10652,6 +10836,7 @@ SUBSTITUTE( {!SelectedAccountAddressValues} ,  {!SingleAccountAddressValue}+&quo
                     <dataType>Number</dataType>
                     <fieldText>Volumen {!Ruta7}</fieldText>
                     <fieldType>InputField</fieldType>
+                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>false</isRequired>
                     <scale>0</scale>
                 </fields>
@@ -10662,6 +10847,7 @@ SUBSTITUTE( {!SelectedAccountAddressValues} ,  {!SingleAccountAddressValue}+&quo
                     <dataType>String</dataType>
                     <fieldText>Ruta negociada {!Ruta7}</fieldText>
                     <fieldType>DropdownBox</fieldType>
+                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>false</isRequired>
                 </fields>
                 <inputParameters>
@@ -10706,6 +10892,7 @@ SUBSTITUTE( {!SelectedAccountAddressValues} ,  {!SingleAccountAddressValue}+&quo
                     <dataType>Currency</dataType>
                     <fieldText>Tarifa {!Ruta7}</fieldText>
                     <fieldType>InputField</fieldType>
+                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>false</isRequired>
                     <scale>0</scale>
                 </fields>
@@ -10763,6 +10950,7 @@ SUBSTITUTE( {!SelectedAccountAddressValues} ,  {!SingleAccountAddressValue}+&quo
                     <dataType>Number</dataType>
                     <fieldText>Volumen {!Ruta8}</fieldText>
                     <fieldType>InputField</fieldType>
+                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>false</isRequired>
                     <scale>0</scale>
                 </fields>
@@ -10773,6 +10961,7 @@ SUBSTITUTE( {!SelectedAccountAddressValues} ,  {!SingleAccountAddressValue}+&quo
                     <dataType>String</dataType>
                     <fieldText>Ruta negociada {!Ruta8}</fieldText>
                     <fieldType>DropdownBox</fieldType>
+                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>false</isRequired>
                 </fields>
                 <inputParameters>
@@ -10817,6 +11006,7 @@ SUBSTITUTE( {!SelectedAccountAddressValues} ,  {!SingleAccountAddressValue}+&quo
                     <dataType>Currency</dataType>
                     <fieldText>Tarifa {!Ruta8}</fieldText>
                     <fieldType>InputField</fieldType>
+                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>false</isRequired>
                     <scale>0</scale>
                 </fields>
@@ -10874,6 +11064,7 @@ SUBSTITUTE( {!SelectedAccountAddressValues} ,  {!SingleAccountAddressValue}+&quo
                     <dataType>Number</dataType>
                     <fieldText>Volumen {!Ruta9}</fieldText>
                     <fieldType>InputField</fieldType>
+                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>false</isRequired>
                     <scale>0</scale>
                 </fields>
@@ -10884,6 +11075,7 @@ SUBSTITUTE( {!SelectedAccountAddressValues} ,  {!SingleAccountAddressValue}+&quo
                     <dataType>String</dataType>
                     <fieldText>Ruta negociada {!Ruta9}</fieldText>
                     <fieldType>DropdownBox</fieldType>
+                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>false</isRequired>
                 </fields>
                 <inputParameters>
@@ -10928,6 +11120,7 @@ SUBSTITUTE( {!SelectedAccountAddressValues} ,  {!SingleAccountAddressValue}+&quo
                     <dataType>Currency</dataType>
                     <fieldText>Tarifa {!Ruta9}</fieldText>
                     <fieldType>InputField</fieldType>
+                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>false</isRequired>
                     <scale>0</scale>
                 </fields>
@@ -10985,6 +11178,7 @@ SUBSTITUTE( {!SelectedAccountAddressValues} ,  {!SingleAccountAddressValue}+&quo
                     <dataType>Number</dataType>
                     <fieldText>Volumen {!Ruta10}</fieldText>
                     <fieldType>InputField</fieldType>
+                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>false</isRequired>
                     <scale>0</scale>
                 </fields>
@@ -10995,6 +11189,7 @@ SUBSTITUTE( {!SelectedAccountAddressValues} ,  {!SingleAccountAddressValue}+&quo
                     <dataType>String</dataType>
                     <fieldText>Ruta negociada {!Ruta10}</fieldText>
                     <fieldType>DropdownBox</fieldType>
+                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>false</isRequired>
                 </fields>
                 <inputParameters>
@@ -11039,6 +11234,7 @@ SUBSTITUTE( {!SelectedAccountAddressValues} ,  {!SingleAccountAddressValue}+&quo
                     <dataType>Currency</dataType>
                     <fieldText>Tarifa {!Ruta10}</fieldText>
                     <fieldType>InputField</fieldType>
+                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>false</isRequired>
                     <scale>0</scale>
                 </fields>
