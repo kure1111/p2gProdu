@@ -244,6 +244,11 @@ public class PAK_UpdateCustomerSAP {
                     resultado = 'logistica';
                 }        
             }
+            String taxId=ACC.TAX_ID__c;
+            System.debug('ACC.TAX_ID__c: ' + ACC.TAX_ID__c);
+            String rfcEscaped = ACC.TAX_ID__c == null ? '' : taxId.escapeXml();
+            String RFC_PLACEHOLDER = '__RFC_SAFE_PLACEHOLDER__'; 
+
             String Body='<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:tem="http://tempuri.org/">'+
                 '<soapenv:Header/>'+
                 '<soapenv:Body>'+
@@ -254,7 +259,9 @@ public class PAK_UpdateCustomerSAP {
                 '<tem:Evidencia>'+Evidencia+'</tem:Evidencia>'+
                 '<tem:RazonSocial>'+ACC.Name+'</tem:RazonSocial>'+
                 '<tem:NumeroRegistroID>'+ACC.CPNumero_Registro_de_ID__c+'</tem:NumeroRegistroID>'+
-                '<tem:RFC>'+ACC.TAX_ID__c+'</tem:RFC>'+
+                
+                '<tem:RFC>'+RFC_PLACEHOLDER+'</tem:RFC>'+
+                
                 '<tem:DireccionFiscal>'+Direccion+'</tem:DireccionFiscal>'+
                 '<tem:CiudadEstado>'+ACC.Estado__c+'</tem:CiudadEstado>'+
                 '<tem:Plaza>'+ACC.Owner.Workplace__c+'</tem:Plaza>'+
@@ -361,6 +368,9 @@ public class PAK_UpdateCustomerSAP {
                 '</soapenv:Envelope>';
             
             string newBody = Body.replace('&','and');
+            newBody = Body.replace(RFC_PLACEHOLDER, rfcEscaped);
+
+
             Body = newBody;
             System.debug('Complete: '+Body);
             Http httpProtocol = new Http();
@@ -414,6 +424,27 @@ public class PAK_UpdateCustomerSAP {
     
     public void byPass(){
         String Test0 = '';
+        Test0 = '';
+        Test0 = '';
+        Test0 = '';
+        Test0 = '';
+        Test0 = '';
+        Test0 = '';
+        Test0 = '';
+        Test0 = '';
+        Test0 = '';
+        Test0 = '';
+        Test0 = '';
+        Test0 = '';
+        Test0 = '';
+        Test0 = '';
+        Test0 = '';
+        Test0 = '';
+        Test0 = '';
+        Test0 = '';
+        Test0 = '';
+        Test0 = '';
+        Test0 = '';
         Test0 = '';
         Test0 = '';
         Test0 = '';
