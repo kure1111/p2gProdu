@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<SearchCustomization xmlns="http://soap.sforce.com/2006/04/metadata">
-    <channel>GlobalSearch</channel>
-    <masterLabel>Administrador_del_sistema_Migrated</masterLabel>
-    <objectToAlwaysSearch>Debit_Note__c</objectToAlwaysSearch>
-    <objectToAlwaysSearch>Shipment__c</objectToAlwaysSearch>
-    <profile>Admin</profile>
-</SearchCustomization>
