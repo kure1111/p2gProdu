@@ -13,3 +13,18 @@ package.xml
 
 # Ignorar configuraciones de notificaciones de Apex (causa del error actual)
 **/apexEmailNotifications/
+
+
+# ===== NUEVAS REGLAS PARA CLI 47.15.1 =====
+# METADATOS AUTO-GENERADOS (causan error con --manifest)
+force-app/main/default/ApplicationSubtypeDefinitions/
+force-app/main/default/BotVersions/
+
+# CONFIGURACIONES DE ORG (no desplegar entre orgs)
+force-app/main/default/settings/
+force-app/main/default/profilePasswordPolicies/
+force-app/main/default/profileSessionSettings/
+
+# EXPERIENCE CLOUD (si no lo usas)
+force-app/main/default/siteDotCom/
+force-app/main/default/networkBranding/
