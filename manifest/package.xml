@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Package xmlns="http://soap.sforce.com/2006/04/metadata">
-    <types>
-        <members>PAK_ShipmentEstatusSAP_test</members>
-        <members>PAK_ShipmntEstatusSAP</members>
-        <members>PAK_UpdateCustomerSAP</members>
-        <members>PAK_UpdateCustomerSAP_TEST</members>
-        <members>PAK_ShipmntEstMonWs</members>
-        <name>ApexClass</name>
-    </types>
+	<types>
+		<members>P2G_PAK_SendCargoLinesTest</members>
+		<members>P2G_PAK_SendClienteRecuperadoTest</members>
+		<members>PAK_SalesOrder</members>
+		<members>PAK_SendCargoLines</members>
+		<members>PAK_SendClienteRecuperado</members>
+		<members>Test_PAK</members>
+	<name>ApexClass</name>
+	</types>
 </Package>
