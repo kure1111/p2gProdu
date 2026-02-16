@@ -2,16 +2,20 @@ public class PAK_UpdateCustomerSAP {
     public ApexPages.StandardController C {get;set;}
     Public Account ACC {get;set;}
     public String IdAcc;
+    Boolean isSandbox;
+    HttpResponse response;
     public PAK_UpdateCustomerSAP(ApexPages.StandardController Controller){
-        if(!Test.isRunningTest()){
-            C = Controller;
-            ACC = (Account)Controller.getRecord();
-            IdAcc = Controller.getId();   
-        }
+       // if(!Test.isRunningTest()){
+        C = Controller;
+        ACC = (Account)Controller.getRecord();
+        IdAcc = Controller.getId();
+       // }
     }
     public PAK_UpdateCustomerSAP(){        
     }
     public pageReference SendWS(){
+        Organization org = [SELECT IsSandbox FROM Organization LIMIT 1];
+        isSandbox = org.IsSandbox;
         try{
              system.debug('Entrando al metodo SendWS: ' + IdAcc);
              RecordType ProspectRt = [Select Id From Recordtype Where DeveloperName='Prospect' limit 1];
@@ -373,24 +377,24 @@ public class PAK_UpdateCustomerSAP {
 
             Body = newBody;
             System.debug('Complete: '+Body);
-            Http httpProtocol = new Http();
-            HttpRequest request = new HttpRequest();
-            request.setEndpoint('http://35.169.18.187/pakws92/WsAltaClientes.asmx');
-            request.setMethod('POST');
-            request.setHeader('Content-Type', 'text/xml;charset=utf-8');
-            request.setHeader('SOAPAction', 'http://tempuri.org/InsertarCliente');
-            request.setBody(Body);
+            if(!isSandbox){
+            	Http httpProtocol = new Http();
+            	HttpRequest request = new HttpRequest();
+            	request.setEndpoint('http://35.169.18.187/pakws92/WsAltaClientes.asmx');
+            	request.setMethod('POST');
+            	request.setHeader('Content-Type', 'text/xml;charset=utf-8');
+            	request.setHeader('SOAPAction', 'http://tempuri.org/InsertarCliente');
+            	request.setBody(Body);
             
-            //HttpResponse response;
-            HttpResponse response = httpProtocol.send(request);
-            
-             System.debug('Encabezado : sap ');
+            	//HttpResponse response;
+            	response = httpProtocol.send(request);
+            	}
+            System.debug('Encabezado : sap ');
             for (Integer i = 0; i < Body.length(); i=i+250)
             {
                 Integer iEffectiveEnd = (i+250) > Body.length() ? Body.length()-1 : (i+250);
                     System.debug('LINEA ' +  i + ' - ' + iEffectiveEnd + '  ' + Body.substring(i,iEffectiveEnd));
             }
-            
             System.debug('-----------'+response.getBody());
             System.debug('-------------------'+Body);
             if(response.getStatusCode() == 200){
@@ -422,7 +426,7 @@ public class PAK_UpdateCustomerSAP {
         }
     }
     
-    public void byPass(){
+   /* public void byPass(){
         String Test0 = '';
         Test0 = '';
         Test0 = '';
@@ -1173,5 +1177,5 @@ public class PAK_UpdateCustomerSAP {
         Test0 = '';
         Test0 = '';
         Test0 = '';
-    }
+    }*/
 }

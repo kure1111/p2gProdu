@@ -9,6 +9,7 @@ public class P2G_creacionFolioWsTest {
         account_test.Venta_Sap__c='Credito';
         account_test.Segment__c='Nuevo';
         account_test.Workplace__c=null;
+        account_test.Monitoreo_Recurso_Confiable__c = true;
         insert account_test;
         User userT = [select id,managerId, userRole.Name  from user where id =: UserInfo.getUserId() limit 1];
         Rol_Margen__c rolMargen = TestDataFactory.createRolMargen(userT.userRole.Name);//Director Comercial ,Director Regional
@@ -104,6 +105,7 @@ public class P2G_creacionFolioWsTest {
         Test.setMock(HttpCalloutMock.class, new P2G_MockHttpResponse(1));
         P2G_creacionFolioWs.callSerCon(ship.Id);
         P2G_creacionFolioWs.callWebService('token test','body test');
+        P2G_creacionFolioWs.SendAccount('sedwewe');
         Test.stopTest();
     }
     

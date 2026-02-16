@@ -3,9 +3,14 @@ public class P2G_creacionFolioWs{
     public static Void callSerCon(String id) {
         //P2G_llamadoWebHelper.setWebServiceUpdate(true);
         List<Response__c> listaErrores = new List<Response__c>();
+        if (!SendAccount(id)) {
+            System.debug('Proceso no continuado: Monitoreo Recurso Confiable = false');
+            return;
+        }
         String listaJson = P2G_CargaEmbarques.mapeoCargaEmbarque(id);
         String error;
         String body = listaJson;
+        System.debug('JSON ENviado: '+body);
         String tokenRC = P2G_globalVariable.getToken();
         if(body.contains('type_operation')){
             error = callWebService(tokenRC,body);//af6fd656-83d8-6f07-2ab4-c00f244a8139
@@ -57,21 +62,6 @@ public class P2G_creacionFolioWs{
         return ErrorType;
     }
     
-    /*public static void callUpdateShipmentService(String shipmentId, String token,String status) {
-        String endpoint = 'https://pak2gologistics--uat.sandbox.my.salesforce.com/services/apexrest/updateShipmnet';
-        String requestBody = '{"idShip":"' + shipmentId +'","status":"'+status +'"}';
-        HttpRequest request = new HttpRequest();
-        request.setEndpoint(endpoint);
-        request.setMethod('POST');
-        request.setHeader('Content-Type', 'application/json');
-        request.setHeader('Authorization', 'Bearer ' + token);
-        request.setBody(requestBody);
-        Http http = new Http();
-        HttpResponse response = http.send(request);
-        if (response.getStatusCode() != 200) {
-            System.debug('Error calling Update Shipment Service: ' + response.getBody());
-        }
-    }*/
     public static void updateStatus(String idShip, String status){
         String message;
         try{
@@ -96,5 +86,18 @@ public class P2G_creacionFolioWs{
             sapR.Message__c =error;
             sapR.Shipment__c = id;
             return sapR;
+    }
+
+    public static Boolean SendAccount(String shipmentId) {
+        try {
+            Shipment__c shipment = [SELECT Id, Account_for__r.Monitoreo_Recurso_Confiable__c 
+                                   FROM Shipment__c 
+                                   WHERE Id = :shipmentId 
+                                   LIMIT 1];
+            return shipment.Account_for__r.Monitoreo_Recurso_Confiable__c == true;
+        } catch (Exception e) {
+            System.debug('Error en SendAccount: ' + e.getMessage());
+            return false;
+        }
     }
 }
