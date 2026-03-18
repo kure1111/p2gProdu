@@ -200,6 +200,7 @@ public class P2G_callsCotizador {
             request.setBody(Body);
             HttpResponse response = httpProtocol.send(request);
             System.debug('Encabezado : sap ');
+            ServiceLogger.log('P2G_callsCotizador');
             for (Integer i = 0; i < Body.length(); i=i+250)
             {
                 Integer iEffectiveEnd = (i+250) > Body.length() ? Body.length()-1 : (i+250);

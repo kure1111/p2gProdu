@@ -92,6 +92,7 @@ global class PAK_DISWS {
 			status st = new status(); st.code = '0'; st.message = 'Existe un error en el web services, por favor revise la trasabilidad de la transacción' + e.getCause() +' '+ e.getMessage() +' '+ e.getLineNumber();				
 			result.add(st);
         }
+        //ServiceLogger.log('PAK_DISWS');
         return Result;
     }
 

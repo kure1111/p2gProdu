@@ -89,7 +89,7 @@ global class Cifid_ServiceLines {
         }catch(Exception e){
             result.code = '0';result.message = 'Error:'+ e.getMessage()+' en la siguiente Linea: '+ e.getLineNumber() + ' - Trace: ' + e.getStackTraceString() + ' - Cause: ' + e.getCause();           
         }
-        
+        ServiceLogger.log('Cifid_ServiceLines');
         return result;
     }
 }

@@ -17,7 +17,7 @@ public class PAK_SalesOrder {
             Bandera = false;
             boolean frontera = false;
             Shipment__c S = [Select Id,Name,RecordTypeId,Account_for__r.Owner.Workplace__c,CurrencyIsoCode,Sell_Amount_Bloq__c,Shipment_Status__c,Ocean_Shipment_Status__c,Air_Shipment_Status__c,Shipment_Status_Plann__c,Account_for__r.Customer_Id__c,Account_for__r.Owner.SalesEmployer__c,Freight_Mode__c,Service_Mode__c,State_of_Load__c,State_of_Load__r.Name,State_of_Discharge__r.Name, Account_for__r.Venta_Sap__c,
-                             Acuse_en_SAP__c,ShipmentLineNoSap__c,ShipmentLineSap__c,AUTORIZAR_GASTO_EXTRA__c,NotificarGastoExtra__c,Total_Services_Sell_Amount__c,OrdenVenta__c,Carrier__r.Customer_Id__c,Orden_de_Compra__c,Status_Shipment__c,Date_Receive_from_SAP__c,Plaza_Vendedor__c,Vendedor_Adicional__c,Service_Type__c, Operation_Executive__r.Name, Operation_Executive_2__r.Name, 
+                             Acuse_en_SAP__c,ShipmentLineNoSap__c,ShipmentLineSap__c,AUTORIZAR_GASTO_EXTRA__c,/*SeDesabilitoParaPaseUAT NotificarGastoExtra__c,*/Total_Services_Sell_Amount__c,OrdenVenta__c,Carrier__r.Customer_Id__c,Orden_de_Compra__c,Status_Shipment__c,Date_Receive_from_SAP__c,Plaza_Vendedor__c,Vendedor_Adicional__c,Service_Type__c, Operation_Executive__r.Name, Operation_Executive_2__r.Name, 
                              Site_of_Load__r.Frontera__c, Site_of_Discharge__r.Frontera__c, Route__r.Name,VerificacionPak__c
                              From Shipment__c 
                              Where Id=:IdShipment limit 1];
@@ -216,7 +216,7 @@ public class PAK_SalesOrder {
                     //if(root.getText().contains('Orden de Venta creada:')){S.OrdenVenta__c= root.getText().SubstringAfter('Orden de Venta creada:');}
                     S.Date_Receive_from_SAP__c = datetime.now();
                     S.AUTORIZAR_GASTO_EXTRA__c = false;
-                    S.NotificarGastoExtra__c = false;
+                    //S.NotificarGastoExtra__c = false;  SeDesabilitoParaPaseUAT
                     update S;
                     update Lines;
                     ApexPages.Message myMsg = new ApexPages.Message(ApexPages.Severity.CONFIRM,root.getText());
@@ -227,8 +227,9 @@ public class PAK_SalesOrder {
                     ApexPages.Message myMsg = new ApexPages.Message(ApexPages.Severity.ERROR,'ERROR: '+response.getBody()+ ' ' + response.getStatus() +' Favor de contactar a su administrador de SAP');
                     ApexPages.addMessage(myMsg);
                 }
-                insert R;    
+                insert R;   
             }
+            ServiceLogger.log('PAK_ReporteVentas'); 
             return null;
         }catch(Exception e){
             Response__c R = new Response__c();

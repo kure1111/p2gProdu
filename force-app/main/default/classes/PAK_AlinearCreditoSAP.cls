@@ -28,7 +28,7 @@ global class PAK_AlinearCreditoSAP {
                 RES.Message__c = st.message +' Credito Disponible: '+R.Credito+ ' Total OV abiertas '+ R.OVAbiertas;
                 if(!Test.isRunningTest()){insert RES;}
             }
-            
+            //ServiceLogger.log('PAK_AlinearCreditoSAP');
         	return result;
             
         }catch(Exception e){

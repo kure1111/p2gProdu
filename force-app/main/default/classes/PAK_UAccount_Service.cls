@@ -127,6 +127,7 @@ global class PAK_UAccount_Service {
             }
             
             upsert Cuentas Customer_Id__c;
+            //ServiceLogger.log('PAK_UAccount_Service TRY');
         	return result;   
         }catch(Exception e){
             System.debug(e.getCause()); System.debug(e.getMessage()); System.debug(e.getLineNumber());
@@ -134,7 +135,7 @@ global class PAK_UAccount_Service {
 			result.add(st);
             //LOG.Error__c = e.getCause() +' '+ e.getMessage() +' '+ e.getLineNumber();
             //insert LOG;
-            
+            //ServiceLogger.log('PAK_UAccount_Service catch');
 			return result;
         }
         

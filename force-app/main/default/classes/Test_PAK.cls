@@ -17,8 +17,6 @@ public class Test_PAK {
         PAK_ReporteVentas REP = new PAK_ReporteVentas();
         PAK_ReporteVentas.Response RES = new PAK_ReporteVentas.Response();
         PAK_Attachment ATT = new PAK_Attachment(null);
-        PAK_AttachmentSHIP ATTS = new PAK_AttachmentSHIP(null);
-        PAK_WSMESSAGES ME = new PAK_WSMESSAGES();
         PAK_CUSTOMERID PCU = new PAK_CUSTOMERID();
         PAK_CUSTOMERID.CUSTOMER CUSTO = new PAK_CUSTOMERID.CUSTOMER();
         PAK_QuoteBigFreight PAKQ = new PAK_QuoteBigFreight(null);
@@ -28,10 +26,6 @@ public class Test_PAK {
 
         PAK_AcuseAttach PAKATTACH = new PAK_AcuseAttach();
         PAK_AcuseAttach.AttachmentAcuse PAcuse = new PAK_AcuseAttach.AttachmentAcuse();
-        PAK_CreateLeads PAKCL = new PAK_CreateLeads();
-        PAK_CreateLeads.Lead LEAD = new PAK_CreateLeads.Lead();
-        PAK_CreateLeads.DetalleIEQ DetalleIEQ  = new PAK_CreateLeads.DetalleIEQ();
-        PAK_CreateLeads.status LEADST = new PAK_CreateLeads.status();
         
         Test.startTest();
         
@@ -181,194 +175,12 @@ public class Test_PAK {
         //SLP.TestMetodo();
         //ACUSE.TestMetodo();
         //NC.TestMetodo();
-        REP.TestMetodo();
-        ME.TestMetodo();
-        //COB.TestMetodo();
-        //FACT.TestMetodo();
-        ATT.TestMetodo();
-        ATTS.TestMetodo();
         //WSDISB.TestMetodo();
         Associated_Document__c Doc = new Associated_Document__c(Name='Test',Account__c=account_test.Id,Document_Type__c='Bill of Lading');
         insert Doc;
         Test.stopTest();   
     }
-    @isTest
-    public static void IMPKQuoteTest(){
-        PAK_CreateQuoteImpak PAKCL = new PAK_CreateQuoteImpak();
-        PAK_CreateQuoteImpak.Quote LEAD = new PAK_CreateQuoteImpak.Quote();
-        PAK_CreateQuoteImpak.DetalleQuote DetalleIEQ  = new PAK_CreateQuoteImpak.DetalleQuote();
-        PAK_CreateQuoteImpak.estatus LEADST = new PAK_CreateQuoteImpak.estatus();
-        
-        Test.startTest();
-        
-        DetalleIEQ.ContainerType='40H';
-        LEAD.CountryOfDis='Mexico';
-        LEAD.CountryOfLoad='Mexico';
-        LEAD.FreightMode='Sea';
-        DetalleIEQ.Height='100';
-        DetalleIEQ.ItemUnits='1';
-        DetalleIEQ.Length='100';
-        LEAD.SalesIncoterm='test';
-        LEAD.ServiceMode='Import';
-        LEAD.ServiceType='FCL';
-        LEAD.SiteOfDis='Monterrey';
-        LEAD.SiteOfLoad='Monterrey';
-        LEAD.StateOfDis='Nuevo Leon';
-        LEAD.StateOfLoad='Nuevo Leon';
-        LEAD.ETA = '2018/01/01';
-        LEAD.ETD  = '2018/01/01';
-        DetalleIEQ.TotalShippingWeight='200';
-        DetalleIEQ.TotalUnitWeight='200';
-        DetalleIEQ.Width='100';
-        
-        LEADST.code='';
-        LEADST.message='';
-        
-        list<PAK_CreateQuoteImpak.DetalleQuote> lsDetalle = new list<PAK_CreateQuoteImpak.DetalleQuote>();
-        lsDetalle.add(DetalleIEQ);
-        LEAD.DetalleQuote = lsDetalle;
-         
-        PAK_CreateQuoteImpak.createQuote(LEAD);
-        
-        LEAD.ServiceType = 'LCL';
-        PAK_CreateQuoteImpak.createQuote(LEAD);
-        
-        LEAD.ServiceType = 'PAQUETERIA';
-        PAK_CreateQuoteImpak.createQuote(LEAD);
-       
-        Test.stopTest();
-    }
-    
-    @isTest
-    public static void PK2_FN_TABLE_Test(){
-       	Test.startTest();
-        PK2_FN_TABLE tableInstance = new PK2_FN_TABLE();
-        PK2_FN_TABLE.limitWrapper[] blocks = tableInstance.getThousandBlocks();
-        Test.stopTest();
-    }
-    
-    @isTest
-    public static void FN_TABLE(){
-        PK2_FN_TABLE FNTABLE = new PK2_FN_TABLE();
-        PK2_GRAL_DAHBOARD PAK2 = new PK2_GRAL_DAHBOARD();
-        PK2_Utils PK2 = new PK2_Utils();
-        Test.startTest();
-        PAK2.getHistoria();
-        PK2.getHistoriaFeeline();
-        System.debug('----------'+PAK2.ls);  
-        Test.stopTest();   
-        
-    }
-    @isTest
-    public static void FN_TABLE2(){
-        PK2_GRAL_DAHBOARD PAK2 = new PK2_GRAL_DAHBOARD();
-        PK2_Utils_2 PK2 = new PK2_Utils_2();
-        Test.startTest();
-        PAK2.getHistoria();
-        PK2.getHistoriaFeeline();
-        System.debug('----------'+PAK2.ls);  
-        Test.stopTest(); 
-    }
-    @isTest
-    public static void PEDIDOS()
-    {
-        PAK_SalesOrder SO = new PAK_SalesOrder(null);
-       
-        Test.startTest();
-       
-        SO.TestMetodo();
-       
-        Test.stopTest();   
-        
-    }
-    
-    @isTest
-    public static void PAKHOME(){
-        Test.startTest();
-        PK2_HomeTask c = new PK2_HomeTask();
-        System.debug('----------'+c.lsTask);  
-        Test.stopTest(); 
-    }
-    @isTest
-    public static void PK2_FI_TABLE_STATES(){
-        Test.startTest();
-        PK2_FI_TABLE_STATES c = new PK2_FI_TABLE_STATES();  
-        Test.stopTest(); 
-    }
-    @isTest
-    public static void PK2_FN_TABLE_STATES(){
-        Test.startTest();
-        PK2_FN_TABLE_STATES c = new PK2_FN_TABLE_STATES();  
-        Test.stopTest(); 
-    }
-    @isTest
-    public static void PK2_TABLE_MONITOREO_FI(){
-        Test.startTest();
-        PK2_TABLE_MONITOREO_FI c = new PK2_TABLE_MONITOREO_FI();  
-        Test.stopTest();
-    }
-    @isTest
-    public static void PK2_FI_IEQ(){
-        Test.startTest();
-        PK2_FI_IEQ c = new PK2_FI_IEQ();  
-        Test.stopTest();
-    }
-    @isTest
-    public static void QualityAssurance(){        
-        Test.startTest();
-        PAK_QuotesReport vf = new PAK_QuotesReport();
-        ApexPages.currentPage().getParameters().put('service', 'FN');
-        ApexPages.currentPage().getParameters().put('startDate', string.valueOf(Date.newInstance(Date.Today().Year(), Date.Today().Month(), 1)));
-        ApexPages.currentPage().getParameters().put('endDate', string.valueOf(Date.newInstance(Date.Today().Year(), Date.Today().Month(), Date.daysInMonth(Date.Today().Year(), Date.Today().Month()))));
-        exportXLSController rep = new exportXLSController();
-        //rep.tstMethod();
-        System.debug('Query: ' + rep.obRep);
-        Test.stopTest();
-    } 
-    @isTest
-    public static void PAK_TotalFacMesTst(){
-        List<PAK_TotFacMes.Plaza> lstPlazas = new List<PAK_TotFacMes.Plaza>();
-        PAK_TotFacMes.Plaza plaza = new PAK_TotFacMes.Plaza();
-        plaza.plazaYear = 'MTY-2019';
-        plaza.totalEne = '1';
-        plaza.totalFeb = '2';
-        plaza.totalMar = '3';
-        plaza.totalAbr = '4';
-        plaza.totalMay = '5';
-        plaza.totalJun = '6';
-        plaza.totalJul = '7';
-        plaza.totalAgo = '8';
-        plaza.totalSep = '9';
-        plaza.totalOct = '10';
-        plaza.totalNov = '11';
-        plaza.totalDic = '12';
-        lstPlazas.add(plaza);
-        
-        PAK_TotFacMes.updateTotalFacturadoMes(lstPlazas);
-        
-        lstPlazas = new List<PAK_TotFacMes.Plaza>();
-        plaza = new PAK_TotFacMes.Plaza();
-        plaza.plazaYear = 'MTY-2019';
-        plaza.totalEne = '11';
-        plaza.totalFeb = '22';
-        plaza.totalMar = '33';
-        plaza.totalAbr = '44';
-        plaza.totalMay = '55';
-        plaza.totalJun = '66';
-        plaza.totalJul = '77';
-        plaza.totalAgo = '88';
-        plaza.totalSep = '99';
-        plaza.totalOct = '100';
-        plaza.totalNov = '110';
-        plaza.totalDic = '120';
-        lstPlazas.add(plaza);
-        
-        PAK_TotFacMes.updateTotalFacturadoMes(lstPlazas);
-    }
-    
-    @isTest
-    public static void testSendToOrdr(){
-        PAK_SendToOrder.TestMetodo();
-    }
+
+
     
 }

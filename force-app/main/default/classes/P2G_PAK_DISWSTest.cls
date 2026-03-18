@@ -1,7 +1,7 @@
 @isTest
 public class P2G_PAK_DISWSTest {
 
-    @isTest(SeeAllData=true)
+     @isTest(SeeAllData=true)
     static void testDisbursementSAP_Success() {        
         Account testAccount = [SELECT Id FROM Account LIMIT 1];
         Shipment__c testShipment = [SELECT Id FROM Shipment__c LIMIT 1];
@@ -58,5 +58,19 @@ public class P2G_PAK_DISWSTest {
         List<PAK_DISWS.status> result = PAK_DISWS.DisbursementSAP(new List<PAK_DISWS.Disbursement>{disbursement});
         Test.stopTest();
 
+    }
+    
+     @isTest
+    static void testFolioEntregaWithoutIdLines() {
+        String message = 'Entrega Creada No. : 12345678';
+        String result = PAK_WSMESSAGES.folioEntrega(message);
+        System.debug('Resultado sin IdLines: ' + result);
+    }
+
+    @isTest
+    static void testFolioEntregaWithIdLines() {
+        String message = 'Entrega Creada No. : 87654321 IdLines: 123';
+        String result = PAK_WSMESSAGES.folioEntrega(message);
+        System.debug('Resultado con IdLines: ' + result);
     }
 }

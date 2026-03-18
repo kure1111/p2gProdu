@@ -34,8 +34,8 @@ global class PAK_PagoContado {
                 r.Message__c = 'Pago contado - Pago realizado por la cantidad de $' + p.montoPago;    
                 insert r;
             }else{s.code = '0';s.message = 'Pago contado - No existe el shipmentId proporcionado';}            
-            
+            //ServiceLogger.log('PAK_PagoContado try');
             return s;
-        }catch(Exception e){s.code = '0';s.message = 'Error pago contado;' + e.getCause()+' - '+e.getMessage() + ' - ' + e.getLineNumber() + ' - ' + e.getStackTraceString();return s;}
+        }catch(Exception e){s.code = '0';s.message = 'Error pago contado;' + e.getCause()+' - '+e.getMessage() + ' - ' + e.getLineNumber() + ' - ' + e.getStackTraceString(); ServiceLogger.log('PAK_PagoContado catch'); return s;}
     }
 }

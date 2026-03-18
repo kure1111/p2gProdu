@@ -54,6 +54,7 @@ global class PAK_AcuseAttach {
                 RES.Message__c = 'Se inserto el Documento '+Acuse.NameDocumento;
                 insert RES; 
             }
+            ServiceLogger.log('PAK_AcuseAttach');
             return result;
         }catch(Exception e){
             RES.Type__c = 'ERROR';RES.Message__c = e.getCause()+' Linea:'+e.getLineNumber();

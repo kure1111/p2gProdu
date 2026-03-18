@@ -32,6 +32,8 @@ public class PAK_ShipmntEstMonWs {
             request.setHeader('SOAPAction', 'http://tempuri.org/insertarEstatusShipment');
             request.setBody(body);
             HttpResponse response = httpProtocol.send(request);
+            //ServiceLogger.log('PAK_ShipmntEstMonWs');
+
             System.debug('Response: '+response.getBody());
             System.debug('Request Body: '+body);
             if(response.getStatusCode() == 200){

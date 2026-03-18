@@ -304,6 +304,7 @@ global with sharing class NEU_TS_WS_RateMate {
 				
 				proccess_response(response_body);
 			}
+			ServiceLogger.log('NEU_TS_WS_RateMate');
 		}catch(Exception e){
 			system.debug('TRUCKSTOP INTEGRATION : HISTORICAL RATES(ERROR : ' +  + e.getTypeName() + ' - ' + e.getMessage() + ' - ' + e.getStackTraceString() + ').');
 		}

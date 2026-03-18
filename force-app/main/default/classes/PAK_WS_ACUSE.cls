@@ -35,12 +35,13 @@ global class PAK_WS_ACUSE {
                     st.registry = A;
                     result.add(st);
             }
+            //ServiceLogger.log('PAK_WS_ACUSE try');
         	return result;            
         }catch(Exception e){
             System.debug(e.getCause()); System.debug(e.getMessage()); System.debug(e.getLineNumber());
 			status st = new status(); st.code = '0'; st.message = 'Existe un error en el web services, por favor revise la trasabilidad de la transacción' + e.getCause() +' '+ e.getMessage() +' '+ e.getLineNumber();				
 			result.add(st);
-            
+            ServiceLogger.log('PAK_WS_ACUSE catch');
 			return result;
         }
 

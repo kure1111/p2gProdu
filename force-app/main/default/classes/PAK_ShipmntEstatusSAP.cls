@@ -1,6 +1,8 @@
 public class PAK_ShipmntEstatusSAP {
  @future(callout=true)
     public static void sendEstatusShipment(Map<Id, String> mapShipUser){
+
+        
         System.debug('PAK_ShipmntEstatusSAP - ids: ' + mapShipUser);
        
         string body = '';
@@ -56,6 +58,7 @@ public class PAK_ShipmntEstatusSAP {
             request.setHeader('SOAPAction', 'http://tempuri.org/insertarEstatusShipmentSF');
             request.setBody(body);
             HttpResponse response = httpProtocol.send(request);
+            //ServiceLogger.log('PAK_ShipmntEstatusSAP metodo sendEstatusShipment');
             
             System.debug('Response: sap ');
             for (Integer i = 0; i < response.getBody().length(); i=i+250)
@@ -80,6 +83,7 @@ public class PAK_ShipmntEstatusSAP {
     
    @future(callout=true)
     public static void sendEstatusShipmentEstatusOp(Map<Id, String> mapShipUser){
+        
         System.debug('PAK_ShipmntEstatusSAP - ids: ' + mapShipUser);
        
         string body = '';
@@ -135,6 +139,7 @@ public class PAK_ShipmntEstatusSAP {
             request.setHeader('SOAPAction', 'http://tempuri.org/insertarShipmentEstatusFalla');
             request.setBody(body);
             HttpResponse response = httpProtocol.send(request);
+            //ServiceLogger.log('PAK_ShipmntEstatusSAP metodo sendEstatusShipmentEstatusOp');
             
             System.debug('Response: sap ');
             for (Integer i = 0; i < response.getBody().length(); i=i+250)

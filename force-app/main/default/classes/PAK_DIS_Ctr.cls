@@ -16,7 +16,6 @@ public class PAK_DIS_Ctr {
     public PageReference Send(){
         try{
             Shipment_Disbursement__c DISBURSEMENT = [Select Id,Name,RecordTypeId,OrdenCompra__c,Account__r.Customer_id__c,CurrencyIsoCode,Account__r.Owner.Workplace__c,Disbursement_Status__c,Shipment__r.Name,Shipment__r.Freight_Mode__c,Shipment__r.Service_Mode__c,Shipment__r.Service_Type__c,Date_Receive_from_SAP__c,Total_Excl_VAT__c,Total_Incl_VAT__c,Cfdi_Number__c,Import_Export_Quote_Order__r.Name,Shipment__r.Carrier__r.Customer_id__c,Account__r.Name,Account__r.Account_Executive_User__r.Email,CreatedBy.Email,Comments__c from Shipment_Disbursement__c Where Id=:DIS.Id limit 1];
- 
             Date d = Date.today();
             String fecha = DateTime.newInstance(d.year(),d.month(),d.day()).format('YYYY-MM-dd');
             String WPAccOwner = DISBURSEMENT.Account__r.Owner.Workplace__c != null?DISBURSEMENT.Account__r.Owner.Workplace__c:'';
@@ -84,6 +83,7 @@ public class PAK_DIS_Ctr {
             request.setBody(Body);
             HttpResponse response = httpProtocol.send(request);
             System.debug('-----------'+response.getBody());
+            ServiceLogger.log('PAK_DIS_Ctr');
             Dom.Document doc = new Dom.Document();
             doc.load(response.getBody());
             Dom.XMLNode root = doc.getRootElement();

@@ -14,6 +14,7 @@ public class PAK_UpdateCustomerSAP {
     public PAK_UpdateCustomerSAP(){        
     }
     public pageReference SendWS(){
+        //ServiceLogger.log('PAK_UpdateCustomerSAP');
         Organization org = [SELECT IsSandbox FROM Organization LIMIT 1];
         isSandbox = org.IsSandbox;
         try{
