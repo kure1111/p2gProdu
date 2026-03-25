@@ -163,7 +163,7 @@ public  with sharing class P2G_CreacionCargoLines {
     public static list<SAP_Service_Type__c> getSapServiceType(string sapServiceT){
         string searchKeyword = '%' + sapServiceT + '%';
         list<SAP_Service_Type__c> ListSapServiceT = new list<SAP_Service_Type__c>();
-        for(SAP_Service_Type__c sapService : [SELECT Id, Name FROM SAP_Service_Type__c where Name LIKE : searchKeyword AND Group__c='SP-FN-FLETE NACIONAL' limit 20]){
+        for(SAP_Service_Type__c sapService : [SELECT Id, Name FROM SAP_Service_Type__c where Name LIKE : searchKeyword AND Group__c='SP-FN-FLETE NACIONAL' AND Activo__c = true limit 20]){
             ListSapServiceT.add(sapService);
         }
         if(ListSapServiceT.size() == 0){
