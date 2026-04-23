@@ -230,7 +230,7 @@ pushMessage(title, variant, message){
         }
         else{
             this.searchSST = 'SERVICIOS LOGISTICOS NACIONALES FN (IC) (FN)';
-            this.searchKeyIdSST='a1n4T000002JWphQAG'; //prod a1n4T000001XXYCQA4 UAT:a1n0R000001lZceQAE
+            this.searchKeyIdSST='a1n0R000001lZceQAE'; //prod a1n4T000001XXYCQA4 UAT:a1n0R000001lZceQAE
 
         }
         console.log(this.searchKeyIdSST);
@@ -423,16 +423,16 @@ GeF_NACIONAL(){
         this.pushMessage('Campos Faltantes','error', 'Favor de llenar todos campos requeridos indicados con *');
         return
     }
-    this.wrapperFolio['recordTypeUnidad'] = this.wrapperFolio.recordTypeUnidad && this.wrapperFolio.recordTypeUnidad.length > 0 ? this.wrapperFolio.recordTypeUnidad : 'a3K4T000000SNdIUAW';
     creaFolios({fleteNacional: this.wrapperFolio, cargoLine: this.wrapperCargoLine})   
     .then(result => {
-        this.listaFolios = result;
+        this.listaFolios = result;    this.wrapperFolio['recordTypeUnidad'] = this.wrapperFolio.recordTypeUnidad && this.wrapperFolio.recordTypeUnidad.length > 0 ? this.wrapperFolio.recordTypeUnidad : 'a3K4T000000SNdIUAW';
+
         if(result!==null){
             this.pushMessage('Exitoso!', 'success', 'Folio/s Generado Con exito!');
             this.isGeneFolio = true;
             this.cleanClaveUnidadPeso();
             if(this.searchKeyIdSST.length<3){
-                this.searchKeyIdSST='a3K4T000000SNdIUAW'; //prod a3K4T000000SNdIUAW UAT:a1n0R000001lZceQAE
+                this.searchKeyIdSST='a1n0R000001lZceQAE'; //prod a3K4T000000SNdIUAW UAT:a1n0R000001lZceQAE
             }
             getIdFolio({listaFolio: this.listaFolios,divisa: this.currency,idConteinerType: this.searchValueIdContainerType,account: this.searchValueIdAccount,idSST:this.searchKeyIdSST})
                 .then(result => {
@@ -504,14 +504,14 @@ GeF_NACIONAL(){
         this.materialPeligroso = false;
         this.quoteSellPrice = 0;
         this.nfolios = 1;
-        this.searchKeyIdSST='a1n4T000002JWphQAG'; //prod a1n4T000001XXYCQA4 UAT:a1n0R000001lZceQAE
+        this.searchKeyIdSST='a1n0R000001lZceQAE'; //prod a1n4T000001XXYCQA4 UAT:a1n0R000001lZceQAE
     }
     abrirFolio(event){
             this.folioname = event.target.outerText;
             this.folioId = event.currentTarget.dataset.id;
             //produccion https://pak2gologistics.lightning.force.com/lightning/r/Customer_Quote__c/
             //uat https://pak2gologistics--uat.sandbox.lightning.force.com/lightning/r/Customer_Quote__c/
-            this.varurl = "https://pak2gologistics.lightning.force.com/lightning/r/Customer_Quote__c/"+this.folioId+"/view";
+            this.varurl = "https://pak2gologistics--uat.sandbox.lightning.force.com/lightning/r/Customer_Quote__c/"+this.folioId+"/view";
             var win = window.open(this.varurl, '_blank');
             win.focus();
     }

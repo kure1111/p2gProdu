@@ -100,7 +100,7 @@
         onclick={folioComercioExterior}
         style="--sds-c-button-line-height:1;" stretch></lightning-button>
     </div>
-  </div>
+</div>
   <div><br></div> 
   <div class="slds-grid slds-grid_align-center slds-gutters">
       <div class="slds-col" style="width:80px;"></div>
@@ -208,7 +208,7 @@
                   <div class="slds-col slds-size_6-of-12">
                     <div onkeyup={searchKeyAccount2}>
                       <lightning-input id="sapServiceType" label="Sap service Type:" placeholder="Buscar Sap service Type" 
-                          required="" value={searchSST} type="search"></lightning-input>
+                          required="" value={searchSST} type="search" disabled></lightning-input>
                     </div>
                     <table if:true={showSST} class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_striped">
                         <thead>

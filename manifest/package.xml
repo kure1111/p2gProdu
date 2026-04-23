@@ -1,12 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Package xmlns="http://soap.sforce.com/2006/04/metadata">
     <types>
-        <members>P2G_AccountRelationShipmentService</members>
-        <members>P2G_AccountRelationShipmentServiceTest</members>
-        <members>P2G_AccountUsageScheduler</members>
-        <members>P2G_AccountUsageSchedulerTest</members>
-        <members>P2G_AccountUsageService</members>
-        <members>P2G_AccountUsageServiceTest</members>
-        <name>ApexClass</name>
+    <members>P2G_CargaObjSalesforceTest</members>
+    <name>ApexClass</name>
     </types>
 </Package>
