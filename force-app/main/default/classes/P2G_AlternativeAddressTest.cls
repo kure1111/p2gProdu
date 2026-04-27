@@ -238,7 +238,7 @@ public class P2G_AlternativeAddressTest {
         List<Account_Address__c> addresses = [SELECT Id, Name FROM Account_Address__c 
                                             WHERE Name LIKE 'KIMBERLY%' 
                                             AND status__c = 'Validado'
-                                            AND Active__c = true
+                                            AND IsActive__c = true
                                             LIMIT 1];
         
         if(!addresses.isEmpty()){
@@ -275,7 +275,7 @@ public class P2G_AlternativeAddressTest {
         List<Account_Address__c> addresses = [SELECT Id FROM Account_Address__c 
                                             WHERE Name LIKE 'KIMBERLY%' 
                                             AND status__c = 'Validado'
-                                            AND Active__c = true
+                                            AND IsActive__c = true
                                             LIMIT 1];
         
         if(!addresses.isEmpty()){

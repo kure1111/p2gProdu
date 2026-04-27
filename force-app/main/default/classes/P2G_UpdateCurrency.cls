@@ -21,10 +21,13 @@ public class P2G_UpdateCurrency implements Schedulable {
         // Obtener el Token de acceso
         String accessToken = UserInfo.getSessionId();
         Http http = new Http();
-
+        
         // Obtener el ID de CurrencyType para USD y EUR
         CurrencyType usdCurrency = [SELECT Id FROM CurrencyType WHERE IsoCode = 'USD' LIMIT 1];
         CurrencyType eurCurrency = [SELECT Id FROM CurrencyType WHERE IsoCode = 'EUR' LIMIT 1];
+        
+        // Actualizar ambas tasas de cambio en una sola llamada
+        actualizarTasasCambio(http, usdCurrency.Id, eurCurrency.Id, (1 / nuevaTasaUSD), (1 / nuevaTasaEUR), accessToken);
         
         // Actualizar tasas fechadas
         Date startDate = Date.today();
@@ -32,10 +35,6 @@ public class P2G_UpdateCurrency implements Schedulable {
         String accessToken2 = UserInfo.getSessionId();
         createDatedConversionRate('EUR', (1 / nuevaTasaEUR), startDate, accessToken2);
         createDatedConversionRate('USD', (1 / nuevaTasaUSD), startDate, accessToken2);
-        
-        // Actualizar ambas tasas de cambio en una sola llamada
-        actualizarTasasCambio(http, usdCurrency.Id, eurCurrency.Id, (1 / nuevaTasaUSD), (1 / nuevaTasaEUR), accessToken);
-        
     }
     
     private static void actualizarTasasCambio(Http http, Id usdCurrencyId, Id eurCurrencyId, Decimal usdRate, Decimal eurRate, String accessToken) {
