@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
-    <description>Permite al usuario ejecutar flujos en Salesforce</description>
     <hasActivationRequired>false</hasActivationRequired>
-    <label>Permission Set Ejecutar Flujos</label>
-    <license>Salesforce</license>
+    <label>Editar Email Templates</label>
     <userPermissions>
         <enabled>true</enabled>
-        <name>RunFlow</name>
+        <name>AccessContentBuilder</name>
     </userPermissions>
 </PermissionSet>

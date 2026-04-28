@@ -1,17 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
-    <classAccesses>
-        <apexClass>p2g_CreateServiceLineQuote</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>p2g_CreateServiceLineShipment</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>p2g_CreateServiceLineShipmentSec2</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
     <description>Set con los permisos para crear y editar Service Lines para el equipo de HOUSE ACCOUNT</description>
     <fieldPermissions>
         <editable>true</editable>
@@ -363,7 +351,7 @@
         <allowDelete>true</allowDelete>
         <allowEdit>true</allowEdit>
         <allowRead>true</allowRead>
-        <modifyAllRecords>true</modifyAllRecords>
+        <modifyAllRecords>false</modifyAllRecords>
         <object>Import_Export_Fee_Line__c</object>
         <viewAllRecords>true</viewAllRecords>
     </objectPermissions>

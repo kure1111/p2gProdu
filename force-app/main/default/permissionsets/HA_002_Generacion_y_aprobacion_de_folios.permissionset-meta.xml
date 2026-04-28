@@ -607,13 +607,13 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>true</editable>
-        <field>Customer_Quote__c.Folio_Declinado__c</field>
+        <editable>false</editable>
+        <field>Customer_Quote__c.Folio_MktAccount__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
-        <field>Customer_Quote__c.Folio_MktAccount__c</field>
+        <editable>true</editable>
+        <field>Customer_Quote__c.Folio_Mkt__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>

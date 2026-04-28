@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
-    <description>Permite al usuario ejecutar flujos en Salesforce</description>
+    <description>Permission set para hacer obligatorio el uso de MFA desde el primer login</description>
     <hasActivationRequired>false</hasActivationRequired>
-    <label>Permission Set Ejecutar Flujos</label>
-    <license>Salesforce</license>
+    <label>P2G_RequiredMFA</label>
     <userPermissions>
         <enabled>true</enabled>
-        <name>RunFlow</name>
+        <name>ForceTwoFactor</name>
     </userPermissions>
 </PermissionSet>

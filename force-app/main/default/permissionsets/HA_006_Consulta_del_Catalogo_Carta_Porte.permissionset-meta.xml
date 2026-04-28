@@ -84,6 +84,10 @@
         <viewAllRecords>true</viewAllRecords>
     </objectPermissions>
     <recordTypeVisibilities>
+        <recordType>Catalogo_SAT__c.Clave_Unidad</recordType>
+        <visible>true</visible>
+    </recordTypeVisibilities>
+    <recordTypeVisibilities>
         <recordType>Catalogo_SAT__c.Codigo_Postal</recordType>
         <visible>true</visible>
     </recordTypeVisibilities>

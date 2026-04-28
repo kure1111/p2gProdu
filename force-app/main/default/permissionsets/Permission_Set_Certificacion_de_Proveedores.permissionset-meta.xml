@@ -3,21 +3,6 @@
     <description>Conjunto de permisos para permitrile al usuario leer, crear, y modificar registros en los objetos Certificación de Proveedor, Certificación de Proveedor / Patios, y Certificación de Proveedor / Rutas</description>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Account.Anos_Experiencia__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>Account.Website</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>Case.AccountId</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
         <field>Certificacion_de_Proveedor__c.Account__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -44,11 +29,6 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Certificacion_de_Proveedor__c.Certificaciones_Varias__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>Certificacion_de_Proveedor__c.Container_Type__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -124,11 +104,6 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Certificacion_de_Proveedor__c.No_De_patios__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>Certificacion_de_Proveedor__c.No_Unidades__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -298,32 +273,7 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Certificacion_de_Proveedor__c.Route__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>Certificacion_de_Proveedor__c.Ruta_negociada__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
         <field>Certificacion_de_Proveedor__c.Sistema_de_rastreo_satelital__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>Certificacion_de_Proveedor__c.Tarifa__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>Certificacion_de_Proveedor__c.Tipo_de_Unidad__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>Certificacion_de_Proveedor__c.Volumen__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -503,7 +453,7 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>P2G_SCP_Ruta__c.P2G_CI_Tarifa10__c</field>
+        <field>P2G_SCP_Ruta__c.P2G_CI_Tarifa12__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -605,31 +555,13 @@
     <label>Permission Set Certificación de Proveedores</label>
     <license>Salesforce</license>
     <objectPermissions>
-        <allowCreate>false</allowCreate>
-        <allowDelete>false</allowDelete>
-        <allowEdit>true</allowEdit>
-        <allowRead>true</allowRead>
-        <modifyAllRecords>false</modifyAllRecords>
-        <object>Account</object>
-        <viewAllRecords>false</viewAllRecords>
-    </objectPermissions>
-    <objectPermissions>
-        <allowCreate>true</allowCreate>
-        <allowDelete>false</allowDelete>
-        <allowEdit>true</allowEdit>
-        <allowRead>true</allowRead>
-        <modifyAllRecords>false</modifyAllRecords>
-        <object>Case</object>
-        <viewAllRecords>false</viewAllRecords>
-    </objectPermissions>
-    <objectPermissions>
         <allowCreate>true</allowCreate>
         <allowDelete>false</allowDelete>
         <allowEdit>true</allowEdit>
         <allowRead>true</allowRead>
         <modifyAllRecords>false</modifyAllRecords>
         <object>Certificacion_de_Proveedor__c</object>
-        <viewAllRecords>true</viewAllRecords>
+        <viewAllRecords>false</viewAllRecords>
     </objectPermissions>
     <objectPermissions>
         <allowCreate>true</allowCreate>
@@ -638,7 +570,7 @@
         <allowRead>true</allowRead>
         <modifyAllRecords>false</modifyAllRecords>
         <object>P2G_SCP_Patios__c</object>
-        <viewAllRecords>true</viewAllRecords>
+        <viewAllRecords>false</viewAllRecords>
     </objectPermissions>
     <objectPermissions>
         <allowCreate>true</allowCreate>
@@ -647,18 +579,14 @@
         <allowRead>true</allowRead>
         <modifyAllRecords>false</modifyAllRecords>
         <object>P2G_SCP_Ruta__c</object>
-        <viewAllRecords>true</viewAllRecords>
+        <viewAllRecords>false</viewAllRecords>
     </objectPermissions>
     <recordTypeVisibilities>
-        <recordType>Account.Transporter</recordType>
+        <recordType>Certificacion_de_Proveedor__c.Case</recordType>
         <visible>true</visible>
     </recordTypeVisibilities>
     <tabSettings>
-        <tab>P2G_SCP_Patios__c</tab>
-        <visibility>Available</visibility>
-    </tabSettings>
-    <tabSettings>
-        <tab>standard-Account</tab>
+        <tab>Certificacion_de_Proveedor__c</tab>
         <visibility>Available</visibility>
     </tabSettings>
 </PermissionSet>

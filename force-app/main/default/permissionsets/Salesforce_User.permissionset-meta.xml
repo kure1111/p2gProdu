@@ -4,6 +4,10 @@
     <hasActivationRequired>false</hasActivationRequired>
     <label>Salesforce User</label>
     <license>Salesforce</license>
+    <tabSettings>
+        <tab>standard-UserProfile</tab>
+        <visibility>Visible</visibility>
+    </tabSettings>
     <userPermissions>
         <enabled>true</enabled>
         <name>AllowLightningLogin</name>

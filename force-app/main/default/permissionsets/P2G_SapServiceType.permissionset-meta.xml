@@ -2,7 +2,7 @@
 <PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
     <description>permiso para Editar el campo Tipo de Servicio TNA en Account</description>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>Account.Tipo_de_Servicio_TNA__c</field>
         <readable>true</readable>
     </fieldPermissions>
