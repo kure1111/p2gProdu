@@ -66,7 +66,7 @@ public class P2G_UpdateCurrency implements Schedulable {
         req.setEndpoint('https://www.banxico.org.mx/SieAPIRest/service/v1/series/SF43718,SF46410/datos/oportuno');
         req.setMethod('GET');
         req.setHeader('Bmx-Token', 'e7d4ea23d131e9b6c5ec25061e91fa4b0ee3699dd16c7f0f588d967a124f260f');
-        
+         req.setTimeout(120000);
         Http http = new Http();
         HttpResponse res = http.send(req);
         
