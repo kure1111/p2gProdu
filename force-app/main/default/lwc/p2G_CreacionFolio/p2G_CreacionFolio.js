@@ -32,14 +32,17 @@ import folioR from "c/p2G_creacionFolioGlobalRouting";
 import folioAW from "c/p2G_creacionFolioGlobalAereo";
 import folioCE from "c/p2G_creacionFolioComercioExterior";
 import folioPQ from "c/p2G_CreacionFoliosPaqueteria";
-
+import folioRN from "c/p2G_CreacionFolioRefrigeradoNacional";
+import folioRI from "c/p2g_CreacionFolioRefrigeradoInter";
+ 
 export default class P2G_CreacionFolio extends LightningElement {
+    isProduccion=true;
     //lista de cargo line
     quote ;
         @wire(getCargoLine,{listaFolio: '$quote'})
         listCargoLine;
         //idQuote; = IdFolios[0].Id;'a0IDV000007FNoy2AG';
-        @wire(getServiceLine) 
+        @wire(getServiceLine)
         listServiceLine;
     // fin lista cargo line
     value = 'No';
@@ -65,50 +68,50 @@ export default class P2G_CreacionFolio extends LightningElement {
     precio;
     quoteSellPrice = 0;
     esTarifario = false;
-    
+   
     @track sideRecordsDischarge;
     searchValueDischarge ='';
     searchValueIdDischarge ='';
     showSideDischarge = false;
-
+ 
     @track sideRecordsAccount;
     searchValueAccount ='';
     searchValueIdAccount ='';
     showSideAccount = false;
     customerId = false;
-
+ 
     @track sideRecordsCustomer;
     searchValueCustomer ='';
     searchValueIdCustomer ='';
     showSideCustomer = false;
-
+ 
     //inicio var Cargo Lines
     @track sideRecordsClaveServicio;
     searchValueClaveServicio ='';
     searchValueIdClaveServicio ='';
     showSideClaveServicio = false;
-    
+   
     materialPeligroso = false;
     @track sideRecordsMaterialPeligroso;
     searchValueMaterialPeligroso ='';
     searchValueIdMaterialPeligroso ='';
     showSideMaterialPeligroso = false;
-    
+   
     @track sideRecordsEmbalaje;
     searchValueEmbalaje ='';
     searchValueIdEmbalaje ='';
     showSideEmbalaje = false;
-    
+   
     @track sideRecordsContainerType;
     searchValueContainerType ='';
     searchValueIdContainerType ='';
     showSideContainerType = false;
-
+ 
     @track sideRecordsClaveUnidadPeso;
     searchValueClaveUnidadPeso ='Pallet';
-    searchValueIdClaveUnidadPeso ='';
+    searchValueIdClaveUnidadPeso = '';
     showSideClaveUnidadPeso = false;
-
+ 
     Descripcionproducto = '';
     units = '';
     pesoBruto = 1;
@@ -116,14 +119,14 @@ export default class P2G_CreacionFolio extends LightningElement {
     currency = 'MXN';
     totalShipping = 1;
     //fin var Cargo Lines
-
+ 
     @track IdFolios;
     folioname ='';
     folioId = '';
     idQuote = '';
     varurl = '';
     rateName = '';
-
+ 
     ComercioEx = 'No';
     team = 'P2G';
     Custumer = '';
@@ -131,16 +134,16 @@ export default class P2G_CreacionFolio extends LightningElement {
     ETD = '';
     loadtime = '';
     unloadtime ='';
-
+ 
     @track carga = false;
     @track csvFile;
     fileName = '';
-
+ 
     @track recordSST;
     showSST=false;
     searchSST='SERVICIOS LOGISTICOS NACIONALES FN (IC) (FN)';
     searchKeyIdSST='';
-
+ 
 //valores Comercio Exterior
     get options() {
         return [
@@ -148,6 +151,43 @@ export default class P2G_CreacionFolio extends LightningElement {
             { label: 'No', value: 'No' },
         ];
     }
+ 
+ 
+    connectedCallback() {
+        this.initializeComponent();
+    }
+ 
+    initializeComponent(){
+        getWrapper()
+            .then(result => {
+                this.wrapperFolio = result;
+                console.log('el wrapper folio es: '+ this.wrapperFolio);
+            })
+            .catch(error => {
+                this.showToast('Error','error', error.body.message);
+                this.wrapperFolio = error;
+                console.log('el wrapper folio es: '+ this.wrapperFolio);
+            });
+        getCargolineWraper()
+            .then(result => {
+                this.wrapperCargoLine = result;
+                console.log('el wrapper CargoLine es: '+ this.wrapperCargoLine);
+            })
+            .catch(error => {
+                this.showToast('Error','error', error.body.message);
+                this.wrapperCargoLine = error;
+                console.log('el error es: '+ this.wrapperCargoLine);
+            });
+        if(this.isProduccion === true){
+            this.searchValueIdClaveUnidadPeso ='a3K4T000000SNdIUAW';
+            this.url = "https://pak2gologistics.lightning.force.com/lightning/r/Customer_Quote__c/";
+        }else{
+            this.searchValueIdClaveUnidadPeso ='a3n0R000000ETiqQAG';
+            this.url ="https://pak2gologistics--uat.sandbox.lightning.force.com/lightning/r/Customer_Quote__c/";
+        }
+    }
+ 
+ 
 pushMessage(title, variant, message){
     const event = new ShowToastEvent({
         title: title,
@@ -181,7 +221,7 @@ pushMessage(title, variant, message){
             this.showSideLoad = false;
         }
     }
-
+ 
 // buscador Site of Discharge
     SideSelectDischarge(event){
         this.searchValueDischarge = event.target.outerText;
@@ -208,7 +248,7 @@ pushMessage(title, variant, message){
             this.showSideDischarge = false;
         }
     }
-    
+   
 // buscador Account
     SideSelectAccount(event){
         this.searchValueAccount = event.target.outerText;
@@ -217,7 +257,7 @@ pushMessage(title, variant, message){
         this.wrapperFolio.idAccount = event.currentTarget.dataset.id;
         this.wrapperCargoLine.idItemSuplienerOwner = event.currentTarget.dataset.id;
         this.wrapperFolio.idReferenceForm='';
-
+ 
         if(event.currentTarget.dataset.sst !== undefined){
             this.searchKeyIdSST=event.currentTarget.dataset.sst;
             getSstName({idSst: this.searchKeyIdSST})
@@ -230,12 +270,12 @@ pushMessage(title, variant, message){
         }
         else{
             this.searchSST = 'SERVICIOS LOGISTICOS NACIONALES FN (IC) (FN)';
-            this.searchKeyIdSST='a1n0R000001lZceQAE'; //prod a1n4T000001XXYCQA4 UAT:a1n0R000001lZceQAE
-
+            this.searchKeyIdSST='a1n4T000001XXYCQA4'; //prod a1n4T000001XXYCQA4 UAT:a1n0R000001lZceQAE
+ 
         }
         console.log(this.searchKeyIdSST);
         console.log( this.searchSST);
-        
+       
     }
     searchKeyAccount(event){
         this.searchValueAccount = event.target.value;
@@ -279,7 +319,7 @@ pushMessage(title, variant, message){
             this.showSST = false;
         }
     }
-        
+       
 // buscador Customer
 SideSelectCustomer(event){
     this.searchValueCustomer = event.target.outerText;
@@ -307,7 +347,7 @@ searchKeyCustomer(event){
         this.showSideCustomer = false;
     }
 }
-
+ 
 registroTeam(event){
     this.wrapperFolio.team = event.target.value;
 }
@@ -339,7 +379,7 @@ registroloadtime(event){
 registrounloadtime(event){
     this.wrapperFolio.Awaitingunloadtime = event.target.value;
 }
-
+ 
 //Abril Modal Pop flete nacional
 OpenF_NACIONAL(){
     this.isF_NACIONAL = true;
@@ -360,7 +400,7 @@ OpenF_NACIONAL(){
                 this.pushMessage('Error','error', error.body.message);
                 this.wrapperCargoLine = null;
             });
-    
+   
 }
 closeF_NACIONAL() {
     //this.isGeneFolio = true;
@@ -398,14 +438,26 @@ AgregarItemPrice(){
     });
     }
 }
-
+ 
 cleanClaveUnidadPeso(){
     this.searchValueClaveUnidadPeso = 'Pallet';
     this.showSideClaveUnidadPeso = false;
     this.searchValueIdClaveUnidadPeso = '';
     this.wrapperFolio.recordTypeUnidad = '';
 }
-
+ 
+ 
+    llenaCamposFijos(){
+        this.wrapperFolio.numFoliosCrear = this.numfolios;
+        this.wrapperFolio.grupo = this.grupo;
+        this.wrapperFolio.comercioExterior = 'No';
+        this.wrapperFolio.team = 'P2G';
+        this.wrapperCargoLine.currencyIsoCode = this.valueCurrency;
+        this.wrapperFolio.currencyIsoCode = this.valueCurrency;
+        this.wrapperFolio.recordTypeUnidad = this.searchValueIdClaveUnidadPeso;
+    }
+ 
+ 
 GeF_NACIONAL(){
     //id por defecto en uat para clave de unidad de peso a3n0R000000ETiqQAG
     //id por defecto en produccion para clave de unidad de peso a3K4T000000SNdIUAW
@@ -423,16 +475,17 @@ GeF_NACIONAL(){
         this.pushMessage('Campos Faltantes','error', 'Favor de llenar todos campos requeridos indicados con *');
         return
     }
-    creaFolios({fleteNacional: this.wrapperFolio, cargoLine: this.wrapperCargoLine})   
+    this.llenaCamposFijos();
+    creaFolios({fleteNacional: this.wrapperFolio, cargoLine: this.wrapperCargoLine})  
     .then(result => {
         this.listaFolios = result;    this.wrapperFolio['recordTypeUnidad'] = this.wrapperFolio.recordTypeUnidad && this.wrapperFolio.recordTypeUnidad.length > 0 ? this.wrapperFolio.recordTypeUnidad : 'a3K4T000000SNdIUAW';
-
+ 
         if(result!==null){
             this.pushMessage('Exitoso!', 'success', 'Folio/s Generado Con exito!');
             this.isGeneFolio = true;
             this.cleanClaveUnidadPeso();
             if(this.searchKeyIdSST.length<3){
-                this.searchKeyIdSST='a1n0R000001lZceQAE'; //prod a3K4T000000SNdIUAW UAT:a1n0R000001lZceQAE
+                this.searchKeyIdSST='a3K4T000000SNdIUAW'; //prod a3K4T000000SNdIUAW UAT:a1n0R000001lZceQAE
             }
             getIdFolio({listaFolio: this.listaFolios,divisa: this.currency,idConteinerType: this.searchValueIdContainerType,account: this.searchValueIdAccount,idSST:this.searchKeyIdSST})
                 .then(result => {
@@ -454,7 +507,7 @@ GeF_NACIONAL(){
                         this.pushMessage('Error','error', error.body.message);
                         this.listServiceLine = null;
                     });
-                condicionesTarifario({idAccount: this.wrapperFolio.idAccount, idServiceType: this.searchKeyIdSST, 
+                condicionesTarifario({idAccount: this.wrapperFolio.idAccount, idServiceType: this.searchKeyIdSST,
                     idContainerType: this.wrapperCargoLine.idConteinerType, IdRoute: this.IdFolios[0].Route__c})
                 .then(result => {
                 this.Tarifario = result;
@@ -504,20 +557,20 @@ GeF_NACIONAL(){
         this.materialPeligroso = false;
         this.quoteSellPrice = 0;
         this.nfolios = 1;
-        this.searchKeyIdSST='a1n0R000001lZceQAE'; //prod a1n4T000001XXYCQA4 UAT:a1n0R000001lZceQAE
+        this.searchKeyIdSST='a1n4T000001XXYCQA4'; //prod a1n4T000001XXYCQA4 UAT:a1n0R000001lZceQAE
     }
     abrirFolio(event){
             this.folioname = event.target.outerText;
             this.folioId = event.currentTarget.dataset.id;
             //produccion https://pak2gologistics.lightning.force.com/lightning/r/Customer_Quote__c/
             //uat https://pak2gologistics--uat.sandbox.lightning.force.com/lightning/r/Customer_Quote__c/
-            this.varurl = "https://pak2gologistics--uat.sandbox.lightning.force.com/lightning/r/Customer_Quote__c/"+this.folioId+"/view";
+            this.varurl = "https://pak2gologistics.lightning.force.com/lightning/r/Customer_Quote__c/"+this.folioId+"/view";
             var win = window.open(this.varurl, '_blank');
             win.focus();
     }
-    
+   
     // busquedad y valor de var de la cargo line
-    
+   
 // buscador ClaveServicio
 SideSelectClaveServicio(event){
     this.materialPeligroso = false;
@@ -551,7 +604,7 @@ searchKeyClaveServicio(event){
         this.showSideClaveServicio = false;
     }
 }
-    
+   
 // buscador Material Peligroso
 SideSelectMaterialPeligroso(event){
     this.searchValueMaterialPeligroso = event.target.outerText;
@@ -629,7 +682,7 @@ searchKeyContainerType(event){
         this.showSideContainerType = false;
     }
 }
-
+ 
 // buscador Clave de unidad de peso
 SideSelectClaveUnidadPeso(event){
     this.searchValueClaveUnidadPeso = event.target.outerText;
@@ -637,15 +690,15 @@ SideSelectClaveUnidadPeso(event){
     this.searchValueIdClaveUnidadPeso = event.currentTarget.dataset.id
     this.wrapperFolio.recordTypeUnidad = event.currentTarget.dataset.id
 }
-
+ 
 handleCleanClaveUnidadPeso(event){
     if (!event.target.value.length) {
         this.cleanClaveUnidadPeso()
     }
 }
-
-
-
+ 
+ 
+ 
 searchKeyClaveUnidadPeso(event){
     this.searchValueClaveUnidadPeso = event.target.value;
     this.searchValueIdClaveUnidadPeso='';
@@ -664,7 +717,7 @@ searchKeyClaveUnidadPeso(event){
         this.showSideClaveUnidadPeso = false;
     }
 }  
-
+ 
 registroDescripcionProducto(event){
     this.wrapperCargoLine.description = event.target.value;
     this.Descripcionproducto = event.target.value;
@@ -680,7 +733,7 @@ registroPesoBruto(event){
 registroPesoNeto(event){
     this.wrapperCargoLine.pesoNeto = event.target.value;
     this.pesoNeto = event.target.value;
-} 
+}
 registroCurrency(event){
     this.wrapperCargoLine.currencyIsoCode = event.target.value;
     this.currency = event.target.value;
@@ -696,7 +749,7 @@ registroTotalShippingVolume(event){
 abrirCargoLine(){
     this.isGeneFolio = false;
     this.isCargoLine = true;
-    
+   
     this.searchValueEmbalaje = null;
     this.searchValueMaterialPeligroso = null;
     this.searchValueClaveServicio = null;
@@ -725,16 +778,16 @@ agregarCargoLine(){
 openCargaMasiva(){
     this.carga = true;
 }
-
+ 
     handleFileChange(event) {
         this.csvFile = event.target.files[0];
         this.fileName = event.target.files[0].name;
     }
-
+ 
     get showUploadButton() {
         return this.csvFile != null;
     }
-
+ 
     handleUploadClick() {
         let reader = new FileReader();
         reader.onload = (event) => {
@@ -825,6 +878,26 @@ openCargaMasiva(){
     async folioPuertos() {
         console.log('id es: ', this.recordId);
         const result = await folioPTO.open({
+            size: 'medium',
+            description: 'Modal para cargar',
+            recordId: this.recordId,
+            label: 'Modal Heading'
+        });
+        console.log(result);
+    }
+    async folioRN() {        
+        console.log('id es: ', this.recordId);
+        const result = await folioRN.open({
+            size: 'medium',
+            description: 'Modal para cargar',
+            recordId: this.recordId,
+            label: 'Modal Heading'
+        });
+        console.log(result);
+    }
+    async abrirFolioRI() {        
+        console.log('id es: ', this.recordId);     
+        const result = await folioRI.open({
             size: 'medium',
             description: 'Modal para cargar',
             recordId: this.recordId,
