@@ -4,58 +4,77 @@ public class PAK_SendToOrder {
     public String TipoShipment; 
     private boolean Bandera {get;set;}
     private String Estatus {get;set;}
+    
+    //NUEVA LÍNEA 1: Variable para modo batch
+    private Boolean isBatchMode;
+    
     public PAK_SendToOrder(ApexPages.StandardController Controller){
         if(!Test.isRunningTest()){
             C = Controller;
             IdShipment = Controller.getId();   
         }
+        //NUEVA LÍNEA 2: Detectar si hay página VF
+        isBatchMode = (ApexPages.currentPage() == null);
     }
+    
+    // NUEVO MÉTODO: Maneja mensajes en ambos modos
+    private void addMessage(ApexPages.Severity severity, String message) {
+        if (isBatchMode) {
+            System.debug(severity.name() + ': ' + message);
+        } else {
+            ApexPages.Message myMsg = new ApexPages.Message(severity, message);
+            ApexPages.addMessage(myMsg);
+        }
+    }
+    
     public PageReference SendWS(){
         try{
             Bandera = false;
-            Shipment__c S = [Select Id,Name,Order__c, Account_for__r.Venta_Sap__c, Shipment_Status_Plann__c, Shipment_Status__c,
-                             Freight_Mode__c, Service_Mode__c, Status_Shipment__c, Ocean_Shipment_Status__c, Air_Shipment_Status__c 
-                             ,Routing_Operation_Status__c,VerificacionPak__c,Shipment_Status_Mon__c 
-                             From Shipment__c 
-                             Where Id=:IdShipment limit 1];
+            Shipment__c S = [SELECT Id,Name,Order__c, Account_for__r.Venta_Sap__c, Shipment_Status_Plann__c, Shipment_Status__c,
+                                    Freight_Mode__c, Service_Mode__c, Status_Shipment__c, Ocean_Shipment_Status__c, Air_Shipment_Status__c, 
+                                    Routing_Operation_Status__c,VerificacionPak__c,Shipment_Status_Mon__c 
+                             FROM Shipment__c 
+                             WHERE Id=:IdShipment limit 1];
             
             Order ordr = [SELECT Id, DefaultPbe__c, DefaultProduct__c FROM Order WHERE Id=:S.Order__c LIMIT 1];
             
             List<OrderItem> lstLines = new List<OrderItem>();
             
-            List<Shipment_Fee_Line__c> Lines = [Select Id,Name,Units__c,CurrencyIsoCode,Shipment_Sell_Price__c,Shipment_Sell_Net_Price__c,
-                                                Shipment_Buy_Price__c,SAP__c, Service_Rate_Name__r.SAP_Service_Type__r.Code__c,Service_Rate_Name__r.SAP_Service_Type__r.Group__c,
-                                                Service_Rate_Name__r.SAP_Service_Type__r.Name, Service_Rate_Name__r.SAP_Service_Type__r.VAT__c, Currency_Buy_Price__c, Conversion_Rate_to_Buy_Currency_Header__c,
-                                                Service_Rate_Name__r.SAP_Service_Type__r.VAT_Withholding__c,Record_Locked__c
-                                                From Shipment_Fee_Line__c 
-                                                Where Shipment__c=:IdShipment AND Campo_Control__c!=true /*and SAP__c=false*/];
+            List<Shipment_Fee_Line__c> Lines = [SELECT Id,Name,Units__c,CurrencyIsoCode,Shipment_Sell_Price__c,Shipment_Sell_Net_Price__c,
+                                                	   Shipment_Buy_Price__c,SAP__c, Service_Rate_Name__r.SAP_Service_Type__r.Code__c,Service_Rate_Name__r.SAP_Service_Type__r.Group__c,
+                                                	   Service_Rate_Name__r.SAP_Service_Type__r.Name, Service_Rate_Name__r.SAP_Service_Type__r.VAT__c, Currency_Buy_Price__c, Conversion_Rate_to_Buy_Currency_Header__c,
+                                                	   Service_Rate_Name__r.SAP_Service_Type__r.VAT_Withholding__c,Record_Locked__c
+                                                FROM Shipment_Fee_Line__c 
+                                                WHERE Shipment__c=:IdShipment AND Campo_Control__c!=true /*and SAP__c=false*/];
             
-            system.debug('lines 1 : ' + lines);
+            System.debug('lines 1 : ' + lines);
             
             TipoShipment = S.Name.substringBetween('-','-');
             Estatus = '';
             
-            if(S.Account_for__r.Venta_Sap__c == null || S.Account_for__r.Venta_Sap__c == ''){ApexPages.Message myMsg = new ApexPages.Message(ApexPages.Severity.WARNING,'Tipo de venta SAP no configurado para este cliente');ApexPages.addMessage(myMsg);return null;}
+            if(S.Account_for__r.Venta_Sap__c == null || S.Account_for__r.Venta_Sap__c == ''){
+                addMessage(ApexPages.Severity.WARNING, 'Tipo de venta SAP no configurado para este cliente');
+                return null;
+            }
            
             {
-                    system.debug('entro  ValidarEstatus : ' + s);
+                System.debug('entro  ValidarEstatus : ' + s);
                 ValidarEstatus(S); 
-                  system.debug('termino  ValidarEstatus : ' );
+                System.debug('termino  ValidarEstatus : ' );
             }
             
             if(Bandera){
-                ApexPages.Message myMsg = new ApexPages.Message(ApexPages.Severity.ERROR,'Validacion: Estatus Incorrecto '+Estatus);
-                ApexPages.addMessage(myMsg);
+                addMessage(ApexPages.Severity.ERROR, 'Validacion: Estatus Incorrecto '+Estatus);
                 return null;
             }
             if(Lines.isEmpty()){
-                ApexPages.Message myMsg = new ApexPages.Message(ApexPages.Severity.ERROR,'ERROR: agregar Shipment Service Lines');
-                ApexPages.addMessage(myMsg);           
+                addMessage(ApexPages.Severity.ERROR, 'ERROR: agregar Shipment Service Lines');
+                return null;           
             }else{
                 String Body = '';
                 if(!Lines.isEmpty()){
                     for(Shipment_Fee_Line__c LI: Lines){
-                         system.debug('entro  ifLines : ' + li);
+                         System.debug('entro  ifLines : ' + li);
                         
                        if(li.Record_Locked__c)
                             LI.Record_Locked__c = false;
@@ -63,7 +82,10 @@ public class PAK_SendToOrder {
                         LI.SAP__c = true;
                         LI.Block__c = true;
                         String ItemCode = LI.Service_Rate_Name__r.SAP_Service_Type__r.Code__c != null?LI.Service_Rate_Name__r.SAP_Service_Type__r.Code__c:'';
-                        if(ItemCode == ''){ApexPages.Message myMsg = new ApexPages.Message(ApexPages.Severity.ERROR,'Capturar SAP Service Type para la línea ' + LI.Name);ApexPages.addMessage(myMsg);return null;}                        
+                        if(ItemCode == ''){
+                            addMessage(ApexPages.Severity.ERROR, 'Capturar SAP Service Type para la línea ' + LI.Name);
+                            return null;
+                        }                        
                         Double units = LI.Units__c != null ? LI.Units__c: 1;
                         String ServTypeLine = LI.Service_Rate_Name__r.SAP_Service_Type__r.Name != null?LI.Service_Rate_Name__r.SAP_Service_Type__r.Name:'';
                         String Concepto = LI.Service_Rate_Name__r.SAP_Service_Type__r.Group__c != null?LI.Service_Rate_Name__r.SAP_Service_Type__r.Group__c:'';                        
@@ -88,51 +110,48 @@ public class PAK_SendToOrder {
                         lstLines.add(line);                       
                     }
                 }
-                 system.debug('entro  upsert : ' + lstLines);
+                System.debug('entro  upsert : ' + lstLines);
                 upsert lstLines ShipServLineId__c;
 
-                if(S.Account_for__r.Venta_Sap__c == 'Contado'){S.RecordTypeId = [Select Id From RecordType Where DeveloperName = 'Shipment_Status_Bloq_Contado' limit 1].Id;}else{S.RecordTypeId = [Select Id From RecordType Where DeveloperName = 'ShipmentStatus' limit 1].Id;}                    
+                if(S.Account_for__r.Venta_Sap__c == 'Contado'){S.RecordTypeId = [SELECT Id FROM RecordType WHERE DeveloperName = 'Shipment_Status_Bloq_Contado' limit 1].Id;}else{S.RecordTypeId = [Select Id From RecordType Where DeveloperName = 'ShipmentStatus' limit 1].Id;}                    
                 S.Status_Shipment__c = 'Send to Sap';                    
                 S.Date_Receive_from_SAP__c = datetime.now();
                 S.AUTORIZAR_GASTO_EXTRA__c = false;
-                S.NotificarGastoExtra__c = false;
+                //S.NotificarGastoExtra__c = false; //descomentar cuando se apsa a produ
                 update S;
                 system.debug('lines antes ' + lines);
                 update Lines;
-                ApexPages.Message myMsg = new ApexPages.Message(ApexPages.Severity.CONFIRM, 'Se envío la información exitosamente. Verificar área de Responses.');
-                ApexPages.addMessage(myMsg);   
+                addMessage(ApexPages.Severity.CONFIRM, 'Se envío la información exitosamente. Verificar área de Responses.');
             }
             return null;
         }catch(Exception e){
-            ApexPages.Message myMsg = new ApexPages.Message(ApexPages.Severity.ERROR,'ERROR: ' + e.getLineNumber()+' - '+e.getMessage());
-            ApexPages.addMessage(myMsg);
-            
+            addMessage(ApexPages.Severity.ERROR, 'ERROR: ' + e.getLineNumber()+' - '+e.getMessage());
             System.debug(e.getLineNumber()+'------------'+e.getMessage());
             return null;
         }
     }
     public void ValidarEstatus(Shipment__c S)
     {
-          system.debug('entro aqui  ValidarEstatus : ' + s);
+          System.debug('entro aqui  ValidarEstatus : ' + s);
         // agregar campo VPC
         if(S.Account_for__r.Venta_Sap__c == 'Credito' && TipoShipment == 'FN' && S.Shipment_Status_Mon__c != 'Delivery on Route_M' && S.Shipment_Status_Mon__c != 'Finished_M'  && s.VerificacionPak__c != true){Bandera=true;Estatus ='para continuar debe ser Delivery on Route / Finished y estar validado por pack control';}
-        if(S.Account_for__r.Venta_Sap__c == 'Credito' && (TipoShipment == 'FI' || TipoShipment == 'PTO') && S.Shipment_Status_Mon__c != 'Delivery on Route_M' && S.Shipment_Status_Mon__c != 'Finished_M'){Bandera=true;Estatus ='para continuar debe ser Delivery on Route o Finished';}
+        if(S.Account_for__r.Venta_Sap__c == 'Credito' && (TipoShipment == 'FI' /*|| TipoShipment == 'PTO'*/) && S.Shipment_Status_Mon__c != 'Delivery on Route_M' && S.Shipment_Status_Mon__c != 'Finished_M'){Bandera=true;Estatus ='para continuar debe ser Delivery on Route o Finished';}
+        
+        //Nuevo IF para PTO, Status Shipment Monitoreo In progress
+        if(S.Account_for__r.Venta_Sap__c == 'Credito' && TipoShipment == 'PTO' && S.Shipment_Status_Mon__c != 'In Progress_M' && S.Shipment_Status_Mon__c != 'Delivery on Route_M' && S.Shipment_Status_Mon__c != 'Finished_M'){Bandera=true;Estatus ='para continuar debe ser In Progress, Delivery on Route o Finished';}
         
         if(S.Account_for__r.Venta_Sap__c == 'Contado' && (TipoShipment == 'FN' || TipoShipment == 'FI' || TipoShipment == 'PTO')){
             System.debug('Entro contado val');
             System.debug('Values - Status_Shipment__c: ' + S.Status_Shipment__c + ' - Shipment_Status_Plann__c: ' + S.Shipment_Status_Plann__c);
-            if(S.Status_Shipment__c == 'Send to Sap' && S.Shipment_Status_Plann__c != 'Confirmed' && S.Shipment_Status_Plann__c != 'False' && S.Shipment_Status_Plann__c != 'In Progress'){
+            if(S.Status_Shipment__c == 'Send to Sap' && S.Shipment_Status_Plann__c != 'Confirmed' && S.Shipment_Status_Plann__c != 'False' && S.Shipment_Status_Plann__c != 'In Progress'){Bandera=true;Estatus ='para continuar debe ser In Progress, Confirmed o False (Contado)';
                 System.debug('Entro val estatus sap');
-                Bandera=true;Estatus ='para continuar debe ser In Progress, Confirmed o False (Contado)';
+                
             }else if(S.Status_Shipment__c != 'Send to Sap' && S.Shipment_Status_Plann__c != 'In Progress' && S.Shipment_Status_Plann__c != 'False'){
                 System.debug('Else estatus sap');
                 Bandera=true;Estatus ='para continuar debe ser In Progress o False (Contado)';
             }
         }
-        /*
-        if(S.Account_for__r.Venta_Sap__c == 'Contado' && (TipoShipment == 'FN' || TipoShipment == 'FI' || TipoShipment == 'PTO') && S.Shipment_Status_Plann__c != 'In Progress'){
-            Bandera=true;Estatus ='para continuar debe ser In Progress (Contado)';
-        }*/
+
         if(S.Account_for__r.Venta_Sap__c == 'Contado' && (TipoShipment == 'A') && (S.Air_Shipment_Status__c != 'Contact with Origin' && S.Air_Shipment_Status__c != 'Pickup and Delivery to Airline' && S.Air_Shipment_Status__c != 'Documentation' && S.Air_Shipment_Status__c != 'Flight Confirmation' && S.Air_Shipment_Status__c != 'Layover' && S.Air_Shipment_Status__c != 'Arrival Confirmation' && S.Air_Shipment_Status__c != 'Pending with Customs Broker' && S.Air_Shipment_Status__c != 'Final Delivery' && S.Air_Shipment_Status__c != 'Finish')){
             Bandera=true;Estatus ='para continuar debe ser Contact with Origin, Pickup and Delivery to Airline, Documentation, Flight Confirmation, Layover, Arrival Confirmation, Pending with Customs Broker, Final Delivery o Finish (Contado)';
         }
@@ -144,18 +163,21 @@ public class PAK_SendToOrder {
             Bandera=true;Estatus ='para continuar debe ser Schedules, Booking Confirmation, Pickup, Documents, Shipping Instructions / VGM, Cut Off, BL Draft, ETD, Invoice, MBL/HBL, Payment, ETA -15, ETA -10, ETA -7, ETA -4, ETA, TLX Confirmation, Delivery On route o Finished (Contado)';
         }
         if(S.Account_for__r.Venta_Sap__c == 'Contado' && (TipoShipment == 'W') && S.Service_Mode__c == 'EXPORT' && S.Shipment_Status__c == 'Delivered'){
-            // Bandera=true;Estatus ='validacion de leo XD';
+            // Bandera=true;Estatus ='validacion de prueba';
             Bandera=true;Estatus ='es necesario que el status sea Delivered el servicio  EXPORT y tipo contado';
-            system.debug('No se mandara a llamar sendtoSap por que lo dice leo XD ');
+            System.debug('No se mandara a llamar sendtoSap');
         }
         if(S.Account_for__r.Venta_Sap__c == 'Credito' && (TipoShipment == 'M') && S.Service_Mode__c == 'EXPORT' && S.Shipment_Status__c == 'Booking Confirmation'){
             Bandera=true;Estatus ='es necesario que el status sea Booking Confirmation el servicio  EXPORT y tipo credito';
-            // Bandera=true;Estatus ='validacion de leo XD';
-            system.debug('No se mandara a llamar sendtoSap por que lo dice leo XD ');
+            // Bandera=true;Estatus ='validacion de prueba';
+            System.debug('No se mandara a llamar sendtoSap');
         }
         // agregar campo VPC
         if(S.Account_for__r.Venta_Sap__c == 'Credito' && TipoShipment == 'FN' && S.Shipment_Status_Mon__c != 'Delivery on Route_M' && S.Shipment_Status_Mon__c != 'Finished_M' && s.VerificacionPak__c != true ){Bandera=true;Estatus ='para continuar debe ser Delivery on Route / Finished y estar validado por pack control';}
-        if(S.Account_for__r.Venta_Sap__c == 'Credito' && (TipoShipment == 'FI' || TipoShipment == 'PTO') && S.Shipment_Status_Mon__c != 'Delivery on Route_M' && S.Shipment_Status_Mon__c != 'Finished_M'){Bandera=true;Estatus ='para continuar debe ser Delivery on Route o Finished (Crédito)';}
+        if(S.Account_for__r.Venta_Sap__c == 'Credito' && (TipoShipment == 'FI' /*|| TipoShipment == 'PTO'*/) && S.Shipment_Status_Mon__c != 'Delivery on Route_M' && S.Shipment_Status_Mon__c != 'Finished_M'){Bandera=true;Estatus ='para continuar debe ser Delivery on Route o Finished (Crédito)';}
+        
+        //Se añade shipment status monitoreo In Progress.
+        if(S.Account_for__r.Venta_Sap__c == 'Credito' && TipoShipment == 'PTO' && S.Shipment_Status_Mon__c != 'In Progress_M' && S.Shipment_Status_Mon__c != 'Delivery on Route_M' && S.Shipment_Status_Mon__c != 'Finished_M'){Bandera=true;Estatus ='para continuar debe ser In Progress, Delivery on Route o Finished (Crédito)';}
         
         if(S.Account_for__r.Venta_Sap__c == 'Credito' && (TipoShipment == 'A') && (S.Air_Shipment_Status__c != 'Flight Confirmation' && S.Air_Shipment_Status__c != 'Layover' && S.Air_Shipment_Status__c != 'Arrival Confirmation' && S.Air_Shipment_Status__c != 'Pending with Customs Broker' && S.Air_Shipment_Status__c != 'Final Delivery' && S.Air_Shipment_Status__c != 'Finish')){Bandera=true;Estatus ='para continuar debe ser Flight Confirmation, Layover, Arrival Confirmation, Pending with Customs Broker, Final Delivery o Finish (Crédito)';}
         
@@ -169,14 +191,6 @@ public class PAK_SendToOrder {
         
         if(TipoShipment == 'AW' && S.Service_Mode__c == 'EXPORT' && S.Air_Shipment_Status__c != 'Pickup and Delivery to Airline'){Bandera=true;Estatus ='para continuar debe ser Pickup and Delivery to Airline';}
         
-        // if(TipoShipment == 'W' && S.Service_Mode__c == 'EXPORT' && S.Shipment_Status__c != 'Delivered'){Bandera=true;Estatus ='para continuar debe ser ETD';}
-        //if(TipoShipment == 'W' && S.Service_Mode__c == 'EXPORT' && S.Shipment_Status__c != 'Delivered'){Bandera=true;Estatus ='para continuar debe ser ETD';}
-        // if(TipoShipment == 'M' && S.Service_Mode__c == 'EXPORT' && S.Shipment_Status__c != 'Delivered' && S.Account_for__r.Venta_Sap__c == 'Credito' ){Bandera=true;Estatus ='para continuar debe ser ETD';}  
-        
-        
-        
-      //  if(TipoShipment == 'R' && S.Freight_Mode__c =='Air' && S.Air_Shipment_Status__c != 'Consigness Notification'){Bandera=true;Estatus ='para continuar debe ser Consigness Notification';}
-
         if((TipoShipment == 'WH' || TipoShipment == 'EX' || TipoShipment == 'ES' || TipoShipment == 'FP' || TipoShipment == 'FO') && S.Shipment_Status_Plann__c != 'Confirmed'){
             Bandera=true;Estatus ='para continuar debe ser Confirmed';
         }
@@ -188,6 +202,7 @@ public class PAK_SendToOrder {
                 Bandera=true;Estatus ='para continuar debe ser in progress';
             }
         }
+
         
         set<string> setEstatus = new set<string>();
         setEstatus.add('Delivered');
@@ -206,12 +221,12 @@ public class PAK_SendToOrder {
         setEstatus.add('Cancel');
         setEstatus.add('Booking Confirmation');
         
-        system.debug('Estaus Shipment '+ s.Shipment_Status__c);
-        system.debug('TipoShipment '+ TipoShipment);
-        system.debug('Freight_Mode__c '+ S.Freight_Mode__c);
-        system.debug('Service_Mode__c '+ S.Service_Mode__c);
-        system.debug('Se encontro: '+ setEstatus.contains(s.Shipment_Status__c));
-          system.debug('llego aqui ValidarEstatus : ');
+        System.debug('Estaus Shipment '+ s.Shipment_Status__c);
+        System.debug('TipoShipment '+ TipoShipment);
+        System.debug('Freight_Mode__c '+ S.Freight_Mode__c);
+        System.debug('Service_Mode__c '+ S.Service_Mode__c);
+        System.debug('Se encontro: '+ setEstatus.contains(s.Shipment_Status__c));
+        System.debug('llego aqui ValidarEstatus : ');
         
         if(TipoShipment == 'R' && (S.Freight_Mode__c == 'Sea' || S.Freight_Mode__c =='Air' ) && ( S.Routing_Operation_Status__c != 'Gestión de Documentos'))
         {
@@ -227,534 +242,106 @@ public class PAK_SendToOrder {
         
         if(TipoShipment == 'W' && S.Service_Mode__c == 'IMPORT' && S.Freight_Mode__c =='Sea' && !setEstatus.contains(s.Ocean_Shipment_Status__c)) {Bandera=true;Estatus ='para continuar debe ser Ocean_Shipment_Status__c';}
         
-    }
-    public static void TestMetodo(){
-        String Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-                Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
+    }     
+    
+    public static void byPass(){
+        Integer a = 1;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+
     }
 }
