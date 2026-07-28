@@ -25,15 +25,18 @@ global class PAK_SLPCODE {
                     st.registry = R;
                     result.add(st);
                 }
+                
 
             }
             
+            ServiceLogger.log('PAK_SLPCODE SLPCODE_USER try');
         	return result;
             
         }catch(Exception e){
             System.debug(e.getCause()); System.debug(e.getMessage()); System.debug(e.getLineNumber());
 			status st = new status(); st.code = '0';st.Existe = ''; st.message = 'Existe un error en el web services, por favor revise la trasabilidad de la transacción' + e.getCause() +' '+ e.getMessage() +' '+ e.getLineNumber();					
 			result.add(st);
+            ServiceLogger.log('PAK_SLPCODE SLPCODE_USER catch');
 			return result;
         }
     }

@@ -2,7 +2,7 @@ public class P2g_CrearProductoOpoPaqueteria {
     @AuraEnabled
     public static List<PricebookEntry> getProductos(){
         List<PricebookEntry> producto = [SELECT Id, Name, UnitPrice, PROJ_Buy_Price__c, Product2Id, Product2.CurrencyIsoCode,
-                                         Pricebook2Id, Pricebook2.Name FROM PricebookEntry 
+                                         Pricebook2Id, Pricebook2.Name FROM PricebookEntry
                                          WHERE Name LIKE: '%General%' AND Pricebook2.Name LIKE: '%Paqueteria%'];
         return producto;
     }

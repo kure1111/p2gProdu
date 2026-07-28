@@ -11,7 +11,7 @@ public class P2G_CreacionCargoLinesTest {
         account_test.Workplace__c=null;
         insert account_test;
         User userT = [select id,managerId, userRole.Name  from user where id =: UserInfo.getUserId() limit 1];
-        Rol_Margen__c rolMargen = TestDataFactory.createRolMargen(userT.userRole.Name);//Director Comercial ,Director Regional
+        Rol_Margen__c rolMargen = TestDataFactory.createRolMargen(userT.userRole.Name);
         Catalogo_SAT__c catalogo = TestDataFactory.createCatalogoSat('Caja de acero test' , 'TCA125','Unidad Peso');
         Catalogo_SAT__c producto = TestDataFactory.createCatalogoSat('Papel' , 'TCA127','Productos y Servicios cP');
         Catalogo_SAT__c materialPeligro = TestDataFactory.createCatalogoSat('Aluminio' , 'TCA126','Material Peligroso');
@@ -19,6 +19,12 @@ public class P2G_CreacionCargoLinesTest {
         Catalogo_SAT__c palet = TestDataFactory.createCatalogoSat('Pallet' , 'TCA228','Unidad Peso');
         catalogo.Material_PeligrosoCP__c=true;
         update catalogo;
+        // Agregar producto refrigerado para prueba
+        Catalogo_SAT__c productoRefrigerado = TestDataFactory.createCatalogoSat('Pescado' , 'TCA129','Productos y Servicios cP');
+        productoRefrigerado.Refrigerado__c = true;
+        productoRefrigerado.Material_PeligrosoCP__c = false;
+        update productoRefrigerado; // Cambiado de insert a update porque el factory ya lo insertó
+        
         Country__c country = new Country__c(Name='Mxico');
         insert country;
         State__c state = new State__c(Name='Sonora',Country__c=country.Id,Iso_Code__c='SON',ISO_Code_2c__c='SO',Zone_Planner_email__c='kuresa@gmaidl.com',Active__c=true);
@@ -27,6 +33,10 @@ public class P2G_CreacionCargoLinesTest {
         insert location;
         Container_Type__c container = new Container_Type__c(Name='Super tracto Camion',Type__c='Road',Cargo_Weight_Kg__c=22222);
         insert container;
+        // Agregar container refrigerado para prueba
+        Container_Type__c containerRefrigerado = new Container_Type__c(Name='Refri 40ft', Type__c='Road', Cargo_Weight_Kg__c=30000, Refrigerado__c=true);
+        insert containerRefrigerado;
+        
         Customer_Quote__c quote = new Customer_Quote__c();
         String recordTypeId = Schema.SObjectType.Customer_Quote__c.getRecordTypeInfosByName().get('Import-Export Quote').getRecordTypeId();
         quote.RecordTypeId = recordTypeId;
@@ -35,16 +45,13 @@ public class P2G_CreacionCargoLinesTest {
         quote.Team__c = 'P2G';
         quote.Quotation_Status__c = 'Quote being prepared';
         quote.Customer_Reference__c = 'holi';
-        //quote.Customer_Reference_Form__c = fleteNacional.idReferenceForm;
         quote.Valid_From__c = system.today();
         quote.Valid_Until__c = system.today();
-        //inicio FN-FLET_NACIONAL_IC
         quote.Comercio_Exterior__c = 'No';
         quote.Freight_Mode__c = 'Road';
         quote.Service_Mode__c = 'NATIONAL';
         quote.Service_Type__c = 'FTL';
         quote.CurrencyIsoCode = 'MXN';
-        //termino FN-FLET_NACIONAL_IC
         quote.Country_ofLoad__c = location.Country__c;
         quote.State_of_Load__c = location.State__c;
         quote.Site_of_Load__c = location.Id;
@@ -60,7 +67,6 @@ public class P2G_CreacionCargoLinesTest {
         Quote_Item_Line__c cargoLine = new Quote_Item_Line__c();
         cargoLine.Import_Export_Quote__c=quote.Id;
         cargoLine.Name='cargo12';
-        //cargoLine.Item_Name__c=cargo.idItem;
         cargoLine.Container_Type__c=container.Id;
         cargoLine.Clave_de_Servicio__c=producto.Id;
         cargoLine.Extension_Item_Name__c='Papel';
@@ -83,7 +89,6 @@ public class P2G_CreacionCargoLinesTest {
         insert serviceLine;
         SAP_Service_Type__c sst = new SAP_Service_Type__c(Name='FLETE NACIONAL (IC) (FN)',Group__c='SP-FN-FLETE NACIONAL',Activo__c=true);
         insert sst;
-        
     }
     
     @isTest
@@ -104,7 +109,36 @@ public class P2G_CreacionCargoLinesTest {
         Import_Export_Fee_Line__c cargoLine = P2G_CreacionCargoLines.getServiceLine(listQuote[0].Id);
         list<SAP_Service_Type__c> lsst = P2G_CreacionCargoLines.getSapServiceType('FLETE NACIONAL (IC) (FN)');
         list<Quote_Item_Line__c> aux = P2G_CreacionCargoLines.getCargoLine(listQuote);
-        System.debug('1.Número de consultas utilizadas en este código ápice hasta el momento: ' + Limits.getQueries());
+        Test.stopTest();
+    }
+
+    // Prueba para getProductosRefrigerado
+    @isTest
+    static void testGetProductosRefrigerado() {
+        Test.startTest();
+        // Caso con resultados
+        P2G_CreacionCargoLines.getProductosRefrigerado('Pescado');
+        // Caso sin resultados (debe lanzar excepción)
+        try {
+            P2G_CreacionCargoLines.getProductosRefrigerado('ProductoInexistenteXYZ');
+        } catch (AuraHandledException e) {
+            // Excepción esperada
+        }
+        Test.stopTest();
+    }
+
+    // Prueba para getContainerTypeRefrigerado
+    @isTest
+    static void testGetContainerTypeRefrigerado() {
+        Test.startTest();
+        // Caso con resultados
+        P2G_CreacionCargoLines.getContainerTypeRefrigerado('Refri 40ft');
+        // Caso sin resultados (debe lanzar excepción)
+        try {
+            P2G_CreacionCargoLines.getContainerTypeRefrigerado('InexistenteContainer');
+        } catch (AuraHandledException e) {
+            // Excepción esperada
+        }
         Test.stopTest();
     }
 }

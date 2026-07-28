@@ -136,6 +136,7 @@ global class PAK_WSMESSAGES {
                     
                     if(!R.message.contains('Actualizada') && 
                        !R.message.contains('Devolucion') &&
+                       !R.message.contains('OC Creada') &&
                        !R.message.contains('Pago recibido') &&
                        !R.message.contains('agregado en SAP correctamente') &&
                        !R.message.contains('Cliente recuperado/reasignado: OK') &&

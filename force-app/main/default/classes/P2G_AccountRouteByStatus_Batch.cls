@@ -7,13 +7,17 @@ public class P2G_AccountRouteByStatus_Batch implements Database.Batchable<sObjec
     public P2G_AccountRouteByStatus_Batch(){
         Integer monthsToConsider = Integer.valueOf(System.Label.monthsToConsider);
         this.startDate = System.now().addMonths(-monthsToConsider);
-     	consultaSOQL='SELECT Id, Account.Id, Account.Name, Import_Export_Quote_Order__r.Route__c, CreatedDate, '+  
-            'Import_Export_Quote_Order__r.Route__r.Name, Account.Estatus_cuenta__c '+ 
-			'FROM Opportunity '+
-			'WHERE Import_Export_Quote_Order__r.Route__r.Name != null '+
-            'AND Account.Estatus_cuenta__c IN (\'Nuevo\',\'Recurrente\') '+
-            'AND CreatedDate >= :startDate '+
-            'ORDER BY Account.Id';   
+     	consultaSOQL = 'SELECT Id, Account.Id, Account.Name, ' +
+                      'Import_Export_Quote_Order__r.Route__c, ' +
+                      'CreatedDate, ' +
+                      'Import_Export_Quote_Order__r.Route__r.Name, ' +
+                      'Account.Estatus_cuenta__c, Service_Type__c ' +
+                      'FROM Opportunity ' +
+                      'WHERE Import_Export_Quote_Order__r.Route__r.Name != null ' +
+                      'AND Account.Estatus_cuenta__c IN (\'Nuevo\',\'Recurrente\') ' +
+                      'AND CreatedDate >= :startDate ' +
+                      'AND Service_Type__c != \'FN\' ' +
+                      'ORDER BY AccountId'; 
     }
     
     public Database.QueryLocator start(Database.BatchableContext BC){

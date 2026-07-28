@@ -50,8 +50,9 @@ global with sharing class P2G_CancelacionInvoiceController {
                 }
             }
 
-            if (data.idsOrdenCancel != null) {
-                System.debug('idsOrdenCancel recibido: ' + data.idsOrdenCancel + ', tamaño: ' + data.idsOrdenCancel.size());
+            if (data.idsOrdenCancel != null && !data.idsOrdenCancel.isEmpty()) {
+                //System.debug('idsOrdenCancel recibido: ' + data.idsOrdenCancel + ', tamaño: ' + data.idsOrdenCancel.size());
+                P2G_CloneLineOC.cloneShipmentLine(data.idsOrdenCancel[0]);
             }
 
             res.statusCode = 200;

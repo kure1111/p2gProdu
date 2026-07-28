@@ -47,24 +47,7 @@ webservice static list<status> CREATE(PAK_Update_ACC.NOTA_CREDITO[] lsEntity){
                         for(Invoice_Line__c IL: [Select CurrencyIsoCode,Concept__c,Import_Export_Quote_Order__c,Invoice__c,Numero_Linea__c,VAT_Withholding__c,VAT_Withholding_ISR__c,Sap_Comp_Code__c,
 													Shipment__c,Amount__c,Total_VAT__c,Unit_Price__c,Units__c,VAT__c,Group__c,SAP_Service_Type__c From Invoice_Line__c Where Invoice__c=: I.Id]){
                                                         
-                        	Invoice_Line__c INVL = new Invoice_Line__c();
-                            INVL.CurrencyIsoCode = IL.CurrencyIsoCode;
-                            INVL.Concept__c =IL.Concept__c;
-                            INVL.Import_Export_Quote_Order__c =IL.Import_Export_Quote_Order__c;
-                            INVL.Invoice__c = INV.Id;
-                            INVL.Numero_Linea__c =IL.Numero_Linea__c;
-                            INVL.VAT_Withholding__c =IL.VAT_Withholding__c;
-                            INVL.VAT_Withholding_ISR__c =IL.VAT_Withholding_ISR__c;
-                            INVL.Sap_Comp_Code__c =IL.Sap_Comp_Code__c;
-                            INVL.Shipment__c =IL.Shipment__c;
-                            INVL.Amount__c =IL.Amount__c != null?IL.Amount__c*-1:null;
-                            INVL.Total_VAT__c =IL.Total_VAT__c !=null?IL.Total_VAT__c*-1:null;
-                            INVL.Unit_Price__c =IL.Unit_Price__c;
-                            INVL.Units__c =IL.Units__c;
-                            INVL.VAT__c =IL.VAT__c;
-							INVL.Group__c = IL.Group__c;
-                            INVL.SAP_Service_Type__c = IL.SAP_Service_Type__c;                           
-                            lineas.add(INVL);
+                        	Invoice_Line__c INVL = new Invoice_Line__c(); INVL.CurrencyIsoCode = IL.CurrencyIsoCode; INVL.Concept__c =IL.Concept__c; INVL.Import_Export_Quote_Order__c =IL.Import_Export_Quote_Order__c; INVL.Invoice__c = INV.Id; INVL.Numero_Linea__c =IL.Numero_Linea__c; INVL.VAT_Withholding__c =IL.VAT_Withholding__c; INVL.VAT_Withholding_ISR__c =IL.VAT_Withholding_ISR__c; INVL.Sap_Comp_Code__c =IL.Sap_Comp_Code__c; INVL.Shipment__c =IL.Shipment__c; INVL.Amount__c =IL.Amount__c != null?IL.Amount__c*-1:null; INVL.Total_VAT__c =IL.Total_VAT__c !=null?IL.Total_VAT__c*-1:null; INVL.Unit_Price__c =IL.Unit_Price__c; INVL.Units__c =IL.Units__c; INVL.VAT__c =IL.VAT__c; INVL.Group__c = IL.Group__c; INVL.SAP_Service_Type__c = IL.SAP_Service_Type__c;                            lineas.add(INVL);
                                                         
                         }
                        	
@@ -145,24 +128,7 @@ webservice static list<status> CREATE(PAK_Update_ACC.NOTA_CREDITO[] lsEntity){
                         for(Disbursement_Line__c IL: [Select CurrencyIsoCode,Concept__c,Import_Export_Quote_Order__c,Disbursement__c,Numero_Linea__c,VAT_Withholding__c,VAT_Withholding_ISR__c,Sap_Comp_Code__c,
 													Shipment__c,Amount__c,Total_VAT__c,Unit_Price__c,Units__c,VAT__c,Group__c,SAP_Service_Type__c From Disbursement_Line__c Where Disbursement__c=: I.Id]){
                                                         
-                        	Disbursement_Line__c INVL = new Disbursement_Line__c();
-                            INVL.CurrencyIsoCode = IL.CurrencyIsoCode;
-                            INVL.Concept__c =IL.Concept__c;
-                            INVL.Import_Export_Quote_Order__c =IL.Import_Export_Quote_Order__c;
-                            INVL.Disbursement__c = INV.Id;
-                            INVL.Numero_Linea__c =IL.Numero_Linea__c;
-                            INVL.VAT_Withholding__c =IL.VAT_Withholding__c;
-                            INVL.VAT_Withholding_ISR__c =IL.VAT_Withholding_ISR__c;
-                            INVL.Sap_Comp_Code__c =IL.Sap_Comp_Code__c;
-                            INVL.Shipment__c =IL.Shipment__c;
-                            INVL.Amount__c =IL.Amount__c != null?IL.Amount__c*-1:null;
-                            INVL.Total_VAT__c =IL.Total_VAT__c !=null?IL.Total_VAT__c*-1:null;
-                            INVL.Unit_Price__c =IL.Unit_Price__c;
-                            INVL.Units__c =IL.Units__c;
-                            INVL.VAT__c =IL.VAT__c;
-							INVL.Group__c = IL.Group__c;
-                            INVL.SAP_Service_Type__c = IL.SAP_Service_Type__c;  
-                            lineas.add(INVL);
+                        	Disbursement_Line__c INVL = new Disbursement_Line__c(); INVL.CurrencyIsoCode = IL.CurrencyIsoCode; INVL.Concept__c =IL.Concept__c; INVL.Import_Export_Quote_Order__c =IL.Import_Export_Quote_Order__c; INVL.Disbursement__c = INV.Id; INVL.Numero_Linea__c =IL.Numero_Linea__c; INVL.VAT_Withholding__c =IL.VAT_Withholding__c; INVL.VAT_Withholding_ISR__c =IL.VAT_Withholding_ISR__c; INVL.Sap_Comp_Code__c =IL.Sap_Comp_Code__c; INVL.Shipment__c =IL.Shipment__c; INVL.Amount__c =IL.Amount__c != null?IL.Amount__c*-1:null; INVL.Total_VAT__c =IL.Total_VAT__c !=null?IL.Total_VAT__c*-1:null; INVL.Unit_Price__c =IL.Unit_Price__c; INVL.Units__c =IL.Units__c; INVL.VAT__c =IL.VAT__c; INVL.Group__c = IL.Group__c; INVL.SAP_Service_Type__c = IL.SAP_Service_Type__c;   lineas.add(INVL);
                                                         
                         }
                        	
@@ -177,11 +143,13 @@ webservice static list<status> CREATE(PAK_Update_ACC.NOTA_CREDITO[] lsEntity){
                 
                 }
             }
+            ServiceLogger.log('PAK_NCREDITO_SERVICE try');
            	return result;
         }catch(Exception e){
             System.debug(e.getCause()); System.debug(e.getMessage()); System.debug(e.getLineNumber());
 			status st = new status(); st.code = '0'; st.message = 'Existe un error en el web services, por favor revise la trasabilidad de la transacción' + e.getCause() +' '+ e.getMessage() +' '+ e.getLineNumber();					
 			result.add(st);
+            ServiceLogger.log('PAK_NCREDITO_SERVICE catch');
 			return result;
         }
     }

@@ -1,5 +1,40 @@
 public  with sharing class P2G_CreacionCargoLines {
-    
+
+    @AuraEnabled(cacheable=true)
+    public static List<Catalogo_SAT__c> getProductosRefrigerado(String producto){
+        String searchKeyword = '%' + producto + '%';
+        String recordTypeId = Schema.SObjectType.Catalogo_SAT__c.getRecordTypeInfosByName().get('Productos y Servicios cP').getRecordTypeId();
+        list<Catalogo_SAT__c> ListClaveSAT = new list<Catalogo_SAT__c>();
+        List<Catalogo_SAT__c> listProductos=[SELECT Id, Name, Clave_SAT__c, Material_PeligrosoCP__c FROM Catalogo_SAT__c WHERE Name LIKE : searchKeyword AND RecordTypeId =: recordTypeId AND Refrigerado__c=true limit 30];
+        for(Catalogo_SAT__c sideClaveSAT : listProductos){
+                                                ListClaveSAT.add(sideClaveSAT);
+                                            }
+        
+        if(ListClaveSAT.size() == 0){
+            throw new AuraHandledException('No Record Found..'); 
+        }
+        System.debug('ListClaveSAT: ' +ListClaveSAT);
+        return ListClaveSAT;
+    }
+
+    @AuraEnabled(cacheable=true)
+    public static list<Container_Type__c> getContainerTypeRefrigerado(string Container){
+        string searchKeyword = '%' + Container + '%';
+        
+        list<Container_Type__c> ListContainerType = new list<Container_Type__c>();
+        for(Container_Type__c sideContainerType : [SELECT Id, Name , Cargo_Weight_Kg__c, Cargo_Volume_m3__c 
+                                                   FROM Container_Type__c where Name LIKE : searchKeyword AND Refrigerado__c=true limit 20]){
+                                                       ListContainerType.add(sideContainerType);
+                                                   }
+        
+        if(ListContainerType.size() == 0){
+            throw new AuraHandledException('No Record Found..'); 
+        }
+        System.debug('ListContainerType: ' +ListContainerType);
+        return ListContainerType;
+    }
+
+
     @AuraEnabled(cacheable=true)
     public static list<Catalogo_SAT__c> getClaveSAT(string sat,String record){
         list<Catalogo_SAT__c> ListClaveSAT = new list<Catalogo_SAT__c>();

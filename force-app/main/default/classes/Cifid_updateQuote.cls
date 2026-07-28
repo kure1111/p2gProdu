@@ -24,16 +24,26 @@ public class Cifid_updateQuote {
         public String state;
         public String stateCode;
         public String street;
+        @TestVisible
         private String[] city_type_info = new String[]{'city','http://soap.sforce.com/schemas/class/Cifid_UpdateQuoteFromPak',null,'1','1','false'};
+        @TestVisible
         private String[] country_type_info = new String[]{'country','http://soap.sforce.com/schemas/class/Cifid_UpdateQuoteFromPak',null,'1','1','false'};
-        private String[] countryCode_type_info = new String[]{'countryCode','http://soap.sforce.com/schemas/class/Cifid_UpdateQuoteFromPak',null,'1','1','false'};
-        private String[] geocodeAccuracy_type_info = new String[]{'geocodeAccuracy','http://soap.sforce.com/schemas/class/Cifid_UpdateQuoteFromPak',null,'1','1','false'};
-        private String[] postalCode_type_info = new String[]{'postalCode','http://soap.sforce.com/schemas/class/Cifid_UpdateQuoteFromPak',null,'1','1','false'};
-        private String[] state_type_info = new String[]{'state','http://soap.sforce.com/schemas/class/Cifid_UpdateQuoteFromPak',null,'1','1','false'};
-        private String[] stateCode_type_info = new String[]{'stateCode','http://soap.sforce.com/schemas/class/Cifid_UpdateQuoteFromPak',null,'1','1','false'};
-        private String[] street_type_info = new String[]{'street','http://soap.sforce.com/schemas/class/Cifid_UpdateQuoteFromPak',null,'1','1','false'};
-        private String[] apex_schema_type_info = new String[]{'http://soap.sforce.com/schemas/class/Cifid_UpdateQuoteFromPak','true','false'};
-        private String[] field_order_type_info = new String[]{'city','country','countryCode','geocodeAccuracy','postalCode','state','stateCode','street'};
+        @TestVisible
+		private String[] countryCode_type_info = new String[]{'countryCode','http://soap.sforce.com/schemas/class/Cifid_UpdateQuoteFromPak',null,'1','1','false'};
+        @TestVisible
+            private String[] geocodeAccuracy_type_info = new String[]{'geocodeAccuracy','http://soap.sforce.com/schemas/class/Cifid_UpdateQuoteFromPak',null,'1','1','false'};
+                @TestVisible
+                private String[] postalCode_type_info = new String[]{'postalCode','http://soap.sforce.com/schemas/class/Cifid_UpdateQuoteFromPak',null,'1','1','false'};
+                @TestVisible
+                    private String[] state_type_info = new String[]{'state','http://soap.sforce.com/schemas/class/Cifid_UpdateQuoteFromPak',null,'1','1','false'};
+                @TestVisible
+                        private String[] stateCode_type_info = new String[]{'stateCode','http://soap.sforce.com/schemas/class/Cifid_UpdateQuoteFromPak',null,'1','1','false'};
+                @TestVisible
+                            private String[] street_type_info = new String[]{'street','http://soap.sforce.com/schemas/class/Cifid_UpdateQuoteFromPak',null,'1','1','false'};
+                @TestVisible
+                                private String[] apex_schema_type_info = new String[]{'http://soap.sforce.com/schemas/class/Cifid_UpdateQuoteFromPak','true','false'};
+                @TestVisible
+                                    private String[] field_order_type_info = new String[]{'city','country','countryCode','geocodeAccuracy','postalCode','state','stateCode','street'};
     }
     public class SessionHeader_element {
         public String sessionId;
@@ -106,7 +116,10 @@ public class Cifid_updateQuote {
         private String[] field_order_type_info = new String[]{'datePricingRespond','finalClient','pricingExecutive','quoteName','quoteStatus','totalServStdBuyAmt'};
     }
     public class Cifid_UpdateQuoteFromPak {
-        public String endpoint_x = 'https://na85.salesforce.com/services/Soap/class/Cifid_UpdateQuoteFromPak';
+        //URL harcodeada
+        //public String endpoint_x = 'https://na85.salesforce.com/services/Soap/class/Cifid_UpdateQuoteFromPak';
+        //URL actualizada
+        public String endpoint_x = 'https://pak2gologistics.my.salesforce.com/services/Soap/class/Cifid_UpdateQuoteFromPak';
         public Map<String,String> inputHttpHeaders_x;
         public Map<String,String> outputHttpHeaders_x;
         public String clientCertName_x;

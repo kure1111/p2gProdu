@@ -14,6 +14,7 @@ public class P2G_EmailServiceError {
                 WHERE Id = :response.Invoice__c 
                 LIMIT 1
             ];
+            System.debug('Punto de control 3 ' + invoice);
             // Verificar que el usuario creador tenga email
             if (String.isBlank(invoice.CreatedBy.Email)) {
                 return;
@@ -46,6 +47,9 @@ public class P2G_EmailServiceError {
     private static Messaging.SingleEmailMessage crearEmailError(Response__c response, Invoice__c invoice) {
         Messaging.SingleEmailMessage email = new Messaging.SingleEmailMessage();
         
+        // Obtener URL de la Org
+        String orgUrl = URL.getOrgDomainURL().toExternalForm();
+        
         // Configurar destinatario con el email del creador de la Invoice
         email.setToAddresses(new String[]{ invoice.CreatedBy.Email });
         email.setCcAddresses(new String[]{'mario.velazquez@2gologistics.com', 'alberto.garcia@2gologistics.com','enrique.betancourt@2gologistics.com','priscila.adame@2gologistics.com','fernanda.rodriguez@2gologistics.com'});
@@ -53,7 +57,7 @@ public class P2G_EmailServiceError {
         email.setSubject('Error en registro - Invoice: ' + invoice.Name);
         
         // Configurar cuerpo del email
-        String cuerpoEmail = 'Estimado/a ' + invoice.CreatedBy.Name + ',\n\n';
+        /*String cuerpoEmail = 'Estimado/a ' + invoice.CreatedBy.Name + ',\n\n';
         cuerpoEmail += 'Se ha detectado un error en su registro por SAP.\n\n';
         cuerpoEmail += 'Detalles del error:\n';
         cuerpoEmail += '- Invoice: ' + invoice.Name + '\n';
@@ -62,8 +66,21 @@ public class P2G_EmailServiceError {
         cuerpoEmail += '- ID del Registro: ' + response.Id + '\n\n';
         cuerpoEmail += 'Por favor, revise el registro para tomar las acciones necesarias.\n\n';
         cuerpoEmail += 'Saludos,\nSistema de Notificaciones';
+		*/
         
-        email.setPlainTextBody(cuerpoEmail);
+        String cuerpoEmail = '<html><body>' + 
+        '<p>Estimado/a ' + '<strong>' + invoice.CreatedBy.Name + '</strong>' + ',</p>' +
+        '<p>Se ha detectado un error en su registro por SAP.</p>' +
+        '<p>Detalles del error:' + '<br>' + 
+        '<strong>' + '- Invoice: ' + '</strong>' + '<a href="' + orgUrl + '/' + invoice.Id + '">' + invoice.Name + '</a>' + '<br>' +
+        '<strong>' + '- Tipo de Error: ' + '</strong>' + response.Message__c + '.<br>' +
+        '<strong>' + '- Fecha: ' + '</strong>' + System.now().format() + '.<br>' +
+        '<strong>' + '- ID del Registro: ' + '</strong>' + '<a href= "' + orgUrl + '/' + response.Id + '">' + response.Name + '</a>' + '</p>' +
+        '<p>Por favor, revise el registro para tomar las acciones necesarias.</p>' +
+        'Saludos.<br>' + 'Sistema de Notificaciones.</p>';
+
+        email.setHtmlBody(cuerpoEmail);
+        //email.setPlainTextBody(cuerpoEmail);
         
         return email;
     }

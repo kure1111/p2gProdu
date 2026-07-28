@@ -202,7 +202,6 @@ public class PAK_SendToOrder {
                 Bandera=true;Estatus ='para continuar debe ser in progress';
             }
         }
-
         
         set<string> setEstatus = new set<string>();
         setEstatus.add('Delivered');

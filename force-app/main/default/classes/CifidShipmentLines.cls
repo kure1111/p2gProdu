@@ -3,23 +3,33 @@
 public class CifidShipmentLines {
     public class shipmentLines_element {
         public CifidShipmentLines.Shipment ship;
+        @TestVisible
         private String[] ship_type_info = new String[]{'ship','http://soap.sforce.com/schemas/class/Cifid_ShipmentLines',null,'1','1','true'};
-        private String[] apex_schema_type_info = new String[]{'http://soap.sforce.com/schemas/class/Cifid_ShipmentLines','true','false'};
-        private String[] field_order_type_info = new String[]{'ship'};
+        @TestVisible
+            private String[] apex_schema_type_info = new String[]{'http://soap.sforce.com/schemas/class/Cifid_ShipmentLines','true','false'};
+        @TestVisible
+                private String[] field_order_type_info = new String[]{'ship'};
     }
     public class LogInfo {
         public String category;
         public String level;
+        @TestVisible
         private String[] category_type_info = new String[]{'category','http://soap.sforce.com/schemas/class/Cifid_ShipmentLines',null,'1','1','false'};
-        private String[] level_type_info = new String[]{'level','http://soap.sforce.com/schemas/class/Cifid_ShipmentLines',null,'1','1','false'};
-        private String[] apex_schema_type_info = new String[]{'http://soap.sforce.com/schemas/class/Cifid_ShipmentLines','true','false'};
-        private String[] field_order_type_info = new String[]{'category','level'};
+        @TestVisible
+            private String[] level_type_info = new String[]{'level','http://soap.sforce.com/schemas/class/Cifid_ShipmentLines',null,'1','1','false'};
+        @TestVisible
+                private String[] apex_schema_type_info = new String[]{'http://soap.sforce.com/schemas/class/Cifid_ShipmentLines','true','false'};
+        @TestVisible
+                    private String[] field_order_type_info = new String[]{'category','level'};
     }
     public class DebuggingInfo_element {
         public String debugLog;
+        @TestVisible
         private String[] debugLog_type_info = new String[]{'debugLog','http://soap.sforce.com/schemas/class/Cifid_ShipmentLines',null,'1','1','false'};
-        private String[] apex_schema_type_info = new String[]{'http://soap.sforce.com/schemas/class/Cifid_ShipmentLines','true','false'};
-        private String[] field_order_type_info = new String[]{'debugLog'};
+        @TestVisible
+            private String[] apex_schema_type_info = new String[]{'http://soap.sforce.com/schemas/class/Cifid_ShipmentLines','true','false'};
+        @TestVisible
+                private String[] field_order_type_info = new String[]{'debugLog'};
     }
     public class address {
         public String city;
@@ -30,52 +40,80 @@ public class CifidShipmentLines {
         public String state;
         public String stateCode;
         public String street;
+        @TestVisible
         private String[] city_type_info = new String[]{'city','http://soap.sforce.com/schemas/class/Cifid_ShipmentLines',null,'1','1','false'};
-        private String[] country_type_info = new String[]{'country','http://soap.sforce.com/schemas/class/Cifid_ShipmentLines',null,'1','1','false'};
-        private String[] countryCode_type_info = new String[]{'countryCode','http://soap.sforce.com/schemas/class/Cifid_ShipmentLines',null,'1','1','false'};
-        private String[] geocodeAccuracy_type_info = new String[]{'geocodeAccuracy','http://soap.sforce.com/schemas/class/Cifid_ShipmentLines',null,'1','1','false'};
-        private String[] postalCode_type_info = new String[]{'postalCode','http://soap.sforce.com/schemas/class/Cifid_ShipmentLines',null,'1','1','false'};
-        private String[] state_type_info = new String[]{'state','http://soap.sforce.com/schemas/class/Cifid_ShipmentLines',null,'1','1','false'};
-        private String[] stateCode_type_info = new String[]{'stateCode','http://soap.sforce.com/schemas/class/Cifid_ShipmentLines',null,'1','1','false'};
-        private String[] street_type_info = new String[]{'street','http://soap.sforce.com/schemas/class/Cifid_ShipmentLines',null,'1','1','false'};
-        private String[] apex_schema_type_info = new String[]{'http://soap.sforce.com/schemas/class/Cifid_ShipmentLines','true','false'};
-        private String[] field_order_type_info = new String[]{'city','country','countryCode','geocodeAccuracy','postalCode','state','stateCode','street'};
+        @TestVisible
+            private String[] country_type_info = new String[]{'country','http://soap.sforce.com/schemas/class/Cifid_ShipmentLines',null,'1','1','false'};
+        @TestVisible
+                private String[] countryCode_type_info = new String[]{'countryCode','http://soap.sforce.com/schemas/class/Cifid_ShipmentLines',null,'1','1','false'};
+        @TestVisible
+                    private String[] geocodeAccuracy_type_info = new String[]{'geocodeAccuracy','http://soap.sforce.com/schemas/class/Cifid_ShipmentLines',null,'1','1','false'};
+        @TestVisible
+                        private String[] postalCode_type_info = new String[]{'postalCode','http://soap.sforce.com/schemas/class/Cifid_ShipmentLines',null,'1','1','false'};
+        @TestVisible
+                            private String[] state_type_info = new String[]{'state','http://soap.sforce.com/schemas/class/Cifid_ShipmentLines',null,'1','1','false'};
+        @TestVisible
+                                private String[] stateCode_type_info = new String[]{'stateCode','http://soap.sforce.com/schemas/class/Cifid_ShipmentLines',null,'1','1','false'};
+        @TestVisible
+                                    private String[] street_type_info = new String[]{'street','http://soap.sforce.com/schemas/class/Cifid_ShipmentLines',null,'1','1','false'};
+        @TestVisible
+                                        private String[] apex_schema_type_info = new String[]{'http://soap.sforce.com/schemas/class/Cifid_ShipmentLines','true','false'};
+        @TestVisible
+                                            private String[] field_order_type_info = new String[]{'city','country','countryCode','geocodeAccuracy','postalCode','state','stateCode','street'};
     }
     public class CallOptions_element {
         public String client;
+        @TestVisible
         private String[] client_type_info = new String[]{'client','http://soap.sforce.com/schemas/class/Cifid_ShipmentLines',null,'1','1','false'};
-        private String[] apex_schema_type_info = new String[]{'http://soap.sforce.com/schemas/class/Cifid_ShipmentLines','true','false'};
-        private String[] field_order_type_info = new String[]{'client'};
+        @TestVisible
+            private String[] apex_schema_type_info = new String[]{'http://soap.sforce.com/schemas/class/Cifid_ShipmentLines','true','false'};
+        @TestVisible
+                private String[] field_order_type_info = new String[]{'client'};
     }
     public class Shipment {
         public CifidShipmentLines.ShipLine[] lines;
         public Integer operation;
         public String shipName;
+        @TestVisible
         private String[] lines_type_info = new String[]{'lines','http://soap.sforce.com/schemas/class/Cifid_ShipmentLines',null,'0','-1','true'};
-        private String[] operation_type_info = new String[]{'operation','http://soap.sforce.com/schemas/class/Cifid_ShipmentLines',null,'0','1','true'};
-        private String[] shipName_type_info = new String[]{'shipName','http://soap.sforce.com/schemas/class/Cifid_ShipmentLines',null,'0','1','true'};
-        private String[] apex_schema_type_info = new String[]{'http://soap.sforce.com/schemas/class/Cifid_ShipmentLines','true','false'};
-        private String[] field_order_type_info = new String[]{'lines','operation','shipName'};
+        @TestVisible
+            private String[] operation_type_info = new String[]{'operation','http://soap.sforce.com/schemas/class/Cifid_ShipmentLines',null,'0','1','true'};
+        @TestVisible
+                private String[] shipName_type_info = new String[]{'shipName','http://soap.sforce.com/schemas/class/Cifid_ShipmentLines',null,'0','1','true'};
+        @TestVisible
+                    private String[] apex_schema_type_info = new String[]{'http://soap.sforce.com/schemas/class/Cifid_ShipmentLines','true','false'};
+        @TestVisible
+                        private String[] field_order_type_info = new String[]{'lines','operation','shipName'};
     }
     public class DebuggingHeader_element {
         public CifidShipmentLines.LogInfo[] categories;
         public String debugLevel;
+        @TestVisible
         private String[] categories_type_info = new String[]{'categories','http://soap.sforce.com/schemas/class/Cifid_ShipmentLines',null,'0','-1','false'};
-        private String[] debugLevel_type_info = new String[]{'debugLevel','http://soap.sforce.com/schemas/class/Cifid_ShipmentLines',null,'1','1','false'};
-        private String[] apex_schema_type_info = new String[]{'http://soap.sforce.com/schemas/class/Cifid_ShipmentLines','true','false'};
-        private String[] field_order_type_info = new String[]{'categories','debugLevel'};
+        @TestVisible
+            private String[] debugLevel_type_info = new String[]{'debugLevel','http://soap.sforce.com/schemas/class/Cifid_ShipmentLines',null,'1','1','false'};
+        @TestVisible
+                private String[] apex_schema_type_info = new String[]{'http://soap.sforce.com/schemas/class/Cifid_ShipmentLines','true','false'};
+        @TestVisible
+                    private String[] field_order_type_info = new String[]{'categories','debugLevel'};
     }
     public class shipmentLinesResponse_element {
         public CifidShipmentLines.estatus result;
+        @TestVisible
         private String[] result_type_info = new String[]{'result','http://soap.sforce.com/schemas/class/Cifid_ShipmentLines',null,'1','1','true'};
-        private String[] apex_schema_type_info = new String[]{'http://soap.sforce.com/schemas/class/Cifid_ShipmentLines','true','false'};
-        private String[] field_order_type_info = new String[]{'result'};
+        @TestVisible
+            private String[] apex_schema_type_info = new String[]{'http://soap.sforce.com/schemas/class/Cifid_ShipmentLines','true','false'};
+        @TestVisible
+                private String[] field_order_type_info = new String[]{'result'};
     }
     public class SessionHeader_element {
         public String sessionId;
+        @TestVisible
         private String[] sessionId_type_info = new String[]{'sessionId','http://soap.sforce.com/schemas/class/Cifid_ShipmentLines',null,'1','1','false'};
-        private String[] apex_schema_type_info = new String[]{'http://soap.sforce.com/schemas/class/Cifid_ShipmentLines','true','false'};
-        private String[] field_order_type_info = new String[]{'sessionId'};
+        @TestVisible
+            private String[] apex_schema_type_info = new String[]{'http://soap.sforce.com/schemas/class/Cifid_ShipmentLines','true','false'};
+        @TestVisible
+                private String[] field_order_type_info = new String[]{'sessionId'};
     }
     public class ShipLine {
         public String carrier;
@@ -87,42 +125,67 @@ public class CifidShipmentLines {
         public Decimal shipStdBuyPrice;
         public Decimal StdBuyAmmount;
         public Decimal units;
+        @TestVisible
         private String[] carrier_type_info = new String[]{'carrier','http://soap.sforce.com/schemas/class/Cifid_ShipmentLines',null,'0','1','true'};
-        private String[] idLine_type_info = new String[]{'idLine','http://soap.sforce.com/schemas/class/Cifid_ShipmentLines',null,'0','1','true'};
-        private String[] rateCategory_type_info = new String[]{'rateCategory','http://soap.sforce.com/schemas/class/Cifid_ShipmentLines',null,'0','1','true'};
-        private String[] rateName_type_info = new String[]{'rateName','http://soap.sforce.com/schemas/class/Cifid_ShipmentLines',null,'0','1','true'};
-        private String[] sellNetAmmount_type_info = new String[]{'sellNetAmmount','http://soap.sforce.com/schemas/class/Cifid_ShipmentLines',null,'0','1','true'};
-        private String[] shipSellPrice_type_info = new String[]{'shipSellPrice','http://soap.sforce.com/schemas/class/Cifid_ShipmentLines',null,'0','1','true'};
-        private String[] shipStdBuyPrice_type_info = new String[]{'shipStdBuyPrice','http://soap.sforce.com/schemas/class/Cifid_ShipmentLines',null,'0','1','true'};
-        private String[] StdBuyAmmount_type_info = new String[]{'StdBuyAmmount','http://soap.sforce.com/schemas/class/Cifid_ShipmentLines',null,'0','1','true'};
-        private String[] units_type_info = new String[]{'units','http://soap.sforce.com/schemas/class/Cifid_ShipmentLines',null,'0','1','true'};
-        private String[] apex_schema_type_info = new String[]{'http://soap.sforce.com/schemas/class/Cifid_ShipmentLines','true','false'};
-        private String[] field_order_type_info = new String[]{'carrier','idLine','rateCategory','rateName','sellNetAmmount','shipSellPrice','shipStdBuyPrice','StdBuyAmmount','units'};
+        @TestVisible
+            private String[] idLine_type_info = new String[]{'idLine','http://soap.sforce.com/schemas/class/Cifid_ShipmentLines',null,'0','1','true'};
+        @TestVisible
+                private String[] rateCategory_type_info = new String[]{'rateCategory','http://soap.sforce.com/schemas/class/Cifid_ShipmentLines',null,'0','1','true'};
+        @TestVisible
+                    private String[] rateName_type_info = new String[]{'rateName','http://soap.sforce.com/schemas/class/Cifid_ShipmentLines',null,'0','1','true'};
+        @TestVisible
+                        private String[] sellNetAmmount_type_info = new String[]{'sellNetAmmount','http://soap.sforce.com/schemas/class/Cifid_ShipmentLines',null,'0','1','true'};
+        @TestVisible
+                            private String[] shipSellPrice_type_info = new String[]{'shipSellPrice','http://soap.sforce.com/schemas/class/Cifid_ShipmentLines',null,'0','1','true'};
+        @TestVisible
+                                private String[] shipStdBuyPrice_type_info = new String[]{'shipStdBuyPrice','http://soap.sforce.com/schemas/class/Cifid_ShipmentLines',null,'0','1','true'};
+        @TestVisible
+                                    private String[] StdBuyAmmount_type_info = new String[]{'StdBuyAmmount','http://soap.sforce.com/schemas/class/Cifid_ShipmentLines',null,'0','1','true'};
+        @TestVisible
+                                        private String[] units_type_info = new String[]{'units','http://soap.sforce.com/schemas/class/Cifid_ShipmentLines',null,'0','1','true'};
+        @TestVisible
+                                            private String[] apex_schema_type_info = new String[]{'http://soap.sforce.com/schemas/class/Cifid_ShipmentLines','true','false'};
+        @TestVisible
+                                                private String[] field_order_type_info = new String[]{'carrier','idLine','rateCategory','rateName','sellNetAmmount','shipSellPrice','shipStdBuyPrice','StdBuyAmmount','units'};
     }
     public class estatus {
         public String code;
         public String message;
+        @TestVisible
         private String[] code_type_info = new String[]{'code','http://soap.sforce.com/schemas/class/Cifid_ShipmentLines',null,'0','1','true'};
+        @TestVisible
         private String[] message_type_info = new String[]{'message','http://soap.sforce.com/schemas/class/Cifid_ShipmentLines',null,'0','1','true'};
+        @TestVisible
         private String[] apex_schema_type_info = new String[]{'http://soap.sforce.com/schemas/class/Cifid_ShipmentLines','true','false'};
+        @TestVisible
         private String[] field_order_type_info = new String[]{'code','message'};
     }
     public class location {
         public Double latitude;
         public Double longitude;
+        @TestVisible
         private String[] latitude_type_info = new String[]{'latitude','http://soap.sforce.com/schemas/class/Cifid_ShipmentLines',null,'1','1','false'};
-        private String[] longitude_type_info = new String[]{'longitude','http://soap.sforce.com/schemas/class/Cifid_ShipmentLines',null,'1','1','false'};
-        private String[] apex_schema_type_info = new String[]{'http://soap.sforce.com/schemas/class/Cifid_ShipmentLines','true','false'};
-        private String[] field_order_type_info = new String[]{'latitude','longitude'};
+        @TestVisible
+            private String[] longitude_type_info = new String[]{'longitude','http://soap.sforce.com/schemas/class/Cifid_ShipmentLines',null,'1','1','false'};
+        @TestVisible
+                private String[] apex_schema_type_info = new String[]{'http://soap.sforce.com/schemas/class/Cifid_ShipmentLines','true','false'};
+        @TestVisible
+                    private String[] field_order_type_info = new String[]{'latitude','longitude'};
     }
     public class AllowFieldTruncationHeader_element {
         public Boolean allowFieldTruncation;
+        @TestVisible
         private String[] allowFieldTruncation_type_info = new String[]{'allowFieldTruncation','http://soap.sforce.com/schemas/class/Cifid_ShipmentLines',null,'1','1','false'};
+        @TestVisible
         private String[] apex_schema_type_info = new String[]{'http://soap.sforce.com/schemas/class/Cifid_ShipmentLines','true','false'};
+        @TestVisible
         private String[] field_order_type_info = new String[]{'allowFieldTruncation'};
     }
     public class Cifid_ShipmentLines {
-        public String endpoint_x = 'https://na85.salesforce.com/services/Soap/class/Cifid_ShipmentLines';
+        //URL harcodeada
+        //public String endpoint_x = 'https://na85.salesforce.com/services/Soap/class/Cifid_ShipmentLines';
+        //URL actualizada
+        public String endpoint_x = 'https://pak2gologistics.my.salesforce.com/services/Soap/class/Cifid_ShipmentLines';
         public Map<String,String> inputHttpHeaders_x;
         public Map<String,String> outputHttpHeaders_x;
         public String clientCertName_x;
@@ -134,11 +197,17 @@ public class CifidShipmentLines {
         public CifidShipmentLines.DebuggingInfo_element DebuggingInfo;
         public CifidShipmentLines.AllowFieldTruncationHeader_element AllowFieldTruncationHeader;
         public CifidShipmentLines.DebuggingHeader_element DebuggingHeader;
+        @TestVisible
         private String SessionHeader_hns = 'SessionHeader=http://soap.sforce.com/schemas/class/Cifid_ShipmentLines';
+        @TestVisible
         private String CallOptions_hns = 'CallOptions=http://soap.sforce.com/schemas/class/Cifid_ShipmentLines';
+        @TestVisible
         private String DebuggingInfo_hns = 'DebuggingInfo=http://soap.sforce.com/schemas/class/Cifid_ShipmentLines';
+        @TestVisible
         private String AllowFieldTruncationHeader_hns = 'AllowFieldTruncationHeader=http://soap.sforce.com/schemas/class/Cifid_ShipmentLines';
+        @TestVisible
         private String DebuggingHeader_hns = 'DebuggingHeader=http://soap.sforce.com/schemas/class/Cifid_ShipmentLines';
+        @TestVisible
         private String[] ns_map_type_info = new String[]{'http://soap.sforce.com/schemas/class/Cifid_ShipmentLines', 'CifidShipmentLines'};
             
         public CifidShipmentLines.estatus shipmentLines(CifidShipmentLines.Shipment ship) {

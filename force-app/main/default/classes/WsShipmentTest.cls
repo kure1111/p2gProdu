@@ -3,6 +3,7 @@ public class WsShipmentTest {
 
     @isTest(SeeAllData=true)
     static void testPUTShipmentSPFN() {
+        NEU_StaticVariableHelper.setBoolean1(true);
         Shipment__c shipment = [SELECT Id FROM Shipment__c LIMIT 1];
         String shipmentId = shipment.Id;
 

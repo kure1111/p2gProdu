@@ -28,11 +28,13 @@ global class PAK_ImpkQuote {
             }else{
                 result.code = '0';
                 result.message = 'Quote updated';
-            }            
+            }   
+            ServiceLogger.log('PAK_ImpkQuote try');         
         }catch(Exception e)
         {
             result.code = '0';
             result.message = 'Error:'+ e.getMessage()+' en la siguiente Linea: '+ e.getLineNumber() + ' - Trace: ' + e.getStackTraceString() + ' - Cause: ' + e.getCause();
+            ServiceLogger.log('PAK_ImpkQuote catch');
         }
         return result;
     }

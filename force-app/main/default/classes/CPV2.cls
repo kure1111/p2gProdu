@@ -23,6 +23,8 @@ public class CPV2 {
             list<Shipment_Line__c> lines =dcp.lines;
             Vehicle__c camion = dcp.camion;
             
+            
+            
             //VARIABLES
             Time myTime = Time.newInstance(0, 0, 0, 0);
             
@@ -32,6 +34,117 @@ public class CPV2 {
             String dateSalida = dtSalida.formatGMT('yyyy-MM-dd\'T\'HH:mm:ss');
             String dateLlegada = dtllegada.formatGMT('yyyy-MM-dd\'T\'HH:mm:ss');
             double totalKms = 0;
+            
+            //
+        
+            // IDs de cuentas Kimberly (configura según tu org)
+        Set<String> KIMBERLY_ACCOUNT_IDS = new Set<String>{
+            '0014T000005QxaZQAS',     // PROD
+            '0014T00000BIs6PQAT'      // UAT - Cliente ejemplo
+        };
+        
+        // Verificar si es cuenta Kimberly
+        Boolean isKimberly = (
+            datosCPShip.Account_for__c != null &&
+            KIMBERLY_ACCOUNT_IDS.contains(datosCPShip.Account_for__c)
+        );
+        
+        Boolean useAlternativeOrigin = false;
+        Boolean useAlternativeDestination = false;
+        
+        // Parsear flags de dirección alternativa
+        if (isKimberly && String.isNotBlank(datosCPShip.Direccion_Alternativa__c)) {
+            String[] partes = datosCPShip.Direccion_Alternativa__c.split('\\|');
+            if (partes.size() == 2) {
+                try {
+                    useAlternativeOrigin = Boolean.valueOf(partes[0].trim());
+                    useAlternativeDestination = Boolean.valueOf(partes[1].trim());
+                } catch (Exception e) {
+                    System.debug('Error parseando Direccion_Alternativa__c: ' + e.getMessage());
+                }
+            }
+        }
+        
+        System.debug('Kimberly? ' + isKimberly);
+        System.debug('Origen alternativo? ' + useAlternativeOrigin);
+        System.debug('Destino alternativo? ' + useAlternativeDestination);
+        
+        // Aplicar direcciones alternativas si es necesario
+        if (isKimberly && (useAlternativeOrigin || useAlternativeDestination)) {
+            Map<String, String> mapNewAddress = P2G_AlternativeAddress.updateAddresses(
+                datosCPShip,
+                useAlternativeOrigin,
+                useAlternativeDestination
+            );
+            
+            // Verificar si el mapa tiene datos
+            if (mapNewAddress != null && !mapNewAddress.isEmpty()) {
+                System.debug('Mapa de direcciones obtenido: ' + mapNewAddress);
+                
+                // 1. MODIFICAR DIRECCIÓN DE ORIGEN ALTERNATIVA
+                if (useAlternativeOrigin && 
+                    mapNewAddress.containsKey('origen') && 
+                    mapNewAddress.get('origen') != null && 
+                    mapNewAddress.get('origen') != datosCPShip.Account_Origin_Address__c) {
+                    
+                    // Re-consultar la dirección alternativa completa
+                    List<Account_Address__c> origenesAlt = [
+                        SELECT Id, Name, Direcci_n__c, Calle_cat__c, Numero_Ext_cp__c, Numero_Int_cat__c,
+                               Colonia_cp__c, Colonia_cp__r.Clave_SAT__c, Referencia__c, Folio_Origen_Destino2__c,
+                               Address_Coordinates__latitude__s, Address_Coordinates__longitude__s,
+                               Codigo_Postal_CP__r.Localidad_Ref_CP__c, Codigo_Postal_CP__r.Localidad_Ref_CP__r.Clave_SAT__c,
+                               Codigo_Postal_CP__r.Municipio_Ref_CP__r.Clave_SAT__c, Codigo_Postal_CP__r.Municipio_Ref_CP__c,
+                               Codigo_Postal_CP__r.Clave_Relacion_SAT__c, Codigo_Postal_CP__r.Clave_Relacion_SAT__r.Clave_SAT__c,
+                               Codigo_Postal_CP__r.Pais_RefCP__r.Clave_SAT__c, Codigo_Postal_CP__r.Pais_RefCP__c,
+                               Codigo_Postal_CP__c, Codigo_Postal_CP__r.Name
+                        FROM Account_Address__c 
+                        WHERE Id = :mapNewAddress.get('origen')
+                        LIMIT 1
+                    ];
+                    
+                    if (!origenesAlt.isEmpty()) {
+                        // ACTUALIZAR EL LOOKUP Y LA RELACIÓN EN MEMORIA
+                        datosCPShip.Account_Origin_Address__c = origenesAlt[0].Id;
+                        datosCPShip.Account_Origin_Address__r = origenesAlt[0];
+                        System.debug('Lookup de origen actualizado a alternativa: ' + origenesAlt[0].Name);
+                    }
+                }
+                
+                // 2. MODIFICAR DIRECCIÓN DE DESTINO ALTERNATIVA
+                if (useAlternativeDestination && 
+                    mapNewAddress.containsKey('destino') && 
+                    mapNewAddress.get('destino') != null && 
+                    mapNewAddress.get('destino') != datosCPShip.Account_Destination_Address__c) {
+                    
+                    // Re-consultar la dirección alternativa completa
+                    List<Account_Address__c> destinosAlt = [
+                        SELECT Id, Name, Direcci_n__c, Calle_cat__c, Numero_Ext_cp__c, Numero_Int_cat__c,
+                               Colonia_cp__c, Colonia_cp__r.Clave_SAT__c, Referencia__c, Folio_Origen_Destino2__c,
+                               Address_Coordinates__latitude__s, Address_Coordinates__longitude__s,
+                               Codigo_Postal_CP__r.Localidad_Ref_CP__c, Codigo_Postal_CP__r.Localidad_Ref_CP__r.Clave_SAT__c,
+                               Codigo_Postal_CP__r.Municipio_Ref_CP__r.Clave_SAT__c, Codigo_Postal_CP__r.Municipio_Ref_CP__c,
+                               Codigo_Postal_CP__r.Clave_Relacion_SAT__c, Codigo_Postal_CP__r.Clave_Relacion_SAT__r.Clave_SAT__c,
+                               Codigo_Postal_CP__r.Pais_RefCP__r.Clave_SAT__c, Codigo_Postal_CP__r.Pais_RefCP__c,
+                               Codigo_Postal_CP__c, Codigo_Postal_CP__r.Name
+                        FROM Account_Address__c 
+                        WHERE Id = :mapNewAddress.get('destino')
+                        LIMIT 1
+                    ];
+                    
+                    if (!destinosAlt.isEmpty()) {
+                        // ACTUALIZAR EL LOOKUP Y LA RELACIÓN EN MEMORIA
+                        datosCPShip.Account_Destination_Address__c = destinosAlt[0].Id;
+                        datosCPShip.Account_Destination_Address__r = destinosAlt[0];
+                        System.debug('Lookup de destino actualizado a alternativa: ' + destinosAlt[0].Name);
+                    }
+                }
+            } else {
+                System.debug('El mapa de direcciones alternativas está vacío o es nulo');
+                System.debug('Se mantienen las direcciones originales');
+            }
+        }
+ 
+            //
             
             //ENCABEZADO
             
@@ -903,6 +1016,7 @@ public class CPV2 {
                                              FROM shipment__C 
                                              where id  =: shipmentID limit 1 ];
             
+            /*
             //PROD Kimberly Id:0014T000005QxaZQAS
             //UAT Cliente ejemplo Id: 0014T00000BIs6PQAT
             Set<String> KIMBERLY_ACCOUNT_IDS = new Set<String>{'0014T000005QxaZQAS', '0014T00000BIs6PQAT'};
@@ -948,7 +1062,7 @@ public class CPV2 {
                 }
                 
                 
-            }
+            }*/
             
             if(datosCPShips.size()==0)
                 throw new BaseException('No existe información del shipment.');
@@ -1086,25 +1200,18 @@ public class CPV2 {
             {
                 for(Shipment_Line__c line : cp.lines)
                 {
-                    if(line.Clave_de_Servicio__c == null)
-                        throw new BaseException('Cargo line ' + line.name + ' no cuenta con Clave de servicio');
-                    if(line.Units_Shipped__c == null)
-                        throw new BaseException('Cargo line ' + line.name + ' no cuenta con Unidades');
-                    if(line.Peso_Neto__c == null)
-                        throw new BaseException('Cargo line ' + line.name + ' no cuenta con Peso Neto');
-                    if(line.Shipping_Weight_Kg__c == null)
-                        throw new BaseException('Cargo line ' + line.name + ' no cuenta con Peso bruto');
+                    if(line.Clave_de_Servicio__c == null) throw new BaseException('Cargo line ' + line.name + ' no cuenta con Clave de servicio');
+                    if(line.Units_Shipped__c == null) throw new BaseException('Cargo line ' + line.name + ' no cuenta con Unidades');
+                    if(line.Peso_Neto__c == null) throw new BaseException('Cargo line ' + line.name + ' no cuenta con Peso Neto');
+                    if(line.Shipping_Weight_Kg__c == null) throw new BaseException('Cargo line ' + line.name + ' no cuenta con Peso bruto');
                     if(line.Clave_de_Servicio__c != null)
-                        if(line.Clave_de_Servicio__r.Material_PeligrosoCP__c && (line.Material_Peligroso__c== null || line.Embalaje__c == null ) )
-                        throw new BaseException('Cargo line ' + line.name + ' no cuenta Material Peligroso o Embalaje');
+                        if(line.Clave_de_Servicio__r.Material_PeligrosoCP__c && (line.Material_Peligroso__c== null || line.Embalaje__c == null ) ) throw new BaseException('Cargo line ' + line.name + ' no cuenta Material Peligroso o Embalaje');
                     
                     if(cp.datosCPShip.Shipment_Type__c == 'FI' || cp.datosCPShip.Shipment_Type__c == 'PTO')
                     {
-                        if(string.isBlank(line.pedimento__c))
-                            throw new BaseException('Cargo line ' + line.name + ' no cuenta con Pedimento');
+                        if(string.isBlank(line.pedimento__c)) throw new BaseException('Cargo line ' + line.name + ' no cuenta con Pedimento');
                         
-                        if(string.isBlank(line.CP_Fraccion_Arancelaria__c))
-                            throw new BaseException('Cargo line ' + line.name + ' no cuenta Fracción Arancelaria');
+                        if(string.isBlank(line.CP_Fraccion_Arancelaria__c)) throw new BaseException('Cargo line ' + line.name + ' no cuenta Fracción Arancelaria');
                     }
                 }
             }
@@ -1137,43 +1244,30 @@ public class CPV2 {
                                         where id =: cp.datosCPShip.Vehicle__c];
             
             
-            if(camiones.size()==0)
-                throw new BaseException('No existe información para este Vehicle.');
+            if(camiones.size()==0) throw new BaseException('No existe información para este Vehicle.');
             else
                 cp.camion = camiones[0];
             
-            if(cp.camion.Caja_Remolque__c == null && cp.camion.Caja_Remolque_2__c == null )
-                throw new BaseException('El Vehicle no cuenta con remolques/cajas asignados.');
-            if(cp.camion.Configuracion_Vehicularcat__c == null )
-                throw new BaseException('El Vehicle no cuenta con Configuración vehicular');
-            if(cp.camion.Num_Placa_Tracto__c == null  )
-                throw new BaseException('El Vehicle no cuenta con Numero de placa');
+            if(cp.camion.Caja_Remolque__c == null && cp.camion.Caja_Remolque_2__c == null ) throw new BaseException('El Vehicle no cuenta con remolques/cajas asignados.');
+            if(cp.camion.Configuracion_Vehicularcat__c == null ) throw new BaseException('El Vehicle no cuenta con Configuración vehicular');
+            if(cp.camion.Num_Placa_Tracto__c == null  ) throw new BaseException('El Vehicle no cuenta con Numero de placa');
             
-            if(cp.camion.Nombre_Aseguradora__c == null )
-                throw new BaseException('El Vehicle no cuenta con Nombre Aseguradora');
-            if(cp.camion.Numero_Poliza_Seguro__c == null  )
-                throw new BaseException('El Vehicle no cuenta con Numero de poliza');
-            if(cp.camion.Asegura_Responsabilidad_Civil__c == null )
-                throw new BaseException('El Vehicle no cuenta con Aseguradora de Responsabilidad Civil');
-            if(cp.camion.Poliza_Responsabilidad_civil__c == null  )
-                throw new BaseException('El Vehicle no cuenta con Poliza de Responsabilidad civil');
-            if(cp.camion.Prima_Seguro__c == null )
-                throw new BaseException('El Vehicle no cuenta con Prima de seguro');
+            if(cp.camion.Nombre_Aseguradora__c == null ) throw new BaseException('El Vehicle no cuenta con Nombre Aseguradora');
+            if(cp.camion.Numero_Poliza_Seguro__c == null  ) throw new BaseException('El Vehicle no cuenta con Numero de poliza');
+            if(cp.camion.Asegura_Responsabilidad_Civil__c == null ) throw new BaseException('El Vehicle no cuenta con Aseguradora de Responsabilidad Civil');
+            if(cp.camion.Poliza_Responsabilidad_civil__c == null  ) throw new BaseException('El Vehicle no cuenta con Poliza de Responsabilidad civil');
+            if(cp.camion.Prima_Seguro__c == null ) throw new BaseException('El Vehicle no cuenta con Prima de seguro');
             
-            if(cp.camion.Numero_de_Permiso_SCT__c == null )
-                throw new BaseException('El Vehicle no cuenta con Numero de Permiso SCT');
+            if(cp.camion.Numero_de_Permiso_SCT__c == null ) throw new BaseException('El Vehicle no cuenta con Numero de Permiso SCT');
             
-            if(cp.camion.Tipo_de_Permiso__c == null )
-                throw new BaseException('El Vehicle no cuenta con Tipo de Permiso');
+            if(cp.camion.Tipo_de_Permiso__c == null ) throw new BaseException('El Vehicle no cuenta con Tipo de Permiso');
             
             
             if(cp.camion.Caja_Remolque__c != null )
             {
-                if(cp.camion.Caja_Remolque__r.Tipo_Remolque__c == null )
-                    throw new BaseException('La caja 1 del Vehicle no cuenta Tipo de remolque');
+                if(cp.camion.Caja_Remolque__r.Tipo_Remolque__c == null ) throw new BaseException('La caja 1 del Vehicle no cuenta Tipo de remolque');
                 
-                if(cp.camion.Caja_Remolque__r.Num_Placa_Caja__c == null )
-                    throw new BaseException('La caja 1 del Vehicle no cuenta Numero de placa');
+                if(cp.camion.Caja_Remolque__r.Num_Placa_Caja__c == null ) throw new BaseException('La caja 1 del Vehicle no cuenta Numero de placa');
                 
                 
             }
@@ -1181,11 +1275,9 @@ public class CPV2 {
             
             if( cp.camion.Caja_Remolque_2__c != null )
             {
-                if(cp.camion.Caja_Remolque_2__r.Tipo_Remolque__c == null )
-                    throw new BaseException('La caja 2 del Vehicle no cuenta Tipo de remolque');
+                if(cp.camion.Caja_Remolque_2__r.Tipo_Remolque__c == null )throw new BaseException('La caja 2 del Vehicle no cuenta Tipo de remolque');
                 
-                if(cp.camion.Caja_Remolque_2__r.Num_Placa_Caja__c == null )
-                    throw new BaseException('La caja 2 del Vehicle no cuenta Numero de placa');
+                if(cp.camion.Caja_Remolque_2__r.Num_Placa_Caja__c == null )throw new BaseException('La caja 2 del Vehicle no cuenta Numero de placa');
             }
             
             

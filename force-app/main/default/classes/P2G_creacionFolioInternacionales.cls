@@ -182,6 +182,10 @@ public class P2G_creacionFolioInternacionales {
         //para CE
         if(flete.salesIncoterm != '' && flete.salesIncoterm != null){
             quote.Sales_Incoterm__c = flete.salesIncoterm;}
+        System.debug('xxxxxxxxxxxxxx flete.refrigerado: '+flete.refrigerado);
+        if(flete.refrigerado != null && flete.refrigerado ){
+            quote.Refrigerado__c=flete.refrigerado;
+        }
             return quote;
     }
     public static P2G_CreacionFoliosWrapper.folio rellenaListFolio(P2G_CreacionFoliosWrapper.folio flete,Customer_Quote__c folio){
@@ -313,6 +317,10 @@ public class P2G_creacionFolioInternacionales {
         }
         if(cargo.pedimento != '' && cargo.pedimento != null){
             cargoLine.Pedimento__c = cargo.pedimento;
+        }
+        System.debug('xxxxxxxxxxxxxxx cargoLine.Temperatura__c '+cargoLine.Temperatura__c);
+        if(cargo.temperatura!= '' && cargo.temperatura != null){
+            cargoLine.Temperatura__c=cargo.temperatura;
         }
         
             

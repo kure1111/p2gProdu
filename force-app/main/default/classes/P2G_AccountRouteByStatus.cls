@@ -10,17 +10,19 @@ public class P2G_AccountRouteByStatus {
         public String nameRoute {get; set;}
         public Id routeId {get; set;}
         public Integer countAccRoute {get; set;}
+        public String serviceType{get; set;}
                 
         public wrapperAccountRoute(){
             this.countAccRoute = 0;
         }
                 
-        public wrapperAccountRoute(String nameAcc, Id accId, String nameRoute, Id routeId){
+        public wrapperAccountRoute(String nameAcc, Id accId, String nameRoute, Id routeId, String serviceType){
             this.nameAcc = nameAcc;
             this.accId = accId;
             this.nameRoute = nameRoute;
             this.routeId = routeId;
             this.countAccRoute = 1;
+            this.serviceType= serviceType;
         }
                 
         public void incrementCount(){
@@ -99,7 +101,7 @@ public class P2G_AccountRouteByStatus {
         //obtenemos la fecha actual y tomamos en cuenta el número de meses a considerar
         DateTime startDate = System.now().addMonths(-monthsToConsider);
         return [ SELECT Id, AccountId, Account.Name, Import_Export_Quote_Order__r.Route__c,
-                Import_Export_Quote_Order__r.Route__r.Name, CreatedDate
+                Import_Export_Quote_Order__r.Route__r.Name, CreatedDate, Service_Type__c
                 FROM Opportunity
                 WHERE AccountId IN :accountIds
                 AND CreatedDate >= :startDate
@@ -202,6 +204,7 @@ public class P2G_AccountRouteByStatus {
                 String nameAcc= opp.Account.Name;
                 Id routeId = opp.Import_Export_Quote_Order__r.Route__c;
                 String routeName = opp.Import_Export_Quote_Order__r.Route__r.Name;
+                String serviceType=opp.Service_Type__c;
                 String key = accountId + '_' + routeId;                                       
                 
                 Boolean isRecurrent = false;
@@ -229,7 +232,8 @@ public class P2G_AccountRouteByStatus {
                         nameAcc,
                         accountId,
                         routeName,
-                        routeId
+                        routeId,
+                        serviceType
                     );
                     mapRecurrentCustomer.put(accountId, newWrapper);
                 }
@@ -246,7 +250,8 @@ public class P2G_AccountRouteByStatus {
                     Route_by_Account__c newRoute = new Route_by_Account__c();
                     newRoute.Account__c = accountId;
                     newRoute.Route__c = routeId;
-                    newRoute.Name = isRecurrent ? 'Recurrente' : 'Nuevo';                                        
+                    newRoute.Name = isRecurrent ? 'Recurrente' : 'Nuevo';
+                    newRoute.Service_Type__c=serviceType;
                     routesToUpsert.add(newRoute);
                     existingRoutesMapbyAccRecurrent.put(key, newRoute);
                 }                                

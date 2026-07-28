@@ -35,6 +35,8 @@ global class P2G_CreacionFoliosWrapper {
         @AuraEnabled public String accountDestinAddress{get;set;}
         @AuraEnabled public String buyPrice{get;set;}
         @AuraEnabled public String sellPrice{get;set;}
+        //check para revisar tipos de folios de tipo refrigerado
+        @AuraEnabled public Boolean refrigerado{get;set;}
         @AuraEnabled public String error{get;set;}
     }
     global class cargoLine{
@@ -60,6 +62,7 @@ global class P2G_CreacionFoliosWrapper {
         @AuraEnabled public String weight{get;set;}
         @AuraEnabled public String idFraccionArancelaria{get;set;}
         @AuraEnabled public String pedimento{get;set;}
+        @AuraEnabled public String temperatura{get;set;}
     }
     public class namesIds{
         @AuraEnabled public Boolean vacio{get;set;}
@@ -146,7 +149,7 @@ global class P2G_CreacionFoliosWrapper {
                 folio.freighMode = 'Road';
                 folio.serviceMode = 'PORT';
             }
-            when 'SP-R-GLOBAL ROUTIN' {
+            when 'SP-R-GLOBAL ROUTING' {
                 folio.quotationStatus = 'Sent awaiting response';
                 folio.CommunityStatus = 'CUSTOMER CREATED';
                 folio.team = 'WCA';
@@ -204,10 +207,31 @@ global class P2G_CreacionFoliosWrapper {
                 folio.serviceMode = 'NATIONAL';
                 folio.servicetype = 'MAYOREO';
             }
+            when 'SP-RN-REFRIGERADONACIONAL' {
+                System.debug('Grupo RN');
+                folio.quotationStatus = 'Sent awaiting response';
+                folio.CommunityStatus = 'CUSTOMER CREATED';
+                folio.team = 'P2G';
+                folio.comercioExterior = 'No';
+                folio.freighMode = 'Road';
+                folio.serviceMode = 'NATIONAL';
+                folio.servicetype = 'FTL';
+                folio.refrigerado=true;
+            }
+            when 'SP-RI-REFRIGERADOINTER' {
+                System.debug('Grupo RI');
+                folio.quotationStatus = 'Sent awaiting response';
+                folio.CommunityStatus = 'CUSTOMER CREATED';
+                folio.serviceMode = 'INTERNATIONAL';
+                folio.team = 'P2G';
+                folio.comercioExterior = 'No';
+                folio.freighMode = 'Road';
+                folio.refrigerado=true;
+            }
             when else {
                 System.debug('No hay grupo');
             }
-		}
+		}        
         return folio;
     }
 }

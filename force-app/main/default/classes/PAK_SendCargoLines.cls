@@ -3,6 +3,7 @@ public class PAK_SendCargoLines {
     
     @future(callout=true)
     public static void send(Set<Id> lstIds, Integer operation){
+        
         System.debug('PAK_SendCargoLines FutureHandler - operation: ' + operation + ' lstIds: ' + lstIds);
         String soap = '';
         String soapLines = '';
@@ -96,6 +97,7 @@ public class PAK_SendCargoLines {
             
             if(!Test.isRunningTest()){System.debug('Response: ' + sendCargoLines(soap).getBody()); }
         }
+        ServiceLogger.log('PAK_SendClienteRecuperado');
     }
     
     public static HttpResponse login(){

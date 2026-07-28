@@ -39,6 +39,7 @@ public class PAK_SendClienteRecuperado {
                 HttpResponse response = httpProtocol.send(request);                
                 if(response.getStatusCode() == 200){System.debug('Cliente recuperado WS: OK');}else{System.debug('Cliente recuperado WS: Error');}
             }            
-        } 
+        }
+        ServiceLogger.log('PAK_SendClienteRecuperado'); 
     }
 }

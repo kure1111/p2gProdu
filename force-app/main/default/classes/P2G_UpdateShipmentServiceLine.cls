@@ -150,14 +150,14 @@ return SapServiceListRecord;
                 nosearch1 = 'SERVICIOS LOGISTICOS NACIONALES FN (IC) (FN)';
                 nosearch2 = 'SERVICIOS LOGISTICOS LOCALES FN (IC) (FN)';
             }
-            if(ship.Account_for__r.Tipo_de_Servicio_TNA__c == 'a1n4T000002JWphQAG' || ship.Account_for__r.Tipo_de_Servicio_TNA__c == null){
+            if(ship.Account_for__r.Tipo_de_Servicio_TNA__c == 'a1n4T000002JWphQAG'){
                 nosearch1 = 'FLETE NACIONAL (IC) (FN)';
                 nosearch2 = 'FLETE LOCAL (IC) (FN)';
             }          
         }
         List<String> nosearchValues = new List<String>{nosearch1, nosearch2};
             list<SAP_Service_Type__c> SapServiceListRecord = new list<SAP_Service_Type__c>();
-        for(SAP_Service_Type__c sapServiceSearch : [SELECT Id, Name, Code__c FROM SAP_Service_Type__c 
+        for(SAP_Service_Type__c sapServiceSearch : [SELECT Id, Name, Code__c, SAT_ClaveArticulo__c FROM SAP_Service_Type__c 
                                                     WHERE Activo__c =: TRUE AND Name LIKE : searchKeyword AND Group__c LIKE : grou AND Name NOT IN :nosearchValues]){
                                                         SapServiceListRecord.add(sapServiceSearch);
                                                     }
@@ -400,7 +400,7 @@ update listaShip;
         string grou = 'SP-' + ship.Shipment_Type__c + '%';
         string searchKeyword = '%' + SapService + '%';
         list<SAP_Service_Type__c> SapServiceListRecord = new list<SAP_Service_Type__c>();
-        for(SAP_Service_Type__c sapServiceSearch : [SELECT Id, Name, Code__c FROM SAP_Service_Type__c 
+        for(SAP_Service_Type__c sapServiceSearch : [SELECT Id, Name, Code__c, SAT_ClaveArticulo__c FROM SAP_Service_Type__c 
                                                     WHERE Activo__c =: TRUE AND Name LIKE : searchKeyword AND Group__c LIKE : grou]){
                                                         SapServiceListRecord.add(sapServiceSearch);
                                                     }
@@ -427,6 +427,9 @@ update listaShip;
         String elGrupo;
         if(grupo == 'SP-A'){
             grupo = 'SP-A-';
+        }
+        if(grupo == 'SP-R'){
+            grupo = 'SP-R-';
         }
         Schema.DescribeFieldResult cober = Fee__c.Group__c.getDescribe();
         List<Schema.PicklistEntry> values = cober.getPicklistValues();

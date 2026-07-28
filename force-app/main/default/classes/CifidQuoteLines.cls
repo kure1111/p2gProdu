@@ -122,7 +122,9 @@ public class CifidQuoteLines {
         private String[] field_order_type_info = new String[]{'allowFieldTruncation'};
     }
     public class Cifid_QuoteLines {
-        public String endpoint_x = 'https://na85.salesforce.com/services/Soap/class/Cifid_QuoteLines';
+        //URL hardcodeada
+        //public String endpoint_x = 'https://na85.salesforce.com/services/Soap/class/Cifid_QuoteLines';
+        public String endpoint_x = 'https://pak2gologistics.my.salesforce.com/services/Soap/class/Cifid_QuoteLines';
         public Map<String,String> inputHttpHeaders_x;
         public Map<String,String> outputHttpHeaders_x;
         public String clientCertName_x;

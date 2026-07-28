@@ -40,19 +40,30 @@ public class PAK_ReporteVentas {
                 request.setHeader('SOAPAction', 'http://tempuri.org/reporteVentas');
                 request.setBody(Body);
                 HttpResponse response = httpProtocol.send(request);
+                ServiceLogger.log('PAK_ReporteVentas');
                 if(response.getStatusCode() == 200){
                     Dom.Document doc = new Dom.Document();
                     doc.load(response.getBody());
+                    System.debug(response.getBody());
                     Dom.XMLNode root = doc.getRootElement();
                     root = root.getChildElement('Body','http://schemas.xmlsoap.org/soap/envelope/');
+                    System.debug('Root 1: ' + root);
                     root = root.getChildElement('reporteVentasResponse', 'http://tempuri.org/');
+                    System.debug('Root 2: ' + root);
                     root = root.getChildElement('reporteVentasResult', 'http://tempuri.org/');
+                    System.debug('Root 3: ' + root);
                     String res = root.getText();
+                    System.debug(res);
                     res = res.replaceAll('Suc-Cte', 'SucCte');
+                    System.debug('res 1:' + res);
                     res = res.replaceAll('Concepto NC', 'Concepto_NC');
+                     System.debug('res 2:' + res);
                     res = res.replaceAll('Rutas/Otros', 'Rutas_Otros');
+                     System.debug('res 3:' + res);
                     res = res.replaceAll('Tipo Producto', 'Tipo_Producto');
+                     System.debug('res 4:' + res);
                     list<Response> lsRes = (list<Response>) JSON.deserialize(res, list<Response>.class);
+                    System.debug('lsRes: ' + lsRes);
                     lsResponse = new list<Response>();
                     Integer cont = 1;
                     for(Response R: lsRes){
@@ -86,7 +97,7 @@ public class PAK_ReporteVentas {
                     viewAccounts();
                     System.debug('------------'+lsResponse);
                 }
-            }   
+            }
         }catch(Exception e){
 			System.debug(e.getLineNumber()+'------------'+e.getMessage());           
         }
@@ -190,7 +201,7 @@ public class PAK_ReporteVentas {
         }
     }
     
-    public void TestMetodo(){
+    /*public void TestMetodo(){
         String Test0 = '';
         Test0 = '';
         Test0 = '';
@@ -831,5 +842,5 @@ public class PAK_ReporteVentas {
         Test0 = '';
         Test0 = '';
         Test0 = '';
-    }
+    }*/
 }

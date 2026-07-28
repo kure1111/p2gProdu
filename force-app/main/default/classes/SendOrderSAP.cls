@@ -10,13 +10,13 @@ public class SendOrderSAP {
         if([SELECT IsSandbox FROM Organization LIMIT 1].IsSandbox){Org = 'QA';}else{Org = 'PROD';}
         
         
-        List<Order> lstOrders = [SELECT Id, OrderNumber, TotalAmount, OrdenVenta__c, Shipment__c, Shipment__r.Name, Shipment__r.Account_for__r.Venta_Sap__c, 
+        List<Order> lstOrders = [SELECT Id, OrderNumber, TotalAmount, CreatedDate, OrdenVenta__c, Shipment__c, Shipment__r.Name, Shipment__r.Account_for__r.Venta_Sap__c, 
                                  Shipment__r.Shipment_Status_Plann__c, Shipment__r.Shipment_Status__c, Shipment__r.Freight_Mode__c, 
                                  Shipment__r.Service_Mode__c, Shipment__r.Account_for__r.Owner.SalesEmployer__c, Shipment__r.Vendedor_Adicional__c,
                                  Shipment__r.Carrier__r.Customer_Id__c, Shipment__r.Acuse_en_SAP__c, Shipment__r.Operation_Executive__r.Name,
                                  Shipment__r.Operation_Executive_2__r.Name, Shipment__r.State_of_Load__c, Shipment__r.State_of_Load__r.Name, Shipment__r.Route__c,
                                  Shipment__r.Route__r.Name, Shipment__r.State_of_Discharge__r.Name, Shipment__r.CurrencyIsoCode, Shipment__r.Orden_de_Compra__c,
-                                 Shipment__r.Account_for__r.Owner.Workplace__c,
+                                 Shipment__r.Account_for__r.Owner.PrcCode__c,Shipment__r.Account_for__r.Owner.Workplace__c,Shipment__r.Date_Receive_from_SAP__c, Shipment__r.CreatedDate,
                                  Shipment__r.Profit__c,Shipment__r.Account_Shipment_Reference__c,
                                  Shipment__r.Account_for__r.Customer_Id__c, Shipment__r.Plaza_Vendedor__c,
                                  Shipment__r.ShipmentService__c, Shipment__r.State_of_Load__r.Zone__c, Shipment__r.Site_of_Load__r.State__r.Zone__c,
@@ -113,9 +113,29 @@ public class SendOrderSAP {
             system.debug('lstOrders no cuenta con registros');
         }
     }
+
+    public static String getWPAccOwner(Order order) {
+        Date fechaPivote = Date.valueOf('2026-06-08');
+                
+        Date fechaReferencia= order.CreatedDate.date();        
+        
+        System.debug('fechaReferencia '+ fechaReferencia);        
+        String wpAccOwner;
+        if (fechaReferencia < fechaPivote) {            
+            wpAccOwner = order.Shipment__r.Account_for__r.Owner.Workplace__c;
+            System.debug('Usando Workplace__c porque fechaReferencia=' + fechaReferencia + ' < ' + fechaPivote);
+        } else {            
+            wpAccOwner = order.Shipment__r.Account_for__r.Owner.PrcCode__c;
+            System.debug('Usando PrcCode__c porque fechaReferencia=' + fechaReferencia + ' >= ' + fechaPivote);
+        }
+                
+        return wpAccOwner != null ? wpAccOwner : '';
+	}
     
     public static String setRequestHeader(Order o, string fecha, string fechaTC){
-        String WPAccOwner = o.Shipment__r.Account_for__r.Owner.Workplace__c != null ? o.Shipment__r.Account_for__r.Owner.Workplace__c : '';
+        String WPAccOwner=getWPAccOwner(o);   
+        System.debug('WPAccOwner '+WPAccOwner);
+        //String WPAccOwner = o.Shipment__r.Account_for__r.Owner.PrcCode__c != null ? o.Shipment__r.Account_for__r.Owner.PrcCode__c : '';
         String Vendedor = o.Shipment__r.Account_for__r.Owner.SalesEmployer__c != null ? o.Shipment__r.Account_for__r.Owner.SalesEmployer__c : '';
         if(o.Shipment__r.Vendedor_Adicional__c != null && o.Shipment__r.Vendedor_Adicional__c != ''){
             Vendedor+=','+o.Shipment__r.Vendedor_Adicional__c;
@@ -282,4 +302,6 @@ public class SendOrderSAP {
         }
         responses.add(R);
     }
+    
+    
 }

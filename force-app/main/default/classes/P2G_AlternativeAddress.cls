@@ -10,14 +10,18 @@ public class P2G_AlternativeAddress {
     
     @AuraEnabled(cacheable=true)
     public static List<AddressWrapper> getAddressDetails(String originId, String destinationId) {
+        System.debug('=== getAddressDetails ===');
+        System.debug('originId: ' + originId);
+        System.debug('destinationId: ' + destinationId);
+        
         List<AddressWrapper> result = new List<AddressWrapper>();
         
-        // ORIGEN
         Account_Address__c ori = getAddressLWC(originId);
+        System.debug('Origen encontrado: ' + (ori != null ? ori.Name : 'null'));
         result.add(buildWrapper(ori));
         
-        // DESTINO
         Account_Address__c dest = getAddressLWC(destinationId);
+        System.debug('Destino encontrado: ' + (dest != null ? dest.Name : 'null'));
         result.add(buildWrapper(dest));
         
         return result;
@@ -100,8 +104,7 @@ public class P2G_AlternativeAddress {
                        Localidad_Cp__c, Localidad_Cp__r.Name,
                        Estado_cat__c, Estado_cat__r.Name
                 FROM Account_Address__c 
-                WHERE Name LIKE : (searchName + '%')
-                AND Status__c = 'Validado'
+                WHERE Name LIKE : (searchName + '%')                
                 AND CreatedDate > 2024-11-01T00:00:00Z 
                 AND Id != :address.Id
                 ORDER BY CreatedDate DESC
@@ -123,17 +126,12 @@ public class P2G_AlternativeAddress {
     
     @AuraEnabled
     public static Account_Address__c getAddressLWC(String addressId){
-        if (String.isBlank(addressId)){
-            return null;
-        }
+        if (String.isBlank(addressId)) return null;
         
         Account_Address__c original = getAddressById(addressId);
+        if (original == null) return null;
         
-        if (original == null){
-            return null;
-        }
-        
-        Account_Address__c alternative = getAddressByName(original);        
+        Account_Address__c alternative = getAddressByName(original);                
         return alternative != null ? alternative : original;
     }
     

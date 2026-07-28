@@ -3,11 +3,12 @@ public class P2G_EmailServiceErrorTest {
     @isTest
     static void testEnviarEmailPorError_ConDatosReales() {
         Response__c responseExistente = [
-            SELECT Id, Invoice__c, Type__c, Message__c, CreatedById 
+            SELECT Id, Name, Invoice__c, Type__c, Message__c, CreatedById 
             FROM Response__c 
             WHERE Invoice__c != null 
             AND Type__c = 'ERROR'
-            AND CreatedBy.Name LIKE '%Interfaces%'
+            //AND CreatedById = '0050R000007Xof5QAC' //ID para Probar en UAT
+            AND CreatedById = '0054T000000cUdmQAE' //ID para Probar en Prod
             LIMIT 1
         ];
 		

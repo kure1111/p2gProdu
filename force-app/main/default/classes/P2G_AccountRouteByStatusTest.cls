@@ -1,8 +1,23 @@
 @isTest
 private class P2G_AccountRouteByStatusTest {
-        
     
-    // Test para customerTypeGroups
+    /*@isTest
+    static void testWrapperAccountRoute() {
+        Test.startTest();
+        
+        P2G_AccountRouteByStatus.wrapperAccountRoute wrapper1 = new P2G_AccountRouteByStatus.wrapperAccountRoute();
+        System.assertEquals(0, wrapper1.countAccRoute);
+        
+        P2G_AccountRouteByStatus.wrapperAccountRoute wrapper2 = new P2G_AccountRouteByStatus.wrapperAccountRoute(
+            'Test Account', '001XXXXXXXXXXXXXXX', 'Test Route', 'a0XYYYYYYYYYYYYYY', 'FI'
+        );
+        
+        
+        wrapper2.incrementCount();
+        
+        Test.stopTest();
+    }*/
+    
     @isTest
     static void testCustomerTypeGroups() {
         Test.startTest();
@@ -16,10 +31,8 @@ private class P2G_AccountRouteByStatusTest {
         Test.stopTest();
     }
     
-    // Test para groupAccountsByCustomerStatus
     @isTest(seeAllData=true)
     static void testGroupAccountsByCustomerStatus() {
-        // Buscar oportunidades con ambos estatus
         List<Opportunity> testOpps = [
             SELECT Id, Account.Id, Account.Name, Account.Estatus_cuenta__c,
                    Import_Export_Quote_Order__r.Route__c, Import_Export_Quote_Order__r.Route__r.Name
@@ -41,7 +54,6 @@ private class P2G_AccountRouteByStatusTest {
         System.debug('Nuevos: ' + groups.newCustomer.size() + ', Recurrentes: ' + groups.recurrentCustomer.size());
     }
     
-    // Test para getAccountIds
     @isTest(seeAllData=true)
     static void testGetAccountIds() {
         List<Opportunity> testOpps = [
@@ -63,7 +75,6 @@ private class P2G_AccountRouteByStatusTest {
         System.debug('Account IDs encontrados: ' + accountIds.size());
     }
     
-    // Test para getRouteAccountsByAccountId
     @isTest(seeAllData=true)
     static void testGetRouteAccountsByAccountId() {
         List<Route_by_Account__c> existingRoutes = [
@@ -86,7 +97,6 @@ private class P2G_AccountRouteByStatusTest {
         System.debug('Rutas encontradas: ' + routes.size());
     }
     
-    // Test para generateRouteAccountExistKeyMap
     @isTest(seeAllData=true)
     static void testGenerateRouteAccountExistKeyMap() {
         List<Route_by_Account__c> testRoutes = [
@@ -103,8 +113,6 @@ private class P2G_AccountRouteByStatusTest {
         System.debug('Map generado con ' + resultMap.size() + ' elementos');
     }
     
-    
-    // Test para recentOpportunitiesByAccount
     @isTest(seeAllData=true)
     static void testRecentOpportunitiesByAccount() {
         List<Account> testAccounts = [SELECT Id FROM Account LIMIT 3];
@@ -120,10 +128,8 @@ private class P2G_AccountRouteByStatusTest {
         System.debug('Oportunidades recientes: ' + recentOpps.size());
     }
     
-    // Test para getNewCustomerByRoute
     @isTest(seeAllData=true)
     static void testGetNewCustomerByRoute() {
-        // Buscar oportunidades de cuentas nuevas
         List<Opportunity> newCustomerOpps = [
             SELECT Id, Account.Id, Account.Name, Import_Export_Quote_Order__r.Route__c,
                    Import_Export_Quote_Order__r.Route__r.Name
@@ -145,13 +151,11 @@ private class P2G_AccountRouteByStatusTest {
         System.debug('getNewCustomerByRoute ejecutado');
     }
     
-    // Test para getRecurrentAccountByRoute
     @isTest(seeAllData=true)
     static void testGetRecurrentAccountByRoute() {
-        // Buscar oportunidades de cuentas recurrentes
         List<Opportunity> recurrentCustomerOpps = [
             SELECT Id, Account.Id, Account.Name, Import_Export_Quote_Order__r.Route__c,
-                   Import_Export_Quote_Order__r.Route__r.Name
+                   Import_Export_Quote_Order__r.Route__r.Name, Service_Type__c
             FROM Opportunity
             WHERE Account.Estatus_cuenta__c = 'Recurrente'
             AND Import_Export_Quote_Order__r.Route__c != null
@@ -170,7 +174,6 @@ private class P2G_AccountRouteByStatusTest {
         System.debug('getRecurrentAccountByRoute ejecutado');
     }
     
-    // Test con datos vacíos para getNewCustomerByRoute
     @isTest(seeAllData=true)
     static void testGetNewCustomerByRouteEmptyList() {
         Test.startTest();
@@ -180,7 +183,6 @@ private class P2G_AccountRouteByStatusTest {
         System.debug('getNewCustomerByRoute con lista vacía ejecutado');
     }
     
-    // Test con datos vacíos para getRecurrentAccountByRoute
     @isTest(seeAllData=true)
     static void testGetRecurrentAccountByRouteEmptyList() {
         Test.startTest();
@@ -189,14 +191,12 @@ private class P2G_AccountRouteByStatusTest {
         
         System.debug('getRecurrentAccountByRoute con lista vacía ejecutado');
     }
-        
-    // Test para el flujo completo
+    
     @isTest(seeAllData=true)
     static void testFlujoCompleto() {
-        // Buscar oportunidades de ambos tipos
         List<Opportunity> allOpps = [
             SELECT Id, Account.Id, Account.Name, Import_Export_Quote_Order__r.Route__c,
-                   Import_Export_Quote_Order__r.Route__r.Name, Account.Estatus_cuenta__c
+                   Import_Export_Quote_Order__r.Route__r.Name, Account.Estatus_cuenta__c, Service_Type__c
             FROM Opportunity
             WHERE Account.Estatus_cuenta__c IN ('Nuevo', 'Recurrente')
             AND Import_Export_Quote_Order__r.Route__c != null
@@ -210,15 +210,12 @@ private class P2G_AccountRouteByStatusTest {
         
         Test.startTest();
         
-        // 1. Agrupar por estatus
         P2G_AccountRouteByStatus.customerTypeGroups grupos = P2G_AccountRouteByStatus.groupAccountsByCustomerStatus(allOpps);
         
-        // 2. Procesar nuevos
         if(!grupos.newCustomer.isEmpty()) {
             P2G_AccountRouteByStatus.getNewCustomerByRoute(grupos.newCustomer);
         }
         
-        // 3. Procesar recurrentes
         if(!grupos.recurrentCustomer.isEmpty()) {
             P2G_AccountRouteByStatus.getRecurrentAccountByRoute(grupos.recurrentCustomer);
         }

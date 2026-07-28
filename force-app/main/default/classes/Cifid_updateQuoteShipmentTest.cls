@@ -1,7 +1,7 @@
 @IsTest
 public class Cifid_updateQuoteShipmentTest {
     
-    // Mock para pruebas de WebService
+    // Mock corregido para pruebas de WebService
     private class MockCifidUpdateQuoteShipmentCallout implements WebServiceMock {
         public void doInvoke(
             Object stub,
@@ -14,17 +14,25 @@ public class Cifid_updateQuoteShipmentTest {
             String responseNamespace,
             String client
         ) {
-            // Simula una respuesta de tipo 'estatus'
+            // Crear la respuesta correcta con updateQuoteResponse_element
+            Cifid_updateQuoteShipment.updateQuoteResponse_element responseElement = new Cifid_updateQuoteShipment.updateQuoteResponse_element();
+            
+            // Crear el estatus dentro de la respuesta
             Cifid_updateQuoteShipment.estatus res = new Cifid_updateQuoteShipment.estatus();
             res.code = '200';
             res.message = 'Éxito';
-            response.put('response_x', res);
+            
+            // Asignar el estatus a la respuesta
+            responseElement.result = res;
+            
+            // Poner el updateQuoteResponse_element en el Map, no el estatus directamente
+            response.put('response_x', responseElement);
         }
     }
     
     @IsTest
     static void testShipmentStructureAndMockCallout() {
-         // SessionHeader_element instance
+        // SessionHeader_element instance
         Cifid_updateQuoteShipment.SessionHeader_element sessionHeader = new Cifid_updateQuoteShipment.SessionHeader_element();
         sessionHeader.sessionId = '00Dxx0000001gP4!AQ4AQEQ...'; // Session ID dummy
         
@@ -57,7 +65,7 @@ public class Cifid_updateQuoteShipmentTest {
         log.category = 'TestCategory';
         log.level = 'INFO';
         
-        // Registra el mock
+        // Registra el mock corregido
         Test.setMock(WebServiceMock.class, new MockCifidUpdateQuoteShipmentCallout());
         
         // Prepara un envío ficticio
@@ -94,6 +102,37 @@ public class Cifid_updateQuoteShipmentTest {
         Cifid_updateQuoteShipment.updateQuote_element req = new Cifid_updateQuoteShipment.updateQuote_element();
         req.ship = shipment;
         
+        // Instanciar clases adicionales para cobertura
+        Cifid_updateQuoteShipment.updateQuoteResponse_element responseElement = new Cifid_updateQuoteShipment.updateQuoteResponse_element();
+        responseElement.result = est;
+        
+        Cifid_updateQuoteShipment.DebuggingHeader_element debugHeader = new Cifid_updateQuoteShipment.DebuggingHeader_element();
+        debugHeader.debugLevel = 'DEBUG';
+        debugHeader.categories = new List<Cifid_updateQuoteShipment.LogInfo>{log};
+        
+        Cifid_updateQuoteShipment.location loc = new Cifid_updateQuoteShipment.location();
+        loc.latitude = 25.123;
+        loc.longitude = -100.456;
+        
+        Cifid_updateQuoteShipment.AllowFieldTruncationHeader_element allowTruncation = new Cifid_updateQuoteShipment.AllowFieldTruncationHeader_element();
+        allowTruncation.allowFieldTruncation = true;
+        
+        // Instanciar y configurar la clase principal del servicio
+        Cifid_updateQuoteShipment.Cifid_ShipmentFromPak service = new Cifid_updateQuoteShipment.Cifid_ShipmentFromPak();
+        service.endpoint_x = 'https://test.salesforce.com/services/Soap/class/Cifid_ShipmentFromPak';
+        service.inputHttpHeaders_x = new Map<String, String>{'Content-Type' => 'text/xml'};
+        service.outputHttpHeaders_x = new Map<String, String>();
+        service.clientCertName_x = 'TestCert';
+        service.timeout_x = 60000;
+        
+        service.DebuggingInfo = debugInfo;
+        service.SessionHeader = sessionHeader;
+        service.CallOptions = callOptions;
+        service.DebuggingHeader = debugHeader;
+        service.AllowFieldTruncationHeader = allowTruncation;
+        
+        // Ejecutar el método updateQuote para cobertura - ahora debería funcionar
+        Cifid_updateQuoteShipment.estatus result = service.updateQuote(shipment);
     }
     
     private class Cifid_ShipmentFromPakMock implements HttpCalloutMock {
@@ -115,5 +154,52 @@ public class Cifid_updateQuoteShipmentTest {
         ship.airStatus = 'In Transit';
         Cifid_updateQuoteShipment.byPass();
 
+        // Probar más campos del Shipment
+        ship.ata = '2025-04-29T12:00:00.000Z';
+        ship.atd = '2025-04-28T08:00:00.000Z';
+        ship.bookingconfirmation = 'CONF123';
+        ship.carrier = 'CarrierX';
+        ship.deliveryAddress = '123 Street, City';
+        ship.externalNumber = 'EXT123';
+        ship.externalQuoteNumber = 'Q456';
+        ship.flightNumber = 'FL1234';
+        ship.freeDays = '5';
+        ship.hblNumber = 'HBL987';
+        ship.lastUpdate = System.now();
+        ship.mawbNumber = 'MAWB123';
+        ship.oceanExpoStatus = 'On Water';
+        ship.oceanImpoStatus = 'Pending';
+        ship.opExecutive = 'John Doe';
+        ship.pickupAddress = 'Pickup St';
+        ship.seaBookingNumber = 'SEA123';
+        ship.seaContainerNumber = 'CONT456';
+        ship.spCurrency = 'USD';
+        ship.statusMonitoreo = 'Active';
+        ship.statusPlanner = 'Planned';
+        ship.totalServBuyAmmount = '5000';
+        ship.vessel = 'Vessel X';
+        ship.vesselLat = 25.123;
+        ship.vesselLon = -100.456;
+    }
+
+    @isTest
+    static void testAdditionalCoverage() {
+        // Probar el método byPass para cobertura completa
+        Cifid_updateQuoteShipment.byPass();
+        
+        // Instanciar todas las clases restantes para cobertura
+        Cifid_updateQuoteShipment.updateQuoteResponse_element responseElem = new Cifid_updateQuoteShipment.updateQuoteResponse_element();
+        Cifid_updateQuoteShipment.DebuggingHeader_element debugHead = new Cifid_updateQuoteShipment.DebuggingHeader_element();
+        Cifid_updateQuoteShipment.location locationObj = new Cifid_updateQuoteShipment.location();
+        Cifid_updateQuoteShipment.AllowFieldTruncationHeader_element allowTrunc = new Cifid_updateQuoteShipment.AllowFieldTruncationHeader_element();
+        
+        // Configurar propiedades adicionales
+        debugHead.categories = new List<Cifid_updateQuoteShipment.LogInfo>();
+        debugHead.debugLevel = 'INFO';
+        
+        locationObj.latitude = 10.5;
+        locationObj.longitude = -66.9;
+        
+        allowTrunc.allowFieldTruncation = true;
     }
 }

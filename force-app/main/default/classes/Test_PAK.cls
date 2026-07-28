@@ -17,6 +17,8 @@ public class Test_PAK {
         PAK_ReporteVentas REP = new PAK_ReporteVentas();
         PAK_ReporteVentas.Response RES = new PAK_ReporteVentas.Response();
         PAK_Attachment ATT = new PAK_Attachment(null);
+        PAK_AttachmentSHIP ATTS = new PAK_AttachmentSHIP(null);
+        PAK_WSMESSAGES ME = new PAK_WSMESSAGES();
         PAK_CUSTOMERID PCU = new PAK_CUSTOMERID();
         PAK_CUSTOMERID.CUSTOMER CUSTO = new PAK_CUSTOMERID.CUSTOMER();
         PAK_QuoteBigFreight PAKQ = new PAK_QuoteBigFreight(null);
@@ -26,6 +28,10 @@ public class Test_PAK {
 
         PAK_AcuseAttach PAKATTACH = new PAK_AcuseAttach();
         PAK_AcuseAttach.AttachmentAcuse PAcuse = new PAK_AcuseAttach.AttachmentAcuse();
+        PAK_CreateLeads PAKCL = new PAK_CreateLeads();
+        PAK_CreateLeads.Lead LEAD = new PAK_CreateLeads.Lead();
+        PAK_CreateLeads.DetalleIEQ DetalleIEQ  = new PAK_CreateLeads.DetalleIEQ();
+        PAK_CreateLeads.status LEADST = new PAK_CreateLeads.status();
         
         Test.startTest();
         
@@ -33,23 +39,84 @@ public class Test_PAK {
         account_test.Name='TESTCustomer';
         account_test.RecordTypeId =  Schema.SObjectType.Account.getRecordTypeInfosByName().get('Customer').getRecordTypeId();
         //Prod
-        account_test.OwnerId='0054T0000025ew3QAA';        
+        account_test.OwnerId='0054T0000025ew3QAA';    
+        //UAT    
+        //account_test.OwnerId='005DV00000EDOsaYAH';         
         account_test.Segment__c = 'Nuevo';
         insert account_test; 
+
+        RecordType supplyChainPartnerRecordType = [SELECT Id FROM RecordType WHERE Name = 'Supply Chain Partner' LIMIT 1];
+            Account supplyChainPartner = new Account(
+                Name = 'Supply Chain Partner Test',
+                NEU_Email__c = 'supplier@example.com',
+                RecordTypeId = supplyChainPartnerRecordType.Id
+        );
+        insert supplyChainPartner;
+
+        User userManager = [SELECT Id FROM user WHERE Id =: UserInfo.getUserId() LIMIT 1];
+
+        // User necesario para trigger NEU_Shipment_Service_Update_Conversions Line 142
+        Profile stdProfile = [SELECT Id FROM Profile WHERE Name = 'Standard User' LIMIT 1];
+        User bernardoUser = new User(
+            FirstName = 'Bernardo',
+            LastName = 'Hinojosa',
+            Email = 'bernardo.hinojosa@test.com',
+            Username = 'bernardo.hinojosa@test.com.unittest',
+            Alias = 'bhinoj',
+            TimeZoneSidKey = 'America/Mexico_City',
+            LocaleSidKey = 'es_MX',
+            EmailEncodingKey = 'UTF-8',
+            ProfileId = stdProfile.Id,
+            LanguageLocaleKey = 'es',
+            IsActive = true,
+            ManagerId = userManager.Id
+        );
+        insert bernardoUser;
+
+        Fee__c serviceRate = new Fee__c();
+        String recordTypefee = Schema.SObjectType.Fee__c.getRecordTypeInfosByName().get('Sea/Ground Freight').getRecordTypeId();
+        serviceRate.RecordTypeId = recordTypefee;
+        serviceRate.Name = 'Flete Nacional';
+        //serviceRate.Route__c = quote.Route__c; 
+        serviceRate.CurrencyIsoCode = 'MXN'; 
+        serviceRate.Fee_Category__c = 'Road Freights'; 
+        serviceRate.Group__c = 'SP-FN-FLETE NACIONAL'; 
+        //serviceRate.SAP_Service_Type__c = a1n0R000001lZceQAE; /*'a1n4T000001XXYCQA4'; */ //uate a1n0R000001lZceQAE, Prod a1n4T000001XXYCQA4
+        //serviceRate.Container_Type__c = container.Id;
+        serviceRate.TT_Days__c = '1';
+        serviceRate.Rate_Type__c = 'Fixed';
+        serviceRate.Account_for__c = account_test.Id;
+        serviceRate.Active__c=true;
+        serviceRate.Fee_Rate__c = 5000;
+        serviceRate.Buy_Rate__c = 4000;
+        insert serviceRate;
+
         //Account account_test=[SELECT Id, Segment__c,Owner.isActive FROM Account WHERE Segment__c ='Nuevo' AND Owner.IsActive = true limit 1];       
         Shipment__c shipment_test = new Shipment__c();
         shipment_test.Account_for__c = account_test.Id;
-        shipment_test.Freight_Mode__c = 'Sea';
-        shipment_test.Service_Mode__c = 'Import';
-        shipment_test.Only_Warehouse_Service__c = true;
+        shipment_test.Freight_Mode__c = 'Road';
+        shipment_test.Service_Mode__c = 'National';
+        shipment_test.Only_Warehouse_Service__c = false;
         shipment_test.name = 'SP-FN-21-909090';
+        shipment_test.Service_Type__c = 'FTL';
+        shipment_test.Operation_Executive__c = bernardoUser.Id;
+        shipment_test.Carrier__c = supplyChainPartner.Id;
+
+        //shipment_test.Operation_Executive__c = UserInfo.getUserId();
+        //insertar  UserInfo.getUserById() en operation executive cObject
         insert shipment_test;
+        System.debug(shipment_test);
     	List<Shipment_Fee_Line__c> lstUpd = new List<Shipment_Fee_Line__c>();
         
         Shipment_Fee_Line__c sfl = new Shipment_Fee_Line__c();
         sfl.Shipment__c = shipment_test.Id;
         sfl.Name = '001';
+        sfl.CurrencyIsoCode	= 'MXN';
+        sfl.Service_Rate_Name__c = serviceRate.Id;
+        sfl.Shipment_Sell_Price__c = 2222;
+        sfl.Shipment_Buy_Price__c = 1111;
         lstUpd.add(sfl);
+        //esta fallando este insert de la service line
         
         
         
@@ -175,12 +242,194 @@ public class Test_PAK {
         //SLP.TestMetodo();
         //ACUSE.TestMetodo();
         //NC.TestMetodo();
+        //REP.TestMetodo();
+        //ME.TestMetodo();
+        //COB.TestMetodo();
+        //FACT.TestMetodo();
+        ATT.TestMetodo();
+        ATTS.TestMetodo();
         //WSDISB.TestMetodo();
         Associated_Document__c Doc = new Associated_Document__c(Name='Test',Account__c=account_test.Id,Document_Type__c='Bill of Lading');
         insert Doc;
         Test.stopTest();   
     }
-
-
+    @isTest
+    public static void IMPKQuoteTest(){
+        PAK_CreateQuoteImpak PAKCL = new PAK_CreateQuoteImpak();
+        PAK_CreateQuoteImpak.Quote LEAD = new PAK_CreateQuoteImpak.Quote();
+        PAK_CreateQuoteImpak.DetalleQuote DetalleIEQ  = new PAK_CreateQuoteImpak.DetalleQuote();
+        PAK_CreateQuoteImpak.estatus LEADST = new PAK_CreateQuoteImpak.estatus();
+        
+        Test.startTest();
+        
+        DetalleIEQ.ContainerType='40H';
+        LEAD.CountryOfDis='Mexico';
+        LEAD.CountryOfLoad='Mexico';
+        LEAD.FreightMode='Sea';
+        DetalleIEQ.Height='100';
+        DetalleIEQ.ItemUnits='1';
+        DetalleIEQ.Length='100';
+        LEAD.SalesIncoterm='test';
+        LEAD.ServiceMode='Import';
+        LEAD.ServiceType='FCL';
+        LEAD.SiteOfDis='Monterrey';
+        LEAD.SiteOfLoad='Monterrey';
+        LEAD.StateOfDis='Nuevo Leon';
+        LEAD.StateOfLoad='Nuevo Leon';
+        LEAD.ETA = '2018/01/01';
+        LEAD.ETD  = '2018/01/01';
+        DetalleIEQ.TotalShippingWeight='200';
+        DetalleIEQ.TotalUnitWeight='200';
+        DetalleIEQ.Width='100';
+        
+        LEADST.code='';
+        LEADST.message='';
+        
+        list<PAK_CreateQuoteImpak.DetalleQuote> lsDetalle = new list<PAK_CreateQuoteImpak.DetalleQuote>();
+        lsDetalle.add(DetalleIEQ);
+        LEAD.DetalleQuote = lsDetalle;
+         
+        PAK_CreateQuoteImpak.createQuote(LEAD);
+        
+        LEAD.ServiceType = 'LCL';
+        PAK_CreateQuoteImpak.createQuote(LEAD);
+        
+        LEAD.ServiceType = 'PAQUETERIA';
+        PAK_CreateQuoteImpak.createQuote(LEAD);
+       
+        Test.stopTest();
+    }
+    
+    @isTest
+    public static void PK2_FN_TABLE_Test(){
+       	Test.startTest();
+        PK2_FN_TABLE tableInstance = new PK2_FN_TABLE();
+        PK2_FN_TABLE.limitWrapper[] blocks = tableInstance.getThousandBlocks();
+        Test.stopTest();
+    }
+    
+    @isTest
+    public static void FN_TABLE(){
+        PK2_FN_TABLE FNTABLE = new PK2_FN_TABLE();
+        PK2_GRAL_DAHBOARD PAK2 = new PK2_GRAL_DAHBOARD();
+        PK2_Utils PK2 = new PK2_Utils();
+        Test.startTest();
+        PAK2.getHistoria();
+        PK2.getHistoriaFeeline();
+        System.debug('----------'+PAK2.ls);  
+        Test.stopTest();   
+        
+    }
+    @isTest
+    public static void FN_TABLE2(){
+        PK2_GRAL_DAHBOARD PAK2 = new PK2_GRAL_DAHBOARD();
+        PK2_Utils_2 PK2 = new PK2_Utils_2();
+        Test.startTest();
+        PAK2.getHistoria();
+        PK2.getHistoriaFeeline();
+        System.debug('----------'+PAK2.ls);  
+        Test.stopTest(); 
+    }
+    @isTest
+    public static void PEDIDOS()
+    {
+        PAK_SalesOrder SO = new PAK_SalesOrder(null);
+       
+        Test.startTest();
+       
+        SO.TestMetodo();
+       
+        Test.stopTest();   
+        
+    }
+    
+    @isTest
+    public static void PAKHOME(){
+        Test.startTest();
+        PK2_HomeTask c = new PK2_HomeTask();
+        System.debug('----------'+c.lsTask);  
+        Test.stopTest(); 
+    }
+    @isTest
+    public static void PK2_FI_TABLE_STATES(){
+        Test.startTest();
+        PK2_FI_TABLE_STATES c = new PK2_FI_TABLE_STATES();  
+        Test.stopTest(); 
+    }
+    @isTest
+    public static void PK2_FN_TABLE_STATES(){
+        Test.startTest();
+        PK2_FN_TABLE_STATES c = new PK2_FN_TABLE_STATES();  
+        Test.stopTest(); 
+    }
+    @isTest
+    public static void PK2_TABLE_MONITOREO_FI(){
+        Test.startTest();
+        PK2_TABLE_MONITOREO_FI c = new PK2_TABLE_MONITOREO_FI();  
+        Test.stopTest();
+    }
+    @isTest
+    public static void PK2_FI_IEQ(){
+        Test.startTest();
+        PK2_FI_IEQ c = new PK2_FI_IEQ();  
+        Test.stopTest();
+    }
+    @isTest
+    public static void QualityAssurance(){        
+        Test.startTest();
+        PAK_QuotesReport vf = new PAK_QuotesReport();
+        ApexPages.currentPage().getParameters().put('service', 'FN');
+        ApexPages.currentPage().getParameters().put('startDate', string.valueOf(Date.newInstance(Date.Today().Year(), Date.Today().Month(), 1)));
+        ApexPages.currentPage().getParameters().put('endDate', string.valueOf(Date.newInstance(Date.Today().Year(), Date.Today().Month(), Date.daysInMonth(Date.Today().Year(), Date.Today().Month()))));
+        exportXLSController rep = new exportXLSController();
+        //rep.tstMethod();
+        System.debug('Query: ' + rep.obRep);
+        Test.stopTest();
+    } 
+    @isTest
+    public static void PAK_TotalFacMesTst(){
+        List<PAK_TotFacMes.Plaza> lstPlazas = new List<PAK_TotFacMes.Plaza>();
+        PAK_TotFacMes.Plaza plaza = new PAK_TotFacMes.Plaza();
+        plaza.plazaYear = 'MTY-2019';
+        plaza.totalEne = '1';
+        plaza.totalFeb = '2';
+        plaza.totalMar = '3';
+        plaza.totalAbr = '4';
+        plaza.totalMay = '5';
+        plaza.totalJun = '6';
+        plaza.totalJul = '7';
+        plaza.totalAgo = '8';
+        plaza.totalSep = '9';
+        plaza.totalOct = '10';
+        plaza.totalNov = '11';
+        plaza.totalDic = '12';
+        lstPlazas.add(plaza);
+        
+        PAK_TotFacMes.updateTotalFacturadoMes(lstPlazas);
+        
+        lstPlazas = new List<PAK_TotFacMes.Plaza>();
+        plaza = new PAK_TotFacMes.Plaza();
+        plaza.plazaYear = 'MTY-2019';
+        plaza.totalEne = '11';
+        plaza.totalFeb = '22';
+        plaza.totalMar = '33';
+        plaza.totalAbr = '44';
+        plaza.totalMay = '55';
+        plaza.totalJun = '66';
+        plaza.totalJul = '77';
+        plaza.totalAgo = '88';
+        plaza.totalSep = '99';
+        plaza.totalOct = '100';
+        plaza.totalNov = '110';
+        plaza.totalDic = '120';
+        lstPlazas.add(plaza);
+        
+        PAK_TotFacMes.updateTotalFacturadoMes(lstPlazas);
+    }
+    /*
+    @isTest
+    public static void testSendToOrdr(){
+        PAK_SendToOrder.TestMetodo();
+    }*/
     
 }

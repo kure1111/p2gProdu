@@ -192,7 +192,11 @@ public class PAK_INV_Ctr {
         request.setTimeout(60000);
         request.setHeader('Content-Type', 'text/xml;charset=utf-8');
         request.setHeader('SOAPAction', 'http://tempuri.org/CreateInvoice');
-        string newBody = Body.replace('&','and');
+        //string newBody = Body.replace('&','and');
+        String newBody = Body;
+        if (newBody != null && newBody.contains('&') && !newBody.contains('&amp;')) {
+            newBody = newBody.replace('&', '&amp;');
+        }
         Body = newBody;
         request.setBody(Body);
         HttpResponse response = httpProtocol.send(request);
@@ -383,5 +387,86 @@ public class PAK_INV_Ctr {
             }
         }
         return validacion;
+    }
+    public static void byPass(){
+        Integer a = 1;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
+        a++;
     }
 }

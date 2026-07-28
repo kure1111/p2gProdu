@@ -148,7 +148,10 @@ public class Cifid_updateQuoteShipment {
         private String[] field_order_type_info = new String[]{'allowFieldTruncation'};
     }
     public class Cifid_ShipmentFromPak {
-        public String endpoint_x = 'https://na85.salesforce.com/services/Soap/class/Cifid_ShipmentFromPak';
+        //URL harcodeada
+        //public String endpoint_x = 'https://na85.salesforce.com/services/Soap/class/Cifid_ShipmentFromPak';
+        //URL actualizada
+        public String endpoint_x = 'https://pak2gologistics.my.salesforce.com/services/Soap/class/Cifid_ShipmentFromPak';
         public Map<String,String> inputHttpHeaders_x;
         public Map<String,String> outputHttpHeaders_x;
         public String clientCertName_x;
@@ -191,28 +194,6 @@ public class Cifid_updateQuoteShipment {
 
     public static void byPass(){
         Integer a = 1;
-        a++;
-        a++;
-        a++;
-        a++;
-        a++;
-        a++;
-        a++;
-        a++;
-        a++;
-        a++;
-        a++;
-        a++;
-        a++;
-        a++;
-        a++;
-        a++;
-        a++;
-        a++;
-        a++;
-        a++;
-        a++;
-        a++;
         a++;
         a++;
         a++;
