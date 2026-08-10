@@ -136,6 +136,9 @@
                                                                                 <th class="" scope="col">
                                                                                     <div class="slds-truncate" title="Code">Code</div>
                                                                                 </th>
+                                                                                <th class="" scope="col">
+                                                                                    <div class="slds-truncate" title="Code">Code</div>
+                                                                                </th>
                                                                             </tr>
                                                                             </thead>
                                                                             <tbody>
@@ -146,6 +149,9 @@
                                                                                     </td>
                                                                                     <td>
                                                                                         <div class="slds-truncate">{con.Code__c}</div>
+                                                                                    </td>
+                                                                                    <td>
+                                                                                        <div class="slds-truncate">{con.SAT_ClaveArticulo__c}</div>
                                                                                     </td>
                                                                                 </tr>
                                                                             </template>
@@ -249,6 +255,9 @@
                                                                                     <th class="" scope="col">
                                                                                         <div class="slds-truncate" title="Code">Code</div>
                                                                                     </th>
+                                                                                    <th class="" scope="col">
+                                                                                        <div class="slds-truncate" title="Code">Clave</div>
+                                                                                    </th>
                                                                                 </tr>
                                                                                 </thead>
                                                                                 <tbody>
@@ -259,6 +268,9 @@
                                                                                         </td>
                                                                                         <td>
                                                                                             <div class="slds-truncate">{con.Code__c}</div>
+                                                                                        </td>
+                                                                                        <td>
+                                                                                            <div class="slds-truncate">{con.SAT_ClaveArticulo__c}</div>
                                                                                         </td>
                                                                                     </tr>
                                                                                 </template>
@@ -633,6 +645,9 @@
                                                                     <th class="" scope="col">
                                                                     <div class="slds-truncate" title="Last Name">Code</div>
                                                                     </th>
+                                                                    <th class="" scope="col">
+                                                                    <div class="slds-truncate" title="Last Name">Clave</div>
+                                                                    </th>
                                                                 </tr>
                                                             </thead>
                                                             <tbody>
@@ -644,7 +659,10 @@
                                                                     <td>
                                                                         <div class="slds-truncate">{con.Code__c}</div>
                                                                     </td>
-                                                                    </tr>
+                                                                    <td>
+                                                                        <div class="slds-truncate">{con.SAT_ClaveArticulo__c}</div>
+                                                                    </td>
+                                                                </tr>
                                                                 </template>
                                                             </tbody>
                                                         </table>
@@ -735,6 +753,9 @@
                                                                         <th class="" scope="col">
                                                                         <div class="slds-truncate" title="Last Name">Code</div>
                                                                         </th>
+                                                                        <th class="" scope="col">
+                                                                        <div class="slds-truncate" title="Last Name">Clave</div>
+                                                                        </th>
                                                                     </tr>
                                                                 </thead>
                                                                 <tbody>
@@ -746,7 +767,10 @@
                                                                         <td>
                                                                             <div class="slds-truncate">{con.Code__c}</div>
                                                                         </td>
-                                                                        </tr>
+                                                                        <td>
+                                                                            <div class="slds-truncate">{con.SAT_ClaveArticulo__c}</div>
+                                                                        </td>
+                                                                    </tr>
                                                                     </template>
                                                                 </tbody>
                                                             </table>
@@ -762,7 +786,7 @@
                                 </td>
                                 <td>
                                     <div class="slds-truncate">
-                                        <select class="slds-select" onchange={registroCurrency}>
+                                        <select class="slds-select" value={currencyValue} onchange={registroCurrency}>
                                           <option value="MXN">MXN</option>
                                           <option value="EUR">EUR</option>
                                           <option value="USD">USD</option>

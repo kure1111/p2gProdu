@@ -33,6 +33,8 @@ export default class P2gCreateShipmentServiceLine extends LightningElement {
     @track createServiceLine;
     @track vistaLine;
     @track elemento;
+    @track currencyValue;
+
     error;
     idString='';
     rateName;
@@ -400,6 +402,18 @@ export default class P2gCreateShipmentServiceLine extends LightningElement {
     closelistSstb(){
         this.showVistaSstb = false;
     }
+
+    syncCurrency(currency) {
+        this.currencyValue = currency;
+
+        if (this.vistaLine && this.vistaLine.length > 0) {
+            this.vistaLine = this.vistaLine.map(item => ({
+                ...item,
+                Moneda: currency
+            }));
+        }
+    }
+
     crearLines(){
         this.key=true;
         if (typeof this.rateName === 'undefined' || this.rateName === null || (this.rateName && this.rateName.length === 0) || this.rateName === '') {
@@ -411,10 +425,15 @@ export default class P2gCreateShipmentServiceLine extends LightningElement {
             this.elemento = result;
             this.listServiceLine = Array.from(this.listServiceLine);
             this.listServiceLine.push(this.elemento);
+            console.log('Resultado Moneda:',result.Moneda);
+            
+            
             //
             const updatedListServiceLine = [...this.listCServiceLine.data];
             updatedListServiceLine.push(result); 
             this.listCServiceLine = { data: updatedListServiceLine };
+            console.log('updatedListServiceLine:',updatedListServiceLine);
+            
             //
             this.pushMessage('Exitoso!','success','Se actualizo con exito!');
             this.searchValueSsts = null;
@@ -425,6 +444,7 @@ export default class P2gCreateShipmentServiceLine extends LightningElement {
             this.buyPrice = null;
             this.comentario = null;
             this.Devolucion = false;
+            this.syncCurrency(this.currencyValue);
         })
         .catch(error => {
             this.pushMessage('Error','error', error.body.message);
@@ -432,6 +452,8 @@ export default class P2gCreateShipmentServiceLine extends LightningElement {
         getCreaLine({Id: this.recordId})
             .then(result => {
                 this.vistaLine = result;
+                this.syncCurrency(this.currencyValue);
+
                 console.log("Entra al then4", this.vistaLine);
             })
             .catch(error => {
@@ -440,6 +462,8 @@ export default class P2gCreateShipmentServiceLine extends LightningElement {
                 console.log("Entra al carch", this.vistaLine);              
             });
     }
+
+
     saveName(event){
         this.rateName = event.target.value;
         const updateVistaLine = this.vistaLine.map( (item) => { 
@@ -492,12 +516,23 @@ export default class P2gCreateShipmentServiceLine extends LightningElement {
     }
 
     registroCurrency(event){
-        const updateVistaLine = this.vistaLine.map( (item) => { 
-            return {...item, Moneda : event.target.value };
-        }); // Actualiza la lista de service lines
-        this.vistaLine = updateVistaLine;
+        const selectCurrency = event.target.value;
+        this.currencyValue=selectCurrency;    
+        
+        if (this.vistaLine && this.vistaLine.length > 0) {
+            this.vistaLine = this.vistaLine.map(item => ({
+                ...item,
+                Moneda: selectCurrency
+            }));
+        }
+            console.log('Registro moneda:', this.currencyValue);
 
-        console.log('Registro: ',this.vistaLine);
+        // const updateVistaLine = this.vistaLine.map( (item) => { 
+        //     return {...item, Moneda : this.selectCurrency };
+        // }); // Actualiza la lista de service lines
+        // this.vistaLine = updateVistaLine;
+
+        //console.log('Registro: ',this.vistaLine);
     }
 
     //------------chance --------------
