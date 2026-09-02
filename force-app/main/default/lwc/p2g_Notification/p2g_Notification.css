@@ -1,0 +1,26 @@
+.response-box {
+    padding: 1rem;
+    border-radius: .25rem;
+    margin-top: 1rem;
+    border: 1px solid #d8dde6;
+}
+
+.success {
+    background-color: lightgreen;
+    border-left: 4px solid #2e844a;
+}
+
+.error {
+    background:#db3f4e;
+    border-left: 4px solid #8f0210;
+    color:white
+    
+}
+
+.response-link {
+    color: #0176d3;
+}
+.response-link:hover {
+    color: #0151a0;
+    text-decoration: underline;
+}

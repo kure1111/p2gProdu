@@ -1,0 +1,32 @@
+<template>
+    <lightning-card title="Último SAP Response" icon-name="standard:dynamic_highlights_panel">
+        <div class="slds-p-horizontal_medium">
+            <template if:true={response}>
+                <div class={responseClass}>
+                    <div class="slds-grid slds-wrap">
+                        <div class="slds-col">
+                            <a href= {responseUrl} class="response-link"> <strong>{response.Name}</strong></a>         
+                        </div>
+                        <div class="slds-col slds-m-left_large">
+                            <strong>Tipo: </strong> {response.Type__c}
+                        </div>
+                        <div class="slds-col slds-m-left_large">
+                            <strong>Fecha: </strong> 
+                            <lightning-formatted-date-time
+                                value={response.CreatedDate}
+                                year="numeric"
+                                month="2-digit"
+                                day="2-digit"
+                                hour="2-digit"
+                                minute="2-digit">
+                            </lightning-formatted-date-time>
+                        </div>
+                    </div>
+                    <div class="slds-m-top_medium slds-box slds-theme_default">
+                    <p><strong>Mensaje:</strong> {response.Message__c}</p>
+                    </div> 
+                </div>
+            </template>                     
+        </div>       
+    </lightning-card>
+</template>
