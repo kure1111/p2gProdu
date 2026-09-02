@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Package xmlns="http://soap.sforce.com/2006/04/metadata">
+    <types>
+        <members>APX_FindAccountRFC</members>
+        <members>APX_FindAccountRFC_Test</members>
+        <members>NEU_Commercial_Info_IE</members>
+        <members>NEU_Commercial_Info_IETest</members>
+        <members>P2G_CapturaOrdenCompra</members>
+        <members>P2G_CapturaOrdenCompraTest</members>
+        <members>P2G_Notification</members>
+        <members>P2G_NotificationTest</members>
+        <members>P2G_StatusClosedShipment</members>
+        <members>P2G_StatusClosedShipmentTest</members>
+        <members>P2G_block</members>
+        <members>P2G_blockTest</members>
+        <members>SurveySitesUtil</members>
+        <members>SurveySitesUtil_Test</members>
+        <name>ApexClass</name>
+    </types>
+    <version>58.0</version>
+</Package>
