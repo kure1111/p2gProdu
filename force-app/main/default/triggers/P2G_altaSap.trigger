@@ -17,4 +17,6 @@ trigger P2G_altaSap on Response__c (after insert) {
     }
     
     P2G_ChangeCampoControl.main(Trigger.new);
+    P2G_CapturaOrdenCompra.main(Trigger.new);
+    
 }
