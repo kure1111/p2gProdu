@@ -1,0 +1,1632 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <allowInChatterGroups>false</allowInChatterGroups>
+    <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
+    <deploymentStatus>Deployed</deploymentStatus>
+    <enableActivities>true</enableActivities>
+    <enableBulkApi>true</enableBulkApi>
+    <enableFeeds>false</enableFeeds>
+    <enableHistory>true</enableHistory>
+    <enableLicensing>false</enableLicensing>
+    <enableReports>true</enableReports>
+    <enableSearch>true</enableSearch>
+    <enableSharing>true</enableSharing>
+    <enableStreamingApi>true</enableStreamingApi>
+    <externalSharingModel>ControlledByParent</externalSharingModel>
+    <fields>
+        <fullName>Add_to_Quote__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Add to Quote</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Block__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <inlineHelpText>Si es Verdadero han modificado la Service Line y no lo han vuelto a enviar a SAP</inlineHelpText>
+        <label>Block</label>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Buy_Amount_BI_converted__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF( TEXT(CurrencyIsoCode)=&quot;MXN&quot;,Shipment_Buy_Price__c,Shipment_Buy_Price__c / CURRENCYRATE(&quot;USD&quot;))</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Buy Amount BI converted</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Buy_Price_Modified__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Buy Price Modified</label>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Buy_Rate__c</fullName>
+        <externalId>false</externalId>
+        <formula>Service_Rate_Name__r.Buy_Rate__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Buy Rate</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Campo_Control__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>Campo para el monitoreo y control de registros bloqueados por parte de SAP</description>
+        <externalId>false</externalId>
+        <label>Campo Control</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Carrier__c</fullName>
+        <externalId>false</externalId>
+        <formula>Service_Rate_Name__r.Carrier_Account__r.Name</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Carrier</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Carrier_trg__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>FN Carrier</label>
+        <referenceTo>Account</referenceTo>
+        <relationshipLabel>Shipment Service Lines</relationshipLabel>
+        <relationshipName>Shipment_Service_Lines</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Code_SAP__c</fullName>
+        <externalId>false</externalId>
+        <formula>Service_Rate_Name__r.SAP_Service_Type__r.Code__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Codigo SAP</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>CommentsServRate__c</fullName>
+        <externalId>false</externalId>
+        <formula>Service_Rate_Name__r.Comments__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Comments</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Comments_QuoteOrder__c</fullName>
+        <externalId>false</externalId>
+        <formula>Import_Export_Service_Line__r.Service_Rate_Name__r.Comments__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Comments LineQuoteOrder</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Concept_1_Sell_Price__c</fullName>
+        <externalId>false</externalId>
+        <label>Concept 1 Sell Price</label>
+        <precision>10</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Concept_1__c</fullName>
+        <externalId>false</externalId>
+        <formula>Service_Rate_Name__r.Concept_1__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Concept 1</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Concept_2_Sell_Price__c</fullName>
+        <externalId>false</externalId>
+        <label>Concept 2 Sell Price</label>
+        <precision>10</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Concept_2__c</fullName>
+        <externalId>false</externalId>
+        <formula>Service_Rate_Name__r.Concept_2__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Concept 2</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Concept_3_Sell_Price__c</fullName>
+        <externalId>false</externalId>
+        <label>Concept 3 Sell Price</label>
+        <precision>10</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Concept_3__c</fullName>
+        <externalId>false</externalId>
+        <formula>Service_Rate_Name__r.Concept_3__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Concept 3</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Concept_4_Sell_Price__c</fullName>
+        <externalId>false</externalId>
+        <label>Concept 4 Sell Price</label>
+        <precision>10</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Concept_4__c</fullName>
+        <externalId>false</externalId>
+        <formula>Service_Rate_Name__r.Concept_4__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Concept 4</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Concept_5_Sell_Price__c</fullName>
+        <externalId>false</externalId>
+        <label>Concept 5 Sell Price</label>
+        <precision>10</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Concept_5__c</fullName>
+        <externalId>false</externalId>
+        <formula>Service_Rate_Name__r.Concept_5__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Concept 5</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Container_Type__c</fullName>
+        <externalId>false</externalId>
+        <formula>Service_Rate_Name__r.Container_Type__r.Name</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Container Type</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Conversion_Rate_to_Buy_Currency_Header__c</fullName>
+        <defaultValue>1</defaultValue>
+        <externalId>false</externalId>
+        <label>Conversion Rate to Buy Currency Header</label>
+        <precision>12</precision>
+        <required>false</required>
+        <scale>4</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Conversion_Rate_to_Currency_Header__c</fullName>
+        <defaultValue>1</defaultValue>
+        <externalId>false</externalId>
+        <label>Conversion Rate to Currency Header</label>
+        <precision>12</precision>
+        <required>false</required>
+        <scale>4</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Count_Modify_Sell_Price__c</fullName>
+        <defaultValue>0</defaultValue>
+        <externalId>false</externalId>
+        <label>Count Modify Sell Price</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Currency_Buy_Price__c</fullName>
+        <externalId>false</externalId>
+        <label>Currency Buy Price</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>MXN</fullName>
+                    <default>true</default>
+                    <label>MXN</label>
+                </value>
+                <value>
+                    <fullName>EUR</fullName>
+                    <default>false</default>
+                    <label>EUR</label>
+                </value>
+                <value>
+                    <fullName>USD</fullName>
+                    <default>false</default>
+                    <label>USD</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>Customer_Id__c</fullName>
+        <description>Campo para consultar el Customer Id del objeto Account (Customer)</description>
+        <externalId>false</externalId>
+        <formula>Shipment__r.Account_for__r.Customer_Id__c</formula>
+        <label>Customer Id</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Director_Email__c</fullName>
+        <externalId>false</externalId>
+        <label>Director_Email</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Email</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Discount_Charge__c</fullName>
+        <externalId>false</externalId>
+        <label>Discount Charge</label>
+        <precision>4</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Percent</type>
+    </fields>
+    <fields>
+        <fullName>Email_Cobranza_1__c</fullName>
+        <externalId>false</externalId>
+        <label>Email Cobranza 1</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Email</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Email_Cobranza_2__c</fullName>
+        <externalId>false</externalId>
+        <label>Email Cobranza 2</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Email</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Email_Cobranza_3__c</fullName>
+        <externalId>false</externalId>
+        <label>Email Cobranza 3</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Email</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Email_Sales_ExecutiveSP__c</fullName>
+        <externalId>false</externalId>
+        <label>Email Sales ExecutiveSP</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Email</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Email_Sales_Executive_del_SP__c</fullName>
+        <externalId>false</externalId>
+        <formula>Import_Export_Quote__r.CreatedBy.Email</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Email Sales Executive del SP</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Es_de_IEQ__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Es de IEQ</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Explain_New_Service_Line__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF( New_Service_Line__c = True, &quot;Se ha creado una nueva Service line  NOW() y no esta relacionada a la Import Export Quote de Origen: Import_Export_Quote__r.Name &quot;,NULL)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Explain New Service Line</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Extension_Service_Name__c</fullName>
+        <externalId>false</externalId>
+        <label>Extension Service Name</label>
+        <length>250</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Group__c</fullName>
+        <externalId>false</externalId>
+        <formula>TEXT(Service_Rate_Name__r.Group__c)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Group</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Group_info__c</fullName>
+        <externalId>false</externalId>
+        <formula>Service_Rate_Name__r.CustomRate__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Group</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Import_Export_Mode__c</fullName>
+        <externalId>false</externalId>
+        <formula>Import_Export_Quote__r.Mode__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Import-Export Mode</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Import_Export_Quote__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Import-Export Quote/Order</label>
+        <referenceTo>Customer_Quote__c</referenceTo>
+        <relationshipLabel>Shipment Service Lines</relationshipLabel>
+        <relationshipName>Shipment_Fee_Lines</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Import_Export_Service_Line__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Import-Export Service Line</label>
+        <referenceTo>Import_Export_Fee_Line__c</referenceTo>
+        <relationshipLabel>Shipment Service Lines</relationshipLabel>
+        <relationshipName>Shipment_Service_Lines</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Invoice_Outstanding_Balance__c</fullName>
+        <externalId>false</externalId>
+        <formula>Sell_Amount__c - Invoiced_Amount__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Invoice Outstanding Balance</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Invoiced_Amount__c</fullName>
+        <externalId>false</externalId>
+        <label>Total Amount Invoiced</label>
+        <summarizedField>Invoice_Service_Line__c.Amount_Allocated_Service_Line_Currency__c</summarizedField>
+        <summaryForeignKey>Invoice_Service_Line__c.Shipment_Service_Line__c</summaryForeignKey>
+        <summaryOperation>sum</summaryOperation>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Summary</type>
+    </fields>
+    <fields>
+        <fullName>Margen__c</fullName>
+        <externalId>false</externalId>
+        <formula>Std_Buy_Amount_SUM_Shipment_Disbur__c / Sell_Gross_Amount__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Margen</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Percent</type>
+    </fields>
+    <fields>
+        <fullName>Min_Amount__c</fullName>
+        <externalId>false</externalId>
+        <label>Min Amount</label>
+        <precision>10</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Moneda__c</fullName>
+        <externalId>false</externalId>
+        <formula>text (Service_Rate_Name__r.Moneda__c)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Moneda</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Negociacion__c</fullName>
+        <externalId>false</externalId>
+        <formula>text(Service_Rate_Name__r.Negociacion__c)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Negociacion</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>New_Service_Line__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF( Name  &lt;&gt;   Import_Export_Service_Line__r.Name ,True, False)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>New Service Line</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>New_Shipment_Name__c</fullName>
+        <description>BI</description>
+        <externalId>false</externalId>
+        <formula>Shipment__r.Name</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>New Shipment Name</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Operation_Executive_SP__c</fullName>
+        <externalId>false</externalId>
+        <formula>Shipment__r.Operation_Executive__r.Username</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Operation Executive SP</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Operations_Executive__c</fullName>
+        <externalId>false</externalId>
+        <label>Operations Executive</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Email</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Orden_Compra__c</fullName>
+        <description>orden de compra dada por sap</description>
+        <externalId>false</externalId>
+        <label>Orden de Compra</label>
+        <length>20</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Outstanding_Balance__c</fullName>
+        <externalId>false</externalId>
+        <formula>Std_Buy_Amount__c - Total_Amount_Allocated_On_Disbursements__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Disbursement Outstanding Balance</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Rate_Category_info__c</fullName>
+        <externalId>false</externalId>
+        <formula>Service_Rate_Name__r.Name</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Rate Category</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Rate_Name_BI__c</fullName>
+        <description>Para consumo de BI</description>
+        <externalId>false</externalId>
+        <formula>Service_Rate_Name__r.Name</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Rate Name BI</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Rate_Type__c</fullName>
+        <externalId>false</externalId>
+        <formula>TEXT(Service_Rate_Name__r.Rate_Type__c)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Rate Type</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Record_Locked__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>Indica si el registro esta bloqueado temporalmente</description>
+        <externalId>false</externalId>
+        <label>Record Locked</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>SAP__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>SAP</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>SST_Estatus_orden_compra__c</fullName>
+        <externalId>false</externalId>
+        <label>Estatus de orden de compra</label>
+        <length>50</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>SST_Orden_compra__c</fullName>
+        <externalId>false</externalId>
+        <label>Orden de compra</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>SST_Sociedad__c</fullName>
+        <description>Campo que consulta el valor de Sociedad en el Service Rate</description>
+        <externalId>false</externalId>
+        <formula>Service_Rate_Name__r.SST_Sociedad__c</formula>
+        <label>Sociedad</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>SUM_Cost_Allocated__c</fullName>
+        <externalId>false</externalId>
+        <label>SUM Cost Allocated</label>
+        <summarizedField>Ship_Service_Consol__c.Cost_Allocated__c</summarizedField>
+        <summaryForeignKey>Ship_Service_Consol__c.Shipment_Service_Line__c</summaryForeignKey>
+        <summaryOperation>sum</summaryOperation>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Summary</type>
+    </fields>
+    <fields>
+        <fullName>Saldo_Disponible_Cliente__c</fullName>
+        <externalId>false</externalId>
+        <formula>Shipment__r.Account_for__r.Saldo_DisponibleOK__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Saldo Disponible (Cliente)</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Sap_Comp_Code__c</fullName>
+        <externalId>false</externalId>
+        <formula>Service_Rate_Name__r.Sap_Comp_Code__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Sap Comp Code</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Sap_Service_Type_Buy__c</fullName>
+        <externalId>false</externalId>
+        <formula>Service_Rate_Name__r.SAP_Service_Type_Buy__r.Name</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Sap Service Type Buy</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Sap_Service_Type__c</fullName>
+        <externalId>false</externalId>
+        <formula>Service_Rate_Name__r.SAP_Service_Type__r.Name</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Sap Service Type Sell</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Sell_Amount_BI_Converted__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF( TEXT(CurrencyIsoCode)=&quot;MXN&quot;,Sell_Amount__c,Sell_Amount__c / CURRENCYRATE(&quot;USD&quot;))</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Sell Amount BI Converted</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Sell_Amount_Number__c</fullName>
+        <externalId>false</externalId>
+        <formula>Sell_Amount__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Sell Amount Number</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Sell_Amount__c</fullName>
+        <externalId>false</externalId>
+        <formula>Sell_Gross_Amount__c * (1 - Discount_Charge__c )</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Sell Net Amount</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Sell_Amount_header_currency__c</fullName>
+        <externalId>false</externalId>
+        <formula>Sell_Amount__c * Conversion_Rate_to_Currency_Header__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Sell Net Amount (header currency)</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Sell_Gross_Amount__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF(Shipment_Sell_Price__c &gt;= 0, MAX(Min_Amount__c,Shipment_Sell_Price__c * Units__c), Shipment_Sell_Price__c * Units__c)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Sell Gross Amount</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Sell_Price_Modified__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Sell Price Modified</label>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Sell_Rate__c</fullName>
+        <externalId>false</externalId>
+        <formula>Service_Rate_Name__r.Fee_Rate__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Sell Rate</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Service_Rate_Category_Filter__c</fullName>
+        <externalId>false</externalId>
+        <label>Rate Category Filter</label>
+        <length>50</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Service_Rate_Category__c</fullName>
+        <externalId>false</externalId>
+        <formula>TEXT(Service_Rate_Name__r.Fee_Category__c)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Rate Category</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Service_Rate_Name__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Rate Name</label>
+        <referenceTo>Fee__c</referenceTo>
+        <relationshipLabel>Shipment Service Lines</relationshipLabel>
+        <relationshipName>Shipment_Service_Lines_Service_Rate_Name</relationshipName>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Service_Rate__c</fullName>
+        <externalId>false</externalId>
+        <formula>Service_Rate_Name__r.Fee__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>% Service Rate</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Percent</type>
+    </fields>
+    <fields>
+        <fullName>Service_Real_Profit__c</fullName>
+        <externalId>false</externalId>
+        <formula>Sell_Amount__c - Total_Amount_Allocated_On_Disbursements__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Service Disb. Profit</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Service_Std_Profit__c</fullName>
+        <externalId>false</externalId>
+        <formula>Sell_Amount__c - Std_Buy_Amount__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Service Profit</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Shipment_Buy_Price_Number__c</fullName>
+        <externalId>false</externalId>
+        <label>Shipment Buy Price Number</label>
+        <precision>10</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Shipment_Buy_Price__c</fullName>
+        <externalId>false</externalId>
+        <label>Shipment Buy Price</label>
+        <precision>12</precision>
+        <required>false</required>
+        <scale>4</scale>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Shipment_Finished__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Shipment Finished</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Shipment_Mode__c</fullName>
+        <externalId>false</externalId>
+        <formula>Shipment__r.Mode__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Shipment Mode</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Shipment_Sell_Net_Price__c</fullName>
+        <externalId>false</externalId>
+        <formula>Shipment_Sell_Price__c * (1- Discount_Charge__c )</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Shipment Sell Net Price</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Shipment_Sell_Price__c</fullName>
+        <externalId>false</externalId>
+        <label>Shipment Sell Price</label>
+        <precision>10</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Shipment_Service_Line__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Base Shipment Service Line</label>
+        <lookupFilter>
+            <active>true</active>
+            <filterItems>
+                <field>$Source.Shipment__c</field>
+                <operation>equals</operation>
+                <valueField>Shipment_Fee_Line__c.Shipment__c</valueField>
+            </filterItems>
+            <isOptional>false</isOptional>
+        </lookupFilter>
+        <referenceTo>Shipment_Fee_Line__c</referenceTo>
+        <relationshipLabel>Shipment Service Lines</relationshipLabel>
+        <relationshipName>Shipment_Service_Lines</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Shipment_Status_Planner__c</fullName>
+        <externalId>false</externalId>
+        <formula>TEXT(Shipment__r.Shipment_Status_Plann__c)</formula>
+        <label>Shipment Status Planner</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Shipment_Status_SAP__c</fullName>
+        <externalId>false</externalId>
+        <formula>TEXT(Shipment__r.Status_Shipment__c)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Shipment Status SAP</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Shipment__c</fullName>
+        <externalId>false</externalId>
+        <label>Shipment</label>
+        <referenceTo>Shipment__c</referenceTo>
+        <relationshipName>Invoice_Lines</relationshipName>
+        <relationshipOrder>0</relationshipOrder>
+        <reparentableMasterDetail>true</reparentableMasterDetail>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>MasterDetail</type>
+        <writeRequiresMasterRead>true</writeRequiresMasterRead>
+    </fields>
+    <fields>
+        <fullName>Shipment_name_BI__c</fullName>
+        <description>Para consumo de BI</description>
+        <externalId>false</externalId>
+        <formula>Shipment__r.Name</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Shipment name BI</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Shipments_Program_Rate_Category__c</fullName>
+        <externalId>false</externalId>
+        <label>Shipments Program Rate Category</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetName>Rate_Category</valueSetName>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>Std_Buy_Amount_Number__c</fullName>
+        <externalId>false</externalId>
+        <formula>Std_Buy_Amount__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Std Buy Amount Number</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Std_Buy_Amount_SUM_Shipment_Disbur__c</fullName>
+        <externalId>false</externalId>
+        <formula>Std_Buy_Amount__c -  Total_Amount_Allocated_On_Disbursements__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Buy Amount - SUM Shipment Disbur</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Std_Buy_Amount__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF(Shipment_Buy_Price__c &gt;= 0 ,MAX (Shipment_Buy_Price__c * Units__c, IF((ISNULL(Shipment_Buy_Price__c )== true) || (Shipment_Buy_Price__c = 0), 0, Min_Amount__c ) ), MIN (Shipment_Buy_Price__c * Units__c, IF((ISNULL(Shipment_Buy_Price__c )== true) || (Shipment_Buy_Price__c = 0), 0, - Min_Amount__c ) ) )</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Buy Amount</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Std_Buy_Amount_header_currency__c</fullName>
+        <externalId>false</externalId>
+        <formula>Std_Buy_Amount__c * Conversion_Rate_to_Currency_Header__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Buy Amount (header currency)</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Tarifa_Negociada__c</fullName>
+        <externalId>false</externalId>
+        <formula>text( Service_Rate_Name__r.Tarifa_objetivo__c )</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Tarifa Negociada</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Tarifario_Info__c</fullName>
+        <externalId>false</externalId>
+        <formula>Service_Rate_Name__r.CustomRate__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Tarifario</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Total_Amount_Allocated_On_Disbursements__c</fullName>
+        <externalId>false</externalId>
+        <label>Total Amount Allocated On Disbursements</label>
+        <summarizedField>Shipment_Service_Line_Disbursement__c.Amount_Allocated_Service_Line_Currency__c</summarizedField>
+        <summaryForeignKey>Shipment_Service_Line_Disbursement__c.Shipment_Service_Line__c</summaryForeignKey>
+        <summaryOperation>sum</summaryOperation>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Summary</type>
+    </fields>
+    <fields>
+        <fullName>Total_Amount_Disbursements_Hea_Currency__c</fullName>
+        <externalId>false</externalId>
+        <formula>Total_Amount_Allocated_On_Disbursements__c * Conversion_Rate_to_Currency_Header__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Total Amount Disbursements(Hea Currency)</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Total_Amount_Invoiced_header_currency__c</fullName>
+        <externalId>false</externalId>
+        <formula>Invoiced_Amount__c *  Conversion_Rate_to_Currency_Header__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Total Amount Invoiced (header currency)</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Units__c</fullName>
+        <externalId>false</externalId>
+        <label>Units</label>
+        <precision>10</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Utilidad__c</fullName>
+        <externalId>false</externalId>
+        <formula>Sell_Gross_Amount__c -  Std_Buy_Amount_SUM_Shipment_Disbur__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Utilidad</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Venta_Account__c</fullName>
+        <externalId>false</externalId>
+        <formula>TEXT(Shipment__r.Account_for__r.Venta_Sap__c)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Venta Account</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Warehouse_Rate__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Warehouse Rate</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Workplace_Acc_Owner__c</fullName>
+        <externalId>false</externalId>
+        <formula>Import_Export_Quote__r.Account_for__r.Workplace_AccOwner__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Workplace Acc Owner</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>clasificacion_ruta__c</fullName>
+        <externalId>false</externalId>
+        <formula>text( Service_Rate_Name__r.Clasificacion_ruta__c )</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>clasificacion ruta</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>sap_service_types_info__c</fullName>
+        <externalId>false</externalId>
+        <formula>Service_Rate_Name__r.SAP_Service_Type__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>sap service type</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <label>Shipment Service Line</label>
+    <listViews>
+        <fullName>All</fullName>
+        <filterScope>Everything</filterScope>
+        <label>All</label>
+    </listViews>
+    <nameField>
+        <label>Service Line</label>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+    </nameField>
+    <pluralLabel>Shipment Service Lines</pluralLabel>
+    <searchLayouts>
+        <customTabListAdditionalFields>Shipment__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Service_Rate_Category__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Service_Rate_Name__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Rate_Type__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Units__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Shipment_Sell_Price__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Sell_Amount__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Shipment_Buy_Price__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Std_Buy_Amount__c</customTabListAdditionalFields>
+        <lookupDialogsAdditionalFields>Shipment__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>Service_Rate_Category__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>Service_Rate_Name__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>Rate_Type__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>Units__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>Shipment_Sell_Price__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>Sell_Amount__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>Shipment_Buy_Price__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>Std_Buy_Amount__c</lookupDialogsAdditionalFields>
+        <searchResultsAdditionalFields>Shipment__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Service_Rate_Category__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Service_Rate_Name__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Rate_Type__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Units__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Shipment_Sell_Price__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Sell_Amount__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Shipment_Buy_Price__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Std_Buy_Amount__c</searchResultsAdditionalFields>
+    </searchLayouts>
+    <sharingModel>ControlledByParent</sharingModel>
+    <validationRules>
+        <fullName>Block_Shipment_Service_Line</fullName>
+        <active>true</active>
+        <description>Bloqueo de edicion cuando campo control esta activo</description>
+        <errorConditionFormula>AND(
+NOT(ISNEW()),
+Campo_Control__c,
+NOT(CONTAINS($Profile.Name,&quot;Admin&quot;))
+)</errorConditionFormula>
+        <errorMessage>No es posible modificar debido a que cuenta con una Orden de Entrega.</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>LimiteCreditoNoDisponible</fullName>
+        <active>false</active>
+        <description>Regla que detecta cuando el total de servicios vendidos supera al saldo disponible del cliente</description>
+        <errorConditionFormula>AND(
+ISCHANGED(Shipment_Sell_Price__c),
+Shipment__r.Account_for__r.Saldo_DisponibleOK__c &lt;  Shipment_Sell_Price__c,
+ Shipment__r.Acc_venta__c = &apos;Credito&apos;
+)</errorConditionFormula>
+        <errorDisplayField>Shipment_Sell_Price__c</errorDisplayField>
+        <errorMessage>Crédito del cliente insuficiente. Hablar con el departamento de créditos*</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>LineaVenta_SinCarrier</fullName>
+        <active>false</active>
+        <description>Regla que detecta cuando se intenta cargar una Shipment Service Line que aún no tiene asignado el carrier en el Rate Name.</description>
+        <errorConditionFormula>ISBLANK( Service_Rate_Name__r.Carrier_Account__c )</errorConditionFormula>
+        <errorMessage>No se puede cargar una línea de venta si aún no tiene asignado el Carrier*</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>NoModificarPreciosVentaCompra</fullName>
+        <active>true</active>
+        <errorConditionFormula>AND(
+
+   Shipment__r.Estatus_Cerrado__c = true,
+
+   OR(
+      ISPICKVAL(  Shipment__r.Shipment_Status_Plann__c   , &apos;Closed&apos;),
+      ISPICKVAL( Shipment__r.Shipment_Status_Mon__c  , &apos;Closed&apos;),
+      ISPICKVAL( Shipment__r.Air_Shipment_Status__c , &apos;Closed&apos;),
+      ISPICKVAL( Shipment__r.Shipment_Status__c, &apos;Closed&apos;),
+      ISPICKVAL( Shipment__r.Ocean_Shipment_Status__c , &apos;Closed&apos;)),
+
+    OR(
+        AND(
+            ISCHANGED(Shipment_Buy_Price__c),
+            PRIORVALUE(Shipment_Buy_Price__c) &lt;&gt; 0
+        ),
+
+        Shipment_Sell_Price__c &lt;&gt; PRIORVALUE(Shipment_Sell_Price__c)
+    )
+
+)</errorConditionFormula>
+        <errorMessage>No se puede modificar el Precio de venta / Costo si el Shipment esta en estatus &quot;Closed&quot;</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>NoModificarShipmentSellPrice</fullName>
+        <active>true</active>
+        <description>No modificar el campo &apos;Shipment Sell Price&apos; si el usuario tiene el perfil de PAK2GO Operaciones</description>
+        <errorConditionFormula>AND(
+ISCHANGED( Shipment_Sell_Price__c ),
+$Profile.Id = &apos;00e4T000000lL6S&apos;,
+$User.Contado_Mgm__c = False
+)</errorConditionFormula>
+        <errorDisplayField>Shipment_Sell_Price__c</errorDisplayField>
+        <errorMessage>SSP-001: Usuario no permitido para modificar este campo. Solicitar la modificación del precio a comercial</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>No_se_acepta_1peso_SP</fullName>
+        <active>true</active>
+        <errorConditionFormula>Shipment_Buy_Price__c = 1</errorConditionFormula>
+        <errorMessage>No se puede colocar el valor de $1 en este campo</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Nueva_ServiceStatus_Closed</fullName>
+        <active>true</active>
+        <errorConditionFormula>AND(
+Shipment__r.Estatus_Cerrado__c = true,
+OR(
+ISPICKVAL( Shipment__r.Shipment_Status_Plann__c , &apos;Closed&apos;),
+ISPICKVAL( Shipment__r.Air_Shipment_Status__c , &apos;Closed&apos;),
+ISPICKVAL( Shipment__r.Shipment_Status__c, &apos;Closed&apos;),
+ISPICKVAL( Shipment__r.Ocean_Shipment_Status__c , &apos;Closed&apos;)
+),
+isnew()
+)</errorConditionFormula>
+        <errorMessage>No se pueden crear Service Lines si el Shipment esta en estatus &quot;Closed&quot;</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Nueva_con_credito</fullName>
+        <active>true</active>
+        <errorConditionFormula>AND(
+ISPICKVAL( Shipment__r.Account_for__r.Venta_Sap__c  , &quot;Credito&quot;),
+OR(
+ISPICKVAL( Service_Rate_Name__r.Fee_Category__c  , &apos;Road Freights&apos;),
+ISPICKVAL( Service_Rate_Name__r.Fee_Category__c  , &apos;Sea Freights&apos;),
+ISPICKVAL( Service_Rate_Name__r.Fee_Category__c  , &apos;Air Freights&apos;)
+),
+
+Shipment_Sell_Price__c &gt; Shipment__r.Account_for__r.Saldo_DisponibleOK__c ,
+isnew()
+)</errorConditionFormula>
+        <errorMessage>SSLN Cliente sin crédito disponible</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Nueva_sin_credito</fullName>
+        <active>true</active>
+        <errorConditionFormula>AND(
+ISPICKVAL( Shipment__r.Account_for__r.Venta_Sap__c  , &quot;Credito&quot;),
+OR(
+ISPICKVAL( Service_Rate_Name__r.Fee_Category__c  , &apos;Road Freights&apos;),
+ISPICKVAL( Service_Rate_Name__r.Fee_Category__c  , &apos;Sea Freights&apos;),
+ISPICKVAL( Service_Rate_Name__r.Fee_Category__c  , &apos;Air Freights&apos;)
+),
+Shipment__r.Account_for__r.Saldo_DisponibleOK__c &lt;= 0,
+isnew()
+)</errorConditionFormula>
+        <errorMessage>Cliente sin crédito disponible</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Validate_Fisnished</fullName>
+        <active>false</active>
+        <errorConditionFormula>Shipment_Finished__c = true &amp;&amp; Service_Rate_Category__c = &quot;Road Freights&quot; &amp;&amp; $User.ProfileId  &lt;&gt; &quot;2F00e4T000000lKYP&quot; ||
+Shipment_Finished__c = true &amp;&amp; Service_Rate_Category__c = &quot;Sea Freights&quot; &amp;&amp; $User.ProfileId &lt;&gt; &quot;2F00e4T000000lKYP&quot; ||
+Shipment_Finished__c = true &amp;&amp; Service_Rate_Category__c = &quot;Air Freights&quot; &amp;&amp; $User.ProfileId &lt;&gt; &quot;2F00e4T000000lKYP&quot;</errorConditionFormula>
+        <errorMessage>NO SE PUEDE MODIFICAR EN ESTATUS FINISHED</errorMessage>
+    </validationRules>
+    <visibility>Public</visibility>
+</CustomObject>

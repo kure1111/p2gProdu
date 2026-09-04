@@ -1,0 +1,799 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <allowInChatterGroups>true</allowInChatterGroups>
+    <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
+    <deploymentStatus>Deployed</deploymentStatus>
+    <description>Objeto para registrar las Debit Notes a partir de los folios SP</description>
+    <enableActivities>false</enableActivities>
+    <enableBulkApi>true</enableBulkApi>
+    <enableFeeds>false</enableFeeds>
+    <enableHistory>true</enableHistory>
+    <enableLicensing>false</enableLicensing>
+    <enableReports>true</enableReports>
+    <enableSearch>true</enableSearch>
+    <enableSharing>true</enableSharing>
+    <enableStreamingApi>true</enableStreamingApi>
+    <externalSharingModel>Private</externalSharingModel>
+    <fields>
+        <fullName>Account_for__c</fullName>
+        <deleteConstraint>Restrict</deleteConstraint>
+        <description>Campo para asignar al cliente al que hará referencia la Debit Note</description>
+        <externalId>false</externalId>
+        <label>Account for (Customer)</label>
+        <referenceTo>Account</referenceTo>
+        <relationshipLabel>Debit Notes</relationshipLabel>
+        <relationshipName>Debit_Notes</relationshipName>
+        <required>true</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>DN_Status__c</fullName>
+        <description>Picklist que específica en que estatus del proceso se encuentra la Debit Note</description>
+        <externalId>false</externalId>
+        <label>Debit Note Status</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>En proceso</fullName>
+                    <default>false</default>
+                    <label>En proceso</label>
+                </value>
+                <value>
+                    <fullName>Creado</fullName>
+                    <default>false</default>
+                    <label>Creado</label>
+                </value>
+                <value>
+                    <fullName>Enviado SAP</fullName>
+                    <default>false</default>
+                    <label>Enviado SAP</label>
+                </value>
+                <value>
+                    <fullName>Finalizado</fullName>
+                    <default>false</default>
+                    <label>Finalizado</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>Folio_y_Flex_ID__c</fullName>
+        <description>Campo para consultar el valor los folios en la Debit Note y el Customer Reference de cada uno</description>
+        <externalId>false</externalId>
+        <formula>&apos;1. &apos;+Shipment_Number_1__r.Name+&apos; &apos;+IF( NOT(ISBLANK( Shipment_Number_1__r.Account_Shipment_Reference__c )), (&apos;1. &apos;+Shipment_Number_1__r.Account_Shipment_Reference__c+&apos;&apos;+BR()), &apos;1. Null&apos;+BR())
++&apos;&apos;+
+IF( NOT(ISBLANK(Shipment_Number_2__r.Name)), (&apos;2. &apos;+Shipment_Number_2__r.Name), &apos;2. Null&apos;)+&apos; &apos;+IF( NOT(ISBLANK( Shipment_Number_2__r.Account_Shipment_Reference__c )), (&apos;2. &apos;+Shipment_Number_2__r.Account_Shipment_Reference__c+&apos;&apos;+BR()), &apos;2. Null&apos;+BR())
++&apos;&apos;+
+IF( NOT(ISBLANK(Shipment_Number_3__r.Name)), (&apos;3. &apos;+Shipment_Number_3__r.Name), &apos;3. Null&apos;)+&apos; &apos;+IF( NOT(ISBLANK( Shipment_Number_3__r.Account_Shipment_Reference__c )), (&apos;3. &apos;+Shipment_Number_3__r.Account_Shipment_Reference__c+&apos;&apos;+BR()), &apos;3. Null&apos;+BR())
++&apos;&apos;+
+IF( NOT(ISBLANK(Shipment_Number_4__r.Name)), (&apos;4. &apos;+Shipment_Number_4__r.Name), &apos;4. Null&apos;)+&apos; &apos;+IF( NOT(ISBLANK( Shipment_Number_4__r.Account_Shipment_Reference__c )), (&apos;4. &apos;+Shipment_Number_4__r.Account_Shipment_Reference__c+&apos;&apos;+BR()), &apos;4. Null&apos;+BR())
++&apos;&apos;+
+IF( NOT(ISBLANK(Shipment_Number_5__r.Name)), (&apos;5. &apos;+Shipment_Number_5__r.Name), &apos;5. Null&apos;)+&apos; &apos;+IF( NOT(ISBLANK( Shipment_Number_5__r.Account_Shipment_Reference__c )), (&apos;5. &apos;+Shipment_Number_5__r.Account_Shipment_Reference__c+&apos;&apos;+BR()), &apos;5. Null&apos;+BR())</formula>
+        <label>Folio y Flex ID</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Import_Export_Quote_1__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <description>Folio del Shipment 1</description>
+        <externalId>false</externalId>
+        <label>Import-Export Quote/Order 1</label>
+        <referenceTo>Customer_Quote__c</referenceTo>
+        <relationshipLabel>Debit Notes (Import-Export Quote/Order 1)</relationshipLabel>
+        <relationshipName>Debit_Notes1</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Import_Export_Quote_Order_2__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Import-Export Quote/Order 2</label>
+        <referenceTo>Customer_Quote__c</referenceTo>
+        <relationshipLabel>Debit Notes (Import-Export Quote/Order 2)</relationshipLabel>
+        <relationshipName>Debit_Notes2</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Import_Export_Quote_Order_3__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Import-Export Quote/Order 3</label>
+        <referenceTo>Customer_Quote__c</referenceTo>
+        <relationshipLabel>Debit Notes (Import-Export Quote/Order 3)</relationshipLabel>
+        <relationshipName>Debit_Note3</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Import_Export_Quote_Order_4__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Import-Export Quote/Order 4</label>
+        <referenceTo>Customer_Quote__c</referenceTo>
+        <relationshipLabel>Debit Notes (Import-Export Quote/Order 4)</relationshipLabel>
+        <relationshipName>Debit_Notes4</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Import_Export_Quote_Order_5__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Import-Export Quote/Order 5</label>
+        <referenceTo>Customer_Quote__c</referenceTo>
+        <relationshipLabel>Debit Notes (Import-Export Quote/Order 5)</relationshipLabel>
+        <relationshipName>Debit_Notes5</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Importe_MXN__c</fullName>
+        <description>Fórmula para cálcular el total de servicios vendidos en MXN</description>
+        <externalId>false</externalId>
+        <formula>IF(
+ISPICKVAL(CurrencyIsoCode,&apos;USD&apos;),(Shipment_Number_1__r.Total_Services_Sell_Amount__c + Shipment_Number_2__r.Total_Services_Sell_Amount__c + Shipment_Number_3__r.Total_Services_Sell_Amount__c + Shipment_Number_4__r.Total_Services_Sell_Amount__c + Shipment_Number_5__r.Total_Services_Sell_Amount__c) / ( CURRENCYRATE(TEXT( CurrencyIsoCode )) ),
+Shipment_Number_1__r.Total_Services_Sell_Amount__c + Shipment_Number_2__r.Total_Services_Sell_Amount__c + Shipment_Number_3__r.Total_Services_Sell_Amount__c + Shipment_Number_4__r.Total_Services_Sell_Amount__c + Shipment_Number_5__r.Total_Services_Sell_Amount__c
+)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Importe MXN</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Importe_USD__c</fullName>
+        <description>Fórmula para calcular el total de servicios vendidos</description>
+        <externalId>false</externalId>
+        <formula>IF(
+ISPICKVAL(CurrencyIsoCode,&apos;MXN&apos;),(Shipment_Number_1__r.Total_Services_Sell_Amount__c + Shipment_Number_2__r.Total_Services_Sell_Amount__c + Shipment_Number_3__r.Total_Services_Sell_Amount__c + Shipment_Number_4__r.Total_Services_Sell_Amount__c + Shipment_Number_5__r.Total_Services_Sell_Amount__c) * ( CURRENCYRATE(&apos;USD&apos;) ),
+Shipment_Number_1__r.Total_Services_Sell_Amount__c + Shipment_Number_2__r.Total_Services_Sell_Amount__c + Shipment_Number_3__r.Total_Services_Sell_Amount__c + Shipment_Number_4__r.Total_Services_Sell_Amount__c + Shipment_Number_5__r.Total_Services_Sell_Amount__c
+)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Importe USD</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Invoice_Number_10__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <description>Número de Invoice relacionado al Shipment Number 10</description>
+        <externalId>false</externalId>
+        <label>Invoice Number 10</label>
+        <referenceTo>Invoice__c</referenceTo>
+        <relationshipLabel>Debit Notes (Invoice Number 10)</relationshipLabel>
+        <relationshipName>DN_Invoice_Number_10</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Invoice_Number_1__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <description>Número de Invoice relacionado al Shipment Number 1</description>
+        <externalId>false</externalId>
+        <label>Invoice Number 1</label>
+        <referenceTo>Invoice__c</referenceTo>
+        <relationshipLabel>Debit Notes (Invoice Number 1)</relationshipLabel>
+        <relationshipName>DN_Invoice_Number_1</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Invoice_Number_2__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <description>Número de Invoice relacionado al Shipment Number 2</description>
+        <externalId>false</externalId>
+        <label>Invoice Number 2</label>
+        <referenceTo>Invoice__c</referenceTo>
+        <relationshipLabel>Debit Notes (Invoice Number 2)</relationshipLabel>
+        <relationshipName>DN_Invoice_Number_2</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Invoice_Number_3__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <description>Número de Invoice relacionado al Shipment Number 3</description>
+        <externalId>false</externalId>
+        <label>Invoice Number 3</label>
+        <referenceTo>Invoice__c</referenceTo>
+        <relationshipLabel>Debit Notes (Invoice Number 3)</relationshipLabel>
+        <relationshipName>DN_Invoice_Number_3</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Invoice_Number_4__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <description>Número de Invoice relacionado al Shipment Number 4</description>
+        <externalId>false</externalId>
+        <label>Invoice Number 4</label>
+        <referenceTo>Invoice__c</referenceTo>
+        <relationshipLabel>Debit Notes (Invoice Number 4)</relationshipLabel>
+        <relationshipName>DN_Invoice_Number_4</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Invoice_Number_5__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <description>Número de Invoice relacionado al Shipment Number 5</description>
+        <externalId>false</externalId>
+        <label>Invoice Number 5</label>
+        <referenceTo>Invoice__c</referenceTo>
+        <relationshipLabel>Debit Notes (Invoice Number 5)</relationshipLabel>
+        <relationshipName>DN_Invoice_Number_5</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Invoice_Number_6__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <description>Número de Invoice relacionado al Shipment Number 6</description>
+        <externalId>false</externalId>
+        <label>Invoice Number 6</label>
+        <referenceTo>Invoice__c</referenceTo>
+        <relationshipLabel>Debit Notes (Invoice Number 6)</relationshipLabel>
+        <relationshipName>DN_Invoice_Number_6</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Invoice_Number_7__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <description>Número de Invoice relacionado al Shipment Number 7</description>
+        <externalId>false</externalId>
+        <label>Invoice Number 7</label>
+        <referenceTo>Invoice__c</referenceTo>
+        <relationshipLabel>Debit Notes (Invoice Number 7)</relationshipLabel>
+        <relationshipName>DN_Invoice_Number_7</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Invoice_Number_8__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <description>Número de Invoice relacionado al Shipment Number 8</description>
+        <externalId>false</externalId>
+        <label>Invoice Number 8</label>
+        <referenceTo>Invoice__c</referenceTo>
+        <relationshipLabel>Debit Notes (Invoice Number 8)</relationshipLabel>
+        <relationshipName>DN_Invoice_Number_8</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Invoice_Number_9__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <description>Número de Invoice relacionado al Shipment Number 9</description>
+        <externalId>false</externalId>
+        <label>Invoice Number 9</label>
+        <referenceTo>Invoice__c</referenceTo>
+        <relationshipLabel>Debit Notes (Invoice Number 9)</relationshipLabel>
+        <relationshipName>DN_Invoice_Number_9</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Shipment_Number_10__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Shipment Number 10</label>
+        <referenceTo>Shipment__c</referenceTo>
+        <relationshipLabel>Debit Notes (Shipment Number 10)</relationshipLabel>
+        <relationshipName>Debit_Notes_10</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Shipment_Number_1__c</fullName>
+        <deleteConstraint>Restrict</deleteConstraint>
+        <description>Número de Shipment relacionado al cliente en Account for (Customer)</description>
+        <externalId>false</externalId>
+        <label>Shipment Number 1</label>
+        <lookupFilter>
+            <active>true</active>
+            <filterItems>
+                <field>Shipment__c.Account_for__c</field>
+                <operation>equals</operation>
+                <valueField>$Source.Account_for__c</valueField>
+            </filterItems>
+            <isOptional>false</isOptional>
+        </lookupFilter>
+        <referenceTo>Shipment__c</referenceTo>
+        <relationshipLabel>Debit Notes (Shipment Number 1)</relationshipLabel>
+        <relationshipName>Debit_Notes_1</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Shipment_Number_2__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <description>Número de Shipment relacionado al cliente en Account for (Customer)</description>
+        <externalId>false</externalId>
+        <label>Shipment Number 2</label>
+        <lookupFilter>
+            <active>true</active>
+            <filterItems>
+                <field>Shipment__c.Account_for__c</field>
+                <operation>equals</operation>
+                <valueField>$Source.Account_for__c</valueField>
+            </filterItems>
+            <isOptional>false</isOptional>
+        </lookupFilter>
+        <referenceTo>Shipment__c</referenceTo>
+        <relationshipLabel>Debit Notes (Shipment Number 2)</relationshipLabel>
+        <relationshipName>Debit_Notes_2</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Shipment_Number_3__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <description>Número de Shipment relacionado al cliente en Account for (Customer)</description>
+        <externalId>false</externalId>
+        <label>Shipment Number 3</label>
+        <lookupFilter>
+            <active>true</active>
+            <filterItems>
+                <field>Shipment__c.Account_for__c</field>
+                <operation>equals</operation>
+                <valueField>$Source.Account_for__c</valueField>
+            </filterItems>
+            <isOptional>false</isOptional>
+        </lookupFilter>
+        <referenceTo>Shipment__c</referenceTo>
+        <relationshipLabel>Debit Notes (Shipment Number 3)</relationshipLabel>
+        <relationshipName>Debit_Notes_3</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Shipment_Number_4__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <description>Número de Shipment relacionado al cliente en Account for (Customer)</description>
+        <externalId>false</externalId>
+        <label>Shipment Number 4</label>
+        <lookupFilter>
+            <active>true</active>
+            <filterItems>
+                <field>Shipment__c.Account_for__c</field>
+                <operation>equals</operation>
+                <valueField>$Source.Account_for__c</valueField>
+            </filterItems>
+            <isOptional>false</isOptional>
+        </lookupFilter>
+        <referenceTo>Shipment__c</referenceTo>
+        <relationshipLabel>Debit Notes (Shipment Number 4)</relationshipLabel>
+        <relationshipName>Debit_Notes_4</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Shipment_Number_5__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <description>Número de Shipment relacionado al cliente en Account for (Customer)</description>
+        <externalId>false</externalId>
+        <label>Shipment Number 5</label>
+        <lookupFilter>
+            <active>true</active>
+            <filterItems>
+                <field>Shipment__c.Account_for__c</field>
+                <operation>equals</operation>
+                <valueField>$Source.Account_for__c</valueField>
+            </filterItems>
+            <isOptional>false</isOptional>
+        </lookupFilter>
+        <referenceTo>Shipment__c</referenceTo>
+        <relationshipLabel>Debit Notes (Shipment Number 5)</relationshipLabel>
+        <relationshipName>Debit_Notes1</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Shipment_Number_6__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Shipment Number 6</label>
+        <referenceTo>Shipment__c</referenceTo>
+        <relationshipLabel>Debit Notes (Shipment Number 6)</relationshipLabel>
+        <relationshipName>Debit_Notes</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Shipment_Number_7__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Shipment Number 7</label>
+        <referenceTo>Shipment__c</referenceTo>
+        <relationshipLabel>Debit Notes (Shipment Number 7)</relationshipLabel>
+        <relationshipName>Debit_Notes2</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Shipment_Number_8__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Shipment Number 8</label>
+        <referenceTo>Shipment__c</referenceTo>
+        <relationshipLabel>Debit Notes (Shipment Number 8)</relationshipLabel>
+        <relationshipName>Debit_Notes_8</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Shipment_Number_9__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Shipment Number 9</label>
+        <referenceTo>Shipment__c</referenceTo>
+        <relationshipLabel>Debit Notes (Shipment Number 9)</relationshipLabel>
+        <relationshipName>Debit_Notes_9</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Shipment_Status_Planner_10__c</fullName>
+        <description>Campo que trae de vuelta el Shipment Status Planner del Shipment 10</description>
+        <externalId>false</externalId>
+        <formula>TEXT( Shipment_Number_10__r.Shipment_Status_Plann__c )</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Shipment Status Planner 10</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Shipment_Status_Planner_1__c</fullName>
+        <description>Campo que trae de vuelta el Shipment Status Planner del Shipment 1</description>
+        <externalId>false</externalId>
+        <formula>TEXT(Shipment_Number_1__r.Shipment_Status_Plann__c)</formula>
+        <label>Shipment Status Planner 1</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Shipment_Status_Planner_2__c</fullName>
+        <description>Campo que trae de vuelta el Shipment Status Planner del Shipment 2</description>
+        <externalId>false</externalId>
+        <formula>TEXT( Shipment_Number_2__r.Shipment_Status_Plann__c )</formula>
+        <label>Shipment Status Planner 2</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Shipment_Status_Planner_3__c</fullName>
+        <description>Campo que trae de vuelta el Shipment Status Planner del Shipment 3</description>
+        <externalId>false</externalId>
+        <formula>TEXT( Shipment_Number_3__r.Shipment_Status_Plann__c )</formula>
+        <label>Shipment Status Planner 3</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Shipment_Status_Planner_4__c</fullName>
+        <description>Campo que trae de vuelta el Shipment Status Planner del Shipment 4</description>
+        <externalId>false</externalId>
+        <formula>TEXT( Shipment_Number_4__r.Shipment_Status_Plann__c )</formula>
+        <label>Shipment Status Planner 4</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Shipment_Status_Planner_5__c</fullName>
+        <description>Campo que trae de vuelta el Shipment Status Planner del Shipment 5</description>
+        <externalId>false</externalId>
+        <formula>TEXT( Shipment_Number_5__r.Shipment_Status_Plann__c )</formula>
+        <label>Shipment Status Planner 5</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Shipment_Status_Planner_6__c</fullName>
+        <description>Campo que trae de vuelta el Shipment Status Planner del Shipment 6</description>
+        <externalId>false</externalId>
+        <formula>TEXT( Shipment_Number_6__r.Shipment_Status_Plann__c )</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Shipment Status Planner 6</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Shipment_Status_Planner_7__c</fullName>
+        <description>Campo que trae de vuelta el Shipment Status Planner del Shipment 7</description>
+        <externalId>false</externalId>
+        <formula>TEXT( Shipment_Number_7__r.Shipment_Status_Plann__c )</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Shipment Status Planner 7</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Shipment_Status_Planner_8__c</fullName>
+        <description>Campo que trae de vuelta el Shipment Status Planner del Shipment 8</description>
+        <externalId>false</externalId>
+        <formula>TEXT( Shipment_Number_8__r.Shipment_Status_Plann__c )</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Shipment Status Planner 8</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Shipment_Status_Planner_9__c</fullName>
+        <description>Campo que trae de vuelta el Shipment Status Planner del Shipment 9</description>
+        <externalId>false</externalId>
+        <formula>TEXT( Shipment_Number_9__r.Shipment_Status_Plann__c )</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Shipment Status Planner 9</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <gender>Feminine</gender>
+    <label>Debit Note</label>
+    <listViews>
+        <fullName>All</fullName>
+        <columns>NAME</columns>
+        <columns>CREATED_DATE</columns>
+        <columns>DN_Status__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Account_for__c</field>
+            <operation>equals</operation>
+            <value>FLEXPORT INTERNATIONAL</value>
+        </filters>
+        <label>All</label>
+    </listViews>
+    <nameField>
+        <displayFormat>DN-{YY}-{000000}</displayFormat>
+        <label>Debit Note Number</label>
+        <trackHistory>false</trackHistory>
+        <type>AutoNumber</type>
+    </nameField>
+    <pluralLabel>Debit Notes</pluralLabel>
+    <searchLayouts/>
+    <sharingModel>ReadWrite</sharingModel>
+    <visibility>Public</visibility>
+</CustomObject>

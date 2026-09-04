@@ -1,0 +1,2807 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <allowInChatterGroups>false</allowInChatterGroups>
+    <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
+    <deploymentStatus>Deployed</deploymentStatus>
+    <description>Object specifying all payment history and details along with each Import-Export on each Account</description>
+    <enableActivities>true</enableActivities>
+    <enableBulkApi>true</enableBulkApi>
+    <enableFeeds>false</enableFeeds>
+    <enableHistory>true</enableHistory>
+    <enableLicensing>false</enableLicensing>
+    <enableReports>true</enableReports>
+    <enableSearch>true</enableSearch>
+    <enableSharing>true</enableSharing>
+    <enableStreamingApi>true</enableStreamingApi>
+    <externalSharingModel>ControlledByParent</externalSharingModel>
+    <fields>
+        <fullName>Account__c</fullName>
+        <externalId>false</externalId>
+        <label>Supplier Account</label>
+        <lookupFilter>
+            <active>true</active>
+            <filterItems>
+                <field>Account.RecordType.Name</field>
+                <operation>equals</operation>
+                <value>Supply Chain Partner</value>
+            </filterItems>
+            <isOptional>true</isOptional>
+        </lookupFilter>
+        <referenceTo>Account</referenceTo>
+        <relationshipLabel>Disbursements</relationshipLabel>
+        <relationshipName>Shipment_Disbursements</relationshipName>
+        <relationshipOrder>0</relationshipOrder>
+        <reparentableMasterDetail>true</reparentableMasterDetail>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>MasterDetail</type>
+        <writeRequiresMasterRead>true</writeRequiresMasterRead>
+    </fields>
+    <fields>
+        <fullName>Accounting_Rollup_Type__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF ( BEGINS(Disbursment_Concept__c, &apos;FREIGHT&apos;)
+|| BEGINS(Disbursment_Concept__c, &apos;COMM&apos;)
+|| BEGINS(Disbursment_Concept__c, &apos;DEMM&apos;)
+|| BEGINS(Disbursment_Concept__c, &apos;DISP&apos;)
+,&apos;ACCT-FREIGHT-EXPENSE&apos;, 
+IF ( BEGINS(Disbursment_Concept__c, &apos;CUST&apos;)
+|| BEGINS(Disbursment_Concept__c, &apos;SURV&apos;)
+|| BEGINS(Disbursment_Concept__c, &apos;CLEAN&apos;)
+, &apos;ACCT-OTHER-EXPENSE&apos;,&apos;ACCT-REVENUE&apos;
+)
+)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Accounting Rollup Type</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Amount_Allocated_on_IE_Cargo_Lines__c</fullName>
+        <externalId>false</externalId>
+        <label>Amount Allocated on IE Cargo Lines</label>
+        <summarizedField>Import_Export_Cargo_Line_Disbursement__c.Amount__c</summarizedField>
+        <summaryForeignKey>Import_Export_Cargo_Line_Disbursement__c.Disbursement__c</summaryForeignKey>
+        <summaryOperation>sum</summaryOperation>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Summary</type>
+    </fields>
+    <fields>
+        <fullName>Amount_Allocated_on_IE_Service_Lines__c</fullName>
+        <externalId>false</externalId>
+        <label>Amount Allocated on IE Service Lines</label>
+        <summarizedField>Import_Export_Service_Line_Disbursement__c.Amount__c</summarizedField>
+        <summaryForeignKey>Import_Export_Service_Line_Disbursement__c.Disbursement__c</summaryForeignKey>
+        <summaryOperation>sum</summaryOperation>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Summary</type>
+    </fields>
+    <fields>
+        <fullName>Amount_Allocated_on_Ship_Cargo_Lines__c</fullName>
+        <externalId>false</externalId>
+        <label>Amount Allocated on Ship. Cargo Lines</label>
+        <summarizedField>Shipment_Item_Line_Disbursement__c.Amount__c</summarizedField>
+        <summaryForeignKey>Shipment_Item_Line_Disbursement__c.Shipment_Disbursement__c</summaryForeignKey>
+        <summaryOperation>sum</summaryOperation>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Summary</type>
+    </fields>
+    <fields>
+        <fullName>Amount_Allocated_on_Ship_Service_Line__c</fullName>
+        <externalId>false</externalId>
+        <label>Amount Allocated on Ship. Service Line</label>
+        <summarizedField>Shipment_Service_Line_Disbursement__c.Amount__c</summarizedField>
+        <summaryForeignKey>Shipment_Service_Line_Disbursement__c.Shipment_Disbursement__c</summaryForeignKey>
+        <summaryOperation>sum</summaryOperation>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Summary</type>
+    </fields>
+    <fields>
+        <fullName>Billing_Type__c</fullName>
+        <externalId>false</externalId>
+        <label>[Old] Billing Type</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Invoice</fullName>
+                    <default>false</default>
+                    <label>Invoice</label>
+                </value>
+                <value>
+                    <fullName>Credit note</fullName>
+                    <default>false</default>
+                    <label>Credit note</label>
+                </value>
+                <value>
+                    <fullName>SARS Payment EDI</fullName>
+                    <default>false</default>
+                    <label>SARS Payment EDI</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>Buy_Manager__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Buyer</label>
+        <referenceTo>User</referenceTo>
+        <relationshipName>Disbursements</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Cfdi_Number__c</fullName>
+        <externalId>false</externalId>
+        <label>Cfdi Number</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Comments__c</fullName>
+        <externalId>false</externalId>
+        <label>Comments</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>TextArea</type>
+    </fields>
+    <fields>
+        <fullName>Containers__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF(Shipment__c != null, 
+
+IF(AND(text(Shipment__r.N_Containers__c) != null, Shipment__r.Container_Type__c != null, text(Shipment__r.N_Containers__c) != &apos;0&apos;) , text(Shipment__r.N_Containers__c) &amp; &apos; x &apos; &amp; Shipment__r.Container_Type__r.Name, IF(AND(text(Shipment__r.N_Containers__c) != null, text(Shipment__r.N_Containers__c) !=&apos;0&apos;) , text(Shipment__r.N_Containers__c), IF(Shipment__r.Container_Type__c != null , Shipment__r.Container_Type__r.Name, &apos;&apos;)))
+,
+
+
+IF(Import_Export_Quote_Order__c != null,
+IF(AND(text(Import_Export_Quote_Order__r.Container_Count__c) != null, Import_Export_Quote_Order__r.Container_Type__c != null, text(Import_Export_Quote_Order__r.Container_Count__c) != &apos;0&apos;) , text(Import_Export_Quote_Order__r.Container_Count__c) &amp; &apos; x &apos; &amp; Import_Export_Quote_Order__r.Container_Type__r.Name, IF(AND(text(Import_Export_Quote_Order__r.Container_Count__c) != null, text(Import_Export_Quote_Order__r.Container_Count__c) !=&apos;0&apos;) , text(Import_Export_Quote_Order__r.Container_Count__c), IF(Import_Export_Quote_Order__r.Container_Type__c != null , Import_Export_Quote_Order__r.Container_Type__r.Name, &apos;&apos;)))
+,&apos;&apos;
+)
+
+)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Containers</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Conversion_Rate_to_Imp_Exp_Currency__c</fullName>
+        <defaultValue>1</defaultValue>
+        <externalId>false</externalId>
+        <label>Conversion Rate to Imp-Exp Currency</label>
+        <precision>10</precision>
+        <required>false</required>
+        <scale>8</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Date_Invoice_SAP__c</fullName>
+        <externalId>false</externalId>
+        <label>Date Disbursement SAP</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Date_Receive_from_SAP__c</fullName>
+        <externalId>false</externalId>
+        <label>Date Receive from SAP</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>DateTime</type>
+    </fields>
+    <fields>
+        <fullName>Date_Refund_Received__c</fullName>
+        <externalId>false</externalId>
+        <label>Date Refund Received</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Disbursement_Status__c</fullName>
+        <externalId>false</externalId>
+        <label>Disbursement Status</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Active</fullName>
+                    <default>false</default>
+                    <label>Active</label>
+                </value>
+                <value>
+                    <fullName>Send to Sap</fullName>
+                    <default>false</default>
+                    <label>Send to Sap</label>
+                </value>
+                <value>
+                    <fullName>Received from Sap</fullName>
+                    <default>false</default>
+                    <label>Received from Sap</label>
+                </value>
+                <value>
+                    <fullName>Cancel</fullName>
+                    <default>false</default>
+                    <label>Cancel</label>
+                </value>
+                <value>
+                    <fullName>Facturado</fullName>
+                    <default>false</default>
+                    <label>Facturado</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>Disbursment_Concept__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Write Concept in block capitals</inlineHelpText>
+        <label>Concept</label>
+        <length>50</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Email_Account_Owner__c</fullName>
+        <externalId>false</externalId>
+        <label>Email Account Owner</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Email</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Etapa__c</fullName>
+        <externalId>false</externalId>
+        <label>Payment Stage</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Abierto</fullName>
+                    <default>false</default>
+                    <label>Abierto</label>
+                </value>
+                <value>
+                    <fullName>Enviado</fullName>
+                    <default>false</default>
+                    <label>Enviado</label>
+                </value>
+                <value>
+                    <fullName>En Proceso</fullName>
+                    <default>false</default>
+                    <label>En Proceso</label>
+                </value>
+                <value>
+                    <fullName>Parcialidad</fullName>
+                    <default>false</default>
+                    <label>Parcialidad</label>
+                </value>
+                <value>
+                    <fullName>Pagado</fullName>
+                    <default>false</default>
+                    <label>Pagado</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>Evidence_Reception_Date__c</fullName>
+        <externalId>false</externalId>
+        <label>Evidence Reception Date</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Evidence_Reception_Document_Status__c</fullName>
+        <externalId>false</externalId>
+        <label>Evidence Reception Document Status</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Pending</fullName>
+                    <default>false</default>
+                    <label>Pending</label>
+                </value>
+                <value>
+                    <fullName>Validated</fullName>
+                    <default>false</default>
+                    <label>Validated</label>
+                </value>
+                <value>
+                    <fullName>Rejected</fullName>
+                    <default>false</default>
+                    <label>Rejected</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>Factura_del_Proveedor__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Factura del Proveedor</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Freight_Mode_SP__c</fullName>
+        <description>Makes reference to freight mode specified in shipment</description>
+        <externalId>false</externalId>
+        <formula>TEXT(Shipments_Program__r.Freight_Mode__c)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Freight Mode Shipments Program</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Freight_Mode__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF(Import_Export_Quote_Order__c != null ,TEXT(Import_Export_Quote_Order__r.Freight_Mode__c), IF( Shipment__c != null,TEXT(Shipment__r.Freight_Mode__c),&apos;&apos; ))</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Freight Mode</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>GEN_Number__c</fullName>
+        <externalId>false</externalId>
+        <label>Numero (Gen)</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Import_Export_Order_Number__c</fullName>
+        <externalId>false</externalId>
+        <formula>Import_Export_Quote_Order__r.Name</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Import-Export Order Number</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Import_Export_Quote_Order__c</fullName>
+        <deleteConstraint>Restrict</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Import-Export Quote/Order</label>
+        <referenceTo>Customer_Quote__c</referenceTo>
+        <relationshipLabel>Disbursements</relationshipLabel>
+        <relationshipName>Disbursements</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Importe_Total__c</fullName>
+        <externalId>false</externalId>
+        <label>Importe Total</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Invoice_Amount_Exc__c</fullName>
+        <externalId>false</externalId>
+        <label>[Old] Invoice Amount (Exc)</label>
+        <precision>8</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Invoice_Amount_Inc__c</fullName>
+        <externalId>false</externalId>
+        <formula>Invoice_Amount_Exc__c + VAT__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>[Old] Invoice Amount (Inc)</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Invoice_Date__c</fullName>
+        <externalId>false</externalId>
+        <label>Disbursement Date</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Invoice_Ref__c</fullName>
+        <caseSensitive>false</caseSensitive>
+        <externalId>false</externalId>
+        <label>Supplier Invoice Ref</label>
+        <length>18</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>true</unique>
+    </fields>
+    <fields>
+        <fullName>Master_Allocation__c</fullName>
+        <externalId>false</externalId>
+        <label>Master Allocation</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Customs</fullName>
+                    <default>false</default>
+                    <label>Customs</label>
+                </value>
+                <value>
+                    <fullName>Port</fullName>
+                    <default>false</default>
+                    <label>Port</label>
+                </value>
+                <value>
+                    <fullName>Shipping Line</fullName>
+                    <default>false</default>
+                    <label>Shipping Line</label>
+                </value>
+                <value>
+                    <fullName>Transport</fullName>
+                    <default>false</default>
+                    <label>Transport</label>
+                </value>
+                <value>
+                    <fullName>PRCC</fullName>
+                    <default>false</default>
+                    <label>PRCC</label>
+                </value>
+                <value>
+                    <fullName>Depot</fullName>
+                    <default>false</default>
+                    <label>Depot</label>
+                </value>
+                <value>
+                    <fullName>Forwarding Partner</fullName>
+                    <default>false</default>
+                    <label>Forwarding Partner</label>
+                </value>
+                <value>
+                    <fullName>Other</fullName>
+                    <default>false</default>
+                    <label>Other</label>
+                </value>
+                <value>
+                    <fullName>Airline</fullName>
+                    <default>false</default>
+                    <label>Airline</label>
+                </value>
+                <value>
+                    <fullName>Release Agent</fullName>
+                    <default>false</default>
+                    <label>Release Agent</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>Mode__c</fullName>
+        <description>Conversion to text of: if &quot;Import-Export Quote/Order&quot; not blank then &quot;Freight Mode&quot; and &quot;Service Mode&quot; from &quot;Import-Export Quote/Order&quot;, else; if &quot;Shipment&quot; not blank then &quot;Freight Mode&quot; and &quot;Service Mode&quot;  from &quot;Shipment&quot;, else blank</description>
+        <externalId>false</externalId>
+        <formula>IF(Import_Export_Quote_Order__c != null ,TEXT(Import_Export_Quote_Order__r.Freight_Mode__c) &amp; &quot; &quot; &amp; TEXT(Import_Export_Quote_Order__r.Service_Mode__c), IF( Shipment__c != null,
+TEXT(Shipment__r.Freight_Mode__c) &amp; &quot; &quot; &amp; TEXT(Shipment__r.Service_Mode__c)
+,&apos;&apos;))</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Freight Mode</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Motivo_Cancelacion__c</fullName>
+        <externalId>false</externalId>
+        <label>Motivo Cancelacion</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Error en Captura</fullName>
+                    <default>false</default>
+                    <label>Error en Captura</label>
+                </value>
+                <value>
+                    <fullName>Negociacion con Cliente</fullName>
+                    <default>false</default>
+                    <label>Negociacion con Cliente</label>
+                </value>
+                <value>
+                    <fullName>Falta Disponibilidad</fullName>
+                    <default>false</default>
+                    <label>Falta Disponibilidad</label>
+                </value>
+                <value>
+                    <fullName>Cambio de proveedor</fullName>
+                    <default>false</default>
+                    <label>Cambio de proveedor</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>Motivo__c</fullName>
+        <externalId>false</externalId>
+        <label>Motivo</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>TextArea</type>
+    </fields>
+    <fields>
+        <fullName>Nature_Merchandise__c</fullName>
+        <description>Conversion to text of: if &quot;Import-Export Quote/Order&quot; not blank then &quot;Nature Merchandise&quot; from &quot;Import-Export Quote/Order&quot;, else &quot;Nature Merchandise&quot; from &quot;Shipment</description>
+        <externalId>false</externalId>
+        <formula>IF(Import_Export_Quote_Order__c != null,Import_Export_Quote_Order__r.Nature_Merchandise__c,  Shipment__r.Nature_Merchandise__c )</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Nature Merchandise</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Numero_Credito__c</fullName>
+        <externalId>false</externalId>
+        <label>Numero Credito</label>
+        <length>20</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Numero_Factura__c</fullName>
+        <externalId>false</externalId>
+        <label>Numero Factura</label>
+        <length>20</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Numero_Folio__c</fullName>
+        <externalId>false</externalId>
+        <label>Numero Folio</label>
+        <precision>6</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>OV_SAP_DISBURMET__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>OV SAP DISBURMET</label>
+        <referenceTo>Shipment__c</referenceTo>
+        <relationshipLabel>Disbursements (OV SAP DISBURMET)</relationshipLabel>
+        <relationshipName>Disbursements1</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>OrdenCompra__c</fullName>
+        <externalId>false</externalId>
+        <label>Orden de Compra</label>
+        <length>20</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Outstanding_Balance__c</fullName>
+        <description>Conversion to currency of difference between &quot;Total (Excl VAT)&quot; and, sum of &quot;Amount Allocated on IE Cargo Lines&quot;, &quot;Amount Allocated on IE Service Lines&quot;, &quot;Amount Allocated on Ship Cargo Lines&quot; and &quot;Amount Allocated on Ship Service Line&quot;</description>
+        <externalId>false</externalId>
+        <formula>Total_Excl_VAT__c - (Amount_Allocated_on_IE_Cargo_Lines__c + Amount_Allocated_on_IE_Service_Lines__c + Amount_Allocated_on_Ship_Cargo_Lines__c + Amount_Allocated_on_Ship_Service_Line__c)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <inlineHelpText>Total Disbursement Lines&apos; balance</inlineHelpText>
+        <label>Allocation Outstanding Balance</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Payment_Amount__c</fullName>
+        <externalId>false</externalId>
+        <label>Payment Amount</label>
+        <precision>12</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Payment_As__c</fullName>
+        <externalId>false</externalId>
+        <label>Payment As</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Full Amount</fullName>
+                    <default>false</default>
+                    <label>Full Amount</label>
+                </value>
+                <value>
+                    <fullName>Partial Amount</fullName>
+                    <default>false</default>
+                    <label>Partial Amount</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>Payment_Date__c</fullName>
+        <externalId>false</externalId>
+        <label>Payment Date</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Payment_Method_Required__c</fullName>
+        <externalId>false</externalId>
+        <label>Payment Method Required</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>EFT</fullName>
+                    <default>false</default>
+                    <label>EFT</label>
+                </value>
+                <value>
+                    <fullName>Cheque</fullName>
+                    <default>false</default>
+                    <label>Cheque</label>
+                </value>
+                <value>
+                    <fullName>Cash</fullName>
+                    <default>false</default>
+                    <label>Cash</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>Payment_Ref__c</fullName>
+        <externalId>false</externalId>
+        <label>Payment Ref</label>
+        <length>18</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Payment_Type__c</fullName>
+        <externalId>false</externalId>
+        <label>Payment Type</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>MultiselectPicklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Freight</fullName>
+                    <default>false</default>
+                    <label>Freight</label>
+                </value>
+                <value>
+                    <fullName>Landside Charges</fullName>
+                    <default>false</default>
+                    <label>Landside Charges</label>
+                </value>
+                <value>
+                    <fullName>Examination</fullName>
+                    <default>false</default>
+                    <label>Examination</label>
+                </value>
+                <value>
+                    <fullName>Detention</fullName>
+                    <default>false</default>
+                    <label>Detention</label>
+                </value>
+                <value>
+                    <fullName>Demurrage</fullName>
+                    <default>false</default>
+                    <label>Demurrage</label>
+                </value>
+                <value>
+                    <fullName>Storage</fullName>
+                    <default>false</default>
+                    <label>Storage</label>
+                </value>
+                <value>
+                    <fullName>Local Agents Charges</fullName>
+                    <default>false</default>
+                    <label>Local Agents Charges</label>
+                </value>
+                <value>
+                    <fullName>Transport</fullName>
+                    <default>false</default>
+                    <label>Transport</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+        <visibleLines>4</visibleLines>
+    </fields>
+    <fields>
+        <fullName>Pedido_Compra_SAP__c</fullName>
+        <externalId>false</externalId>
+        <label>Orden de Compra SAP</label>
+        <length>25</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Planned_ETA__c</fullName>
+        <description>Formula describing place of arrival</description>
+        <externalId>false</externalId>
+        <formula>IF(Import_Export_Quote_Order__c != null ,TEXT(Import_Export_Quote_Order__r.Planned_ETA_SP__c) &amp; &quot; &quot; &amp; Import_Export_Quote_Order__r.Site_of_Discharge__r.Name &amp; &quot; &quot; &amp; Import_Export_Quote_Order__r.Country_ofDischarge__r.Name, 
+IF(Shipment__c != null,
+TEXT(Shipment__r.ETA_Point_of_Discharge__c) &amp; &quot; &quot; &amp; Shipment__r.Site_of_Discharge__r.Name &amp; &quot; &quot; &amp; Shipment__r.Country_of_Discharge__r.Name,&apos;&apos;
+)
+)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Planned ETA</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Planned_ETA_filter__c</fullName>
+        <externalId>false</externalId>
+        <label>Planned ETA (filter)</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Planned_ETA_filter_formula__c</fullName>
+        <description>Number describing time and date of estimated arrival</description>
+        <externalId>false</externalId>
+        <formula>IF(Import_Export_Quote_Order__c != null, Import_Export_Quote_Order__r.Planned_ETA_SP__c, Shipment__r.ETA_Point_of_Discharge__c)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Planned ETA (filter formula)</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Planned_ETD__c</fullName>
+        <description>text describing estimated location of departure</description>
+        <externalId>false</externalId>
+        <formula>IF(Import_Export_Quote_Order__c != null,TEXT( Import_Export_Quote_Order__r.Last_Shipment__r.ETD_from_Point_of_Load__c ) &amp; &quot; &quot; &amp;  Import_Export_Quote_Order__r.Site_of_Load__r.Name &amp; &quot; &quot; &amp;  Import_Export_Quote_Order__r.Country_ofLoad__r.Name,
+TEXT(Shipment__r.ETD_from_Point_of_Load__c) &amp; &quot; &quot; &amp;   Shipment__r.Site_of_Load__r.Name &amp; &quot; &quot; &amp;   Shipment__r.Country_of_Load__r.Name)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Planned ETD</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Planned_ETD_filter__c</fullName>
+        <externalId>false</externalId>
+        <label>Planned ETD (filter)</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Planned_ETD_filter_formula__c</fullName>
+        <description>number describing time and date of estimated arrival</description>
+        <externalId>false</externalId>
+        <formula>If(Import_Export_Quote_Order__c != null ,Import_Export_Quote_Order__r.Last_Shipment__r.ETD_from_Point_of_Load__c, Shipment__r.ETD_from_Point_of_Load__c)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Planned ETD (filter formula)</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Quotation_Status__c</fullName>
+        <externalId>false</externalId>
+        <formula>text(Import_Export_Quote_Order__r.Quotation_Status__c)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Quotation Status</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Request_Comment__c</fullName>
+        <externalId>false</externalId>
+        <label>Request Comment</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>TextArea</type>
+    </fields>
+    <fields>
+        <fullName>Request_Note__c</fullName>
+        <externalId>false</externalId>
+        <label>Request Note</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Pay in full</fullName>
+                    <default>false</default>
+                    <label>Pay in full</label>
+                </value>
+                <value>
+                    <fullName>Part pay</fullName>
+                    <default>false</default>
+                    <label>Part pay</label>
+                </value>
+                <value>
+                    <fullName>Deposit - await refund</fullName>
+                    <default>false</default>
+                    <label>Deposit - await refund</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>Requiere_Acuse__c</fullName>
+        <externalId>false</externalId>
+        <formula>TEXT(Account__r.Requiere_Acuse_Sap__c )</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Requiere Acuse?</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>SARS_LRN_Number__c</fullName>
+        <externalId>false</externalId>
+        <label>SARS LRN Number</label>
+        <length>30</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>SARS_Office__c</fullName>
+        <externalId>false</externalId>
+        <label>SARS Office</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>DURBAN</fullName>
+                    <default>false</default>
+                    <label>DURBAN</label>
+                </value>
+                <value>
+                    <fullName>DURBAN INTERNATIONAL</fullName>
+                    <default>false</default>
+                    <label>DURBAN INTERNATIONAL</label>
+                </value>
+                <value>
+                    <fullName>JOHANNESBURG INTL (AIR)</fullName>
+                    <default>false</default>
+                    <label>JOHANNESBURG INTL (AIR)</label>
+                </value>
+                <value>
+                    <fullName>JOHANNESBURG (SEA)</fullName>
+                    <default>false</default>
+                    <label>JOHANNESBURG (SEA)</label>
+                </value>
+                <value>
+                    <fullName>CAPE TOWN (SEA)</fullName>
+                    <default>false</default>
+                    <label>CAPE TOWN (SEA)</label>
+                </value>
+                <value>
+                    <fullName>CAPE TOWN (AIR)</fullName>
+                    <default>false</default>
+                    <label>CAPE TOWN (AIR)</label>
+                </value>
+                <value>
+                    <fullName>PORT ELIZABETH</fullName>
+                    <default>false</default>
+                    <label>PORT ELIZABETH</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>SARS_Ref__c</fullName>
+        <externalId>false</externalId>
+        <label>SARS Ref</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Provisional Payment</fullName>
+                    <default>false</default>
+                    <label>Provisional Payment</label>
+                </value>
+                <value>
+                    <fullName>Customs Duty</fullName>
+                    <default>false</default>
+                    <label>Customs Duty</label>
+                </value>
+                <value>
+                    <fullName>Customs VAT</fullName>
+                    <default>false</default>
+                    <label>Customs VAT</label>
+                </value>
+                <value>
+                    <fullName>Penalty</fullName>
+                    <default>false</default>
+                    <label>Penalty</label>
+                </value>
+                <value>
+                    <fullName>Deposit</fullName>
+                    <default>false</default>
+                    <label>Deposit</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>Service_Mode__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF(Import_Export_Quote_Order__c != null,TEXT(Import_Export_Quote_Order__r.Service_Mode__c), TEXT(Shipment__r.Service_Mode__c))</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Service Mode</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Shipment_Number__c</fullName>
+        <externalId>false</externalId>
+        <formula>Shipment__r.Name</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Shipment Number</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Shipment_Status__c</fullName>
+        <description>Describes &quot;Shipment Status&quot; as stated in &quot;Shipment&quot;</description>
+        <externalId>false</externalId>
+        <formula>text(Shipment__r.Shipment_Status__c)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Shipment Status</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Shipment__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Shipment</label>
+        <referenceTo>Shipment__c</referenceTo>
+        <relationshipLabel>Disbursements</relationshipLabel>
+        <relationshipName>Disbursements</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Shipments_Program_Number__c</fullName>
+        <externalId>false</externalId>
+        <formula>Shipments_Program__r.Name</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Shipments Program Number</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Shipments_Program__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Shipments Program</label>
+        <referenceTo>Shipment_Program__c</referenceTo>
+        <relationshipLabel>Disbursements</relationshipLabel>
+        <relationshipName>Shipment_Disbursements</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Shipping_Line_Inv_Amount__c</fullName>
+        <externalId>false</externalId>
+        <label>Shipping Line Inv Amount</label>
+        <precision>10</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Sub_Allocation__c</fullName>
+        <externalId>false</externalId>
+        <label>Sub Allocation</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <controllingField>Master_Allocation__c</controllingField>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Customs Duty</fullName>
+                    <default>false</default>
+                    <label>Customs Duty</label>
+                </value>
+                <value>
+                    <fullName>Customs VAT</fullName>
+                    <default>false</default>
+                    <label>Customs VAT</label>
+                </value>
+                <value>
+                    <fullName>Provisional Payment</fullName>
+                    <default>false</default>
+                    <label>Provisional Payment</label>
+                </value>
+                <value>
+                    <fullName>Customs Other</fullName>
+                    <default>false</default>
+                    <label>Customs Other</label>
+                </value>
+                <value>
+                    <fullName>Cargo Dues</fullName>
+                    <default>false</default>
+                    <label>Cargo Dues</label>
+                </value>
+                <value>
+                    <fullName>Terminal Handling Charge</fullName>
+                    <default>false</default>
+                    <label>Terminal Handling Charge</label>
+                </value>
+                <value>
+                    <fullName>Landing charge</fullName>
+                    <default>false</default>
+                    <label>Landing charge</label>
+                </value>
+                <value>
+                    <fullName>Shipping Order</fullName>
+                    <default>false</default>
+                    <label>Shipping Order</label>
+                </value>
+                <value>
+                    <fullName>Port Storage</fullName>
+                    <default>false</default>
+                    <label>Port Storage</label>
+                </value>
+                <value>
+                    <fullName>Freight</fullName>
+                    <default>false</default>
+                    <label>Freight</label>
+                </value>
+                <value>
+                    <fullName>Landside Charge</fullName>
+                    <default>false</default>
+                    <label>Landside Charge</label>
+                </value>
+                <value>
+                    <fullName>Cartage</fullName>
+                    <default>false</default>
+                    <label>Cartage</label>
+                </value>
+                <value>
+                    <fullName>Unpack</fullName>
+                    <default>false</default>
+                    <label>Unpack</label>
+                </value>
+                <value>
+                    <fullName>Repack</fullName>
+                    <default>false</default>
+                    <label>Repack</label>
+                </value>
+                <value>
+                    <fullName>Depot Storage</fullName>
+                    <default>false</default>
+                    <label>Depot Storage</label>
+                </value>
+                <value>
+                    <fullName>Ex Works Charge</fullName>
+                    <default>false</default>
+                    <label>Ex Works Charge</label>
+                </value>
+                <value>
+                    <fullName>Freight Import</fullName>
+                    <default>false</default>
+                    <label>Freight Import</label>
+                </value>
+                <value>
+                    <fullName>Delivery Charge</fullName>
+                    <default>false</default>
+                    <label>Delivery Charge</label>
+                </value>
+                <value>
+                    <fullName>Profit Share</fullName>
+                    <default>false</default>
+                    <label>Profit Share</label>
+                </value>
+                <value>
+                    <fullName>Rebate Certicate</fullName>
+                    <default>false</default>
+                    <label>Rebate Certicate</label>
+                </value>
+                <value>
+                    <fullName>Customs Exam</fullName>
+                    <default>false</default>
+                    <label>Customs Exam</label>
+                </value>
+                <value>
+                    <fullName>Special Attendance</fullName>
+                    <default>false</default>
+                    <label>Special Attendance</label>
+                </value>
+                <value>
+                    <fullName>Cargo Repairs</fullName>
+                    <default>false</default>
+                    <label>Cargo Repairs</label>
+                </value>
+                <value>
+                    <fullName>Port Exam</fullName>
+                    <default>false</default>
+                    <label>Port Exam</label>
+                </value>
+                <value>
+                    <fullName>Airline Handling</fullName>
+                    <default>false</default>
+                    <label>Airline Handling</label>
+                </value>
+                <value>
+                    <fullName>Airline Storage</fullName>
+                    <default>false</default>
+                    <label>Airline Storage</label>
+                </value>
+                <value>
+                    <fullName>Airline Freight</fullName>
+                    <default>false</default>
+                    <label>Airline Freight</label>
+                </value>
+                <value>
+                    <fullName>Airline Split Fees</fullName>
+                    <default>false</default>
+                    <label>Airline Split Fees</label>
+                </value>
+                <value>
+                    <fullName>Airline Security Fee</fullName>
+                    <default>false</default>
+                    <label>Airline Security Fee</label>
+                </value>
+                <value>
+                    <fullName>Airline Hazardous Charge</fullName>
+                    <default>false</default>
+                    <label>Airline Hazardous Charge</label>
+                </value>
+                <value>
+                    <fullName>Airline AWB Fee</fullName>
+                    <default>false</default>
+                    <label>Airline AWB Fee</label>
+                </value>
+                <value>
+                    <fullName>Release Agent Air</fullName>
+                    <default>false</default>
+                    <label>Release Agent Air</label>
+                </value>
+                <value>
+                    <fullName>Release Agent Sea</fullName>
+                    <default>false</default>
+                    <label>Release Agent Sea</label>
+                </value>
+            </valueSetDefinition>
+            <valueSettings>
+                <controllingFieldValue>Customs</controllingFieldValue>
+                <valueName>Customs Duty</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Customs</controllingFieldValue>
+                <valueName>Customs VAT</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Customs</controllingFieldValue>
+                <valueName>Provisional Payment</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Customs</controllingFieldValue>
+                <valueName>Customs Other</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Port</controllingFieldValue>
+                <valueName>Cargo Dues</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Port</controllingFieldValue>
+                <valueName>Terminal Handling Charge</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Port</controllingFieldValue>
+                <valueName>Landing charge</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Port</controllingFieldValue>
+                <valueName>Shipping Order</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Port</controllingFieldValue>
+                <valueName>Port Storage</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Shipping Line</controllingFieldValue>
+                <valueName>Freight</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Shipping Line</controllingFieldValue>
+                <valueName>Landside Charge</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Transport</controllingFieldValue>
+                <valueName>Cartage</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>PRCC</controllingFieldValue>
+                <valueName>Rebate Certicate</valueName>
+            </valueSettings>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>Supplier_Account_Name__c</fullName>
+        <externalId>false</externalId>
+        <formula>Account__r.Name</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Supplier Account Name</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Supplier_Invoice_Status__c</fullName>
+        <externalId>false</externalId>
+        <label>Supplier Invoice Status</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Pending</fullName>
+                    <default>false</default>
+                    <label>Pending</label>
+                </value>
+                <value>
+                    <fullName>Validated</fullName>
+                    <default>false</default>
+                    <label>Validated</label>
+                </value>
+                <value>
+                    <fullName>Rejected</fullName>
+                    <default>false</default>
+                    <label>Rejected</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>Timbrado_Factura_SAP__c</fullName>
+        <externalId>false</externalId>
+        <label>Timbrado Factura SAP</label>
+        <length>255</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Total_Excl_VAT_Imp_Exp_Currency_N__c</fullName>
+        <externalId>false</externalId>
+        <formula>Total_Excl_VAT__c* Conversion_Rate_to_Imp_Exp_Currency__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Total (Excl. VAT) (Imp-Exp Currency)</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Total_Excl_VAT_Invoice_Lines__c</fullName>
+        <externalId>false</externalId>
+        <label>Total (Excl. VAT) Disbursement Lines</label>
+        <summarizedField>Disbursement_Line__c.Amount__c</summarizedField>
+        <summaryForeignKey>Disbursement_Line__c.Disbursement__c</summaryForeignKey>
+        <summaryOperation>sum</summaryOperation>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Summary</type>
+    </fields>
+    <fields>
+        <fullName>Total_Excl_VAT__c</fullName>
+        <externalId>false</externalId>
+        <formula>Total_Excl_VAT_Invoice_Lines__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Total (Excl. VAT)</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Total_Incl_VAT__c</fullName>
+        <description>Conversion to currency of &quot;Total (Excl VAT)&quot; + &quot;Total VAT&quot;</description>
+        <externalId>false</externalId>
+        <formula>Total_Excl_VAT__c + Total_VAT__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <inlineHelpText>&quot;Total (Excl VAT)&quot; + &quot;Total VAT&quot;</inlineHelpText>
+        <label>Total (Incl. VAT)</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Total_Invoice_SAP__c</fullName>
+        <externalId>false</externalId>
+        <label>Total Disbursement SAP</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Total_VAT_Invoice_Lines__c</fullName>
+        <externalId>false</externalId>
+        <label>Total VAT Disbursement  Lines</label>
+        <summarizedField>Disbursement_Line__c.Total_VAT__c</summarizedField>
+        <summaryForeignKey>Disbursement_Line__c.Disbursement__c</summaryForeignKey>
+        <summaryOperation>sum</summaryOperation>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Summary</type>
+    </fields>
+    <fields>
+        <fullName>Total_VAT__c</fullName>
+        <externalId>false</externalId>
+        <formula>Total_VAT_Invoice_Lines__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Total VAT</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Type__c</fullName>
+        <externalId>false</externalId>
+        <label>Type</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetName>Type</valueSetName>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>Urgent_Payment_Needed__c</fullName>
+        <externalId>false</externalId>
+        <label>Urgent Payment Needed</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>No</fullName>
+                    <default>true</default>
+                    <label>No</label>
+                </value>
+                <value>
+                    <fullName>Yes</fullName>
+                    <default>false</default>
+                    <label>Yes</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>VAT__c</fullName>
+        <externalId>false</externalId>
+        <label>[Old] VAT Amount</label>
+        <precision>8</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Voyage__c</fullName>
+        <externalId>false</externalId>
+        <formula>Shipments_Program__r.Voyage_Number_sp__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Voyage</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Why_has_been_Rejected_ERD__c</fullName>
+        <externalId>false</externalId>
+        <label>Why has been Rejected?</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>TextArea</type>
+    </fields>
+    <fields>
+        <fullName>Why_has_been_Rejected_SI__c</fullName>
+        <externalId>false</externalId>
+        <label>Why has been Rejected?</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>TextArea</type>
+    </fields>
+    <label>Disbursement</label>
+    <listViews>
+        <fullName>All</fullName>
+        <columns>NAME</columns>
+        <columns>Account__c</columns>
+        <columns>Invoice_Ref__c</columns>
+        <columns>Disbursment_Concept__c</columns>
+        <columns>Invoice_Amount_Exc__c</columns>
+        <columns>Invoice_Date__c</columns>
+        <columns>Master_Allocation__c</columns>
+        <columns>Sub_Allocation__c</columns>
+        <columns>Shipment__c</columns>
+        <filterScope>Everything</filterScope>
+        <label>All</label>
+    </listViews>
+    <listViews>
+        <fullName>All1</fullName>
+        <columns>NAME</columns>
+        <filterScope>Everything</filterScope>
+        <label>All</label>
+    </listViews>
+    <nameField>
+        <label>Disbursement Number</label>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+    </nameField>
+    <pluralLabel>Disbursements</pluralLabel>
+    <recordTypeTrackHistory>false</recordTypeTrackHistory>
+    <recordTypes>
+        <fullName>Disbursement</fullName>
+        <active>true</active>
+        <label>Disbursement</label>
+        <picklistValues>
+            <picklist>Billing_Type__c</picklist>
+            <values>
+                <fullName>Credit note</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Invoice</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SARS Payment EDI</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Disbursement_Status__c</picklist>
+            <values>
+                <fullName>Active</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cancel</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Facturado</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Received from Sap</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Send to Sap</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Etapa__c</picklist>
+            <values>
+                <fullName>Abierto</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>En Proceso</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Enviado</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Pagado</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Parcialidad</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Evidence_Reception_Document_Status__c</picklist>
+            <values>
+                <fullName>Pending</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Rejected</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Validated</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Master_Allocation__c</picklist>
+            <values>
+                <fullName>Airline</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Customs</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Depot</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Forwarding Partner</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Other</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>PRCC</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Port</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Release Agent</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Shipping Line</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Transport</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Motivo_Cancelacion__c</picklist>
+            <values>
+                <fullName>Cambio de proveedor</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Error en Captura</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Falta Disponibilidad</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Negociacion con Cliente</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Payment_As__c</picklist>
+            <values>
+                <fullName>Full Amount</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Partial Amount</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Payment_Method_Required__c</picklist>
+            <values>
+                <fullName>Cash</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cheque</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>EFT</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Payment_Type__c</picklist>
+            <values>
+                <fullName>Demurrage</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Detention</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Examination</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Freight</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Landside Charges</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Local Agents Charges</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Storage</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Transport</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Request_Note__c</picklist>
+            <values>
+                <fullName>Deposit - await refund</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Part pay</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Pay in full</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>SARS_Office__c</picklist>
+            <values>
+                <fullName>CAPE TOWN %28AIR%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CAPE TOWN %28SEA%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>DURBAN</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>DURBAN INTERNATIONAL</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>JOHANNESBURG %28SEA%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>JOHANNESBURG INTL %28AIR%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>PORT ELIZABETH</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>SARS_Ref__c</picklist>
+            <values>
+                <fullName>Customs Duty</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Customs VAT</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Deposit</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Penalty</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Provisional Payment</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Sub_Allocation__c</picklist>
+            <values>
+                <fullName>Airline AWB Fee</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Airline Freight</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Airline Handling</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Airline Hazardous Charge</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Airline Security Fee</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Airline Split Fees</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Airline Storage</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cargo Dues</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cargo Repairs</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cartage</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Customs Duty</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Customs Exam</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Customs Other</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Customs VAT</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Delivery Charge</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Depot Storage</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Ex Works Charge</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Freight</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Freight Import</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Landing charge</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Landside Charge</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Port Exam</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Port Storage</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Profit Share</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Provisional Payment</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Rebate Certicate</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Release Agent Air</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Release Agent Sea</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Repack</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Shipping Order</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Special Attendance</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Terminal Handling Charge</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Unpack</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Supplier_Invoice_Status__c</picklist>
+            <values>
+                <fullName>Pending</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Rejected</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Validated</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Type__c</picklist>
+            <values>
+                <fullName>Credit Note</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Debit Note</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Urgent_Payment_Needed__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>true</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+    </recordTypes>
+    <recordTypes>
+        <fullName>DisbursementStatus</fullName>
+        <active>true</active>
+        <label>Disbursement BLOQ</label>
+        <picklistValues>
+            <picklist>Billing_Type__c</picklist>
+            <values>
+                <fullName>Credit note</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Invoice</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SARS Payment EDI</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Disbursement_Status__c</picklist>
+            <values>
+                <fullName>Active</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cancel</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Facturado</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Received from Sap</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Send to Sap</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Etapa__c</picklist>
+            <values>
+                <fullName>Abierto</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>En Proceso</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Enviado</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Pagado</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Parcialidad</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Evidence_Reception_Document_Status__c</picklist>
+            <values>
+                <fullName>Pending</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Rejected</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Validated</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Master_Allocation__c</picklist>
+            <values>
+                <fullName>Airline</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Customs</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Depot</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Forwarding Partner</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Other</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>PRCC</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Port</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Release Agent</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Shipping Line</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Transport</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Motivo_Cancelacion__c</picklist>
+            <values>
+                <fullName>Cambio de proveedor</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Error en Captura</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Falta Disponibilidad</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Negociacion con Cliente</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Payment_As__c</picklist>
+            <values>
+                <fullName>Full Amount</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Partial Amount</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Payment_Method_Required__c</picklist>
+            <values>
+                <fullName>Cash</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cheque</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>EFT</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Payment_Type__c</picklist>
+            <values>
+                <fullName>Demurrage</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Detention</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Examination</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Freight</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Landside Charges</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Local Agents Charges</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Storage</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Transport</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Request_Note__c</picklist>
+            <values>
+                <fullName>Deposit - await refund</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Part pay</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Pay in full</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>SARS_Office__c</picklist>
+            <values>
+                <fullName>CAPE TOWN %28AIR%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CAPE TOWN %28SEA%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>DURBAN</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>DURBAN INTERNATIONAL</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>JOHANNESBURG %28SEA%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>JOHANNESBURG INTL %28AIR%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>PORT ELIZABETH</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>SARS_Ref__c</picklist>
+            <values>
+                <fullName>Customs Duty</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Customs VAT</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Deposit</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Penalty</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Provisional Payment</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Sub_Allocation__c</picklist>
+            <values>
+                <fullName>Airline AWB Fee</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Airline Freight</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Airline Handling</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Airline Hazardous Charge</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Airline Security Fee</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Airline Split Fees</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Airline Storage</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cargo Dues</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cargo Repairs</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cartage</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Customs Duty</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Customs Exam</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Customs Other</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Customs VAT</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Delivery Charge</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Depot Storage</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Ex Works Charge</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Freight</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Freight Import</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Landing charge</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Landside Charge</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Port Exam</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Port Storage</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Profit Share</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Provisional Payment</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Rebate Certicate</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Release Agent Air</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Release Agent Sea</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Repack</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Shipping Order</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Special Attendance</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Terminal Handling Charge</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Unpack</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Supplier_Invoice_Status__c</picklist>
+            <values>
+                <fullName>Pending</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Rejected</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Validated</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Type__c</picklist>
+            <values>
+                <fullName>Credit Note</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Debit Note</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Urgent_Payment_Needed__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>true</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+    </recordTypes>
+    <searchLayouts>
+        <customTabListAdditionalFields>Account__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Payment_Type__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Sub_Allocation__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Invoice_Ref__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Invoice_Amount_Exc__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Invoice_Amount_Inc__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Payment_Ref__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Payment_Amount__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Payment_Date__c</customTabListAdditionalFields>
+        <lookupDialogsAdditionalFields>Account__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>Payment_Type__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>Sub_Allocation__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>Invoice_Ref__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>Invoice_Amount_Exc__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>Invoice_Amount_Inc__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>Payment_Ref__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>Payment_Amount__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>Payment_Date__c</lookupDialogsAdditionalFields>
+        <searchResultsAdditionalFields>Account__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Payment_Type__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Sub_Allocation__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Invoice_Ref__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Invoice_Amount_Exc__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Invoice_Amount_Inc__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Payment_Ref__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Payment_Amount__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Payment_Date__c</searchResultsAdditionalFields>
+    </searchLayouts>
+    <sharingModel>ControlledByParent</sharingModel>
+    <validationRules>
+        <fullName>Credit_Note_Negative_Amount</fullName>
+        <active>false</active>
+        <errorConditionFormula>text(Type__c) == &apos;Credit Note&apos; &amp;&amp; Total_Incl_VAT__c &gt; 0</errorConditionFormula>
+        <errorMessage>You can’t include these lines because Total(Incl. Vat) in the “Credit Note” Invoice must be negative</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Debit_Note_Positive_Amount</fullName>
+        <active>false</active>
+        <errorConditionFormula>text(Type__c) == &apos;Debit Note&apos; &amp;&amp; Total_Incl_VAT__c &lt; 0</errorConditionFormula>
+        <errorMessage>You can´t include these lines because Total (Incl. VAT) in the &quot;Debit Note&quot; Invoice must be positive</errorMessage>
+    </validationRules>
+    <visibility>Public</visibility>
+    <webLinks>
+        <fullName>Allocate_Lines</fullName>
+        <availability>online</availability>
+        <displayType>button</displayType>
+        <height>600</height>
+        <linkType>page</linkType>
+        <masterLabel>Allocate Lines</masterLabel>
+        <openType>sidebar</openType>
+        <page>NEU_Create_Disbursement_Service_Item</page>
+        <protected>false</protected>
+    </webLinks>
+    <webLinks>
+        <fullName>Cancel_to_SAP</fullName>
+        <availability>online</availability>
+        <displayType>button</displayType>
+        <hasMenubar>false</hasMenubar>
+        <hasScrollbars>true</hasScrollbars>
+        <hasToolbar>false</hasToolbar>
+        <height>600</height>
+        <isResizable>true</isResizable>
+        <linkType>page</linkType>
+        <masterLabel>Cancel to SAP</masterLabel>
+        <openType>newWindow</openType>
+        <page>PAK_DIS_Cancelar</page>
+        <position>none</position>
+        <protected>false</protected>
+        <showsLocation>false</showsLocation>
+        <showsStatus>false</showsStatus>
+    </webLinks>
+    <webLinks>
+        <fullName>New_Associated_Document</fullName>
+        <availability>online</availability>
+        <displayType>button</displayType>
+        <encodingKey>UTF-8</encodingKey>
+        <height>600</height>
+        <linkType>url</linkType>
+        <masterLabel>New Associated Document</masterLabel>
+        <openType>sidebar</openType>
+        <protected>false</protected>
+        <url>/apex/NEU_MD_Associated_Documents?id={!Shipment_Disbursement__c.Id}</url>
+    </webLinks>
+    <webLinks>
+        <fullName>New_Disbursement_Import_Export</fullName>
+        <availability>online</availability>
+        <displayType>massActionButton</displayType>
+        <encodingKey>UTF-8</encodingKey>
+        <linkType>url</linkType>
+        <masterLabel>New Disbursement (Import-Export)</masterLabel>
+        <openType>replace</openType>
+        <protected>false</protected>
+        <requireRowSelection>false</requireRowSelection>
+        <url>/apex/NEU_NewDisbursementButton?import_export_id={!Customer_Quote__c.Id}</url>
+    </webLinks>
+    <webLinks>
+        <fullName>New_Disbursement_Shipment</fullName>
+        <availability>online</availability>
+        <displayType>massActionButton</displayType>
+        <encodingKey>UTF-8</encodingKey>
+        <linkType>url</linkType>
+        <masterLabel>New Disbursement (Shipment)</masterLabel>
+        <openType>replace</openType>
+        <protected>false</protected>
+        <requireRowSelection>false</requireRowSelection>
+        <url>/apex/NEU_NewDisbursementButton?shipment_id={!Shipment__c.Id}</url>
+    </webLinks>
+    <webLinks>
+        <fullName>Send_to_SAP</fullName>
+        <availability>online</availability>
+        <displayType>button</displayType>
+        <height>600</height>
+        <linkType>page</linkType>
+        <masterLabel>Send to SAP</masterLabel>
+        <openType>noSidebar</openType>
+        <page>PAK_DIS_Send_SAP</page>
+        <protected>false</protected>
+    </webLinks>
+</CustomObject>

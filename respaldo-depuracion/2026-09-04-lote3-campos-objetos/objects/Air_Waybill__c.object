@@ -1,0 +1,2104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <allowInChatterGroups>false</allowInChatterGroups>
+    <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
+    <deploymentStatus>Deployed</deploymentStatus>
+    <enableActivities>true</enableActivities>
+    <enableBulkApi>true</enableBulkApi>
+    <enableFeeds>false</enableFeeds>
+    <enableHistory>true</enableHistory>
+    <enableLicensing>false</enableLicensing>
+    <enableReports>true</enableReports>
+    <enableSearch>true</enableSearch>
+    <enableSharing>true</enableSharing>
+    <enableStreamingApi>true</enableStreamingApi>
+    <externalSharingModel>ControlledByParent</externalSharingModel>
+    <fields>
+        <fullName>Accounting_Information__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>10</inlineHelpText>
+        <label>Accounting Information</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>TextArea</type>
+    </fields>
+    <fields>
+        <fullName>Airline_Code_Number__c</fullName>
+        <externalId>false</externalId>
+        <formula>Carrier_Account__r.Airline_Code_Number__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <inlineHelpText>1A</inlineHelpText>
+        <label>Carrier Code Number</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Airport_To_by_First_Carrier_Code__c</fullName>
+        <externalId>false</externalId>
+        <formula>Airport_To_by_First_Carrier__r.IATA_Code__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <inlineHelpText>11A
+            (Note: Information needs to be transformed into IATA three-letter code for airport)</inlineHelpText>
+        <label>Site To (by First Carrier) (Code)</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Airport_To_by_First_Carrier__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Site To (by First Carrier)</label>
+        <lookupFilter>
+            <active>true</active>
+            <filterItems>
+                <field>Location__c.Country__c</field>
+                <operation>equals</operation>
+                <valueField>$Source.Country_To_by_First_Carrier__c</valueField>
+            </filterItems>
+            <isOptional>false</isOptional>
+        </lookupFilter>
+        <referenceTo>Location__c</referenceTo>
+        <relationshipLabel>Waybills (Airport To (by First Carrier))</relationshipLabel>
+        <relationshipName>Air_Waybills1</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Airport_To_by_Second_Carrier_Code__c</fullName>
+        <externalId>false</externalId>
+        <formula>Airport_To_by_Second_Carrier__r.UNLOCODE__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <inlineHelpText>11D</inlineHelpText>
+        <label>Site To (by Second Carrier) (Code)</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Airport_To_by_Second_Carrier__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Site To (by Second Carrier)</label>
+        <lookupFilter>
+            <active>true</active>
+            <filterItems>
+                <field>$Source.Country_To_by_Second_Carrier__c</field>
+                <operation>equals</operation>
+                <valueField>Location__c.Country__c</valueField>
+            </filterItems>
+            <isOptional>true</isOptional>
+        </lookupFilter>
+        <referenceTo>Location__c</referenceTo>
+        <relationshipLabel>Waybills (Airport To (by Second Carrier))</relationshipLabel>
+        <relationshipName>Air_Waybills2</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Airport_To_by_Third_Carrier_Code__c</fullName>
+        <externalId>false</externalId>
+        <formula>Airport_To_by_Third_Carrier__r.UNLOCODE__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <inlineHelpText>11F</inlineHelpText>
+        <label>Site To (by Third Carrier) (Code)</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Airport_To_by_Third_Carrier__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Site To (by Third Carrier)</label>
+        <lookupFilter>
+            <active>true</active>
+            <filterItems>
+                <field>$Source.Country_To_by_Third_Carrier__c</field>
+                <operation>equals</operation>
+                <valueField>Location__c.Country__c</valueField>
+            </filterItems>
+            <isOptional>true</isOptional>
+        </lookupFilter>
+        <referenceTo>Location__c</referenceTo>
+        <relationshipLabel>Waybills (Airport To (by Third Carrier))</relationshipLabel>
+        <relationshipName>Air_Waybills3</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Airport_of_Departure_Code__c</fullName>
+        <externalId>false</externalId>
+        <formula>Airport_of_Departure__r.UNLOCODE__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Site of Departure (Code)</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Airport_of_Departure__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <inlineHelpText>9</inlineHelpText>
+        <label>Site of Departure</label>
+        <lookupFilter>
+            <active>true</active>
+            <filterItems>
+                <field>$Source.Country_of_Departure__c</field>
+                <operation>equals</operation>
+                <valueField>Location__c.Country__c</valueField>
+            </filterItems>
+            <isOptional>false</isOptional>
+        </lookupFilter>
+        <referenceTo>Location__c</referenceTo>
+        <relationshipLabel>Waybills (Airport of Departure)</relationshipLabel>
+        <relationshipName>Air_Waybills</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Airport_of_Destination_Code__c</fullName>
+        <externalId>false</externalId>
+        <formula>Site_of_Destination__r.UNLOCODE__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Site of Destination (Code)</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Alternative_Fligtht_1__c</fullName>
+        <externalId>false</externalId>
+        <label>Alternative Fligtht 1</label>
+        <length>10</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Alternative_Fligtht_2__c</fullName>
+        <externalId>false</externalId>
+        <label>Alternative Fligtht 2</label>
+        <length>10</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Amount_of_Insurance__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>20
+            (Note: If empty, need to show &quot;XXX&quot;)</inlineHelpText>
+        <label>Amount of Insurance</label>
+        <precision>10</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>By_First_Carrier_Account_Address__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF(By_First_Carrier_Account__r.BillingStreet != null, By_First_Carrier_Account__r.BillingStreet, &apos;&apos;)
+            &amp;
+            IF(By_First_Carrier_Account__r.BillingCity != null, &apos;, &apos;&amp;By_First_Carrier_Account__r.BillingCity, &apos;&apos;)
+            &amp;
+            IF(By_First_Carrier_Account__r.BillingPostalCode != null, &apos;, &apos;&amp;By_First_Carrier_Account__r.BillingPostalCode, &apos;&apos;)
+            &amp;
+            IF(By_First_Carrier_Account__r.BillingState != null, &apos;, &apos;&amp;By_First_Carrier_Account__r.BillingState, &apos;&apos;)
+            &amp;
+            IF(By_First_Carrier_Account__r.BillingCountry != null, &apos;, &apos;&amp;By_First_Carrier_Account__r.BillingCountry, &apos;&apos;)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>By First Carrier Account Address</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>By_First_Carrier_Account__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <inlineHelpText>11B
+            (Note: Full name or IATA two-letter code both valid)</inlineHelpText>
+        <label>By First Carrier Account</label>
+        <lookupFilter>
+            <active>true</active>
+            <filterItems>
+                <field>Account.Record_Type_Name__c</field>
+                <operation>equals</operation>
+                <value>Supply Chain Partner</value>
+            </filterItems>
+            <isOptional>false</isOptional>
+        </lookupFilter>
+        <referenceTo>Account</referenceTo>
+        <relationshipName>Air_Waybills4</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>By_Second_Carrier_Account__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <inlineHelpText>11D
+            (Note: IATA two-letter code required, must find way to automate this)</inlineHelpText>
+        <label>By Second Carrier Account</label>
+        <lookupFilter>
+            <active>true</active>
+            <filterItems>
+                <field>Account.Record_Type_Name__c</field>
+                <operation>equals</operation>
+                <value>Supply Chain Partner</value>
+            </filterItems>
+            <isOptional>true</isOptional>
+        </lookupFilter>
+        <referenceTo>Account</referenceTo>
+        <relationshipName>Air_Waybills5</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>By_Third_Carrier_Account__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <inlineHelpText>11F</inlineHelpText>
+        <label>By Third Carrier Account</label>
+        <lookupFilter>
+            <active>true</active>
+            <filterItems>
+                <field>Account.Record_Type_Name__c</field>
+                <operation>equals</operation>
+                <value>Supply Chain Partner</value>
+            </filterItems>
+            <isOptional>true</isOptional>
+        </lookupFilter>
+        <referenceTo>Account</referenceTo>
+        <relationshipName>Air_Waybills6</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Carrier_Account_Address__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF(Carrier_Account__r.BillingStreet != null, Carrier_Account__r.BillingStreet, &apos;&apos;)
+            &amp;
+            IF(Carrier_Account__r.BillingCity != null, &apos;, &apos;&amp;Carrier_Account__r.BillingCity, &apos;&apos;)
+            &amp;
+            IF(Carrier_Account__r.BillingPostalCode != null, &apos;, &apos;&amp;Carrier_Account__r.BillingPostalCode, &apos;&apos;)
+            &amp;
+            IF(Carrier_Account__r.BillingState != null, &apos;, &apos;&amp;Carrier_Account__r.BillingState, &apos;&apos;)
+            &amp;
+            IF(Carrier_Account__r.BillingCountry != null, &apos;, &apos;&amp;Carrier_Account__r.BillingCountry, &apos;&apos;)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <inlineHelpText>1C</inlineHelpText>
+        <label>Carrier Account Address</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Carrier_Account__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <inlineHelpText>1C</inlineHelpText>
+        <label>Carrier Account</label>
+        <lookupFilter>
+            <active>true</active>
+            <filterItems>
+                <field>Account.Record_Type_Name__c</field>
+                <operation>equals</operation>
+                <value>Supply Chain Partner</value>
+            </filterItems>
+            <isOptional>false</isOptional>
+        </lookupFilter>
+        <referenceTo>Account</referenceTo>
+        <relationshipName>Air_Waybills</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Carriers_Agent_Account__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <inlineHelpText>6</inlineHelpText>
+        <label>Carrier&apos;s Agent Account</label>
+        <lookupFilter>
+            <active>true</active>
+            <filterItems>
+                <field>Account.Record_Type_Name__c</field>
+                <operation>equals</operation>
+                <value>Supply Chain Partner</value>
+            </filterItems>
+            <isOptional>false</isOptional>
+        </lookupFilter>
+        <referenceTo>Account</referenceTo>
+        <relationshipName>Air_Waybills3</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Carriers_Agent_Address__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF(Carriers_Agent_Account__r.BillingStreet != null, Carriers_Agent_Account__r.BillingStreet, &apos;&apos;)
+            &amp;
+            IF(Carriers_Agent_Account__r.BillingCity != null, &apos;, &apos;&amp;Carriers_Agent_Account__r.BillingCity, &apos;&apos;)
+            &amp;
+            IF(Carriers_Agent_Account__r.BillingPostalCode != null, &apos;, &apos;&amp;Carriers_Agent_Account__r.BillingPostalCode, &apos;&apos;)
+            &amp;
+            IF(Carriers_Agent_Account__r.BillingState != null, &apos;, &apos;&amp;Carriers_Agent_Account__r.BillingState, &apos;&apos;)
+            &amp;
+            IF(Carriers_Agent_Account__r.BillingCountry != null, &apos;, &apos;&amp;Carriers_Agent_Account__r.BillingCountry, &apos;&apos;)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Carrier&apos;s Agent Address</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Carriers_Agent_City__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF(Carriers_Agent_Account__r.BillingCity != null, Carriers_Agent_Account__r.BillingCity, &apos;&apos;)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <inlineHelpText>6</inlineHelpText>
+        <label>Carrier&apos;s Agent City</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Consignee_Account_Address__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF(Consignee_Account__r.BillingStreet != null, Consignee_Account__r.BillingStreet, &apos;&apos;)
+            &amp;
+            IF(Consignee_Account__r.BillingCity != null, &apos;, &apos;&amp;Consignee_Account__r.BillingCity, &apos;&apos;)
+            &amp;
+            IF(Consignee_Account__r.BillingPostalCode != null, &apos;, &apos;&amp;Consignee_Account__r.BillingPostalCode, &apos;&apos;)
+            &amp;
+            IF(Consignee_Account__r.BillingState != null, &apos;, &apos;&amp;Consignee_Account__r.BillingState, &apos;&apos;)
+            &amp;
+            IF(Consignee_Account__r.BillingCountry != null, &apos;, &apos;&amp;Consignee_Account__r.BillingCountry, &apos;&apos;)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <inlineHelpText>4</inlineHelpText>
+        <label>Consignee Account Address</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Consignee_Account_Phone__c</fullName>
+        <externalId>false</externalId>
+        <formula>Consignee_Account__r.Phone</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <inlineHelpText>4</inlineHelpText>
+        <label>Consignee Account Phone</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Consignee_Account__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <inlineHelpText>4</inlineHelpText>
+        <label>Consignee Account</label>
+        <lookupFilter>
+            <active>true</active>
+            <filterItems>
+                <field>Account.RecordTypeId</field>
+                <operation>equals</operation>
+                <value>Consignee</value>
+            </filterItems>
+            <isOptional>true</isOptional>
+        </lookupFilter>
+        <referenceTo>Account</referenceTo>
+        <relationshipLabel>Waybills (Consignee Account)</relationshipLabel>
+        <relationshipName>Air_Waybills2</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Consignee_Alternative_Account__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Consignee Alternative Account</label>
+        <lookupFilter>
+            <active>true</active>
+            <filterItems>
+                <field>Account.RecordTypeId</field>
+                <operation>equals</operation>
+                <value>Consignee</value>
+            </filterItems>
+            <isOptional>true</isOptional>
+        </lookupFilter>
+        <referenceTo>Account</referenceTo>
+        <relationshipLabel>Waybills (Consignee Alternative Account)</relationshipLabel>
+        <relationshipName>Waybills</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Consignee_Alternative_Address__c</fullName>
+        <externalId>false</externalId>
+        <label>Consignee Alternative Address</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>TextArea</type>
+    </fields>
+    <fields>
+        <fullName>Consignee_Alternative_Country__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Consignee Alternative Country</label>
+        <referenceTo>Country__c</referenceTo>
+        <relationshipLabel>Waybills (Consignee Alternative Country)</relationshipLabel>
+        <relationshipName>Waybills1</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Consignee_Alternative_Location__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Consignee Alternative Location</label>
+        <lookupFilter>
+            <active>true</active>
+            <filterItems>
+                <field>$Source.Consignee_Alternative_Country__c</field>
+                <operation>equals</operation>
+                <valueField>Location__c.Country__c</valueField>
+            </filterItems>
+            <isOptional>true</isOptional>
+        </lookupFilter>
+        <referenceTo>Location__c</referenceTo>
+        <relationshipLabel>Waybills (Consignee Alternative Location)</relationshipLabel>
+        <relationshipName>Waybills1</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Consignee_House_Account_Address__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF(Consignee_House__r.BillingStreet != null, Consignee_House__r.BillingStreet, &apos;&apos;) 
+&amp; 
+IF(Consignee_House__r.BillingCity != null, &apos;, &apos;&amp;Consignee_House__r.BillingCity, &apos;&apos;) 
+&amp; 
+IF(Consignee_House__r.BillingPostalCode != null, &apos;, &apos;&amp;Consignee_House__r.BillingPostalCode, &apos;&apos;) 
+&amp; 
+IF(Consignee_House__r.BillingState != null, &apos;, &apos;&amp;Consignee_House__r.BillingState, &apos;&apos;) 
+&amp; 
+IF(Consignee_House__r.BillingCountry != null, &apos;, &apos;&amp;Consignee_House__r.BillingCountry, &apos;&apos;)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Consignee House Account Address</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Consignee_House_Account_Phone__c</fullName>
+        <externalId>false</externalId>
+        <formula>Consignee_House__r.Phone</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Consignee House Account Phone</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Consignee_House_Alternative_Account__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Consignee House Alternative Account</label>
+        <lookupFilter>
+            <active>true</active>
+            <filterItems>
+                <field>Account.RecordTypeId</field>
+                <operation>equals</operation>
+                <value>Consignee</value>
+            </filterItems>
+            <isOptional>true</isOptional>
+        </lookupFilter>
+        <referenceTo>Account</referenceTo>
+        <relationshipLabel>Waybills (Consignee House Alternative Account)</relationshipLabel>
+        <relationshipName>Waybills2</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Consignee_House_Alternative_Address__c</fullName>
+        <externalId>false</externalId>
+        <label>Consignee House Alternative Address</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>TextArea</type>
+    </fields>
+    <fields>
+        <fullName>Consignee_House_Alternative_Country__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Consignee House Alternative Country</label>
+        <referenceTo>Country__c</referenceTo>
+        <relationshipLabel>Waybills (Consignee House Alternative Country)</relationshipLabel>
+        <relationshipName>Waybills2</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Consignee_House_Alternative_Location__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Consignee House Alternative Location</label>
+        <lookupFilter>
+            <active>true</active>
+            <filterItems>
+                <field>$Source.Consignee_House_Alternative_Country__c</field>
+                <operation>equals</operation>
+                <valueField>Location__c.Country__c</valueField>
+            </filterItems>
+            <isOptional>true</isOptional>
+        </lookupFilter>
+        <referenceTo>Location__c</referenceTo>
+        <relationshipLabel>Waybills (Consignee House Alternative Location)</relationshipLabel>
+        <relationshipName>Waybills2</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Consignee_House__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Consignee House</label>
+        <lookupFilter>
+            <active>true</active>
+            <filterItems>
+                <field>Account.RecordTypeId</field>
+                <operation>equals</operation>
+                <value>Consignee</value>
+            </filterItems>
+            <isOptional>true</isOptional>
+        </lookupFilter>
+        <referenceTo>Account</referenceTo>
+        <relationshipLabel>Waybills (Consignee House)</relationshipLabel>
+        <relationshipName>Waybills1</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Country_To_by_First_Carrier__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Country To (by First Carrier)</label>
+        <referenceTo>Country__c</referenceTo>
+        <relationshipName>Air_Waybills1</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Country_To_by_Second_Carrier__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Country To (by Second Carrier)</label>
+        <referenceTo>Country__c</referenceTo>
+        <relationshipName>Air_Waybills2</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Country_To_by_Third_Carrier__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Country To (by Third Carrier)</label>
+        <referenceTo>Country__c</referenceTo>
+        <relationshipName>Air_Waybills3</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Country_of_Departure__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Country of Departure</label>
+        <referenceTo>Country__c</referenceTo>
+        <relationshipName>Air_Waybills</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Country_of_Destination__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Country of Destination</label>
+        <referenceTo>Country__c</referenceTo>
+        <relationshipLabel>Waybills (Country of Destination)</relationshipLabel>
+        <relationshipName>Waybills</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Currency__c</fullName>
+        <externalId>false</externalId>
+        <label>Currency</label>
+        <length>3</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Date_of_Flight__c</fullName>
+        <externalId>false</externalId>
+        <label>ETD</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Declared_Value_For_Carriage__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>16
+            (Note: If empty, need to show &quot;NVD&quot;)</inlineHelpText>
+        <label>Declared Value For Carriage</label>
+        <precision>10</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Declared_Value_For_Customs__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>17
+            (Note: If empty, need to show &quot;NCV&quot;)</inlineHelpText>
+        <label>Declared Value For Customs</label>
+        <precision>10</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Direct_Shipment__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Direct Shipment</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Display_House_Number_on_PDF__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Display House Number on PDF</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Enable_Consignee_Alternative_Address__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Enable Consignee Alternative</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Enable_Consignee_House_Alt_Address__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Enable Consignee House Alternative</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Enable_Shipper_Alternative_Address__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Enable Shipper Alternative</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Executed_on_date__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>32A</inlineHelpText>
+        <label>Executed on (date)</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Flight_Number__c</fullName>
+        <externalId>false</externalId>
+        <label>Flight Number</label>
+        <length>6</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Handling_Information__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>20</inlineHelpText>
+        <label>Handling Information</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>TextArea</type>
+    </fields>
+    <fields>
+        <fullName>Hide_House_Totals__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Hide House Totals</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>House_Executive_Counter__c</fullName>
+        <externalId>false</externalId>
+        <label>House Executive Counter</label>
+        <length>3</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>House_Executive_Letter__c</fullName>
+        <externalId>false</externalId>
+        <label>House Executive Letter</label>
+        <length>1</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>House_Reference__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>House Reference</label>
+        <lookupFilter>
+            <active>true</active>
+            <filterItems>
+                <field>$Source.Id</field>
+                <operation>equals</operation>
+                <valueField>Waybill_Consolidation__c.Waybill__c</valueField>
+            </filterItems>
+            <isOptional>true</isOptional>
+        </lookupFilter>
+        <referenceTo>Waybill_Consolidation__c</referenceTo>
+        <relationshipLabel>Waybills</relationshipLabel>
+        <relationshipName>Waybills</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>IATA_Code_Manual__c</fullName>
+        <externalId>false</externalId>
+        <label>IATA Code Manual</label>
+        <length>14</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>IATA_Code__c</fullName>
+        <externalId>false</externalId>
+        <formula>Carriers_Agent_Account__r.IATA_Code__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <inlineHelpText>7</inlineHelpText>
+        <label>IATA Code</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Issuing_Carrier_s_Signature__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>32C</inlineHelpText>
+        <label>Issuing Carrier&apos;s Signature</label>
+        <length>24</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>MAWB_Number__c</fullName>
+        <externalId>false</externalId>
+        <formula>Airline_Code_Number__c+&apos;-&apos;+Serial_Number__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>MAWB_Number</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Nature_of_Goods__c</fullName>
+        <externalId>false</externalId>
+        <label>Nature of Goods MAWB</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>TextArea</type>
+    </fields>
+    <fields>
+        <fullName>Other_Charges_Count__c</fullName>
+        <externalId>false</externalId>
+        <label>Other Charges Count</label>
+        <summaryForeignKey>Waybill_Other_Charge__c.Waybill__c</summaryForeignKey>
+        <summaryOperation>count</summaryOperation>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Summary</type>
+    </fields>
+    <fields>
+        <fullName>Other_Charges_House__c</fullName>
+        <externalId>false</externalId>
+        <label>Other Charges House</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>TextArea</type>
+    </fields>
+    <fields>
+        <fullName>Other_Charges_Master__c</fullName>
+        <externalId>false</externalId>
+        <label>Other Charges Master</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>TextArea</type>
+    </fields>
+    <fields>
+        <fullName>Other_Charges__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>23</inlineHelpText>
+        <label>Other Charges</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>TextArea</type>
+    </fields>
+    <fields>
+        <fullName>Payment__c</fullName>
+        <externalId>false</externalId>
+        <label>Payment</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Prepaid</fullName>
+                    <default>false</default>
+                    <label>Prepaid</label>
+                </value>
+                <value>
+                    <fullName>Credit</fullName>
+                    <default>false</default>
+                    <label>Credit</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>Prepaid_Collect_House_Other__c</fullName>
+        <externalId>false</externalId>
+        <label>Prepaid/Collect House (Other)</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Prepaid</fullName>
+                    <default>false</default>
+                    <label>Prepaid</label>
+                </value>
+                <value>
+                    <fullName>Collect</fullName>
+                    <default>false</default>
+                    <label>Collect</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>Prepaid_Collect_House_WT_VAL__c</fullName>
+        <externalId>false</externalId>
+        <label>Prepaid/Collect House (WT/VAL)</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Prepaid</fullName>
+                    <default>false</default>
+                    <label>Prepaid</label>
+                </value>
+                <value>
+                    <fullName>Collect</fullName>
+                    <default>false</default>
+                    <label>Collect</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>Prepaid_Collect_Other__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>15A/15B</inlineHelpText>
+        <label>Prepaid/Collect (Other)</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Prepaid</fullName>
+                    <default>true</default>
+                    <label>Prepaid</label>
+                </value>
+                <value>
+                    <fullName>Collect</fullName>
+                    <default>false</default>
+                    <label>Collect</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>Prepaid_Collect_WT_VAL__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>14A/14B</inlineHelpText>
+        <label>Prepaid/Collect (WT/VAL)</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Prepaid</fullName>
+                    <default>false</default>
+                    <label>Prepaid</label>
+                </value>
+                <value>
+                    <fullName>Collect</fullName>
+                    <default>false</default>
+                    <label>Collect</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>Serial_Number__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>1B</inlineHelpText>
+        <label>Serial Number</label>
+        <length>8</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Shipment__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Shipment</label>
+        <referenceTo>Shipment__c</referenceTo>
+        <relationshipLabel>Waybills</relationshipLabel>
+        <relationshipName>Waybills</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Shipments_Program__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Shipments Program</label>
+        <referenceTo>Shipment_Program__c</referenceTo>
+        <relationshipName>Air_Waybills</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Shipper_Account_Address__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF(Shipper_Account__r.BillingStreet != null, Shipper_Account__r.BillingStreet, &apos;&apos;)
+            &amp;
+            IF(Shipper_Account__r.BillingCity != null, &apos;, &apos;&amp;Shipper_Account__r.BillingCity, &apos;&apos;)
+            &amp;
+            IF(Shipper_Account__r.BillingPostalCode != null, &apos;, &apos;&amp;Shipper_Account__r.BillingPostalCode, &apos;&apos;)
+            &amp;
+            IF(Shipper_Account__r.BillingState != null, &apos;, &apos;&amp;Shipper_Account__r.BillingState, &apos;&apos;)
+            &amp;
+            IF(Shipper_Account__r.BillingCountry != null, &apos;, &apos;&amp;Shipper_Account__r.BillingCountry, &apos;&apos;)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <inlineHelpText>2</inlineHelpText>
+        <label>Shipper Account Address</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Shipper_Account_Phone__c</fullName>
+        <externalId>false</externalId>
+        <formula>Shipper_Account__r.Phone</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <inlineHelpText>2</inlineHelpText>
+        <label>Shipper Account Phone</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Shipper_Account__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <inlineHelpText>2</inlineHelpText>
+        <label>Shipper Account</label>
+        <lookupFilter>
+            <active>true</active>
+            <filterItems>
+                <field>Account.RecordTypeId</field>
+                <operation>equals</operation>
+                <value>Shipper</value>
+            </filterItems>
+            <isOptional>true</isOptional>
+        </lookupFilter>
+        <referenceTo>Account</referenceTo>
+        <relationshipLabel>Waybills (Shipper Account)</relationshipLabel>
+        <relationshipName>Air_Waybills1</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Shipper_Alternative_Account__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Shipper Alternative Account</label>
+        <lookupFilter>
+            <active>true</active>
+            <filterItems>
+                <field>Account.RecordTypeId</field>
+                <operation>equals</operation>
+                <value>Shipper</value>
+            </filterItems>
+            <isOptional>true</isOptional>
+        </lookupFilter>
+        <referenceTo>Account</referenceTo>
+        <relationshipLabel>Waybills (Shipper Alternative Account)</relationshipLabel>
+        <relationshipName>Waybills3</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Shipper_Alternative_Address__c</fullName>
+        <externalId>false</externalId>
+        <label>Shipper Alternative Address</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>TextArea</type>
+    </fields>
+    <fields>
+        <fullName>Shipper_Alternative_Country__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Shipper Alternative Country</label>
+        <referenceTo>Country__c</referenceTo>
+        <relationshipLabel>Waybills (Shipper Alternative Country)</relationshipLabel>
+        <relationshipName>Waybills3</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Shipper_Alternative_Location__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Shipper Alternative Location</label>
+        <lookupFilter>
+            <active>true</active>
+            <filterItems>
+                <field>$Source.Shipper_Alternative_Country__c</field>
+                <operation>equals</operation>
+                <valueField>Location__c.Country__c</valueField>
+            </filterItems>
+            <isOptional>true</isOptional>
+        </lookupFilter>
+        <referenceTo>Location__c</referenceTo>
+        <relationshipLabel>Waybills (Shipper Alternative Location)</relationshipLabel>
+        <relationshipName>Waybills3</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Shipper_s_Signature__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>31</inlineHelpText>
+        <label>Shipper&apos;s Signature</label>
+        <length>24</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Site_of_Destination__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Site of Destination</label>
+        <lookupFilter>
+            <active>true</active>
+            <filterItems>
+                <field>Location__c.Country__c</field>
+                <operation>equals</operation>
+                <valueField>$Source.Country_of_Destination__c</valueField>
+            </filterItems>
+            <isOptional>true</isOptional>
+        </lookupFilter>
+        <referenceTo>Location__c</referenceTo>
+        <relationshipLabel>Waybills (Site of Destination)</relationshipLabel>
+        <relationshipName>Waybills</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Special_Customs_Information__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>21A</inlineHelpText>
+        <label>Special Customs Information</label>
+        <length>50</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Tax_House__c</fullName>
+        <externalId>false</externalId>
+        <label>Tax House</label>
+        <precision>10</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Tax_Master__c</fullName>
+        <externalId>false</externalId>
+        <label>Tax Master</label>
+        <precision>10</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Tax__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>26A/26B</inlineHelpText>
+        <label>Tax</label>
+        <precision>10</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Total_Chargeable_Weight__c</fullName>
+        <externalId>false</externalId>
+        <formula>MAX(Total_Gross_Weight__c,Total_Volumetric_Weight__c)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Total Chargeable Weight</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Total_Collect_House_SBR__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF( ISPICKVAL(Prepaid_Collect_House_WT_VAL__c , &quot;Collect&quot;) , Total_WT_VAL_House__c, 0) + IF( ISPICKVAL( Prepaid_Collect_House_Other__c , &quot;Collect&quot;) , Total_Other_House__c, 0)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Total Collect House SBR</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Total_Collect_House__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF( ISPICKVAL(Prepaid_Collect_House_WT_VAL__c , &quot;Collect&quot;) , Total_WT_VAL__c, 0) + IF( ISPICKVAL( Prepaid_Collect_House_Other__c , &quot;Collect&quot;) , Total_Other__c, 0)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Total Collect House</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Total_Collect_Master_SBR__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF( ISPICKVAL(Prepaid_Collect_WT_VAL__c , &quot;Collect&quot;) , Total_WT_VAL_Master__c , 0) + IF( ISPICKVAL( Prepaid_Collect_Other__c , &quot;Collect&quot;) , Total_Other_Master__c, 0)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Total Collect Master SBR</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Total_Collect__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF( ISPICKVAL(Prepaid_Collect_WT_VAL__c , &quot;Collect&quot;) , Total_WT_VAL__c , 0) + IF( ISPICKVAL( Prepaid_Collect_Other__c , &quot;Collect&quot;) , Total_Other__c , 0)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Total Collect</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Total_Gross_Weight__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>22K</inlineHelpText>
+        <label>Total Gross Weight</label>
+        <summarizedField>Air_Waybill_Line__c.Gross_Weight__c</summarizedField>
+        <summaryForeignKey>Air_Waybill_Line__c.Air_Waybill__c</summaryForeignKey>
+        <summaryOperation>sum</summaryOperation>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Summary</type>
+    </fields>
+    <fields>
+        <fullName>Total_Number_of_Pieces__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>22J</inlineHelpText>
+        <label>Total Number of Pieces</label>
+        <summarizedField>Air_Waybill_Line__c.No_of_Pieces__c</summarizedField>
+        <summaryForeignKey>Air_Waybill_Line__c.Air_Waybill__c</summaryForeignKey>
+        <summaryOperation>sum</summaryOperation>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Summary</type>
+    </fields>
+    <fields>
+        <fullName>Total_Other_Charges_Due_Agent_House__c</fullName>
+        <externalId>false</externalId>
+        <label>Total Other Charges Due Agent House</label>
+        <precision>10</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Total_Other_Charges_Due_Agent_Master__c</fullName>
+        <externalId>false</externalId>
+        <label>Total Other Charges Due Agent Master</label>
+        <precision>10</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Total_Other_Charges_Due_Agent__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>27A/27B
+            (Note: See Weight Charges Above)</inlineHelpText>
+        <label>Total Other Charges Due Agent</label>
+        <precision>10</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Total_Other_Charges_Due_House__c</fullName>
+        <externalId>false</externalId>
+        <label>Total Other Charges Due House</label>
+        <precision>10</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Total_Other_Charges_Due_Master__c</fullName>
+        <externalId>false</externalId>
+        <label>Total Other Charges Due Master</label>
+        <precision>10</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Total_Other_Charges_Due__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>28A/28B</inlineHelpText>
+        <label>Total Other Charges Due Carrier</label>
+        <precision>10</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Total_Other_House__c</fullName>
+        <externalId>false</externalId>
+        <formula>Total_Other_Charges_Due_Agent_House__c + Total_Other_Charges_Due_House__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Total Other House</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Total_Other_Master__c</fullName>
+        <externalId>false</externalId>
+        <formula>Total_Other_Charges_Due_Agent_Master__c + Total_Other_Charges_Due_Master__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Total Other Master</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Total_Other__c</fullName>
+        <externalId>false</externalId>
+        <formula>Total_Other_Charges_Due_Agent__c + Total_Other_Charges_Due__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Total Other</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Total_Prepaid_House_SBR__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF( ISPICKVAL(Prepaid_Collect_House_WT_VAL__c , &quot;Prepaid&quot;) , Total_WT_VAL_House__c, 0) + IF( ISPICKVAL( Prepaid_Collect_House_Other__c , &quot;Prepaid&quot;) , Total_Other_House__c, 0)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Total Prepaid House SBR</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Total_Prepaid_House__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF( ISPICKVAL(Prepaid_Collect_House_WT_VAL__c , &quot;Prepaid&quot;) , Total_WT_VAL__c, 0) + IF( ISPICKVAL( Prepaid_Collect_House_Other__c , &quot;Prepaid&quot;) , Total_Other__c, 0)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Total Prepaid House</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Total_Prepaid_Master_SBR__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF( ISPICKVAL(Prepaid_Collect_WT_VAL__c , &quot;Prepaid&quot;) , Total_WT_VAL_Master__c, 0) + IF( ISPICKVAL( Prepaid_Collect_Other__c , &quot;Prepaid&quot;) , Total_Other_Master__c, 0)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Total Prepaid Master SBR</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Total_Prepaid__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF( ISPICKVAL(Prepaid_Collect_WT_VAL__c , &quot;Prepaid&quot;) , Total_WT_VAL__c , 0) + IF( ISPICKVAL( Prepaid_Collect_Other__c , &quot;Prepaid&quot;) , Total_Other__c , 0)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Total Prepaid</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Total_Rate_Charge_House__c</fullName>
+        <externalId>false</externalId>
+        <label>Total Rate/Charge House</label>
+        <summarizedField>Air_Waybill_Line__c.Rate_Charge_House__c</summarizedField>
+        <summaryForeignKey>Air_Waybill_Line__c.Air_Waybill__c</summaryForeignKey>
+        <summaryOperation>sum</summaryOperation>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Summary</type>
+    </fields>
+    <fields>
+        <fullName>Total_Rate_Charge_Master__c</fullName>
+        <externalId>false</externalId>
+        <label>Total Rate/Charge Master</label>
+        <summarizedField>Air_Waybill_Line__c.Rate_Charge_Master__c</summarizedField>
+        <summaryForeignKey>Air_Waybill_Line__c.Air_Waybill__c</summaryForeignKey>
+        <summaryOperation>sum</summaryOperation>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Summary</type>
+    </fields>
+    <fields>
+        <fullName>Total_Rate_Charge__c</fullName>
+        <externalId>false</externalId>
+        <label>Total Rate/Charge</label>
+        <summarizedField>Air_Waybill_Line__c.Rate_Charge__c</summarizedField>
+        <summaryForeignKey>Air_Waybill_Line__c.Air_Waybill__c</summaryForeignKey>
+        <summaryOperation>sum</summaryOperation>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Summary</type>
+    </fields>
+    <fields>
+        <fullName>Total_Service_Charges_House__c</fullName>
+        <externalId>false</externalId>
+        <label>Total Service Charges House</label>
+        <summarizedField>Air_Waybill_Line__c.Total_Service_Charge_House__c</summarizedField>
+        <summaryForeignKey>Air_Waybill_Line__c.Air_Waybill__c</summaryForeignKey>
+        <summaryOperation>sum</summaryOperation>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Summary</type>
+    </fields>
+    <fields>
+        <fullName>Total_Service_Charges_Master__c</fullName>
+        <externalId>false</externalId>
+        <label>Total Service Charges Master</label>
+        <summarizedField>Air_Waybill_Line__c.Total_Service_Charge_Master__c</summarizedField>
+        <summaryForeignKey>Air_Waybill_Line__c.Air_Waybill__c</summaryForeignKey>
+        <summaryOperation>sum</summaryOperation>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Summary</type>
+    </fields>
+    <fields>
+        <fullName>Total_Service_Charges__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>22L
+            Note: If zero, needs to display &quot;AS AGREED&quot;</inlineHelpText>
+        <label>Total Service Charges</label>
+        <summarizedField>Air_Waybill_Line__c.Total_Service_Charge__c</summarizedField>
+        <summaryForeignKey>Air_Waybill_Line__c.Air_Waybill__c</summaryForeignKey>
+        <summaryOperation>sum</summaryOperation>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Summary</type>
+    </fields>
+    <fields>
+        <fullName>Total_Volumetric_Weight__c</fullName>
+        <externalId>false</externalId>
+        <label>Total Volumetric Weight</label>
+        <summarizedField>Air_Waybill_Line__c.Volumetric_Weight__c</summarizedField>
+        <summaryForeignKey>Air_Waybill_Line__c.Air_Waybill__c</summaryForeignKey>
+        <summaryOperation>sum</summaryOperation>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Summary</type>
+    </fields>
+    <fields>
+        <fullName>Total_WT_VAL_House__c</fullName>
+        <externalId>false</externalId>
+        <formula>Weight_Charge_House__c + Valuation_Charge_House__c + Tax_House__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Total WT/VAL House</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Total_WT_VAL_Master__c</fullName>
+        <externalId>false</externalId>
+        <formula>Weight_Charge_Master__c + Valuation_Charge_Master__c + Tax_Master__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Total WT/VAL Master</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Total_WT_VAL__c</fullName>
+        <externalId>false</externalId>
+        <formula>Weight_Charge__c + Valuation_Charge__c + Tax__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Total WT/VAL</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Valuation_Charge_House__c</fullName>
+        <externalId>false</externalId>
+        <label>Valuation Charge House</label>
+        <precision>10</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Valuation_Charge_Master__c</fullName>
+        <externalId>false</externalId>
+        <label>Valuation Charge Master</label>
+        <precision>10</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Valuation_Charge__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>25A/25B</inlineHelpText>
+        <label>Valuation Charge</label>
+        <precision>10</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Waybill_Master__c</fullName>
+        <externalId>false</externalId>
+        <label>Waybill Master</label>
+        <referenceTo>Waybill_Master__c</referenceTo>
+        <relationshipLabel>Waybills</relationshipLabel>
+        <relationshipName>Waybills</relationshipName>
+        <relationshipOrder>0</relationshipOrder>
+        <reparentableMasterDetail>false</reparentableMasterDetail>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>MasterDetail</type>
+        <writeRequiresMasterRead>false</writeRequiresMasterRead>
+    </fields>
+    <fields>
+        <fullName>Waybill_Status__c</fullName>
+        <externalId>false</externalId>
+        <label>Waybill Status</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Created</fullName>
+                    <default>false</default>
+                    <label>Created</label>
+                </value>
+                <value>
+                    <fullName>Sent</fullName>
+                    <default>false</default>
+                    <label>Sent</label>
+                </value>
+                <value>
+                    <fullName>Processed by airline</fullName>
+                    <default>false</default>
+                    <label>Processed by airline</label>
+                </value>
+                <value>
+                    <fullName>Processed with errors</fullName>
+                    <default>false</default>
+                    <label>Processed with errors</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>Weight_Charge_House__c</fullName>
+        <externalId>false</externalId>
+        <label>Weight Charge House</label>
+        <precision>10</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Weight_Charge_Master__c</fullName>
+        <externalId>false</externalId>
+        <label>Weight Charge Master</label>
+        <precision>10</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Weight_Charge__c</fullName>
+        <description>24A/24B 
+(Note: Dependent upon value selected in Prepaid/Collect (WT/VAL) - Prepaid: 24A Collect:24B)</description>
+        <externalId>false</externalId>
+        <label>Weight Charge</label>
+        <summarizedField>Air_Waybill_Line__c.Total_Service_Charge__c</summarizedField>
+        <summaryForeignKey>Air_Waybill_Line__c.Air_Waybill__c</summaryForeignKey>
+        <summaryOperation>sum</summaryOperation>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Summary</type>
+    </fields>
+    <fields>
+        <fullName>at_place__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>32B</inlineHelpText>
+        <label>at (place)</label>
+        <length>24</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <label>Waybill</label>
+    <listViews>
+        <fullName>All</fullName>
+        <columns>NAME</columns>
+        <columns>Carrier_Account__c</columns>
+        <columns>CREATED_DATE</columns>
+        <filterScope>Everything</filterScope>
+        <label>All</label>
+    </listViews>
+    <listViews>
+        <fullName>All1</fullName>
+        <filterScope>Everything</filterScope>
+        <label>All</label>
+    </listViews>
+    <nameField>
+        <label>Waybill Number</label>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+    </nameField>
+    <pluralLabel>Waybills</pluralLabel>
+    <searchLayouts>
+        <customTabListAdditionalFields>Airport_of_Departure__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Carrier_Account__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Shipper_Account__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Consignee_Account__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Carriers_Agent_Account__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Airport_To_by_First_Carrier__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Airport_To_by_Second_Carrier__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Total_Number_of_Pieces__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Total_Gross_Weight__c</customTabListAdditionalFields>
+        <lookupDialogsAdditionalFields>Airport_of_Departure__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>Carrier_Account__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>Shipper_Account__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>Consignee_Account__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>Carriers_Agent_Account__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>Airport_To_by_First_Carrier__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>Airport_To_by_Second_Carrier__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>Total_Number_of_Pieces__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>Total_Gross_Weight__c</lookupDialogsAdditionalFields>
+        <searchResultsAdditionalFields>Airport_of_Departure__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Carrier_Account__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Shipper_Account__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Consignee_Account__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Carriers_Agent_Account__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Airport_To_by_First_Carrier__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Airport_To_by_Second_Carrier__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Total_Number_of_Pieces__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Total_Gross_Weight__c</searchResultsAdditionalFields>
+    </searchLayouts>
+    <sharingModel>ControlledByParent</sharingModel>
+    <validationRules>
+        <fullName>Other_Charges_Max_9</fullName>
+        <active>false</active>
+        <errorConditionFormula>Other_Charges_Count__c &gt; 9</errorConditionFormula>
+        <errorMessage>Other Charges has a maximum of 9</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>WT_VAL_equal_Other_Prepaid_Collect_House</fullName>
+        <active>false</active>
+        <errorConditionFormula>TEXT(Prepaid_Collect_House_WT_VAL__c) &lt;&gt; TEXT(Prepaid_Collect_House_Other__c)</errorConditionFormula>
+        <errorDisplayField>Prepaid_Collect_House_WT_VAL__c</errorDisplayField>
+        <errorMessage>Prepaid/Collect House (WT/VAL) must be equal to Prepaid/Collect House (Other)</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>WT_VAL_equals_Other_Prepaid_Collect</fullName>
+        <active>false</active>
+        <errorConditionFormula>TEXT(Prepaid_Collect_WT_VAL__c) &lt;&gt; TEXT(Prepaid_Collect_Other__c)</errorConditionFormula>
+        <errorDisplayField>Prepaid_Collect_WT_VAL__c</errorDisplayField>
+        <errorMessage>Prepaid / Collect (WT / VAL) must be equal to Prepaid / Collect (Other)</errorMessage>
+    </validationRules>
+    <visibility>Public</visibility>
+    <webLinks>
+        <fullName>Generate_House_Air_Waybill_PDF</fullName>
+        <availability>online</availability>
+        <displayType>button</displayType>
+        <linkType>javascript</linkType>
+        <masterLabel>Generate House Air Waybill PDF</masterLabel>
+        <openType>onClickJavaScript</openType>
+        <protected>false</protected>
+        <url>window.open(&apos;{!$Site.BaseUrl}/apex/NEU_Air_Waybills_save_PDF?id={!Air_Waybill__c.Id}&amp;type=house&apos;, &apos;_blank&apos;);</url>
+    </webLinks>
+    <webLinks>
+        <fullName>Generate_Manifest_PDF</fullName>
+        <availability>online</availability>
+        <displayType>button</displayType>
+        <linkType>javascript</linkType>
+        <masterLabel>Generate Manifest PDF</masterLabel>
+        <openType>onClickJavaScript</openType>
+        <protected>false</protected>
+        <url>window.open(&apos;{!$Site.BaseUrl}/apex/NEU_Air_Manifest_save_PDF?id={!Air_Waybill__c.Id}&apos;, &apos;_blank&apos;);</url>
+    </webLinks>
+    <webLinks>
+        <fullName>Generate_Master_Air_Waybill_PDF</fullName>
+        <availability>online</availability>
+        <displayType>button</displayType>
+        <linkType>javascript</linkType>
+        <masterLabel>Generate Master Air Waybill PDF</masterLabel>
+        <openType>onClickJavaScript</openType>
+        <protected>false</protected>
+        <url>window.open(&apos;{!$Site.BaseUrl}/apex/NEU_Air_Waybills_save_PDF?id={!Air_Waybill__c.Id}&amp;type=master&apos;, &apos;_blank&apos;);</url>
+    </webLinks>
+    <webLinks>
+        <fullName>Recalculate</fullName>
+        <availability>online</availability>
+        <displayType>button</displayType>
+        <height>600</height>
+        <linkType>page</linkType>
+        <masterLabel>Recalculate</masterLabel>
+        <openType>sidebar</openType>
+        <page>NEU_Air_Waybill_Recalculate</page>
+        <protected>false</protected>
+    </webLinks>
+</CustomObject>

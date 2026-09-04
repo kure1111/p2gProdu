@@ -1,0 +1,1073 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <allowInChatterGroups>false</allowInChatterGroups>
+    <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
+    <deploymentStatus>Deployed</deploymentStatus>
+    <description>Specifies transport fees associated to an Import-Export. Child object from &quot;Freight Rates Management&quot;</description>
+    <enableActivities>false</enableActivities>
+    <enableBulkApi>true</enableBulkApi>
+    <enableFeeds>false</enableFeeds>
+    <enableHistory>true</enableHistory>
+    <enableLicensing>false</enableLicensing>
+    <enableReports>true</enableReports>
+    <enableSearch>true</enableSearch>
+    <enableSharing>true</enableSharing>
+    <enableStreamingApi>true</enableStreamingApi>
+    <externalSharingModel>ControlledByParent</externalSharingModel>
+    <fields>
+        <fullName>Buy_Amount__c</fullName>
+        <description>If &quot;Quote Buy Price&quot; positive then maximum value between &quot;Quote Buy Price&quot; x &quot;Units&quot; or &quot;Min Amount&quot;
+If &quot;Quote Buy Price&quot; negative then minimum value between &quot;Quote Buy Price&quot; x &quot;Units&quot; or &quot;Min Amount&quot;</description>
+        <externalId>false</externalId>
+        <formula>IF(Quote_Buy_Price__c &gt;= 0 ,MAX (Quote_Buy_Price__c * Units__c, IF((ISNULL(Quote_Buy_Price__c)== true) || (Quote_Buy_Price__c = 0), 0, Min_Amount__c ) ), MIN (Quote_Buy_Price__c* Units__c, IF((ISNULL(Quote_Buy_Price__c )== true) || (Quote_Buy_Price__c = 0), 0, - Min_Amount__c ) ) )</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <inlineHelpText>Highest value between &quot;Quote Buy Price&quot; x &quot;Units&quot; and &quot;Min Amount&quot;</inlineHelpText>
+        <label>Std. Buy Amount</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Buy_Amount_header_currency__c</fullName>
+        <externalId>false</externalId>
+        <formula>Buy_Amount__c * Conversion_Rate_to_Currency_Header__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Std. Buy Amount (header currency)</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Buy_Rate__c</fullName>
+        <description>&quot;Buy Rate&quot; as specified on Service Rate Name</description>
+        <externalId>false</externalId>
+        <formula>Service_Rate_Name__r.Buy_Rate__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <inlineHelpText>&quot;Buy Rate&quot; as specified on Service Rate Name</inlineHelpText>
+        <label>Buy Rate</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Carrier__c</fullName>
+        <externalId>false</externalId>
+        <formula>Service_Rate_Name__r.Carrier_Account__r.Name</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Carrier</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Concept_1_Sell_Price__c</fullName>
+        <externalId>false</externalId>
+        <label>Concept 1 Sell Price</label>
+        <precision>10</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Concept_1__c</fullName>
+        <description>Specifies type of freight taken</description>
+        <externalId>false</externalId>
+        <formula>Service_Rate_Name__r.Concept_1__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <inlineHelpText>Associates to &quot;Service Rate Name&quot; form taken</inlineHelpText>
+        <label>Concept 1</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Concept_2_Sell_Price__c</fullName>
+        <externalId>false</externalId>
+        <label>Concept 2 Sell Price</label>
+        <precision>10</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Concept_2__c</fullName>
+        <description>Specifies type of freight taken</description>
+        <externalId>false</externalId>
+        <formula>Service_Rate_Name__r.Concept_2__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Concept 2</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Concept_3_Sell_Price__c</fullName>
+        <externalId>false</externalId>
+        <label>Concept 3 Sell Price</label>
+        <precision>10</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Concept_3__c</fullName>
+        <description>Specifies type of freight taken</description>
+        <externalId>false</externalId>
+        <formula>Service_Rate_Name__r.Concept_3__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Concept 3</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Concept_4_Sell_Price__c</fullName>
+        <externalId>false</externalId>
+        <label>Concept 4 Sell Price</label>
+        <precision>10</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Concept_4__c</fullName>
+        <description>Specifies type of freight taken</description>
+        <externalId>false</externalId>
+        <formula>Service_Rate_Name__r.Concept_4__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Concept 4</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Concept_5_Sell_Price__c</fullName>
+        <externalId>false</externalId>
+        <label>Concept 5 Sell Price</label>
+        <precision>10</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Concept_5__c</fullName>
+        <description>Specifies type of freight taken</description>
+        <externalId>false</externalId>
+        <formula>Service_Rate_Name__r.Concept_5__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Concept 5</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Conversion_Rate_to_Buy_Currency_Header__c</fullName>
+        <externalId>false</externalId>
+        <label>Conversion Rate to Buy Currency Header</label>
+        <precision>12</precision>
+        <required>false</required>
+        <scale>4</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Conversion_Rate_to_Currency_Header__c</fullName>
+        <defaultValue>1</defaultValue>
+        <externalId>false</externalId>
+        <label>Conversion Rate to Currency Header</label>
+        <precision>12</precision>
+        <required>false</required>
+        <scale>4</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Currency_Buy_Price__c</fullName>
+        <externalId>false</externalId>
+        <label>Currency Buy Price</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>MXN</fullName>
+                    <default>false</default>
+                    <label>MXN</label>
+                </value>
+                <value>
+                    <fullName>EUR</fullName>
+                    <default>false</default>
+                    <label>EUR</label>
+                </value>
+                <value>
+                    <fullName>USD</fullName>
+                    <default>false</default>
+                    <label>USD</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>Disbursement_Outstanding_Balance__c</fullName>
+        <description>Conversion to currency of &quot;Buy Amount&quot; - &quot;Total Amount Allocated On Disbursements&quot;, from Disbursement Outstanding Balance Roll-Up</description>
+        <externalId>false</externalId>
+        <formula>Buy_Amount__c - Total_Amount_Allocated_On_Disbursements__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <inlineHelpText>&quot;Buy Amount&quot; - &quot;Total Amount Allocated On Disbursements&quot;</inlineHelpText>
+        <label>Disbursement Outstanding Balance</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Discount__c</fullName>
+        <externalId>false</externalId>
+        <label>% Discount</label>
+        <precision>4</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Percent</type>
+    </fields>
+    <fields>
+        <fullName>Ext_Serv_Rate_Name_IMPK__c</fullName>
+        <externalId>false</externalId>
+        <label>Ext Serv Rate Name</label>
+        <length>100</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Ext_Service_Line_IMPK__c</fullName>
+        <externalId>false</externalId>
+        <label>Ext Service Line</label>
+        <length>30</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Extension_Service_Name__c</fullName>
+        <externalId>false</externalId>
+        <label>Comments Service Line</label>
+        <length>250</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>FNQTC__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>FNQTC</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Group__c</fullName>
+        <externalId>false</externalId>
+        <formula>TEXT(Service_Rate_Name__r.Group__c)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Group</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Impak_Check__c</fullName>
+        <externalId>false</externalId>
+        <label>Impak</label>
+        <length>10</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Import_Export_Quote__c</fullName>
+        <externalId>false</externalId>
+        <label>Import-Export Quote/Order</label>
+        <referenceTo>Customer_Quote__c</referenceTo>
+        <relationshipLabel>Import-Export Service Lines</relationshipLabel>
+        <relationshipName>Import_Export_Fees_Lines</relationshipName>
+        <relationshipOrder>0</relationshipOrder>
+        <reparentableMasterDetail>true</reparentableMasterDetail>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>MasterDetail</type>
+        <writeRequiresMasterRead>true</writeRequiresMasterRead>
+    </fields>
+    <fields>
+        <fullName>Import_Export_Service_Line__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <inlineHelpText>Specify Import-Export Quote/Order first</inlineHelpText>
+        <label>Base Import-Export Service Line</label>
+        <lookupFilter>
+            <active>true</active>
+            <filterItems>
+                <field>$Source.Import_Export_Quote__c</field>
+                <operation>equals</operation>
+                <valueField>Import_Export_Fee_Line__c.Import_Export_Quote__c</valueField>
+            </filterItems>
+            <isOptional>false</isOptional>
+        </lookupFilter>
+        <referenceTo>Import_Export_Fee_Line__c</referenceTo>
+        <relationshipLabel>Import-Export Service Lines</relationshipLabel>
+        <relationshipName>Import_Export_Service_Lines</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Invoice_Outstanding_Balance__c</fullName>
+        <description>Conversion to currency of &quot;Sell Amount&quot; - &quot;Invoiced Amount&quot;</description>
+        <externalId>false</externalId>
+        <formula>Sell_Amount__c - Invoiced_Amount__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <inlineHelpText>&quot;Sell Amount&quot; - &quot;Invoiced Amount&quot;</inlineHelpText>
+        <label>Invoice Outstanding Balance</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Invoiced_Amount__c</fullName>
+        <externalId>false</externalId>
+        <label>Invoiced Amount</label>
+        <summarizedField>Import_Export_Service_Line_Invoice__c.Amount_Allocated_Service_Line_Currency__c</summarizedField>
+        <summaryForeignKey>Import_Export_Service_Line_Invoice__c.Import_Export_Service_Line__c</summaryForeignKey>
+        <summaryOperation>sum</summaryOperation>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Summary</type>
+    </fields>
+    <fields>
+        <fullName>Min_Amount__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Minimum Amount applicable to the Service Rate</inlineHelpText>
+        <label>Min Amount</label>
+        <precision>10</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>New_Rate_Category__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF( Ext_Service_Line_IMPK__c = &quot;&quot;, Service_Rate_Category__c, &quot;Impak POL Charges&quot;)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>New Rate Category</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>New_Rate_Name__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF( Ext_Service_Line_IMPK__c   = &quot;&quot;,  Service_Rate_Name__r.Name ,  Ext_Serv_Rate_Name_IMPK__c )</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>New Rate Name</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Precio_sugerido__c</fullName>
+        <externalId>false</externalId>
+        <formula>Quote_Buy_Price__c * (1.22)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Precio sugerido</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>ProfitServLine__c</fullName>
+        <externalId>false</externalId>
+        <formula>(Sell_Amount__c - Buy_Amount__c)/Sell_Amount__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>% Profit</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Percent</type>
+    </fields>
+    <fields>
+        <fullName>Quotation_Status__c</fullName>
+        <externalId>false</externalId>
+        <formula>TEXT(Import_Export_Quote__r.Quotation_Status__c)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Quotation Status</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Quote_Buy_Price_Number__c</fullName>
+        <externalId>false</externalId>
+        <label>Quote Buy Price Number</label>
+        <precision>10</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Quote_Buy_Price__c</fullName>
+        <externalId>false</externalId>
+        <label>Quote Std. Buy Price</label>
+        <precision>10</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Quote_Sell_Net_Price__c</fullName>
+        <description>Conversion to currency of &quot;Quote Sell Price&quot; x (1 - &quot;Discount&quot;)</description>
+        <externalId>false</externalId>
+        <formula>Quote_Sell_Price__c * (1 -  Discount__c  )</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <inlineHelpText>&quot;Quote Sell Price&quot; x (1 - &quot;Discount&quot;)</inlineHelpText>
+        <label>Quote Sell Net Price</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Quote_Sell_Price__c</fullName>
+        <externalId>false</externalId>
+        <label>Quote Sell Price</label>
+        <precision>10</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Rate_Type__c</fullName>
+        <externalId>false</externalId>
+        <formula>TEXT ( Service_Rate_Name__r.Rate_Type__c )</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Rate Type</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>SST_Sociedad__c</fullName>
+        <description>Consulta el valor de Sociedad en la Service Rate asociada a la Service Line</description>
+        <externalId>false</externalId>
+        <formula>Service_Rate_Name__r.SST_Sociedad__c</formula>
+        <label>Sociedad</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Sap_Comp_Code__c</fullName>
+        <externalId>false</externalId>
+        <formula>Service_Rate_Name__r.Sap_Comp_Code__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Sap Comp Code</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Sap_Service_Type_Buy__c</fullName>
+        <externalId>false</externalId>
+        <formula>Service_Rate_Name__r.SAP_Service_Type_Buy__r.Name</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Sap Service Type Buy</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Sap_Service_Type__c</fullName>
+        <externalId>false</externalId>
+        <formula>Service_Rate_Name__r.SAP_Service_Type__r.Name</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Sap Service Type Sell</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Sell_Amount_Number__c</fullName>
+        <externalId>false</externalId>
+        <formula>Sell_Amount__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Sell Amount Number</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Sell_Amount__c</fullName>
+        <description>Conversion to currency of &quot;Sell Gross Amount&quot; x (1 - &quot;Discount&quot;)</description>
+        <externalId>false</externalId>
+        <formula>Sell_Gross_Amount__c * (1 - Discount__c )</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <inlineHelpText>&quot;Sell Gross Amount&quot; x (1 - &quot;Discount&quot;)</inlineHelpText>
+        <label>Sell Net Amount</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Sell_Amount_header_currency__c</fullName>
+        <externalId>false</externalId>
+        <formula>Sell_Amount__c * Conversion_Rate_to_Currency_Header__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Sell Net Amount (header currency)</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Sell_Gross_Amount__c</fullName>
+        <description>Conversion to currency of; highest value between &quot;Min Amount&quot; and (&quot;Quote Sell Price&quot; x &quot;Units&quot;), if &quot;Quote Sell Price&quot; greater or equal to 0, else product of &quot;Quote Sell Price&quot; and &quot;Units&quot;</description>
+        <externalId>false</externalId>
+        <formula>IF(Quote_Sell_Price__c &gt;= 0,MAX(Min_Amount__c, Quote_Sell_Price__c*Units__c),Quote_Sell_Price__c*Units__c)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <inlineHelpText>Highest value between &quot;Min Amount&quot; and (&quot;Quote Sell Price&quot; x &quot;Units&quot;)</inlineHelpText>
+        <label>Sell Gross Amount</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Sell_Rate__c</fullName>
+        <description>&quot;Fee Rate&quot; as specified on Service Rate Name</description>
+        <externalId>false</externalId>
+        <formula>Service_Rate_Name__r.Fee_Rate__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <inlineHelpText>&quot;Fee Rate&quot; as specified on Service Rate Name</inlineHelpText>
+        <label>Sell Rate</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Service_Profit__c</fullName>
+        <description>Conversion to currency of &quot;Sell Amount&quot; - &quot;Buy Amount&quot;, from Service Std. Profit Roll-Up</description>
+        <externalId>false</externalId>
+        <formula>Sell_Amount__c - Buy_Amount__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <inlineHelpText>&quot;Sell Amount&quot; - &quot;Buy Amount&quot;</inlineHelpText>
+        <label>Service Std. Profit</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Service_Rate_Category__c</fullName>
+        <externalId>false</externalId>
+        <formula>TEXT(Service_Rate_Name__r.Fee_Category__c)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Rate Category</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Service_Rate_Name__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Rate Name</label>
+        <referenceTo>Fee__c</referenceTo>
+        <relationshipLabel>Import-Export Service Lines</relationshipLabel>
+        <relationshipName>Import_Export_Fees_Lines</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Service_Rate__c</fullName>
+        <description>&quot;Fee&quot; as specified on Service Rate Name</description>
+        <externalId>false</externalId>
+        <formula>Service_Rate_Name__r.Fee__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <inlineHelpText>&quot;Fee&quot; as specified on Service Rate Name</inlineHelpText>
+        <label>% Service Rate</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Percent</type>
+    </fields>
+    <fields>
+        <fullName>Shipment_Service_Line__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Shipment Service Line</label>
+        <referenceTo>Shipment_Fee_Line__c</referenceTo>
+        <relationshipLabel>Import-Export Service Lines</relationshipLabel>
+        <relationshipName>Import_Export_Service_Lines</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Std_Buy_Amount_Number__c</fullName>
+        <externalId>false</externalId>
+        <formula>Buy_Amount__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Std Buy Amount Number</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Supply_Project__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Supply Project</label>
+        <referenceTo>Supply_Project__c</referenceTo>
+        <relationshipLabel>Import-Export Service Lines</relationshipLabel>
+        <relationshipName>Import_Export_Fee_Lines</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>TT_ServLines__c</fullName>
+        <externalId>false</externalId>
+        <formula>Service_Rate_Name__r.TT_Days__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>TT</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Tarifa_Creada_por__c</fullName>
+        <externalId>false</externalId>
+        <formula>CreatedBy.Profile.Name</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Tarifa Creada por</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Tarifario_ServRate__c</fullName>
+        <externalId>false</externalId>
+        <label>Tarifario ServRate</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Tarifario__c</fullName>
+        <externalId>false</externalId>
+        <formula>Service_Rate_Name__r.CustomRate__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Tarifario</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Total_Amount_Allocated_On_Disbursements__c</fullName>
+        <externalId>false</externalId>
+        <label>Total Amount Allocated On Disbursements</label>
+        <summarizedField>Import_Export_Service_Line_Disbursement__c.Amount_Allocated_Service_Line_Currency__c</summarizedField>
+        <summaryForeignKey>Import_Export_Service_Line_Disbursement__c.Import_Export_Service_Line__c</summaryForeignKey>
+        <summaryOperation>sum</summaryOperation>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Summary</type>
+    </fields>
+    <fields>
+        <fullName>Total_Amount_Disbursements_Hea_Currency__c</fullName>
+        <externalId>false</externalId>
+        <formula>Total_Amount_Allocated_On_Disbursements__c *  Conversion_Rate_to_Currency_Header__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Total Amount Disbursements(Hea Currency)</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Units__c</fullName>
+        <defaultValue>1</defaultValue>
+        <externalId>false</externalId>
+        <label>Units</label>
+        <precision>10</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Warehouse_Rate__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Warehouse Rate</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>route__c</fullName>
+        <externalId>false</externalId>
+        <formula>Service_Rate_Name__r.Route__r.Name</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>route</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <label>Import-Export Service Line</label>
+    <listViews>
+        <fullName>All</fullName>
+        <columns>Import_Export_Quote__c</columns>
+        <filterScope>Everything</filterScope>
+        <label>All</label>
+    </listViews>
+    <nameField>
+        <label>Service Line</label>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+    </nameField>
+    <pluralLabel>Import-Export Service Lines</pluralLabel>
+    <searchLayouts>
+        <customTabListAdditionalFields>Import_Export_Quote__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Service_Rate_Category__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Service_Rate_Name__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Extension_Service_Name__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Rate_Type__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Units__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Quote_Sell_Price__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Sell_Amount__c</customTabListAdditionalFields>
+        <lookupDialogsAdditionalFields>Import_Export_Quote__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>Service_Rate_Category__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>Service_Rate_Name__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>Extension_Service_Name__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>Rate_Type__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>Units__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>Quote_Sell_Price__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>Sell_Amount__c</lookupDialogsAdditionalFields>
+        <searchResultsAdditionalFields>Import_Export_Quote__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Service_Rate_Category__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Service_Rate_Name__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Extension_Service_Name__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Rate_Type__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Units__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Quote_Sell_Price__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Sell_Amount__c</searchResultsAdditionalFields>
+    </searchLayouts>
+    <sharingModel>ControlledByParent</sharingModel>
+    <validationRules>
+        <fullName>NoModificarQuoteSellPrice</fullName>
+        <active>false</active>
+        <description>No modificar el campo &apos;Quote Sell Price&apos; si el usuario tiene el perfil de PAK2GO Operaciones</description>
+        <errorConditionFormula>AND(
+  ISCHANGED(Quote_Sell_Price__c),
+  $Profile.Id = &apos;00e4T000000lL6S&apos;,
+  $User.Contado_Mgm__c = False,
+  $User.P2G_spot__c != &apos;Spot&apos;
+)</errorConditionFormula>
+        <errorDisplayField>Quote_Sell_Price__c</errorDisplayField>
+        <errorMessage>QSP-001: Usuario no permitido para modificar este campo. Solicitar la modificación del precio a comercial</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>No_se_acepta_1peso</fullName>
+        <active>false</active>
+        <errorConditionFormula>Quote_Buy_Price__c = 1</errorConditionFormula>
+        <errorMessage>No se puede colocar el valor de $1 en este campo</errorMessage>
+    </validationRules>
+    <visibility>Public</visibility>
+    <webLinks>
+        <fullName>create_service_line</fullName>
+        <availability>online</availability>
+        <displayType>massActionButton</displayType>
+        <encodingKey>UTF-8</encodingKey>
+        <height>600</height>
+        <linkType>url</linkType>
+        <masterLabel>Create Service Line</masterLabel>
+        <openType>noSidebar</openType>
+        <protected>false</protected>
+        <requireRowSelection>false</requireRowSelection>
+        <url>/lightning/n/Creaci_n_Quote_Service_Line?c__recordId={!Customer_Quote__c.Id}</url>
+    </webLinks>
+</CustomObject>

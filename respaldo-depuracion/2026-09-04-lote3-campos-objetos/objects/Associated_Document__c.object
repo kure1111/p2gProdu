@@ -1,0 +1,1066 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <allowInChatterGroups>false</allowInChatterGroups>
+    <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
+    <deploymentStatus>Deployed</deploymentStatus>
+    <description>Import space for documents created and associated to an Account, Import-Export and/or shipment.</description>
+    <enableActivities>true</enableActivities>
+    <enableBulkApi>true</enableBulkApi>
+    <enableFeeds>true</enableFeeds>
+    <enableHistory>true</enableHistory>
+    <enableLicensing>false</enableLicensing>
+    <enableReports>true</enableReports>
+    <enableSearch>true</enableSearch>
+    <enableSharing>true</enableSharing>
+    <enableStreamingApi>true</enableStreamingApi>
+    <externalSharingModel>ControlledByParent</externalSharingModel>
+    <fields>
+        <fullName>Account__c</fullName>
+        <externalId>false</externalId>
+        <label>Account</label>
+        <referenceTo>Account</referenceTo>
+        <relationshipLabel>Associated Documents</relationshipLabel>
+        <relationshipName>Associate_Documents</relationshipName>
+        <relationshipOrder>0</relationshipOrder>
+        <reparentableMasterDetail>true</reparentableMasterDetail>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>MasterDetail</type>
+        <writeRequiresMasterRead>true</writeRequiresMasterRead>
+    </fields>
+    <fields>
+        <fullName>Air_Waybill__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Air_Waybill</label>
+        <referenceTo>Air_Waybill__c</referenceTo>
+        <relationshipLabel>Associated Documents</relationshipLabel>
+        <relationshipName>Associated_Documents</relationshipName>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Available_for_Community__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Available for Community</label>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Claim__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Claim</label>
+        <referenceTo>Claim__c</referenceTo>
+        <relationshipLabel>Associated Documents</relationshipLabel>
+        <relationshipName>Associated_Documents</relationshipName>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Consolidation_Program__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Shipments Program</label>
+        <referenceTo>Shipment_Program__c</referenceTo>
+        <relationshipLabel>Associated Documents</relationshipLabel>
+        <relationshipName>Associated_Documents</relationshipName>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Document_Description__c</fullName>
+        <externalId>false</externalId>
+        <label>Document Description</label>
+        <length>100</length>
+        <required>false</required>
+        <trackFeedHistory>true</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Document_Reference__c</fullName>
+        <externalId>false</externalId>
+        <label>Document Reference</label>
+        <length>50</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Document_Type__c</fullName>
+        <externalId>false</externalId>
+        <label>Document Type</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Acuse</fullName>
+                    <default>false</default>
+                    <label>Acuse</label>
+                </value>
+                <value>
+                    <fullName>Bill of Lading</fullName>
+                    <default>false</default>
+                    <label>Bill of Lading</label>
+                </value>
+                <value>
+                    <fullName>Guía Consolidado</fullName>
+                    <default>false</default>
+                    <label>Guía Consolidado</label>
+                </value>
+                <value>
+                    <fullName>Contract</fullName>
+                    <default>false</default>
+                    <label>Contract</label>
+                </value>
+                <value>
+                    <fullName>Import Permit</fullName>
+                    <default>false</default>
+                    <label>Import Permit</label>
+                </value>
+                <value>
+                    <fullName>Customer Order</fullName>
+                    <default>false</default>
+                    <label>Customer Order</label>
+                </value>
+                <value>
+                    <fullName>Order Confirmation</fullName>
+                    <default>false</default>
+                    <label>Order Confirmation</label>
+                </value>
+                <value>
+                    <fullName>Technical Specifications</fullName>
+                    <default>false</default>
+                    <label>Technical Specifications</label>
+                </value>
+                <value>
+                    <fullName>Proforma Invoice</fullName>
+                    <default>false</default>
+                    <label>Proforma Invoice</label>
+                </value>
+                <value>
+                    <fullName>Commercial Invoice</fullName>
+                    <default>false</default>
+                    <label>Commercial Invoice</label>
+                </value>
+                <value>
+                    <fullName>Packaging List</fullName>
+                    <default>false</default>
+                    <label>Packaging List</label>
+                </value>
+                <value>
+                    <fullName>Shipping Line Instruction</fullName>
+                    <default>false</default>
+                    <label>Shipping Line Instruction</label>
+                </value>
+                <value>
+                    <fullName>Transport Delivery Instruction</fullName>
+                    <default>false</default>
+                    <label>Transport Delivery Instruction</label>
+                </value>
+                <value>
+                    <fullName>RFP</fullName>
+                    <default>false</default>
+                    <label>RFP</label>
+                </value>
+                <value>
+                    <fullName>Telex</fullName>
+                    <default>false</default>
+                    <label>Telex</label>
+                </value>
+                <value>
+                    <fullName>Op - Licencia</fullName>
+                    <default>false</default>
+                    <label>Op - Licencia</label>
+                </value>
+                <value>
+                    <fullName>Op - Tarjeta Circulacion</fullName>
+                    <default>false</default>
+                    <label>Op - Tarjeta Circulacion</label>
+                </value>
+                <value>
+                    <fullName>Op - Placas Unidad</fullName>
+                    <default>false</default>
+                    <label>Op - Placas Unidad</label>
+                </value>
+                <value>
+                    <fullName>Formato de Alta de Proveedor Firmado</fullName>
+                    <default>false</default>
+                    <label>Formato de Alta de Proveedor Firmado</label>
+                </value>
+                <value>
+                    <fullName>Comprobante de Domicilio</fullName>
+                    <default>false</default>
+                    <label>Comprobante de Domicilio</label>
+                </value>
+                <value>
+                    <fullName>IFE del Represéntate Legal</fullName>
+                    <default>false</default>
+                    <label>IFE del Represéntate Legal</label>
+                </value>
+                <value>
+                    <fullName>Poliza Vigente y del Prestador</fullName>
+                    <default>false</default>
+                    <label>Poliza Vigente y del Prestador</label>
+                </value>
+                <value>
+                    <fullName>Opinion de Cumplimiento Ante el SAT</fullName>
+                    <default>false</default>
+                    <label>Opinion de Cumplimiento Ante el SAT</label>
+                </value>
+                <value>
+                    <fullName>Convenio</fullName>
+                    <default>false</default>
+                    <label>Convenio</label>
+                </value>
+                <value>
+                    <fullName>Alta del SAT</fullName>
+                    <default>false</default>
+                    <label>Alta del SAT</label>
+                </value>
+                <value>
+                    <fullName>Factura Timbrada</fullName>
+                    <default>false</default>
+                    <label>Factura Timbrada</label>
+                </value>
+                <value>
+                    <fullName>Perfil de Conductores</fullName>
+                    <default>false</default>
+                    <label>Perfil de Conductores</label>
+                </value>
+                <value>
+                    <fullName>Negociación de tarifas</fullName>
+                    <default>false</default>
+                    <label>Negociación de tarifas</label>
+                </value>
+                <value>
+                    <fullName>MC Number</fullName>
+                    <default>false</default>
+                    <label>MC Number</label>
+                </value>
+                <value>
+                    <fullName>Ejemplo de Acuse</fullName>
+                    <default>false</default>
+                    <label>Ejemplo de Acuse</label>
+                </value>
+                <value>
+                    <fullName>Acta constitutiva</fullName>
+                    <default>false</default>
+                    <label>Acta constitutiva</label>
+                </value>
+                <value>
+                    <fullName>Poder notarial de representante Legal</fullName>
+                    <default>false</default>
+                    <label>Poder notarial de representante Legal</label>
+                </value>
+                <value>
+                    <fullName>Caratula Bancaria</fullName>
+                    <default>false</default>
+                    <label>Caratula Bancaria</label>
+                </value>
+                <value>
+                    <fullName>Solicitud de crédito</fullName>
+                    <default>false</default>
+                    <label>Solicitud de crédito</label>
+                </value>
+                <value>
+                    <fullName>Cedula Fiscal</fullName>
+                    <default>false</default>
+                    <label>Cedula Fiscal</label>
+                </value>
+                <value>
+                    <fullName>Constancia Visita Fotografia Del Negocio</fullName>
+                    <default>false</default>
+                    <label>Constancia Visita Fotografia Del Negocio</label>
+                </value>
+                <value>
+                    <fullName>Referencias Comerciales Adicionales</fullName>
+                    <default>false</default>
+                    <label>Referencias Comerciales Adicionales</label>
+                </value>
+                <value>
+                    <fullName>Devoluciones</fullName>
+                    <default>false</default>
+                    <label>Devoluciones</label>
+                </value>
+                <value>
+                    <fullName>Otros</fullName>
+                    <default>false</default>
+                    <label>Otros</label>
+                </value>
+                <value>
+                    <fullName>Cuenta de gastos</fullName>
+                    <default>false</default>
+                    <label>Cuenta de gastos</label>
+                </value>
+                <value>
+                    <fullName>Tarjeta Circulacion</fullName>
+                    <default>false</default>
+                    <label>Tarjeta Circulacion</label>
+                </value>
+                <value>
+                    <fullName>Tercerizado</fullName>
+                    <default>false</default>
+                    <label>Tercerizado</label>
+                </value>
+                <value>
+                    <fullName>Licencia</fullName>
+                    <default>false</default>
+                    <label>Licencia</label>
+                </value>
+                <value>
+                    <fullName>Debit Note</fullName>
+                    <default>false</default>
+                    <label>Debit Note</label>
+                </value>
+                <value>
+                    <fullName>Protocolo - Devoluciones</fullName>
+                    <default>false</default>
+                    <label>Protocolo - Devoluciones</label>
+                </value>
+                <value>
+                    <fullName>QR - Protocolo Devoluciones</fullName>
+                    <default>false</default>
+                    <label>QR - Protocolo Devoluciones</label>
+                </value>
+                <value>
+                    <fullName>Protocolo - Acuses</fullName>
+                    <default>false</default>
+                    <label>Protocolo - Acuses</label>
+                </value>
+                <value>
+                    <fullName>QR - Protocolo Acuses</fullName>
+                    <default>false</default>
+                    <label>QR - Protocolo Acuses</label>
+                </value>
+                <value>
+                    <fullName>Protocolo - Siniestros</fullName>
+                    <default>false</default>
+                    <label>Protocolo - Siniestros</label>
+                </value>
+                <value>
+                    <fullName>QR - Protocolo Siniestros</fullName>
+                    <default>false</default>
+                    <label>QR - Protocolo Siniestros</label>
+                </value>
+                <value>
+                    <fullName>Barras Logisticas</fullName>
+                    <default>false</default>
+                    <label>Barras Logisticas</label>
+                </value>
+                <value>
+                    <fullName>Vale de Resguardo</fullName>
+                    <default>false</default>
+                    <label>Vale de Resguardo</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>Document_URL__c</fullName>
+        <externalId>false</externalId>
+        <label>Document URL</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Url</type>
+    </fields>
+    <fields>
+        <fullName>Document__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF( Document_URL__c !=null,HYPERLINK(  MID($Api.Enterprise_Server_URL_300, FIND(&apos;/&apos;,$Api.Enterprise_Server_URL_300,9),FIND( &apos;/services&apos;, $Api.Enterprise_Server_URL_300)- FIND(&apos;/&apos;,$Api.Enterprise_Server_URL_300,9))+Document_URL__c  , IMAGE(&apos;/img/icon/contracts32.png&apos;,&apos;Document&apos;,32,32),&apos;_blank&apos;),IF(  Manual_Document_URL__c !=null,HYPERLINK(   Manual_Document_URL__c , IMAGE(&apos;/img/icon/contracts32.png&apos;,&apos;Document&apos;,32,32),&apos;_blank&apos;),null))</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Document</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>File_Content_Version_Id__c</fullName>
+        <externalId>false</externalId>
+        <label>File Content Version Id</label>
+        <length>30</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Import_Export_Quote__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Import-Export Quote</label>
+        <lookupFilter>
+            <active>true</active>
+            <filterItems>
+                <field>Customer_Quote__c.Account_for__c</field>
+                <operation>equals</operation>
+                <valueField>$Source.Account__c</valueField>
+            </filterItems>
+            <isOptional>true</isOptional>
+        </lookupFilter>
+        <referenceTo>Customer_Quote__c</referenceTo>
+        <relationshipLabel>Associated Documents</relationshipLabel>
+        <relationshipName>Associate_Documents</relationshipName>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Invoice__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Invoice</label>
+        <lookupFilter>
+            <active>true</active>
+            <filterItems>
+                <field>$Source.Account__c</field>
+                <operation>equals</operation>
+                <valueField>Invoice__c.Account__c</valueField>
+            </filterItems>
+            <isOptional>false</isOptional>
+        </lookupFilter>
+        <referenceTo>Invoice__c</referenceTo>
+        <relationshipLabel>Associated Documents</relationshipLabel>
+        <relationshipName>Associated_Documents</relationshipName>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>KPI_POD__c</fullName>
+        <externalId>false</externalId>
+        <formula>CreatedDate -  Unload_Time_Shipment__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>KPI POD</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Manual_Document_URL__c</fullName>
+        <externalId>false</externalId>
+        <label>Manual Document URL</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Url</type>
+    </fields>
+    <fields>
+        <fullName>Operadores__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Operadores</label>
+        <referenceTo>Operadores__c</referenceTo>
+        <relationshipLabel>Associated Documents</relationshipLabel>
+        <relationshipName>Associated_Documents</relationshipName>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Operations_Executive__c</fullName>
+        <externalId>false</externalId>
+        <formula>Shipment__r.Operation_Executive__r.FirstName &amp; &quot; &quot;&amp; Shipment__r.Operation_Executive__r.LastName</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Operations Executive</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Rti_Factura_Proveedor__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF( ISPICKVAL(Document_Type__c,&quot;Business Specifications&quot;),True, False)</formula>
+        <label>Factura Proveedor</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>SCM_Contract__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>SCM Contract</label>
+        <referenceTo>SCM_Contract__c</referenceTo>
+        <relationshipLabel>Associated Documents</relationshipLabel>
+        <relationshipName>Associated_Documents</relationshipName>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>SP_Service__c</fullName>
+        <externalId>false</externalId>
+        <formula>Shipment__r.ShipmentService__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>SP Service</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Shipment_Carrier__c</fullName>
+        <externalId>false</externalId>
+        <formula>Shipment__r.Carrier__r.Name</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Shipment Carrier</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Shipment_Consolidation_Data__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Shipment Consolidation Data</label>
+        <lookupFilter>
+            <active>true</active>
+            <filterItems>
+                <field>Shipment_Consolidation_Data__c.Shipment__c</field>
+                <operation>equals</operation>
+                <valueField>$Source.Shipment__c</valueField>
+            </filterItems>
+            <filterItems>
+                <field>Shipment_Consolidation_Data__c.Import_Export_Quote__c</field>
+                <operation>equals</operation>
+                <valueField>$Source.Import_Export_Quote__c</valueField>
+            </filterItems>
+            <isOptional>true</isOptional>
+        </lookupFilter>
+        <referenceTo>Shipment_Consolidation_Data__c</referenceTo>
+        <relationshipLabel>Associated Documents</relationshipLabel>
+        <relationshipName>Associated_Documents</relationshipName>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Shipment_Disbursement__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Shipment Disbursement</label>
+        <lookupFilter>
+            <active>true</active>
+            <filterItems>
+                <field>$Source.Shipment__c</field>
+                <operation>equals</operation>
+                <valueField>Shipment_Disbursement__c.Shipment__c</valueField>
+            </filterItems>
+            <isOptional>true</isOptional>
+        </lookupFilter>
+        <referenceTo>Shipment_Disbursement__c</referenceTo>
+        <relationshipLabel>Associated Documents</relationshipLabel>
+        <relationshipName>Associated_Documents</relationshipName>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Shipment_Packaging_Consolidation_Data__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Transport Packaging Data</label>
+        <lookupFilter>
+            <active>true</active>
+            <filterItems>
+                <field>Transport_Packaging_Data__c.Shipment__c</field>
+                <operation>equals</operation>
+                <valueField>$Source.Shipment__c</valueField>
+            </filterItems>
+            <isOptional>true</isOptional>
+        </lookupFilter>
+        <referenceTo>Transport_Packaging_Data__c</referenceTo>
+        <relationshipLabel>Associated Documents</relationshipLabel>
+        <relationshipName>Associated_Documents</relationshipName>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Shipment_Track__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Shipment FTL Track</label>
+        <lookupFilter>
+            <active>true</active>
+            <filterItems>
+                <field>$Source.Account__c</field>
+                <operation>equals</operation>
+                <valueField>Shipment_Track__c.Shipment__r.Account_for__c</valueField>
+            </filterItems>
+            <isOptional>true</isOptional>
+        </lookupFilter>
+        <referenceTo>Shipment_Track__c</referenceTo>
+        <relationshipLabel>Associated Documents</relationshipLabel>
+        <relationshipName>Associated_Documents</relationshipName>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Shipment__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Shipment</label>
+        <lookupFilter>
+            <active>true</active>
+            <filterItems>
+                <field>Shipment__c.Account_for__c</field>
+                <operation>equals</operation>
+                <valueField>$Source.Account__c</valueField>
+            </filterItems>
+            <isOptional>true</isOptional>
+        </lookupFilter>
+        <referenceTo>Shipment__c</referenceTo>
+        <relationshipLabel>Associated Documents</relationshipLabel>
+        <relationshipName>Associated_Documents</relationshipName>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Shopping_Cart__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Field Order</label>
+        <lookupFilter>
+            <active>true</active>
+            <filterItems>
+                <field>Shopping_Cart__c.Customer__c</field>
+                <operation>equals</operation>
+                <valueField>$Source.Account__c</valueField>
+            </filterItems>
+            <isOptional>true</isOptional>
+        </lookupFilter>
+        <referenceTo>Shopping_Cart__c</referenceTo>
+        <relationshipLabel>Associated Documents</relationshipLabel>
+        <relationshipName>Associate_Documents</relationshipName>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Supplier_Quote__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Supplier Quote/Order</label>
+        <lookupFilter>
+            <active>true</active>
+            <filterItems>
+                <field>Supplier_Quote__c.Supply_Project__c</field>
+                <operation>equals</operation>
+                <valueField>$Source.Supply_Project__c</valueField>
+            </filterItems>
+            <isOptional>true</isOptional>
+        </lookupFilter>
+        <referenceTo>Supplier_Quote__c</referenceTo>
+        <relationshipLabel>Associated Documents</relationshipLabel>
+        <relationshipName>Associated_Documents</relationshipName>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Supplier_Request_RFP__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Supplier Request (RFP)</label>
+        <lookupFilter>
+            <active>true</active>
+            <filterItems>
+                <field>Supplier_Request_RFP__c.Supply_Project__c</field>
+                <operation>equals</operation>
+                <valueField>$Source.Supply_Project__c</valueField>
+            </filterItems>
+            <isOptional>true</isOptional>
+        </lookupFilter>
+        <referenceTo>Supplier_Request_RFP__c</referenceTo>
+        <relationshipLabel>Associated Documents</relationshipLabel>
+        <relationshipName>Associated_Documents</relationshipName>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Supply_Project__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Supply Project</label>
+        <lookupFilter>
+            <active>true</active>
+            <filterItems>
+                <field>Supply_Project__c.Customer__c</field>
+                <operation>equals</operation>
+                <valueField>$Source.Account__c</valueField>
+            </filterItems>
+            <isOptional>true</isOptional>
+        </lookupFilter>
+        <referenceTo>Supply_Project__c</referenceTo>
+        <relationshipLabel>Associated Documents</relationshipLabel>
+        <relationshipName>Associate_Documents</relationshipName>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Tipo_Venta__c</fullName>
+        <externalId>false</externalId>
+        <formula>TEXT(Account__r.Venta_Sap__c)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Tipo Venta</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Truckstop_Document_Id__c</fullName>
+        <externalId>false</externalId>
+        <label>Truckstop Document Id</label>
+        <length>100</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Type__c</fullName>
+        <externalId>false</externalId>
+        <label>Type</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Document</fullName>
+                    <default>false</default>
+                    <label>Document</label>
+                </value>
+                <value>
+                    <fullName>File</fullName>
+                    <default>false</default>
+                    <label>File</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>Unload_Time_Shipment__c</fullName>
+        <externalId>false</externalId>
+        <formula>Shipment__r.Equip_Unloaded__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Unload Time (Shipment)</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>DateTime</type>
+    </fields>
+    <fields>
+        <fullName>Vehicle__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Vehicle</label>
+        <referenceTo>Vehicle__c</referenceTo>
+        <relationshipLabel>Associated Documents</relationshipLabel>
+        <relationshipName>Associated_Documents</relationshipName>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Warehouse_Exit_Order__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Warehouse Exit Order</label>
+        <lookupFilter>
+            <active>true</active>
+            <filterItems>
+                <field>$Source.Account__c</field>
+                <operation>equals</operation>
+                <valueField>Warehouse_Exit_Order__c.Account_for_Customer__c</valueField>
+            </filterItems>
+            <isOptional>false</isOptional>
+        </lookupFilter>
+        <referenceTo>Warehouse_Exit_Order__c</referenceTo>
+        <relationshipLabel>Associated Documents</relationshipLabel>
+        <relationshipName>Associated_Documents</relationshipName>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <label>Associated Document</label>
+    <listViews>
+        <fullName>All1</fullName>
+        <columns>NAME</columns>
+        <columns>Document__c</columns>
+        <columns>CREATED_DATE</columns>
+        <columns>Shipment__c</columns>
+        <columns>Import_Export_Quote__c</columns>
+        <columns>Type__c</columns>
+        <columns>CREATEDBY_USER</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Invoice__c</field>
+            <operation>equals</operation>
+        </filters>
+        <label>All</label>
+    </listViews>
+    <nameField>
+        <label>Associated Document Name</label>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+    </nameField>
+    <pluralLabel>Associated Documents</pluralLabel>
+    <searchLayouts>
+        <customTabListAdditionalFields>Document_Type__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Document_Reference__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Account__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>SCM_Contract__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Supply_Project__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Import_Export_Quote__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Shipment__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Claim__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Document__c</customTabListAdditionalFields>
+        <excludedStandardButtons>New</excludedStandardButtons>
+        <lookupDialogsAdditionalFields>Document_Type__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>Document_Reference__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>Account__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>SCM_Contract__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>Supply_Project__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>Import_Export_Quote__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>Shipment__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>Claim__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>Document__c</lookupDialogsAdditionalFields>
+        <searchResultsAdditionalFields>Document_Type__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Document_Reference__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Account__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>SCM_Contract__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Supply_Project__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Import_Export_Quote__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Shipment__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Claim__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Document__c</searchResultsAdditionalFields>
+    </searchLayouts>
+    <sharingModel>ControlledByParent</sharingModel>
+    <visibility>Public</visibility>
+</CustomObject>

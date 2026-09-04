@@ -1,0 +1,1624 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <allowInChatterGroups>false</allowInChatterGroups>
+    <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
+    <deploymentStatus>Deployed</deploymentStatus>
+    <description>Specifies items to be transported as part of a shipment. Child object of Import-Export Cargo Lines</description>
+    <enableActivities>false</enableActivities>
+    <enableBulkApi>true</enableBulkApi>
+    <enableFeeds>true</enableFeeds>
+    <enableHistory>false</enableHistory>
+    <enableLicensing>false</enableLicensing>
+    <enableReports>true</enableReports>
+    <enableSearch>true</enableSearch>
+    <enableSharing>true</enableSharing>
+    <enableStreamingApi>true</enableStreamingApi>
+    <externalSharingModel>ControlledByParent</externalSharingModel>
+    <fields>
+        <fullName>Account_for_Customer__c</fullName>
+        <externalId>false</externalId>
+        <formula>Shipment__r.Account_for__r.Name</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Shipment Account for Customer</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Additional_Import_Taxes_Amount__c</fullName>
+        <externalId>false</externalId>
+        <label>Additional Import Taxes Amount</label>
+        <precision>10</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Additional_Import_Taxes_Detail__c</fullName>
+        <externalId>false</externalId>
+        <label>Additional Import Taxes Detail</label>
+        <length>1000</length>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackTrending>false</trackTrending>
+        <type>LongTextArea</type>
+        <visibleLines>3</visibleLines>
+    </fields>
+    <fields>
+        <fullName>CE_Descripcion_PAK__c</fullName>
+        <externalId>false</externalId>
+        <formula>Quote_Item_Line__r.CE_Descripcion_de_Producto_PAK__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Descripción PAK</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>CP_Fraccion_Arancelaria__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Fracción Arancelaria</label>
+        <lookupFilter>
+            <active>true</active>
+            <filterItems>
+                <field>Catalogo_SAT__c.RecordTypeId</field>
+                <operation>equals</operation>
+                <value>Fraccion Arancelaria</value>
+            </filterItems>
+            <isOptional>true</isOptional>
+        </lookupFilter>
+        <referenceTo>Catalogo_SAT__c</referenceTo>
+        <relationshipLabel>Shipment Cargo Lines (Fracción Arancelaria)</relationshipLabel>
+        <relationshipName>Shipment_Cargo_Lines3</relationshipName>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Cargo_Por_Tasacion__c</fullName>
+        <externalId>false</externalId>
+        <label>Cargo Por Tasacion</label>
+        <length>10</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Category_DC__c</fullName>
+        <externalId>false</externalId>
+        <label>Category DC</label>
+        <length>200</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Clave_de_Servicio__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Clave de Servicio</label>
+        <lookupFilter>
+            <active>true</active>
+            <filterItems>
+                <field>Catalogo_SAT__c.RecordTypeId</field>
+                <operation>equals</operation>
+                <value>Productos y Servicios cP</value>
+            </filterItems>
+            <isOptional>false</isOptional>
+        </lookupFilter>
+        <referenceTo>Catalogo_SAT__c</referenceTo>
+        <relationshipLabel>Shipment Cargo Lines</relationshipLabel>
+        <relationshipName>Shipment_Cargo_Lines</relationshipName>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Container_Name__c</fullName>
+        <externalId>false</externalId>
+        <formula>Container_Type__r.Name</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Container Name</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Container_Number__c</fullName>
+        <externalId>false</externalId>
+        <label>Container Number</label>
+        <length>10</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Container_Type__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Container Type</label>
+        <referenceTo>Container_Type__c</referenceTo>
+        <relationshipLabel>Shipment Cargo Lines</relationshipLabel>
+        <relationshipName>Shipment_Cargo_Lines</relationshipName>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Conversion_Rate_to_Currency_Header__c</fullName>
+        <defaultValue>1</defaultValue>
+        <externalId>false</externalId>
+        <label>Conversion Rate to Currency Header</label>
+        <precision>12</precision>
+        <required>false</required>
+        <scale>4</scale>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Customer_Order_Line__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <inlineHelpText>Dependent on &quot;Field Order&quot;</inlineHelpText>
+        <label>Field Order Line</label>
+        <referenceTo>Shopping_Cart_line__c</referenceTo>
+        <relationshipLabel>Shipment Cargo Lines</relationshipLabel>
+        <relationshipName>Shipment_Items_Lines_Customer_Order_Line</relationshipName>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Customer_Order_Price__c</fullName>
+        <externalId>false</externalId>
+        <formula>Customer_Order_Line__r.Net_Price__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Field Order Price</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Customer_Order__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Field Order</label>
+        <referenceTo>Shopping_Cart__c</referenceTo>
+        <relationshipLabel>Shipment Cargo Lines</relationshipLabel>
+        <relationshipName>Shipment_Items_Lines_Customer_Order</relationshipName>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Customs_Incoterm__c</fullName>
+        <externalId>false</externalId>
+        <label>Customs Incoterm</label>
+        <length>20</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Customs_Value__c</fullName>
+        <externalId>false</externalId>
+        <label>Customs Value</label>
+        <precision>10</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Delivered__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <inlineHelpText>Controlled by Deliveries</inlineHelpText>
+        <label>Delivered</label>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Destination_Amount__c</fullName>
+        <description>Conversion to currency of ratio between sum of &quot;Sell Origin Amount&quot;, &quot;Shipment Charges Assigned&quot; and &quot;Total Taxes&quot;, and 1- &quot;Margin at Destination&quot;. Roll-Up from Destination Amount</description>
+        <externalId>false</externalId>
+        <formula>(Sell_Origin_Amount__c +  Shipment_Charges_Assigned_copy__c + Total_Taxes__c)/(1- Margin_at_Destination__c )</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <inlineHelpText>Ratio between total cost amount and 1- &quot;Margin at Destination&quot;</inlineHelpText>
+        <label>Destination Amount</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Destination_Amount_header_currency__c</fullName>
+        <externalId>false</externalId>
+        <formula>Destination_Amount__c *  Conversion_Rate_to_Currency_Header__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Destination Amount (header currency)</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Duty__c</fullName>
+        <externalId>false</externalId>
+        <label>Duty</label>
+        <precision>10</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Embalaje__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Embalaje</label>
+        <lookupFilter>
+            <active>true</active>
+            <filterItems>
+                <field>Catalogo_SAT__c.RecordTypeId</field>
+                <operation>equals</operation>
+                <value>Tipo de Embalaje</value>
+            </filterItems>
+            <isOptional>true</isOptional>
+        </lookupFilter>
+        <referenceTo>Catalogo_SAT__c</referenceTo>
+        <relationshipLabel>Shipment Cargo Lines (Embalaje)</relationshipLabel>
+        <relationshipName>Shipment_Cargo_Lines2</relationshipName>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Expense_Amount__c</fullName>
+        <externalId>false</externalId>
+        <label>Expense Amount</label>
+        <precision>10</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Expense_Amount_header_currency__c</fullName>
+        <externalId>false</externalId>
+        <formula>Expense_Amount__c *  Conversion_Rate_to_Currency_Header__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Expense Amount (header currency)</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Expense_Concept__c</fullName>
+        <externalId>false</externalId>
+        <formula>Supplier_Quote_Line__r.Expense_Concept__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Expense Concept</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Extension_Item_Name__c</fullName>
+        <externalId>false</externalId>
+        <label>Extension Item Name</label>
+        <length>255</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Family__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Family</label>
+        <referenceTo>Product_Family__c</referenceTo>
+        <relationshipLabel>Shipment Cargo Lines</relationshipLabel>
+        <relationshipName>Shipment_Items_Lines</relationshipName>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>HS_Code__c</fullName>
+        <externalId>false</externalId>
+        <label>HS Code</label>
+        <length>20</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Import_Export_Quote__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Import-Export Quote</label>
+        <referenceTo>Customer_Quote__c</referenceTo>
+        <relationshipLabel>Shipment Cargo Lines</relationshipLabel>
+        <relationshipName>Shipment_Lines</relationshipName>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Invoice_Outstanding_Balance__c</fullName>
+        <description>Conversion to currency of difference between &quot;Sell Origin Amount&quot; and &quot;Invoiced Amount&quot;, from Invoice Outstanding Balance Roll-Up</description>
+        <externalId>false</externalId>
+        <formula>Sell_Origin_Amount__c - Invoiced_Amount__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <inlineHelpText>Difference between &quot;Sell Origin Amount&quot; and &quot;Invoiced Amount&quot;</inlineHelpText>
+        <label>Invoice Outstanding Balance</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Invoiced_Amount__c</fullName>
+        <externalId>false</externalId>
+        <label>Invoiced Amount</label>
+        <summarizedField>Invoice_Item_Line__c.Amount_Allocated_Cargo_Line_Currency__c</summarizedField>
+        <summaryForeignKey>Invoice_Item_Line__c.Shipment_Item_Line__c</summaryForeignKey>
+        <summaryOperation>sum</summaryOperation>
+        <trackTrending>false</trackTrending>
+        <type>Summary</type>
+    </fields>
+    <fields>
+        <fullName>Item_Code__c</fullName>
+        <externalId>false</externalId>
+        <formula>Item_Name__r.Sourcing_Item_Code__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Item Code</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Item_Name__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Item Name</label>
+        <referenceTo>Sourcing_Item__c</referenceTo>
+        <relationshipLabel>Shipment Cargo Lines</relationshipLabel>
+        <relationshipName>Shipment_Item_Lines</relationshipName>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Item_Price__c</fullName>
+        <externalId>false</externalId>
+        <label>Item Price</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Item_Units_x_Packaging__c</fullName>
+        <description>If &quot;Quote Item Line&quot; not blank then &quot;Item Units x Packaging&quot; from &quot;Quote Item Line&quot;, else &quot;Item Units x Packaging&quot; from &quot;Supplier Quote Line&quot;</description>
+        <externalId>false</externalId>
+        <formula>IF(Quote_Item_Line__c &lt;&gt; null , Quote_Item_Line__r.Item_Units_x_Packaging__c, Supplier_Quote_Line__r.Item_Units_x_Packaging__c)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Item Units x Packaging</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Margin_at_Destination__c</fullName>
+        <externalId>false</externalId>
+        <label>Margin at Destination</label>
+        <precision>4</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackTrending>false</trackTrending>
+        <type>Percent</type>
+    </fields>
+    <fields>
+        <fullName>Margin_at_Origin__c</fullName>
+        <description>Ratio of &quot;Profit&quot; to &quot;Sell Origin Amount&quot;</description>
+        <externalId>false</externalId>
+        <formula>Profit__c /  Sell_Origin_Amount__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <inlineHelpText>Ratio of &quot;Profit&quot; to &quot;Sell Origin Amount&quot;</inlineHelpText>
+        <label>Margin at Origin</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackTrending>false</trackTrending>
+        <type>Percent</type>
+    </fields>
+    <fields>
+        <fullName>Material_Peligroso__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Material Peligroso</label>
+        <lookupFilter>
+            <active>true</active>
+            <filterItems>
+                <field>Catalogo_SAT__c.RecordTypeId</field>
+                <operation>equals</operation>
+                <value>Material Peligroso</value>
+            </filterItems>
+            <isOptional>false</isOptional>
+        </lookupFilter>
+        <referenceTo>Catalogo_SAT__c</referenceTo>
+        <relationshipLabel>Shipment Cargo Lines (Material Peligroso)</relationshipLabel>
+        <relationshipName>Shipment_Cargo_Lines1</relationshipName>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Origin_Buy_Amount__c</fullName>
+        <description>Conversion to currency of sum between product of &quot;Unit Origin Buy Price&quot; and &quot;Unit Shipped&quot;, and &quot;Expense Amount&quot;, from Origin Buy Amount Roll-Up</description>
+        <externalId>false</externalId>
+        <formula>(Unit_Origin_Buy_Price__c * Units_Shipped__c) + Expense_Amount__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <inlineHelpText>Sum between product of &quot;Unit Origin Buy Price&quot; and &quot;Unit Shipped&quot;, and &quot;Expense Amount&quot;</inlineHelpText>
+        <label>Origin Buy Amount</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Origin_Buy_Amount_header_currency__c</fullName>
+        <externalId>false</externalId>
+        <formula>Origin_Buy_Amount__c * Conversion_Rate_to_Currency_Header__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Origin Buy Amount (header currency)</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Outstanding_Balance__c</fullName>
+        <description>Conversion to currency of difference between &quot;Origin Buy Amount&quot; and &quot;Total Amount Allocated On Disbursements&quot;</description>
+        <externalId>false</externalId>
+        <formula>Origin_Buy_Amount__c - Total_Amount_Allocated_On_Disbursements__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <inlineHelpText>Difference between &quot;Origin Buy Amount&quot; and &quot;Total Amount Allocated On Disbursements&quot;</inlineHelpText>
+        <label>Disbursement Outstanding Balance</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Packaging_Description__c</fullName>
+        <description>If &quot;Quote Item Line&quot; not blank then &quot;Packaging Description&quot; from &quot;Quote Item Line&quot;, else &quot;Packaging Description&quot; from &quot;Supplier Quote Line&quot;</description>
+        <externalId>false</externalId>
+        <formula>IF(Quote_Item_Line__c &lt;&gt; null , Quote_Item_Line__r.Packaging_Description__c, Supplier_Quote_Line__r.Packaging_Description__c)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Packaging Description</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Packaging_Gross_Weight_kg__c</fullName>
+        <description>If &quot;Quote Item Line&quot; not blank then &quot;Packaging Gross Weight (Kg)&quot; from &quot;Quote Item Line&quot;, else &quot;Packaging Gross Weight (Kg)&quot; from &quot;Supplier Quote Line&quot;</description>
+        <externalId>false</externalId>
+        <formula>IF(Quote_Item_Line__c &lt;&gt; null , Quote_Item_Line__r.Packaging_Gross_Weight_kg__c, Supplier_Quote_Line__r.Packaging_Gross_Weight_kg__c)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Packaging Gross Weight (kg)</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Packaging_Height_cm__c</fullName>
+        <description>Number conversion of field in: if &quot;Quote Item Line&quot; not blank then &quot;Packaging Height (cm)&quot; from &quot;Quote Item Line&quot;, else &quot;Packaging Height (cm)&quot; from &quot;Supplier Quote Line&quot;</description>
+        <externalId>false</externalId>
+        <formula>IF(Quote_Item_Line__c &lt;&gt; null , Quote_Item_Line__r.Packaging_Height_cm__c, Supplier_Quote_Line__r.Packaging_Height_cm__c)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Packaging Height (cm)</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Packaging_Length_cm__c</fullName>
+        <description>Number conversion of field in: if &quot;Quote Item Line&quot; not blank then &quot;Packaging Length (cm)&quot; from &quot;Quote Item Line&quot;, else &quot;Packaging Length (cm)&quot; from &quot;Supplier Quote Line&quot;</description>
+        <externalId>false</externalId>
+        <formula>IF(Quote_Item_Line__c &lt;&gt; null , Quote_Item_Line__r.Packaging_Length_cm__c, Supplier_Quote_Line__r.Packaging_Length_cm__c)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Packaging Length (cm)</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Packaging_Quantity__c</fullName>
+        <description>Number conversion of field in: if &quot;Quote Item Line&quot; not blank then &quot;Packaging Quantity&quot; from &quot;Quote Item Line&quot;, else &quot;Packaging Quantity&quot; from &quot;Supplier Quote Line&quot;</description>
+        <externalId>false</externalId>
+        <formula>IF(Quote_Item_Line__c &lt;&gt; null , Quote_Item_Line__r.Packaging_Quantity__c, Supplier_Quote_Line__r.Packaging_Quantity__c)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Packaging Quantity</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Packaging_Volume_m3__c</fullName>
+        <description>Number conversion of field in: if &quot;Quote Item Line&quot; not blank then &quot;Packaging Volume (m3))&quot; from &quot;Quote Item Line&quot;, else &quot;Packaging Volume (m3)&quot; from &quot;Supplier Quote Line&quot;</description>
+        <externalId>false</externalId>
+        <formula>IF(Quote_Item_Line__c &lt;&gt; null , Quote_Item_Line__r.Packaging_Volume_m3__c, Supplier_Quote_Line__r.Packaging_Volume_m3__c)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Packaging Volume (m3)</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>4</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Packaging_Weight_kg__c</fullName>
+        <description>Number conversion of field in: if &quot;Quote Item Line&quot; not blank then &quot;Packaging Weight (Kg)&quot; from &quot;Quote Item Line&quot;, else &quot;Packaging Weight (Kg)&quot; from &quot;Supplier Quote Line&quot;</description>
+        <externalId>false</externalId>
+        <formula>IF(Quote_Item_Line__c &lt;&gt; null , Quote_Item_Line__r.Packaging_Weight_kg__c, Supplier_Quote_Line__r.Packaging_Weight_kg__c)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Packaging Weight (kg)</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>4</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Packaging_Width_cm__c</fullName>
+        <description>Number conversion of field in: if &quot;Quote Item Line&quot; not blank then &quot;Packaging Width (cm)&quot; from &quot;Quote Item Line&quot;, else &quot;Packaging Width (cm)&quot; from &quot;Supplier Quote Line&quot;</description>
+        <externalId>false</externalId>
+        <formula>IF(Quote_Item_Line__c &lt;&gt; null , Quote_Item_Line__r.Packaging_Width_cm__c, Supplier_Quote_Line__r.Packaging_Width_cm__c)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Packaging Width (cm)</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Pallet_Code__c</fullName>
+        <externalId>false</externalId>
+        <label>Pallet Code</label>
+        <length>50</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Pedimento__c</fullName>
+        <externalId>false</externalId>
+        <label>Pedimento</label>
+        <length>21</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Percent_Duty__c</fullName>
+        <externalId>false</externalId>
+        <label>Percent Duty</label>
+        <precision>5</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackTrending>false</trackTrending>
+        <type>Percent</type>
+    </fields>
+    <fields>
+        <fullName>Percent_Taxes__c</fullName>
+        <externalId>false</externalId>
+        <label>Percent Taxes</label>
+        <precision>5</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackTrending>false</trackTrending>
+        <type>Percent</type>
+    </fields>
+    <fields>
+        <fullName>Peso_Neto__c</fullName>
+        <externalId>false</externalId>
+        <label>Peso Neto</label>
+        <precision>14</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Product_Item_DC__c</fullName>
+        <externalId>false</externalId>
+        <label>Product Item DC</label>
+        <length>200</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Profit__c</fullName>
+        <description>Conversion to currency of difference between &quot;Sell Origin Amount&quot; and &quot;Origin Buy Amount&quot;, from Profit Roll-Up</description>
+        <externalId>false</externalId>
+        <formula>Sell_Origin_Amount__c - Origin_Buy_Amount__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Profit</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Quote_Destination_Price__c</fullName>
+        <description>Conversion to currency of &quot;Unit Destination Price&quot; from &quot;Quote Item Line&quot;</description>
+        <externalId>false</externalId>
+        <formula>Quote_Item_Line__r.Unit_Destination_Price__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Quote Destination Price</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Quote_Item_Line__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Quote Cargo Line</label>
+        <lookupFilter>
+            <active>true</active>
+            <filterItems>
+                <field>Quote_Item_Line__c.Import_Export_Quote__c</field>
+                <operation>equals</operation>
+                <valueField>$Source.Import_Export_Quote__c</valueField>
+            </filterItems>
+            <isOptional>false</isOptional>
+        </lookupFilter>
+        <referenceTo>Quote_Item_Line__c</referenceTo>
+        <relationshipLabel>Shipment Cargo Lines</relationshipLabel>
+        <relationshipName>Shipment_Items_Lines</relationshipName>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Quote_Origin_Price__c</fullName>
+        <description>Conversion to currency of &quot;Price&quot; from &quot;Quote Item Line&quot;</description>
+        <externalId>false</externalId>
+        <formula>Quote_Item_Line__r.Price__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Quote Origin Price</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Received__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <inlineHelpText>Controlled by Stock Entries</inlineHelpText>
+        <label>Received</label>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>SPCL_Item_Height__c</fullName>
+        <externalId>false</externalId>
+        <formula>Item_Name__r.Master_Box_Height_cm__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Item Height(cm)</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>SPCL_Item_Lenght_cm__c</fullName>
+        <externalId>false</externalId>
+        <formula>Item_Name__r.Master_Box_Length_cm__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Item Lenght(cm)</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>SPCL_Item_Volume_m3__c</fullName>
+        <externalId>false</externalId>
+        <formula>Item_Name__r.Master_Box_Volume_m3__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Item Volume(m3)</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>SPCL_Item_Width_cm__c</fullName>
+        <externalId>false</externalId>
+        <formula>Item_Name__r.Master_Box_Width_cm__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Item Width(cm)</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>SP_number__c</fullName>
+        <externalId>false</externalId>
+        <formula>Shipment__r.Name</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>SP number</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Sales_Tax__c</fullName>
+        <externalId>false</externalId>
+        <label>Sales Tax</label>
+        <precision>10</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Sell_Origin_Amount__c</fullName>
+        <description>Conversion to currency of product between &quot;Unit Origin Sell Price&quot; and &quot;Units Shipped&quot;, from Sell Origin Amount Roll-Up</description>
+        <externalId>false</externalId>
+        <formula>Unit_Origin_Sell_Price__c   *   Units_Shipped__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <inlineHelpText>&quot;Unit Origin Sell Price&quot; x &quot;Units Shipped&quot;</inlineHelpText>
+        <label>Origin Amount</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Sell_Origin_Amount_header_currency__c</fullName>
+        <description>Product of &quot;Sell Origin Amount&quot; and &quot;Conversion Rate to Currency Header&quot;</description>
+        <externalId>false</externalId>
+        <formula>Sell_Origin_Amount__c *  Conversion_Rate_to_Currency_Header__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Sell Origin Amount (header currency)</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Shipment_Carrier__c</fullName>
+        <externalId>false</externalId>
+        <formula>Shipment__r.Carrier__r.Name</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Shipment Carrier</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Shipment_Charges_Assigned__c</fullName>
+        <description>Conversion to currency of product between ratio of: products between; if &quot;Total Volume (m3)&quot; from &quot;Shipment&quot; greater than 0 then ratio of &quot;Shipping Volume (m3)&quot; to &quot;Total Volume (m3)&quot; from &quot;Shipment&quot;, else ratio of &quot;Shipping Weight (Kg)&quot; to &quot;Total Weight (Kg)&quot; from &quot;Shipment&quot;, and &quot;Total Services Sell Amount&quot; from &quot;Shipment&quot;: to &quot;Conversion Rate to Currency Header&quot;</description>
+        <externalId>false</externalId>
+        <formula>IF( Shipment__r.Total_Volume_m3__c &gt;0, Shipping_Volume_m3__c / Shipment__r.Total_Volume_m3__c , Shipping_Weight_Kg__c /  Shipment__r.Total_Weight_Kg__c) * Shipment__r.Total_Services_Sell_Amount_number__c / Conversion_Rate_to_Currency_Header__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Shipment Charges Assigned</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Shipment_Charges_Assigned_copy__c</fullName>
+        <externalId>false</externalId>
+        <label>Shipment Charges Assigned (copy)</label>
+        <precision>10</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Shipment_Consolidation_Data__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <inlineHelpText>Dependent on &quot;Shipment&quot;</inlineHelpText>
+        <label>Shipment Consolidation Data</label>
+        <lookupFilter>
+            <active>true</active>
+            <filterItems>
+                <field>Shipment_Consolidation_Data__c.Shipment__c</field>
+                <operation>equals</operation>
+                <valueField>$Source.Shipment__c</valueField>
+            </filterItems>
+            <isOptional>false</isOptional>
+        </lookupFilter>
+        <referenceTo>Shipment_Consolidation_Data__c</referenceTo>
+        <relationshipLabel>Shipment Cargo Lines</relationshipLabel>
+        <relationshipName>Shipment_Items_Lines</relationshipName>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Shipment_CreateDate__c</fullName>
+        <externalId>false</externalId>
+        <formula>TEXT(Shipment__r.CreatedDate)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Shipment CreateDate</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Shipment_Mode__c</fullName>
+        <externalId>false</externalId>
+        <formula>Shipment__r.Mode__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Shipment Mode</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Shipment_Route__c</fullName>
+        <externalId>false</externalId>
+        <formula>Shipment__r.Route__r.Name</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Shipment Route</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Shipment_Status__c</fullName>
+        <externalId>false</externalId>
+        <formula>TEXT(Shipment__r.Shipment_Status__c)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Shipment Status</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Shipment__c</fullName>
+        <externalId>false</externalId>
+        <label>Shipment</label>
+        <referenceTo>Shipment__c</referenceTo>
+        <relationshipLabel>Shipment Cargo Lines</relationshipLabel>
+        <relationshipName>Shipment_Lines</relationshipName>
+        <relationshipOrder>0</relationshipOrder>
+        <reparentableMasterDetail>true</reparentableMasterDetail>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackTrending>false</trackTrending>
+        <type>MasterDetail</type>
+        <writeRequiresMasterRead>true</writeRequiresMasterRead>
+    </fields>
+    <fields>
+        <fullName>Shipment_number__c</fullName>
+        <externalId>false</externalId>
+        <formula>Shipment__r.Name</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Shipment number</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Shipping_Surface_m2__c</fullName>
+        <externalId>false</externalId>
+        <label>Shipping Surface (m2)</label>
+        <precision>16</precision>
+        <required>false</required>
+        <scale>4</scale>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Shipping_Volume_m3__c</fullName>
+        <externalId>false</externalId>
+        <label>Shipping Volume (m3)</label>
+        <precision>14</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Shipping_Weight_Kg__c</fullName>
+        <externalId>false</externalId>
+        <label>Peso bruto (Kg)</label>
+        <precision>14</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>SpTEUS__c</fullName>
+        <externalId>false</externalId>
+        <label>TEUS(Sp)</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Subcategory_DC__c</fullName>
+        <externalId>false</externalId>
+        <label>Subcategory DC</label>
+        <length>200</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Subfamily__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <inlineHelpText>Dependent on &quot;Family&quot;</inlineHelpText>
+        <label>Subfamily</label>
+        <lookupFilter>
+            <active>true</active>
+            <filterItems>
+                <field>Subfamily__c.Product_Family__c</field>
+                <operation>equals</operation>
+                <valueField>$Source.Family__c</valueField>
+            </filterItems>
+            <isOptional>false</isOptional>
+        </lookupFilter>
+        <referenceTo>Subfamily__c</referenceTo>
+        <relationshipLabel>Shipment Cargo Lines</relationshipLabel>
+        <relationshipName>Shipment_Items_Lines</relationshipName>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Supplier_Item_Weight_kg__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF(Quote_Item_Line__c &lt;&gt; null , Quote_Item_Line__r.Supplier_Item_Weight_kg__c,  Supplier_Quote_Line__r.Supplier_Item_Weight_kg__c)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Supplier Item Weight (kg)</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Supplier_Quote_Line__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Supplier Quote/Order Line</label>
+        <referenceTo>Supplier_Quote_Line__c</referenceTo>
+        <relationshipLabel>Shipment Cargo Lines</relationshipLabel>
+        <relationshipName>Shipment_Items_Lines</relationshipName>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Supplier_Quote_Price__c</fullName>
+        <externalId>false</externalId>
+        <formula>Supplier_Quote_Line__r.Net_Price__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Supplier Quote/Order Price</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Supplier_Quote__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Supplier Quote/Order</label>
+        <referenceTo>Supplier_Quote__c</referenceTo>
+        <relationshipLabel>Shipment Cargo Lines</relationshipLabel>
+        <relationshipName>Shipment_Items_Lines</relationshipName>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Supplier_Total_Volume_m3__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF(Quote_Item_Line__c &lt;&gt; null , Quote_Item_Line__r.Supplier_Total_Volume_m3__c, IF(Supplier_Quote_Line__c &lt;&gt; null, Supplier_Quote_Line__r.Supplier_Total_Volume_m3__c, 0))</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Supplier Total Volume (m3)</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>4</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Supplier_Total_Weight_kg__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF(Quote_Item_Line__r.Supplier_Total_Weight_kg__c &gt; 0 , Quote_Item_Line__r.Supplier_Total_Weight_kg__c, IF( Supplier_Quote_Line__r.Supplier_Total_Weight_kg__c &gt; 0,Supplier_Quote_Line__r.Supplier_Total_Weight_kg__c,0))</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Peso Bruto</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>TEUS__c</fullName>
+        <externalId>false</externalId>
+        <label>TEUS</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Temperatura__c</fullName>
+        <description>Campo para indicar la temperatura del producto</description>
+        <externalId>false</externalId>
+        <label>Temperatura</label>
+        <length>10</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Total_Amount_Allocated_On_Disbursements__c</fullName>
+        <externalId>false</externalId>
+        <label>Total Amount Allocated On Disbursements</label>
+        <summarizedField>Shipment_Item_Line_Disbursement__c.Amount_Allocated_Cargo_Line_Currency__c</summarizedField>
+        <summaryForeignKey>Shipment_Item_Line_Disbursement__c.Shipment_Item_Line__c</summaryForeignKey>
+        <summaryOperation>sum</summaryOperation>
+        <trackTrending>false</trackTrending>
+        <type>Summary</type>
+    </fields>
+    <fields>
+        <fullName>Total_Amount_Disbursements_Hea_Currency__c</fullName>
+        <externalId>false</externalId>
+        <formula>Total_Amount_Allocated_On_Disbursements__c *  Conversion_Rate_to_Currency_Header__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Total Amount Disbursements(Hea Currency)</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Total_Amount_Invoiced__c</fullName>
+        <externalId>false</externalId>
+        <label>Total Amount Invoiced</label>
+        <summarizedField>Invoice_Item_Line__c.Amount_Allocated_Cargo_Line_Currency__c</summarizedField>
+        <summaryForeignKey>Invoice_Item_Line__c.Shipment_Item_Line__c</summaryForeignKey>
+        <summaryOperation>sum</summaryOperation>
+        <trackTrending>false</trackTrending>
+        <type>Summary</type>
+    </fields>
+    <fields>
+        <fullName>Total_Amount_Invoiced_header_currency__c</fullName>
+        <externalId>false</externalId>
+        <formula>Total_Amount_Invoiced__c *  Conversion_Rate_to_Currency_Header__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Total Amount Invoiced (header currency)</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Total_Taxes__c</fullName>
+        <description>Sum of &quot;Duty&quot;, &quot;Sales Tax&quot; and &quot;Additional Import Taxes Amount&quot;</description>
+        <externalId>false</externalId>
+        <formula>Duty__c +  Sales_Tax__c +  Additional_Import_Taxes_Amount__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <inlineHelpText>Sum of &quot;Duty&quot;, &quot;Sales Tax&quot; and &quot;Additional Import Taxes Amount&quot;</inlineHelpText>
+        <label>Total Taxes</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Total_Taxes_header_currency__c</fullName>
+        <externalId>false</externalId>
+        <formula>Total_Taxes__c *  Conversion_Rate_to_Currency_Header__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Total Taxes (header currency)</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Total_Volume_Items_Packaging_m3__c</fullName>
+        <description>Product of &quot;Units Shipped&quot; and ratio of &quot;Master Box Volume (m3)&quot; from &quot;Item Name&quot; to &quot;Units x Master Box&quot; from &quot;Item Name&quot;</description>
+        <externalId>false</externalId>
+        <formula>(Item_Name__r.Master_Box_Volume_m3__c / Item_Name__r.Units_x_Master_Box__c)* Units_Shipped__c</formula>
+        <label>Total Volume Items + Packaging (m3)</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Total_Weight_Items_Packaging_Kg__c</fullName>
+        <description>Product of &quot;Units Shipped&quot; and; ratio of &quot;Master Box Weight (Kg)&quot; from &quot;Item Name&quot; to &quot;Units x Master Box&quot; from &quot;Item Name&quot;, or &quot;Weight (Kgs)&quot; from &quot;Item Name&quot;</description>
+        <externalId>false</externalId>
+        <formula>Units_Shipped__c *  BLANKVALUE( Item_Name__r.Master_Box_Gross_Weight_kg__c /  Item_Name__r.Units_x_Master_Box__c , Item_Name__r.Weight_Kgs__c )</formula>
+        <label>Total Weight Items + Packaging (Kg)</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Unit_Destination_Price__c</fullName>
+        <externalId>false</externalId>
+        <formula>Destination_Amount__c /  Units_Shipped__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Unit Destination Price</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Unit_Origin_Buy_Price__c</fullName>
+        <externalId>false</externalId>
+        <label>Unit Origin Buy Price</label>
+        <precision>10</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Unit_Origin_Sell_Price__c</fullName>
+        <externalId>false</externalId>
+        <label>Unit Origin Price</label>
+        <precision>10</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Unit_Origin_Sell_Price_header_currency__c</fullName>
+        <externalId>false</externalId>
+        <formula>Unit_Origin_Sell_Price__c * Conversion_Rate_to_Currency_Header__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Unit Origin Sell Price (header currency)</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Unit_of_measure__c</fullName>
+        <externalId>false</externalId>
+        <formula>TEXT( Item_Name__r.Unit_of_measure__c )</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Unit of measure</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Units_Customer_Order__c</fullName>
+        <externalId>false</externalId>
+        <formula>Customer_Order_Line__r.Units__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Units Field Order</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Units_Quoted__c</fullName>
+        <externalId>false</externalId>
+        <formula>Quote_Item_Line__r.Units__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Units Quoted</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Units_Shipped__c</fullName>
+        <externalId>false</externalId>
+        <label>Units Shipped</label>
+        <precision>10</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Units_Supplier_Quote_Order__c</fullName>
+        <externalId>false</externalId>
+        <formula>Supplier_Quote_Line__r.Quantity__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Units Supplier Quote/Order</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Warehouse_Location__c</fullName>
+        <externalId>false</externalId>
+        <label>Warehouse Location</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackTrending>false</trackTrending>
+        <type>TextArea</type>
+    </fields>
+    <fields>
+        <fullName>Warehouse__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Warehouse</label>
+        <referenceTo>Warehouse__c</referenceTo>
+        <relationshipName>Shipment_Items_Lines</relationshipName>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>pallet_warehouse__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Pallet Warehouse</label>
+        <referenceTo>pallet_warehouse__c</referenceTo>
+        <relationshipLabel>Shipment Cargo Lines</relationshipLabel>
+        <relationshipName>Shipment_Cargo_Lines</relationshipName>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <label>Shipment Cargo Line</label>
+    <listViews>
+        <fullName>All</fullName>
+        <filterScope>Everything</filterScope>
+        <label>All</label>
+    </listViews>
+    <nameField>
+        <label>Shipment Cargo Line</label>
+        <trackFeedHistory>false</trackFeedHistory>
+        <type>Text</type>
+    </nameField>
+    <pluralLabel>Shipment Cargo Lines</pluralLabel>
+    <searchLayouts>
+        <customTabListAdditionalFields>Shipment__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Item_Name__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Unit_of_measure__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Sell_Origin_Amount__c</customTabListAdditionalFields>
+        <lookupDialogsAdditionalFields>Shipment__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>Item_Name__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>Unit_of_measure__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>Sell_Origin_Amount__c</lookupDialogsAdditionalFields>
+        <searchResultsAdditionalFields>Shipment__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Item_Name__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Unit_of_measure__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Sell_Origin_Amount__c</searchResultsAdditionalFields>
+    </searchLayouts>
+    <sharingModel>ControlledByParent</sharingModel>
+    <visibility>Public</visibility>
+</CustomObject>

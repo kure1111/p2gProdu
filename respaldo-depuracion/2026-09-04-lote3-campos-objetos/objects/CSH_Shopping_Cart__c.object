@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customSettingsType>Hierarchy</customSettingsType>
+    <enableFeeds>false</enableFeeds>
+    <fields>
+        <fullName>E_Commerce_Offers_Selection__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <inlineHelpText>You will only see the E-Commerce Offers related to the Item Selection of the Account Shopping Cart.(true)</inlineHelpText>
+        <label>E-Commerce Offers Selection</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Field_Order_Type_Authorized__c</fullName>
+        <externalId>false</externalId>
+        <label>Field Order Type Authorized</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Items_Selection__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <inlineHelpText>All Items (false), Only Items in Price List (true)</inlineHelpText>
+        <label>Items Selection</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Shopping_Cart_Type_Authorized__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>The value ​​must be one these: Customer Shopping Cart or  Supplier Shopping Cart or Customer &amp; Supplier Shopping Cart</inlineHelpText>
+        <label>Field Order Type Authorized</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <label>CSH Field Order</label>
+    <visibility>Public</visibility>
+</CustomObject>

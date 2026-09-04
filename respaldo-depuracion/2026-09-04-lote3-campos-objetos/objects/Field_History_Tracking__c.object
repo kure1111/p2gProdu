@@ -1,0 +1,454 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <allowInChatterGroups>false</allowInChatterGroups>
+    <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
+    <deploymentStatus>Deployed</deploymentStatus>
+    <enableActivities>false</enableActivities>
+    <enableBulkApi>true</enableBulkApi>
+    <enableFeeds>false</enableFeeds>
+    <enableHistory>false</enableHistory>
+    <enableLicensing>false</enableLicensing>
+    <enableReports>false</enableReports>
+    <enableSearch>true</enableSearch>
+    <enableSharing>true</enableSharing>
+    <enableStreamingApi>true</enableStreamingApi>
+    <externalSharingModel>ReadWrite</externalSharingModel>
+    <fields>
+        <fullName>Account_History__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <description>Campo que apunta al objeto cuenta. Para así saber cuál se modificó.</description>
+        <externalId>false</externalId>
+        <label>Account</label>
+        <referenceTo>Account</referenceTo>
+        <relationshipLabel>Account History</relationshipLabel>
+        <relationshipName>Fields_History_Tracking</relationshipName>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Date__c</fullName>
+        <description>Fecha en la que se registra el cambio.</description>
+        <externalId>false</externalId>
+        <label>Date</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>DateTime</type>
+    </fields>
+    <fields>
+        <fullName>Field_Tracking_Estatus_de_cliente__c</fullName>
+        <description>Campo para almacenar el valor del último cambio que se hizo en el campo Estatus de cliente. Viene del objeto Account</description>
+        <externalId>false</externalId>
+        <label>Field Tracking - Estatus de cliente</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Field_Tracking_Total_IEQ_Approved__c</fullName>
+        <description>Campo para simplemente rastrear los cambios en el campo Total IEQ Approved</description>
+        <externalId>false</externalId>
+        <label>Field Tracking - Total IEQ Approved</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>FieldsChange__c</fullName>
+        <externalId>false</externalId>
+        <label>FieldsChange</label>
+        <length>80</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Fields__c</fullName>
+        <externalId>false</externalId>
+        <label>Fields</label>
+        <length>131072</length>
+        <trackTrending>false</trackTrending>
+        <type>Html</type>
+        <visibleLines>10</visibleLines>
+    </fields>
+    <fields>
+        <fullName>Import_Export_CL_History__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <description>Apunta al objeto Import-Export Cargo Line. Para así saber cuál se modificó.</description>
+        <externalId>false</externalId>
+        <label>Import-Export Cargo Line</label>
+        <referenceTo>Quote_Item_Line__c</referenceTo>
+        <relationshipLabel>Import-Export Cargo Line History</relationshipLabel>
+        <relationshipName>Fields_History_Tracking</relationshipName>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Import_Export_QO_History__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <description>Apunta al objeto Import-Export Quote/Order. Para así saber cuál se modificó.</description>
+        <externalId>false</externalId>
+        <label>Import-Export Quote/Order</label>
+        <referenceTo>Customer_Quote__c</referenceTo>
+        <relationshipLabel>Import-Export Quote/Order History</relationshipLabel>
+        <relationshipName>Fields_History_Tracking</relationshipName>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Import_Export_SL_History__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <description>Apunta al objeto Import-Export Service Line. Para así saber cuál se modificó.</description>
+        <externalId>false</externalId>
+        <label>Import-Export Service Line</label>
+        <referenceTo>Import_Export_Fee_Line__c</referenceTo>
+        <relationshipLabel>Import-Export Service Line History</relationshipLabel>
+        <relationshipName>Fields_History_Tracking</relationshipName>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Invoice_History__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <description>Apunta al objeto Invoice. Para así saber cuál se modificó.</description>
+        <externalId>false</externalId>
+        <label>Invoice</label>
+        <referenceTo>Invoice__c</referenceTo>
+        <relationshipLabel>Invoice History</relationshipLabel>
+        <relationshipName>Fields_History_Tracking</relationshipName>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>New_Values__c</fullName>
+        <externalId>false</externalId>
+        <label>New Values</label>
+        <length>131072</length>
+        <trackTrending>false</trackTrending>
+        <type>Html</type>
+        <visibleLines>10</visibleLines>
+    </fields>
+    <fields>
+        <fullName>On_Time_Delivery__c</fullName>
+        <description>Calcula si el Servicio empezó la carga en la fecha y hora programada.</description>
+        <externalId>false</externalId>
+        <formula>IF( NOT(ISBLANK( Shipment_History__c )),
+
+IF( Shipment_History__r.ETA_Point_of_Discharge__c == DATEVALUE( CreatedDate ),
+
+IF( Shipment_History__r.ETA_Time_Point_of_Discharge__c == TIMEVALUE( CreatedDate ), &apos;Descargado a Tiempo&apos;,
+
+IF( Shipment_History__r.ETA_Time_Point_of_Discharge__c &lt; TIMEVALUE( CreatedDate ), &apos;Descargado Tarde&apos;, &apos;Descargado a Tiempo&apos;))
+
+,IF( Shipment_History__r.ETA_Point_of_Discharge__c &lt; DATEVALUE( CreatedDate ), &apos;Descargado Tarde&apos;, &apos;Descargado a Tiempo&apos;
+)),
+
+&apos;No es un historial de Shipment&apos;)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>On Time Delivery</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>On_Time_Pickup__c</fullName>
+        <description>Calcula si el Servicio empezó la carga en la fecha y hora programada.</description>
+        <externalId>false</externalId>
+        <formula>IF( NOT(ISBLANK( Shipment_History__c )),
+
+IF( Shipment_History__r.ETD_from_Point_of_Load__c == DATEVALUE( CreatedDate ),
+
+IF( Shipment_History__r.ETD_Time_from_Point_of_Load__c == TIMEVALUE( CreatedDate ), &apos;Cargado a Tiempo&apos;, 
+
+IF( Shipment_History__r.ETD_Time_from_Point_of_Load__c &lt; TIMEVALUE( CreatedDate ), &apos;Cargado Tarde&apos;, &apos;Cargado a Tiempo&apos;))
+
+,IF( Shipment_History__r.ETD_from_Point_of_Load__c &lt; DATEVALUE( CreatedDate ), &apos;Cargado Tarde&apos;, &apos;Cargado a Tiempo&apos;
+)),
+
+&apos;No es un historial de Shipment&apos;)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>On Time Pickup</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Operator_History__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <description>Apunta hacia el operador al cual se le realizó cambios.</description>
+        <externalId>false</externalId>
+        <label>Operadores</label>
+        <referenceTo>Operadores__c</referenceTo>
+        <relationshipLabel>Operator History</relationshipLabel>
+        <relationshipName>Fields_History_Tracking</relationshipName>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Order_History__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <description>Apunta al objeto Order. Para así saber cuál se modificó.</description>
+        <externalId>false</externalId>
+        <label>Order</label>
+        <referenceTo>Order</referenceTo>
+        <relationshipLabel>Order History</relationshipLabel>
+        <relationshipName>Fields_History_Tracking</relationshipName>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Original_Values__c</fullName>
+        <externalId>false</externalId>
+        <label>Original Values</label>
+        <length>131072</length>
+        <trackTrending>false</trackTrending>
+        <type>Html</type>
+        <visibleLines>10</visibleLines>
+    </fields>
+    <fields>
+        <fullName>Service_Rate_History__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <description>Apunta al objeto Service Rate. Para así saber cuál se modificó.</description>
+        <externalId>false</externalId>
+        <label>Service Rate</label>
+        <referenceTo>Fee__c</referenceTo>
+        <relationshipLabel>Service Rate History</relationshipLabel>
+        <relationshipName>Fields_History_Tracking</relationshipName>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Shipment_CL_History__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <description>Apunta al objeto Shipment Cargo Line. Para así saber cuál se modificó.</description>
+        <externalId>false</externalId>
+        <label>Shipment Cargo Line</label>
+        <referenceTo>Shipment_Line__c</referenceTo>
+        <relationshipLabel>Shipment Cargo Line History</relationshipLabel>
+        <relationshipName>Fields_History_Tracking</relationshipName>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Shipment_History__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <description>Campo que apunta la Shipment que se modifica.</description>
+        <externalId>false</externalId>
+        <label>Shipment</label>
+        <referenceTo>Shipment__c</referenceTo>
+        <relationshipLabel>Shipment History</relationshipLabel>
+        <relationshipName>Fields_History_Tracking</relationshipName>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Shipment_SL_History__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <description>Apunta al objeto Shipment Service Line. Para así saber cuál se modificó.</description>
+        <externalId>false</externalId>
+        <label>Shipment Service Line</label>
+        <referenceTo>Shipment_Fee_Line__c</referenceTo>
+        <relationshipLabel>Shipment Service Line History</relationshipLabel>
+        <relationshipName>Fields_History_Tracking</relationshipName>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>User__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <description>El usuario que hizo modificación al registro.</description>
+        <externalId>false</externalId>
+        <label>User</label>
+        <referenceTo>User</referenceTo>
+        <relationshipName>Fields_History_Tracking</relationshipName>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Vehicle_History__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <description>Apunta al objeto Vehicle. Para así saber cuál se modificó.</description>
+        <externalId>false</externalId>
+        <label>Vehicle</label>
+        <referenceTo>Vehicle__c</referenceTo>
+        <relationshipLabel>Vehicle History</relationshipLabel>
+        <relationshipName>Fields_History_Tracking</relationshipName>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <gender>Feminine</gender>
+    <label>Field History Tracking</label>
+    <listViews>
+        <fullName>All</fullName>
+        <filterScope>Everything</filterScope>
+        <label>All</label>
+    </listViews>
+    <nameField>
+        <displayFormat>FH-{0000}</displayFormat>
+        <label>Field History Tracking Name</label>
+        <type>AutoNumber</type>
+    </nameField>
+    <pluralLabel>Fields History Tracking</pluralLabel>
+    <searchLayouts/>
+    <sharingModel>ReadWrite</sharingModel>
+    <visibility>Public</visibility>
+</CustomObject>

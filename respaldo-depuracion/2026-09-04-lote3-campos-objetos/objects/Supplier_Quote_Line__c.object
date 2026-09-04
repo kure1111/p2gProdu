@@ -1,0 +1,1152 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <allowInChatterGroups>false</allowInChatterGroups>
+    <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
+    <deploymentStatus>Deployed</deploymentStatus>
+    <enableActivities>false</enableActivities>
+    <enableBulkApi>true</enableBulkApi>
+    <enableFeeds>false</enableFeeds>
+    <enableHistory>true</enableHistory>
+    <enableLicensing>false</enableLicensing>
+    <enableReports>true</enableReports>
+    <enableSearch>true</enableSearch>
+    <enableSharing>true</enableSharing>
+    <enableStreamingApi>true</enableStreamingApi>
+    <externalSharingModel>ControlledByParent</externalSharingModel>
+    <fields>
+        <fullName>Active__c</fullName>
+        <defaultValue>true</defaultValue>
+        <externalId>false</externalId>
+        <label>Active</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Additional_Import_Taxes_Amount__c</fullName>
+        <externalId>false</externalId>
+        <label>Additional Import Taxes Amount</label>
+        <precision>10</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Additional_Import_Taxes_Detail__c</fullName>
+        <externalId>false</externalId>
+        <label>Additional Import Taxes Detail</label>
+        <length>1000</length>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>LongTextArea</type>
+        <visibleLines>3</visibleLines>
+    </fields>
+    <fields>
+        <fullName>Category_DC_Value__c</fullName>
+        <externalId>false</externalId>
+        <label>Category DC Value</label>
+        <length>50</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Category_DC__c</fullName>
+        <externalId>false</externalId>
+        <label>Category DC</label>
+        <length>200</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Consolidated__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Shipment Consolidated</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Conversion_Rate_to_Currency_Header__c</fullName>
+        <defaultValue>1</defaultValue>
+        <externalId>false</externalId>
+        <label>Conversion Rate to Currency Header</label>
+        <precision>12</precision>
+        <required>false</required>
+        <scale>4</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Customs_Incoterm__c</fullName>
+        <externalId>false</externalId>
+        <label>Customs Incoterm</label>
+        <length>20</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Customs_Value__c</fullName>
+        <externalId>false</externalId>
+        <label>Customs Value</label>
+        <precision>10</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Delivery_Date__c</fullName>
+        <externalId>false</externalId>
+        <label>Delivery Date</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Delivery_Number__c</fullName>
+        <externalId>false</externalId>
+        <label>Delivery Number</label>
+        <precision>2</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Discount__c</fullName>
+        <externalId>false</externalId>
+        <label>% Discount</label>
+        <precision>4</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Percent</type>
+    </fields>
+    <fields>
+        <fullName>Discounts_Applied__c</fullName>
+        <externalId>false</externalId>
+        <label>Discounts Applied</label>
+        <length>131072</length>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>LongTextArea</type>
+        <visibleLines>3</visibleLines>
+    </fields>
+    <fields>
+        <fullName>Duty__c</fullName>
+        <externalId>false</externalId>
+        <label>Duty</label>
+        <precision>10</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>E_Commerce_Offer__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>E-Commerce Offer</label>
+        <lookupFilter>
+            <active>true</active>
+            <filterItems>
+                <field>E_Commerce_Offer__c.Item_Name__c</field>
+                <operation>equals</operation>
+                <valueField>$Source.Item__c</valueField>
+            </filterItems>
+            <isOptional>false</isOptional>
+        </lookupFilter>
+        <referenceTo>E_Commerce_Offer__c</referenceTo>
+        <relationshipLabel>Supplier Quote/Order Lines</relationshipLabel>
+        <relationshipName>Supplier_Quote_Order_Lines</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Expense_Amount__c</fullName>
+        <externalId>false</externalId>
+        <label>Expense Amount</label>
+        <precision>10</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Expense_Concept__c</fullName>
+        <externalId>false</externalId>
+        <label>Expense Concept</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>TextArea</type>
+    </fields>
+    <fields>
+        <fullName>Family__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Family</label>
+        <referenceTo>Product_Family__c</referenceTo>
+        <relationshipLabel>Supplier Quote/Order Lines</relationshipLabel>
+        <relationshipName>Supplier_Quote_Order_Lines</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Gross_Buy_Amount__c</fullName>
+        <externalId>false</externalId>
+        <formula>Quantity__c  *   Quote_Order_Buy_Price__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <inlineHelpText>&quot;Units&quot; x &quot;Quote/Order Buy Price&quot;</inlineHelpText>
+        <label>Gross Buy Amount</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>HS_Code__c</fullName>
+        <externalId>false</externalId>
+        <label>HS Code</label>
+        <length>20</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Imp_Exp_Charges_Assigned_Percent__c</fullName>
+        <externalId>false</externalId>
+        <formula>Imp_Exp_Charges_Assigned__c / Total_Destination_Amount__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <inlineHelpText>&quot;Imp-Exp Charges Assigned&quot; / &quot;Total Destination Amount&quot;</inlineHelpText>
+        <label>Imp-Exp Charges Assigned (%)</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Percent</type>
+    </fields>
+    <fields>
+        <fullName>Imp_Exp_Charges_Assigned__c</fullName>
+        <description>If &quot;Total Volume (m3)&quot; from &quot;Supplier Quote/Order&quot; different from 0 then (&quot;Total Volume (m3)&quot; / &quot;Total Volume (m3)&quot; from &quot;Supplier Quote/Order&quot;) x (&quot;Total Fees Sell Amount&quot; from &quot;Supplier Quote/Order&quot; / &quot;Conversion Rate to Currency Header&quot;)
+If &quot;Total Weight (Kg)&quot; from &quot;Supplier Quote/Order&quot; different from 0 then (&quot;Total Weight (Kg)&quot; / &quot;Total Weight (Kg)&quot; from &quot;Supplier Quote/Order&quot;) x (&quot;Total Fees Sell Amount&quot; from &quot;Supplier Quote/Order&quot; / &quot;Conversion Rate to Currency Header&quot;)</description>
+        <externalId>false</externalId>
+        <formula>IF(Supplier_Quote__r.Total_Volume_m3_2__c&lt;&gt;0,Total_Volume_m3__c/ Supplier_Quote__r.Total_Volume_m3_2__c, IF(Supplier_Quote__r.Total_Weight_Kg2__c&lt;&gt;0,Total_Weight_Kg__c / Supplier_Quote__r.Total_Weight_Kg2__c,null)) * Supplier_Quote__r.Total_Fees_Sell_Amount_number__c /  Conversion_Rate_to_Currency_Header__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <inlineHelpText>(&quot;Total Volume (m3)&quot; / &quot;Total Volume (m3)&quot; from &quot;Supplier Quote/Order&quot;) or (&quot;Total Weight (Kg)&quot; / &quot;Total Weight (Kg)&quot; from &quot;Supplier Quote/Order&quot;) x (&quot;Total Fees Sell Amount&quot; from &quot;Supplier Quote/Order&quot; / &quot;Conversion Rate to Currency Header&quot;)</inlineHelpText>
+        <label>Imp-Exp Charges Assigned</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Import_Export_Consolidated__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Import-Export Consolidated</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Import_Export_Item_Line__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Import-Export Item Line</label>
+        <referenceTo>Quote_Item_Line__c</referenceTo>
+        <relationshipLabel>Supplier Quote/Order Lines</relationshipLabel>
+        <relationshipName>Supplier_Quote_Order_Lines</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Item_Code__c</fullName>
+        <externalId>false</externalId>
+        <formula>Item__r.Sourcing_Item_Code__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <inlineHelpText>As specified in &quot;Item Code&quot; inside &quot;Item&quot;</inlineHelpText>
+        <label>Item Code</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Item_List_Price__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Item List Price</label>
+        <lookupFilter>
+            <active>true</active>
+            <filterItems>
+                <field>Item_List_Price__c.Item_Name__c</field>
+                <operation>equals</operation>
+                <valueField>$Source.Item__c</valueField>
+            </filterItems>
+            <isOptional>false</isOptional>
+        </lookupFilter>
+        <referenceTo>Item_List_Price__c</referenceTo>
+        <relationshipLabel>Supplier Quote/Order Lines</relationshipLabel>
+        <relationshipName>Supplier_Quote_Order_Lines</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Item_Units_x_Packaging__c</fullName>
+        <externalId>false</externalId>
+        <label>Item Units / Packaging</label>
+        <precision>8</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Item__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Item</label>
+        <referenceTo>Sourcing_Item__c</referenceTo>
+        <relationshipLabel>Supplier Quote/Order Lines</relationshipLabel>
+        <relationshipName>Supplier_Quote_Order_Lines</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Item_to_Supply__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Item to Supply</label>
+        <referenceTo>Items_to_Supply__c</referenceTo>
+        <relationshipName>Supplier_Quote_Lines</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Line_Number__c</fullName>
+        <externalId>false</externalId>
+        <label>Line Number</label>
+        <precision>6</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>List_Price__c</fullName>
+        <externalId>false</externalId>
+        <label>List Price</label>
+        <precision>10</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Net_Amount__c</fullName>
+        <externalId>false</externalId>
+        <formula>Quantity__c   *  Net_Price__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <inlineHelpText>&quot;Units&quot; x &quot;Net Price&quot;</inlineHelpText>
+        <label>Net Amount</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Net_Price__c</fullName>
+        <externalId>false</externalId>
+        <formula>Quote_Order_Buy_Price__c    *  ( 1 -  Discount__c  )</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <inlineHelpText>&quot;Quote/Order Buy Price&quot; x (1 - &quot;Discount&quot;)</inlineHelpText>
+        <label>Net Price</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Number_of_Containers__c</fullName>
+        <externalId>false</externalId>
+        <label>Number of Containers</label>
+        <precision>8</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Observations__c</fullName>
+        <externalId>false</externalId>
+        <label>Observations</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>TextArea</type>
+    </fields>
+    <fields>
+        <fullName>Offer_Price__c</fullName>
+        <externalId>false</externalId>
+        <label>Offer Price</label>
+        <precision>10</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Packaging_Description__c</fullName>
+        <externalId>false</externalId>
+        <label>Packaging Description</label>
+        <length>20</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Packaging_Gross_Weight_kg__c</fullName>
+        <externalId>false</externalId>
+        <formula>Item_Units_x_Packaging__c * Supplier_Item_Weight_kg__c + Packaging_Weight_kg__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <inlineHelpText>&quot;Item Units x Packaging&quot; x &quot;Supplier Item Weight (Kg)&quot; + &quot;Packaging Weight (Kg)&quot;</inlineHelpText>
+        <label>Packaging Gross Weight (kg)</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Packaging_Height_cm__c</fullName>
+        <externalId>false</externalId>
+        <label>Packaging Height (cm)</label>
+        <precision>4</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Packaging_Length_cm__c</fullName>
+        <externalId>false</externalId>
+        <label>Packaging Length (cm)</label>
+        <precision>4</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Packaging_Quantity__c</fullName>
+        <externalId>false</externalId>
+        <formula>Quantity__c / Item_Units_x_Packaging__c</formula>
+        <inlineHelpText>&quot;Units&quot; / &quot;Item Units x Packaging&quot;</inlineHelpText>
+        <label>Packaging Quantity</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Packaging_Volume_m3__c</fullName>
+        <externalId>false</externalId>
+        <formula>( Packaging_Length_cm__c * Packaging_Height_cm__c * Packaging_Width_cm__c) / 1000000</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <inlineHelpText>(&quot;Packaging Length (cm)&quot; x &quot;Packaging Height (cm)&quot; x &quot;Packaging Width (cm)&quot;) / 1000000</inlineHelpText>
+        <label>Packaging Volume (m3)</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>4</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Packaging_Weight_kg__c</fullName>
+        <externalId>false</externalId>
+        <label>Packaging Weight (kg)</label>
+        <precision>10</precision>
+        <required>false</required>
+        <scale>4</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Packaging_Width_cm__c</fullName>
+        <externalId>false</externalId>
+        <label>Packaging Width (cm)</label>
+        <precision>4</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Percent_Duty__c</fullName>
+        <externalId>false</externalId>
+        <label>Percent Duty</label>
+        <precision>5</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Percent</type>
+    </fields>
+    <fields>
+        <fullName>Percent_Taxes__c</fullName>
+        <externalId>false</externalId>
+        <label>Percent Taxes</label>
+        <precision>5</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Percent</type>
+    </fields>
+    <fields>
+        <fullName>Price__c</fullName>
+        <externalId>false</externalId>
+        <label>Item Price</label>
+        <precision>10</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Product_Item_DC_Value__c</fullName>
+        <externalId>false</externalId>
+        <label>Product Item DC Value</label>
+        <length>50</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Product_Item_DC__c</fullName>
+        <externalId>false</externalId>
+        <label>Product Item DC</label>
+        <length>200</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Production_Time_Days__c</fullName>
+        <externalId>false</externalId>
+        <label>Production Time (Days)</label>
+        <precision>8</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Quantity__c</fullName>
+        <externalId>false</externalId>
+        <label>Units</label>
+        <precision>10</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Quote_Order_Buy_Price__c</fullName>
+        <externalId>false</externalId>
+        <formula>BLANKVALUE(Offer_Price__c,BLANKVALUE(List_Price__c,Price__c))</formula>
+        <label>Quote/Order Buy Price</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Received__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Received</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Sales_Tax__c</fullName>
+        <externalId>false</externalId>
+        <label>Sales Tax</label>
+        <precision>10</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Subcategory_DC_Value__c</fullName>
+        <externalId>false</externalId>
+        <label>Subcategory DC Value</label>
+        <length>50</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Subcategory_DC__c</fullName>
+        <externalId>false</externalId>
+        <label>Subcategory DC</label>
+        <length>200</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Subfamily__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Subfamily</label>
+        <lookupFilter>
+            <active>true</active>
+            <filterItems>
+                <field>Subfamily__c.Product_Family__c</field>
+                <operation>equals</operation>
+                <valueField>$Source.Family__c</valueField>
+            </filterItems>
+            <isOptional>false</isOptional>
+        </lookupFilter>
+        <referenceTo>Subfamily__c</referenceTo>
+        <relationshipLabel>Supplier Quote/Order Lines</relationshipLabel>
+        <relationshipName>Supplier_Quote_Order_Lines</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Supplier_Item_Weight_kg__c</fullName>
+        <externalId>false</externalId>
+        <label>Supplier Item Weight (kg)</label>
+        <precision>8</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Supplier_Quote__c</fullName>
+        <externalId>false</externalId>
+        <label>Supplier Quote/Order</label>
+        <referenceTo>Supplier_Quote__c</referenceTo>
+        <relationshipLabel>Supplier Quote/Order Lines</relationshipLabel>
+        <relationshipName>Supplier_Quote_Lines</relationshipName>
+        <relationshipOrder>0</relationshipOrder>
+        <reparentableMasterDetail>false</reparentableMasterDetail>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>MasterDetail</type>
+        <writeRequiresMasterRead>false</writeRequiresMasterRead>
+    </fields>
+    <fields>
+        <fullName>Supplier_Request_Line__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Supplier Request Line</label>
+        <lookupFilter>
+            <active>true</active>
+            <filterItems>
+                <field>Supplier_Request_Line__c.Supplier_Request_RFP__c</field>
+                <operation>equals</operation>
+                <valueField>$Source.Supplier_Request_RFP__c</valueField>
+            </filterItems>
+            <isOptional>false</isOptional>
+        </lookupFilter>
+        <referenceTo>Supplier_Request_Line__c</referenceTo>
+        <relationshipLabel>Supplier Quote/Order Lines</relationshipLabel>
+        <relationshipName>Supplier_Quote_Order_Lines</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Supplier_Request_RFP__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Supplier Request</label>
+        <referenceTo>Supplier_Request_RFP__c</referenceTo>
+        <relationshipLabel>Supplier Quote/Order Lines</relationshipLabel>
+        <relationshipName>Supplier_Quote_Lines</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Supplier_Total_Volume_m3__c</fullName>
+        <externalId>false</externalId>
+        <formula>Packaging_Volume_m3__c * Packaging_Quantity__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <inlineHelpText>&quot;Packaging Volume (m3)&quot; x &quot;Packaging Quantity&quot;</inlineHelpText>
+        <label>Supplier Total Volume (m3)</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>4</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Supplier_Total_Weight_kg__c</fullName>
+        <externalId>false</externalId>
+        <formula>Packaging_Gross_Weight_kg__c * Packaging_Quantity__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <inlineHelpText>&quot;Packaging Gross Weight (kg)&quot; x &quot;Packaging Quantity&quot;</inlineHelpText>
+        <label>Supplier Total Weight (kg)</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Supplier__c</fullName>
+        <externalId>false</externalId>
+        <formula>Supplier_Quote__r.Supplier__r.Name</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <inlineHelpText>As specified in &quot;Supplier&quot; inside &quot;Supplier Quote/Order&quot;</inlineHelpText>
+        <label>Supplier</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Total_Amount__c</fullName>
+        <externalId>false</externalId>
+        <formula>Net_Amount__c   +  Expense_Amount__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <inlineHelpText>&quot;Net Amount&quot; + &quot;Expense Amount&quot;</inlineHelpText>
+        <label>Total Origin Amount</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Total_Destination_Amount__c</fullName>
+        <externalId>false</externalId>
+        <formula>Total_Amount__c + Imp_Exp_Charges_Assigned__c + Total_Taxes__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <inlineHelpText>&quot;Total Amount&quot; + &quot;Imp-Exp Charges Assigned&quot; + &quot;Total Taxes&quot;</inlineHelpText>
+        <label>Total Destination Amount</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Total_Origin_Amount_header_currency__c</fullName>
+        <externalId>false</externalId>
+        <formula>Total_Amount__c *  Conversion_Rate_to_Currency_Header__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Total Origin Amount (header currency)</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Total_Taxes__c</fullName>
+        <externalId>false</externalId>
+        <formula>Duty__c + Sales_Tax__c +  Additional_Import_Taxes_Amount__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <inlineHelpText>&quot;Duty&quot; + &quot;Sales Tax&quot; + &quot;Additional Import Taxes Amount&quot;</inlineHelpText>
+        <label>Total Taxes</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Total_Taxes_header_currency__c</fullName>
+        <externalId>false</externalId>
+        <formula>Total_Taxes__c *  Conversion_Rate_to_Currency_Header__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Total Taxes (header currency)</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Total_Volume_m3__c</fullName>
+        <externalId>false</externalId>
+        <label>Total Volume (m3)</label>
+        <precision>12</precision>
+        <required>false</required>
+        <scale>4</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Total_Weight_Kg__c</fullName>
+        <externalId>false</externalId>
+        <label>Total Weight (Kg)</label>
+        <precision>10</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Unit_Destination_Price__c</fullName>
+        <externalId>false</externalId>
+        <formula>Total_Destination_Amount__c / Quantity__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <inlineHelpText>&quot;Total Destination Amount&quot; / &quot;Units&quot;</inlineHelpText>
+        <label>Unit Destination Price</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Unit_Origin_Price__c</fullName>
+        <externalId>false</externalId>
+        <formula>Total_Amount__c / Quantity__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <inlineHelpText>&quot;Total Amount&quot; / &quot;Units&quot;</inlineHelpText>
+        <label>Unit Origin Price</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Unit_of_measure__c</fullName>
+        <externalId>false</externalId>
+        <formula>TEXT (Item__r.Unit_of_measure__c)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <inlineHelpText>As specified in &quot;Unit of measure&quot; inside &quot;Item&quot;</inlineHelpText>
+        <label>Unit of measure</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <label>Supplier Quote/Order Line</label>
+    <listViews>
+        <fullName>All</fullName>
+        <columns>Supplier__c</columns>
+        <columns>Supplier_Quote__c</columns>
+        <columns>Item__c</columns>
+        <columns>Quote_Order_Buy_Price__c</columns>
+        <columns>Net_Price__c</columns>
+        <filterScope>Everything</filterScope>
+        <label>All</label>
+    </listViews>
+    <nameField>
+        <label>SQO Line</label>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+    </nameField>
+    <pluralLabel>Supplier Quote/Order Lines</pluralLabel>
+    <recordTypeTrackHistory>false</recordTypeTrackHistory>
+    <recordTypes>
+        <fullName>Supplier_Quote_Order_Line</fullName>
+        <active>true</active>
+        <label>Supplier Quote/Order Line</label>
+    </recordTypes>
+    <recordTypes>
+        <fullName>Supplier_Quote_Order_Line_Hidden</fullName>
+        <active>true</active>
+        <label>Supplier Quote/Order Line Hidden</label>
+    </recordTypes>
+    <searchLayouts>
+        <customTabListAdditionalFields>Supplier_Request_RFP__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Supplier_Quote__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Supplier__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Item__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Unit_of_measure__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Quantity__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Net_Price__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Net_Amount__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Expense_Amount__c</customTabListAdditionalFields>
+        <lookupDialogsAdditionalFields>Supplier_Request_RFP__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>Supplier_Quote__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>Supplier__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>Item__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>Unit_of_measure__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>Quantity__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>Net_Price__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>Net_Amount__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>Expense_Amount__c</lookupDialogsAdditionalFields>
+        <searchResultsAdditionalFields>Supplier_Request_RFP__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Supplier_Quote__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Supplier__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Item__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Unit_of_measure__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Quantity__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Net_Price__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Net_Amount__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Expense_Amount__c</searchResultsAdditionalFields>
+    </searchLayouts>
+    <sharingModel>ControlledByParent</sharingModel>
+    <visibility>Public</visibility>
+</CustomObject>

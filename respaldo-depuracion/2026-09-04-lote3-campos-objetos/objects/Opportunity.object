@@ -1,0 +1,4256 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionOverrides>
+        <actionName>AddInfluence</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>AddInfluence</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>AddInfluence</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <comment>Action override created by Lightning App Builder during activation.</comment>
+        <content>Opportunity_Record_Page2</content>
+        <formFactor>Large</formFactor>
+        <skipRecordTypeSelect>false</skipRecordTypeSelect>
+        <type>Flexipage</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <businessProcesses>
+        <fullName>Proyectos</fullName>
+        <isActive>true</isActive>
+        <values>
+            <fullName>Cotización</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ejecución</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Entendimiento</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ganada</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Negociación</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Perdida</fullName>
+            <default>false</default>
+        </values>
+    </businessProcesses>
+    <businessProcesses>
+        <fullName>Standar Opportunity</fullName>
+        <isActive>true</isActive>
+        <values>
+            <fullName>Agreed Shipping</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Closed Lost</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>First Contact %2F Need Analysis</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>First Shipment</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Future Opportunity</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Implemented</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Potencial</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Proposal</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ship to Profile</fullName>
+            <default>false</default>
+        </values>
+    </businessProcesses>
+    <compactLayoutAssignment>New_Awesome_Companct_Layout</compactLayoutAssignment>
+    <compactLayouts>
+        <fullName>New_Awesome_Companct_Layout</fullName>
+        <fields>Name</fields>
+        <fields>AccountId</fields>
+        <fields>CloseDate</fields>
+        <fields>Amount</fields>
+        <fields>OwnerId</fields>
+        <fields>RecordTypeId</fields>
+        <label>New Awesome Compact Layout</label>
+    </compactLayouts>
+    <enableEnhancedLookup>true</enableEnhancedLookup>
+    <enableFeeds>true</enableFeeds>
+    <enableHistory>false</enableHistory>
+    <externalSharingModel>Private</externalSharingModel>
+    <fields>
+        <fullName>AccountId</fullName>
+        <trackFeedHistory>false</trackFeedHistory>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Accruing_Unpaid_Expense_Total__c</fullName>
+        <externalId>false</externalId>
+        <label>Accruing/Unpaid Expense Total</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackFeedHistory>false</trackFeedHistory>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Activacion_autorizada__c</fullName>
+        <externalId>false</externalId>
+        <label>Activación autorizada?</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Si</fullName>
+                    <default>false</default>
+                    <label>Si</label>
+                </value>
+                <value>
+                    <fullName>No</fullName>
+                    <default>false</default>
+                    <label>No</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>Amount</fullName>
+        <trackFeedHistory>true</trackFeedHistory>
+        <trackTrending>true</trackTrending>
+    </fields>
+    <fields>
+        <fullName>Budget_Confirmed__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Budget Confirmed</label>
+        <trackFeedHistory>false</trackFeedHistory>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>CampaignId</fullName>
+        <trackFeedHistory>false</trackFeedHistory>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Campaign_Assign__c</fullName>
+        <externalId>false</externalId>
+        <formula>Campaign.Name</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Campaign Assign</label>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Check_Price_Products__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Check Price Products</label>
+        <trackFeedHistory>false</trackFeedHistory>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Check_Sell_Price__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Check Sell Price</label>
+        <trackFeedHistory>false</trackFeedHistory>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Ciente_Capacitado__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Ciente Capacitado</label>
+        <trackFeedHistory>false</trackFeedHistory>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>CloseDate</fullName>
+        <trackFeedHistory>true</trackFeedHistory>
+        <trackTrending>true</trackTrending>
+    </fields>
+    <fields>
+        <fullName>Comentarios_Otros__c</fullName>
+        <externalId>false</externalId>
+        <label>Comentarios Otros</label>
+        <length>500</length>
+        <trackFeedHistory>false</trackFeedHistory>
+        <type>LongTextArea</type>
+        <visibleLines>2</visibleLines>
+    </fields>
+    <fields>
+        <fullName>ContractId</fullName>
+        <trackFeedHistory>false</trackFeedHistory>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Cuenta_Recuperada__c</fullName>
+        <externalId>false</externalId>
+        <formula>Account.Recuperado__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Cuenta Recuperada</label>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>CurrencyIsoCode</fullName>
+        <trackFeedHistory>false</trackFeedHistory>
+    </fields>
+    <fields>
+        <fullName>Data_Time_Cotizacion__c</fullName>
+        <externalId>false</externalId>
+        <label>Data Time Cotización</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <type>DateTime</type>
+    </fields>
+    <fields>
+        <fullName>Data_Time_Ejecucion__c</fullName>
+        <externalId>false</externalId>
+        <label>Data Time Ejecución</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <type>DateTime</type>
+    </fields>
+    <fields>
+        <fullName>Data_Time_Entendimiento__c</fullName>
+        <externalId>false</externalId>
+        <label>Data Time Entendimiento</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <type>DateTime</type>
+    </fields>
+    <fields>
+        <fullName>Data_Time_Ganada__c</fullName>
+        <externalId>false</externalId>
+        <label>Data Time Ganada</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <type>DateTime</type>
+    </fields>
+    <fields>
+        <fullName>Data_Time_Negociacion__c</fullName>
+        <externalId>false</externalId>
+        <label>Data Time Negociación</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <type>DateTime</type>
+    </fields>
+    <fields>
+        <fullName>Description</fullName>
+        <trackFeedHistory>false</trackFeedHistory>
+    </fields>
+    <fields>
+        <fullName>Discovery_Completed__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Discovery Completed</label>
+        <trackFeedHistory>false</trackFeedHistory>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Estado_Cotizacion__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF((SLA_Cotizacion__c != null)||(SLA_Cotizacion__c != &apos;&apos;), &quot;Paso a la siguiente etapa Negociación fecha &quot; &amp; TEXT(DATEVALUE( Data_Time_Negociacion__c )) &amp; &quot; &quot; &amp; TEXT(TIMEVALUE(Data_Time_Negociacion__c - (6/24))) , 
+   IF(FLOOR((NOW() - Data_Time_Cotizacion__c) * 24 * 60) &lt; 10, IMAGE(&apos;/resource/relojVerde&apos;, &apos;relojVerde&apos;, 50, 50)  &amp; &quot; Tiempo trascurrido en la etapa &quot; &amp; TEXT(FLOOR(NOW() - Data_Time_Cotizacion__c)) &amp; &quot; Días &quot; &amp; TEXT( ROUND(((FLOOR((NOW() - Data_Time_Cotizacion__c) * 24 * 60)) - (FLOOR(NOW() - Data_Time_Cotizacion__c) * 1440)) / 60, 2)) &amp; &quot; Horas&quot;,
+      IF(FLOOR((NOW() - Data_Time_Cotizacion__c) * 24 * 60) &lt; 30, IMAGE(&apos;/resource/relojNaranja&apos;, &apos;relojNaranja&apos;, 50, 50)  &amp; &quot; Tiempo trascurrido en la etapa &quot; &amp; TEXT(FLOOR(NOW() - Data_Time_Cotizacion__c)) &amp; &quot; Días &quot; &amp; TEXT( ROUND(((FLOOR((NOW() - Data_Time_Cotizacion__c) * 24 * 60)) - (FLOOR(NOW() - Data_Time_Cotizacion__c) * 1440)) / 60, 2)) &amp; &quot; Horas&quot;,
+         IF(FLOOR((NOW() - Data_Time_Cotizacion__c) * 24 * 60) &gt; 30, IMAGE(&apos;/resource/relojRojo&apos;, &apos;relojRojo&apos;, 50, 50) &amp; &quot; Tiempo trascurrido en la etapa &quot; &amp; TEXT(FLOOR(NOW() - Data_Time_Cotizacion__c)) &amp; &quot; Días &quot; &amp; TEXT( ROUND(((FLOOR((NOW() - Data_Time_Cotizacion__c) * 24 * 60)) - (FLOOR(NOW() - Data_Time_Cotizacion__c) * 1440)) / 60, 2)) &amp; &quot; Horas&quot;, &quot;&quot;
+         )
+      )
+   )
+)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Estado Cotización</label>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Estado_Ejecucion__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF((SLA_Ejecucion__c != null)||(SLA_Ejecucion__c != &apos;&apos;), &quot;Paso a la siguiente etapa Ganada fecha &quot; &amp; TEXT(DATEVALUE( Data_Time_Ganada__c)) &amp; &quot; &quot; &amp; TEXT(TIMEVALUE(Data_Time_Ganada__c - (6/24))),
+IF(FLOOR((NOW() - Data_Time_Ejecucion__c) * 24 * 60) &lt; 10, IMAGE(&apos;/resource/relojVerde&apos;, &apos;relojVerde&apos;, 50, 50) &amp; &quot; Tiempo trascurrido en la etapa &quot; &amp; TEXT(FLOOR(NOW() - Data_Time_Ejecucion__c)) &amp; &quot; Días &quot; &amp; TEXT( ROUND(((FLOOR((NOW() - Data_Time_Ejecucion__c) * 24 * 60)) - (FLOOR(NOW() - Data_Time_Ejecucion__c) * 1440)) / 60, 2)) &amp; &quot; Horas&quot;,
+IF(FLOOR((NOW() - Data_Time_Ejecucion__c) * 24 * 60) &lt; 30, IMAGE(&apos;/resource/relojNaranja&apos;, &apos;relojNaranja&apos;, 50, 50) &amp; &quot; Tiempo trascurrido en la etapa &quot; &amp; TEXT(FLOOR(NOW() - Data_Time_Ejecucion__c)) &amp; &quot; Días &quot; &amp; TEXT( ROUND(((FLOOR((NOW() - Data_Time_Ejecucion__c) * 24 * 60)) - (FLOOR(NOW() - Data_Time_Ejecucion__c) * 1440)) / 60, 2)) &amp; &quot; Horas&quot;,
+IF(FLOOR((NOW() - Data_Time_Ejecucion__c) * 24 * 60) &gt; 30, IMAGE(&apos;/resource/relojRojo&apos;, &apos;relojRojo&apos;, 50, 50) &amp; &quot; Tiempo trascurrido en la etapa &quot; &amp; TEXT(FLOOR(NOW() - Data_Time_Ejecucion__c)) &amp; &quot; Días &quot; &amp; TEXT( ROUND(((FLOOR((NOW() - Data_Time_Ejecucion__c) * 24 * 60)) - (FLOOR(NOW() - Data_Time_Ejecucion__c) * 1440)) / 60, 2)) &amp; &quot; Horas&quot;, &quot;&quot;
+)
+)
+)
+)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Estado Ejecución</label>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Estado_Entendimiento__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF((SLA_Entendimiento__c != null)||(SLA_Entendimiento__c != &apos;&apos;), &quot;Paso a la siguiente etapa Cotización fecha &quot; &amp; TEXT(DATEVALUE( Data_Time_Cotizacion__c )) &amp; &quot; &quot; &amp; TEXT(TIMEVALUE(Data_Time_Cotizacion__c - (6/24))) , 
+   IF(FLOOR((NOW() - CreatedDate) * 24 * 60) &lt; 10, IMAGE(&apos;/resource/relojVerde&apos;, &apos;relojVerde&apos;, 50, 50)  &amp; &quot; Tiempo trascurrido en la etapa &quot; &amp; TEXT(FLOOR(NOW() - CreatedDate)) &amp; &quot; Días &quot; &amp; TEXT( ROUND(((FLOOR((NOW() - CreatedDate) * 24 * 60)) - (FLOOR(NOW() - CreatedDate) * 1440)) / 60, 2)) &amp; &quot; Horas&quot;,
+      IF(FLOOR((NOW() - CreatedDate) * 24 * 60) &lt; 30, IMAGE(&apos;/resource/relojNaranja&apos;, &apos;relojNaranja&apos;, 50, 50)  &amp; &quot; Tiempo trascurrido en la etapa &quot; &amp; TEXT(FLOOR(NOW() - CreatedDate)) &amp; &quot; Días &quot; &amp; TEXT( ROUND(((FLOOR((NOW() - CreatedDate) * 24 * 60)) - (FLOOR(NOW() - CreatedDate) * 1440)) / 60, 2)) &amp; &quot; Horas&quot;,
+         IMAGE(&apos;/resource/relojRojo&apos;, &apos;relojRojo&apos;, 50, 50) &amp; &quot; Tiempo trascurrido en la etapa &quot; &amp; TEXT(FLOOR(NOW() - CreatedDate)) &amp; &quot; Días &quot; &amp; TEXT( ROUND(((FLOOR((NOW() - CreatedDate) * 24 * 60)) - (FLOOR(NOW() - CreatedDate) * 1440)) / 60, 2)) &amp; &quot; Horas&quot;
+      )
+   )
+)</formula>
+        <label>Estado Entendimiento</label>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Estado_Negociacion__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF((SLA_Negociacion__c != null)||(SLA_Negociacion__c != &apos;&apos;), &quot;Paso a la siguiente etapa Ejecución fecha &quot; &amp; TEXT(DATEVALUE(Data_Time_Ejecucion__c)) &amp; &quot; &quot; &amp; TEXT(TIMEVALUE(Data_Time_Ejecucion__c - (6/24))), 
+   IF(FLOOR((NOW() - Data_Time_Negociacion__c) * 24 * 60) &lt; 10, IMAGE(&apos;/resource/relojVerde&apos;, &apos;relojVerde&apos;, 50, 50)  &amp; &quot; Tiempo trascurrido en la etapa &quot; &amp; TEXT(FLOOR(NOW() - Data_Time_Negociacion__c)) &amp; &quot; Días &quot; &amp; TEXT( ROUND(((FLOOR((NOW() - Data_Time_Negociacion__c) * 24 * 60)) - (FLOOR(NOW() - Data_Time_Negociacion__c) * 1440)) / 60, 2)) &amp; &quot; Horas&quot;,
+      IF(FLOOR((NOW() - Data_Time_Negociacion__c) * 24 * 60) &lt; 30, IMAGE(&apos;/resource/relojNaranja&apos;, &apos;relojNaranja&apos;, 50, 50)  &amp; &quot; Tiempo trascurrido en la etapa &quot; &amp; TEXT(FLOOR(NOW() - Data_Time_Negociacion__c)) &amp; &quot; Días &quot; &amp; TEXT( ROUND(((FLOOR((NOW() - Data_Time_Negociacion__c) * 24 * 60)) - (FLOOR(NOW() - Data_Time_Negociacion__c) * 1440)) / 60, 2)) &amp; &quot; Horas&quot;,
+         IF(FLOOR((NOW() - Data_Time_Negociacion__c) * 24 * 60) &gt; 30, IMAGE(&apos;/resource/relojRojo&apos;, &apos;relojRojo&apos;, 50, 50) &amp; &quot; Tiempo trascurrido en la etapa &quot; &amp; TEXT(FLOOR(NOW() - Data_Time_Negociacion__c)) &amp; &quot; Días &quot; &amp; TEXT( ROUND(((FLOOR((NOW() - Data_Time_Negociacion__c) * 24 * 60)) - (FLOOR(NOW() - Data_Time_Negociacion__c) * 1440)) / 60, 2)) &amp; &quot; Horas&quot;, &quot;&quot;
+         )
+      )
+   )
+)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Estado Negociación</label>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>ExpectedRevenue</fullName>
+    </fields>
+    <fields>
+        <fullName>Fecha_Estimada_Cierre__c</fullName>
+        <externalId>false</externalId>
+        <label>Fecha Estimada de Cierre</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Final_Paid_Expense_Total__c</fullName>
+        <externalId>false</externalId>
+        <label>Final/Paid Expense Total</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackFeedHistory>false</trackFeedHistory>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Folio_Mkt2__c</fullName>
+        <externalId>false</externalId>
+        <label>Folio Mkt2</label>
+        <length>25</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Folio_Mkt__c</fullName>
+        <externalId>false</externalId>
+        <formula>Account.Folio_Mkt__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Folio Mkt</label>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Group__c</fullName>
+        <externalId>false</externalId>
+        <label>Group</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>SP-FN-FLETE NACIONAL</fullName>
+                    <default>false</default>
+                    <label>SP-FN-FLETE NACIONAL</label>
+                </value>
+                <value>
+                    <fullName>SP-FI-FLETE INTER</fullName>
+                    <default>false</default>
+                    <label>SP-FI-FLETE INTER</label>
+                </value>
+                <value>
+                    <fullName>SP-A-AEREO</fullName>
+                    <default>false</default>
+                    <label>SP-A-AEREO</label>
+                </value>
+                <value>
+                    <fullName>SP-AW-GLOBAL AEREO</fullName>
+                    <default>false</default>
+                    <label>SP-AW-GLOBAL AEREO</label>
+                </value>
+                <value>
+                    <fullName>SP-CE-COMERCIO EXT</fullName>
+                    <default>false</default>
+                    <label>SP-CE-COMERCIO EXT</label>
+                </value>
+                <value>
+                    <fullName>SP-EX-SEGUROS</fullName>
+                    <default>false</default>
+                    <label>SP-EX-SEGUROS</label>
+                </value>
+                <value>
+                    <fullName>SP-M-MARITIMO</fullName>
+                    <default>false</default>
+                    <label>SP-M-MARITIMO</label>
+                </value>
+                <value>
+                    <fullName>SP-PQ-PAQUETERIA</fullName>
+                    <default>false</default>
+                    <label>SP-PQ-PAQUETERIA</label>
+                </value>
+                <value>
+                    <fullName>SP-PTO-PUERTOS</fullName>
+                    <default>false</default>
+                    <label>SP-PTO-PUERTOS</label>
+                </value>
+                <value>
+                    <fullName>SP-R-GLOBAL ROUTING</fullName>
+                    <default>false</default>
+                    <label>SP-R-GLOBAL ROUTING</label>
+                </value>
+                <value>
+                    <fullName>SP-SL-SERV LOGISTICO</fullName>
+                    <default>false</default>
+                    <label>SP-SL-SERV LOGISTICO</label>
+                </value>
+                <value>
+                    <fullName>SP-T-CONSOLIDADO</fullName>
+                    <default>false</default>
+                    <label>SP-T-CONSOLIDADO</label>
+                </value>
+                <value>
+                    <fullName>SP-W-GLOBAL MARITIMO</fullName>
+                    <default>false</default>
+                    <label>SP-W-GLOBAL MARITIMO</label>
+                </value>
+                <value>
+                    <fullName>SP-WH-ALMACENAJE</fullName>
+                    <default>false</default>
+                    <label>SP-WH-ALMACENAJE</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>Guias__c</fullName>
+        <description>Define el numero de guias</description>
+        <externalId>false</externalId>
+        <label>Guias</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackFeedHistory>false</trackFeedHistory>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>IEQ_Status__c</fullName>
+        <externalId>false</externalId>
+        <formula>TEXT(Import_Export_Quote_Order__r.Quotation_Status__c )</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>IEQ Status</label>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Import_Export_Quote_Order__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Import-Export Quote/Order</label>
+        <lookupFilter>
+            <active>true</active>
+            <filterItems>
+                <field>Customer_Quote__c.Account_for__c</field>
+                <operation>equals</operation>
+                <valueField>$Source.AccountId</valueField>
+            </filterItems>
+            <isOptional>false</isOptional>
+        </lookupFilter>
+        <referenceTo>Customer_Quote__c</referenceTo>
+        <relationshipLabel>Opportunities</relationshipLabel>
+        <relationshipName>Opportunities</relationshipName>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Invoice_Number__c</fullName>
+        <externalId>false</externalId>
+        <label>Invoice Number</label>
+        <length>255</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>IqScore</fullName>
+    </fields>
+    <fields>
+        <fullName>IsPrivate</fullName>
+        <trackFeedHistory>false</trackFeedHistory>
+    </fields>
+    <fields>
+        <fullName>LeadSource</fullName>
+        <trackFeedHistory>false</trackFeedHistory>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Loss_Reason__c</fullName>
+        <externalId>false</externalId>
+        <label>Loss Reason</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <type>Picklist</type>
+        <valueSet>
+            <controllingField>StageName</controllingField>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Lost to Competitor</fullName>
+                    <default>false</default>
+                    <label>Lost to Competitor</label>
+                </value>
+                <value>
+                    <fullName>No Budget / Lost Funding</fullName>
+                    <default>false</default>
+                    <label>No Budget / Lost Funding</label>
+                </value>
+                <value>
+                    <fullName>No Decision / Non-Responsive</fullName>
+                    <default>false</default>
+                    <label>No Decision / Non-Responsive</label>
+                </value>
+                <value>
+                    <fullName>Price</fullName>
+                    <default>false</default>
+                    <label>Price</label>
+                </value>
+                <value>
+                    <fullName>Other</fullName>
+                    <default>false</default>
+                    <label>Other</label>
+                </value>
+                <value>
+                    <fullName>Ruta fuera de portafolio</fullName>
+                    <default>false</default>
+                    <label>Ruta fuera de portafolio</label>
+                </value>
+                <value>
+                    <fullName>No rentable</fullName>
+                    <default>false</default>
+                    <label>No rentable</label>
+                </value>
+                <value>
+                    <fullName>Tiempo de plan de trabajo</fullName>
+                    <default>false</default>
+                    <label>Tiempo de plan de trabajo</label>
+                </value>
+                <value>
+                    <fullName>Vetado, moroso (Temas Adm)</fullName>
+                    <default>false</default>
+                    <label>Vetado, moroso (Temas Adm)</label>
+                </value>
+                <value>
+                    <fullName>No aplica proyecto</fullName>
+                    <default>false</default>
+                    <label>No aplica proyecto</label>
+                </value>
+                <value>
+                    <fullName>No contesto al contactarlo nuevamente</fullName>
+                    <default>false</default>
+                    <label>No contesto al contactarlo nuevamente</label>
+                </value>
+                <value>
+                    <fullName>Esta realizando benchmark/investigacion</fullName>
+                    <default>false</default>
+                    <label>Esta realizando benchmark/investigacion</label>
+                </value>
+                <value>
+                    <fullName>Para oportunidad futura</fullName>
+                    <default>false</default>
+                    <label>Para oportunidad futura</label>
+                </value>
+                <value>
+                    <fullName>Declinado por el folio</fullName>
+                    <default>false</default>
+                    <label>Declinado por el folio</label>
+                </value>
+                <value>
+                    <fullName>Falta de seguimiento a oportunidad</fullName>
+                    <default>false</default>
+                    <label>Falta de seguimiento a oportunidad</label>
+                </value>
+                <value>
+                    <fullName>Falta de crédito</fullName>
+                    <default>false</default>
+                    <label>Falta de crédito</label>
+                </value>
+                <value>
+                    <fullName>Falta de disponibilidad</fullName>
+                    <default>false</default>
+                    <label>Falta de disponibilidad</label>
+                </value>
+                <value>
+                    <fullName>Tarifa Alta</fullName>
+                    <default>false</default>
+                    <label>Tarifa Alta</label>
+                </value>
+                <value>
+                    <fullName>Tardanza en Cotizar</fullName>
+                    <default>false</default>
+                    <label>Tardanza en Cotizar</label>
+                </value>
+                <value>
+                    <fullName>Cancelación de Cliente</fullName>
+                    <default>false</default>
+                    <label>Cancelación de Cliente</label>
+                </value>
+                <value>
+                    <fullName>Falla Operativa</fullName>
+                    <default>false</default>
+                    <label>Falla Operativa</label>
+                </value>
+                <value>
+                    <fullName>Fuera de where to play</fullName>
+                    <default>false</default>
+                    <label>Fuera de where to play</label>
+                </value>
+                <value>
+                    <fullName>Oportunidad duplicada</fullName>
+                    <default>false</default>
+                    <label>Oportunidad duplicada</label>
+                </value>
+                <value>
+                    <fullName>No le interesa</fullName>
+                    <default>false</default>
+                    <label>No le interesa</label>
+                </value>
+            </valueSetDefinition>
+            <valueSettings>
+                <controllingFieldValue>Perdida</controllingFieldValue>
+                <controllingFieldValue>Closed Lost</controllingFieldValue>
+                <valueName>Para oportunidad futura</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Perdida</controllingFieldValue>
+                <controllingFieldValue>Closed Lost</controllingFieldValue>
+                <valueName>Declinado por el folio</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Perdida</controllingFieldValue>
+                <controllingFieldValue>Closed Lost</controllingFieldValue>
+                <valueName>Falta de seguimiento a oportunidad</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Perdida</controllingFieldValue>
+                <controllingFieldValue>Closed Lost</controllingFieldValue>
+                <valueName>Falta de crédito</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Perdida</controllingFieldValue>
+                <controllingFieldValue>Closed Lost</controllingFieldValue>
+                <valueName>Falta de disponibilidad</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Perdida</controllingFieldValue>
+                <controllingFieldValue>Closed Lost</controllingFieldValue>
+                <valueName>Tarifa Alta</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Perdida</controllingFieldValue>
+                <controllingFieldValue>Closed Lost</controllingFieldValue>
+                <valueName>Tardanza en Cotizar</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Perdida</controllingFieldValue>
+                <controllingFieldValue>Closed Lost</controllingFieldValue>
+                <valueName>Cancelación de Cliente</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Perdida</controllingFieldValue>
+                <controllingFieldValue>Closed Lost</controllingFieldValue>
+                <valueName>Falla Operativa</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Perdida</controllingFieldValue>
+                <controllingFieldValue>Closed Lost</controllingFieldValue>
+                <valueName>Fuera de where to play</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Perdida</controllingFieldValue>
+                <controllingFieldValue>Closed Lost</controllingFieldValue>
+                <valueName>Oportunidad duplicada</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Perdida</controllingFieldValue>
+                <controllingFieldValue>Closed Lost</controllingFieldValue>
+                <valueName>No le interesa</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Declinar</controllingFieldValue>
+                <valueName>Ruta fuera de portafolio</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Declinar</controllingFieldValue>
+                <valueName>No rentable</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Declinar</controllingFieldValue>
+                <valueName>Tiempo de plan de trabajo</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Declinar</controllingFieldValue>
+                <valueName>Vetado, moroso (Temas Adm)</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Declinar</controllingFieldValue>
+                <valueName>No aplica proyecto</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Closed Lost</controllingFieldValue>
+                <valueName>No contesto al contactarlo nuevamente</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Closed Lost</controllingFieldValue>
+                <valueName>Esta realizando benchmark/investigacion</valueName>
+            </valueSettings>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>Manager__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Manager</label>
+        <referenceTo>User</referenceTo>
+        <relationshipName>Opportunities1</relationshipName>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Mes_Close_Date__c</fullName>
+        <externalId>false</externalId>
+        <formula>MONTH(CloseDate)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Mes Close Date</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Mkt_Executive__c</fullName>
+        <externalId>false</externalId>
+        <label>Mkt Executive</label>
+        <length>20</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Modalidad__c</fullName>
+        <description>Describe el tipo de Modalidad</description>
+        <externalId>false</externalId>
+        <label>Modalidad</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Prepago</fullName>
+                    <default>false</default>
+                    <label>Prepago</label>
+                </value>
+                <value>
+                    <fullName>Consumo</fullName>
+                    <default>false</default>
+                    <label>Consumo</label>
+                </value>
+                <value>
+                    <fullName>Recompra</fullName>
+                    <default>false</default>
+                    <label>Recompra</label>
+                </value>
+                <value>
+                    <fullName>Tarimas</fullName>
+                    <default>false</default>
+                    <label>Tarimas</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>Name</fullName>
+        <trackFeedHistory>false</trackFeedHistory>
+    </fields>
+    <fields>
+        <fullName>Negotiation_Review_Description__c</fullName>
+        <externalId>false</externalId>
+        <label>Negotiation/Review Description</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <type>TextArea</type>
+    </fields>
+    <fields>
+        <fullName>NextStep</fullName>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackTrending>true</trackTrending>
+    </fields>
+    <fields>
+        <fullName>Numero_de_guias__c</fullName>
+        <externalId>false</externalId>
+        <label>Número de guías</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>1</fullName>
+                    <default>false</default>
+                    <label>1</label>
+                </value>
+                <value>
+                    <fullName>&lt;10</fullName>
+                    <default>false</default>
+                    <label>&lt;10</label>
+                </value>
+                <value>
+                    <fullName>&lt;100</fullName>
+                    <default>false</default>
+                    <label>&lt;100</label>
+                </value>
+                <value>
+                    <fullName>&gt;100</fullName>
+                    <default>false</default>
+                    <label>&gt;100</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>Opportunity_Record_Number__c</fullName>
+        <externalId>false</externalId>
+        <label>Opportunity Record Number</label>
+        <type>AutoNumber</type>
+    </fields>
+    <fields>
+        <fullName>OwnerId</fullName>
+        <trackFeedHistory>true</trackFeedHistory>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>P2G_Opp_DebitNote__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <description>Campo para relacionar la Oportunidad con la Debit Note que tenga el folio relacionado a la Opp</description>
+        <externalId>false</externalId>
+        <label>Debit Note</label>
+        <referenceTo>Debit_Note__c</referenceTo>
+        <relationshipLabel>Opportunities</relationshipLabel>
+        <relationshipName>Opportunities</relationshipName>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>PROJ_Buy_price__c</fullName>
+        <externalId>false</externalId>
+        <label>Total Buy Price</label>
+        <precision>10</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackFeedHistory>false</trackFeedHistory>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>PROJ_Margen_de_ventas__c</fullName>
+        <externalId>false</externalId>
+        <formula>((PROJ_TotalQuotes__c - Total_Buy_Price2__c)/ PROJ_TotalQuotes__c)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Margen de ventas</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <type>Percent</type>
+    </fields>
+    <fields>
+        <fullName>PROJ_Service_Mode__c</fullName>
+        <externalId>false</externalId>
+        <label>Service Mode</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Pq</fullName>
+                    <default>false</default>
+                    <label>Paqueteria</label>
+                </value>
+                <value>
+                    <fullName>FN</fullName>
+                    <default>false</default>
+                    <label>TNA</label>
+                </value>
+                <value>
+                    <fullName>FI</fullName>
+                    <default>false</default>
+                    <label>TIN</label>
+                </value>
+                <value>
+                    <fullName>PTO</fullName>
+                    <default>false</default>
+                    <label>Puerto</label>
+                </value>
+                <value>
+                    <fullName>M</fullName>
+                    <default>false</default>
+                    <label>Maritimo</label>
+                </value>
+                <value>
+                    <fullName>T</fullName>
+                    <default>false</default>
+                    <label>Tarima</label>
+                </value>
+                <value>
+                    <fullName>A</fullName>
+                    <default>false</default>
+                    <label>Aereo</label>
+                </value>
+                <value>
+                    <fullName>CE</fullName>
+                    <default>false</default>
+                    <label>Comercio Exterior</label>
+                </value>
+                <value>
+                    <fullName>R</fullName>
+                    <default>false</default>
+                    <label>Routing Order</label>
+                </value>
+                <value>
+                    <fullName>WH</fullName>
+                    <default>false</default>
+                    <label>Warehouse</label>
+                </value>
+                <value>
+                    <fullName>International</fullName>
+                    <default>false</default>
+                    <isActive>false</isActive>
+                    <label>International</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>PROJ_TotalQuotes__c</fullName>
+        <externalId>false</externalId>
+        <label>Total Quotes</label>
+        <summarizedField>Quote.TotalPrice</summarizedField>
+        <summaryForeignKey>Quote.OpportunityId</summaryForeignKey>
+        <summaryOperation>sum</summaryOperation>
+        <type>Summary</type>
+    </fields>
+    <fields>
+        <fullName>Peso__c</fullName>
+        <externalId>false</externalId>
+        <label>Peso</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Sobre</fullName>
+                    <default>false</default>
+                    <label>Sobre</label>
+                </value>
+                <value>
+                    <fullName>1-5 Kg</fullName>
+                    <default>false</default>
+                    <label>1-5 Kg</label>
+                </value>
+                <value>
+                    <fullName>6-10 Kg</fullName>
+                    <default>false</default>
+                    <label>6-10 Kg</label>
+                </value>
+                <value>
+                    <fullName>11-15 Kg</fullName>
+                    <default>false</default>
+                    <label>11-15 Kg</label>
+                </value>
+                <value>
+                    <fullName>16-20 Kg</fullName>
+                    <default>false</default>
+                    <label>16-20 Kg</label>
+                </value>
+                <value>
+                    <fullName>Mas de 20 Kg</fullName>
+                    <default>false</default>
+                    <label>Mas de 20 Kg</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>Por_cual_proveedor_cambio_el_cliente__c</fullName>
+        <description>Se proporciona el nombre del proveedor que escoge el cliente cuando la cotización se cancela por el Nivel de servicio</description>
+        <externalId>false</externalId>
+        <label>¿Por cuál proveedor cambió el cliente?</label>
+        <length>255</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Price_Book_del__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Price Book</label>
+        <referenceTo>Pricebook2</referenceTo>
+        <relationshipLabel>Opportunities</relationshipLabel>
+        <relationshipName>Opportunities_del</relationshipName>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Pricebook2Id</fullName>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Probability</fullName>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackTrending>true</trackTrending>
+    </fields>
+    <fields>
+        <fullName>Product__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Product</label>
+        <referenceTo>Product2</referenceTo>
+        <relationshipLabel>Opportunities</relationshipLabel>
+        <relationshipName>Opportunities</relationshipName>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Proveedor__c</fullName>
+        <externalId>false</externalId>
+        <label>Proveedor</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Paquete Express</fullName>
+                    <default>false</default>
+                    <label>Paquete Express</label>
+                </value>
+                <value>
+                    <fullName>AM PM</fullName>
+                    <default>false</default>
+                    <label>AM PM</label>
+                </value>
+                <value>
+                    <fullName>DHL</fullName>
+                    <default>false</default>
+                    <label>DHL</label>
+                </value>
+                <value>
+                    <fullName>Estafeta</fullName>
+                    <default>false</default>
+                    <label>Estafeta</label>
+                </value>
+                <value>
+                    <fullName>Red Pack</fullName>
+                    <default>false</default>
+                    <label>Red Pack</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>Quote_status__c</fullName>
+        <externalId>false</externalId>
+        <formula>TEXT(SyncedQuote.Status)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Quote status</label>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>ROI_Analysis_Completed__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>ROI Analysis Completed</label>
+        <trackFeedHistory>false</trackFeedHistory>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Realizacion_de_Kickoff__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Realización de Kickoff</label>
+        <trackFeedHistory>false</trackFeedHistory>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Requerimientos_especialesNew__c</fullName>
+        <externalId>false</externalId>
+        <label>Requerimientos especiales</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <type>MultiselectPicklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Estibable</fullName>
+                    <default>false</default>
+                    <label>Estibable</label>
+                </value>
+                <value>
+                    <fullName>Ctpat.</fullName>
+                    <default>false</default>
+                    <label>Ctpat.</label>
+                </value>
+                <value>
+                    <fullName>Granel</fullName>
+                    <default>false</default>
+                    <label>Granel</label>
+                </value>
+                <value>
+                    <fullName>entarimado</fullName>
+                    <default>false</default>
+                    <label>entarimado</label>
+                </value>
+                <value>
+                    <fullName>SUA (IMSS)</fullName>
+                    <default>false</default>
+                    <label>SUA (IMSS)</label>
+                </value>
+                <value>
+                    <fullName>R-control</fullName>
+                    <default>false</default>
+                    <label>R-control</label>
+                </value>
+                <value>
+                    <fullName>Alarma de reversa.</fullName>
+                    <default>false</default>
+                    <label>Alarma de reversa.</label>
+                </value>
+                <value>
+                    <fullName>Extintor</fullName>
+                    <default>false</default>
+                    <label>Extintor</label>
+                </value>
+                <value>
+                    <fullName>EPP (Botas, chalecos, cascos, guantes lentes, mascarilla, COVID)</fullName>
+                    <default>false</default>
+                    <label>EPP (Botas, chalecos, cascos, guantes lentes, mascarilla, COVID)</label>
+                </value>
+                <value>
+                    <fullName>Personal con restricción de edad</fullName>
+                    <default>false</default>
+                    <label>Personal con restricción de edad</label>
+                </value>
+                <value>
+                    <fullName>GPS en tracto y Caja</fullName>
+                    <default>false</default>
+                    <label>GPS en tracto y Caja</label>
+                </value>
+                <value>
+                    <fullName>Riel logístico</fullName>
+                    <default>false</default>
+                    <label>Riel logístico</label>
+                </value>
+                <value>
+                    <fullName>Gafas</fullName>
+                    <default>false</default>
+                    <label>Gafas</label>
+                </value>
+                <value>
+                    <fullName>Certificado</fullName>
+                    <default>false</default>
+                    <label>Certificado</label>
+                </value>
+                <value>
+                    <fullName>Otro</fullName>
+                    <default>false</default>
+                    <label>Otro</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+        <visibleLines>4</visibleLines>
+    </fields>
+    <fields>
+        <fullName>Requerimientos_especiales__c</fullName>
+        <externalId>false</externalId>
+        <label>Requerimientos especiales</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Estibable</fullName>
+                    <default>false</default>
+                    <label>Estibable</label>
+                </value>
+                <value>
+                    <fullName>Ctpat.</fullName>
+                    <default>false</default>
+                    <label>Ctpat.</label>
+                </value>
+                <value>
+                    <fullName>Granel</fullName>
+                    <default>false</default>
+                    <label>Granel</label>
+                </value>
+                <value>
+                    <fullName>entarimado</fullName>
+                    <default>false</default>
+                    <label>entarimado</label>
+                </value>
+                <value>
+                    <fullName>SUA (IMSS)</fullName>
+                    <default>false</default>
+                    <label>SUA (IMSS)</label>
+                </value>
+                <value>
+                    <fullName>R-control</fullName>
+                    <default>false</default>
+                    <label>R-control</label>
+                </value>
+                <value>
+                    <fullName>Alarma de reversa.</fullName>
+                    <default>false</default>
+                    <label>Alarma de reversa.</label>
+                </value>
+                <value>
+                    <fullName>Extintor</fullName>
+                    <default>false</default>
+                    <label>Extintor</label>
+                </value>
+                <value>
+                    <fullName>EPP (Botas, chalecos, cascos, guantes lentes, mascarilla, COVID)</fullName>
+                    <default>false</default>
+                    <label>EPP (Botas, chalecos, cascos, guantes lentes, mascarilla, COVID)</label>
+                </value>
+                <value>
+                    <fullName>Personal con restricción de edad</fullName>
+                    <default>false</default>
+                    <label>Personal con restricción de edad</label>
+                </value>
+                <value>
+                    <fullName>GPS en tracto y Caja</fullName>
+                    <default>false</default>
+                    <label>GPS en tracto y Caja</label>
+                </value>
+                <value>
+                    <fullName>Riel logístico</fullName>
+                    <default>false</default>
+                    <label>Riel logístico</label>
+                </value>
+                <value>
+                    <fullName>Gafas</fullName>
+                    <default>false</default>
+                    <label>Gafas</label>
+                </value>
+                <value>
+                    <fullName>Certificado</fullName>
+                    <default>false</default>
+                    <label>Certificado</label>
+                </value>
+                <value>
+                    <fullName>Otros</fullName>
+                    <default>false</default>
+                    <label>Otros</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>Revisado_por_IC__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Revisado por IC</label>
+        <trackFeedHistory>false</trackFeedHistory>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Ruta_Folio__c</fullName>
+        <externalId>false</externalId>
+        <formula>Import_Export_Quote_Order__r.Traffic__r.Name</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Ruta</label>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>SLA_Cotizacion__c</fullName>
+        <externalId>false</externalId>
+        <label>SLA Cotización</label>
+        <length>200</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>SLA_Ejecucion__c</fullName>
+        <externalId>false</externalId>
+        <label>SLA Ejecución</label>
+        <length>200</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>SLA_Entendimiento__c</fullName>
+        <externalId>false</externalId>
+        <label>SLA Entendimiento</label>
+        <length>200</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>SLA_Negociacion__c</fullName>
+        <externalId>false</externalId>
+        <label>SLA Negociación</label>
+        <length>200</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Sales_Type__c</fullName>
+        <externalId>false</externalId>
+        <label>Sales Type</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetName>Sales_Type</valueSetName>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>Service_Type__c</fullName>
+        <externalId>false</externalId>
+        <label>Service Type</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>FN</fullName>
+                    <default>true</default>
+                    <label>FN - Flete Nacional</label>
+                </value>
+                <value>
+                    <fullName>FI</fullName>
+                    <default>false</default>
+                    <label>FI - Flete Internacional</label>
+                </value>
+                <value>
+                    <fullName>PQ</fullName>
+                    <default>false</default>
+                    <label>PQ - Paqueterias</label>
+                </value>
+                <value>
+                    <fullName>T</fullName>
+                    <default>false</default>
+                    <label>T - Tarimas</label>
+                </value>
+                <value>
+                    <fullName>M</fullName>
+                    <default>false</default>
+                    <label>M - Maritimo</label>
+                </value>
+                <value>
+                    <fullName>A</fullName>
+                    <default>false</default>
+                    <label>A - Aereo</label>
+                </value>
+                <value>
+                    <fullName>WH</fullName>
+                    <default>false</default>
+                    <label>WH - Almacenajes</label>
+                </value>
+                <value>
+                    <fullName>EX-Seguros</fullName>
+                    <default>false</default>
+                    <label>EX-Seguros</label>
+                </value>
+                <value>
+                    <fullName>PTO - Puerto</fullName>
+                    <default>false</default>
+                    <label>PTO - Puerto</label>
+                </value>
+                <value>
+                    <fullName>R - Global Routing</fullName>
+                    <default>false</default>
+                    <label>R - Global Routing</label>
+                </value>
+                <value>
+                    <fullName>PQI - Paquertería Internacional</fullName>
+                    <default>false</default>
+                    <label>PQI - Paquertería Internacional</label>
+                </value>
+                <value>
+                    <fullName>CE - Aduanas</fullName>
+                    <default>false</default>
+                    <label>CE - Aduanas</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>StageName</fullName>
+        <trackFeedHistory>true</trackFeedHistory>
+        <trackTrending>true</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Stage_actual__c</fullName>
+        <externalId>false</externalId>
+        <formula>TEXT(StageName)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Stage actual</label>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>SyncedQuoteId</fullName>
+        <trackFeedHistory>false</trackFeedHistory>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Tienda_online__c</fullName>
+        <externalId>false</externalId>
+        <label>Tienda online</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Si</fullName>
+                    <default>false</default>
+                    <label>Si</label>
+                </value>
+                <value>
+                    <fullName>No</fullName>
+                    <default>false</default>
+                    <label>No</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>Tiene_alguna_otra_plataforma_de_envios__c</fullName>
+        <externalId>false</externalId>
+        <label>Tiene alguna otra plataforma de envíos</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Si</fullName>
+                    <default>false</default>
+                    <label>Si</label>
+                </value>
+                <value>
+                    <fullName>No</fullName>
+                    <default>false</default>
+                    <label>No</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>Tipo__c</fullName>
+        <externalId>false</externalId>
+        <label>Tipo</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Import-Export Quote/Order</fullName>
+                    <default>false</default>
+                    <label>Import-Export Quote/Order</label>
+                </value>
+                <value>
+                    <fullName>Quote</fullName>
+                    <default>false</default>
+                    <label>Quote</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>Tipo_de_Oportunidad__c</fullName>
+        <description>Describe el tipo de Oportunidad</description>
+        <externalId>false</externalId>
+        <label>Tipo de Oportunidad</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Acquisition</fullName>
+                    <default>false</default>
+                    <label>Acquisition</label>
+                </value>
+                <value>
+                    <fullName>Up-selling</fullName>
+                    <default>false</default>
+                    <label>Up-selling</label>
+                </value>
+                <value>
+                    <fullName>Cross selling</fullName>
+                    <default>false</default>
+                    <label>Cross selling</label>
+                </value>
+                <value>
+                    <fullName>One off / Seasonal</fullName>
+                    <default>false</default>
+                    <label>One off / Seasonal</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>Tipo_de_industria__c</fullName>
+        <externalId>false</externalId>
+        <label>Tipo de industria</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Joyería</fullName>
+                    <default>false</default>
+                    <label>Joyería</label>
+                </value>
+                <value>
+                    <fullName>Documentos</fullName>
+                    <default>false</default>
+                    <label>Documentos</label>
+                </value>
+                <value>
+                    <fullName>Zapatos</fullName>
+                    <default>false</default>
+                    <label>Zapatos</label>
+                </value>
+                <value>
+                    <fullName>Ropa</fullName>
+                    <default>false</default>
+                    <label>Ropa</label>
+                </value>
+                <value>
+                    <fullName>Equipo medico</fullName>
+                    <default>false</default>
+                    <label>Equipo medico</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>Tipo_de_paqueteria__c</fullName>
+        <externalId>false</externalId>
+        <label>Tipo de paquetería</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Aéreo</fullName>
+                    <default>false</default>
+                    <label>Aéreo</label>
+                </value>
+                <value>
+                    <fullName>Terrestre</fullName>
+                    <default>false</default>
+                    <label>Terrestre</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>TotalOpportunityQuantity</fullName>
+        <trackFeedHistory>false</trackFeedHistory>
+    </fields>
+    <fields>
+        <fullName>Total_Amount_Aceptada__c</fullName>
+        <externalId>false</externalId>
+        <label>Total Amount Aceptada</label>
+        <precision>12</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackFeedHistory>false</trackFeedHistory>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Total_Amount_Rechazados_Anual__c</fullName>
+        <externalId>false</externalId>
+        <label>Total Amount Rechazados Anual</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackFeedHistory>false</trackFeedHistory>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Total_Amount_Rechazados__c</fullName>
+        <externalId>false</externalId>
+        <label>Total Amount Rechazados</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackFeedHistory>false</trackFeedHistory>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Total_Amount__c</fullName>
+        <externalId>false</externalId>
+        <label>Total Amount</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackFeedHistory>false</trackFeedHistory>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Total_Amount_del__c</fullName>
+        <externalId>false</externalId>
+        <label>Total Amount</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackFeedHistory>false</trackFeedHistory>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Total_Buy_Price2__c</fullName>
+        <externalId>false</externalId>
+        <label>Total Buy Price</label>
+        <summarizedField>OpportunityLineItem.Buy_Price__c</summarizedField>
+        <summaryForeignKey>OpportunityLineItem.OpportunityId</summaryForeignKey>
+        <summaryOperation>sum</summaryOperation>
+        <type>Summary</type>
+    </fields>
+    <fields>
+        <fullName>Total_Cerrado_Ganado_Anual__c</fullName>
+        <externalId>false</externalId>
+        <label>Total Cerrado Ganado Anual</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackFeedHistory>false</trackFeedHistory>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Total_Cerrado_Ganado__c</fullName>
+        <externalId>false</externalId>
+        <label>Total Cerrado Ganado</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackFeedHistory>false</trackFeedHistory>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Total_Cotizado_Anual__c</fullName>
+        <externalId>false</externalId>
+        <label>Total Cotizado Anual</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackFeedHistory>false</trackFeedHistory>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Total_Cotizado__c</fullName>
+        <externalId>false</externalId>
+        <label>Total Cotizado</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackFeedHistory>false</trackFeedHistory>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Total_IEQO_Creados__c</fullName>
+        <externalId>false</externalId>
+        <label>Total IEQO Creados</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackFeedHistory>false</trackFeedHistory>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Total_IEQO_Operado__c</fullName>
+        <externalId>false</externalId>
+        <label>Total IEQO Operado</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackFeedHistory>false</trackFeedHistory>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Total_IEQO__c</fullName>
+        <description>Suma de las IEQO relacionadas en la oportunidad</description>
+        <externalId>false</externalId>
+        <label>Total IEQO</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackFeedHistory>false</trackFeedHistory>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Total_IEQ_Service_Line__c</fullName>
+        <externalId>false</externalId>
+        <formula>Import_Export_Quote_Order__r.Total_Services_Sell_Amount__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Total IEQ Service Line</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Total_Opportunity_Anual__c</fullName>
+        <externalId>false</externalId>
+        <label>Total Opportunity Anual</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackFeedHistory>false</trackFeedHistory>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Total_Opportunity__c</fullName>
+        <externalId>false</externalId>
+        <label>Total Opportunity</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackFeedHistory>false</trackFeedHistory>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Total_Productos_Aceptados__c</fullName>
+        <externalId>false</externalId>
+        <label>Total Productos Aceptados</label>
+        <summarizedField>OpportunityLineItem.UnitPrice</summarizedField>
+        <summaryFilterItems>
+            <field>OpportunityLineItem.Status__c</field>
+            <operation>equals</operation>
+            <value>Aceptada</value>
+        </summaryFilterItems>
+        <summaryForeignKey>OpportunityLineItem.OpportunityId</summaryForeignKey>
+        <summaryOperation>sum</summaryOperation>
+        <type>Summary</type>
+    </fields>
+    <fields>
+        <fullName>Total_Productos__c</fullName>
+        <externalId>false</externalId>
+        <label>Total Productos</label>
+        <summarizedField>OpportunityLineItem.UnitPrice</summarizedField>
+        <summaryForeignKey>OpportunityLineItem.OpportunityId</summaryForeignKey>
+        <summaryOperation>sum</summaryOperation>
+        <type>Summary</type>
+    </fields>
+    <fields>
+        <fullName>Total_Products__c</fullName>
+        <externalId>false</externalId>
+        <label>Total Products</label>
+        <summarizedField>OpportunityLineItem.TotalPrice</summarizedField>
+        <summaryForeignKey>OpportunityLineItem.OpportunityId</summaryForeignKey>
+        <summaryOperation>sum</summaryOperation>
+        <type>Summary</type>
+    </fields>
+    <fields>
+        <fullName>Total_Quotes_Vendido__c</fullName>
+        <externalId>false</externalId>
+        <label>Total Quotes Vendido</label>
+        <summarizedField>Quote.TotalPrice</summarizedField>
+        <summaryFilterItems>
+            <field>Quote.Vendido__c</field>
+            <operation>equals</operation>
+            <value>True</value>
+        </summaryFilterItems>
+        <summaryForeignKey>Quote.OpportunityId</summaryForeignKey>
+        <summaryOperation>sum</summaryOperation>
+        <type>Summary</type>
+    </fields>
+    <fields>
+        <fullName>Type</fullName>
+        <trackFeedHistory>false</trackFeedHistory>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Usuario_IC__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Usuario IC</label>
+        <referenceTo>User</referenceTo>
+        <relationshipName>Opportunities</relationshipName>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>check_stage__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>trampa stage</description>
+        <externalId>false</externalId>
+        <label>check stage</label>
+        <trackFeedHistory>false</trackFeedHistory>
+        <type>Checkbox</type>
+    </fields>
+    <listViews>
+        <fullName>AllOpportunities</fullName>
+        <booleanFilter>(1 AND 2) OR (3 AND 2) OR (4 AND 3)</booleanFilter>
+        <columns>OPPORTUNITY.NAME</columns>
+        <columns>ACCOUNT.NAME</columns>
+        <columns>OPPORTUNITY.AMOUNT</columns>
+        <columns>OPPORTUNITY.CREATED_DATE</columns>
+        <columns>OPPORTUNITY.CLOSE_DATE</columns>
+        <columns>OPPORTUNITY.STAGE_NAME</columns>
+        <columns>CORE.USERS.ALIAS</columns>
+        <columns>OPPORTUNITY.LAST_UPDATE</columns>
+        <columns>CORE.USERS.FULL_NAME</columns>
+        <columns>CREATEDBY_USER.ALIAS</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>OPPORTUNITY.NAME</field>
+            <operation>contains</operation>
+            <value>PTO -</value>
+        </filters>
+        <filters>
+            <field>OPPORTUNITY.CREATED_DATE</field>
+            <operation>greaterThan</operation>
+            <value>1/1/2026 12:00 AM</value>
+        </filters>
+        <filters>
+            <field>OPPORTUNITY.NAME</field>
+            <operation>contains</operation>
+            <value>FI -</value>
+        </filters>
+        <filters>
+            <field>OPPORTUNITY.NAME</field>
+            <operation>contains</operation>
+            <value>M -</value>
+        </filters>
+        <label>All Opportunities</label>
+    </listViews>
+    <listViews>
+        <fullName>ClosingNextMonth</fullName>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>OPPORTUNITY.CLOSED</field>
+            <operation>equals</operation>
+            <value>0</value>
+        </filters>
+        <filters>
+            <field>OPPORTUNITY.CLOSE_DATE</field>
+            <operation>equals</operation>
+            <value>NEXT_MONTH</value>
+        </filters>
+        <label>Closing Next Month</label>
+    </listViews>
+    <listViews>
+        <fullName>ClosingThisMonth</fullName>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>OPPORTUNITY.CLOSED</field>
+            <operation>equals</operation>
+            <value>0</value>
+        </filters>
+        <filters>
+            <field>OPPORTUNITY.CLOSE_DATE</field>
+            <operation>equals</operation>
+            <value>THIS_MONTH</value>
+        </filters>
+        <label>Closing This Month</label>
+    </listViews>
+    <listViews>
+        <fullName>Copy_of_Paqueter_a</fullName>
+        <columns>OPPORTUNITY.NAME</columns>
+        <columns>ACCOUNT.NAME</columns>
+        <columns>Import_Export_Quote_Order__c</columns>
+        <columns>IEQ_Status__c</columns>
+        <columns>OPPORTUNITY.STAGE_NAME</columns>
+        <columns>Modalidad__c</columns>
+        <columns>Tipo_de_Oportunidad__c</columns>
+        <columns>Guias__c</columns>
+        <columns>Proveedor__c</columns>
+        <columns>OPPORTUNITY.AMOUNT</columns>
+        <columns>CORE.USERS.FULL_NAME</columns>
+        <columns>OPPORTUNITY.CLOSE_DATE</columns>
+        <columns>OPPORTUNITY.CREATED_DATE</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Service_Type__c</field>
+            <operation>equals</operation>
+            <value>PQ,PQ - Paqueterias,T</value>
+        </filters>
+        <filters>
+            <field>OPPORTUNITY.CREATED_DATE</field>
+            <operation>greaterThan</operation>
+            <value>1/1/2022 12:00 AM</value>
+        </filters>
+        <filters>
+            <field>CORE.USERS.FULL_NAME</field>
+            <operation>equals</operation>
+            <value>Brayan Nava</value>
+        </filters>
+        <label>Paquetería Bryan</label>
+    </listViews>
+    <listViews>
+        <fullName>Default_Opportunity_Pipeline</fullName>
+        <columns>OPPORTUNITY.NAME</columns>
+        <columns>ACCOUNT.NAME</columns>
+        <columns>OPPORTUNITY.AMOUNT</columns>
+        <columns>OPPORTUNITY.CLOSE_DATE</columns>
+        <columns>OPPORTUNITY.STAGE_NAME</columns>
+        <columns>CORE.USERS.ALIAS</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>OPPORTUNITY.CREATED_DATE</field>
+            <operation>greaterThan</operation>
+            <value>11/1/2021 12:00 AM</value>
+        </filters>
+        <label>Opportunity Pipeline</label>
+    </listViews>
+    <listViews>
+        <fullName>Expo_Opps</fullName>
+        <columns>OPPORTUNITY.NAME</columns>
+        <columns>ACCOUNT.NAME</columns>
+        <columns>OPPORTUNITY.AMOUNT</columns>
+        <columns>OPPORTUNITY.CREATED_DATE</columns>
+        <columns>OPPORTUNITY.CLOSE_DATE</columns>
+        <columns>OPPORTUNITY.STAGE_NAME</columns>
+        <columns>CORE.USERS.ALIAS</columns>
+        <columns>OPPORTUNITY.LAST_UPDATE</columns>
+        <columns>CORE.USERS.FULL_NAME</columns>
+        <filterScope>Everything</filterScope>
+        <label>Expo Opps</label>
+    </listViews>
+    <listViews>
+        <fullName>Flete_Nacional</fullName>
+        <columns>OPPORTUNITY.NAME</columns>
+        <columns>ACCOUNT.NAME</columns>
+        <columns>Import_Export_Quote_Order__c</columns>
+        <columns>IEQ_Status__c</columns>
+        <columns>Ruta_Folio__c</columns>
+        <columns>Tipo_de_Oportunidad__c</columns>
+        <columns>OPPORTUNITY.STAGE_NAME</columns>
+        <columns>OPPORTUNITY.AMOUNT</columns>
+        <columns>CORE.USERS.FULL_NAME</columns>
+        <columns>OPPORTUNITY.CLOSE_DATE</columns>
+        <columns>OPPORTUNITY.CREATED_DATE</columns>
+        <columns>OPPORTUNITY.WON</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Service_Type__c</field>
+            <operation>equals</operation>
+            <value>FN,FN - Flete Nacional</value>
+        </filters>
+        <filters>
+            <field>OPPORTUNITY.CREATED_DATE</field>
+            <operation>greaterThan</operation>
+            <value>1/1/2022 12:00 AM</value>
+        </filters>
+        <filters>
+            <field>OPPORTUNITY.CLOSE_DATE</field>
+            <operation>lessOrEqual</operation>
+            <value>1/1/2026</value>
+        </filters>
+        <label>Flete Nacional</label>
+    </listViews>
+    <listViews>
+        <fullName>MyOpportunities</fullName>
+        <columns>OPPORTUNITY.NAME</columns>
+        <columns>ACCOUNT.NAME</columns>
+        <columns>OPPORTUNITY.AMOUNT</columns>
+        <columns>OPPORTUNITY.CLOSE_DATE</columns>
+        <columns>OPPORTUNITY.STAGE_NAME</columns>
+        <columns>CORE.USERS.ALIAS</columns>
+        <columns>Ciente_Capacitado__c</columns>
+        <columns>ROI_Analysis_Completed__c</columns>
+        <columns>Service_Type__c</columns>
+        <filterScope>Mine</filterScope>
+        <label>My Opportunities</label>
+    </listViews>
+    <listViews>
+        <fullName>NewThisWeek</fullName>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>OPPORTUNITY.CREATED_DATE</field>
+            <operation>equals</operation>
+            <value>THIS_WEEK</value>
+        </filters>
+        <label>New This Week</label>
+    </listViews>
+    <listViews>
+        <fullName>Opportunities_Expo_Logistic</fullName>
+        <columns>OPPORTUNITY.NAME</columns>
+        <columns>ACCOUNT.NAME</columns>
+        <columns>OPPORTUNITY.AMOUNT</columns>
+        <columns>OPPORTUNITY.CREATED_DATE</columns>
+        <columns>OPPORTUNITY.CLOSE_DATE</columns>
+        <columns>OPPORTUNITY.STAGE_NAME</columns>
+        <columns>CORE.USERS.ALIAS</columns>
+        <columns>OPPORTUNITY.LAST_UPDATE</columns>
+        <columns>CORE.USERS.FULL_NAME</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Campaign_Assign__c</field>
+            <operation>contains</operation>
+            <value>Expo</value>
+        </filters>
+        <filters>
+            <field>OPPORTUNITY.CREATED_DATE</field>
+            <operation>greaterThan</operation>
+            <value>11/1/2021 12:00 AM</value>
+        </filters>
+        <label>Opportunities Expo Logistic</label>
+    </listViews>
+    <listViews>
+        <fullName>Paqueter_a_Epak</fullName>
+        <columns>OPPORTUNITY.NAME</columns>
+        <columns>ACCOUNT.NAME</columns>
+        <columns>Import_Export_Quote_Order__c</columns>
+        <columns>IEQ_Status__c</columns>
+        <columns>OPPORTUNITY.STAGE_NAME</columns>
+        <columns>Modalidad__c</columns>
+        <columns>Tipo_de_Oportunidad__c</columns>
+        <columns>Guias__c</columns>
+        <columns>Proveedor__c</columns>
+        <columns>OPPORTUNITY.AMOUNT</columns>
+        <columns>CORE.USERS.FULL_NAME</columns>
+        <columns>OPPORTUNITY.CLOSE_DATE</columns>
+        <columns>OPPORTUNITY.CREATED_DATE</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Service_Type__c</field>
+            <operation>equals</operation>
+            <value>PQ,PQ - Paqueterias,T</value>
+        </filters>
+        <filters>
+            <field>OPPORTUNITY.CREATED_DATE</field>
+            <operation>greaterThan</operation>
+            <value>1/1/2022 12:00 AM</value>
+        </filters>
+        <filters>
+            <field>CORE.USERS.FULL_NAME</field>
+            <operation>contains</operation>
+            <value>Vianey</value>
+        </filters>
+        <label>Paquetería Epak</label>
+    </listViews>
+    <listViews>
+        <fullName>Paqueteria</fullName>
+        <columns>OPPORTUNITY.NAME</columns>
+        <columns>ACCOUNT.NAME</columns>
+        <columns>Import_Export_Quote_Order__c</columns>
+        <columns>IEQ_Status__c</columns>
+        <columns>OPPORTUNITY.STAGE_NAME</columns>
+        <columns>Modalidad__c</columns>
+        <columns>Tipo_de_Oportunidad__c</columns>
+        <columns>Guias__c</columns>
+        <columns>Proveedor__c</columns>
+        <columns>OPPORTUNITY.AMOUNT</columns>
+        <columns>CORE.USERS.FULL_NAME</columns>
+        <columns>OPPORTUNITY.CLOSE_DATE</columns>
+        <columns>OPPORTUNITY.CREATED_DATE</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>OPPORTUNITY.NAME</field>
+            <operation>contains</operation>
+            <value>PQ</value>
+        </filters>
+        <filters>
+            <field>OPPORTUNITY.CREATED_DATE</field>
+            <operation>greaterThan</operation>
+            <value>2/1/2024 12:00 AM</value>
+        </filters>
+        <filters>
+            <field>OPPORTUNITY.STAGE_NAME</field>
+            <operation>contains</operation>
+            <value>Entendimiento</value>
+        </filters>
+        <filters>
+            <field>OPPORTUNITY.RECORDTYPE</field>
+            <operation>equals</operation>
+            <value>Opportunity.Proyectos</value>
+        </filters>
+        <label>Paquetería</label>
+    </listViews>
+    <listViews>
+        <fullName>Paqueteria_y_tarimas</fullName>
+        <columns>OPPORTUNITY.NAME</columns>
+        <columns>Service_Type__c</columns>
+        <columns>ACCOUNT.NAME</columns>
+        <columns>OPPORTUNITY.AMOUNT</columns>
+        <columns>OPPORTUNITY.CREATED_DATE</columns>
+        <columns>OPPORTUNITY.CLOSE_DATE</columns>
+        <columns>OPPORTUNITY.STAGE_NAME</columns>
+        <columns>CORE.USERS.ALIAS</columns>
+        <columns>OPPORTUNITY.LAST_UPDATE</columns>
+        <columns>CORE.USERS.FULL_NAME</columns>
+        <columns>PROJ_TotalQuotes__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Service_Type__c</field>
+            <operation>equals</operation>
+            <value>PQ,PQ - Paqueterias,T</value>
+        </filters>
+        <label>Paqueteria y tarimas</label>
+    </listViews>
+    <listViews>
+        <fullName>Proyecto</fullName>
+        <columns>OPPORTUNITY.NAME</columns>
+        <columns>ACCOUNT.NAME</columns>
+        <columns>OPPORTUNITY.AMOUNT</columns>
+        <columns>OPPORTUNITY.CREATED_DATE</columns>
+        <columns>OPPORTUNITY.CLOSE_DATE</columns>
+        <columns>OPPORTUNITY.STAGE_NAME</columns>
+        <columns>CORE.USERS.ALIAS</columns>
+        <columns>OPPORTUNITY.LAST_UPDATE</columns>
+        <columns>CORE.USERS.FULL_NAME</columns>
+        <columns>PROJ_TotalQuotes__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>OPPORTUNITY.RECORDTYPE</field>
+            <operation>equals</operation>
+            <value>Opportunity.Proyectos</value>
+        </filters>
+        <label>Proyecto</label>
+    </listViews>
+    <listViews>
+        <fullName>Proyecto_Construir_TNA</fullName>
+        <columns>OPPORTUNITY.NAME</columns>
+        <columns>ACCOUNT.NAME</columns>
+        <columns>OPPORTUNITY.AMOUNT</columns>
+        <columns>OPPORTUNITY.CREATED_DATE</columns>
+        <columns>OPPORTUNITY.CLOSE_DATE</columns>
+        <columns>OPPORTUNITY.STAGE_NAME</columns>
+        <columns>CORE.USERS.ALIAS</columns>
+        <columns>OPPORTUNITY.LAST_UPDATE</columns>
+        <columns>CORE.USERS.FULL_NAME</columns>
+        <columns>PROJ_TotalQuotes__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>OPPORTUNITY.RECORDTYPE</field>
+            <operation>equals</operation>
+            <value>Opportunity.Proyectos</value>
+        </filters>
+        <filters>
+            <field>OPPORTUNITY.STAGE_NAME</field>
+            <operation>equals</operation>
+            <value>Entendimiento,Cotización,Negociación,Ejecución,Ganada</value>
+        </filters>
+        <filters>
+            <field>Service_Type__c</field>
+            <operation>equals</operation>
+            <value>FN,FN - Flete Nacional</value>
+        </filters>
+        <label>Proyecto TNA</label>
+    </listViews>
+    <listViews>
+        <fullName>Proyecto_Cultive</fullName>
+        <columns>OPPORTUNITY.NAME</columns>
+        <columns>ACCOUNT.NAME</columns>
+        <columns>OPPORTUNITY.AMOUNT</columns>
+        <columns>OPPORTUNITY.CREATED_DATE</columns>
+        <columns>OPPORTUNITY.CLOSE_DATE</columns>
+        <columns>OPPORTUNITY.STAGE_NAME</columns>
+        <columns>CORE.USERS.ALIAS</columns>
+        <columns>OPPORTUNITY.LAST_UPDATE</columns>
+        <columns>CORE.USERS.FULL_NAME</columns>
+        <columns>PROJ_TotalQuotes__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>OPPORTUNITY.RECORDTYPE</field>
+            <operation>equals</operation>
+            <value>Opportunity.Proyectos</value>
+        </filters>
+        <filters>
+            <field>OPPORTUNITY.STAGE_NAME</field>
+            <operation>equals</operation>
+            <value>Cultivar</value>
+        </filters>
+        <filters>
+            <field>OPPORTUNITY.NAME</field>
+            <operation>contains</operation>
+            <value>FN</value>
+        </filters>
+        <label>Proyecto Cultive</label>
+    </listViews>
+    <listViews>
+        <fullName>Proyecto_INTER</fullName>
+        <columns>OPPORTUNITY.NAME</columns>
+        <columns>ACCOUNT.NAME</columns>
+        <columns>OPPORTUNITY.AMOUNT</columns>
+        <columns>OPPORTUNITY.CREATED_DATE</columns>
+        <columns>OPPORTUNITY.CLOSE_DATE</columns>
+        <columns>OPPORTUNITY.STAGE_NAME</columns>
+        <columns>Usuario_IC__c</columns>
+        <columns>CORE.USERS.ALIAS</columns>
+        <columns>OPPORTUNITY.LAST_UPDATE</columns>
+        <columns>CORE.USERS.FULL_NAME</columns>
+        <columns>PROJ_TotalQuotes__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>OPPORTUNITY.RECORDTYPE</field>
+            <operation>equals</operation>
+            <value>Opportunity.Proyectos</value>
+        </filters>
+        <filters>
+            <field>OPPORTUNITY.STAGE_NAME</field>
+            <operation>equals</operation>
+            <value>Cotización</value>
+        </filters>
+        <filters>
+            <field>Service_Type__c</field>
+            <operation>notEqual</operation>
+            <value>FN,FN - Flete Nacional,PQ,PQ - Paqueterias,T,WH,R - Global Routing,PQI - Paquertería Internacional</value>
+        </filters>
+        <label>Proyecto INTER</label>
+    </listViews>
+    <listViews>
+        <fullName>Proyecto_MKT</fullName>
+        <columns>OPPORTUNITY.NAME</columns>
+        <columns>ACCOUNT.NAME</columns>
+        <columns>OPPORTUNITY.AMOUNT</columns>
+        <columns>OPPORTUNITY.CREATED_DATE</columns>
+        <columns>OPPORTUNITY.CLOSE_DATE</columns>
+        <columns>OPPORTUNITY.STAGE_NAME</columns>
+        <columns>CORE.USERS.ALIAS</columns>
+        <columns>OPPORTUNITY.LAST_UPDATE</columns>
+        <columns>CORE.USERS.FULL_NAME</columns>
+        <columns>PROJ_TotalQuotes__c</columns>
+        <columns>Folio_Mkt__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>OPPORTUNITY.RECORDTYPE</field>
+            <operation>equals</operation>
+            <value>Opportunity.Proyectos</value>
+        </filters>
+        <filters>
+            <field>OPPORTUNITY.NAME</field>
+            <operation>notEqual</operation>
+            <value>&quot; &quot;</value>
+        </filters>
+        <filters>
+            <field>Folio_Mkt__c</field>
+            <operation>notEqual</operation>
+            <value>,&quot; &quot;</value>
+        </filters>
+        <label>Proyecto MKT</label>
+    </listViews>
+    <listViews>
+        <fullName>WCA_Dubai</fullName>
+        <columns>OPPORTUNITY.NAME</columns>
+        <columns>Campaign_Assign__c</columns>
+        <columns>ACCOUNT.NAME</columns>
+        <columns>Import_Export_Quote_Order__c</columns>
+        <columns>IEQ_Status__c</columns>
+        <columns>OPPORTUNITY.STAGE_NAME</columns>
+        <columns>Modalidad__c</columns>
+        <columns>Tipo_de_Oportunidad__c</columns>
+        <columns>Guias__c</columns>
+        <columns>Proveedor__c</columns>
+        <columns>OPPORTUNITY.AMOUNT</columns>
+        <columns>CORE.USERS.FULL_NAME</columns>
+        <columns>OPPORTUNITY.CLOSE_DATE</columns>
+        <columns>OPPORTUNITY.CREATED_DATE</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>OPPORTUNITY.CREATED_DATE</field>
+            <operation>greaterThan</operation>
+            <value>1/1/2022 12:00 AM</value>
+        </filters>
+        <filters>
+            <field>CORE.USERS.FULL_NAME</field>
+            <operation>equals</operation>
+            <value>Catalina Carvajal,David Fernandez,Paola Gonzalez,Fernando Treviño</value>
+        </filters>
+        <filters>
+            <field>IEQ_Status__c</field>
+            <operation>equals</operation>
+            <value>Shipped,Approved as Succesful</value>
+        </filters>
+        <label>WCA Dubai</label>
+    </listViews>
+    <listViews>
+        <fullName>Won</fullName>
+        <columns>OPPORTUNITY.NAME</columns>
+        <columns>ACCOUNT.NAME</columns>
+        <columns>OPPORTUNITY.AMOUNT</columns>
+        <columns>OPPORTUNITY.CLOSE_DATE</columns>
+        <columns>OPPORTUNITY.STAGE_NAME</columns>
+        <columns>CORE.USERS.FULL_NAME</columns>
+        <columns>CORE.USERS.ALIAS</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>OPPORTUNITY.WON</field>
+            <operation>equals</operation>
+            <value>1</value>
+        </filters>
+        <filters>
+            <field>OPPORTUNITY.CLOSED</field>
+            <operation>equals</operation>
+            <value>1</value>
+        </filters>
+        <label>Won</label>
+    </listViews>
+    <recordTypeTrackFeedHistory>false</recordTypeTrackFeedHistory>
+    <recordTypes>
+        <fullName>Proyectos</fullName>
+        <active>true</active>
+        <businessProcess>Proyectos</businessProcess>
+        <label>Proyecto</label>
+        <picklistValues>
+            <picklist>Activacion_autorizada__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Si</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>ForecastCategoryName</picklist>
+            <values>
+                <fullName>Best Case</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Closed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Commit</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Omitted</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Pipeline</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Group__c</picklist>
+            <values>
+                <fullName>SP-A-AEREO</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SP-AW-GLOBAL AEREO</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SP-CE-COMERCIO EXT</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SP-EX-SEGUROS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SP-FI-FLETE INTER</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SP-FN-FLETE NACIONAL</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SP-M-MARITIMO</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SP-PQ-PAQUETERIA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SP-PTO-PUERTOS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SP-R-GLOBAL ROUTING</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SP-SL-SERV LOGISTICO</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SP-T-CONSOLIDADO</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SP-W-GLOBAL MARITIMO</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SP-WH-ALMACENAJE</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>LeadSource</picklist>
+            <values>
+                <fullName>Advertisement</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Base de datos</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cambaceo</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Correo masivo</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Customer Event</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Employee Referral</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>External Referral</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Google AdWords</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Internet</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MKT - Email</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MKT - Llamada entrante</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MKT - Otros</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MKT - Redes sociales</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MKT - Web - Chat</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MKT - Wsapp</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MKT Expo</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Other</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Partner</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Public Relations</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Purchased List</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Recomendación</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Seminar - Internal</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Seminar - Partner</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Trade Show</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Webinar</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Website</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>WebtoLead</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Word of mouth</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ePak - Web - Chat</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Loss_Reason__c</picklist>
+            <values>
+                <fullName>Cancelación de Cliente</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Falla Operativa</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Falta de crédito</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Falta de disponibilidad</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Falta de seguimiento a oportunidad</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Fuera de where to play</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Lost to Competitor</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>No Budget %2F Lost Funding</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>No Decision %2F Non-Responsive</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>No le interesa</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Oportunidad duplicada</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Other</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Price</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Tardanza en Cotizar</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Tarifa Alta</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Modalidad__c</picklist>
+            <values>
+                <fullName>Consumo</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Prepago</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Recompra</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Tarimas</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Numero_de_guias__c</picklist>
+            <values>
+                <fullName>%3C10</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>%3C100</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>%3E100</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>1</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>PROJ_Service_Mode__c</picklist>
+            <values>
+                <fullName>A</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CE</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>FI</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>FN</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>M</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>PTO</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Pq</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>R</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>T</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>WH</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Peso__c</picklist>
+            <values>
+                <fullName>1-5 Kg</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>11-15 Kg</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>16-20 Kg</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>6-10 Kg</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Mas de 20 Kg</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Sobre</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Proveedor__c</picklist>
+            <values>
+                <fullName>AM PM</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>DHL</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Estafeta</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Paquete Express</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Red Pack</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Requerimientos_especialesNew__c</picklist>
+            <values>
+                <fullName>Alarma de reversa%2E</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Certificado</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Ctpat%2E</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>EPP %28Botas%2C chalecos%2C cascos%2C guantes lentes%2C mascarilla%2C COVID%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Estibable</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Extintor</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>GPS en tracto y Caja</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Gafas</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Granel</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Otro</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Personal con restricción de edad</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>R-control</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Riel logístico</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SUA %28IMSS%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>entarimado</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Requerimientos_especiales__c</picklist>
+            <values>
+                <fullName>Alarma de reversa%2E</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Certificado</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Ctpat%2E</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>EPP %28Botas%2C chalecos%2C cascos%2C guantes lentes%2C mascarilla%2C COVID%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Estibable</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Extintor</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>GPS en tracto y Caja</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Gafas</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Granel</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Otros</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Personal con restricción de edad</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>R-control</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Riel logístico</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SUA %28IMSS%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>entarimado</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Sales_Type__c</picklist>
+            <values>
+                <fullName>Cross Selling</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Service_Type__c</picklist>
+            <values>
+                <fullName>A</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CE - Aduanas</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>EX-Seguros</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>FI</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>FN</fullName>
+                <default>true</default>
+            </values>
+            <values>
+                <fullName>M</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>PQ</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>PQI - Paquertería Internacional</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>PTO - Puerto</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>R - Global Routing</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>T</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>WH</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Tienda_online__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Si</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Tiene_alguna_otra_plataforma_de_envios__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Si</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Tipo__c</picklist>
+            <values>
+                <fullName>Import-Export Quote%2FOrder</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Quote</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Tipo_de_Oportunidad__c</picklist>
+            <values>
+                <fullName>Acquisition</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cross selling</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>One off %2F Seasonal</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Up-selling</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Tipo_de_industria__c</picklist>
+            <values>
+                <fullName>Documentos</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Equipo medico</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Joyería</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Ropa</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Zapatos</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Tipo_de_paqueteria__c</picklist>
+            <values>
+                <fullName>Aéreo</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Terrestre</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Type</picklist>
+            <values>
+                <fullName>Existing Business</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>New Business</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+    </recordTypes>
+    <recordTypes>
+        <fullName>Standar_Opportunity</fullName>
+        <active>true</active>
+        <businessProcess>Standar Opportunity</businessProcess>
+        <label>Standar Opportunity</label>
+        <picklistValues>
+            <picklist>Activacion_autorizada__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Si</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>ForecastCategoryName</picklist>
+            <values>
+                <fullName>Best Case</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Closed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Commit</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Omitted</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Pipeline</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Group__c</picklist>
+            <values>
+                <fullName>SP-A-AEREO</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SP-AW-GLOBAL AEREO</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SP-CE-COMERCIO EXT</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SP-EX-SEGUROS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SP-FI-FLETE INTER</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SP-FN-FLETE NACIONAL</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SP-M-MARITIMO</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SP-PQ-PAQUETERIA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SP-PTO-PUERTOS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SP-R-GLOBAL ROUTING</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SP-SL-SERV LOGISTICO</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SP-T-CONSOLIDADO</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SP-W-GLOBAL MARITIMO</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SP-WH-ALMACENAJE</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>LeadSource</picklist>
+            <values>
+                <fullName>Advertisement</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Base de datos</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cambaceo</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Correo masivo</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Customer Event</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Employee Referral</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>External Referral</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Google AdWords</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Internet</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MKT - Email</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MKT - Llamada entrante</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MKT - Otros</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MKT - Promociones</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MKT - Redes sociales</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MKT - SPOT</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MKT - Web - Chat</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MKT - Wsapp</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MKT Expo</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Other</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Partner</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Public Relations</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Purchased List</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Recomendación</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Seminar - Internal</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Seminar - Partner</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Trade Show</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Webinar</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Website</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>WebtoLead</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Word of mouth</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ePak</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Loss_Reason__c</picklist>
+            <values>
+                <fullName>Declinado por el folio</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Esta realizando benchmark%2Finvestigacion</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Falta de crédito</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Falta de disponibilidad</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Falta de seguimiento a oportunidad</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Fuera de where to play</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Lost to Competitor</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>No Budget %2F Lost Funding</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>No Decision %2F Non-Responsive</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>No contesto al contactarlo nuevamente</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>No le interesa</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Oportunidad duplicada</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Other</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Para oportunidad futura</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Price</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Modalidad__c</picklist>
+            <values>
+                <fullName>Consumo</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Prepago</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Recompra</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Tarimas</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Numero_de_guias__c</picklist>
+            <values>
+                <fullName>%3C10</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>%3C100</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>%3E100</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>1</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>PROJ_Service_Mode__c</picklist>
+            <values>
+                <fullName>A</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CE</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>FI</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>FN</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>M</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>PTO</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Pq</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>R</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>T</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>WH</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Peso__c</picklist>
+            <values>
+                <fullName>1-5 Kg</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>11-15 Kg</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>16-20 Kg</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>6-10 Kg</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Mas de 20 Kg</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Sobre</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Proveedor__c</picklist>
+            <values>
+                <fullName>AM PM</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>DHL</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Estafeta</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Paquete Express</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Red Pack</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Requerimientos_especialesNew__c</picklist>
+            <values>
+                <fullName>Alarma de reversa%2E</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Certificado</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Ctpat%2E</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>EPP %28Botas%2C chalecos%2C cascos%2C guantes lentes%2C mascarilla%2C COVID%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Estibable</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Extintor</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>GPS en tracto y Caja</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Gafas</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Granel</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Otro</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Personal con restricción de edad</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>R-control</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Riel logístico</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SUA %28IMSS%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>entarimado</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Requerimientos_especiales__c</picklist>
+            <values>
+                <fullName>Alarma de reversa%2E</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Certificado</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Ctpat%2E</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>EPP %28Botas%2C chalecos%2C cascos%2C guantes lentes%2C mascarilla%2C COVID%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Estibable</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Extintor</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>GPS en tracto y Caja</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Gafas</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Granel</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Personal con restricción de edad</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>R-control</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Riel logístico</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SUA %28IMSS%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>entarimado</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Sales_Type__c</picklist>
+            <values>
+                <fullName>Cross Selling</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Service_Type__c</picklist>
+            <values>
+                <fullName>A</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CE - Aduanas</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>EX-Seguros</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>FI</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>FN</fullName>
+                <default>true</default>
+            </values>
+            <values>
+                <fullName>M</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>PQ</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>PQI - Paquertería Internacional</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>PTO - Puerto</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>R - Global Routing</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>T</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>WH</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Tienda_online__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Si</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Tiene_alguna_otra_plataforma_de_envios__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Si</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Tipo__c</picklist>
+            <values>
+                <fullName>Import-Export Quote%2FOrder</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Quote</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Tipo_de_Oportunidad__c</picklist>
+            <values>
+                <fullName>Acquisition</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cross selling</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>One off %2F Seasonal</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Up-selling</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Tipo_de_industria__c</picklist>
+            <values>
+                <fullName>Documentos</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Equipo medico</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Joyería</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Ropa</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Zapatos</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Tipo_de_paqueteria__c</picklist>
+            <values>
+                <fullName>Aéreo</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Terrestre</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Type</picklist>
+            <values>
+                <fullName>Existing Business</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>New Business</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+    </recordTypes>
+    <searchLayouts>
+        <customTabListAdditionalFields>OPPORTUNITY.NAME</customTabListAdditionalFields>
+        <customTabListAdditionalFields>ACCOUNT.NAME</customTabListAdditionalFields>
+        <customTabListAdditionalFields>OPPORTUNITY.CLOSE_DATE</customTabListAdditionalFields>
+        <lookupDialogsAdditionalFields>OPPORTUNITY.NAME</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>ACCOUNT.NAME</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>ACCOUNT.SITE</lookupDialogsAdditionalFields>
+        <lookupPhoneDialogsAdditionalFields>OPPORTUNITY.NAME</lookupPhoneDialogsAdditionalFields>
+        <lookupPhoneDialogsAdditionalFields>ACCOUNT.NAME</lookupPhoneDialogsAdditionalFields>
+        <lookupPhoneDialogsAdditionalFields>ACCOUNT.SITE</lookupPhoneDialogsAdditionalFields>
+        <searchResultsAdditionalFields>OPPORTUNITY.NAME</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>ACCOUNT.NAME</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>ACCOUNT.SITE</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>OPPORTUNITY.STAGE_NAME</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>OPPORTUNITY.CLOSE_DATE</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>CORE.USERS.ALIAS</searchResultsAdditionalFields>
+    </searchLayouts>
+    <sharingModel>Private</sharingModel>
+    <validationRules>
+        <fullName>ActivacionAutorizada</fullName>
+        <active>true</active>
+        <errorConditionFormula>AND(
+  Account.ActiveSap__c  = false,
+  RecordType.Name = &quot;Proyectos&quot;,
+ISPICKVAL(StageName, &quot;Activación Cliente&quot;)
+)</errorConditionFormula>
+        <errorDisplayField>Activacion_autorizada__c</errorDisplayField>
+        <errorMessage>PROJ001- Favor de revisar si ya se activó la cuenta.</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>DebeTenerCosto</fullName>
+        <active>true</active>
+        <errorConditionFormula>AND(
+ISPICKVAL(StageName , &quot;VoBo IC&quot;),
+RecordType.Name = &quot;Proyectos&quot;,
+OR(
+Amount = 0,
+ISNULL(Amount)
+)
+)</errorConditionFormula>
+        <errorDisplayField>Amount</errorDisplayField>
+        <errorMessage>PROJ004: Antes de proceder al estatus de VoBo IC, el campo de &quot;Amount&quot; no puede ser 0. Favor de agregar productos.</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>MotivoDeRechazo</fullName>
+        <active>true</active>
+        <errorConditionFormula>AND(
+ ISPICKVAL(StageName,&quot;Declinar&quot;),
+ RecordType.Name = &quot;Proyectos&quot;,
+  ISPICKVAL( Loss_Reason__c , &quot;&quot;)  
+
+)</errorConditionFormula>
+        <errorDisplayField>Loss_Reason__c</errorDisplayField>
+        <errorMessage>PROJ006: Favor de agregar un motivo de pérdida.</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>NoCambiarEtapaFactibilidad</fullName>
+        <active>true</active>
+        <description>Solo puede cambiar etapa Inteligencia Comercial y Marcos</description>
+        <errorConditionFormula>AND(ISPICKVAL(StageName, &quot;Factibilidad de Proyecto&quot;),
+ISCHANGED(StageName),
+RecordType.Name = &quot;Proyectos&quot;,
+AND(
+NOT($UserRole.Name = &quot;Asesor Comercial &quot;),
+NOT($UserRole.Name = &quot;Cuenta Clave &quot;),
+NOT($UserRole.Name = &quot; Director Comercial&quot;),
+NOT($UserRole.Name = &quot;Gerente Comercial&quot;),
+NOT($UserRole.Name = &quot;Representantes SAC&quot;),
+NOT($UserRole.Name = &quot;OPERACIONES&quot;)
+
+)
+)</errorConditionFormula>
+        <errorMessage>PROJ002_Solo Inteligencia Comercial puede aprobar esta etapa</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>NoCambiarStageCompras</fullName>
+        <active>true</active>
+        <description>Solo puede cambiar etapa Compras</description>
+        <errorConditionFormula>AND(
+ $Profile.Id &lt;&gt; &quot;00e4T000000zD9C&quot;,
+ $User.Id &lt;&gt; &quot;0054T000000cUcw&quot;,
+
+ISPICKVAL(StageName, &quot;Cotización Compras&quot;),
+ISCHANGED(StageName),
+RecordType.Name = &quot;Proyectos&quot;)</errorConditionFormula>
+        <errorMessage>PROJ003: Solo Compras puede aprobar esta etapa</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>NoCambiarStageVoBoIC</fullName>
+        <active>true</active>
+        <description>Solo puede cambiar etapa Inteligencia Comercial</description>
+        <errorConditionFormula>AND(
+ $User.Id &lt;&gt; &quot;0054T000001hgIi&quot;,
+ $Profile.Id &lt;&gt; &quot;00e4T000000zD9C&quot;,
+ $User.Id &lt;&gt; &quot;0054T000001iWDU&quot;,
+
+ISPICKVAL(StageName, &quot;VoBo IC&quot;),
+ISCHANGED(StageName),
+RecordType.Name = &quot;Proyectos&quot;)</errorConditionFormula>
+        <errorMessage>PROJ005: Solo Inteligencia Comercial puede aprobar esta etapa</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>No_solicitar_IEQ</fullName>
+        <active>true</active>
+        <errorConditionFormula>AND(
+ISPICKVAL(Tipo__c , &quot;Quote&quot;),
+  ISNULL(Import_Export_Quote_Order__c)
+)</errorConditionFormula>
+        <errorDisplayField>Import_Export_Quote_Order__c</errorDisplayField>
+        <errorMessage>Import Export Quote debe ir en blanco</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>OPP009</fullName>
+        <active>true</active>
+        <description>Agregar que otro requerimiento especial en campo de texto</description>
+        <errorConditionFormula>AND(
+  INCLUDES(Requerimientos_especialesNew__c, &quot;Otro&quot;),
+  ISBLANK(Comentarios_Otros__c)
+)</errorConditionFormula>
+        <errorMessage>OPP009 - Es necesario especificar que otro requerimiento especial se necesita en el campo &quot;Comentarios Otros&quot;.</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>OPP010</fullName>
+        <active>true</active>
+        <errorConditionFormula>AND(
+    RecordType.Name = &apos;Proyecto&apos;,
+    AND(
+        OR(
+            ISPICKVAL(StageName, &quot;Cotización&quot;),
+            ISPICKVAL(StageName, &quot;Negociación&quot;),
+            ISPICKVAL(StageName, &quot;Ejecución&quot;)
+        ),
+        OR(
+            TotalOpportunityQuantity = 0,
+            ISBLANK(TotalOpportunityQuantity)
+        )
+    )
+)</errorConditionFormula>
+        <errorMessage>OPP010 - Debes de Cargar Productos para poder cambiar de etapa.</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>OPP011</fullName>
+        <active>false</active>
+        <errorConditionFormula>AND(
+    RecordType.Name = &apos;Proyecto&apos;,
+    NOT(
+        OR(
+            ISPICKVAL(Group__c, &quot;SP-PQ-PAQUETERIA&quot;),
+            ISPICKVAL(Group__c, &quot;SP-T-CONSOLIDADO&quot;),
+            ISPICKVAL(Group__c, &quot;SP-WH-ALMACENAJE&quot;)
+        )
+    ),
+    AND(
+        OR(            
+            ISPICKVAL(StageName, &quot;Negociación&quot;),
+            ISPICKVAL(StageName, &quot;Ejecución&quot;)
+        ),
+        OR(
+            Total_Buy_Price2__c = 0,
+            Amount = 0
+        )
+    )
+)</errorConditionFormula>
+        <errorMessage>OPP011 - Los productos deben tener un costo de Buy Price y Sell Price para poder cambiar de etapa</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>OPP012</fullName>
+        <active>true</active>
+        <errorConditionFormula>AND(
+    RecordType.Name = &apos;Proyecto&apos;,
+    NOT(
+        OR(
+            ISPICKVAL(Group__c, &quot;SP-PQ-PAQUETERIA&quot;),
+            ISPICKVAL(Group__c, &quot;SP-T-CONSOLIDADO&quot;),
+            ISPICKVAL(Group__c, &quot;SP-WH-ALMACENAJE&quot;)
+        )
+    ),
+    AND(
+        OR(
+            ISPICKVAL(StageName, &quot;Ejecución&quot;)
+        ),
+        OR(
+            Realizacion_de_Kickoff__c = false
+        )
+    )
+)</errorConditionFormula>
+        <errorMessage>OPP012 - Para pasar a la etapa ejecución se requiere activar el campo Realización de Kikoff</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>OPP_Agreed_Shipping</fullName>
+        <active>false</active>
+        <errorConditionFormula>AND(
+ISPICKVAL(StageName, &quot;Agreed Shipping&quot;),
+
+OR(
+(IEQ_Status__c &lt;&gt; &quot;Approved as Succesful&quot;),
+(Total_Quotes_Vendido__c  &lt;&gt; 0 ))
+
+)</errorConditionFormula>
+        <errorMessage>OPP004- Se necesita Quote Vendido o Total IEQ</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>OPP_Agreed_Shipping2</fullName>
+        <active>true</active>
+        <errorConditionFormula>AND(
+ISPICKVAL(StageName, &quot;Agreed Shipping&quot;),
+ISPICKVAL(Tipo__c,&quot;Quote&quot;),
+
+Total_Quotes_Vendido__c  &lt;= 0 
+
+)</errorConditionFormula>
+        <errorMessage>OPP005- Se necesita Quote Vendido</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>OPP_Agreed_Shipping3</fullName>
+        <active>true</active>
+        <errorConditionFormula>AND(
+ISPICKVAL(StageName, &quot;Agreed Shipping&quot;),
+ISPICKVAL(Tipo__c,&quot;Import-Export Quote/Order&quot;),
+ISPICKVAL(Tipo__c, &quot;Quote&quot;),
+
+IEQ_Status__c &lt;&gt; &quot;Approved as Succesful&quot;
+
+)</errorConditionFormula>
+        <errorMessage>OPP006- Se necesita Folio Aprobado</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>OPP_First_Contact</fullName>
+        <active>false</active>
+        <description>Validación de esta etapa</description>
+        <errorConditionFormula>AND(
+ISPICKVAL(StageName,&quot;First Contact / Need Analysis&quot;),
+RecordType.Name = &quot;Standar Opportunity&quot;,
+
+Total_Products__c  &lt;= 0
+
+)</errorConditionFormula>
+        <errorMessage>OPP001-Para pasar a la siguiente etapa es necesario agregar Productos</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>OPP_First_Contact2</fullName>
+        <active>true</active>
+        <description>Validación de esta etapa</description>
+        <errorConditionFormula>AND(
+ISPICKVAL(StageName,&quot;First Contact / Need Analysis&quot;),
+RecordType.Name = &quot;Standar Opportunity&quot;,
+ISPICKVAL(Tipo__c, &quot;Quote&quot;),
+
+ PROJ_TotalQuotes__c =  0 
+
+)</errorConditionFormula>
+        <errorMessage>OPP002-Para pasar a la siguiente etapa es necesario agregar  Quotes</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>OPP_First_Contact3</fullName>
+        <active>true</active>
+        <description>Validación de esta etapa</description>
+        <errorConditionFormula>AND(
+ISPICKVAL(StageName,&quot;First Contact / Need Analysis&quot;),
+RecordType.Name = &quot;Standar Opportunity&quot;,
+ISPICKVAL(Tipo__c, &quot;Import-Export Quote/Order&quot;),
+
+ ISBLANK( Import_Export_Quote_Order__c )
+)</errorConditionFormula>
+        <errorMessage>OPP003-Para pasar a la siguiente etapa es necesario agregar Folio</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>OPP_First_Shipment</fullName>
+        <active>false</active>
+        <description>Validación de esta etapa</description>
+        <errorConditionFormula>AND(
+ISPICKVAL(StageName,&quot;First Shipment&quot;),
+RecordType.Name = &quot;Standar Opportunity&quot;,
+ ( IEQ_Status__c  &lt;&gt;   &quot;Shipped&quot;)
+)</errorConditionFormula>
+        <errorMessage>OPP008-Para pasar a la siguiente etapa es necesario Shipment</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>OPP_Implemented</fullName>
+        <active>false</active>
+        <description>Checkbox cliente capacitado</description>
+        <errorConditionFormula>AND(
+Ciente_Capacitado__c  = false,
+RecordType.Name = &quot;Standar Opportunity&quot;,
+ISPICKVAL(StageName, &quot;Implemented&quot;)
+)</errorConditionFormula>
+        <errorDisplayField>Ciente_Capacitado__c</errorDisplayField>
+        <errorMessage>OPP007- Favor de revisar si se implemento con el cliente</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>OPP_Proposal</fullName>
+        <active>false</active>
+        <description>Validación de esta etapa</description>
+        <errorConditionFormula>AND(
+ISPICKVAL(StageName,&quot;Proposal&quot;),
+RecordType.Name = &quot;Standar Opportunity&quot;,
+ ISPICKVAL(LeadSource,&quot;&quot;)
+)</errorConditionFormula>
+        <errorDisplayField>LeadSource</errorDisplayField>
+        <errorMessage>OPP004-Para pasar a la siguiente etapa es necesario agregar Lead Source</errorMessage>
+    </validationRules>
+    <webLinks>
+        <fullName>ManualUsuario</fullName>
+        <availability>online</availability>
+        <displayType>button</displayType>
+        <encodingKey>UTF-8</encodingKey>
+        <hasMenubar>false</hasMenubar>
+        <hasScrollbars>true</hasScrollbars>
+        <hasToolbar>false</hasToolbar>
+        <height>600</height>
+        <isResizable>true</isResizable>
+        <linkType>url</linkType>
+        <masterLabel>Manual de Usuario</masterLabel>
+        <openType>newWindow</openType>
+        <position>none</position>
+        <protected>false</protected>
+        <showsLocation>false</showsLocation>
+        <showsStatus>false</showsStatus>
+        <url>https://pak2gologistics.my.salesforce.com/sfc/p/4T000000DybZ/a/RQ000005NYPV/dKFfNWKoYG2NuPBX6nLwxf7E7cRLttwO0ybU8bwDtXg</url>
+    </webLinks>
+    <webLinks>
+        <fullName>New_Import_Expor_Quote</fullName>
+        <availability>online</availability>
+        <displayType>button</displayType>
+        <encodingKey>UTF-8</encodingKey>
+        <hasMenubar>false</hasMenubar>
+        <hasScrollbars>true</hasScrollbars>
+        <hasToolbar>false</hasToolbar>
+        <height>600</height>
+        <isResizable>true</isResizable>
+        <linkType>url</linkType>
+        <masterLabel>New Import/Expor Quote</masterLabel>
+        <openType>newWindow</openType>
+        <position>none</position>
+        <protected>false</protected>
+        <showsLocation>false</showsLocation>
+        <showsStatus>false</showsStatus>
+        <url>https://pak2go--develop.my.salesforce.com/setup/ui/recordtypeselect.jsp?ent=01I4T000000HYhF&amp;retURL=%2Fa0I%2Fo&amp;save_new_url=%2Fa0I%2Fe%3FretURL%3D%252Fa0I%252Fo</url>
+    </webLinks>
+</CustomObject>

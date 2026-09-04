@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customSettingsType>Hierarchy</customSettingsType>
+    <enableFeeds>false</enableFeeds>
+    <fields>
+        <fullName>Default_Freight_Mode_Pick_Ship__c</fullName>
+        <externalId>false</externalId>
+        <label>Default Freight Mode Pick &amp; Ship</label>
+        <length>20</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Default_Freight_Mode__c</fullName>
+        <externalId>false</externalId>
+        <label>Default Freight Mode</label>
+        <length>20</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Default_Supply_Project_Customer_Buyer__c</fullName>
+        <externalId>false</externalId>
+        <label>Default Supply Project Customer/Buyer</label>
+        <length>80</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Transport_Packaging_Data_Lookup_Id__c</fullName>
+        <externalId>false</externalId>
+        <label>Transport Packaging Data Lookup Id</label>
+        <length>15</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <label>CSH Shipment</label>
+    <visibility>Public</visibility>
+</CustomObject>

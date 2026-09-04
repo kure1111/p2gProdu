@@ -1,0 +1,1904 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <formFactor>Large</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <formFactor>Small</formFactor>
+        <type>Default</type>
+    </actionOverrides>
+    <allowInChatterGroups>false</allowInChatterGroups>
+    <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
+    <deploymentStatus>Deployed</deploymentStatus>
+    <enableActivities>true</enableActivities>
+    <enableBulkApi>true</enableBulkApi>
+    <enableFeeds>true</enableFeeds>
+    <enableHistory>true</enableHistory>
+    <enableLicensing>false</enableLicensing>
+    <enableReports>true</enableReports>
+    <enableSearch>true</enableSearch>
+    <enableSharing>true</enableSharing>
+    <enableStreamingApi>true</enableStreamingApi>
+    <externalSharingModel>ControlledByParent</externalSharingModel>
+    <fields>
+        <fullName>Account_Executive_User__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Account Executive User</label>
+        <referenceTo>User</referenceTo>
+        <relationshipName>Suppliers_Quotes</relationshipName>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Carrier_JOC_Sailings_List__c</fullName>
+        <externalId>false</externalId>
+        <formula>TEXT( Vessel_Flight__r.Carrier_JOC_Sailings_List__c )</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <inlineHelpText>As specified in &quot;Carrier (JOC Sailings List)&quot; inside &quot;Vessel Flight&quot;</inlineHelpText>
+        <label>Carrier (JOC Sailings List)</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Carton_Box_Suppliers__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Carton Box Suppliers</label>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Catalog_Account_Price_List__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Catalog Account Price List</label>
+        <referenceTo>Customer_Price_List__c</referenceTo>
+        <relationshipLabel>Suppliers Quotes/Orders</relationshipLabel>
+        <relationshipName>Suppliers_Quotes_Orders1</relationshipName>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Catalog_Price_List__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Catalog Price List</label>
+        <referenceTo>Price_List__c</referenceTo>
+        <relationshipLabel>Suppliers Quotes/Orders</relationshipLabel>
+        <relationshipName>Suppliers_Quotes_Orders</relationshipName>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Collection_Conditions__c</fullName>
+        <externalId>false</externalId>
+        <label>Payment Terms</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>30% Deposit in Advanced and Balance with BL Copy</fullName>
+                    <default>false</default>
+                    <label>30% Deposit in Advanced and Balance with BL Copy</label>
+                </value>
+                <value>
+                    <fullName>15% Deposit in Advanced and Balance Before Shipment</fullName>
+                    <default>false</default>
+                    <label>15% Deposit in Advanced and Balance Before Shipment</label>
+                </value>
+                <value>
+                    <fullName>30% Deposit in Advanced and Balance Before Shipment</fullName>
+                    <default>false</default>
+                    <label>30% Deposit in Advanced and Balance Before Shipment</label>
+                </value>
+                <value>
+                    <fullName>30% Deposit in Advanced and Balance with LC AT SIGN</fullName>
+                    <default>false</default>
+                    <label>30% Deposit in Advanced and Balance with LC AT SIGN</label>
+                </value>
+                <value>
+                    <fullName>100% LC AT SIGN</fullName>
+                    <default>false</default>
+                    <label>100% LC AT SIGN</label>
+                </value>
+                <value>
+                    <fullName>TT 100% Advanced Payment</fullName>
+                    <default>false</default>
+                    <label>TT 100% Advanced Payment</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>Contact__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Contact</label>
+        <lookupFilter>
+            <active>true</active>
+            <filterItems>
+                <field>Contact.AccountId</field>
+                <operation>equals</operation>
+                <valueField>$Source.Supplier__c</valueField>
+            </filterItems>
+            <isOptional>false</isOptional>
+        </lookupFilter>
+        <referenceTo>Contact</referenceTo>
+        <relationshipLabel>Suppliers Quotes/Orders</relationshipLabel>
+        <relationshipName>Suppliers_Quotes_Orders</relationshipName>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Contract_Duration_months__c</fullName>
+        <externalId>false</externalId>
+        <label>Contract Duration (months)</label>
+        <precision>4</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Conversion_Rate_Date__c</fullName>
+        <defaultValue>TODAY()</defaultValue>
+        <externalId>false</externalId>
+        <label>Conversion Rate Date</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Country_ofDischarge__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Country of Discharge</label>
+        <referenceTo>Country__c</referenceTo>
+        <relationshipLabel>Suppliers Quotes/Orders</relationshipLabel>
+        <relationshipName>Suppliers_Quotes_Orders</relationshipName>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Country_ofLoad__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Country of Load</label>
+        <referenceTo>Country__c</referenceTo>
+        <relationshipLabel>Suppliers Quotes/Orders (Country of Load)</relationshipLabel>
+        <relationshipName>Suppliers_Quotes_Orders1</relationshipName>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Country_of_Discharge__c</fullName>
+        <externalId>false</externalId>
+        <formula>Route__r.Country_of_Discharge__r.Name</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <inlineHelpText>As specified in &quot;Country of Discharge&quot; inside &quot;Route&quot;</inlineHelpText>
+        <label>Route - Country of Discharge</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Country_of_Load__c</fullName>
+        <externalId>false</externalId>
+        <formula>Route__r.Country_of_Load__r.Name</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <inlineHelpText>As specified in &quot;Country of Load&quot; inside &quot;Route&quot;</inlineHelpText>
+        <label>Route - Country of Load</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Customer__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Buyer Account</label>
+        <lookupFilter>
+            <active>true</active>
+            <filterItems>
+                <field>Account.RecordTypeId</field>
+                <operation>equals</operation>
+                <value>Customer</value>
+            </filterItems>
+            <isOptional>false</isOptional>
+        </lookupFilter>
+        <referenceTo>Account</referenceTo>
+        <relationshipName>Suppliers_Quotes_Buyer_Account</relationshipName>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>DeliveryAddress__c</fullName>
+        <externalId>false</externalId>
+        <label>Origin Address</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>TextArea</type>
+    </fields>
+    <fields>
+        <fullName>Delivery_Account__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Pickup / Delivery Account</label>
+        <lookupFilter>
+            <active>true</active>
+            <errorMessage>Value does not exist or does not match.</errorMessage>
+            <filterItems>
+                <field>Account.RecordTypeId</field>
+                <operation>equals</operation>
+                <value>Supplier</value>
+            </filterItems>
+            <isOptional>false</isOptional>
+        </lookupFilter>
+        <referenceTo>Account</referenceTo>
+        <relationshipLabel>Suppliers Quotes/Orders (Delivery Account)</relationshipLabel>
+        <relationshipName>Suppliers_Quotes_Orders</relationshipName>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Delivery_Date__c</fullName>
+        <externalId>false</externalId>
+        <label>Delivery Date</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Delivery_Zone__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Pickup / Delivery Drayage</label>
+        <referenceTo>Delivery_Zone__c</referenceTo>
+        <relationshipLabel>Suppliers Quotes/Orders</relationshipLabel>
+        <relationshipName>Suppliers_Quotes_Orders</relationshipName>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Fees_Kg__c</fullName>
+        <description>If &quot;Total Weight (Kg)&quot; different from 0 then &quot;Total Fees Sell Amount&quot; / &quot;Total Weight (Kg)&quot;, else leave blank</description>
+        <externalId>false</externalId>
+        <formula>IF(Total_Weight_Kg2__c&lt;&gt;0,Total_Fees_Sell_Amount__c / Total_Weight_Kg2__c,null)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <inlineHelpText>&quot;Total Fees Sell Amount&quot; / &quot;Total Weight (Kg)&quot;</inlineHelpText>
+        <label>Service Charges / Kg</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Fees_m3__c</fullName>
+        <description>If &quot;Total Weight (Kg)&quot; different from 0 then &quot;Total Fees Sell Amount&quot; / &quot;Total Volume (m3)&quot;, else leave blank</description>
+        <externalId>false</externalId>
+        <formula>IF(Total_Volume_m3_2__c&lt;&gt;0,Total_Fees_Sell_Amount__c /Total_Volume_m3_2__c,null)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <inlineHelpText>&quot;Total Fees Sell Amount&quot; / &quot;Total Volume (m3)&quot;</inlineHelpText>
+        <label>Service Charges / m3</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Import_Export_Quote_Order__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Import-Export Quote/Order</label>
+        <referenceTo>Customer_Quote__c</referenceTo>
+        <relationshipLabel>Suppliers Quotes/Orders</relationshipLabel>
+        <relationshipName>Suppliers_Quotes_Orders</relationshipName>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Incoterm_Place__c</fullName>
+        <externalId>false</externalId>
+        <label>Incoterm Place</label>
+        <length>50</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Incoterm__c</fullName>
+        <externalId>false</externalId>
+        <label>Purchase Incoterm</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>CFR</fullName>
+                    <default>false</default>
+                    <label>CFR</label>
+                </value>
+                <value>
+                    <fullName>CIF</fullName>
+                    <default>false</default>
+                    <label>CIF</label>
+                </value>
+                <value>
+                    <fullName>CIP</fullName>
+                    <default>false</default>
+                    <label>CIP</label>
+                </value>
+                <value>
+                    <fullName>CPT</fullName>
+                    <default>false</default>
+                    <label>CPT</label>
+                </value>
+                <value>
+                    <fullName>DAP</fullName>
+                    <default>false</default>
+                    <label>DAP</label>
+                </value>
+                <value>
+                    <fullName>DAT</fullName>
+                    <default>false</default>
+                    <label>DAT</label>
+                </value>
+                <value>
+                    <fullName>DDP</fullName>
+                    <default>false</default>
+                    <label>DDP</label>
+                </value>
+                <value>
+                    <fullName>EXW</fullName>
+                    <default>false</default>
+                    <label>EXW</label>
+                </value>
+                <value>
+                    <fullName>FCA</fullName>
+                    <default>false</default>
+                    <label>FCA</label>
+                </value>
+                <value>
+                    <fullName>FOB</fullName>
+                    <default>false</default>
+                    <label>FOB</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>Labels_Suppliers__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Labels Suppliers</label>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>MIN_Valid_Until__c</fullName>
+        <externalId>false</externalId>
+        <label>Services Valid Until</label>
+        <summarizedField>Supplier_Quote_Order_Fee_Line__c.Valid_Until__c</summarizedField>
+        <summaryForeignKey>Supplier_Quote_Order_Fee_Line__c.Supplier_Quote_Order__c</summaryForeignKey>
+        <summaryOperation>min</summaryOperation>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Summary</type>
+    </fields>
+    <fields>
+        <fullName>MOQ__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Minimum Order Quantity</inlineHelpText>
+        <label>MOQ</label>
+        <length>100</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Max_Deliveries__c</fullName>
+        <externalId>false</externalId>
+        <label>Max Deliveries</label>
+        <precision>2</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Move_Type__c</fullName>
+        <externalId>false</externalId>
+        <label>Move Type</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Door to Door</fullName>
+                    <default>false</default>
+                    <label>Door to Door</label>
+                </value>
+                <value>
+                    <fullName>Door to Port</fullName>
+                    <default>false</default>
+                    <label>Door to Port</label>
+                </value>
+                <value>
+                    <fullName>Port to Door</fullName>
+                    <default>false</default>
+                    <label>Port to Door</label>
+                </value>
+                <value>
+                    <fullName>Port to Port</fullName>
+                    <default>false</default>
+                    <label>Port to Port</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>Number_Active_Lines__c</fullName>
+        <externalId>false</externalId>
+        <label>Number Active Lines</label>
+        <summaryFilterItems>
+            <field>Supplier_Quote_Line__c.Active__c</field>
+            <operation>equals</operation>
+            <value>True</value>
+        </summaryFilterItems>
+        <summaryForeignKey>Supplier_Quote_Line__c.Supplier_Quote__c</summaryForeignKey>
+        <summaryOperation>count</summaryOperation>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Summary</type>
+    </fields>
+    <fields>
+        <fullName>Pallets_Suppliers__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Pallets Suppliers</label>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Place_of_Delivery__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Port / Airport of Load</label>
+        <lookupFilter>
+            <active>true</active>
+            <booleanFilter>1 AND (2 OR 3)</booleanFilter>
+            <errorMessage>Value does not exist or does not match criteria.</errorMessage>
+            <filterItems>
+                <field>$Source.Country_ofLoad__c</field>
+                <operation>equals</operation>
+                <valueField>Location__c.Country__c</valueField>
+            </filterItems>
+            <filterItems>
+                <field>$Source.State_of_Load__c</field>
+                <operation>equals</operation>
+                <valueField>Location__c.State__c</valueField>
+            </filterItems>
+            <filterItems>
+                <field>Location__c.State__c</field>
+                <operation>equals</operation>
+                <value></value>
+            </filterItems>
+            <isOptional>false</isOptional>
+        </lookupFilter>
+        <referenceTo>Location__c</referenceTo>
+        <relationshipLabel>Suppliers Quotes/Orders (Port / Airport of Load)</relationshipLabel>
+        <relationshipName>Suppliers_Quotes_Orders_Place_of_Deliver</relationshipName>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Place_of_Receipt__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Port / Airport of Discharge</label>
+        <lookupFilter>
+            <active>true</active>
+            <booleanFilter>1 AND (2 OR 3)</booleanFilter>
+            <filterItems>
+                <field>$Source.Country_ofDischarge__c</field>
+                <operation>equals</operation>
+                <valueField>Location__c.Country__c</valueField>
+            </filterItems>
+            <filterItems>
+                <field>$Source.State_of_Discharge__c</field>
+                <operation>equals</operation>
+                <valueField>Location__c.State__c</valueField>
+            </filterItems>
+            <filterItems>
+                <field>Location__c.State__c</field>
+                <operation>equals</operation>
+                <value></value>
+            </filterItems>
+            <isOptional>true</isOptional>
+        </lookupFilter>
+        <referenceTo>Location__c</referenceTo>
+        <relationshipLabel>Suppliers Quotes/Orders (Port / Airport of Discharge)</relationshipLabel>
+        <relationshipName>Suppliers_Quotes_Orders_Place_of_Receipt</relationshipName>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Poligag_Suppliers__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Poligag Suppliers</label>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Port_Airport_of_Discharge__c</fullName>
+        <externalId>false</externalId>
+        <formula>Route__r.Port_Airport_of_Discharge__r.Name</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <inlineHelpText>As specified in &quot;Port / Airport of Discharge&quot; inside &quot;Route&quot;</inlineHelpText>
+        <label>Route - Port / Airport of Discharge</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Port_Airport_of_Load__c</fullName>
+        <externalId>false</externalId>
+        <formula>Route__r.Port_Airport_of_Load__r.Name</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <inlineHelpText>As specified in &quot;Port / Airport of Load&quot; inside &quot;Route&quot;</inlineHelpText>
+        <label>Route - Port / Airport of Load</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Production_Time_Days__c</fullName>
+        <externalId>false</externalId>
+        <label>Production Time (Days)</label>
+        <precision>8</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Quality_Observations__c</fullName>
+        <externalId>false</externalId>
+        <label>Quality Observations</label>
+        <length>2000</length>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Html</type>
+        <visibleLines>10</visibleLines>
+    </fields>
+    <fields>
+        <fullName>Receipt_Address__c</fullName>
+        <externalId>false</externalId>
+        <label>Destination Address</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>TextArea</type>
+    </fields>
+    <fields>
+        <fullName>Route_State_of_Discharge__c</fullName>
+        <externalId>false</externalId>
+        <formula>Route__r.State_of_Discharge__r.Name</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <inlineHelpText>As specified in &quot;State of Discharge&quot; inside &quot;Route&quot;</inlineHelpText>
+        <label>Route - State of Discharge</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Route_State_of_Load__c</fullName>
+        <externalId>false</externalId>
+        <formula>Route__r.State_of_Load__r.Name</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <inlineHelpText>As specified in &quot;State of Load&quot; inside &quot;Route&quot;</inlineHelpText>
+        <label>Route - State of Load</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Route__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Route</label>
+        <referenceTo>Carrier_Line_Load_Point__c</referenceTo>
+        <relationshipLabel>Suppliers Quotes/Orders</relationshipLabel>
+        <relationshipName>Suppliers_Quotes_Orders</relationshipName>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>SUM_Destination_Amount__c</fullName>
+        <externalId>false</externalId>
+        <formula>Total_Fees_Sell_Amount__c + Total_Amount_Number__c + SUM_Total_Taxes__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <inlineHelpText>&quot;Total Fees Sell Amount&quot; + &quot;Total Amount&quot; + &quot;SUM Total Taxes&quot;</inlineHelpText>
+        <label>SUM Destination Amount</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>SUM_Total_Taxes_Number__c</fullName>
+        <externalId>false</externalId>
+        <label>SUM Total Taxes Number</label>
+        <summarizedField>Supplier_Quote_Line__c.Total_Taxes_header_currency__c</summarizedField>
+        <summaryFilterItems>
+            <field>Supplier_Quote_Line__c.Active__c</field>
+            <operation>equals</operation>
+            <value>True</value>
+        </summaryFilterItems>
+        <summaryForeignKey>Supplier_Quote_Line__c.Supplier_Quote__c</summaryForeignKey>
+        <summaryOperation>sum</summaryOperation>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Summary</type>
+    </fields>
+    <fields>
+        <fullName>SUM_Total_Taxes__c</fullName>
+        <externalId>false</externalId>
+        <formula>SUM_Total_Taxes_Number__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <inlineHelpText>SUM of all Taxes from Supplier Quote/Order</inlineHelpText>
+        <label>SUM Total Taxes</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Sales_Incoterm__c</fullName>
+        <externalId>false</externalId>
+        <formula>TEXT(Supply_Project__r.Sales_Incoterm__c)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <inlineHelpText>As specified in &quot;Sales Incoterm&quot; inside &quot;Supply Project&quot;</inlineHelpText>
+        <label>Sales Incoterm</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Service_Charges_Calculated__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Service Charges Calculated</label>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>State_of_Discharge__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>State of Discharge</label>
+        <lookupFilter>
+            <active>true</active>
+            <filterItems>
+                <field>$Source.Country_ofDischarge__c</field>
+                <operation>equals</operation>
+                <valueField>State__c.Country__c</valueField>
+            </filterItems>
+            <isOptional>true</isOptional>
+        </lookupFilter>
+        <referenceTo>State__c</referenceTo>
+        <relationshipLabel>Suppliers Quotes/Orders</relationshipLabel>
+        <relationshipName>Suppliers_Quotes_Orders_State_of_D</relationshipName>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>State_of_Load__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>State of Load</label>
+        <lookupFilter>
+            <active>true</active>
+            <filterItems>
+                <field>$Source.Country_ofLoad__c</field>
+                <operation>equals</operation>
+                <valueField>State__c.Country__c</valueField>
+            </filterItems>
+            <isOptional>true</isOptional>
+        </lookupFilter>
+        <referenceTo>State__c</referenceTo>
+        <relationshipLabel>Suppliers Quotes/Orders (State of Load)</relationshipLabel>
+        <relationshipName>Suppliers_Quotes_Orders_State_of_Load</relationshipName>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Status_Observations__c</fullName>
+        <externalId>false</externalId>
+        <label>Status Observations</label>
+        <required>false</required>
+        <trackFeedHistory>true</trackFeedHistory>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>TextArea</type>
+    </fields>
+    <fields>
+        <fullName>Supplier_Name__c</fullName>
+        <externalId>false</externalId>
+        <formula>Supplier__r.Name</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <inlineHelpText>As specified in &quot;Supplier&quot;</inlineHelpText>
+        <label>Supplier Name</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Supplier_Quote_Order_Ref_Number__c</fullName>
+        <externalId>false</externalId>
+        <label>Supplier (Quote/Order Ref. Number)</label>
+        <length>50</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Supplier_Quote_Status__c</fullName>
+        <externalId>false</externalId>
+        <label>Supplier Quote/Order Status</label>
+        <required>false</required>
+        <trackFeedHistory>true</trackFeedHistory>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Not Valid</fullName>
+                    <default>false</default>
+                    <label>Not Valid</label>
+                </value>
+                <value>
+                    <fullName>Declined</fullName>
+                    <default>false</default>
+                    <label>Declined</label>
+                </value>
+                <value>
+                    <fullName>Draft</fullName>
+                    <default>false</default>
+                    <label>Draft</label>
+                </value>
+                <value>
+                    <fullName>Sent Bid</fullName>
+                    <default>false</default>
+                    <label>Sent Bid</label>
+                </value>
+                <value>
+                    <fullName>Sent Final Bid</fullName>
+                    <default>false</default>
+                    <label>Sent Final Bid</label>
+                </value>
+                <value>
+                    <fullName>Approved</fullName>
+                    <default>false</default>
+                    <label>Approved</label>
+                </value>
+                <value>
+                    <fullName>Import-Export Consolidated</fullName>
+                    <default>false</default>
+                    <label>Import-Export Consolidated</label>
+                </value>
+                <value>
+                    <fullName>Consolidated</fullName>
+                    <default>false</default>
+                    <label>Consolidated</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>Supplier_Request_RFP__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Supplier Request</label>
+        <referenceTo>Supplier_Request_RFP__c</referenceTo>
+        <relationshipLabel>Suppliers Quotes/Orders</relationshipLabel>
+        <relationshipName>Supplier_Quote</relationshipName>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Supplier__c</fullName>
+        <externalId>false</externalId>
+        <label>Supplier</label>
+        <lookupFilter>
+            <active>true</active>
+            <filterItems>
+                <field>Account.RecordTypeId</field>
+                <operation>equals</operation>
+                <value>Supplier, Supply Chain Partner, Purchase Agent</value>
+            </filterItems>
+            <isOptional>false</isOptional>
+        </lookupFilter>
+        <referenceTo>Account</referenceTo>
+        <relationshipLabel>Suppliers Quotes/Orders (Supplier)</relationshipLabel>
+        <relationshipName>Suppliers_Quotes_Supplier</relationshipName>
+        <relationshipOrder>0</relationshipOrder>
+        <reparentableMasterDetail>true</reparentableMasterDetail>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>MasterDetail</type>
+        <writeRequiresMasterRead>true</writeRequiresMasterRead>
+    </fields>
+    <fields>
+        <fullName>Supply_Project_Number__c</fullName>
+        <externalId>false</externalId>
+        <formula>Supply_Project__r.Supply_Project_Number__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <inlineHelpText>As specified in &quot;Supply Project Number&quot; inside &quot;Supply Project&quot;</inlineHelpText>
+        <label>Supply Project Number</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Supply_Project__c</fullName>
+        <deleteConstraint>Restrict</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Supply Project</label>
+        <referenceTo>Supply_Project__c</referenceTo>
+        <relationshipName>Suppliers_Quotes</relationshipName>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Taxes_Calculated__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Taxes Calculated</label>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Total_Amount_Number__c</fullName>
+        <externalId>false</externalId>
+        <label>Total Amount Number</label>
+        <summarizedField>Supplier_Quote_Line__c.Total_Origin_Amount_header_currency__c</summarizedField>
+        <summaryFilterItems>
+            <field>Supplier_Quote_Line__c.Active__c</field>
+            <operation>equals</operation>
+            <value>True</value>
+        </summaryFilterItems>
+        <summaryForeignKey>Supplier_Quote_Line__c.Supplier_Quote__c</summaryForeignKey>
+        <summaryOperation>sum</summaryOperation>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Summary</type>
+    </fields>
+    <fields>
+        <fullName>Total_Amount__c</fullName>
+        <externalId>false</externalId>
+        <formula>Total_Amount_Number__c</formula>
+        <inlineHelpText>SUM of Original Amounts from Supplier Quote/Order</inlineHelpText>
+        <label>Total Amount</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Total_Fees_Buy_Amount__c</fullName>
+        <externalId>false</externalId>
+        <formula>Total_Fees_Buy_Amount_number__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <inlineHelpText>SUM of all Services&apos; Fees Buy Amounts</inlineHelpText>
+        <label>Total Services Buy Amount</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Total_Fees_Buy_Amount_number__c</fullName>
+        <externalId>false</externalId>
+        <label>Total Services Buy Amount (number)</label>
+        <summarizedField>Supplier_Quote_Order_Fee_Line__c.Buy_Amount_header_currency__c</summarizedField>
+        <summaryForeignKey>Supplier_Quote_Order_Fee_Line__c.Supplier_Quote_Order__c</summaryForeignKey>
+        <summaryOperation>sum</summaryOperation>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Summary</type>
+    </fields>
+    <fields>
+        <fullName>Total_Fees_Sell_Amount__c</fullName>
+        <externalId>false</externalId>
+        <formula>Total_Fees_Sell_Amount_number__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <inlineHelpText>SUM of all Services&apos; Fees Sell Amount</inlineHelpText>
+        <label>Total Services Sell Amount</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Total_Fees_Sell_Amount_number__c</fullName>
+        <externalId>false</externalId>
+        <label>Total Services Sell Amount (number)</label>
+        <summarizedField>Supplier_Quote_Order_Fee_Line__c.Sell_Amount_header_currency__c</summarizedField>
+        <summaryForeignKey>Supplier_Quote_Order_Fee_Line__c.Supplier_Quote_Order__c</summaryForeignKey>
+        <summaryOperation>sum</summaryOperation>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Summary</type>
+    </fields>
+    <fields>
+        <fullName>Total_Fees_Std_Profit__c</fullName>
+        <externalId>false</externalId>
+        <formula>Total_Fees_Sell_Amount__c - Total_Fees_Buy_Amount__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <inlineHelpText>&quot;Total Services Sell Amount&quot; - &quot;Total Services Buy Amount&quot;</inlineHelpText>
+        <label>Total Services Std. Profit</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>4</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Total_Volume_m3_2__c</fullName>
+        <externalId>false</externalId>
+        <label>Total Volume (m3)</label>
+        <summarizedField>Supplier_Quote_Line__c.Total_Volume_m3__c</summarizedField>
+        <summaryFilterItems>
+            <field>Supplier_Quote_Line__c.Active__c</field>
+            <operation>equals</operation>
+            <value>True</value>
+        </summaryFilterItems>
+        <summaryForeignKey>Supplier_Quote_Line__c.Supplier_Quote__c</summaryForeignKey>
+        <summaryOperation>sum</summaryOperation>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Summary</type>
+    </fields>
+    <fields>
+        <fullName>Total_Weight_Kg2__c</fullName>
+        <externalId>false</externalId>
+        <label>Total Weight (Kg)</label>
+        <summarizedField>Supplier_Quote_Line__c.Total_Weight_Kg__c</summarizedField>
+        <summaryFilterItems>
+            <field>Supplier_Quote_Line__c.Active__c</field>
+            <operation>equals</operation>
+            <value>True</value>
+        </summaryFilterItems>
+        <summaryForeignKey>Supplier_Quote_Line__c.Supplier_Quote__c</summaryForeignKey>
+        <summaryOperation>sum</summaryOperation>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Summary</type>
+    </fields>
+    <fields>
+        <fullName>Unsigned_Proforma_Invoice__c</fullName>
+        <externalId>false</externalId>
+        <label>Unsigned Proforma Invoice</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Url</type>
+    </fields>
+    <fields>
+        <fullName>Valid_Until_Supplier_Form__c</fullName>
+        <externalId>false</externalId>
+        <label>Valid Until (Supplier Form)</label>
+        <length>100</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Valid_Until__c</fullName>
+        <externalId>false</externalId>
+        <label>Valid Until</label>
+        <required>false</required>
+        <trackFeedHistory>true</trackFeedHistory>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Valid_for_Auction__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <inlineHelpText>Checked when this quote is included in the auction process</inlineHelpText>
+        <label>Valid for Auction</label>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Vessel_Flight_Arrived__c</fullName>
+        <externalId>false</externalId>
+        <formula>Vessel_Flight__r.Vessel_Flight_Arrived__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <inlineHelpText>As specified in &quot;Vessel/Flight Arrived&quot; inside &quot;Vessel/Flight&quot;</inlineHelpText>
+        <label>Vessel Arrived</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Vessel_Flight_ETA_Point_of_Discharge__c</fullName>
+        <externalId>false</externalId>
+        <formula>Vessel_Flight__r.Vessel_Flight_ETA_Point_of_Discharge__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <inlineHelpText>As specified in &quot;Vessel ETA Point of Discharge&quot; inside &quot;Vessel&quot;</inlineHelpText>
+        <label>Vessel ETA Point of Discharge</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Vessel_Flight_ETD_Point_of_Load__c</fullName>
+        <externalId>false</externalId>
+        <formula>Vessel_Flight__r.Vessel_Flight_ETD_Point_of_Load__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <inlineHelpText>As specified in &quot;Vessel ETA Point of Load&quot; inside &quot;Vessel&quot;</inlineHelpText>
+        <label>Vessel ETD Point of Load</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Vessel_Flight__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Vessel</label>
+        <referenceTo>Vessel_Flight__c</referenceTo>
+        <relationshipLabel>Suppliers Quotes/Orders</relationshipLabel>
+        <relationshipName>Suppliers_Quotes_Orders</relationshipName>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <label>Supplier Quote/Order</label>
+    <listViews>
+        <fullName>All</fullName>
+        <columns>NAME</columns>
+        <columns>Total_Weight_Kg2__c</columns>
+        <columns>Total_Volume_m3_2__c</columns>
+        <columns>Customer__c</columns>
+        <columns>Delivery_Account__c</columns>
+        <columns>Delivery_Zone__c</columns>
+        <columns>Route__c</columns>
+        <columns>Total_Fees_Std_Profit__c</columns>
+        <filterScope>Everything</filterScope>
+        <label>All</label>
+    </listViews>
+    <nameField>
+        <displayFormat>SQO# {YYYY}-{000000}</displayFormat>
+        <label>Supplier Quote/Order Number</label>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>AutoNumber</type>
+    </nameField>
+    <pluralLabel>Suppliers Quotes/Orders</pluralLabel>
+    <recordTypeTrackFeedHistory>false</recordTypeTrackFeedHistory>
+    <recordTypeTrackHistory>false</recordTypeTrackHistory>
+    <recordTypes>
+        <fullName>Supplier_Hidden_Quote</fullName>
+        <active>true</active>
+        <label>Supplier Hidden Quote</label>
+        <picklistValues>
+            <picklist>Collection_Conditions__c</picklist>
+            <values>
+                <fullName>100%25 LC AT SIGN</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>15%25 Deposit in Advanced and Balance Before Shipment</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>30%25 Deposit in Advanced and Balance Before Shipment</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>30%25 Deposit in Advanced and Balance with BL Copy</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>30%25 Deposit in Advanced and Balance with LC AT SIGN</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TT 100%25 Advanced Payment</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Incoterm__c</picklist>
+            <values>
+                <fullName>CFR</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CIF</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CIP</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CPT</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>DAP</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>DAT</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>DDP</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>EXW</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>FCA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>FOB</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Move_Type__c</picklist>
+            <values>
+                <fullName>Door to Door</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Door to Port</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Port to Door</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Port to Port</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Supplier_Quote_Status__c</picklist>
+            <values>
+                <fullName>Approved</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Consolidated</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Declined</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Draft</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not Valid</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Sent Bid</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Sent Final Bid</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+    </recordTypes>
+    <recordTypes>
+        <fullName>Supplier_Order</fullName>
+        <active>true</active>
+        <label>Supplier Order</label>
+        <picklistValues>
+            <picklist>Collection_Conditions__c</picklist>
+            <values>
+                <fullName>100%25 LC AT SIGN</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>15%25 Deposit in Advanced and Balance Before Shipment</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>30%25 Deposit in Advanced and Balance Before Shipment</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>30%25 Deposit in Advanced and Balance with BL Copy</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>30%25 Deposit in Advanced and Balance with LC AT SIGN</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TT 100%25 Advanced Payment</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Incoterm__c</picklist>
+            <values>
+                <fullName>CFR</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CIF</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CIP</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CPT</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>DAP</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>DAT</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>DDP</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>EXW</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>FCA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>FOB</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Move_Type__c</picklist>
+            <values>
+                <fullName>Door to Door</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Door to Port</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Port to Door</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Port to Port</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Supplier_Quote_Status__c</picklist>
+            <values>
+                <fullName>Approved</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Consolidated</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Declined</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Import-Export Consolidated</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not Valid</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+    </recordTypes>
+    <recordTypes>
+        <fullName>Supplier_Quote</fullName>
+        <active>true</active>
+        <label>Supplier Quote</label>
+        <picklistValues>
+            <picklist>Collection_Conditions__c</picklist>
+            <values>
+                <fullName>100%25 LC AT SIGN</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>15%25 Deposit in Advanced and Balance Before Shipment</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>30%25 Deposit in Advanced and Balance Before Shipment</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>30%25 Deposit in Advanced and Balance with BL Copy</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>30%25 Deposit in Advanced and Balance with LC AT SIGN</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TT 100%25 Advanced Payment</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Incoterm__c</picklist>
+            <values>
+                <fullName>CFR</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CIF</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CIP</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CPT</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>DAP</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>DAT</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>DDP</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>EXW</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>FCA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>FOB</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Move_Type__c</picklist>
+            <values>
+                <fullName>Door to Door</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Door to Port</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Port to Door</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Port to Port</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Supplier_Quote_Status__c</picklist>
+            <values>
+                <fullName>Approved</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Consolidated</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Declined</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Draft</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not Valid</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Sent Bid</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Sent Final Bid</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+    </recordTypes>
+    <searchLayouts>
+        <customTabListAdditionalFields>Supplier_Quote_Status__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Status_Observations__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Supply_Project__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Customer__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Supplier__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Incoterm__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Incoterm_Place__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Production_Time_Days__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Valid_Until__c</customTabListAdditionalFields>
+        <lookupDialogsAdditionalFields>Supplier_Quote_Status__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>Status_Observations__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>Supply_Project__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>Customer__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>Supplier__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>Incoterm__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>Incoterm_Place__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>Production_Time_Days__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>Valid_Until__c</lookupDialogsAdditionalFields>
+        <searchResultsAdditionalFields>Supplier_Quote_Status__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Status_Observations__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Supply_Project__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Customer__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Supplier__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Incoterm__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Incoterm_Place__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Production_Time_Days__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Valid_Until__c</searchResultsAdditionalFields>
+    </searchLayouts>
+    <sharingModel>ControlledByParent</sharingModel>
+    <visibility>Public</visibility>
+    <webLinks>
+        <fullName>Automatic_Calculation_of_Duties</fullName>
+        <availability>online</availability>
+        <displayType>button</displayType>
+        <height>600</height>
+        <linkType>page</linkType>
+        <masterLabel>Automatic Calculation of Duties</masterLabel>
+        <openType>sidebar</openType>
+        <page>NEU_Standard_Duty_Calculator_Suppl_Quote</page>
+        <protected>false</protected>
+    </webLinks>
+    <webLinks>
+        <fullName>Automatic_Calculation_of_Fees</fullName>
+        <availability>online</availability>
+        <displayType>button</displayType>
+        <linkType>page</linkType>
+        <masterLabel>Automatic Calculation of Fees</masterLabel>
+        <openType>replace</openType>
+        <page>NEU_Standard_Fee_Calculation</page>
+        <protected>false</protected>
+    </webLinks>
+    <webLinks>
+        <fullName>Create_Inventory_Entries</fullName>
+        <availability>online</availability>
+        <displayType>button</displayType>
+        <height>600</height>
+        <linkType>page</linkType>
+        <masterLabel>Create Inventory Entries</masterLabel>
+        <openType>sidebar</openType>
+        <page>NEU_SQO_Entry</page>
+        <protected>false</protected>
+    </webLinks>
+    <webLinks>
+        <fullName>Create_Quote_Fee_Lines</fullName>
+        <availability>online</availability>
+        <displayType>button</displayType>
+        <height>600</height>
+        <linkType>page</linkType>
+        <masterLabel>Create Quote Fee Lines</masterLabel>
+        <openType>sidebar</openType>
+        <page>NEU_OM_SupQuOr_FeeLinesPriceListDiscount</page>
+        <protected>false</protected>
+    </webLinks>
+    <webLinks>
+        <fullName>Duplicate_Supplier_Quote_Order</fullName>
+        <availability>online</availability>
+        <displayType>button</displayType>
+        <height>600</height>
+        <linkType>page</linkType>
+        <masterLabel>Duplicate Supplier Quote/Order</masterLabel>
+        <openType>sidebar</openType>
+        <page>NEU_CloneSupplierQuoteOrder</page>
+        <protected>false</protected>
+    </webLinks>
+    <webLinks>
+        <fullName>Generate_Delivery_Order</fullName>
+        <availability>online</availability>
+        <displayType>button</displayType>
+        <height>600</height>
+        <linkType>page</linkType>
+        <masterLabel>Generate Delivery Order</masterLabel>
+        <openType>sidebar</openType>
+        <page>NEU_OM_Shipment_Management</page>
+        <protected>false</protected>
+    </webLinks>
+    <webLinks>
+        <fullName>New_Associated_Document</fullName>
+        <availability>online</availability>
+        <displayType>button</displayType>
+        <encodingKey>UTF-8</encodingKey>
+        <height>600</height>
+        <linkType>url</linkType>
+        <masterLabel>New Associated Document</masterLabel>
+        <openType>sidebar</openType>
+        <protected>false</protected>
+        <url>/apex/NEU_MD_Associated_Documents?id={!Supplier_Quote__c.Id}</url>
+    </webLinks>
+    <webLinks>
+        <fullName>Search_Schedules</fullName>
+        <availability>online</availability>
+        <displayType>link</displayType>
+        <linkType>javascript</linkType>
+        <masterLabel>Search Schedules</masterLabel>
+        <openType>onClickJavaScript</openType>
+        <protected>false</protected>
+        <url>if(&apos;{! Supplier_Quote__c.Port_Airport_of_Load__c}&apos; == &apos;&apos; || &apos;{! Supplier_Quote__c.Country_of_Load__c}&apos; == &apos;&apos; || &apos;{! Supplier_Quote__c.Port_Airport_of_Discharge__c}&apos; == &apos;&apos; || &apos;{! Supplier_Quote__c.Country_of_Discharge__c }&apos; == &apos;&apos; || (&apos;{! Supplier_Quote__c.Vessel_Flight_ETD_Point_of_Load__c}&apos; == &apos;&apos;)) 
+{ 
+var message = &apos;FIELDS MISSING:\n\n\n&apos;; 
+
+if(&apos;{!Supplier_Quote__c.Port_Airport_of_Load__c}&apos; == &apos;&apos;) 
+message += &apos;Port of Load.\n\n&apos;; 
+if(&apos;{!Supplier_Quote__c.Country_of_Load__c}&apos; == &apos;&apos;) 
+message += &apos;Country of Load.\n\n&apos;; 
+if(&apos;{!Supplier_Quote__c.Port_Airport_of_Discharge__c}&apos; == &apos;&apos;) 
+message += &apos;Port of Discharge.\n\n&apos;; 
+if(&apos;{!Supplier_Quote__c.Country_of_Discharge__c}&apos; == &apos;&apos;) 
+message += &apos;Country of Discharge.\n\n&apos;; 
+if(&apos;{!Supplier_Quote__c.Vessel_Flight_ETD_Point_of_Load__c}&apos; == &apos;&apos;) 
+message += &apos;Vessel / Fly ETD from Point of Load.&apos;; 
+
+alert(message); 
+} 
+else 
+{ 
+if(&apos;{!Supplier_Quote__c.Vessel_Flight_ETD_Point_of_Load__c}&apos; != null &amp;&amp; &apos;{!Supplier_Quote__c.Vessel_Flight_ETD_Point_of_Load__c}&apos; != &apos;&apos;) 
+{ 
+fecha = &apos;{!Supplier_Quote__c.Vessel_Flight_ETD_Point_of_Load__c}&apos;; 
+} 
+
+
+var pfecha=new Array(); 
+pfecha = fecha.split(&apos;/&apos;); 
+
+if(&apos;{! Supplier_Quote__c.Carrier_JOC_Sailings_List__c }&apos; != null &amp;&amp; &apos;{! Supplier_Quote__c.Carrier_JOC_Sailings_List__c }&apos; != &quot;&quot;) 
+{ 
+window.open(&quot;http://www.jocsailings.com/GlobalSailingSchedules/SailingScheduleResults.aspx?ORIGIN=&quot;+&apos;{!Supplier_Quote__c.Port_Airport_of_Load__c}&apos;+&quot;%2C+&quot;+&apos;{!Supplier_Quote__c.Country_of_Load__c}&apos;+&quot;&amp;DEST=&quot;+&apos;{!Supplier_Quote__c.Port_Airport_of_Discharge__c}&apos;+&quot;%2C+&quot;+&apos;{!Supplier_Quote__c.Country_of_Discharge__c}&apos;+&quot;&amp;CNAME=&quot;+&apos;{!Supplier_Quote__c.Carrier_JOC_Sailings_List__c}&apos;+&quot;&amp;DR=60&amp;DT=&quot;+pfecha[2]+&quot;%2f&quot;+pfecha[1]+&quot;%2f&quot;+pfecha[0]+&quot;&amp;VT=Container%2c&quot;,&quot;Buscador_Navieras&quot;);
+} 
+else 
+{ 
+window.open(&quot;http://www.jocsailings.com/GlobalSailingSchedules/SailingScheduleResults.aspx?ORIGIN=&quot;+&apos;{!Supplier_Quote__c.Port_Airport_of_Load__c}&apos;+&quot;%2C+&quot;+&apos;{!Supplier_Quote__c.Country_of_Load__c}&apos;+&quot;&amp;DEST=&quot;+&apos;{!Supplier_Quote__c.Port_Airport_of_Discharge__c}&apos;+&quot;%2C+&quot;+&apos;{!Supplier_Quote__c.Country_of_Discharge__c}&apos;+&quot;&amp;DR=60&amp;DT=&quot;+pfecha[2]+&quot;%2f&quot;+pfecha[1]+&quot;%2f&quot;+pfecha[0]+&quot;&amp;VT=Container%2c&quot;,&quot;Buscador_Navieras&quot;); 
+} 
+}</url>
+    </webLinks>
+    <webLinks>
+        <fullName>Send_Email_with_Documents</fullName>
+        <availability>online</availability>
+        <displayType>button</displayType>
+        <encodingKey>UTF-8</encodingKey>
+        <height>600</height>
+        <linkType>url</linkType>
+        <masterLabel>Send Email with Documents</masterLabel>
+        <openType>sidebar</openType>
+        <protected>false</protected>
+        <url>/apex/NEU_Generic_SendDocuments?object_select=supplier_quote&amp;object_id={!Supplier_Quote__c.Id}</url>
+    </webLinks>
+</CustomObject>
