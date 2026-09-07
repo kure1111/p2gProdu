@@ -1,0 +1,87 @@
+<template>
+    <div class="slds-grid slds-wrap slds-gutters">
+
+        <!-- CARD IZQUIERDA: Carga de Tarifarios (funcionalidad original intacta) -->
+        <div class="slds-col slds-size_1-of-1 slds-large-size_1-of-2">
+            <lightning-card title="Carga de Tarifarios" icon-name="standard:price_books">
+                <div class="slds-p-horizontal_medium slds-p-bottom_medium" style="display: flex; flex-direction: column; width: 100%;">
+
+                    <!-- Select y botón de descarga en la misma fila -->
+                    <div class="slds-grid slds-gutters slds-align-middle" style="margin-bottom: 1rem; width: 100%;">
+                        <div class="slds-col slds-size_8-of-12">
+                            <lightning-select
+                                name="options"
+                                value={selectVal}
+                                label=" "
+                                options={productOptions}
+                                onchange={handleChange}
+                                variant="label-hidden">
+                            </lightning-select>
+                        </div>
+                        <div class="slds-col slds-size_4-of-12" style="padding-top: 0.25rem; display: flex; align-items: center;">
+                            <lightning-button
+                                label="Descargar plantilla"
+                                variant="neutral"
+                                icon-name="utility:download"
+                                onclick={descargarPlantilla}
+                                disabled={isDownloadDisabled}
+                                style="width: auto; white-space: nowrap;">
+                            </lightning-button>
+                        </div>
+                    </div>
+
+                    <!-- Carga de archivo CSV -->
+                    <div class="slds-form-element" style="margin-bottom: 1rem;">
+                        <div class="slds-form-element__control">
+                            <div class="slds-file-selector slds-file-selector_files">
+                                <div class="slds-file-selector__dropzone">
+                                    <input type="file"
+                                        class="slds-file-selector__input slds-assistive-text"
+                                        accept=".csv"
+                                        id="file-upload-input"
+                                        onchange={handleFileChange} />
+                                    <label class="slds-file-selector__body" for="file-upload-input">
+                                        <span class="slds-file-selector__button slds-button slds-button_neutral">
+                                            <lightning-icon icon-name="utility:upload" size="x-small" class="slds-m-right_small">
+                                            </lightning-icon>
+                                            Subir Archivo CSV
+                                        </span>
+                                        <span class="slds-file-selector__text slds-medium-show">
+                                            Arrastra o selecciona un archivo CSV
+                                        </span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Mostrar nombre del archivo -->
+                        <div if:true={fileName} class="slds-m-top_x-small">
+                            <lightning-icon icon-name="utility:attachment" size="x-small"></lightning-icon>
+                            <span>{fileName}</span>
+                        </div>
+                    </div>
+
+                    <!-- Botón de envío -->
+                    <lightning-button
+                        label="Subir tarifarios"
+                        variant="brand"
+                        onclick={handleSubirTarifarios}
+                        disabled={isButtonDisabled}>
+                    </lightning-button>
+
+                    <!-- Mensajes personalizados -->
+                    <div if:true={message} class="slds-m-top_medium">
+                        <div class={messageClass}>
+                            {message}
+                        </div>
+                    </div>
+                </div>
+            </lightning-card>
+        </div>
+
+        <!-- CARD DERECHA: Base de Rutas por Planner -->
+        <div class="slds-col slds-size_1-of-1 slds-large-size_1-of-2">
+            <c-asignacion-planner-carga></c-asignacion-planner-carga>
+        </div>
+
+    </div>
+</template>
