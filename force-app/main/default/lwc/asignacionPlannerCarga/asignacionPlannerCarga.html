@@ -32,13 +32,22 @@
                 </p>
             </template>
 
-            <lightning-input
-                type="checkbox"
-                label="Desactivar las rutas que NO vengan en el archivo (reemplazo total)"
-                checked={reemplazarTodo}
-                onchange={cambiarReemplazo}
-                class="slds-p-top_small">
-            </lightning-input>
+            <div class="slds-p-top_small">
+                <lightning-input
+                    type="checkbox"
+                    label="Reemplazo total de la base"
+                    checked={reemplazarTodo}
+                    onchange={cambiarReemplazo}>
+                </lightning-input>
+                <p class="slds-text-body_small slds-text-color_weak slds-p-top_xx-small slds-p-left_large">
+                    Si activas esta opción, tu archivo se convierte en la base completa: las rutas que
+                    existen hoy pero que NO vengan en el archivo se marcarán como inactivas y dejarán de
+                    asignar planner (los folios de esas rutas nacerán sin asignar). No se borra nada — las
+                    rutas desactivadas se conservan y puedes reactivarlas subiéndolas de nuevo o editando
+                    la casilla "Activa" en la lista. Si NO la activas, el archivo solo agrega rutas nuevas
+                    y actualiza las que incluya, sin tocar el resto.
+                </p>
+            </div>
 
             <div class="slds-p-top_medium">
                 <lightning-button

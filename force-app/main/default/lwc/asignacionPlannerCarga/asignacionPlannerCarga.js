@@ -39,12 +39,17 @@ export default class AsignacionPlannerCarga extends LightningElement {
             }
             // BOM para que Excel abra bien los acentos
             const blob = new Blob(['﻿' + lineas.join('\r\n')], { type: 'text/csv;charset=utf-8;' });
-            const a = document.createElement('a');
-            a.href = URL.createObjectURL(blob);
+            const url = URL.createObjectURL(blob);
             const hoy = new Date().toISOString().slice(0, 10);
-            a.download = 'base-planner-' + hoy + '.csv';
+            const a = document.createElement('a');
+            a.setAttribute('href', url);
+            a.setAttribute('download', 'base-planner-' + hoy + '.csv');
+            a.setAttribute('target', '_self');
+            // en Lightning el link debe estar en el DOM para que respete el nombre del archivo
+            document.body.appendChild(a);
             a.click();
-            URL.revokeObjectURL(a.href);
+            document.body.removeChild(a);
+            setTimeout(() => URL.revokeObjectURL(url), 1000);
             this.toast('Listo', datos.length + ' rutas descargadas', 'success');
         } catch (e) {
             this.toast('Error al descargar', this.mensajeError(e), 'error');
