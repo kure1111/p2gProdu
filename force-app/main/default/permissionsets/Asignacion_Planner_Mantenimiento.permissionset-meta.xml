@@ -3,6 +3,18 @@
     <description>Permite ver y mantener la base de asignacion de planners por ruta (objeto Asignacion Planner). Asignar a operaciones y administradores.</description>
     <hasActivationRequired>false</hasActivationRequired>
     <label>Asignacion Planner - Mantenimiento</label>
+    <classAccesses>
+        <apexClass>AsignacionPlannerCtrl</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <tabSettings>
+        <tab>Asignacion_Planner__c</tab>
+        <visibility>Visible</visibility>
+    </tabSettings>
+    <tabSettings>
+        <tab>Carga_Base_Planner</tab>
+        <visibility>Visible</visibility>
+    </tabSettings>
     <fieldPermissions>
         <editable>true</editable>
         <field>Asignacion_Planner__c.Ruta_Consolidada__c</field>

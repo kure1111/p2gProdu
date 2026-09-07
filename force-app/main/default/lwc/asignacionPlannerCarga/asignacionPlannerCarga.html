@@ -1,0 +1,84 @@
+<template>
+    <lightning-card title="Base de Asignación de Planner por Ruta" icon-name="standard:job_profile">
+        <div class="slds-p-horizontal_medium slds-p-bottom_medium">
+
+            <p class="slds-text-body_regular slds-p-bottom_small">
+                Descarga la base actual, modifícala en Excel (columnas: <b>Ruta, Ruta Consolidada, Planner, Activa</b>)
+                y vuelve a subirla. El planner acepta nombre completo, email o nombre de pila si es único.
+                Guarda el archivo como <b>CSV</b>.
+            </p>
+
+            <div class="slds-grid slds-gutters slds-p-bottom_medium">
+                <div class="slds-col slds-grow-none">
+                    <lightning-button
+                        label="Descargar base actual (CSV)"
+                        icon-name="utility:download"
+                        onclick={descargar}
+                        disabled={cargando}>
+                    </lightning-button>
+                </div>
+            </div>
+
+            <lightning-input
+                type="file"
+                label="Subir base modificada (.csv)"
+                accept=".csv"
+                onchange={archivoSeleccionado}>
+            </lightning-input>
+
+            <template if:true={nombreArchivo}>
+                <p class="slds-p-top_x-small">
+                    Archivo: <b>{nombreArchivo}</b> — {filasLeidas} rutas leídas
+                </p>
+            </template>
+
+            <lightning-input
+                type="checkbox"
+                label="Desactivar las rutas que NO vengan en el archivo (reemplazo total)"
+                checked={reemplazarTodo}
+                onchange={cambiarReemplazo}
+                class="slds-p-top_small">
+            </lightning-input>
+
+            <div class="slds-p-top_medium">
+                <lightning-button
+                    variant="brand"
+                    label="Subir y aplicar"
+                    icon-name="utility:upload"
+                    onclick={subir}
+                    disabled={subirDeshabilitado}>
+                </lightning-button>
+            </div>
+
+            <template if:true={cargando}>
+                <div class="slds-p-top_medium">
+                    <lightning-spinner alternative-text="Procesando" size="small"></lightning-spinner>
+                </div>
+            </template>
+
+            <template if:true={resultado}>
+                <div class="slds-box slds-theme_shade slds-p-around_small slds-m-top_medium">
+                    <p><b>Resultado:</b> {resultado.creados} creadas · {resultado.actualizados} actualizadas ·
+                       {resultado.desactivados} desactivadas · {resultado.conError} con error</p>
+                    <template if:true={hayAvisos}>
+                        <p class="slds-p-top_x-small"><b>Avisos:</b></p>
+                        <ul class="slds-list_dotted">
+                            <template for:each={resultado.avisos} for:item="a">
+                                <li key={a}>{a}</li>
+                            </template>
+                        </ul>
+                    </template>
+                    <template if:true={hayErrores}>
+                        <p class="slds-p-top_x-small slds-text-color_error"><b>Errores (no aplicados):</b></p>
+                        <ul class="slds-list_dotted">
+                            <template for:each={resultado.errores} for:item="e">
+                                <li key={e} class="slds-text-color_error">{e}</li>
+                            </template>
+                        </ul>
+                    </template>
+                </div>
+            </template>
+
+        </div>
+    </lightning-card>
+</template>
