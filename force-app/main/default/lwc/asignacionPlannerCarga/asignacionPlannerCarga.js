@@ -38,7 +38,7 @@ export default class AsignacionPlannerCarga extends LightningElement {
                 lineas.push([enc(f.ruta), enc(f.consolidada), enc(f.planner), enc(f.activa)].join(','));
             }
             // BOM para que Excel abra bien los acentos
-            const blob = new Blob(['﻿' + lineas.join('\r\n')], { type: 'text/csv;charset=utf-8;' });
+            const blob = new Blob(['﻿' + lineas.join('\r\n')], { type: 'application/octet-stream' });
             const url = URL.createObjectURL(blob);
             const hoy = new Date().toISOString().slice(0, 10);
             const a = document.createElement('a');
