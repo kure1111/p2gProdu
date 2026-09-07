@@ -5,8 +5,8 @@ export default class P2G_FileUpload extends LightningElement {
     @track selectVal = '';
     productOptions = [
         { label: 'Seleccione que tipo de operación deseas realizar:', value: '' },
-        { label: 'Carga de tarifarios clientes', value: 'clientes' },
-        { label: 'Carga de tarifarios proveedores', value: 'proveedores' }
+        { label: 'Carga de tarifarios clientes', value: 'clientes' }
+        //{ label: 'Carga de tarifarios proveedores', value: 'proveedores' }
     ];
 
     @track fileContent;
@@ -14,6 +14,7 @@ export default class P2G_FileUpload extends LightningElement {
     @track fileValid = false;
     @track message = '';
     @track messageType = 'info';
+    clearMessageTimer = null;
 
     get plantillaUrl() {
         if (this.selectVal === 'proveedores') {
@@ -47,6 +48,7 @@ export default class P2G_FileUpload extends LightningElement {
         this.selectVal = event.detail.value;
         this.resetFileState();
         this.message = '';
+        this.clearAutoDismissTimer();
     }
 
     descargarPlantilla() {
@@ -62,8 +64,7 @@ export default class P2G_FileUpload extends LightningElement {
         }
 
         window.location.href = url;
-
-        // Mensaje de tipo 'info' para indicar que la descarga está en curso
+        
         this.showMessage('Se ha descargado la plantilla. En caso de no poder modificar el archivo favor de guardarlo como una copia', 'info');
     }
 
@@ -198,10 +199,26 @@ export default class P2G_FileUpload extends LightningElement {
         this.fileValid = false;
         this.fileName = '';
         this.fileContent = null;
+        this.clearAutoDismissTimer();
+    }
+
+    clearAutoDismissTimer() {
+        if (this.clearMessageTimer) {
+            clearTimeout(this.clearMessageTimer);
+            this.clearMessageTimer = null;
+        }
     }
 
     showMessage(msg, type) {
+        this.clearAutoDismissTimer();
         this.message = msg;
         this.messageType = type;
+
+    
+        this.clearMessageTimer = setTimeout(() => {
+            this.message = '';
+            this.messageType = 'info';
+            this.clearMessageTimer = null;
+        }, 5000);
     }
 }
