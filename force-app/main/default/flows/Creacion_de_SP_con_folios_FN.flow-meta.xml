@@ -20,69 +20,41 @@
         <nameSegment>NEU_Generate_Shipments</nameSegment>
     </actionCalls>
     <apiVersion>54.0</apiVersion>
-    <constants>
-        <name>IdLider1_Noroeste_GDL</name>
-        <dataType>String</dataType>
-        <value>
-            <stringValue>005RQ000000115JYAQ</stringValue>
-        </value>
-    </constants>
-    <constants>
-        <name>IdLider2_PACSUR_CentroNorte</name>
-        <dataType>String</dataType>
-        <value>
-            <stringValue>0054T000001jpXoQAI</stringValue>
-        </value>
-    </constants>
     <decisions>
-        <name>Definicion_de_Zona</name>
-        <label>Definicion de Zona</label>
+        <name>Asignar_Planner</name>
+        <label>Asignar Planner segun base</label>
         <locationX>314</locationX>
         <locationY>1055</locationY>
-        <defaultConnectorLabel>Sin Zona</defaultConnectorLabel>
+        <defaultConnector>
+            <targetReference>Quitar_Planner_SP</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Sin patron - sin asignar</defaultConnectorLabel>
         <rules>
-            <name>Zona_Noroeste_y_GDL</name>
-            <conditionLogic>or</conditionLogic>
+            <name>Es_Comercio_Exterior</name>
+            <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>$Record.Route__r.Zona__c</leftValueReference>
+                <leftValueReference>$Record.FolioResume__c</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
-                    <stringValue>GDL</stringValue>
+                    <stringValue>CE</stringValue>
                 </rightValue>
             </conditions>
-            <conditions>
-                <leftValueReference>$Record.Route__r.Zona__c</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <stringValue>Noroeste</stringValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Lider1</targetReference>
-            </connector>
-            <label>Zona Noroeste y GDL</label>
+            <label>Es Comercio Exterior</label>
         </rules>
         <rules>
-            <name>Zona_PAC_SUR_y_Centro_Norte</name>
-            <conditionLogic>or</conditionLogic>
+            <name>Con_Planner_en_Base</name>
+            <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>$Record.Route__r.Zona__c</leftValueReference>
-                <operator>EqualTo</operator>
+                <leftValueReference>Buscar_Planner_Ruta.Planner__c</leftValueReference>
+                <operator>IsNull</operator>
                 <rightValue>
-                    <stringValue>PAC-SUR</stringValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>$Record.Route__r.Zona__c</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <stringValue>Centro-Norte</stringValue>
+                    <booleanValue>false</booleanValue>
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Copy_2_of_UpdateShipmentLider1</targetReference>
+                <targetReference>Asignar_Planner_SP</targetReference>
             </connector>
-            <label>Zona PAC-SUR y Centro-Norte</label>
+            <label>Con Planner en Base</label>
         </rules>
     </decisions>
     <decisions>
@@ -158,12 +130,17 @@
             <label>ETD es menor a 24 hrs</label>
         </rules>
     </decisions>
-    <description>Se modifica las variables idLider1 y idLider2 con los ids correspondientes de producción</description>
+    <description>v2: asigna planner del SP segun base Asignacion_Planner__c por nombre de ruta (requerimiento 2026-09-07). Sin match = sin asignar. CE conserva su ejecutivo. Antes: zona con IDs hardcodeados de Catherine/Omar.</description>
     <environments>Default</environments>
     <formulas>
         <name>ETDMenor24hrs</name>
         <dataType>DateTime</dataType>
         <expression>{!$Record.ETD_Time__c} + 1</expression>
+    </formulas>
+    <formulas>
+        <name>RutaNombre</name>
+        <dataType>String</dataType>
+        <expression>{!$Record.Route__r.Name}</expression>
     </formulas>
     <interviewLabel>Creación de SP con folios FN {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Creación de SP con folios FN</label>
@@ -186,6 +163,34 @@
         </value>
     </processMetadataValues>
     <processType>AutoLaunchedFlow</processType>
+    <recordLookups>
+        <name>Buscar_Planner_Ruta</name>
+        <label>Buscar Planner por Ruta</label>
+        <locationX>314</locationX>
+        <locationY>1001</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Asignar_Planner</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Ruta__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>RutaNombre</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>Activa__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Asignacion_Planner__c</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
     <recordLookups>
         <name>Get_Shipment</name>
         <label>Get Shipment</label>
@@ -213,7 +218,7 @@
         <locationX>314</locationX>
         <locationY>947</locationY>
         <connector>
-            <targetReference>Definicion_de_Zona</targetReference>
+            <targetReference>Buscar_Planner_Ruta</targetReference>
         </connector>
         <inputAssignments>
             <field>Last_Shipment__c</field>
@@ -230,10 +235,10 @@
         <inputReference>$Record</inputReference>
     </recordUpdates>
     <recordUpdates>
-        <name>Copy_2_of_UpdateShipmentLider1</name>
-        <label>UpdateShipmentLider1</label>
-        <locationX>314</locationX>
-        <locationY>1163</locationY>
+        <name>Asignar_Planner_SP</name>
+        <label>Asignar Planner al SP</label>
+        <locationX>178</locationX>
+        <locationY>1263</locationY>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
@@ -245,16 +250,16 @@
         <inputAssignments>
             <field>Operation_Executive__c</field>
             <value>
-                <elementReference>IdLider2_PACSUR_CentroNorte</elementReference>
+                <elementReference>Buscar_Planner_Ruta.Planner__c</elementReference>
             </value>
         </inputAssignments>
         <object>Shipment__c</object>
     </recordUpdates>
     <recordUpdates>
-        <name>Lider1</name>
-        <label>UpdateShipmentLider1</label>
-        <locationX>50</locationX>
-        <locationY>1163</locationY>
+        <name>Quitar_Planner_SP</name>
+        <label>Dejar SP sin asignar</label>
+        <locationX>450</locationX>
+        <locationY>1263</locationY>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
@@ -266,7 +271,7 @@
         <inputAssignments>
             <field>Operation_Executive__c</field>
             <value>
-                <elementReference>IdLider1_Noroeste_GDL</elementReference>
+                <elementReference>varPlannerVacio</elementReference>
             </value>
         </inputAssignments>
         <object>Shipment__c</object>
@@ -292,6 +297,13 @@
                 <stringValue>CE</stringValue>
             </value>
         </filters>
+        <filters>
+            <field>FolioResume__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>RN</stringValue>
+            </value>
+        </filters>
         <object>Customer_Quote__c</object>
         <recordTriggerType>Update</recordTriggerType>
         <triggerType>RecordAfterSave</triggerType>
@@ -304,5 +316,12 @@
         <isInput>true</isInput>
         <isOutput>true</isOutput>
         <objectType>Customer_Quote__c</objectType>
+    </variables>
+    <variables>
+        <name>varPlannerVacio</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
     </variables>
 </Flow>

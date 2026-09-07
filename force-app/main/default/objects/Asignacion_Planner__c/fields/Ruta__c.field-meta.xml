@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Ruta__c</fullName>
+    <caseSensitive>false</caseSensitive>
+    <description>Nombre exacto de la ruta (Carrier Line Load Point) tal como aparece en el folio/SP. Llave unica para carga masiva.</description>
+    <externalId>true</externalId>
+    <label>Ruta (llave)</label>
+    <length>255</length>
+    <required>true</required>
+    <type>Text</type>
+    <unique>true</unique>
+</CustomField>

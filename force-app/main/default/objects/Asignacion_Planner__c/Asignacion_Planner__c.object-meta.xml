@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <deploymentStatus>Deployed</deploymentStatus>
+    <description>Base de asignacion de planner por ruta para folios/SP FN. Mantenida por operaciones via la pantalla Carga Base Planner.</description>
+    <enableActivities>false</enableActivities>
+    <enableBulkApi>true</enableBulkApi>
+    <enableFeeds>false</enableFeeds>
+    <enableHistory>true</enableHistory>
+    <enableReports>true</enableReports>
+    <enableSearch>true</enableSearch>
+    <enableSharing>true</enableSharing>
+    <enableStreamingApi>true</enableStreamingApi>
+    <label>Asignacion Planner</label>
+    <nameField>
+        <label>Ruta</label>
+        <type>Text</type>
+    </nameField>
+    <pluralLabel>Asignaciones Planner</pluralLabel>
+    <sharingModel>ReadWrite</sharingModel>
+</CustomObject>
