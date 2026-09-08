@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>58.0</apiVersion>
+    <assignments>
+        <name>Marcar_Cotizada</name>
+        <label>Marcar Cotizada</label>
+        <locationX>176</locationX>
+        <locationY>287</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.Status__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Cotizada</stringValue>
+            </value>
+        </assignmentItems>
+    </assignments>
+    <description>Cuando un producto de oportunidad ya tiene Buy Price y Sell Price (UnitPrice) capturados y sigue en Pendiente por Cotizar, lo marca como Cotizada. Solo transiciona desde Pendiente por Cotizar para no pisar estados manuales posteriores (Aceptada, Rechazada, Negociacion con cliente, No Cotizada).</description>
+    <environments>Default</environments>
+    <interviewLabel>PROJ Status Cotizada Producto {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>PROJ Status Cotizada Producto</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <start>
+        <locationX>50</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Marcar_Cotizada</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Status__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Pendiente por Cotizar</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>Buy_Price__c</field>
+            <operator>GreaterThan</operator>
+            <value>
+                <numberValue>0.0</numberValue>
+            </value>
+        </filters>
+        <filters>
+            <field>UnitPrice</field>
+            <operator>GreaterThan</operator>
+            <value>
+                <numberValue>0.0</numberValue>
+            </value>
+        </filters>
+        <object>OpportunityLineItem</object>
+        <recordTriggerType>CreateAndUpdate</recordTriggerType>
+        <triggerType>RecordBeforeSave</triggerType>
+    </start>
+    <status>Active</status>
+</Flow>
