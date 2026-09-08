@@ -1,18 +1,27 @@
 public class P2G_correoPricingNegociacion{
 	public static void enviarCorreo(String idOli){
-        OpportunityLineItem oli = [SELECT Id, Name, CreatedBy.Email, OpportunityId, Opportunity.Name, Ruta__c,
-                                   Opportunity.Account.Name, Product2.Name, PROJ_Tipo_de_mercancia__c, Quantity,
-                                   PROJ_Modalidad__c,PROJ_Frecuencia__c,Comentarios__c,Buy_Price__c,UnitPrice,Target__c
-                                   FROM OpportunityLineItem WHERE id =: idOli LIMIT 1];
-        String correo = oli.CreatedBy.Email;
-        System.debug('El correo del usuario es: '+correo);
-        String bodyHTML = htmlCorreo(oli);
-        System.debug('El body es: '+bodyHTML);
-        Messaging.SingleEmailMessage email = new Messaging.SingleEmailMessage();
-        email.setToAddresses(new String[]{correo});
-        email.setSubject('Producto en Negociación con Cliente');
-        email.setHtmlBody(bodyHTML);
-        Messaging.sendEmail(new Messaging.SingleEmailMessage[]{email});
+        enviarCorreos(new List<Id>{ (Id)idOli });
+    }
+    // Bulk: una sola consulta y una sola invocacion de Messaging.sendEmail por lote
+    // (el limite de Salesforce es 10 invocaciones por transaccion; una por linea tronaba con 11+ lineas)
+    public static void enviarCorreos(List<Id> idOlis){
+        if(idOlis == null || idOlis.isEmpty()){ return; }
+        List<Messaging.SingleEmailMessage> emails = new List<Messaging.SingleEmailMessage>();
+        for(OpportunityLineItem oli : [SELECT Id, Name, CreatedBy.Email, OpportunityId, Opportunity.Name,
+                                       Opportunity.Account.Name, Product2.Name, PROJ_Tipo_de_mercancia__c, Quantity,
+                                       PROJ_Modalidad__c,PROJ_Frecuencia__c,Comentarios__c,Buy_Price__c,UnitPrice,Target__c
+                                       FROM OpportunityLineItem WHERE id in: idOlis]){
+            if(oli.CreatedBy.Email == null){ continue; }
+            Messaging.SingleEmailMessage email = new Messaging.SingleEmailMessage();
+            email.setToAddresses(new String[]{oli.CreatedBy.Email});
+            email.setSubject('Producto en Negociación con Cliente');
+            email.setHtmlBody(htmlCorreo(oli));
+            emails.add(email);
+        }
+        if(!emails.isEmpty()){
+            // allOrNothing=false: un correo invalido no tumba el guardado de las lineas
+            Messaging.sendEmail(emails, false);
+        }
     }
     public static String htmlCorreo(OpportunityLineItem item){
         String bodyHTML ='<html><body>';

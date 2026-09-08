@@ -19,6 +19,7 @@ trigger triggerControllerOpportunityProduct on OpportunityLineItem (before inser
         when before_update {
             List<SubProducto__c> updateSubproductos = new List<SubProducto__c>();
             Set<SubProducto__c> paraSubproductos = new Set<SubProducto__c>();
+            List<Id> olisCorreoNegociacion = new List<Id>();
             List<SubProducto__c> todosSubproductos = P2G_tiempoTranscurridoOppo.todosSubproductos(idOpportuniy);
             for(OpportunityLineItem oli : trigger.new){
                 // para convertir la moneda del buy price y del sales price.
@@ -41,10 +42,11 @@ trigger triggerControllerOpportunityProduct on OpportunityLineItem (before inser
                     oli.SLA_Cotiza_Pricing__c = tiempoTranscurridas + ' El Buy Price que se coloco es: $'+ oli.Buy_Price__c.format()+oli.CurrencyIsoCode;
                     oli.Fecha_y_Hora_Respuesta_Pricing__c = System.now();
                 }
-                //llena el campo Datatime Negociacion y correo Pricing
-                if(oli.Status__c == 'Negociación con cliente'){
+                //llena el campo Datatime Negociacion y correo Pricing, solo cuando CAMBIA a ese estatus
+                //(antes disparaba en cada edicion: 1 sendEmail por linea reventaba el limite de 10 con 11+ lineas)
+                if(oli.Status__c == 'Negociación con cliente' && trigger.oldMap.get(oli.Id).Status__c != 'Negociación con cliente'){
                     oli.Data_Time_Negocia_Pricing__c = System.now();
-                    P2G_correoPricingNegociacion.enviarCorreo(oli.Id);
+                    olisCorreoNegociacion.add(oli.Id);
                 }
                 //llena el campo SLA Negociacion Pricing
                 if((trigger.oldMap.get(oli.Id).Status__c == 'Negociación con cliente') && (trigger.oldMap.get(oli.Id).Status__c != oli.Status__c)){
@@ -60,6 +62,9 @@ trigger triggerControllerOpportunityProduct on OpportunityLineItem (before inser
                         }
                     }
                 }
+            }
+            if(olisCorreoNegociacion.size() > 0){
+                P2G_correoPricingNegociacion.enviarCorreos(olisCorreoNegociacion);
             }
             if(paraSubproductos.size() > 0){
                 for(SubProducto__c sub : paraSubproductos){
