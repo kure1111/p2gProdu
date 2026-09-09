@@ -172,12 +172,18 @@ export default class P2gCreateShipmentServiceLine extends LightningElement {
         getCreaLine({Id: this.recordId})
             .then(result => {
                 this.vistaLine = result;
+                // Sincronizar el select de moneda con la moneda real de la linea:
+                // el select mostraba siempre MXN (primera opcion) aunque el shipment fuera USD,
+                // y "elegir" la moneda ya mostrada no dispara change -> la linea nacia en otra moneda
+                if (result && result.length > 0 && result[0].Moneda) {
+                    this.currencyValue = result[0].Moneda;
+                }
                 console.log("Entra al then4", this.vistaLine);
             })
             .catch(error => {
                 this.pushMessage('Error en cargar Seccion 4','error', error.body.message);
                 this.vistaLine = null;
-                console.log("Entra al carch", this.vistaLine);              
+                console.log("Entra al carch", this.vistaLine);
             });
     }
 
@@ -447,6 +453,16 @@ export default class P2gCreateShipmentServiceLine extends LightningElement {
     closelistSstb(){
         this.showVistaSstb = false;
     }
+
+    // Moneda que realmente lleva la linea nueva: la elegida por el usuario o, si no ha tocado
+    // el select, la moneda del shipment (que trae el template). El select se pinta con esta.
+    get monedaActualLinea(){
+        if (this.currencyValue) { return this.currencyValue; }
+        return (this.vistaLine && this.vistaLine.length > 0 && this.vistaLine[0].Moneda) ? this.vistaLine[0].Moneda : 'MXN';
+    }
+    get monedaEsMXN(){ return this.monedaActualLinea === 'MXN'; }
+    get monedaEsEUR(){ return this.monedaActualLinea === 'EUR'; }
+    get monedaEsUSD(){ return this.monedaActualLinea === 'USD'; }
 
     syncCurrency(currency) {
         // Si el usuario no ha elegido moneda, NO pisar la Moneda que trae la linea

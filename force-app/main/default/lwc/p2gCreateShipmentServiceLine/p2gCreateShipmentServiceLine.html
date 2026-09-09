@@ -802,10 +802,10 @@
                                 </td>
                                 <td>
                                     <div class="slds-truncate">
-                                        <select class="slds-select" value={currencyValue} onchange={registroCurrency}>
-                                          <option value="MXN">MXN</option>
-                                          <option value="EUR">EUR</option>
-                                          <option value="USD">USD</option>
+                                        <select class="slds-select" onchange={registroCurrency}>
+                                          <option value="MXN" selected={monedaEsMXN}>MXN</option>
+                                          <option value="EUR" selected={monedaEsEUR}>EUR</option>
+                                          <option value="USD" selected={monedaEsUSD}>USD</option>
                                         </select>
                                     </div>
                                 </td>
