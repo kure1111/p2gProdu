@@ -25,8 +25,8 @@ trigger OpportunityName on Opportunity (before insert, before update) {
       for(User b : [SELECT Id, Name FROM User WHERE Id IN:setOwner]){
         mapOwnerOpp.put(b.Id, b.Name);
     }
-    List<OpportunityLineItem> todosProductos = P2G_tiempoTranscurridoOppo.todosProductos(idOpportuniy);
-    List<SubProducto__c> todosSubproductos = P2G_tiempoTranscurridoOppo.todosSubproductos(idOpportuniy);
+    // Se quitaron 2 consultas (todosProductos/todosSubproductos) que NUNCA se usaban en este trigger:
+    // corre ~14 veces por transaccion en la cascada de la opp y esas consultas muertas provocaban SOQL 101
     //Actualización del Campo
     for(Opportunity op : Trigger.New){
         if(op.AccountId != null && op.Service_Type__c != null){
