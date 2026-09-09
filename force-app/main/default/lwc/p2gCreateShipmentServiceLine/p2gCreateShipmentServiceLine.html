@@ -613,9 +613,25 @@
                                     <div class="slds-truncate">{con.Name}</div>
                                 </td>
                                 <td>
-                                    <div onkeyup={saveName}>
-                                        <lightning-input type="text" required="" placeholder="Nombre del Rate..." value={rateName}></lightning-input>
-                                    </div>
+                                    <template if:true={showSelector}>
+                                        <lightning-combobox
+                                            placeholder="Selecciona un Rate..."
+                                            value={rateName}
+                                            options={rateOptions}
+                                            onchange={saveName}
+                                            required
+                                        ></lightning-combobox>
+                                    </template>
+                                    
+                                    <template if:false={showSelector}>
+                                        <lightning-input 
+                                            type="text" 
+                                            placeholder="Nombre del Rate..." 
+                                            value={rateName}
+                                            onchange={saveName}
+                                            required
+                                        ></lightning-input>
+                                    </template>
                                 </td>
                                 <td>
                                     <div class="slds-truncate" style="width: 160px;">

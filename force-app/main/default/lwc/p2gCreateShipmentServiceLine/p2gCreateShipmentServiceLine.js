@@ -19,7 +19,25 @@ import getStatusClose from '@salesforce/apex/P2G_UpdateShipmentServiceLine.getSt
 import updateStatus from '@salesforce/apex/P2G_UpdateShipmentServiceLine.updateStatus';
 //import getShipName from '@salesforce/apex/P2G_UpdateShipmentServiceLine.getShipmentName';
 import ChangeLine from '@salesforce/apex/P2G_UpdateShipmentServiceLine.ChangeLine';
+import { getRecord } from 'lightning/uiRecordApi';
+import NAME_FIELD from '@salesforce/schema/Shipment__c.Name'; 
 
+const RATE_OPTIONS = [
+    { label: 'CARGOS ADICIONALES', value: 'CARGOS ADICIONALES' },
+    { label: 'CASETAS', value: 'CASETAS' },
+    { label: 'DEVOLUCION', value: 'DEVOLUCION' },
+    { label: 'ESTADIAS', value: 'ESTADIAS' },
+    { label: 'FLETE FALSO', value: 'FLETE FALSO' },
+    { label: 'FLETE NACIONAL', value: 'FLETE NACIONAL' },
+    { label: 'MANIOBRAS', value: 'MANIOBRAS' },
+    { label: 'MULTA', value: 'MULTA' },
+    { label: 'PENSION', value: 'PENSION' },
+    { label: 'PISTA', value: 'PISTA' },
+    { label: 'REPARTO', value: 'REPARTO' },
+    { label: 'SEGURO', value: 'SEGURO' },
+    { label: 'VACIO', value: 'VACIO' },
+    { label: 'OTROS', value: 'OTROS' }
+];
 
 export default class P2gCreateShipmentServiceLine extends LightningElement {
         
@@ -34,6 +52,7 @@ export default class P2gCreateShipmentServiceLine extends LightningElement {
     @track vistaLine;
     @track elemento;
     @track currencyValue;
+    @track recordName = ''; 
 
     error;
     idString='';
@@ -62,6 +81,15 @@ export default class P2gCreateShipmentServiceLine extends LightningElement {
     nWrapper=0;
 
     //chance
+    @wire(getRecord, { 
+    recordId: '$recordId', 
+    fields: [NAME_FIELD] 
+    })
+    wiredRecord({ error, data }) {
+        if (data) {
+            this.recordName = data.fields.Name.value;
+        }
+    }
     @wire(getServiceLine, { Id: '$recordId' }, { cacheable: false })
     listCServiceLine;
     @track prueba;
@@ -87,6 +115,18 @@ export default class P2gCreateShipmentServiceLine extends LightningElement {
     rowIndex;
     deURL = false;
 
+    @track rateName  = '';
+    rateOptions = RATE_OPTIONS;
+
+    handleRateChange(event) {
+        this.selectedRate = event.detail.value;
+        // Disparar evento para comunicar con el padre
+        const rateSelectedEvent = new CustomEvent('rateselect', {
+            detail: { value: this.selectedRate }
+        });
+        this.dispatchEvent(rateSelectedEvent);
+    }
+
     connectedCallback() {
         console.log("Entra al connected", this.recordId);
         const urlParams = new URLSearchParams(window.location.search);
@@ -97,6 +137,11 @@ export default class P2gCreateShipmentServiceLine extends LightningElement {
         }
         this.initializeComponent();
     }
+
+    get showSelector() {
+    return this.recordName && this.recordName.includes('FN-');
+    }
+
     initializeComponent(){
         getlineShip({Id: this.recordId})
             .then(result => {
@@ -208,7 +253,7 @@ export default class P2gCreateShipmentServiceLine extends LightningElement {
             this.contenido = JSON.stringify(this.wrapper2);
             console.log('El wrapper2 es',this.wrapper2,' en nwrapper: ',this.nWrapper);
             crealineQuote({line: this.contenido, numLinea: this.nWrapper})
-                .then(result => {
+                .then(result => {                    
                     this.RespuestaLineQuote = result;
                     const updatedListServiceLine = [...this.listCServiceLine.data];
                     result.forEach(item => {
@@ -404,6 +449,9 @@ export default class P2gCreateShipmentServiceLine extends LightningElement {
     }
 
     syncCurrency(currency) {
+        // Si el usuario no ha elegido moneda, NO pisar la Moneda que trae la linea
+        // (antes la dejaba undefined y el segundo create fallaba con CurrencyIsoCode null)
+        if (currency === undefined || currency === null || currency === '') { return; }
         this.currencyValue = currency;
 
         if (this.vistaLine && this.vistaLine.length > 0) {
@@ -412,6 +460,23 @@ export default class P2gCreateShipmentServiceLine extends LightningElement {
                 Moneda: currency
             }));
         }
+    }
+
+    mensajeErrorApex(error){
+        let msg = (error && error.body && error.body.message) ? error.body.message : '';
+        if (!msg && error && error.body) {
+            const partes = [];
+            if (error.body.fieldErrors) {
+                Object.values(error.body.fieldErrors).forEach(lista => {
+                    lista.forEach(fe => partes.push(fe.message));
+                });
+            }
+            if (error.body.pageErrors) {
+                error.body.pageErrors.forEach(pe => partes.push(pe.message));
+            }
+            msg = partes.join(' | ');
+        }
+        return msg || 'Error desconocido al crear la linea';
     }
 
     crearLines(){
@@ -447,7 +512,7 @@ export default class P2gCreateShipmentServiceLine extends LightningElement {
             this.syncCurrency(this.currencyValue);
         })
         .catch(error => {
-            this.pushMessage('Error','error', error.body.message);
+            this.pushMessage('Error','error', this.mensajeErrorApex(error));
         });
         getCreaLine({Id: this.recordId})
             .then(result => {
@@ -464,13 +529,20 @@ export default class P2gCreateShipmentServiceLine extends LightningElement {
     }
 
 
-    saveName(event){
-        this.rateName = event.target.value;
+    saveName(event) {
+        let selectedValue;
+        if (this.showSelector) {
+            selectedValue = event.detail.value;
+        } else {
+            selectedValue = event.target.value;
+        }
+        this.rateName = selectedValue;
         const updateVistaLine = this.vistaLine.map( (item) => { 
-            return {...item, ServiceRateName : this.rateName, };
-        }); // Actualiza la lista de service lines
+            return {...item, ServiceRateName : this.rateName};
+        });
         this.vistaLine = updateVistaLine;
     }
+
     saveSellPrice(event){
         this.sellPrice = event.target.value;
         const updateVistaLine = this.vistaLine.map( (item) => { 
