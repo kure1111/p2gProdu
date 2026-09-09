@@ -481,24 +481,28 @@ export default class P2gCreateShipmentServiceLine extends LightningElement {
 
     crearLines(){
         this.key=true;
-        if (typeof this.rateName === 'undefined' || this.rateName === null || (this.rateName && this.rateName.length === 0) || this.rateName === '') {
+        // Validar el dato que realmente se envia (vistaLine[0].ServiceRateName), no solo la variable rateName:
+        // podian quedar desincronizados tras un create fallido y el Fee se insertaba sin nombre (SF le pone su Id)
+        const lineaNueva = (this.vistaLine && this.vistaLine.length > 0) ? this.vistaLine[0] : null;
+        const nombreRate = lineaNueva ? lineaNueva.ServiceRateName : null;
+        if (!nombreRate || String(nombreRate).trim().length === 0) {
             this.pushMessage('Error','error', 'Se requiere Rate Name');
             return
         }
-        createNewLine({data: this.vistaLine[0]})
+        createNewLine({data: lineaNueva})
         .then(result => {
             this.elemento = result;
             this.listServiceLine = Array.from(this.listServiceLine);
             this.listServiceLine.push(this.elemento);
             console.log('Resultado Moneda:',result.Moneda);
-            
-            
+
+
             //
             const updatedListServiceLine = [...this.listCServiceLine.data];
-            updatedListServiceLine.push(result); 
+            updatedListServiceLine.push(result);
             this.listCServiceLine = { data: updatedListServiceLine };
             console.log('updatedListServiceLine:',updatedListServiceLine);
-            
+
             //
             this.pushMessage('Exitoso!','success','Se actualizo con exito!');
             this.searchValueSsts = null;
@@ -510,22 +514,22 @@ export default class P2gCreateShipmentServiceLine extends LightningElement {
             this.comentario = null;
             this.Devolucion = false;
             this.syncCurrency(this.currencyValue);
+            // Refrescar el formulario SOLO si la creacion fue exitosa;
+            // antes corria en paralelo y un create fallido dejaba el formulario reseteado con rateName lleno
+            return getCreaLine({Id: this.recordId})
+                .then(r => {
+                    this.vistaLine = r;
+                    this.syncCurrency(this.currencyValue);
+                    console.log("Entra al then4", this.vistaLine);
+                })
+                .catch(e => {
+                    this.pushMessage('Error en cargar Seccion 4','error', this.mensajeErrorApex(e));
+                    this.vistaLine = null;
+                });
         })
         .catch(error => {
             this.pushMessage('Error','error', this.mensajeErrorApex(error));
         });
-        getCreaLine({Id: this.recordId})
-            .then(result => {
-                this.vistaLine = result;
-                this.syncCurrency(this.currencyValue);
-
-                console.log("Entra al then4", this.vistaLine);
-            })
-            .catch(error => {
-                this.pushMessage('Error en cargar Seccion 4','error', error.body.message);
-                this.vistaLine = null;
-                console.log("Entra al carch", this.vistaLine);              
-            });
     }
 
 
