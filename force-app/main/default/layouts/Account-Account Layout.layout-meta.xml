@@ -111,7 +111,7 @@
                 <field>Prospeccion_Impak__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Edit</behavior>
+                <behavior>Readonly</behavior>
                 <field>Obsycom_cta__c</field>
             </layoutItems>
             <layoutItems>
@@ -137,6 +137,30 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>CPNumero_Registro_de_ID__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Costo_reposicion_barra_logistica__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Retorno_barras_logisticas__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Barras_logisticas_pendientes__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Monto_retenido_incidencias_barras__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Tiempo_promedio_devolucion_barras__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Total_barras_perdidas__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
@@ -171,6 +195,10 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Active__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Bloqueo_Tarifario__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsTopToBottom</style>
@@ -370,6 +398,15 @@
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
+        <fields>Shipment__c</fields>
+        <fields>Motivo__c</fields>
+        <fields>Fecha_Incidencia__c</fields>
+        <fields>Estatus__c</fields>
+        <fields>Resolucion__c</fields>
+        <relatedList>Incidencia_Proveedor__c.Proveedor__c</relatedList>
+    </relatedLists>
+<relatedLists>
+        <fields>NAME</fields>
         <fields>CREATEDBY_USER</fields>
         <fields>CREATED_DATE</fields>
         <fields>Object__c</fields>
@@ -435,6 +472,14 @@
         <fields>MEMBER_NAME</fields>
         <fields>TEAM_MEMBER_ROLE</fields>
         <relatedList>RelatedAccountSalesTeam</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
+        <relatedList>Barra_Logistica__c.Account__c</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
+        <relatedList>Cuenta_Chat__c.Account__c</relatedList>
     </relatedLists>
     <relatedObjects>ParentId</relatedObjects>
     <showEmailCheckbox>false</showEmailCheckbox>

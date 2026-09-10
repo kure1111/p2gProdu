@@ -4,9 +4,7 @@
     <customButtons>New_Associated_Document</customButtons>
     <customButtons>Send_to_SAP_Supply_Chain_Partner</customButtons>
     <customButtons>Send_Attachment</customButtons>
-    <excludeButtons>DataDotComClean</excludeButtons>
-    <excludeButtons>DataDotComCompanyHierarchy</excludeButtons>
-    <excludeButtons>OpenSlackRecordChannel</excludeButtons>
+    <excludeButtons>DataDotComAccountInsights</excludeButtons>
     <layoutSections>
         <customLabel>true</customLabel>
         <detailHeading>false</detailHeading>
@@ -70,6 +68,30 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>CPNumero_Registro_de_ID__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Costo_reposicion_barra_logistica__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Retorno_barras_logisticas__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Barras_logisticas_pendientes__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Monto_retenido_incidencias_barras__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Tiempo_promedio_devolucion_barras__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Total_barras_perdidas__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
@@ -185,6 +207,10 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Requerimientos_Especiales__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Tipo_de_Servicio_Prospecto__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
@@ -836,6 +862,15 @@
         <relatedList>Shipment__c.Carrier__c</relatedList>
     </relatedLists>
     <relatedLists>
+        <fields>NAME</fields>
+        <fields>Shipment__c</fields>
+        <fields>Motivo__c</fields>
+        <fields>Fecha_Incidencia__c</fields>
+        <fields>Estatus__c</fields>
+        <fields>Resolucion__c</fields>
+        <relatedList>Incidencia_Proveedor__c.Proveedor__c</relatedList>
+    </relatedLists>
+<relatedLists>
         <fields>ACCOUNT.NAME</fields>
         <fields>OPPORTUNITY.NAME</fields>
         <fields>PARTNER.ROLE</fields>
@@ -1017,6 +1052,14 @@
         <fields>MEMBER_NAME</fields>
         <fields>TEAM_MEMBER_ROLE</fields>
         <relatedList>RelatedAccountSalesTeam</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
+        <relatedList>Barra_Logistica__c.Account__c</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
+        <relatedList>Cuenta_Chat__c.Account__c</relatedList>
     </relatedLists>
     <relatedObjects>ParentId</relatedObjects>
     <showEmailCheckbox>false</showEmailCheckbox>
