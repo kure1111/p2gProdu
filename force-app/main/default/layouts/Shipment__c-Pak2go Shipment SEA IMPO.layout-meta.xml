@@ -1024,7 +1024,7 @@
             <sortOrder>24</sortOrder>
         </platformActionListItems>
         <platformActionListItems>
-            <actionName>Shipment__c.Levantar_Incidencia</actionName>
+            <actionName>Shipment__c.Levantar_Incidencia_SP</actionName>
             <actionType>QuickAction</actionType>
             <sortOrder>25</sortOrder>
         </platformActionListItems>
