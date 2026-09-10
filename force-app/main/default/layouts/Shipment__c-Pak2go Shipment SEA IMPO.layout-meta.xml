@@ -86,11 +86,11 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>Campo_Control__c</field>
+                <field>Direccion_Alternativa__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>Direccion_Alternativa__c</field>
+                <field>Requiere_barras_logisticas__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns/>
@@ -1023,6 +1023,11 @@
             <actionType>CustomButton</actionType>
             <sortOrder>24</sortOrder>
         </platformActionListItems>
+        <platformActionListItems>
+            <actionName>Shipment__c.Levantar_Incidencia</actionName>
+            <actionType>QuickAction</actionType>
+            <sortOrder>25</sortOrder>
+        </platformActionListItems>
     </platformActionList>
     <relatedLists>
         <relatedList>RelatedNoteList</relatedList>
@@ -1204,6 +1209,14 @@
         <fields>Carrier_Class__c</fields>
         <fields>Carrier_Evaluation__c</fields>
         <relatedList>Account.Shipment__c</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
+        <relatedList>Route_by_Account__c.Shipment__c</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
+        <relatedList>Barra_Logistica__c.Shipment__c</relatedList>
     </relatedLists>
     <showEmailCheckbox>false</showEmailCheckbox>
     <showHighlightsPanel>false</showHighlightsPanel>

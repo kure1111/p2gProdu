@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Proveedor_Sustituto__c</fullName>
+    <deleteConstraint>SetNull</deleteConstraint>
+    <label>Proveedor Sustituto</label>
+    <lookupFilter>
+        <active>true</active>
+        <errorMessage>El proveedor sustituto debe ser una cuenta de tipo Supply Chain Partner</errorMessage>
+        <filterItems>
+            <field>Account.RecordTypeId</field>
+            <operation>equals</operation>
+            <value>Supply Chain Partner</value>
+        </filterItems>
+        <isOptional>false</isOptional>
+    </lookupFilter>
+    <referenceTo>Account</referenceTo>
+    <relationshipLabel>Incidencias como Sustituto</relationshipLabel>
+    <relationshipName>Incidencias_como_Sustituto</relationshipName>
+    <required>false</required>
+    <trackHistory>true</trackHistory>
+    <type>Lookup</type>
+</CustomField>

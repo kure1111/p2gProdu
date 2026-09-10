@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Motivo__c</fullName>
+    <label>Motivo</label>
+    <required>true</required>
+    <trackHistory>true</trackHistory>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Quedó mal (no se presentó)</fullName>
+                <default>false</default>
+                <label>Quedó mal (no se presentó)</label>
+            </value>
+            <value>
+                <fullName>Falla mecánica</fullName>
+                <default>false</default>
+                <label>Falla mecánica</label>
+            </value>
+            <value>
+                <fullName>Equipo no disponible</fullName>
+                <default>false</default>
+                <label>Equipo no disponible</label>
+            </value>
+            <value>
+                <fullName>Incumplimiento a cita</fullName>
+                <default>false</default>
+                <label>Incumplimiento a cita</label>
+            </value>
+            <value>
+                <fullName>Retraso</fullName>
+                <default>false</default>
+                <label>Retraso</label>
+            </value>
+            <value>
+                <fullName>Incidente en ruta (robo/accidente)</fullName>
+                <default>false</default>
+                <label>Incidente en ruta (robo/accidente)</label>
+            </value>
+            <value>
+                <fullName>Canceló el proveedor</fullName>
+                <default>false</default>
+                <label>Canceló el proveedor</label>
+            </value>
+            <value>
+                <fullName>Otro</fullName>
+                <default>false</default>
+                <label>Otro</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>
