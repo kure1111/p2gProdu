@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>isInverted__c</fullName>
+    <defaultValue>false</defaultValue>
+    <description>Campo para invertir la informaciÃ³n de kimberly (Direcciones Origen/Destino y Cliente Origen/Destino)</description>
+    <label>isInverted</label>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <type>Checkbox</type>
+</CustomField>

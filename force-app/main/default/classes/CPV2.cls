@@ -65,9 +65,14 @@ public class CPV2 {
             }
         }
         
+		Boolean isInverted = (datosCPShip.isInverted__c != null && datosCPShip.isInverted__c);
+
+        
         System.debug('Kimberly? ' + isKimberly);
         System.debug('Origen alternativo? ' + useAlternativeOrigin);
         System.debug('Destino alternativo? ' + useAlternativeDestination);
+        System.debug('Invertido? ' + isInverted);
+
         
         // Aplicar direcciones alternativas si es necesario
         if (isKimberly && (useAlternativeOrigin || useAlternativeDestination)) {
@@ -143,6 +148,25 @@ public class CPV2 {
                 System.debug('Se mantienen las direcciones originales');
             }
         }
+            
+        if (isInverted) {
+                System.debug('Invirtiendo Origen y Destino por isInverted__c = true');
+                
+                // Guardar temporalmente el origen
+                Id tmpOriginId = datosCPShip.Account_Origin_Address__c;
+                Account_Address__c tmpOriginAddr = datosCPShip.Account_Origin_Address__r;
+                
+                // Origen = Destino actual
+                datosCPShip.Account_Origin_Address__c = datosCPShip.Account_Destination_Address__c;
+                datosCPShip.Account_Origin_Address__r = datosCPShip.Account_Destination_Address__r;
+                
+                // Destino = Origen original
+                datosCPShip.Account_Destination_Address__c = tmpOriginId;
+                datosCPShip.Account_Destination_Address__r = tmpOriginAddr;
+                
+                System.debug('Nuevo Origen  Id: ' + datosCPShip.Account_Origin_Address__c);
+                System.debug('Nuevo Destino Id: ' + datosCPShip.Account_Destination_Address__c);
+            }
  
             //
             
@@ -280,8 +304,8 @@ public class CPV2 {
             
             //Seccion de modificacion de datos carta porte
             
-            String rfcDestinatario = '';
-            String nombreDestinatario = '';
+            String rfcOrigen = '';
+            String nombreOrigen = '';
             
             
             if (!String.isBlank(datosCPShip.Datos_Carta_Porte__c) &&
@@ -290,25 +314,71 @@ public class CPV2 {
                 
                 Integer inicioRFC = 'RFC DESTINATARIO:'.length();
                 Integer finRFC = datosCPShip.Datos_Carta_Porte__c.indexOf(',DESTINATARIO:');
-                rfcDestinatario = datosCPShip.Datos_Carta_Porte__c.substring(inicioRFC, finRFC).trim();
+                rfcOrigen = datosCPShip.Datos_Carta_Porte__c.substring(inicioRFC, finRFC).trim();
                 
                 Integer inicioNombre = finRFC + ',DESTINATARIO:'.length();
-                nombreDestinatario = datosCPShip.Datos_Carta_Porte__c.substring(inicioNombre).trim();
+                nombreOrigen = datosCPShip.Datos_Carta_Porte__c.substring(inicioNombre).trim();
                 
-                System.debug('Datos extraídos: RFC=' + rfcDestinatario + ', Nombre=' + nombreDestinatario);
+                System.debug('Datos extraídos: RFC=' + rfcOrigen + ', Nombre=' + nombreOrigen);
             }
             else {
-                rfcDestinatario = String.isBlank(datosCPShip.account_for__r.TAX_ID__c)
+                rfcOrigen = String.isBlank(datosCPShip.account_for__r.TAX_ID__c)
                     ? ''
                     : datosCPShip.account_for__r.TAX_ID__c;
                 
-                nombreDestinatario = String.isBlank(datosCPShip.account_for__r.Name)
+                nombreOrigen = String.isBlank(datosCPShip.account_for__r.Name)
                     ? ''
                     : datosCPShip.account_for__r.Name;
             }
             
-            ubicacion.RFCRemitenteDestinatario = rfcDestinatario;
-            ubicacion.NombreRemitenteDestinatario = nombreDestinatario;
+            
+            // ===== PARSEO PARA DESTINO =====
+            String rfcDestino = '';
+            String nombreDestino = '';
+            
+            if (!String.isBlank(datosCPShip.Datos_Carta_Porte_Destino__c) &&
+                datosCPShip.Datos_Carta_Porte_Destino__c.startsWith('RFC Destino:') &&
+                datosCPShip.Datos_Carta_Porte_Destino__c.contains(',Razon Social:')) {
+                
+                Integer inicioRFC = 'RFC Destino:'.length();
+                Integer finRFC = datosCPShip.Datos_Carta_Porte_Destino__c.indexOf(',Razon Social:');
+                rfcDestino = datosCPShip.Datos_Carta_Porte_Destino__c.substring(inicioRFC, finRFC).trim();
+                
+                Integer inicioNombre = finRFC + ',Razon Social:'.length();
+                nombreDestino = datosCPShip.Datos_Carta_Porte_Destino__c.substring(inicioNombre).trim();
+                
+                System.debug('Datos destino extraídos: RFC=' + rfcDestino + ', Nombre=' + nombreDestino);
+            } else {
+                // Fallback: mismo comportamiento original
+                rfcDestino = datosCP.client_of_Client__c == null 
+                    ? (String.isBlank(datosCPShip.account_for__r.TAX_ID__c) ? '' : datosCPShip.account_for__r.TAX_ID__c) 
+                    : (String.isBlank(datosCP.client_of_Client__r.TAX_ID__c) ? '' : datosCP.client_of_Client__r.TAX_ID__c);
+                
+                nombreDestino = datosCP.client_of_Client__c == null 
+                    ? (String.isBlank(datosCPShip.account_for__r.name) ? '' : datosCPShip.account_for__r.name) 
+                    : (String.isBlank(datosCP.client_of_Client__r.name) ? '' : datosCP.client_of_Client__r.name);
+            }
+            
+            
+            //  INVERTIR RFC/Nombre si isInverted__c == true
+            if (isInverted) {
+                String tmpRfc    = rfcOrigen;
+                String tmpNombre = nombreOrigen;
+                
+                rfcOrigen     = rfcDestino;
+                nombreOrigen  = nombreDestino;
+                
+                rfcDestino    = tmpRfc;
+                nombreDestino = tmpNombre;
+                
+                System.debug('>>> RFC/Nombre invertidos por isInverted__c');
+                System.debug('    Origen ahora: ' + rfcOrigen + ' / ' + nombreOrigen);
+                System.debug('    Destino ahora: ' + rfcDestino + ' / ' + nombreDestino);
+            }
+            
+            
+            ubicacion.RFCRemitenteDestinatario = rfcOrigen;
+            ubicacion.NombreRemitenteDestinatario = nombreOrigen;
             
             //
             
@@ -425,9 +495,13 @@ public class CPV2 {
             
             Ubicacion ubicacionDestino = new Ubicacion();
             
-            ubicacionDestino.TipoUbicacion ='Destino' ;
-            ubicacionDestino.RFCRemitenteDestinatario  =datosCP.client_of_Client__c == null ? (string.isBlank(datosCPShip.account_for__r.TAX_ID__c) ? '' : datosCPShip.account_for__r.TAX_ID__c ) : (string.isBlank(datosCP.client_of_Client__r.TAX_ID__c) ? '' : datosCP.client_of_Client__r.TAX_ID__c ) ;
-            ubicacionDestino.NombreRemitenteDestinatario= datosCP.client_of_Client__c == null ? (string.isBlank(datosCPShip.account_for__r.name) ? '' : datosCPShip.account_for__r.name) : (string.isBlank(datosCP.client_of_Client__r.name) ? '' : datosCP.client_of_Client__r.name);
+            ubicacionDestino.TipoUbicacion ='Destino' ;            
+            //Forma antigua Destino
+			//ubicacionDestino.RFCRemitenteDestinatario  =datosCP.client_of_Client__c == null ? (string.isBlank(datosCPShip.account_for__r.TAX_ID__c) ? '' : datosCPShip.account_for__r.TAX_ID__c ) : (string.isBlank(datosCP.client_of_Client__r.TAX_ID__c) ? '' : datosCP.client_of_Client__r.TAX_ID__c ) ;
+            //ubicacionDestino.NombreRemitenteDestinatario= datosCP.client_of_Client__c == null ? (string.isBlank(datosCPShip.account_for__r.name) ? '' : datosCPShip.account_for__r.name) : (string.isBlank(datosCP.client_of_Client__r.name) ? '' : datosCP.client_of_Client__r.name);
+            //Forma nueva Destino
+            ubicacionDestino.RFCRemitenteDestinatario = rfcDestino;
+			ubicacionDestino.NombreRemitenteDestinatario = nombreDestino;
             ubicacionDestino.FechaHoraSalidaLlegada = dateLlegada;
             
             ubicacionDestino.TipoEstacion = '';
@@ -1010,7 +1084,7 @@ public class CPV2 {
                                              Forwarder__r.Direccion_Principal__r.Referencia__c,
                                              Forwarder__r.Direccion_Principal__r.Folio_Origen_Destino2__c,
                                              
-                                             Datos_Carta_Porte__c,
+                                             Datos_Carta_Porte__c,Datos_Carta_Porte_Destino__c, isInverted__c,
                                              Direccion_Alternativa__c
                                              
                                              FROM shipment__C 

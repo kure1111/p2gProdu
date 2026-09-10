@@ -121,11 +121,72 @@ public with sharing class NEU_CartaPortePDF
                     ? ''
                     : dataCP.datosCPShip.account_for__r.Name;
             }
+            
+            // ===== NUEVO: Extracción para DESTINO desde Datos_Carta_Porte_Destino__c =====
+            String rfcDestino = '';
+            String razonSocialDestino = '';
+            System.debug('Valor de Datos_Carta_Porte_Destino__c: ' + record.Datos_Carta_Porte_Destino__c);
+            
+            if (!String.isBlank(record.Datos_Carta_Porte_Destino__c) &&
+                record.Datos_Carta_Porte_Destino__c.startsWith('RFC Destino:') &&
+            record.Datos_Carta_Porte_Destino__c.contains(',Razon Social:')) {
+                
+                Integer inicioRFC = 'RFC Destino:'.length();
+                Integer finRFC = record.Datos_Carta_Porte_Destino__c.indexOf(',Razon Social:');
+                rfcDestino = record.Datos_Carta_Porte_Destino__c.substring(inicioRFC, finRFC).trim();
+                
+                Integer inicioRazon = finRFC + ',Razon Social:'.length();
+                razonSocialDestino = record.Datos_Carta_Porte_Destino__c.substring(inicioRazon).trim();
+                System.debug('Datos capturados - RFC Destino: ' + rfcDestino + ', Razon Social: ' + razonSocialDestino);
+            }
+            
+            // si el campo está vacío o mal formado, usamos los valores que ya se estaban usando
+            if (String.isBlank(rfcDestino) || String.isBlank(razonSocialDestino)) {
+                // Prioridad: client_of_Client__r, si no, account_for__r (como estaba)
+                rfcDestino = (dataCP.datosCPquote.client_of_Client__c != null && !String.isBlank(dataCP.datosCPquote.client_of_Client__r.TAX_ID__c))
+                    ? dataCP.datosCPquote.client_of_Client__r.TAX_ID__c
+                    : (String.isBlank(dataCP.datosCPShip.account_for__r.TAX_ID__c) ? '' : dataCP.datosCPShip.account_for__r.TAX_ID__c);
+                razonSocialDestino = (dataCP.datosCPquote.client_of_Client__c != null && !String.isBlank(dataCP.datosCPquote.client_of_Client__r.Name))
+                    ? dataCP.datosCPquote.client_of_Client__r.Name
+                    : (String.isBlank(dataCP.datosCPShip.account_for__r.Name) ? '' : dataCP.datosCPShip.account_for__r.Name);
+            }
+            // ===== FIN NUEVO =====
+            
+            
             //
             //versión anterior
             //pdf += '<tr> <td colspan="2">'+(string.isBlank(dataCP.datosCPShip.account_for__r.TAX_ID__c) ? '' : dataCP.datosCPShip.account_for__r.TAX_ID__c ) +'</td> <td colspan="2">'+(string.isBlank(dataCP.datosCPShip.account_for__r.Name) ? '' : dataCP.datosCPShip.account_for__r.Name ) +'</td> <td colspan="2">'+'Origen'+'</td>';
             //nueva versión
-            pdf += '<tr><td colspan="2">' + rfcDestinatario + '</td><td colspan="2">' + nombreDestinatario + '</td><td colspan="2">Origen</td>';
+            //pdf += '<tr><td colspan="2">' + rfcDestinatario + '</td><td colspan="2">' + nombreDestinatario + '</td><td colspan="2">Origen</td>';
+            
+            // ===== INTERCAMBIO POR DEVOLUCIÓN =====
+            // Variables para el intercambio
+            String rfcOrigen = rfcDestinatario;
+            String nombreOrigen = nombreDestinatario;
+            String rfcDestinoFinal = rfcDestino;
+            String nombreDestinoFinal = razonSocialDestino;
+            Set<String> KIMBERLY_ACCOUNT_IDS = new Set<String>{
+                '0014T000005QxaZQAS',     // PROD
+                '0014T00000BIs6PQAT'// UAT - Cliente ejemplo
+            };
+            
+            // Verificar si es cuenta Kimberly
+            Boolean isKimberly = (
+                record.Account_for__c != null &&
+                KIMBERLY_ACCOUNT_IDS.contains(record.Account_for__c)
+                );
+            
+            // Si el campo de devolución está marcado, intercambiamos
+            if (record.isInverted__c && isKimberly) {
+                rfcOrigen = rfcDestino;
+                nombreOrigen = razonSocialDestino;
+                rfcDestinoFinal = rfcDestinatario;
+                nombreDestinoFinal = nombreDestinatario;
+            }
+            // ===== FIN INTERCAMBIO =====
+            // NUEVA VERSIÓN con los valores intercambiados (si aplica)
+            pdf += '<tr><td colspan="2">' + rfcOrigen + '</td><td colspan="2">' + nombreOrigen + '</td><td colspan="2">Origen</td>';
+            
             
             if(dataCP.datosCPShip.Account_Origin_Address__c != null)
                 pdf += '<td colspan="2">'+'OR' + (string.isBlank(dataCP.datosCPShip.Account_Origin_Address__r.Folio_Origen_Destino2__c)  ? '': dataCP.datosCPShip.Account_Origin_Address__r.Folio_Origen_Destino2__c )  +'</td>';
@@ -176,10 +237,12 @@ public with sharing class NEU_CartaPortePDF
                     pdf += '</tr>';
                 }
             }
-            //FORMA ANTERIOR
-            pdf += '<tr><td colspan="2">'+(dataCP.datosCPquote.client_of_Client__c == null ? (string.isBlank(dataCP.datosCPShip.account_for__r.TAX_ID__c) ? '' : dataCP.datosCPShip.account_for__r.TAX_ID__c) : (string.isBlank(dataCP.datosCPquote.client_of_Client__r.TAX_ID__c) ? '' : dataCP.datosCPquote.client_of_Client__r.TAX_ID__c)) +'</td><td colspan="2">'+(dataCP.datosCPquote.client_of_Client__c == null ? (string.isBlank(dataCP.datosCPShip.account_for__r.Name) ? '' : dataCP.datosCPShip.account_for__r.Name) : (string.isBlank(dataCP.datosCPquote.client_of_Client__r.Name) ? '' : dataCP.datosCPquote.client_of_Client__r.Name)) +'</td><td colspan="2">'+'Destino'+'</td>';
-            //NUEVA FORMA
-            //pdf += '<tr><td colspan="2">' + rfcDestinatario + '</td><td colspan="2">' + nombreDestinatario + '</td><td colspan="2">Destino</td>';
+            //FORMA ANTERIOR Destino
+            //pdf += '<tr><td colspan="2">'+(dataCP.datosCPquote.client_of_Client__c == null ? (string.isBlank(dataCP.datosCPShip.account_for__r.TAX_ID__c) ? '' : dataCP.datosCPShip.account_for__r.TAX_ID__c) : (string.isBlank(dataCP.datosCPquote.client_of_Client__r.TAX_ID__c) ? '' : dataCP.datosCPquote.client_of_Client__r.TAX_ID__c)) +'</td><td colspan="2">'+(dataCP.datosCPquote.client_of_Client__c == null ? (string.isBlank(dataCP.datosCPShip.account_for__r.Name) ? '' : dataCP.datosCPShip.account_for__r.Name) : (string.isBlank(dataCP.datosCPquote.client_of_Client__r.Name) ? '' : dataCP.datosCPquote.client_of_Client__r.Name)) +'</td><td colspan="2">'+'Destino'+'</td>';
+            //NUEVA FORMA Destino
+            //pdf += '<tr><td colspan="2">' + rfcDestino + '</td><td colspan="2">' + razonSocialDestino + '</td><td colspan="2">Destino</td>';
+            //NUEVA FORMA Destino con intercambio aplicado
+            pdf += '<tr><td colspan="2">' + rfcDestinoFinal + '</td><td colspan="2">' + nombreDestinoFinal + '</td><td colspan="2">Destino</td>';
             
             if(dataCP.datosCPShip.Account_Destination_Address__c != null)
                 pdf += '<td colspan="2">'+'DE'+ (string.isBlank(dataCP.datosCPShip.Account_Destination_Address__r.Folio_Origen_Destino2__c)  ? '': dataCP.datosCPShip.Account_Destination_Address__r.Folio_Origen_Destino2__c )  +'</td>';
@@ -333,7 +396,7 @@ public with sharing class NEU_CartaPortePDF
         National_Operator__c, National_Operator__r.Marca_ope__c, National_Operator__r.Numplatra_ope__c, National_Operator__r.Numplacaj_ope__c, National_Operator__r.Color_ope__c,
         Vehicle__r.Modelo__c, Vehicle__r.Numero_Eco__c, Vehicle__r.Color_Caja__c, Vehicle__r.Tipo_de_Caja__c, Vehicle__r.Tipo_de_Unidad__c, Vehicle__r.Num_Placa_Tracto__c,
         Vehicle__r.Num_Placa_Caja__c, Vehicle__r.Color_Tracto__c, Vehicle__r.Ano__c, Vehicle__r.Marca__c, Vehicle__r.Name,Shipment_Type__c,Traslado_Ingreso__c,
-        Datos_Carta_Porte__c
+        Datos_Carta_Porte__c,Datos_Carta_Porte_Destino__c, isInverted__c
         from Shipment__c where Id =: shipmentID];
     }
     public static  List<Carta_Porte__c> getCartaPorteByIdAndType(String shipmentID, string tipo){
@@ -353,6 +416,31 @@ public with sharing class NEU_CartaPortePDF
     }
     public static void test(){
         Integer a = 1 ;
+        a = 1;
+        a = 1;
+        a = 1;
+        a = 1;
+        a = 1;
+        a = 1;
+        a = 1;
+        a = 1;
+        a = 1;
+        a = 1;
+        a = 1;
+        a = 1;
+        a = 1;
+        a = 1;
+        a = 1;
+        a = 1;
+        a = 1;
+        a = 1;
+        a = 1;
+        a = 1;
+        a = 1;
+        a = 1;
+        a = 1;
+        a = 1;
+        a = 1;
         a = 1;
         a = 1;
         a = 1;

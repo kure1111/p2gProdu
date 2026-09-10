@@ -26,6 +26,9 @@
                             <value>CustomButton.Shipment__c.Send_to_Order</value>
                         </valueListItems>
                         <valueListItems>
+                            <value>Shipment__c.Invertir_Datos</value>
+                        </valueListItems>
+                        <valueListItems>
                             <value>Shipment__c.Levantar_Incidencia_SP</value>
                         </valueListItems>
                         <valueListItems>

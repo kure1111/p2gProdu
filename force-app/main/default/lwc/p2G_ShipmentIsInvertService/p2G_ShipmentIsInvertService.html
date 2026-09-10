@@ -1,0 +1,21 @@
+<template>    
+<lightning-modal-header label="Confirmar Inversión de Datos"></lightning-modal-header>
+
+<lightning-modal-body>
+    <div class="slds-modal__content slds-p-around_medium">
+            <div class="slds-m-bottom_medium">                
+                <p class="slds-text-body_regular slds-m-bottom_small">
+                    Se procederá a invertir la información registrada en este registro.
+                </p>
+                <h3 class="slds-text-heading_small slds-m-top_small">                    
+                    ¿Estás seguro de que deseas continuar?
+                </h3>
+            </div>
+        </div>
+</lightning-modal-body>
+
+<lightning-modal-footer>
+    <lightning-button variant="neutral" label="Cancelar" onclick={handleCancel}></lightning-button>    
+    <lightning-button class="slds-m-left_large" variant="brand" label="Continuar" onclick={handleConfirm}></lightning-button>
+</lightning-modal-footer>
+</template>
