@@ -172,6 +172,164 @@
         </connector>
     </assignments>
     <assignments>
+        <name>Arma_QLI_Flete</name>
+        <label>Arma QLI Flete</label>
+        <locationX>1634</locationX>
+        <locationY>3600</locationY>
+        <assignmentItems>
+            <assignToReference>varQLIFlete.OpportunityLineItemId</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>recorrer_productos_y_agregarlos_a_QLI.Id</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>varQLIFlete.PricebookEntryId</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>recorrer_productos_y_agregarlos_a_QLI.PricebookEntryId</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>varQLIFlete.Product2Id</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>recorrer_productos_y_agregarlos_a_QLI.Product2Id</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>varQLIFlete.Quantity</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>recorrer_productos_y_agregarlos_a_QLI.Quantity</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>varQLIFlete.QuoteId</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>crear_Quote</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>varQLIFlete.Sales_Price_Converted__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>recorrer_productos_y_agregarlos_a_QLI.Sales_Price_Converted__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>varQLIFlete.Tipo_de_Linea__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Flete</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>varQLIFlete.UnitPrice</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>recorrer_productos_y_agregarlos_a_QLI.UnitPrice</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>colQLIsFlete</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>varQLIFlete</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>numQLIsFlete</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <numberValue>1.0</numberValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>recorrer_productos_y_agregarlos_a_QLI</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Arma_QLI_Cargo</name>
+        <label>Arma QLI Cargo</label>
+        <locationX>1634</locationX>
+        <locationY>4100</locationY>
+        <assignmentItems>
+            <assignToReference>varQLICargo.PricebookEntryId</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>recorre_subProducto.SubProduct_Opportunity_Product__r.PricebookEntryId</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>varQLICargo.Product2Id</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>recorre_subProducto.SubProduct_Opportunity_Product__r.Product2Id</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>varQLICargo.Quantity</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>recorre_subProducto.SubProduct_Opportunity_Product__r.Quantity</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>varQLICargo.QuoteId</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>crear_Quote</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>varQLICargo.Sales_Price_Converted__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>recorre_subProducto.SubProduct_Sell_Price_Converted__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>varQLICargo.SubProducto__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>recorre_subProducto.Id</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>varQLICargo.Tipo_de_Linea__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Cargo Adicional</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>varQLICargo.UnitPrice</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>recorre_subProducto.SubProduct_Sell_Price__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>colQLIsCargo</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>varQLICargo</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>numQLIsCargo</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <numberValue>1.0</numberValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>recorre_subProducto</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
         <name>Buy_Rate_Agregado</name>
         <label>Buy Rate Agregado</label>
         <locationX>2162</locationX>
@@ -924,9 +1082,59 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>CREAR_QUOTE_LIT</targetReference>
+                <targetReference>Arma_QLI_Flete</targetReference>
             </connector>
             <label>Producto listo para Cotizar</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Hay_QLIs_Flete</name>
+        <label>Hay QLIs Flete que crear</label>
+        <locationX>1634</locationX>
+        <locationY>3620</locationY>
+        <defaultConnector>
+            <targetReference>Get_SubProducto</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Sin QLIs</defaultConnectorLabel>
+        <rules>
+            <name>Si_hay_QLIs_Flete</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>numQLIsFlete</leftValueReference>
+                <operator>GreaterThan</operator>
+                <rightValue>
+                    <numberValue>0.0</numberValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Crea_QLIs_Flete</targetReference>
+            </connector>
+            <label>Si hay QLIs Flete</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Hay_QLIs_Cargo</name>
+        <label>Hay QLIs Cargo que crear</label>
+        <locationX>1634</locationX>
+        <locationY>4110</locationY>
+        <defaultConnector>
+            <targetReference>Tarea_1_Negociacion</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Sin QLIs Cargo</defaultConnectorLabel>
+        <rules>
+            <name>Si_hay_QLIs_Cargo</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>numQLIsCargo</leftValueReference>
+                <operator>GreaterThan</operator>
+                <rightValue>
+                    <numberValue>0.0</numberValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Crea_QLIs_Cargo</targetReference>
+            </connector>
+            <label>Si hay QLIs Cargo</label>
         </rules>
     </decisions>
     <decisions>
@@ -1163,10 +1371,10 @@
         <collectionReference>Get_SubProducto</collectionReference>
         <iterationOrder>Asc</iterationOrder>
         <nextValueConnector>
-            <targetReference>CREAR_QUOTE_LIT_SubPro</targetReference>
+            <targetReference>Arma_QLI_Cargo</targetReference>
         </nextValueConnector>
         <noMoreValuesConnector>
-            <targetReference>Tarea_1_Negociacion</targetReference>
+            <targetReference>Hay_QLIs_Cargo</targetReference>
         </noMoreValuesConnector>
     </loops>
     <loops>
@@ -1194,7 +1402,7 @@
             <targetReference>Producto_Cotizado</targetReference>
         </nextValueConnector>
         <noMoreValuesConnector>
-            <targetReference>Get_SubProducto</targetReference>
+            <targetReference>Hay_QLIs_Flete</targetReference>
         </noMoreValuesConnector>
     </loops>
     <processMetadataValues>
@@ -1239,129 +1447,31 @@
         <inputAssignments>
             <field>RecordTypeId</field>
             <value>
-                <stringValue>012RQ0000006wB1YAI</stringValue>
+                <elementReference>Get_RT_Quote_Proyecto.Id</elementReference>
             </value>
         </inputAssignments>
         <object>Quote</object>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordCreates>
     <recordCreates>
-        <name>CREAR_QUOTE_LIT</name>
-        <label>CREAR QUOTE LIT</label>
+        <name>Crea_QLIs_Flete</name>
+        <label>Crea QLIs Flete en bloque</label>
         <locationX>1634</locationX>
         <locationY>3635</locationY>
         <connector>
-            <targetReference>recorrer_productos_y_agregarlos_a_QLI</targetReference>
+            <targetReference>Get_SubProducto</targetReference>
         </connector>
-        <inputAssignments>
-            <field>OpportunityLineItemId</field>
-            <value>
-                <elementReference>recorrer_productos_y_agregarlos_a_QLI.Id</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>PricebookEntryId</field>
-            <value>
-                <elementReference>recorrer_productos_y_agregarlos_a_QLI.PricebookEntryId</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>Product2Id</field>
-            <value>
-                <elementReference>recorrer_productos_y_agregarlos_a_QLI.Product2Id</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>Quantity</field>
-            <value>
-                <elementReference>recorrer_productos_y_agregarlos_a_QLI.Quantity</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>QuoteId</field>
-            <value>
-                <elementReference>crear_Quote</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>Sales_Price_Converted__c</field>
-            <value>
-                <elementReference>recorrer_productos_y_agregarlos_a_QLI.Sales_Price_Converted__c</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>Tipo_de_Linea__c</field>
-            <value>
-                <stringValue>Flete</stringValue>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>UnitPrice</field>
-            <value>
-                <elementReference>recorrer_productos_y_agregarlos_a_QLI.UnitPrice</elementReference>
-            </value>
-        </inputAssignments>
-        <object>QuoteLineItem</object>
-        <storeOutputAutomatically>true</storeOutputAutomatically>
+        <inputReference>colQLIsFlete</inputReference>
     </recordCreates>
     <recordCreates>
-        <name>CREAR_QUOTE_LIT_SubPro</name>
-        <label>CREAR QUOTE LIT SubPro</label>
+        <name>Crea_QLIs_Cargo</name>
+        <label>Crea QLIs Cargo en bloque</label>
         <locationX>1634</locationX>
         <locationY>4127</locationY>
         <connector>
-            <targetReference>recorre_subProducto</targetReference>
+            <targetReference>Tarea_1_Negociacion</targetReference>
         </connector>
-        <inputAssignments>
-            <field>PricebookEntryId</field>
-            <value>
-                <elementReference>recorre_subProducto.SubProduct_Opportunity_Product__r.PricebookEntryId</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>Product2Id</field>
-            <value>
-                <elementReference>recorre_subProducto.SubProduct_Opportunity_Product__r.Product2Id</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>Quantity</field>
-            <value>
-                <elementReference>recorre_subProducto.SubProduct_Opportunity_Product__r.Quantity</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>QuoteId</field>
-            <value>
-                <elementReference>crear_Quote</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>Sales_Price_Converted__c</field>
-            <value>
-                <elementReference>recorre_subProducto.SubProduct_Sell_Price_Converted__c</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>SubProducto__c</field>
-            <value>
-                <elementReference>recorre_subProducto.Id</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>Tipo_de_Linea__c</field>
-            <value>
-                <stringValue>Cargo Adicional</stringValue>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>UnitPrice</field>
-            <value>
-                <elementReference>recorre_subProducto.SubProduct_Sell_Price__c</elementReference>
-            </value>
-        </inputAssignments>
-        <object>QuoteLineItem</object>
-        <storeOutputAutomatically>true</storeOutputAutomatically>
+        <inputReference>colQLIsCargo</inputReference>
     </recordCreates>
     <recordCreates>
         <name>Tarea_1_Cotizacion</name>
@@ -1686,6 +1796,34 @@
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordCreates>
     <recordLookups>
+        <name>Get_RT_Quote_Proyecto</name>
+        <label>Get RT Quote Proyecto</label>
+        <locationX>1546</locationX>
+        <locationY>3150</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>crear_Quote</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>SobjectType</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Quote</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>DeveloperName</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Proyecto</stringValue>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>RecordType</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
         <name>Get_opptyproduct</name>
         <label>Get opptyproduct</label>
         <locationX>1546</locationX>
@@ -1999,7 +2137,7 @@
         <locationX>1546</locationX>
         <locationY>3095</locationY>
         <connector>
-            <targetReference>crear_Quote</targetReference>
+            <targetReference>Get_RT_Quote_Proyecto</targetReference>
         </connector>
         <inputAssignments>
             <field>Data_Time_Negociacion__c</field>
@@ -2291,14 +2429,7 @@
         <connector>
             <targetReference>Oportunidad_Nueva</targetReference>
         </connector>
-        <filterLogic>and</filterLogic>
-        <filters>
-            <field>RecordTypeId</field>
-            <operator>EqualTo</operator>
-            <value>
-                <stringValue>0124T000000Q3hUQAS</stringValue>
-            </value>
-        </filters>
+        <filterFormula>{!$Record.RecordType.DeveloperName} = &apos;Proyectos&apos;</filterFormula>
         <object>Opportunity</object>
         <recordTriggerType>Update</recordTriggerType>
         <triggerType>RecordAfterSave</triggerType>
@@ -2319,6 +2450,60 @@
         <isViewedAsPlainText>false</isViewedAsPlainText>
         <text>&lt;p style=&quot;text-align: center;&quot;&gt;********** SELL PRICE AGREGADO **********&lt;/p&gt;&lt;p style=&quot;text-align: center;&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Se agrego el costo del Seles Price a los productos de la Oportunididad &lt;strong&gt;{!$Record.Name}&lt;/strong&gt;, y se paso a la etapa de Negociación.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Account Name: {!$Record.Account.Name}&lt;/p&gt;&lt;p&gt;Oportunidad: &lt;a href=&quot;{!urlOportunidad}{!$Record.Id}/view&quot; rel=&quot;noopener noreferrer&quot; target=&quot;_blank&quot;&gt;{!$Record.Name}&lt;/a&gt;&lt;/p&gt;&lt;p&gt;Owner: {!$Record.Owner.FirstName} {!$Record.Owner.LastName}&lt;/p&gt;&lt;p&gt;Usuario IC: {!$Record.Usuario_IC__r.FirstName} {!$Record.Usuario_IC__r.LastName}&lt;/p&gt;&lt;p&gt;Stage: {!$Record.StageName}&lt;/p&gt;&lt;p&gt;Productos:{!ProductoSellPrice}&lt;/p&gt;</text>
     </textTemplates>
+    <variables>
+        <name>colQLIsCargo</name>
+        <dataType>SObject</dataType>
+        <isCollection>true</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>QuoteLineItem</objectType>
+    </variables>
+    <variables>
+        <name>colQLIsFlete</name>
+        <dataType>SObject</dataType>
+        <isCollection>true</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>QuoteLineItem</objectType>
+    </variables>
+    <variables>
+        <name>numQLIsCargo</name>
+        <dataType>Number</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <scale>0</scale>
+        <value>
+            <numberValue>0.0</numberValue>
+        </value>
+    </variables>
+    <variables>
+        <name>numQLIsFlete</name>
+        <dataType>Number</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <scale>0</scale>
+        <value>
+            <numberValue>0.0</numberValue>
+        </value>
+    </variables>
+    <variables>
+        <name>varQLICargo</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>QuoteLineItem</objectType>
+    </variables>
+    <variables>
+        <name>varQLIFlete</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>QuoteLineItem</objectType>
+    </variables>
     <variables>
         <name>correo</name>
         <dataType>String</dataType>

@@ -121,8 +121,23 @@ trigger triggerControllerOpportunityProduct on OpportunityLineItem (before inser
                 }
             }
             if(opportunity != null){
-                update opportunity;
-            }            
+                // Solo actualizar si algun total realmente cambio: un update identico
+                // re-dispara todas las automatizaciones de la oportunidad sin aportar nada
+                Opportunity actual = [SELECT Total_Cerrado_Ganado__c, Total_Cotizado__c, Total_Opportunity__c, Total_Amount_Rechazados__c,
+                                      Total_Cotizado_Anual__c, Total_Opportunity_Anual__c, Total_Amount_Rechazados_Anual__c, Total_Cerrado_Ganado_Anual__c
+                                      FROM Opportunity WHERE Id = :opportunity.Id];
+                Boolean cambio = actual.Total_Cerrado_Ganado__c != opportunity.Total_Cerrado_Ganado__c
+                    || actual.Total_Cotizado__c != opportunity.Total_Cotizado__c
+                    || actual.Total_Opportunity__c != opportunity.Total_Opportunity__c
+                    || actual.Total_Amount_Rechazados__c != opportunity.Total_Amount_Rechazados__c
+                    || actual.Total_Cotizado_Anual__c != opportunity.Total_Cotizado_Anual__c
+                    || actual.Total_Opportunity_Anual__c != opportunity.Total_Opportunity_Anual__c
+                    || actual.Total_Amount_Rechazados_Anual__c != opportunity.Total_Amount_Rechazados_Anual__c
+                    || actual.Total_Cerrado_Ganado_Anual__c != opportunity.Total_Cerrado_Ganado_Anual__c;
+                if(cambio){
+                    update opportunity;
+                }
+            }
             System.debug('se modifica la oportunidad '+opportunity);
         //termina sincronizacion de la quote
         }

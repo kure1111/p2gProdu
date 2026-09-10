@@ -91,8 +91,8 @@ public class P2G_tiempoTranscurridoOppo {
     @InvocableMethod
     public static void sumaTotalAmount(List<String> idOppo){
         Opportunity op = new Opportunity();
-        List<OpportunityLineItem> listOli = [SELECT Id, Name, OpportunityId, opportunity.Total_Amount_Aceptada__c, PROJ_Frecuencia__c,
-                                             Precio_Sugerido_Venta__c, Quantity FROM OpportunityLineItem 
+        List<OpportunityLineItem> listOli = [SELECT Id, Name, OpportunityId, opportunity.Total_Amount_Aceptada__c, opportunity.Total_Amount_del__c, PROJ_Frecuencia__c,
+                                             Precio_Sugerido_Venta__c, Quantity FROM OpportunityLineItem
                                             WHERE OpportunityId =: idOppo[0] AND Precio_Sugerido_Venta__c != 0 AND Precio_Sugerido_Venta__c != null];
         Double totalAmount = 0;
         Double multiplicacionTotalAmount;
@@ -103,7 +103,11 @@ public class P2G_tiempoTranscurridoOppo {
             }
             op.id = listOli[0].OpportunityId;
             op.Total_Amount_del__c = totalAmount;
-            Update op;
+            // Solo actualizar si el total realmente cambio (un update identico re-dispara la cascada de la opp)
+            Decimal totalActual = listOli[0].Opportunity.Total_Amount_del__c;
+            if(totalActual == null || totalActual != op.Total_Amount_del__c){
+                Update op;
+            }
         }
     }
     //Para ir sumando el Total Amount aceptado
