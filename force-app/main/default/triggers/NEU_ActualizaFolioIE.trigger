@@ -14,34 +14,36 @@ trigger NEU_ActualizaFolioIE on Customer_Quote__c (before insert, before update)
                 system.debug('GenerateDateLoad.GenerarTimeResponse 1');
                 GenerateDateLoad.GenerarTimeResponse(trigger.new,Trigger.oldMap);
             }
+            //Consultas UNA sola vez por transaccion (antes corrian dentro del loop, por cada folio)
+            List<IE_Counter__c> contador = [SELECT Contador__c FROM IE_Counter__c FOR UPDATE];
+            List<User> user = [SELECT Id, Name, Team__c from User WHERE Id =: UserInfo.getUserId()];
+            Integer contadorAnual = 0;
+            if(!Test.isRunningTest())
+            {
+                if(system.now().month() == 12){
+                    // contadorAnual = [SELECT COUNT() FROM Customer_Quote__c WHERE CALENDAR_MONTH(CreatedDate) = 12 limit 10];
+                    contadorAnual = contadorAnual == 0 ? 1 : contadorAnual;
+                }
+                else{
+                    contadorAnual = [SELECT COUNT() FROM Customer_Quote__c WHERE CreatedDate = this_year limit 10];
+                }
+            }
             for(Customer_Quote__c ie : trigger.new)
             {
                 string ref = '';
-                
-                List<IE_Counter__c> contador = [SELECT Contador__c FROM IE_Counter__c FOR UPDATE];
-                List<User> user = [SELECT Id, Name, Team__c from User WHERE Id =: UserInfo.getUserId()];        
-                
+
                 if(!Test.isRunningTest())
-                {   Integer contadorAnual = 0;
-                 if(system.now().month() == 12){
-                     // contadorAnual = [SELECT COUNT() FROM Customer_Quote__c WHERE CALENDAR_MONTH(CreatedDate) = 12 limit 10];
-                     contadorAnual = contadorAnual == 0 ? 1 : contadorAnual;
-                 }
-                 else{
-                     contadorAnual = [SELECT COUNT() FROM Customer_Quote__c WHERE CreatedDate = this_year limit 10];
-                 }
+                {
                  //Si hemos cambiado de año reiniciamos el contador, si no es así simplemente lo incrementamos
-                 
-                 
                  if(contadorAnual == 0)
                      contador[0].Contador__c = 1;
                  else
                      contador[0].Contador__c += 1;
-                 
+
                  ie.Numero_Folio__c = contador[0].Contador__c;
                 }
-                else{ 
-                    
+                else{
+
                     ie.Numero_Folio__c = 1;
                 }
                 
@@ -84,7 +86,17 @@ trigger NEU_ActualizaFolioIE on Customer_Quote__c (before insert, before update)
                     if(ie.Freight_Mode__c == 'Air' && ie.Service_Mode__c == 'INTERNATIONAL' && ie.Service_Type__c == 'CARGA'){ref = 'A';}                        
                     if(ie.Freight_Mode__c == 'Air' && ie.Service_Mode__c == 'NATIONAL' && ie.Service_Type__c == 'PAQUETERIA'){ref = 'ES';}                        
                     if(ie.Freight_Mode__c == 'Air' && ie.Service_Mode__c == 'NATIONAL' && ie.Service_Type__c == 'CARGA'){ref = 'A';}                        
-                    if(ie.Freight_Mode__c == 'Air' && ie.Service_Mode__c == 'NATIONAL' && ie.Service_Type__c == 'ENVIO NACIONAL'){ref = 'ES';}                        
+                    if(ie.Freight_Mode__c == 'Air' && ie.Service_Mode__c == 'NATIONAL' && ie.Service_Type__c == 'ENVIO NACIONAL'){ref = 'ES';}    
+                    
+                    //Refrigerado
+                    if(ie.Refrigerado__c && ie.Service_Mode__c == 'NATIONAL'){
+                        System.debug('Es de tipo refrigerado el SP');
+                        ref = 'RN';
+                    }
+                    if(ie.Refrigerado__c && ie.Service_Mode__c == 'INTERNATIONAL'){
+                        System.debug('Es de tipo refrigerado el SP');
+                        ref = 'RI';
+                    }
                 }
                 else
                 {
@@ -128,8 +140,9 @@ trigger NEU_ActualizaFolioIE on Customer_Quote__c (before insert, before update)
                 ref += ('000000' + (numeroFolio)).right(6);
                 
                 ie.Name = ref;
-                update contador;
             }
+            //un solo update al contador con el valor final (antes era un DML por folio)
+            update contador;
         }
         else if(trigger.isUpdate == true)
         {
@@ -142,7 +155,17 @@ trigger NEU_ActualizaFolioIE on Customer_Quote__c (before insert, before update)
             }
             
             
-            map<string, User> mapUSer = new map<string, User>([SELECT Id, Name, Team__c from User ]);
+            //solo se usa cuando cambian los campos que rearman el Name: no consultar todos los usuarios si nada cambio
+            Boolean hayCambioNombre = false;
+            for(Customer_Quote__c ie : trigger.new)
+            {
+                Customer_Quote__c old_ie = Trigger.oldMap.get(ie.Id);
+                if(old_ie.Freight_Mode__c != ie.Freight_Mode__c || old_ie.Service_Mode__c != ie.Service_Mode__c
+                   || old_ie.Service_Type__c != ie.Service_Type__c || old_ie.Team__c != ie.Team__c
+                   || old_ie.Warehouse__c != ie.Warehouse__c || old_ie.Only_Warehouse_Service__c != ie.Only_Warehouse_Service__c)
+                { hayCambioNombre = true; break; }
+            }
+            map<string, User> mapUSer = hayCambioNombre ? new map<string, User>([SELECT Id, Name, Team__c from User ]) : new map<string, User>();
             //List<User> user = [SELECT Id, Name, Team__c from User WHERE Id =: ie.CreatedById];
             
             
@@ -196,7 +219,17 @@ trigger NEU_ActualizaFolioIE on Customer_Quote__c (before insert, before update)
                         if(ie.Freight_Mode__c == 'Air' && ie.Service_Mode__c == 'INTERNATIONAL' && ie.Service_Type__c == 'CARGA'){ref = 'A';}                            
                         if(ie.Freight_Mode__c == 'Air' && ie.Service_Mode__c == 'NATIONAL' && ie.Service_Type__c == 'PAQUETERIA'){ref = 'ES';}                            
                         if(ie.Freight_Mode__c == 'Air' && ie.Service_Mode__c == 'NATIONAL' && ie.Service_Type__c == 'CARGA'){ref = 'A';}                            
-                        if(ie.Freight_Mode__c == 'Air' && ie.Service_Mode__c == 'NATIONAL' && ie.Service_Type__c == 'ENVIO NACIONAL'){ref = 'ES';}                            
+                        if(ie.Freight_Mode__c == 'Air' && ie.Service_Mode__c == 'NATIONAL' && ie.Service_Type__c == 'ENVIO NACIONAL'){ref = 'ES';}
+                        
+                         //Refrigerado
+                        if(ie.Refrigerado__c && ie.Service_Mode__c == 'NATIONAL'){
+                            System.debug('Es de tipo refrigerado el SP');
+                            ref = 'RN';
+                        }
+                        if(ie.Refrigerado__c && ie.Service_Mode__c == 'INTERNATIONAL'){
+                            System.debug('Es de tipo refrigerado el SP');
+                            ref = 'RI';
+                        }
                     }
                     else
                     {
@@ -246,219 +279,6 @@ trigger NEU_ActualizaFolioIE on Customer_Quote__c (before insert, before update)
                 
             }
         }
-
-    
-    	/*if(Test.isRunningTest())
-    	{
-        string       Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-        Test0 = '';
-    }*/
+        	
     }    
 }

@@ -11,8 +11,11 @@ trigger Pak_MargenOperativo_email on Customer_Quote__c (before update)
         {  
             Customer_Quote__c oldquote = Trigger.oldMap.get(folio.ID);
             
-            if(folio.Quotation_Status__c == 'Approved as Succesful'
-               || oldquote.Quotation_Status__c == folio.Quotation_Status__c)
+            //mismo criterio que aplica el procesamiento de abajo (los demas folios hacian
+            //continue de todos modos, pero disparaban las consultas de User y Rol_Margen)
+            if(Test.isRunningTest()
+               || (folio.Quotation_Status__c == 'Approved as Succesful'
+               && oldquote.Quotation_Status__c != folio.Quotation_Status__c))
                 folios.add(folio);
         }
         

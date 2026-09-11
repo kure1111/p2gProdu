@@ -16,15 +16,17 @@ public class TriggerCustomerQuote {
         
             if(!idShipments.isEmpty()){
                 
-                for(Shipment__c s : [select id,SPMargen_Operativo__c  from Shipment__c where id in :idShipments] )
+                for(Shipment__c s : [select id,SPMargen_Operativo__c,Order_Margen_Operativo__c  from Shipment__c where id in :idShipments] )
                 {
                     if(mapQuote.containsKey(s.id))
                     {
+                        //si el margen ya es el mismo, actualizar solo re-dispararia la cadena de triggers del Shipment
+                        if(s.Order_Margen_Operativo__c == mapQuote.get(s.id).Margen_Operativo__c){ continue; }
                         s.Order_Margen_Operativo__c = mapQuote.get(s.id).Margen_Operativo__c;
-                        listaShipments.add(s);    
-                    }                    
+                        listaShipments.add(s);
+                    }
                 }
-                update listaShipments;               
+                if(!listaShipments.isEmpty()){ update listaShipments; }               
             }               
         
     }
