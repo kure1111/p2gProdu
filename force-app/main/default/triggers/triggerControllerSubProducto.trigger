@@ -1,4 +1,7 @@
 trigger triggerControllerSubProducto on SubProducto__c (before insert, before update, before delete, after insert, after update, after delete) {
+    // Sin logica de borrado: en delete Trigger.new es null y el recorrido de abajo tronaba con NullPointerException
+    if (Trigger.isDelete) { return; }
+
     Set<String> idOli = new Set<String>();
     Set<String> idOppo = new Set<String>();
     List<String> idOpportuniy = new List<String>();
