@@ -25,7 +25,7 @@ public with sharing class P2G_EventMeeting {
     }
     
     @AuraEnabled
-    public static void createEvent(String subject, String motivoMinuta, String tipoMeeting, String ownerId, String whatId, String tipoVisita, DateTime startDateTime, DateTime endDateTime) {
+    public static void createEvent(String subject, String motivoMinuta, String tipoMeeting, String ownerId, String whatId, String tipoVisita, DateTime startDateTime, DateTime endDateTime, String servicio) {
         System.debug('subject: ' + subject);
         System.debug('motivoMinuta: ' + motivoMinuta);
         System.debug('tipoMeeting: ' + tipoMeeting);
@@ -56,7 +56,8 @@ public with sharing class P2G_EventMeeting {
             OwnerId = ownerId,
             WhatId = whatId,
             Tipo_Visita__c = tipoVisita,
-            Status_Event__c = 'Not Started', 
+            Servicio__c = servicio,
+            Status_Event__c = 'Not Started',
             StartDateTime = startDateTime,
             EndDateTime = endDateTime
         );

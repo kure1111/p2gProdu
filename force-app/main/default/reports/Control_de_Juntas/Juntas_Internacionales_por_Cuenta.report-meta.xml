@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Report xmlns="http://soap.sforce.com/2006/04/metadata">
+    <columns>
+        <field>SUBJECT</field>
+    </columns>
+    <columns>
+        <field>ASSIGNED</field>
+    </columns>
+    <columns>
+        <field>Activity.Servicio__c</field>
+    </columns>
+    <columns>
+        <field>Activity.TipoMeeting__c</field>
+    </columns>
+    <columns>
+        <field>Activity.Tipo_Visita__c</field>
+    </columns>
+    <columns>
+        <field>DUE_DATE</field>
+    </columns>
+    <description>Juntas de servicios internacionales (FI/M/A/PTO) agrupadas por cliente y motivo. Fuente: quick action Nuevo Evento.</description>
+    <filter>
+        <criteriaItems>
+            <column>Activity.Servicio__c</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>true</isUnlocked>
+            <operator>includes</operator>
+            <value>FI - Flete Inter,M - Maritimo,A - Aereo,PTO - Puertos</value>
+        </criteriaItems>
+    </filter>
+    <format>Summary</format>
+    <groupingsDown>
+        <dateGranularity>Day</dateGranularity>
+        <field>ACCOUNT</field>
+        <sortOrder>Asc</sortOrder>
+    </groupingsDown>
+    <groupingsDown>
+        <dateGranularity>Day</dateGranularity>
+        <field>Activity.Motivo_Minuta__c</field>
+        <sortOrder>Asc</sortOrder>
+    </groupingsDown>
+    <name>Juntas Internacionales por Cuenta</name>
+    <params>
+        <name>closed</name>
+        <value>all</value>
+    </params>
+    <params>
+        <name>type</name>
+        <value>e</value>
+    </params>
+    <params>
+        <name>co</name>
+        <value>1</value>
+    </params>
+    <reportType>Activity</reportType>
+    <scope>organization</scope>
+    <showDetails>true</showDetails>
+    <timeFrameFilter>
+        <dateColumn>END_DATE_TIME</dateColumn>
+        <interval>INTERVAL_CURY</interval>
+    </timeFrameFilter>
+</Report>

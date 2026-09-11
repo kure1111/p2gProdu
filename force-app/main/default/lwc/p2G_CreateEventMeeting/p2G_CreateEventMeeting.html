@@ -102,6 +102,13 @@
                                 disabled>
             </lightning-input>
 
+            <lightning-checkbox-group label="Servicio"
+                                options={servicioOptions}
+                                value={servicio}
+                                onchange={handleServicioChange}
+                                required>
+            </lightning-checkbox-group>
+
             <lightning-combobox label="Frecuencia"
                                 value={frequency}
                                 options={frequencyOptions}

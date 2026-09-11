@@ -3,6 +3,8 @@ import getRecordName from '@salesforce/apex/P2G_EventMeeting.getRecordName';
 import createEvent from '@salesforce/apex/P2G_EventMeeting.createEvent';
 import getOpportunitiesForAccount from '@salesforce/apex/P2G_EventMeeting.getOpportunitiesForAccount';
 import { getRecord } from 'lightning/uiRecordApi';
+import { getPicklistValues } from 'lightning/uiObjectInfoApi';
+import SERVICIO_FIELD from '@salesforce/schema/Event.Servicio__c';
 import USER_ID from '@salesforce/user/Id';
 import NAME_FIELD from '@salesforce/schema/User.Name';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
@@ -25,6 +27,8 @@ pageRef;
 @track subject = '';
 @track meetingType = '';
 @track reason = '';
+@track servicio = [];
+@track servicioOptions = [];
 @track frequency = '';
 @track startDateTime = '';
 @track endDateTime = '';
@@ -75,6 +79,20 @@ connectedCallback() {
     if (this.pageRef && this.pageRef.type === 'standard__quickAction') {
         this.isQuickAction = true;
     }
+}
+
+// opciones de Event.Servicio__c desde la picklist real (sin hardcodear valores)
+@wire(getPicklistValues, { recordTypeId: '012000000000000AAA', fieldApiName: SERVICIO_FIELD })
+loadServicioOptions({ error, data }) {
+    if (data) {
+        this.servicioOptions = data.values.map(v => ({ label: v.label, value: v.value }));
+    } else if (error) {
+        console.error('Error fetching Servicio picklist: ', error);
+    }
+}
+
+handleServicioChange(event) {
+    this.servicio = event.detail.value;
 }
 
 @wire(getRecord, { recordId: USER_ID, fields: [NAME_FIELD] })
@@ -325,12 +343,24 @@ handleSubmit() {
         return;
     }*/
 
+    if (!this.servicio || this.servicio.length === 0) {
+        this.dispatchEvent(
+            new ShowToastEvent({
+                title: 'Error',
+                message: 'El campo "Servicio" es requerido.',
+                variant: 'error'
+            })
+        );
+        return;
+    }
+
     let eventDetails = {
         subject: this.subject,
         motivoMinuta: this.reason,
         tipoMeeting: this.meetingType,
         ownerId: USER_ID,
         tipoVisita: this.frequency,
+        servicio: this.servicio.join(';'),
         startDateTime: this.startDateTime,
         endDateTime: this.endDateTime
     };
@@ -386,6 +416,7 @@ clearFields() {
     this.subject = '';
     this.meetingType = '';
     this.reason = '';
+    this.servicio = [];
     this.frequency = '';
     this.startDateTime = '';
     this.endDateTime = '';
