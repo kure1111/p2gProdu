@@ -1,8 +1,7 @@
 trigger NEU_OM_UpdateFoShipment on Shipment__c (after insert) {
-
 	if(NEU_StaticVariableHelper.getBoolean1())
 		return; 
-
+	
     Set<Id>users=new Set<Id>();
     Set<Id>accounts=new Set<Id>();
     
@@ -82,4 +81,11 @@ trigger NEU_OM_UpdateFoShipment on Shipment__c (after insert) {
         insert entities.values();
     }
     catch(Exception e){}
+    try {
+        P2G_InterbodegaValidator.main(Trigger.new);
+    } catch(Exception e) {
+        for(Shipment__c sh : Trigger.new) {
+            sh.addError('Ocurrió un error al validar la interbodega: ' + e.getMessage());
+        }
+    }
 }
