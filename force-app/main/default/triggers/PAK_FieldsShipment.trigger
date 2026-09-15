@@ -11,14 +11,47 @@ trigger PAK_FieldsShipment on Shipment__c (before update, after update) {
         if(!setShipment.contains(s.Id)){setShipment.add(s.Id);}
     }
     System.debug('***PAK_FieldsShipment SET: *** ' + setShipment);
-    for(Shipment_Consolidation_Data__c scd : [Select Import_Export_Quote__c,Import_Export_Quote__r.CreatedBy.Email, Shipment__c From Shipment_Consolidation_Data__c Where Shipment__c IN:setShipment]){mapShipment.put(scd.Shipment__c, scd);}
+    // En el after la consolidacion solo se usa para armar los Status_Datetime,
+    // y eso solo pasa cuando cambio algun status: si ninguno cambio, se salta
+    // la query (el resto del bloque after queda en no-op solo, como antes).
+    Boolean consolidacionNecesaria = trigger.isBefore;
+    if(trigger.isAfter){
+        for(Shipment__c s : trigger.new){
+            Shipment__c viejoSP = trigger.oldMap.get(s.Id);
+            if(s.Air_Shipment_Status__c != viejoSP.Air_Shipment_Status__c
+               || s.Shipment_Status__c != viejoSP.Shipment_Status__c
+               || s.Ocean_Shipment_Status__c != viejoSP.Ocean_Shipment_Status__c
+               || s.Shipment_Status_Plann__c != viejoSP.Shipment_Status_Plann__c
+               || s.Shipment_Status_Mon__c != viejoSP.Shipment_Status_Mon__c
+               || s.Routing_Operation_Status__c != viejoSP.Routing_Operation_Status__c){
+                consolidacionNecesaria = true;
+                break;
+            }
+        }
+    }
+    if(consolidacionNecesaria){
+        for(Shipment_Consolidation_Data__c scd : [Select Import_Export_Quote__c,Import_Export_Quote__r.CreatedBy.Email, Shipment__c From Shipment_Consolidation_Data__c Where Shipment__c IN:setShipment]){mapShipment.put(scd.Shipment__c, scd);}
+    }
     System.debug('***PAK_FieldsShipment MAP ID, CONS: *** ' + mapShipment);
     
     if(trigger.isBefore){
         System.debug('***PAK_FieldsShipment BEFORE***');
-        P2G_Advertencia.handleBeforeUpdate(Trigger.new[0], Trigger.oldMap);
+        // P2G_Advertencia solo actua en estas dos transiciones (el metodo valida
+        // exactamente lo mismo antes de hacer nada): llamarlo siempre costaba una
+        // query de Log_Aprobacion en cada update.
+        Shipment__c primerSP = Trigger.new[0];
+        String statusViejoAdv = Trigger.oldMap.get(primerSP.Id).Shipment_Status_Plann__c;
+        String statusNuevoAdv = primerSP.Shipment_Status_Plann__c;
+        if((statusNuevoAdv == 'In Progress' && statusViejoAdv == 'Pending') || (statusNuevoAdv == 'Confirmed' && statusViejoAdv == 'In Progress')){
+            P2G_Advertencia.handleBeforeUpdate(primerSP, Trigger.oldMap);
+        }
         map<String,String> mapWareHouse = new map<String,String>();
-        for(Warehouse__c WH: [Select Id, Warehouse_Manager__c, Warehouse_Executive__c, Warehouse_Manager__r.Email,Warehouse_Executive__r.Email From Warehouse__c]){String ExEmail = '';String ManEmail = '';if(WH.Warehouse_Executive__c != null){ExEmail = WH.Warehouse_Executive__r.Email;}if(WH.Warehouse_Manager__c != null){ManEmail = WH.Warehouse_Manager__r.Email;}mapWareHouse.put(WH.Id, ExEmail+'-'+ManEmail);}
+        // solo las bodegas referenciadas por estos SP (antes bajaba la tabla completa)
+        Set<Id> setWarehouse = new Set<Id>();
+        for(Shipment__c s : trigger.new){ if(s.Warehouse__c != null){ setWarehouse.add(s.Warehouse__c); } }
+        if(!setWarehouse.isEmpty()){
+            for(Warehouse__c WH: [Select Id, Warehouse_Manager__c, Warehouse_Executive__c, Warehouse_Manager__r.Email,Warehouse_Executive__r.Email From Warehouse__c Where Id IN :setWarehouse]){String ExEmail = '';String ManEmail = '';if(WH.Warehouse_Executive__c != null){ExEmail = WH.Warehouse_Executive__r.Email;}if(WH.Warehouse_Manager__c != null){ManEmail = WH.Warehouse_Manager__r.Email;}mapWareHouse.put(WH.Id, ExEmail+'-'+ManEmail);}
+        }
         for(Shipment__c SHIP: trigger.new){
             
         // inicia guardar Cancelled by
