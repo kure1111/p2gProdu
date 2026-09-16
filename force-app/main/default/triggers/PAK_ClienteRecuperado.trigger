@@ -7,7 +7,10 @@ trigger PAK_ClienteRecuperado on Account (after update) {
         
         Set<Id> accountsIds = new Set<Id>();
         Set<Id> accountsIdsReasing =  new Set<Id>();
-        String cliente = [SELECT Id FROM RecordType WHERE DeveloperName='Customer'].Id;
+        // mismo Id que la query [SELECT Id FROM RecordType WHERE DeveloperName='Customer'],
+        // pero por describe: esa query corria en CADA update de Account (incluido el
+        // recalculo de rollups por cada Shipment/folio nuevo) aunque no hubiera nada que hacer
+        String cliente = Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get('Customer').getRecordTypeId();
         for(Account acct : Trigger.New){
             if(Test.isRunningTest() || (acct.Recuperado__c && Trigger.oldMap.get(acct.Id).Recuperado__c == false && !acct.Recuperado_SAP__c && acct.RecordTypeId == cliente && !accountsIds.contains(acct.Id))){
                 accountsIds.add(acct.Id);
