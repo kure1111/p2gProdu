@@ -124,12 +124,19 @@
         <defaultConnectorLabel>Sin cambio</defaultConnectorLabel>
         <rules>
             <name>Precio_diferente</name>
-            <conditionLogic>and</conditionLogic>
+            <conditionLogic>or</conditionLogic>
             <conditions>
                 <leftValueReference>preciocalculado</leftValueReference>
                 <operator>NotEqualTo</operator>
                 <rightValue>
                     <elementReference>$Record.Precio_Sugerido_Venta__c</elementReference>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>preciocalculado</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <elementReference>$Record.UnitPrice</elementReference>
                 </rightValue>
             </conditions>
             <connector>
@@ -227,7 +234,15 @@
     <formulas>
         <name>preciocalculado</name>
         <dataType>Currency</dataType>
-        <expression>{!$Record.Buy_Price__c} * {!precioMargen}</expression>
+        <expression>IF(AND(TEXT({!$Record.Opportunity.Group__c}) = &quot;SP-FN-FLETE NACIONAL&quot;, 2 - {!precioMargen} &gt; 0),
+{!$Record.Buy_Price__c} / (2 - {!precioMargen}),
+{!$Record.Buy_Price__c} * {!precioMargen})</expression>
+        <scale>2</scale>
+    </formulas>
+    <formulas>
+        <name>precioVentaFinal</name>
+        <dataType>Currency</dataType>
+        <expression>IF(ISBLANK({!preciocalculado}), {!$Record.UnitPrice}, {!preciocalculado})</expression>
         <scale>2</scale>
     </formulas>
     <formulas>
@@ -303,6 +318,12 @@
             <field>Precio_Sugerido_Venta__c</field>
             <value>
                 <elementReference>preciocalculado</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>UnitPrice</field>
+            <value>
+                <elementReference>precioVentaFinal</elementReference>
             </value>
         </inputAssignments>
         <inputReference>$Record</inputReference>
