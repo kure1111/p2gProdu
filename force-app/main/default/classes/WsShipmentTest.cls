@@ -65,9 +65,14 @@ public class WsShipmentTest {
         NEU_StaticVariableHelper.setBoolean1(true);
 
         Test.startTest();
-        // sin devolucion: el campo no se toca
-        llamar(new Map<String, Object>{ 'idShipment' => sp.Id, 'specialNote' => 'nota sin devolucion' });
-        System.assertEquals(false, [SELECT Devolucion__c FROM Shipment__c WHERE Id = :sp.Id].Devolucion__c);
+        // sin devolucion: ni el checkbox ni los datos se tocan, aunque los manden
+        llamar(new Map<String, Object>{ 'idShipment' => sp.Id, 'specialNote' => 'nota sin devolucion',
+            'causanteDevolucion' => 'Cliente', 'comentariosDevolucion' => 'no debe guardarse' });
+        Shipment__c sinDev = [SELECT Devolucion__c, Causante_de_devoluci_n__c, Seguimiento_de_devolucion_comentarios__c
+                              FROM Shipment__c WHERE Id = :sp.Id];
+        System.assertEquals(false, sinDev.Devolucion__c);
+        System.assertEquals(null, sinDev.Causante_de_devoluci_n__c, 'Sin devolucion:true el causante se ignora');
+        System.assertEquals(null, sinDev.Seguimiento_de_devolucion_comentarios__c, 'Sin devolucion:true el comentario se ignora');
         // devolucion false explicito: tampoco
         llamar(new Map<String, Object>{ 'idShipment' => sp.Id, 'devolucion' => false });
         System.assertEquals(false, [SELECT Devolucion__c FROM Shipment__c WHERE Id = :sp.Id].Devolucion__c);
@@ -79,16 +84,13 @@ public class WsShipmentTest {
         Test.stopTest();
 
         System.assertEquals('El shipment fue Actualizado con Éxito..', r);
-        // el campo Motivo se llama distinto en UAT y Produ: query dinamica
-        String campoMotivo = Schema.SObjectType.Shipment__c.fields.getMap().containsKey('motivo_de_devoluci_n__c')
-            ? 'Motivo_de_devoluci_n__c' : 'Motivo_de__c';
-        Shipment__c despues = Database.query('SELECT Devolucion__c, Special_Notes__c, Causante_de_devoluci_n__c, '
-            + campoMotivo + ', Fecha_final_devolucion__c, Seguimiento_de_devolucion_comentarios__c'
-            + ' FROM Shipment__c WHERE Id = \'' + sp.Id + '\'');
+        Shipment__c despues = [SELECT Devolucion__c, Special_Notes__c, Causante_de_devoluci_n__c,
+                                      Motivo_de__c, Fecha_final_devolucion__c, Seguimiento_de_devolucion_comentarios__c
+                               FROM Shipment__c WHERE Id = :sp.Id];
         System.assertEquals(true, despues.Devolucion__c, 'devolucion=true debe marcar el checkbox');
         System.assertEquals('DESCARGA CONCLUIDA con una devolución C/PR', despues.Special_Notes__c);
         System.assertEquals('Cliente', despues.Causante_de_devoluci_n__c);
-        System.assertEquals('Rechazos', (String) despues.get(campoMotivo));
+        System.assertEquals('Rechazos', despues.Motivo_de__c);
         System.assertEquals(Date.newInstance(2026, 9, 30), despues.Fecha_final_devolucion__c);
         System.assertEquals('comentario devolucion', despues.Seguimiento_de_devolucion_comentarios__c);
 
@@ -97,9 +99,9 @@ public class WsShipmentTest {
         llamar(new Map<String, Object>{ 'idShipment' => sp.Id, 'devolucion' => 'true' });
         System.assertEquals(true, [SELECT Devolucion__c FROM Shipment__c WHERE Id = :sp.Id].Devolucion__c);
 
-        // fecha final invalida regresa Error sin tumbar el servicio
+        // fecha final invalida (con devolucion:true, si no se ignoraria) regresa Error
         NEU_StaticVariableHelper.setBoolean1(true);
-        String rMala = llamar(new Map<String, Object>{ 'idShipment' => sp.Id, 'fechaFinalDevolucion' => 'no-es-fecha' });
+        String rMala = llamar(new Map<String, Object>{ 'idShipment' => sp.Id, 'devolucion' => true, 'fechaFinalDevolucion' => 'no-es-fecha' });
         System.assert(rMala.startsWith('Error:'), 'Fecha final invalida debe regresar Error: ' + rMala);
     }
 

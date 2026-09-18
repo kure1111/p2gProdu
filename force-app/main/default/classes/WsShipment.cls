@@ -4,7 +4,8 @@
  * Body: { idShipment, status, eventDatetime ('yyyy-MM-dd HH:mm:ss' GMT o 'NA' para reset),
  *         specialNote, otd, devolucion (boolean),
  *         causanteDevolucion (picklist), motivoDevolucion (picklist),
- *         fechaFinalDevolucion ('yyyy-MM-dd'), comentariosDevolucion (texto) }
+ *         fechaFinalDevolucion ('yyyy-MM-dd'), comentariosDevolucion (texto)
+ *         — los 4 datos de devolucion SOLO se aplican si devolucion viene en true }
  * Respuestas (texto plano, el bot las parsea — NO cambiar):
  *   'El shipment fue Actualizado con Éxito..' | 'Error: <detalle>'
  */
@@ -14,12 +15,6 @@ global with sharing class WsShipment {
     private static final Set<String> TIPOS_ROAD  = new Set<String>{ 'SP-PT', 'SP-FI', 'SP-FN' };
     private static final Set<String> TIPOS_AIR   = new Set<String>{ 'SP-A-' };
     private static final Set<String> TIPOS_OCEAN = new Set<String>{ 'SP-M-' };
-
-    // El campo Motivo de Devolucion se llama distinto en cada org
-    // (Motivo_de_devoluci_n__c en UAT, Motivo_de__c en Produccion): se resuelve dinamico
-    private static final String CAMPO_MOTIVO_DEVOLUCION =
-        Schema.SObjectType.Shipment__c.fields.getMap().containsKey('motivo_de_devoluci_n__c')
-            ? 'Motivo_de_devoluci_n__c' : 'Motivo_de__c';
 
     @HttpPut
     global static String UpdateShipment() {
@@ -69,24 +64,24 @@ global with sharing class WsShipment {
             if (String.isNotBlank(otd)) {
                 ship.OTD__c = otd;
             }
-            if (devolucion) {
-                ship.Devolucion__c = true;
-            }
-            // Datos de la devolucion (Control Room los manda junto con devolucion:true;
-            // cada campo se aplica de forma independiente, igual que el resto del payload).
+            // Los datos de la devolucion SOLO se aplican cuando el payload trae
+            // devolucion:true; si no viene (o viene false), se ignoran aunque los manden.
             // Causante y Motivo son picklists RESTRINGIDAS: un valor fuera de catalogo
             // hace fallar el update y regresa 'Error: ...'
-            if (String.isNotBlank(causanteDevolucion)) {
-                ship.Causante_de_devoluci_n__c = causanteDevolucion;
-            }
-            if (String.isNotBlank(motivoDevolucion)) {
-                ship.put(CAMPO_MOTIVO_DEVOLUCION, motivoDevolucion);
-            }
-            if (String.isNotBlank(fechaFinalDevolucion)) {
-                ship.Fecha_final_devolucion__c = Date.valueOf(fechaFinalDevolucion);
-            }
-            if (String.isNotBlank(comentariosDevolucion)) {
-                ship.Seguimiento_de_devolucion_comentarios__c = comentariosDevolucion;
+            if (devolucion) {
+                ship.Devolucion__c = true;
+                if (String.isNotBlank(causanteDevolucion)) {
+                    ship.Causante_de_devoluci_n__c = causanteDevolucion;
+                }
+                if (String.isNotBlank(motivoDevolucion)) {
+                    ship.Motivo_de__c = motivoDevolucion;
+                }
+                if (String.isNotBlank(fechaFinalDevolucion)) {
+                    ship.Fecha_final_devolucion__c = Date.valueOf(fechaFinalDevolucion);
+                }
+                if (String.isNotBlank(comentariosDevolucion)) {
+                    ship.Seguimiento_de_devolucion_comentarios__c = comentariosDevolucion;
+                }
             }
 
             update ship;
