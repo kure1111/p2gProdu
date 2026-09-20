@@ -1,0 +1,56 @@
+<template>
+    <lightning-card title="Cotizador de compra por ruta (FN)" icon-name="standard:price_books">
+        <div class="slds-p-around_medium">
+            <div class="slds-grid slds-gutters slds-wrap">
+                <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-3">
+                    <lightning-record-picker
+                        label="Origen"
+                        placeholder="Buscar localidad..."
+                        object-api-name="Location__c"
+                        onchange={handleOrigen}>
+                    </lightning-record-picker>
+                </div>
+                <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-3">
+                    <lightning-record-picker
+                        label="Destino"
+                        placeholder="Buscar localidad..."
+                        object-api-name="Location__c"
+                        onchange={handleDestino}>
+                    </lightning-record-picker>
+                </div>
+                <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-3">
+                    <lightning-input type="number" label="Km (opcional, se estima del histórico)"
+                        step="1" onchange={handleKm}></lightning-input>
+                </div>
+            </div>
+            <div class="slds-m-top_medium">
+                <lightning-button variant="brand" label="Cotizar" onclick={cotizarRuta}
+                    disabled={sinSeleccion}></lightning-button>
+                <template if:true={cargando}>
+                    <lightning-spinner alternative-text="Cotizando" size="small"></lightning-spinner>
+                </template>
+            </div>
+
+            <template if:true={error}>
+                <div class="slds-m-top_medium slds-text-color_error">{error}</div>
+            </template>
+
+            <template if:true={resultado}>
+                <div class="slds-m-top_medium slds-box">
+                    <template if:true={tieneCosto}>
+                        <div class="slds-text-heading_large">
+                            <lightning-formatted-number value={resultado.costo} format-style="currency"
+                                currency-code="MXN" maximum-fraction-digits="0"></lightning-formatted-number>
+                        </div>
+                    </template>
+                    <p class="slds-m-top_x-small slds-text-title">{resultado.fuente}</p>
+                    <template if:true={resultado.km}>
+                        <p class="slds-m-top_x-small">Km: {resultado.km}
+                            <template if:true={resultado.costoPorKm}> &nbsp;|&nbsp; $/km: {resultado.costoPorKm}</template>
+                        </p>
+                    </template>
+                </div>
+            </template>
+        </div>
+    </lightning-card>
+</template>
