@@ -1,5 +1,5 @@
 <template>
-    <lightning-card title="Cotizador de compra por ruta (FN)" icon-name="standard:price_books">
+    <lightning-card title="Cotizador de fletes por ruta (FN)" icon-name="standard:price_books">
         <div class="slds-p-around_medium">
             <div class="slds-grid slds-gutters slds-wrap">
                 <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-3">
@@ -36,20 +36,77 @@
             </template>
 
             <template if:true={resultado}>
+                <!-- Lo que dice el motor: costo de compra estimado + confianza -->
                 <div class="slds-m-top_medium slds-box">
-                    <template if:true={tieneCosto}>
-                        <div class="slds-text-heading_large">
-                            <lightning-formatted-number value={resultado.costo} format-style="currency"
-                                currency-code="MXN" maximum-fraction-digits="0"></lightning-formatted-number>
+                    <div class="slds-grid slds-grid_align-spread slds-grid_vertical-align-center">
+                        <div>
+                            <p class="slds-text-title">Costo estimado de compra</p>
+                            <template if:true={tieneCosto}>
+                                <div class="slds-text-heading_large">
+                                    <lightning-formatted-number value={resultado.costo} format-style="currency"
+                                        currency-code="MXN" maximum-fraction-digits="0"></lightning-formatted-number>
+                                </div>
+                            </template>
                         </div>
-                    </template>
+                        <template if:true={resultado.confianza}>
+                            <span class={badgeClass}>{etiquetaConfianza}</span>
+                        </template>
+                    </div>
                     <p class="slds-m-top_x-small slds-text-title">{resultado.fuente}</p>
                     <template if:true={resultado.km}>
                         <p class="slds-m-top_x-small">Km: {resultado.km}
                             <template if:true={resultado.costoPorKm}> &nbsp;|&nbsp; $/km: {resultado.costoPorKm}</template>
                         </p>
                     </template>
+                    <template if:true={resultado.pedirProveedor}>
+                        <div class="slds-m-top_small slds-text-color_error">
+                            ⚠ Poca información de esta ruta: confirma el precio con proveedor antes de comprometer la venta.
+                        </div>
+                    </template>
                 </div>
+
+                <!-- Decisión humana: el precio final lo pone la persona, no el motor -->
+                <template if:true={tieneCosto}>
+                    <div class="slds-m-top_medium slds-box">
+                        <p class="slds-text-heading_small">Precio de venta — lo decides tú</p>
+                        <p class="slds-text-body_small slds-m-top_xx-small slds-m-bottom_small">
+                            Sugerido con margen del {resultado.margenPct}%. Mueve el margen o escribe el
+                            precio final y el otro se recalcula.
+                        </p>
+                        <div class="slds-grid slds-gutters slds-wrap slds-grid_vertical-align-end">
+                            <div class="slds-col slds-size_1-of-2 slds-medium-size_1-of-4">
+                                <lightning-input type="number" label="Margen (%)" step="0.1"
+                                    value={margen} onchange={handleMargen}></lightning-input>
+                            </div>
+                            <div class="slds-col slds-size_1-of-2 slds-medium-size_1-of-4">
+                                <lightning-input type="number" label="Precio de venta (MXN)" step="1"
+                                    value={venta} onchange={handleVenta}></lightning-input>
+                            </div>
+                            <div class="slds-col slds-size_1-of-1 slds-medium-size_2-of-4">
+                                <template if:true={tieneUtilidad}>
+                                    <p class="slds-text-heading_small slds-p-bottom_x-small">Utilidad:
+                                        <lightning-formatted-number value={utilidad} format-style="currency"
+                                            currency-code="MXN" maximum-fraction-digits="0"></lightning-formatted-number>
+                                    </p>
+                                </template>
+                            </div>
+                        </div>
+                        <template if:true={ventaBajoCosto}>
+                            <div class="slds-m-top_small slds-text-color_error">
+                                ⚠ Estás vendiendo DEBAJO del costo estimado.
+                            </div>
+                        </template>
+                        <template if:true={margenBajo}>
+                            <div class="slds-m-top_small slds-text-color_error">
+                                ⚠ Margen debajo del 10%.
+                            </div>
+                        </template>
+                        <div class="slds-m-top_small">
+                            <lightning-button label={etiquetaCopiar} icon-name="utility:copy_to_clipboard"
+                                onclick={copiarResumen}></lightning-button>
+                        </div>
+                    </div>
+                </template>
             </template>
         </div>
     </lightning-card>

@@ -12,6 +12,12 @@
  * el mismo par), km = mediana de Kms__c de los viajes reales (el manual lo
  * sobreescribe), y trazabilidad de qué fuente se usó y con cuántos viajes.
  * Fuente de datos: Shipment__c FN con compra real (> 0), sin copiar nada.
+ *
+ * Fase 2 (2026-09-23): confianza Alta/Media/Baja según el nivel de la cascada,
+ * bandera pedirProveedor cuando el dato no es confiable, y venta sugerida con
+ * el margen FN estándar (15% sobre venta, mismo criterio que el precio
+ * sugerido de productos: Buy / 0.85). La venta es SOLO una sugerencia: el
+ * humano de pricing la ajusta en pantalla y decide el precio final.
  */
 public with sharing class P2G_CotizadorCompra {
 
@@ -24,6 +30,9 @@ public with sharing class P2G_CotizadorCompra {
     private static final Decimal KM_LOCAL = 100;
     private static final Decimal KM_CORTA = 300;
     private static final Decimal KM_MEDIA = 700;
+    // Margen FN estándar sobre venta (venta = buy / 0.85), igual que el flow
+    // de precio sugerido de productos OLI
+    @TestVisible private static final Decimal MARGEN_VENTA_DEFAULT = 15;
 
     public class Resultado {
         @AuraEnabled public Decimal costo;
@@ -31,6 +40,10 @@ public with sharing class P2G_CotizadorCompra {
         @AuraEnabled public Integer viajes;
         @AuraEnabled public Decimal km;
         @AuraEnabled public Decimal costoPorKm;
+        @AuraEnabled public String confianza;       // Alta / Media / Baja segun el nivel de la cascada
+        @AuraEnabled public Boolean pedirProveedor; // true = dato poco confiable, pedir precio a proveedor
+        @AuraEnabled public Decimal margenPct;      // margen default con el que se sugiere la venta
+        @AuraEnabled public Decimal ventaSugerida;  // costo / (1 - margen); el humano la ajusta en pantalla
     }
 
     private class Viaje {
@@ -65,10 +78,10 @@ public with sharing class P2G_CotizadorCompra {
         if (km == null) { km = medianaKm(par); }
 
         if (parRecientes.size() >= MIN_PAR_RECIENTE) {
-            return arma(medianaBuy(parRecientes), 'Par exacto reciente (' + parRecientes.size() + ' viajes, últimos ' + MESES_VENTANA_RECIENTE + ' meses)', parRecientes.size(), km);
+            return arma(medianaBuy(parRecientes), 'Par exacto reciente (' + parRecientes.size() + ' viajes, últimos ' + MESES_VENTANA_RECIENTE + ' meses)', parRecientes.size(), km, 'Alta');
         }
         if (par.size() >= MIN_PAR_HISTORICO) {
-            return arma(medianaBuy(par), 'Par exacto histórico desde 2024 (' + par.size() + ' viajes)', par.size(), km);
+            return arma(medianaBuy(par), 'Par exacto histórico desde 2024 (' + par.size() + ' viajes)', par.size(), km, 'Media');
         }
 
         // ---- Niveles 3-4: zona metropolitana ----
@@ -83,10 +96,10 @@ public with sharing class P2G_CotizadorCompra {
         if (km == null) { km = medianaKm(zona); }
 
         if (zonaRecientes.size() >= MIN_ZONA_RECIENTE) {
-            return arma(medianaBuy(zonaRecientes), 'Zona reciente (' + zonaRecientes.size() + ' viajes, últimos ' + MESES_VENTANA_RECIENTE + ' meses)', zonaRecientes.size(), km);
+            return arma(medianaBuy(zonaRecientes), 'Zona reciente (' + zonaRecientes.size() + ' viajes, últimos ' + MESES_VENTANA_RECIENTE + ' meses)', zonaRecientes.size(), km, 'Media');
         }
         if (zona.size() >= MIN_ZONA_HISTORICO) {
-            return arma(medianaBuy(zona), 'Zona histórico desde 2024 (' + zona.size() + ' viajes)', zona.size(), km);
+            return arma(medianaBuy(zona), 'Zona histórico desde 2024 (' + zona.size() + ' viajes)', zona.size(), km, 'Baja');
         }
 
         // ---- Nivel 5: bandas de $/km sobre TODO el flete nacional reciente ----
@@ -116,7 +129,8 @@ public with sharing class P2G_CotizadorCompra {
             r.fuente = respaldoGlobal == null
                 ? 'Sin datos: no hay historial del par ni de la zona; captura los km para estimar por banda'
                 : 'Global (respaldo, sin km): mediana de ' + todos.size() + ' fletes FN recientes';
-            return r;
+            if (respaldoGlobal != null) { r.confianza = 'Baja'; }
+            return finaliza(r);
         }
 
         String nombreBanda = km < KM_LOCAL ? 'Local (<100 km)'
@@ -151,7 +165,8 @@ public with sharing class P2G_CotizadorCompra {
                 : 'Global (respaldo): mediana de ' + costosGlobal.size() + ' fletes FN recientes (banda ' + nombreBanda + ' vacía)';
         }
         if (r.costo != null && km > 0) { r.costoPorKm = (r.costo / km).setScale(2); }
-        return r;
+        if (r.costo != null) { r.confianza = 'Baja'; }
+        return finaliza(r);
     }
 
     private static List<Shipment__c> consultaPar(Id origenId, Id destinoId) {
@@ -204,13 +219,25 @@ public with sharing class P2G_CotizadorCompra {
         return recientes;
     }
 
-    private static Resultado arma(Decimal costo, String fuente, Integer n, Decimal km) {
+    private static Resultado arma(Decimal costo, String fuente, Integer n, Decimal km, String confianza) {
         Resultado r = new Resultado();
         r.costo = costo;
         r.fuente = fuente;
         r.viajes = n;
         r.km = km;
         if (costo != null && km != null && km > 0) { r.costoPorKm = (costo / km).setScale(2); }
+        r.confianza = confianza;
+        return finaliza(r);
+    }
+
+    // Capa de venta y bandera de proveedor. La venta es sugerencia: el precio
+    // final SIEMPRE lo decide el humano en pantalla.
+    private static Resultado finaliza(Resultado r) {
+        r.pedirProveedor = (r.costo == null || r.confianza == 'Baja');
+        if (r.costo != null) {
+            r.margenPct = MARGEN_VENTA_DEFAULT;
+            r.ventaSugerida = (r.costo / (1 - MARGEN_VENTA_DEFAULT / 100)).setScale(2, RoundingMode.HALF_UP);
+        }
         return r;
     }
 

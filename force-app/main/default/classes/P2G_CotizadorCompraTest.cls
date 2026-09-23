@@ -53,6 +53,10 @@ public class P2G_CotizadorCompraTest {
         System.assertEquals(3, r.viajes);
         System.assertEquals(335, r.km, 'Km = mediana de los kms reales del par');
         System.assertNotEquals(null, r.costoPorKm);
+        System.assertEquals('Alta', r.confianza, 'Par exacto reciente = confianza alta');
+        System.assertEquals(false, r.pedirProveedor);
+        System.assertEquals(15, r.margenPct);
+        System.assertEquals(20000.00, r.ventaSugerida, 'Venta = costo / 0.85 (margen 15% sobre venta)');
     }
 
     @IsTest
@@ -69,6 +73,8 @@ public class P2G_CotizadorCompraTest {
 
         System.assertEquals(19000, r.costo, 'Mediana de los 3 del histórico');
         System.assert(r.fuente.contains('histórico'), 'Fuente: ' + r.fuente);
+        System.assertEquals('Media', r.confianza, 'Par histórico = confianza media');
+        System.assertEquals(false, r.pedirProveedor);
     }
 
     @IsTest
@@ -86,6 +92,7 @@ public class P2G_CotizadorCompraTest {
         System.assertEquals(17000, r.costo, 'Mediana de la zona');
         System.assert(r.fuente.contains('Zona reciente'), 'Fuente: ' + r.fuente);
         System.assertEquals(335, r.km, 'Km estimado de los viajes de la zona');
+        System.assertEquals('Media', r.confianza, 'Zona reciente = confianza media');
     }
 
     @IsTest
@@ -102,6 +109,8 @@ public class P2G_CotizadorCompraTest {
 
         System.assertEquals(21000, r.costo);
         System.assert(r.fuente.contains('Zona histórico'), 'Fuente: ' + r.fuente);
+        System.assertEquals('Baja', r.confianza, 'Zona vieja = confianza baja');
+        System.assertEquals(true, r.pedirProveedor, 'Confianza baja pide confirmar con proveedor');
     }
 
     @IsTest
@@ -122,6 +131,9 @@ public class P2G_CotizadorCompraTest {
 
         System.assert(media.fuente.contains('banda Media'), 'Fuente: ' + media.fuente);
         System.assertEquals(27500, media.costo, '550 km x $50/km mediano de la banda');
+        System.assertEquals('Baja', media.confianza, 'Banda = confianza baja');
+        System.assertEquals(true, media.pedirProveedor);
+        System.assertNotEquals(null, media.ventaSugerida, 'Aun con confianza baja se sugiere venta');
         // km<100 sin fletes locales: cae al respaldo global (mediana de flete completo)
         System.assert(local.fuente.contains('Global'), 'Fuente: ' + local.fuente);
         System.assertEquals(16500, local.costo);
@@ -140,6 +152,9 @@ public class P2G_CotizadorCompraTest {
 
         System.assertEquals(null, r.costo, 'Sin viajes y sin km no hay cotización');
         System.assert(r.fuente.contains('Sin datos'), 'Fuente: ' + r.fuente);
+        System.assertEquals(null, r.confianza, 'Sin costo no hay confianza que reportar');
+        System.assertEquals(null, r.ventaSugerida, 'Sin costo no se sugiere venta');
+        System.assertEquals(true, r.pedirProveedor, 'Sin datos siempre manda a proveedor');
     }
 
     @IsTest
