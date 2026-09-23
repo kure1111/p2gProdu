@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>64.0</apiVersion>
+    <description>Candado carta porte: al generarse una carta porte (timbrada o almacenada), el shipment del viaje pasa a Estatus Tránsito = En Tránsito. No toca shipments ya Entregados.</description>
+    <environments>Default</environments>
+    <interviewLabel>PAK Carta Porte En Transito {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>PAK Carta Porte En Transito</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordUpdates>
+        <name>Marcar_En_Transito</name>
+        <label>Marcar En Transito</label>
+        <locationX>176</locationX>
+        <locationY>287</locationY>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>$Record.Shipment__c</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>Estatus_Transito__c</field>
+            <operator>NotEqualTo</operator>
+            <value>
+                <stringValue>Entregado</stringValue>
+            </value>
+        </filters>
+        <inputAssignments>
+            <field>Estatus_Transito__c</field>
+            <value>
+                <stringValue>En Transito</stringValue>
+            </value>
+        </inputAssignments>
+        <object>Shipment__c</object>
+    </recordUpdates>
+    <start>
+        <locationX>50</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Marcar_En_Transito</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Shipment__c</field>
+            <operator>IsNull</operator>
+            <value>
+                <booleanValue>false</booleanValue>
+            </value>
+        </filters>
+        <object>Carta_Porte__c</object>
+        <recordTriggerType>Create</recordTriggerType>
+        <triggerType>RecordAfterSave</triggerType>
+    </start>
+    <status>Active</status>
+</Flow>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <label>Estatus Transito</label>
+    <description>Ver y editar el Estatus Tránsito del Shipment (candado carta porte) y verlo en la Carta Porte.</description>
+    <hasActivationRequired>false</hasActivationRequired>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Shipment__c.Estatus_Transito__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Carta_Porte__c.Estatus_Transito__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+</PermissionSet>

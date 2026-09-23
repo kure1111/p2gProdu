@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Estatus_Transito__c</fullName>
+    <externalId>false</externalId>
+    <formula>IF(ISPICKVAL(Shipment__r.Estatus_Transito__c, "En Transito"), "En Tránsito", TEXT(Shipment__r.Estatus_Transito__c))</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <label>Estatus Tránsito (Shipment)</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

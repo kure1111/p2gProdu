@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Bloquear_Regreso_En_Transito</fullName>
+    <active>true</active>
+    <description>Candado carta porte: una vez que el shipment está En Tránsito (se generó carta porte), nadie lo puede regresar a Pendiente salvo el administrador.</description>
+    <errorConditionFormula>AND(
+    ISCHANGED(Estatus_Transito__c),
+    ISPICKVAL(PRIORVALUE(Estatus_Transito__c), "En Transito"),
+    ISPICKVAL(Estatus_Transito__c, "Pendiente"),
+    $Profile.Name &lt;&gt; "System Administrator"
+)</errorConditionFormula>
+    <errorDisplayField>Estatus_Transito__c</errorDisplayField>
+    <errorMessage>Este shipment ya está En Tránsito (tiene carta porte generada). No se puede regresar a Pendiente.</errorMessage>
+</ValidationRule>
