@@ -167,6 +167,10 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
+                <field>Estatus_Transito__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
                 <field>OTP__c</field>
             </layoutItems>
             <layoutItems>
