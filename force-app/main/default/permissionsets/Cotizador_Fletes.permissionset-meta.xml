@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <label>Cotizador Fletes</label>
+    <description>Acceso al cotizador de fletes por ruta FN: la pestaña y su motor Apex. Sin esto la pestaña no aparece (los tabs desplegados por metadata llegan ocultos para todos los perfiles).</description>
+    <classAccesses>
+        <apexClass>P2G_CotizadorCompra</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <tabSettings>
+        <tab>Cotizador_Compra</tab>
+        <visibility>Visible</visibility>
+    </tabSettings>
+</PermissionSet>
