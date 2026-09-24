@@ -3,6 +3,7 @@
     <fullName>Toda_La_Cuenta__c</fullName>
     <defaultValue>false</defaultValue>
     <description>Marcado = TODOS los viajes de la cuenta son interbodega, sin importar origen ni destino (caso OPERADORAS EN SERVICIOS COMERCIALES y FIFCO MEXICO). Con esto marcado, Origen y Destino van vacios.</description>
+    <inlineHelpText>Márcalo si TODAS las rutas de esta cuenta son interbodega (hoy: OPERADORAS EN SERVICIOS COMERCIALES y FIFCO). En ese caso deja Origen y Destino vacíos.</inlineHelpText>
     <label>Toda la cuenta</label>
     <trackHistory>true</trackHistory>
     <type>Checkbox</type>
