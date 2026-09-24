@@ -1,17 +1,21 @@
 <aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,lightning:actionOverride,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" controller="PAKCargaProductosController">
      <!-- export attributes start  -->
-    <!--aura init handler, call js "loadContactList" function on component load, and display contact data on table-->   
+    <!--aura init handler, call js "loadContactList" function on component load, and display contact data on table-->
     <aura:handler name="init" value="{!this}" action="{!c.loadContactList}"/>
-    <!--Declare Attribute for store Contact Records List-->  
+    <!--Declare Attribute for store Contact Records List-->
     <aura:attribute name="ListOfProduct" type="Product2[]"/>
     <!-- export attributes end-->
-    
-    <aura:attribute name="fileToBeUploaded" type="Object[]" /> 
-    <aura:attribute name="fileToBeUploadedProd" type="Object[]" /> 
-    
+
+    <aura:attribute name="fileToBeUploaded" type="Object[]" />
+    <aura:attribute name="fileToBeUploadedProd" type="Object[]" />
+    <!-- reporte de errores del archivo: todo o nada, no se carga ningun renglon -->
+    <aura:attribute name="erroresCarga" type="Object[]" />
+    <aura:attribute name="totalErrores" type="Integer" default="0" />
+    <aura:attribute name="mostrarErrores" type="Boolean" default="false" />
+
     <div class="slds-box" style="background-color:white">
         <lightning:spinner variant="brand" size="large" aura:id="Id_spinner" class="slds-hide" />
-          <div class="slds-box slds-is-relative">   
+          <div class="slds-box slds-is-relative">
             <div class="slds-text-title_bold">
                 Carga Masiva de Productos
             </div>
@@ -19,20 +23,60 @@
                     Carga de manera sencilla tus rutas, puedes descargar el template de ejemplo.
             </div>
             <div class="slds-align_absolute-center">
-                <lightning:input messageWhenTypeMismatch="Cargar solamente archivo soportado" type="file" label="" multiple="false" 
-                                 name="file" accept=".csv" onchange="{! c.CreateRecordProd }" files="{!v.fileToBeUploadedProd}" /> 
-            </div>   
+                <lightning:input messageWhenTypeMismatch="Cargar solamente archivo soportado" type="file" label="" multiple="false"
+                                 name="file" accept=".csv" onchange="{! c.CreateRecordProd }" files="{!v.fileToBeUploadedProd}" />
+            </div>
                <div class="slds-m-top_medium">
                  <form class="slds-form--stacked">
-                    
-                
-                      <lightning:formattedUrl 
+
+
+                      <lightning:formattedUrl
         value="https://pak2gologistics.my.salesforce.com/sfc/p/4T000000DybZ/a/RQ0000069whG/FcsjEGS81gmfySmaZWMgGKo9kBgd_T3uoRv.QS9Alyg"
         label="Descargar template"
-        target="_blank" /> 
+        target="_blank" />
                 </form>
             </div>
         </div>
-       
-    </div>	
+
+        <aura:if isTrue="{!v.mostrarErrores}">
+            <div class="slds-box slds-m-top_medium">
+                <div class="slds-text-title_bold slds-text-color_error">
+                    El archivo tiene {!v.totalErrores} error(es) &#8212; no se cargó ningún renglón
+                </div>
+                <div class="slds-text-body_small slds-m-bottom_x-small">
+                    Corrige el archivo y vuelve a subirlo completo. El renglón cuenta desde el archivo (el 1 es el encabezado).
+                </div>
+                <div style="max-height:280px; overflow:auto;">
+                    <table class="slds-table slds-table_bordered slds-table_cell-buffer slds-table_striped">
+                        <thead>
+                            <tr class="slds-line-height_reset">
+                                <th scope="col">Renglón</th>
+                                <th scope="col">Columna</th>
+                                <th scope="col">Valor</th>
+                                <th scope="col">Problema</th>
+                                <th scope="col">Sugerencia</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <aura:iteration items="{!v.erroresCarga}" var="err">
+                                <tr>
+                                    <td>{!err.renglon}</td>
+                                    <td>{!err.columna}</td>
+                                    <td>{!err.valor}</td>
+                                    <td style="white-space:normal;">{!err.problema}</td>
+                                    <td style="white-space:normal;">{!err.sugerencia}</td>
+                                </tr>
+                            </aura:iteration>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="slds-m-top_small">
+                    <lightning:button label="Descargar errores (CSV)" onclick="{!c.descargarErrores}" />
+                    <lightning:button label="Copiar" onclick="{!c.copiarErrores}" />
+                    <lightning:button label="Cerrar" onclick="{!c.cerrarErrores}" />
+                </div>
+            </div>
+        </aura:if>
+
+    </div>
 </aura:component>
