@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <label>Interbodegas Catalogo</label>
+    <description>Mantener el catalogo de rutas interbodega (objeto Interbodega_Ruta__c) sin deploys: la pestana y el CRUD completo. Sin este permset la pestana no aparece (los tabs desplegados por metadata llegan ocultos para todos los perfiles).</description>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Interbodega_Ruta__c.Activa__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Interbodega_Ruta__c.Destino__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Interbodega_Ruta__c.Origen__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Interbodega_Ruta__c.Toda_La_Cuenta__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <objectPermissions>
+        <allowCreate>true</allowCreate>
+        <allowDelete>true</allowDelete>
+        <allowEdit>true</allowEdit>
+        <allowRead>true</allowRead>
+        <modifyAllRecords>false</modifyAllRecords>
+        <object>Interbodega_Ruta__c</object>
+        <viewAllRecords>true</viewAllRecords>
+    </objectPermissions>
+    <tabSettings>
+        <tab>Interbodega_Ruta__c</tab>
+        <visibility>Visible</visibility>
+    </tabSettings>
+</PermissionSet>

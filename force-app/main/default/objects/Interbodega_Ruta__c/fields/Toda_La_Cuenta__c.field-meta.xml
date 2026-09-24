@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Toda_La_Cuenta__c</fullName>
+    <defaultValue>false</defaultValue>
+    <description>Marcado = TODOS los viajes de la cuenta son interbodega, sin importar origen ni destino (caso OPERADORAS EN SERVICIOS COMERCIALES y FIFCO MEXICO). Con esto marcado, Origen y Destino van vacios.</description>
+    <label>Toda la cuenta</label>
+    <trackHistory>true</trackHistory>
+    <type>Checkbox</type>
+</CustomField>

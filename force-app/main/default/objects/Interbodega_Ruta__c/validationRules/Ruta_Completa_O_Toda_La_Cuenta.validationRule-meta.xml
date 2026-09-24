@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Ruta_Completa_O_Toda_La_Cuenta</fullName>
+    <active>true</active>
+    <description>Un renglon es una ruta (origen Y destino llenos) o una regla de toda la cuenta (checkbox marcado y direcciones vacias). A medias no marca nada y confunde.</description>
+    <errorConditionFormula>OR(
+    AND(NOT(Toda_La_Cuenta__c), OR(ISBLANK(Origen__c), ISBLANK(Destino__c))),
+    AND(Toda_La_Cuenta__c, OR(NOT(ISBLANK(Origen__c)), NOT(ISBLANK(Destino__c))))
+)</errorConditionFormula>
+    <errorMessage>Captura Origen y Destino, o marca "Toda la cuenta" y deja las direcciones vacías.</errorMessage>
+</ValidationRule>

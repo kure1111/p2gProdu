@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Activa__c</fullName>
+    <defaultValue>true</defaultValue>
+    <description>Desmarcar apaga el renglon sin borrarlo (el validator solo lee renglones activos). Deja rastro en el historial de quien lo apago y cuando.</description>
+    <label>Activa</label>
+    <trackHistory>true</trackHistory>
+    <type>Checkbox</type>
+</CustomField>
