@@ -1,5 +1,22 @@
 //AGE
 global with sharing class PAKCargaProductosController {
+
+    // normaliza para comparar: minusculas, sin acentos, sin espacios sobrantes.
+    // El catalogo guarda 'Azcapotzalco'/'Nuevo Leon' y los archivos traen
+    // 'AZCAPOTZALCO'/'Nuevo León': la SOQL no distingue mayusculas pero el map de
+    // Apex si, y por eso se rechazaban ciudades que si existen.
+    @TestVisible
+    private static String normaliza(String texto) {
+        if (texto == null) return '';
+        String t = texto.trim().toLowerCase();
+        t = t.replaceAll('[áàäâã]', 'a').replaceAll('[éèëê]', 'e').replaceAll('[íìïî]', 'i')
+             .replaceAll('[óòöôõ]', 'o').replaceAll('[úùüû]', 'u').replaceAll('ñ', 'n');
+        return t;
+    }
+
+    private static String claveCiudad(String ciudad, String estado, String pais) {
+        return normaliza(ciudad) + '|' + normaliza(estado) + '|' + normaliza(pais);
+    }
     
     public class csvProducts{
         public string paisOrigen	{get;set;}
@@ -63,39 +80,52 @@ global with sharing class PAKCargaProductosController {
                     optionsProd.put( a.getValue(),a.getLabel()); 
                 }
                 //PRODUCTOS
-                for(csvProducts l : lines){                   
-                    paisesName.add(l.paisOrigen);
-                    paisesName.add(l.paisDestino);
-                    estadosName.add(l.estadoOrigen);
-                    estadosName.add(l.estadoDestino);
-                    ciudadesName.add(l.ciudadDestino);
-                    ciudadesName.add(l.ciudadOrigen);                    
-                }
-                List<Location__c> locationRecords = [SELECT Id, Name, State__c, State__r.Name, Country__c, Country__r.Name FROM Location__c WHERE Name IN :ciudadesName And State__r.Name IN :estadosName LIMIT 49000];
-                for (Location__c a : locationRecords) {
-                    if (!ciudades.containsKey(a.Name)) {
-                        ciudades.put(a.Name, a);
-                        estados.put(a.State__r.Name, a.id);
-                        paises.put(a.Country__r.Name, a.id);
+                //la SOQL es insensible a mayusculas pero NO a acentos: se consulta
+                //tambien la variante sin acentos de cada ciudad del archivo
+                for(csvProducts l : lines){
+                    if (String.isNotBlank(l.ciudadOrigen)) {
+                        ciudadesName.add(l.ciudadOrigen.trim());
+                        ciudadesName.add(normaliza(l.ciudadOrigen));
                     }
+                    if (String.isNotBlank(l.ciudadDestino)) {
+                        ciudadesName.add(l.ciudadDestino.trim());
+                        ciudadesName.add(normaliza(l.ciudadDestino));
+                    }
+                }
+                //sin filtro por estado: un estado acentuado en el archivo dejaba fuera
+                //ciudades legitimas; el estado y el pais se validan abajo, normalizados
+                List<Location__c> locationRecords = [SELECT Id, Name, State__c, State__r.Name, Country__c, Country__r.Name FROM Location__c WHERE Name IN :ciudadesName LIMIT 49000];
+                //mapa por llave compuesta ciudad|estado|pais: dos ciudades homonimas
+                //("Santa Catarina" existe en 3 estados) ya no se pisan entre si
+                Map<String, Location__c> ciudadesPorClave = new Map<String, Location__c>();
+                Set<String> ciudadesExistentes = new Set<String>();
+                Set<String> estadosExistentes = new Set<String>();
+                Set<String> paisesExistentes = new Set<String>();
+                for (Location__c a : locationRecords) {
+                    String clave = claveCiudad(a.Name, a.State__r.Name, a.Country__r.Name);
+                    if (!ciudadesPorClave.containsKey(clave)) {
+                        ciudadesPorClave.put(clave, a);
+                    }
+                    ciudadesExistentes.add(normaliza(a.Name));
+                    estadosExistentes.add(normaliza(a.State__r.Name));
+                    paisesExistentes.add(normaliza(a.Country__r.Name));
                 }
                 
                 integer renglon = 2;
                 
                 for(csvProducts l : lines){
-                    //inician validaciones
-                        System.debug('las ciudades son: '+ciudades);
-                    if(String.isBlank(l.paisOrigen) || paises.get(l.paisOrigen) == null )
+                    //inician validaciones (comparaciones normalizadas: sin acentos ni mayusculas)
+                    if(String.isBlank(l.paisOrigen) || !paisesExistentes.contains(normaliza(l.paisOrigen)) )
                         return 'Renglon ('+renglon+') : No se encontró país de origen ' + l.paisOrigen ;
-                    if(String.isBlank(l.estadoOrigen) || estados.get(l.estadoOrigen) == null )
+                    if(String.isBlank(l.estadoOrigen) || !estadosExistentes.contains(normaliza(l.estadoOrigen)) )
                         return 'Renglon ('+renglon+') : No se encontró estado de origen ' + l.estadoOrigen;
-                    if(String.isBlank(l.ciudadOrigen) || ciudades.get(l.ciudadOrigen) == null )
+                    if(String.isBlank(l.ciudadOrigen) || !ciudadesExistentes.contains(normaliza(l.ciudadOrigen)) )
                         return 'Renglon ('+renglon+') : No se encontró ciudad de origen ' +l.ciudadOrigen;
-                    if(String.isBlank(l.paisDestino) || paises.get(l.paisDestino) == null )
+                    if(String.isBlank(l.paisDestino) || !paisesExistentes.contains(normaliza(l.paisDestino)) )
                         return 'Renglon ('+renglon+') : No se encontró país de destino ' + l.paisDestino;
-                    if(String.isBlank(l.estadoDestino) || estados.get(l.estadoDestino) == null ){
+                    if(String.isBlank(l.estadoDestino) || !estadosExistentes.contains(normaliza(l.estadoDestino)) ){
                         return 'Renglon ('+renglon+') : No se encontró estado de destino ' + l.estadoDestino;}
-                    if(String.isBlank(l.ciudadDestino) || ciudades.get(l.ciudadDestino) == null )
+                    if(String.isBlank(l.ciudadDestino) || !ciudadesExistentes.contains(normaliza(l.ciudadDestino)) )
                         return 'Renglon ('+renglon+') : No se encontró ciudad de destino ' + l.ciudadDestino;
                     if(l.cantidad == null)
                         return  'Renglon ('+renglon+') : debe tener Cantidad';
@@ -109,17 +139,23 @@ global with sharing class PAKCargaProductosController {
                         return 'Renglon ('+renglon+') contiene una modalidad invalida : ' + l.modalidad;
                     }
                     //terminan validaciones
-                    //sacar los Ids de origen y destino
-                    if((ciudades.get(l.ciudadOrigen).Name == l.ciudadOrigen) && (ciudades.get(l.ciudadOrigen).State__r.Name == l.estadoOrigen) && (ciudades.get(l.ciudadOrigen).Country__r.Name == l.paisOrigen)){
-                        origenId = ciudades.get(l.ciudadOrigen).Id;
+                    //sacar los Ids de origen y destino por llave compuesta ciudad+estado+pais
+                    Location__c locOrigen = ciudadesPorClave.get(claveCiudad(l.ciudadOrigen, l.estadoOrigen, l.paisOrigen));
+                    if(locOrigen != null){
+                        origenId = locOrigen.Id;
                     }else{
                         return 'Renglon ('+renglon+') no se encontro la ciudad de Origen: ' + l.ciudadOrigen+' con el estado: '+l.estadoOrigen+' del pais: '+l.paisOrigen;
                     }
-                    if((ciudades.get(l.ciudadDestino).Name == l.ciudadDestino) && (ciudades.get(l.ciudadDestino).State__r.Name == l.estadoDestino) && (ciudades.get(l.ciudadDestino).Country__r.Name == l.paisDestino)){
-                        destinoId = ciudades.get(l.ciudadDestino).Id;
+                    Location__c locDestino = ciudadesPorClave.get(claveCiudad(l.ciudadDestino, l.estadoDestino, l.paisDestino));
+                    if(locDestino != null){
+                        destinoId = locDestino.Id;
                     }else{
                         return 'Renglon ('+renglon+') no se encontro la ciudad de Destino: ' + l.ciudadDestino+' con el estado: '+l.estadoDestino+' del pais: '+l.paisDestino;
                     }
+                    //usar la escritura OFICIAL del catalogo (no la del archivo) para que
+                    //"MONTERREY - SALTILLO" y "Monterrey - Saltillo" no dupliquen productos
+                    l.ciudadOrigen = locOrigen.Name;
+                    l.ciudadDestino = locDestino.Name;
                     //cambio de wrapper para la clase P2G_loadProductsCsv
                     P2G_loadProducts.csvProduct csvLoadProducts = csvLoadProducts(l, origenId, destinoId);
                     loadProducts.add(csvLoadProducts);

@@ -176,8 +176,18 @@ public class P2G_loadProducts {
         
     }
     
+    // cache: antes se consultaba el User POR CADA fila del CSV y una carga de ~90+
+    // renglones reventaba Too many SOQL queries 101; el usuario es el mismo siempre
+    private static User usuarioActual;
+    private static User getUsuarioActual() {
+        if (usuarioActual == null) {
+            usuarioActual = [SELECT Name FROM User WHERE Id =: UserInfo.getUserId() LIMIT 1];
+        }
+        return usuarioActual;
+    }
+
     public static OpportunityLineItem createOpporLi(String opportunityId, Id product2Id, Id pricebookEntryId,csvProduct productInfo) {
-        User nameUser = [SELECT Name FROM User WHERE Id =: UserInfo.getUserId() LIMIT 1];
+        User nameUser = getUsuarioActual();
         OpportunityLineItem rellena = new OpportunityLineItem();
         rellena.OpportunityId = opportunityId;
         rellena.Product2Id = product2Id;
