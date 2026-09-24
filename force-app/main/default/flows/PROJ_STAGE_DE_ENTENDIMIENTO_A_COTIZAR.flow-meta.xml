@@ -148,6 +148,7 @@
         <nameSegment>emailSimple</nameSegment>
     </actionCalls>
     <apiVersion>58.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
     <assignments>
         <name>AddEmailOwner</name>
         <label>AddEmailOwner</label>
@@ -169,85 +170,6 @@
         </assignmentItems>
         <connector>
             <targetReference>actualiza_stage_cotizar</targetReference>
-        </connector>
-    </assignments>
-    <assignments>
-        <name>Arma_QLI_Flete</name>
-        <label>Arma QLI Flete</label>
-        <locationX>1634</locationX>
-        <locationY>3600</locationY>
-        <assignmentItems>
-            <assignToReference>varQLIFlete.OpportunityLineItemId</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>recorrer_productos_y_agregarlos_a_QLI.Id</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>varQLIFlete.PricebookEntryId</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>recorrer_productos_y_agregarlos_a_QLI.PricebookEntryId</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>varQLIFlete.Product2Id</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>recorrer_productos_y_agregarlos_a_QLI.Product2Id</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>varQLIFlete.Quantity</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>recorrer_productos_y_agregarlos_a_QLI.Quantity</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>varQLIFlete.QuoteId</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>crear_Quote</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>varQLIFlete.Sales_Price_Converted__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>recorrer_productos_y_agregarlos_a_QLI.Sales_Price_Converted__c</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>varQLIFlete.Tipo_de_Linea__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <stringValue>Flete</stringValue>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>varQLIFlete.UnitPrice</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>recorrer_productos_y_agregarlos_a_QLI.UnitPrice</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>colQLIsFlete</assignToReference>
-            <operator>Add</operator>
-            <value>
-                <elementReference>varQLIFlete</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>numQLIsFlete</assignToReference>
-            <operator>Add</operator>
-            <value>
-                <numberValue>1.0</numberValue>
-            </value>
-        </assignmentItems>
-        <connector>
-            <targetReference>recorrer_productos_y_agregarlos_a_QLI</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -327,6 +249,85 @@
         </assignmentItems>
         <connector>
             <targetReference>recorre_subProducto</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Arma_QLI_Flete</name>
+        <label>Arma QLI Flete</label>
+        <locationX>1634</locationX>
+        <locationY>3600</locationY>
+        <assignmentItems>
+            <assignToReference>varQLIFlete.OpportunityLineItemId</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>recorrer_productos_y_agregarlos_a_QLI.Id</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>varQLIFlete.PricebookEntryId</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>recorrer_productos_y_agregarlos_a_QLI.PricebookEntryId</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>varQLIFlete.Product2Id</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>recorrer_productos_y_agregarlos_a_QLI.Product2Id</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>varQLIFlete.Quantity</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>recorrer_productos_y_agregarlos_a_QLI.Quantity</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>varQLIFlete.QuoteId</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>crear_Quote</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>varQLIFlete.Sales_Price_Converted__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>recorrer_productos_y_agregarlos_a_QLI.Sales_Price_Converted__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>varQLIFlete.Tipo_de_Linea__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Flete</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>varQLIFlete.UnitPrice</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>recorrer_productos_y_agregarlos_a_QLI.UnitPrice</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>colQLIsFlete</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>varQLIFlete</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>numQLIsFlete</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <numberValue>1.0</numberValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>recorrer_productos_y_agregarlos_a_QLI</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -816,6 +817,38 @@
         </connector>
     </assignments>
     <assignments>
+        <name>Cuenta_Linea</name>
+        <label>Cuenta Linea</label>
+        <locationX>1810</locationX>
+        <locationY>1400</locationY>
+        <assignmentItems>
+            <assignToReference>totalLineas</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <numberValue>1.0</numberValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Es_No_Cotizada</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Suma_No_Cotizada</name>
+        <label>Suma No Cotizada</label>
+        <locationX>1900</locationX>
+        <locationY>1420</locationY>
+        <assignmentItems>
+            <assignToReference>noCotizadas</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <numberValue>1.0</numberValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>sales_prices</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
         <name>cuentaCero</name>
         <label>cuentaCero</label>
         <locationX>1898</locationX>
@@ -871,7 +904,7 @@
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>Cambio_de_etapa_negociacion</name>
-            <conditionLogic>and</conditionLogic>
+            <conditionLogic>1 AND 2 AND 3 AND 4 AND (5 OR 6)</conditionLogic>
             <conditions>
                 <leftValueReference>salesnocotizada</leftValueReference>
                 <operator>EqualTo</operator>
@@ -893,10 +926,53 @@
                     <numberValue>0.0</numberValue>
                 </rightValue>
             </conditions>
+            <conditions>
+                <leftValueReference>noCotizadas</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <elementReference>totalLineas</elementReference>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Total_Buy_Price2__c</leftValueReference>
+                <operator>GreaterThan</operator>
+                <rightValue>
+                    <numberValue>0.0</numberValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Group__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>SP-PQ-PAQUETERIA</stringValue>
+                </rightValue>
+            </conditions>
             <connector>
                 <targetReference>Copy_1_of_Check_Buy_Price_Products</targetReference>
             </connector>
             <label>Cambio de etapa negociacion</label>
+        </rules>
+        <rules>
+            <name>Todo_No_Cotizado</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>totalLineas</leftValueReference>
+                <operator>GreaterThan</operator>
+                <rightValue>
+                    <numberValue>0.0</numberValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>noCotizadas</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <elementReference>totalLineas</elementReference>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>actualiza_etapa_negociacion_sin_quote</targetReference>
+            </connector>
+            <label>Todo No Cotizado</label>
         </rules>
         <rules>
             <name>sales_vacios</name>
@@ -958,6 +1034,31 @@
         </rules>
     </decisions>
     <decisions>
+        <name>Es_No_Cotizada</name>
+        <label>Es No Cotizada</label>
+        <locationX>1855</locationX>
+        <locationY>1410</locationY>
+        <defaultConnector>
+            <targetReference>sales_prices</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Otra</defaultConnectorLabel>
+        <rules>
+            <name>Linea_No_Cotizada</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>ciclo_productos.Status__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>No Cotizada</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Suma_No_Cotizada</targetReference>
+            </connector>
+            <label>Linea No Cotizada</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>decision_etapa</name>
         <label>decision etapa</label>
         <locationX>1766</locationX>
@@ -987,7 +1088,7 @@
         </rules>
         <rules>
             <name>Negociacion</name>
-            <conditionLogic>(1 AND 2) OR (1 AND 3)</conditionLogic>
+            <conditionLogic>(1 AND 2) OR (1 AND 3) OR (1 AND 4)</conditionLogic>
             <conditions>
                 <leftValueReference>$Record.StageName</leftValueReference>
                 <operator>EqualTo</operator>
@@ -1007,6 +1108,13 @@
                 <operator>EqualTo</operator>
                 <rightValue>
                     <stringValue>SP-PQ-PAQUETERIA</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Total_Buy_Price2__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <numberValue>0.0</numberValue>
                 </rightValue>
             </conditions>
             <connector>
@@ -1035,6 +1143,56 @@
                 <targetReference>Actualiza_etapa_Ganada</targetReference>
             </connector>
             <label>Ganada</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Hay_QLIs_Cargo</name>
+        <label>Hay QLIs Cargo que crear</label>
+        <locationX>1634</locationX>
+        <locationY>4110</locationY>
+        <defaultConnector>
+            <targetReference>Tarea_1_Negociacion</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Sin QLIs Cargo</defaultConnectorLabel>
+        <rules>
+            <name>Si_hay_QLIs_Cargo</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>numQLIsCargo</leftValueReference>
+                <operator>GreaterThan</operator>
+                <rightValue>
+                    <numberValue>0.0</numberValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Crea_QLIs_Cargo</targetReference>
+            </connector>
+            <label>Si hay QLIs Cargo</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Hay_QLIs_Flete</name>
+        <label>Hay QLIs Flete que crear</label>
+        <locationX>1634</locationX>
+        <locationY>3620</locationY>
+        <defaultConnector>
+            <targetReference>Get_SubProducto</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Sin QLIs</defaultConnectorLabel>
+        <rules>
+            <name>Si_hay_QLIs_Flete</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>numQLIsFlete</leftValueReference>
+                <operator>GreaterThan</operator>
+                <rightValue>
+                    <numberValue>0.0</numberValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Crea_QLIs_Flete</targetReference>
+            </connector>
+            <label>Si hay QLIs Flete</label>
         </rules>
     </decisions>
     <decisions>
@@ -1085,56 +1243,6 @@
                 <targetReference>Arma_QLI_Flete</targetReference>
             </connector>
             <label>Producto listo para Cotizar</label>
-        </rules>
-    </decisions>
-    <decisions>
-        <name>Hay_QLIs_Flete</name>
-        <label>Hay QLIs Flete que crear</label>
-        <locationX>1634</locationX>
-        <locationY>3620</locationY>
-        <defaultConnector>
-            <targetReference>Get_SubProducto</targetReference>
-        </defaultConnector>
-        <defaultConnectorLabel>Sin QLIs</defaultConnectorLabel>
-        <rules>
-            <name>Si_hay_QLIs_Flete</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>numQLIsFlete</leftValueReference>
-                <operator>GreaterThan</operator>
-                <rightValue>
-                    <numberValue>0.0</numberValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Crea_QLIs_Flete</targetReference>
-            </connector>
-            <label>Si hay QLIs Flete</label>
-        </rules>
-    </decisions>
-    <decisions>
-        <name>Hay_QLIs_Cargo</name>
-        <label>Hay QLIs Cargo que crear</label>
-        <locationX>1634</locationX>
-        <locationY>4110</locationY>
-        <defaultConnector>
-            <targetReference>Tarea_1_Negociacion</targetReference>
-        </defaultConnector>
-        <defaultConnectorLabel>Sin QLIs Cargo</defaultConnectorLabel>
-        <rules>
-            <name>Si_hay_QLIs_Cargo</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>numQLIsCargo</leftValueReference>
-                <operator>GreaterThan</operator>
-                <rightValue>
-                    <numberValue>0.0</numberValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Crea_QLIs_Cargo</targetReference>
-            </connector>
-            <label>Si hay QLIs Cargo</label>
         </rules>
     </decisions>
     <decisions>
@@ -1357,7 +1465,7 @@
         <collectionReference>opptyproduct</collectionReference>
         <iterationOrder>Asc</iterationOrder>
         <nextValueConnector>
-            <targetReference>sales_prices</targetReference>
+            <targetReference>Cuenta_Linea</targetReference>
         </nextValueConnector>
         <noMoreValuesConnector>
             <targetReference>AddEmailOwner</targetReference>
@@ -1425,6 +1533,26 @@
     </processMetadataValues>
     <processType>AutoLaunchedFlow</processType>
     <recordCreates>
+        <name>Crea_QLIs_Cargo</name>
+        <label>Crea QLIs Cargo en bloque</label>
+        <locationX>1634</locationX>
+        <locationY>4127</locationY>
+        <connector>
+            <targetReference>Tarea_1_Negociacion</targetReference>
+        </connector>
+        <inputReference>colQLIsCargo</inputReference>
+    </recordCreates>
+    <recordCreates>
+        <name>Crea_QLIs_Flete</name>
+        <label>Crea QLIs Flete en bloque</label>
+        <locationX>1634</locationX>
+        <locationY>3635</locationY>
+        <connector>
+            <targetReference>Get_SubProducto</targetReference>
+        </connector>
+        <inputReference>colQLIsFlete</inputReference>
+    </recordCreates>
+    <recordCreates>
         <name>crear_Quote</name>
         <label>crear Quote</label>
         <locationX>1546</locationX>
@@ -1452,26 +1580,6 @@
         </inputAssignments>
         <object>Quote</object>
         <storeOutputAutomatically>true</storeOutputAutomatically>
-    </recordCreates>
-    <recordCreates>
-        <name>Crea_QLIs_Flete</name>
-        <label>Crea QLIs Flete en bloque</label>
-        <locationX>1634</locationX>
-        <locationY>3635</locationY>
-        <connector>
-            <targetReference>Get_SubProducto</targetReference>
-        </connector>
-        <inputReference>colQLIsFlete</inputReference>
-    </recordCreates>
-    <recordCreates>
-        <name>Crea_QLIs_Cargo</name>
-        <label>Crea QLIs Cargo en bloque</label>
-        <locationX>1634</locationX>
-        <locationY>4127</locationY>
-        <connector>
-            <targetReference>Tarea_1_Negociacion</targetReference>
-        </connector>
-        <inputReference>colQLIsCargo</inputReference>
     </recordCreates>
     <recordCreates>
         <name>Tarea_1_Cotizacion</name>
@@ -1796,34 +1904,6 @@
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordCreates>
     <recordLookups>
-        <name>Get_RT_Quote_Proyecto</name>
-        <label>Get RT Quote Proyecto</label>
-        <locationX>1546</locationX>
-        <locationY>3150</locationY>
-        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
-        <connector>
-            <targetReference>crear_Quote</targetReference>
-        </connector>
-        <filterLogic>and</filterLogic>
-        <filters>
-            <field>SobjectType</field>
-            <operator>EqualTo</operator>
-            <value>
-                <stringValue>Quote</stringValue>
-            </value>
-        </filters>
-        <filters>
-            <field>DeveloperName</field>
-            <operator>EqualTo</operator>
-            <value>
-                <stringValue>Proyecto</stringValue>
-            </value>
-        </filters>
-        <getFirstRecordOnly>true</getFirstRecordOnly>
-        <object>RecordType</object>
-        <storeOutputAutomatically>true</storeOutputAutomatically>
-    </recordLookups>
-    <recordLookups>
         <name>Get_opptyproduct</name>
         <label>Get opptyproduct</label>
         <locationX>1546</locationX>
@@ -2013,6 +2093,34 @@
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <recordLookups>
+        <name>Get_RT_Quote_Proyecto</name>
+        <label>Get RT Quote Proyecto</label>
+        <locationX>1546</locationX>
+        <locationY>3150</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>crear_Quote</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>SobjectType</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Quote</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>DeveloperName</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Proyecto</stringValue>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>RecordType</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
         <name>Get_SubProducto</name>
         <label>Get SubProducto</label>
         <locationX>1546</locationX>
@@ -2131,6 +2239,31 @@
         <object>OpportunityLineItem</object>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
+    <recordUpdates>
+        <name>actualiza_etapa_negociacion_sin_quote</name>
+        <label>actualiza etapa negociacion sin quote</label>
+        <locationX>2100</locationX>
+        <locationY>2700</locationY>
+        <inputAssignments>
+            <field>Data_Time_Negociacion__c</field>
+            <value>
+                <elementReference>$Flow.CurrentDateTime</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Revisado_por_IC__c</field>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>StageName</field>
+            <value>
+                <stringValue>Negociación</stringValue>
+            </value>
+        </inputAssignments>
+        <inputReference>$Record</inputReference>
+    </recordUpdates>
     <recordUpdates>
         <name>actualiza_etapa_a_negociacion</name>
         <label>actualiza etapa a negociacion</label>
@@ -2467,44 +2600,6 @@
         <objectType>QuoteLineItem</objectType>
     </variables>
     <variables>
-        <name>numQLIsCargo</name>
-        <dataType>Number</dataType>
-        <isCollection>false</isCollection>
-        <isInput>false</isInput>
-        <isOutput>false</isOutput>
-        <scale>0</scale>
-        <value>
-            <numberValue>0.0</numberValue>
-        </value>
-    </variables>
-    <variables>
-        <name>numQLIsFlete</name>
-        <dataType>Number</dataType>
-        <isCollection>false</isCollection>
-        <isInput>false</isInput>
-        <isOutput>false</isOutput>
-        <scale>0</scale>
-        <value>
-            <numberValue>0.0</numberValue>
-        </value>
-    </variables>
-    <variables>
-        <name>varQLICargo</name>
-        <dataType>SObject</dataType>
-        <isCollection>false</isCollection>
-        <isInput>false</isInput>
-        <isOutput>false</isOutput>
-        <objectType>QuoteLineItem</objectType>
-    </variables>
-    <variables>
-        <name>varQLIFlete</name>
-        <dataType>SObject</dataType>
-        <isCollection>false</isCollection>
-        <isInput>false</isInput>
-        <isOutput>false</isOutput>
-        <objectType>QuoteLineItem</objectType>
-    </variables>
-    <variables>
         <name>correo</name>
         <dataType>String</dataType>
         <isCollection>false</isCollection>
@@ -2574,6 +2669,28 @@
         <isOutput>false</isOutput>
         <value>
             <stringValue>0120R000003lkxpQAA</stringValue>
+        </value>
+    </variables>
+    <variables>
+        <name>numQLIsCargo</name>
+        <dataType>Number</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <scale>0</scale>
+        <value>
+            <numberValue>0.0</numberValue>
+        </value>
+    </variables>
+    <variables>
+        <name>numQLIsFlete</name>
+        <dataType>Number</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <scale>0</scale>
+        <value>
+            <numberValue>0.0</numberValue>
         </value>
     </variables>
     <variables>
@@ -2701,6 +2818,28 @@
         <isOutput>false</isOutput>
     </variables>
     <variables>
+        <name>totalLineas</name>
+        <dataType>Number</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <scale>2</scale>
+        <value>
+            <numberValue>0.0</numberValue>
+        </value>
+    </variables>
+    <variables>
+        <name>noCotizadas</name>
+        <dataType>Number</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <scale>2</scale>
+        <value>
+            <numberValue>0.0</numberValue>
+        </value>
+    </variables>
+    <variables>
         <name>varcero</name>
         <dataType>Number</dataType>
         <isCollection>false</isCollection>
@@ -2728,6 +2867,22 @@
         <isCollection>false</isCollection>
         <isInput>false</isInput>
         <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>varQLICargo</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>QuoteLineItem</objectType>
+    </variables>
+    <variables>
+        <name>varQLIFlete</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>QuoteLineItem</objectType>
     </variables>
     <variables>
         <name>vId</name>

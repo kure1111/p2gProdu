@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>58.0</apiVersion>
+    <assignments>
+        <name>Marca_No_Cotizada</name>
+        <label>Marca No Cotizada</label>
+        <locationX>176</locationX>
+        <locationY>287</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.Status__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>No Cotizada</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Tiene_Razon</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Pone_Razon</name>
+        <label>Pone Razon</label>
+        <locationX>176</locationX>
+        <locationY>420</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.Razon_del_rechazo__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>No cotizado por Pricing: Buy Price en $0 (automático)</stringValue>
+            </value>
+        </assignmentItems>
+    </assignments>
+    <decisions>
+        <name>Es_Proyecto</name>
+        <label>Es Proyecto</label>
+        <locationX>176</locationX>
+        <locationY>150</locationY>
+        <defaultConnectorLabel>No aplica</defaultConnectorLabel>
+        <rules>
+            <name>RT_Proyectos_y_Status_Abierto</name>
+            <conditionLogic>1 AND (2 OR 3 OR 4)</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Opportunity.RecordType.DeveloperName</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Proyectos</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Status__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Pendiente por Cotizar</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Status__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Cotizada</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Status__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Marca_No_Cotizada</targetReference>
+            </connector>
+            <label>RT Proyectos y Status abierto</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Tiene_Razon</name>
+        <label>Tiene Razon</label>
+        <locationX>176</locationX>
+        <locationY>350</locationY>
+        <defaultConnectorLabel>Ya trae razon</defaultConnectorLabel>
+        <rules>
+            <name>Sin_Razon</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Razon_del_rechazo__c</leftValueReference>
+                <operator>IsBlank</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Pone_Razon</targetReference>
+            </connector>
+            <label>Sin Razon</label>
+        </rules>
+    </decisions>
+    <description>Oportunidades tipo Proyecto: cuando Pricing teclea Buy Price = 0 (cero explicito, distinto de vacio) en un producto Pendiente por Cotizar, Cotizada o sin status, el producto pasa a No Cotizada y se llena la razon del rechazo si viene vacia (la VR PROJ 001 la exige en el mismo save; si el usuario ya escribio una razon, se respeta). El vacio (null) en Buy sigue significando "aun no cotizado" y no dispara nada. Sin reversa por decision de negocio 2026-09-23.</description>
+    <environments>Default</environments>
+    <interviewLabel>PROJ_Status_No_Cotizada_Producto {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>PROJ_Status_No_Cotizada_Producto</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <start>
+        <locationX>50</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Es_Proyecto</targetReference>
+        </connector>
+        <filterFormula>ISCHANGED({!$Record.Buy_Price__c}) &amp;&amp; NOT(ISBLANK({!$Record.Buy_Price__c})) &amp;&amp; {!$Record.Buy_Price__c} = 0</filterFormula>
+        <object>OpportunityLineItem</object>
+        <recordTriggerType>Update</recordTriggerType>
+        <triggerType>RecordBeforeSave</triggerType>
+    </start>
+    <status>Active</status>
+</Flow>

@@ -80,6 +80,14 @@ trigger triggerControllerOpportunityProduct on OpportunityLineItem (before inser
             List<OpportunityLineItem> modificarOlis = new List<OpportunityLineItem>();
             List<SubProducto__c> todosSubproduct = new List<SubProducto__c>();
             List<SubProducto__c> modificarSubproduct = new List<SubProducto__c>();
+            // una linea que TRANSICIONA a 'No Cotizada' debe re-evaluar la etapa de la opp
+            // aunque ningun total cambie (Buy null->0 no mueve el rollup y el Sell ya era 0)
+            Boolean algunaNoCotizada = false;
+            for(OpportunityLineItem oli : trigger.new){
+                if(oli.Status__c == 'No Cotizada' && trigger.oldMap.get(oli.Id).Status__c != 'No Cotizada'){
+                    algunaNoCotizada = true;
+                }
+            }
             for(OpportunityLineItem oli : trigger.new){
                 if((oli.Quantity != trigger.oldMap.get(oli.Id).Quantity) || (oli.UnitPrice != trigger.oldMap.get(oli.Id).UnitPrice) || (oli.Status__c != trigger.oldMap.get(oli.Id).Status__c)){
                     System.debug('entra a modificar,eliminar o insertar');
@@ -134,7 +142,7 @@ trigger triggerControllerOpportunityProduct on OpportunityLineItem (before inser
                     || actual.Total_Opportunity_Anual__c != opportunity.Total_Opportunity_Anual__c
                     || actual.Total_Amount_Rechazados_Anual__c != opportunity.Total_Amount_Rechazados_Anual__c
                     || actual.Total_Cerrado_Ganado_Anual__c != opportunity.Total_Cerrado_Ganado_Anual__c;
-                if(cambio){
+                if(cambio || algunaNoCotizada){
                     update opportunity;
                 }
             }
