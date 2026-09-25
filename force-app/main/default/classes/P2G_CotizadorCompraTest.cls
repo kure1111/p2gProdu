@@ -37,6 +37,16 @@ public class P2G_CotizadorCompraTest {
             Shipment__c.class);
     }
 
+    // Versión enriquecida para explicar(): folio, dónde cargó y transportista
+    private static Shipment__c viajeFull(Decimal buy, Decimal km, Integer mesesAtras, String folio, Id cargaEn, String fletera) {
+        DateTime fecha = DateTime.now().addMonths(-mesesAtras);
+        return (Shipment__c) JSON.deserialize(
+            '{"Name":"' + folio + '","Total_Services_Std_Buy_Amount__c":' + buy + ',"Kms__c":' + km +
+            ',"CreatedDate":"' + fecha.formatGmt('yyyy-MM-dd\'T\'HH:mm:ss') + 'Z"' +
+            ',"Site_of_Load__c":"' + cargaEn + '","Carrier__r":{"Name":"' + fletera + '"}}',
+            Shipment__c.class);
+    }
+
     @IsTest
     static void testParExactoRecienteConMediana() {
         Map<String, Id> ids = armarLocalidades();
@@ -155,6 +165,62 @@ public class P2G_CotizadorCompraTest {
         System.assertEquals(null, r.confianza, 'Sin costo no hay confianza que reportar');
         System.assertEquals(null, r.ventaSugerida, 'Sin costo no se sugiere venta');
         System.assertEquals(true, r.pedirProveedor, 'Sin datos siempre manda a proveedor');
+    }
+
+    @IsTest
+    static void testExplicarParReciente() {
+        Map<String, Id> ids = armarLocalidades();
+        // 2 cargan en celaya (ida) y 1 en tlaquepaque (vuelta); mediana = 17000
+        P2G_CotizadorCompra.mockPar = new List<Shipment__c>{
+            viajeFull(16000, 330, 1, 'SP-FN-26-000001', ids.get('celaya'), 'Fletera Uno'),
+            viajeFull(18000, 340, 2, 'SP-FN-26-000002', ids.get('tlaquepaque'), 'Fletera Dos'),
+            viajeFull(17000, 335, 3, 'SP-FN-26-000003', ids.get('celaya'), 'Fletera Tres')
+        };
+        P2G_CotizadorCompra.mockZona = new List<Shipment__c>();
+        P2G_CotizadorCompra.mockBanda = new List<Shipment__c>();
+
+        Test.startTest();
+        P2G_CotizadorCompra.Explicacion ex = P2G_CotizadorCompra.explicar(ids.get('celaya'), ids.get('tlaquepaque'), null);
+        Test.stopTest();
+
+        System.assertEquals(17000, ex.resultado.costo, 'El resultado del panel es el mismo que el de cotizar');
+        System.assertEquals(5, ex.niveles.size(), 'La matriz enseña los 5 escalones');
+        System.assertEquals(true, ex.niveles[0].usado);
+        System.assert(ex.niveles[0].veredicto.contains('USADO') && ex.niveles[0].veredicto.contains('Alta'), 'Veredicto: ' + ex.niveles[0].veredicto);
+        System.assert(ex.niveles[1].veredicto.contains('no se usó'), 'El histórico alcanzaba pero no ganó: ' + ex.niveles[1].veredicto);
+        System.assert(ex.niveles[2].veredicto.contains('no alcanza'), 'Zona sin viajes: ' + ex.niveles[2].veredicto);
+        System.assert(ex.niveles[4].veredicto.contains('no se usó'), 'Banda no usada: ' + ex.niveles[4].veredicto);
+        System.assertEquals(3, ex.muestra.size());
+        System.assertEquals('SP-FN-26-000001', ex.muestra[0].folio, 'Ordenada del más barato al más caro');
+        System.assertEquals(true, ex.muestra[1].esMediana, 'La mediana viene marcada');
+        System.assertEquals('ida', ex.muestra[0].sentido);
+        System.assertEquals(2, ex.viajesIda);
+        System.assertEquals(1, ex.viajesVuelta);
+        System.assertEquals(16000, ex.minimoBuy);
+        System.assertEquals(18000, ex.maximoBuy);
+        System.assertEquals(16000, ex.p25);
+        System.assertEquals(17000, ex.p75);
+        System.assert(ex.origenKm.contains('par'), 'Km del par: ' + ex.origenKm);
+        System.assert(ex.viajeMasViejo <= ex.viajeMasReciente);
+    }
+
+    @IsTest
+    static void testExplicarSinDatos() {
+        Map<String, Id> ids = armarLocalidades();
+        P2G_CotizadorCompra.mockPar = new List<Shipment__c>();
+        P2G_CotizadorCompra.mockZona = new List<Shipment__c>();
+        P2G_CotizadorCompra.mockBanda = new List<Shipment__c>();
+
+        Test.startTest();
+        P2G_CotizadorCompra.Explicacion ex = P2G_CotizadorCompra.explicar(ids.get('celaya'), ids.get('victoria'), null);
+        Test.stopTest();
+
+        System.assertEquals(null, ex.resultado.costo);
+        System.assertEquals(true, ex.niveles[4].usado, 'Sin datos la cascada muere en la banda');
+        System.assert(ex.niveles[4].veredicto.contains('sin datos'), 'Veredicto: ' + ex.niveles[4].veredicto);
+        System.assertEquals(null, ex.muestra, 'Sin ruta ganadora no hay muestra');
+        System.assert(ex.notaMuestra.contains('Sin viajes'), 'Nota: ' + ex.notaMuestra);
+        System.assert(ex.origenKm.contains('Sin km'), 'Origen km: ' + ex.origenKm);
     }
 
     @IsTest

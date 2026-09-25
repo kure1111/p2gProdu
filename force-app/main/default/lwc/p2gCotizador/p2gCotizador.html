@@ -107,6 +107,95 @@
                         </div>
                     </div>
                 </template>
+
+                <!-- Transparencia: la cascada completa, solo cuando la piden -->
+                <div class="slds-m-top_medium">
+                    <lightning-button label={etiquetaExplicar} icon-name="utility:knowledge_base"
+                        onclick={verComoSeCalculo}></lightning-button>
+                    <template if:true={cargandoExplicacion}>
+                        <lightning-spinner alternative-text="Calculando detalle" size="small"></lightning-spinner>
+                    </template>
+                </div>
+                <template if:true={mostrarExplicacion}>
+                    <div class="slds-m-top_medium slds-box">
+                        <p class="slds-text-heading_small">Cómo se calculó</p>
+                        <p class="slds-m-top_x-small slds-text-body_small">{explicacion.origenKmTxt}</p>
+
+                        <table class="slds-table slds-table_bordered slds-table_cell-buffer slds-m-top_small">
+                            <thead>
+                                <tr class="slds-line-height_reset">
+                                    <th scope="col">Nivel</th>
+                                    <th scope="col">Qué buscó</th>
+                                    <th scope="col">Viajes</th>
+                                    <th scope="col">Mínimo</th>
+                                    <th scope="col">Mediana</th>
+                                    <th scope="col">$/km</th>
+                                    <th scope="col">Veredicto</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <template for:each={explicacion.niveles} for:item="niv">
+                                    <tr key={niv.key} class={niv.clase}>
+                                        <td>{niv.titulo}</td>
+                                        <td>{niv.queBusco}</td>
+                                        <td>{niv.viajes}</td>
+                                        <td>{niv.minimoTxt}</td>
+                                        <td>{niv.medianaTxt}</td>
+                                        <td>{niv.porKmTxt}</td>
+                                        <td>{niv.veredicto}</td>
+                                    </tr>
+                                </template>
+                            </tbody>
+                        </table>
+
+                        <template if:true={explicacion.dispersionTxt}>
+                            <p class="slds-m-top_small">{explicacion.dispersionTxt}</p>
+                            <p class="slds-m-top_xx-small">{explicacion.idaVueltaTxt}</p>
+                        </template>
+
+                        <template if:true={tieneMuestra}>
+                            <p class="slds-text-heading_small slds-m-top_medium">Los viajes detrás de la mediana</p>
+                            <table class="slds-table slds-table_bordered slds-table_cell-buffer slds-m-top_x-small">
+                                <thead>
+                                    <tr class="slds-line-height_reset">
+                                        <th scope="col">Folio</th>
+                                        <th scope="col">Fecha</th>
+                                        <th scope="col">Transportista</th>
+                                        <th scope="col">Buy</th>
+                                        <th scope="col">Km</th>
+                                        <th scope="col">Sentido</th>
+                                        <th scope="col"></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <template for:each={explicacion.muestra} for:item="v">
+                                        <tr key={v.key} class={v.clase}>
+                                            <td>{v.folio}</td>
+                                            <td>{v.fechaTxt}</td>
+                                            <td>{v.transportista}</td>
+                                            <td>{v.buyTxt}</td>
+                                            <td>{v.kmTxt}</td>
+                                            <td>{v.sentido}</td>
+                                            <td>{v.marcador}</td>
+                                        </tr>
+                                    </template>
+                                </tbody>
+                            </table>
+                        </template>
+                        <template if:true={explicacion.notaMuestra}>
+                            <p class="slds-m-top_x-small slds-text-body_small">{explicacion.notaMuestra}</p>
+                        </template>
+
+                        <template if:true={explicacion.ventaTxt}>
+                            <p class="slds-m-top_small">{explicacion.ventaTxt}</p>
+                        </template>
+
+                        <div class="slds-m-top_small">
+                            <lightning-button label={etiquetaCopiarExp} icon-name="utility:copy_to_clipboard"
+                                onclick={copiarExplicacion}></lightning-button>
+                        </div>
+                    </div>
+                </template>
             </template>
         </div>
     </lightning-card>
