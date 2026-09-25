@@ -13,6 +13,9 @@ export default class P2gCotizador extends LightningElement {
     origenId = null;
     destinoId = null;
     km = null;
+    servicio = 'FN';
+    modalidadId = null;
+    kmAdicionales = null;
     @track resultado = null;
     // Decision humana: el motor sugiere, la persona de pricing ajusta y decide
     margen = null;
@@ -43,6 +46,23 @@ export default class P2gCotizador extends LightningElement {
         this.km = valor === '' || valor === null ? null : Number(valor);
     }
 
+    handleServicio(event) {
+        this.servicio = event.detail.value;
+    }
+
+    handleModalidad(event) {
+        this.modalidadId = event.detail.recordId;
+    }
+
+    handleKmAdicionales(event) {
+        const valor = event.target.value;
+        this.kmAdicionales = valor === '' || valor === null ? null : Number(valor);
+    }
+
+    get servicioOptions() {
+        return ['FN', 'FI', 'PTO', 'T', 'M', 'CE', 'PQ'].map((s) => ({ label: s, value: s }));
+    }
+
     get sinSeleccion() {
         return !this.origenId || !this.destinoId;
     }
@@ -58,7 +78,10 @@ export default class P2gCotizador extends LightningElement {
         this.copiadoExp = false;
         this.cargando = true;
         // La explicación se amarra a ESTOS parámetros aunque el usuario mueva los pickers después
-        this.paramsCotizados = { origenId: this.origenId, destinoId: this.destinoId, kmManual: this.km };
+        this.paramsCotizados = {
+            origenId: this.origenId, destinoId: this.destinoId, kmManual: this.km,
+            servicio: this.servicio, modalidadId: this.modalidadId, kmAdicionales: this.kmAdicionales
+        };
         cotizar(this.paramsCotizados)
             .then((r) => {
                 this.resultado = r;
@@ -118,6 +141,13 @@ export default class P2gCotizador extends LightningElement {
         return this.resultado ? 'Confianza ' + this.resultado.confianza : '';
     }
 
+    // Desglose cuando hubo km adicionales: base + adicionales = total
+    get desgloseTxt() {
+        const r = this.resultado;
+        if (!r || r.costoAdicional === null || r.costoAdicional === undefined) { return ''; }
+        return 'Ruta base ' + pesos(r.costoBase) + ' + ' + r.kmAdicionales + ' km adicionales × $' + r.costoPorKm + '/km = ' + pesos(r.costo);
+    }
+
     get badgeClass() {
         const base = 'slds-badge ';
         if (!this.resultado) { return base; }
@@ -138,11 +168,13 @@ export default class P2gCotizador extends LightningElement {
     copiarResumen() {
         const r = this.resultado;
         const lineas = [
-            'Cotización FN ' + this.nombreDe(this.origenRec) + ' → ' + this.nombreDe(this.destinoRec),
+            'Cotización ' + (r.servicio || 'FN') + ' ' + this.nombreDe(this.origenRec) + ' → ' + this.nombreDe(this.destinoRec),
             'Costo estimado de compra: ' + pesos(r.costo) + (r.km ? ' (' + r.km + ' km)' : ''),
             'Precio de venta: ' + pesos(this.venta) + ' (margen ' + this.margen + '%)',
             'Confianza: ' + r.confianza + ' — ' + r.fuente
         ];
+        if (this.desgloseTxt) { lineas.splice(2, 0, this.desgloseTxt); }
+        if (r.modalidadNota) { lineas.push('OJO: ' + r.modalidadNota); }
         if (r.pedirProveedor) {
             lineas.push('OJO: confirmar precio con proveedor antes de comprometer.');
         }
@@ -190,7 +222,7 @@ export default class P2gCotizador extends LightningElement {
         const niveles = (e.niveles || []).map((n) => ({
             key: n.nivel,
             titulo: n.nivel + ' · ' + n.nombre,
-            queBusco: n.queBusco,
+            queBusco: n.queBusco + (n.nota ? ' · ' + n.nota : ''),
             viajes: n.viajes === null || n.viajes === undefined ? 0 : n.viajes,
             minimoTxt: n.minimo === null || n.minimo === undefined ? '—' : n.minimo,
             medianaTxt: pesos(n.mediana),

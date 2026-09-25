@@ -37,6 +37,16 @@ public class P2G_CotizadorCompraTest {
             Shipment__c.class);
     }
 
+    // Con modalidad (Container_Type__c) para la guarda de la Fase 4
+    private static Shipment__c viajeCaja(Decimal buy, Decimal km, Integer mesesAtras, Id caja) {
+        DateTime fecha = DateTime.now().addMonths(-mesesAtras);
+        return (Shipment__c) JSON.deserialize(
+            '{"Total_Services_Std_Buy_Amount__c":' + buy + ',"Kms__c":' + km +
+            ',"CreatedDate":"' + fecha.formatGmt('yyyy-MM-dd\'T\'HH:mm:ss') + 'Z"' +
+            ',"Container_Type__c":"' + caja + '"}',
+            Shipment__c.class);
+    }
+
     // Versión enriquecida para explicar(): folio, dónde cargó y transportista
     private static Shipment__c viajeFull(Decimal buy, Decimal km, Integer mesesAtras, String folio, Id cargaEn, String fletera) {
         DateTime fecha = DateTime.now().addMonths(-mesesAtras);
@@ -55,7 +65,7 @@ public class P2G_CotizadorCompraTest {
         };
 
         Test.startTest();
-        P2G_CotizadorCompra.Resultado r = P2G_CotizadorCompra.cotizar(ids.get('celaya'), ids.get('tlaquepaque'), null);
+        P2G_CotizadorCompra.Resultado r = P2G_CotizadorCompra.cotizar(ids.get('celaya'), ids.get('tlaquepaque'), null, null, null, null);
         Test.stopTest();
 
         System.assertEquals(17000, r.costo, 'Mediana del par (el outlier de 30k no arrastra)');
@@ -78,7 +88,7 @@ public class P2G_CotizadorCompraTest {
         };
 
         Test.startTest();
-        P2G_CotizadorCompra.Resultado r = P2G_CotizadorCompra.cotizar(ids.get('celaya'), ids.get('tlaquepaque'), null);
+        P2G_CotizadorCompra.Resultado r = P2G_CotizadorCompra.cotizar(ids.get('celaya'), ids.get('tlaquepaque'), null, null, null, null);
         Test.stopTest();
 
         System.assertEquals(19000, r.costo, 'Mediana de los 3 del histórico');
@@ -96,7 +106,7 @@ public class P2G_CotizadorCompraTest {
         };
 
         Test.startTest();
-        P2G_CotizadorCompra.Resultado r = P2G_CotizadorCompra.cotizar(ids.get('celaya'), ids.get('tlaquepaque'), null);
+        P2G_CotizadorCompra.Resultado r = P2G_CotizadorCompra.cotizar(ids.get('celaya'), ids.get('tlaquepaque'), null, null, null, null);
         Test.stopTest();
 
         System.assertEquals(17000, r.costo, 'Mediana de la zona');
@@ -114,7 +124,7 @@ public class P2G_CotizadorCompraTest {
         };
 
         Test.startTest();
-        P2G_CotizadorCompra.Resultado r = P2G_CotizadorCompra.cotizar(ids.get('celaya'), ids.get('tlaquepaque'), null);
+        P2G_CotizadorCompra.Resultado r = P2G_CotizadorCompra.cotizar(ids.get('celaya'), ids.get('tlaquepaque'), null, null, null, null);
         Test.stopTest();
 
         System.assertEquals(21000, r.costo);
@@ -134,9 +144,9 @@ public class P2G_CotizadorCompraTest {
         };
 
         Test.startTest();
-        P2G_CotizadorCompra.Resultado media = P2G_CotizadorCompra.cotizar(ids.get('celaya'), ids.get('victoria'), 550);
-        P2G_CotizadorCompra.Resultado local = P2G_CotizadorCompra.cotizar(ids.get('celaya'), ids.get('victoria'), 50);
-        P2G_CotizadorCompra.Resultado sinKm = P2G_CotizadorCompra.cotizar(ids.get('celaya'), ids.get('victoria'), null);
+        P2G_CotizadorCompra.Resultado media = P2G_CotizadorCompra.cotizar(ids.get('celaya'), ids.get('victoria'), 550, null, null, null);
+        P2G_CotizadorCompra.Resultado local = P2G_CotizadorCompra.cotizar(ids.get('celaya'), ids.get('victoria'), 50, null, null, null);
+        P2G_CotizadorCompra.Resultado sinKm = P2G_CotizadorCompra.cotizar(ids.get('celaya'), ids.get('victoria'), null, null, null, null);
         Test.stopTest();
 
         System.assert(media.fuente.contains('banda Media'), 'Fuente: ' + media.fuente);
@@ -144,6 +154,10 @@ public class P2G_CotizadorCompraTest {
         System.assertEquals('Baja', media.confianza, 'Banda = confianza baja');
         System.assertEquals(true, media.pedirProveedor);
         System.assertNotEquals(null, media.ventaSugerida, 'Aun con confianza baja se sugiere venta');
+        System.assertEquals('FN', media.servicio, 'Sin servicio explícito se asume FN');
+        System.assertEquals(50.00, media.bandaMedianaKm, 'La banda expone su $/km mediano (el usado)');
+        System.assertEquals(50.00, media.bandaPromedioKm, 'y el promedio simple');
+        System.assertEquals(50.00, media.bandaPonderadoKm, 'y el ponderado (dinero total / km totales)');
         // km<100 sin fletes locales: cae al respaldo global (mediana de flete completo)
         System.assert(local.fuente.contains('Global'), 'Fuente: ' + local.fuente);
         System.assertEquals(16500, local.costo);
@@ -157,7 +171,7 @@ public class P2G_CotizadorCompraTest {
         Map<String, Id> ids = armarLocalidades();
 
         Test.startTest();
-        P2G_CotizadorCompra.Resultado r = P2G_CotizadorCompra.cotizar(ids.get('celaya'), ids.get('victoria'), null);
+        P2G_CotizadorCompra.Resultado r = P2G_CotizadorCompra.cotizar(ids.get('celaya'), ids.get('victoria'), null, null, null, null);
         Test.stopTest();
 
         System.assertEquals(null, r.costo, 'Sin viajes y sin km no hay cotización');
@@ -180,7 +194,7 @@ public class P2G_CotizadorCompraTest {
         P2G_CotizadorCompra.mockBanda = new List<Shipment__c>();
 
         Test.startTest();
-        P2G_CotizadorCompra.Explicacion ex = P2G_CotizadorCompra.explicar(ids.get('celaya'), ids.get('tlaquepaque'), null);
+        P2G_CotizadorCompra.Explicacion ex = P2G_CotizadorCompra.explicar(ids.get('celaya'), ids.get('tlaquepaque'), null, null, null, null);
         Test.stopTest();
 
         System.assertEquals(17000, ex.resultado.costo, 'El resultado del panel es el mismo que el de cotizar');
@@ -212,7 +226,7 @@ public class P2G_CotizadorCompraTest {
         P2G_CotizadorCompra.mockBanda = new List<Shipment__c>();
 
         Test.startTest();
-        P2G_CotizadorCompra.Explicacion ex = P2G_CotizadorCompra.explicar(ids.get('celaya'), ids.get('victoria'), null);
+        P2G_CotizadorCompra.Explicacion ex = P2G_CotizadorCompra.explicar(ids.get('celaya'), ids.get('victoria'), null, null, null, null);
         Test.stopTest();
 
         System.assertEquals(null, ex.resultado.costo);
@@ -224,12 +238,77 @@ public class P2G_CotizadorCompraTest {
     }
 
     @IsTest
+    static void testModalidadFiltraYCaeATodas() {
+        Map<String, Id> ids = armarLocalidades();
+        String pfx = Container_Type__c.SObjectType.getDescribe().getKeyPrefix();
+        Id cajaA = Id.valueOf(pfx + '000000001AAA');
+        Id cajaB = Id.valueOf(pfx + '000000002AAA');
+        // 3 viajes recientes de caja A + 1 carísimo de caja B
+        P2G_CotizadorCompra.mockPar = new List<Shipment__c>{
+            viajeCaja(16000, 330, 1, cajaA), viajeCaja(17000, 335, 1, cajaA),
+            viajeCaja(18000, 340, 2, cajaA), viajeCaja(30000, 330, 1, cajaB)
+        };
+
+        Test.startTest();
+        P2G_CotizadorCompra.Resultado conA = P2G_CotizadorCompra.cotizar(ids.get('celaya'), ids.get('tlaquepaque'), null, null, cajaA, null);
+        P2G_CotizadorCompra.Resultado conB = P2G_CotizadorCompra.cotizar(ids.get('celaya'), ids.get('tlaquepaque'), null, null, cajaB, null);
+        Test.stopTest();
+
+        System.assertEquals(17000, conA.costo, 'Con caja A el historial se filtra (el de B no arrastra)');
+        System.assert(conA.fuente.contains('solo la modalidad'), 'Fuente: ' + conA.fuente);
+        System.assertEquals(null, conA.modalidadNota, 'Filtró bien: sin aviso');
+        System.assertEquals(17500, conB.costo, 'Caja B sola no alcanza: cae a TODAS las modalidades (mediana de 4)');
+        System.assertNotEquals(null, conB.modalidadNota, 'Y lo dice');
+        System.assert(conB.modalidadNota.contains('todas las modalidades'), 'Nota: ' + conB.modalidadNota);
+    }
+
+    @IsTest
+    static void testKmAdicionalesAlPorKmDeLaFuente() {
+        Map<String, Id> ids = armarLocalidades();
+        P2G_CotizadorCompra.mockPar = new List<Shipment__c>{
+            viaje(16000, 330, 1), viaje(17000, 335, 1), viaje(18000, 340, 2)
+        };
+        P2G_CotizadorCompra.mockZona = new List<Shipment__c>();
+
+        Test.startTest();
+        // par exacto: mediana 17000, km 335 -> $50.75/km; +40 km = +2030
+        P2G_CotizadorCompra.Resultado r = P2G_CotizadorCompra.cotizar(ids.get('celaya'), ids.get('tlaquepaque'), null, null, null, 40);
+        // respaldo global (sin km, no escala): los adicionales NO se aplican
+        P2G_CotizadorCompra.mockPar = new List<Shipment__c>();
+        P2G_CotizadorCompra.mockBanda = new List<Shipment__c>{ viaje(16500, 330, 1) };
+        P2G_CotizadorCompra.Resultado g = P2G_CotizadorCompra.cotizar(ids.get('celaya'), ids.get('victoria'), null, null, null, 40);
+        Test.stopTest();
+
+        System.assertEquals(17000, r.costoBase, 'El costo base queda desglosado');
+        System.assertEquals(40, r.kmAdicionales);
+        System.assertEquals(2030.00, r.costoAdicional, '40 km x $50.75 del par');
+        System.assertEquals(19030.00, r.costo, 'Total = base + adicionales');
+        System.assert(r.fuente.contains('km adicionales'), 'Fuente: ' + r.fuente);
+        System.assertEquals(22388.24, r.ventaSugerida, 'La venta se sugiere sobre el TOTAL');
+
+        System.assertEquals(16500, g.costo, 'El respaldo global no escala por km: costo intacto');
+        System.assertEquals(null, g.costoAdicional);
+        System.assert(g.fuente.contains('no se aplicaron'), 'Fuente: ' + g.fuente);
+    }
+
+    @IsTest
+    static void testServicioInvalido() {
+        Map<String, Id> ids = armarLocalidades();
+        try {
+            P2G_CotizadorCompra.cotizar(ids.get('celaya'), ids.get('victoria'), null, 'XX', null, null);
+            System.assert(false, 'Debe rechazar servicios fuera del catálogo');
+        } catch (AuraHandledException e) {
+            System.assert(e.getMessage().contains('no soportado'), 'Mensaje: ' + e.getMessage());
+        }
+    }
+
+    @IsTest
     static void testMedianaYValidacion() {
         System.assertEquals(2, P2G_CotizadorCompra.mediana(new List<Decimal>{ 3, 1, 2 }));
         System.assertEquals(2.50, P2G_CotizadorCompra.mediana(new List<Decimal>{ 1, 2, 3, 4 }));
         System.assertEquals(null, P2G_CotizadorCompra.mediana(new List<Decimal>()));
         try {
-            P2G_CotizadorCompra.cotizar(null, null, null);
+            P2G_CotizadorCompra.cotizar(null, null, null, null, null, null);
             System.assert(false, 'Debe rechazar sin origen/destino');
         } catch (AuraHandledException e) {
             System.assertEquals('Selecciona origen y destino', e.getMessage());

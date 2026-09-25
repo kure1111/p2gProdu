@@ -22,6 +22,22 @@
                     <lightning-input type="number" label="Km (opcional, se estima del histórico)"
                         step="1" onchange={handleKm}></lightning-input>
                 </div>
+                <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-3">
+                    <lightning-combobox label="Tipo de servicio" value={servicio}
+                        options={servicioOptions} onchange={handleServicio}></lightning-combobox>
+                </div>
+                <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-3">
+                    <lightning-record-picker
+                        label="Modalidad / caja (opcional)"
+                        placeholder="Buscar tipo de caja..."
+                        object-api-name="Container_Type__c"
+                        onchange={handleModalidad}>
+                    </lightning-record-picker>
+                </div>
+                <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-3">
+                    <lightning-input type="number" label="Km adicionales (destino cercano a la ruta)"
+                        step="1" onchange={handleKmAdicionales}></lightning-input>
+                </div>
             </div>
             <div class="slds-m-top_medium">
                 <lightning-button variant="brand" label="Cotizar" onclick={cotizarRuta}
@@ -53,10 +69,18 @@
                         </template>
                     </div>
                     <p class="slds-m-top_x-small slds-text-title">{resultado.fuente}</p>
+                    <template if:true={desgloseTxt}>
+                        <p class="slds-m-top_x-small">{desgloseTxt}</p>
+                    </template>
                     <template if:true={resultado.km}>
                         <p class="slds-m-top_x-small">Km: {resultado.km}
                             <template if:true={resultado.costoPorKm}> &nbsp;|&nbsp; $/km: {resultado.costoPorKm}</template>
                         </p>
+                    </template>
+                    <template if:true={resultado.modalidadNota}>
+                        <div class="slds-m-top_small slds-text-color_error">
+                            ⚠ {resultado.modalidadNota}
+                        </div>
                     </template>
                     <template if:true={resultado.pedirProveedor}>
                         <div class="slds-m-top_small slds-text-color_error">

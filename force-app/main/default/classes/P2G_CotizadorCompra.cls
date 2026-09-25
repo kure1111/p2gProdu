@@ -1,5 +1,5 @@
 /**
- * Cotizador de costo de compra (CXP) por ruta de flete nacional.
+ * Cotizador de costo de compra (CXP) por ruta de flete.
  * Cascada de fuentes (requerimiento de negocio 2026-09-19, versión Salesforce
  * del cotizador de Excel):
  *   1. Par exacto reciente (últimos 6 meses), mínimo 3 viajes  -> mediana del buy
@@ -11,13 +11,23 @@
  * Reglas: medianas (anti-outliers), búsqueda BIDIRECCIONAL (ida y vuelta son
  * el mismo par), km = mediana de Kms__c de los viajes reales (el manual lo
  * sobreescribe), y trazabilidad de qué fuente se usó y con cuántos viajes.
- * Fuente de datos: Shipment__c FN con compra real (> 0), sin copiar nada.
+ * Fuente de datos: Shipment__c del servicio elegido con compra real (> 0).
  *
  * Fase 2 (2026-09-23): confianza Alta/Media/Baja según el nivel de la cascada,
  * bandera pedirProveedor cuando el dato no es confiable, y venta sugerida con
  * el margen FN estándar (15% sobre venta, mismo criterio que el precio
  * sugerido de productos: Buy / 0.85). La venta es SOLO una sugerencia: el
  * humano de pricing la ajusta en pantalla y decide el precio final.
+ *
+ * Fase 4 (2026-09-25): servicio parametrizado (FN/FI/PTO/T/M/CE/PQ — T, M, CE
+ * y PQ no tienen km capturados: niveles 1-4 funcionan a costo completo y el
+ * respaldo es el costo completo mediano, nunca un $/km inventado); modalidad
+ * (Container_Type__c) con GUARDA: solo filtra el historial si quedan
+ * suficientes viajes, si no cae a todas las modalidades y lo dice; km
+ * adicionales cobrados al $/km de la MISMA fuente que dio el precio (nunca en
+ * banda Local ni respaldo global, que no escalan por km); y promedio/mediana/
+ * ponderado del $/km de la banda expuestos (el cálculo SIGUE siendo con
+ * mediana, decisión pendiente de negocio).
  */
 public with sharing class P2G_CotizadorCompra {
 
@@ -33,6 +43,7 @@ public with sharing class P2G_CotizadorCompra {
     // Margen FN estándar sobre venta (venta = buy / 0.85), igual que el flow
     // de precio sugerido de productos OLI
     @TestVisible private static final Decimal MARGEN_VENTA_DEFAULT = 15;
+    @TestVisible private static final Set<String> SERVICIOS = new Set<String>{ 'FN', 'FI', 'PTO', 'T', 'M', 'CE', 'PQ' };
 
     public class Resultado {
         @AuraEnabled public Decimal costo;
@@ -44,13 +55,15 @@ public with sharing class P2G_CotizadorCompra {
         @AuraEnabled public Boolean pedirProveedor; // true = dato poco confiable, pedir precio a proveedor
         @AuraEnabled public Decimal margenPct;      // margen default con el que se sugiere la venta
         @AuraEnabled public Decimal ventaSugerida;  // costo / (1 - margen); el humano la ajusta en pantalla
-    }
-
-    private class Viaje {
-        Decimal buy;
-        Decimal km;
-        Boolean reciente;
-        Viaje(Decimal b, Decimal k, Boolean r) { buy = b; km = k; reciente = r; }
+        @AuraEnabled public String servicio;        // FN / FI / PTO / T / M / CE / PQ
+        @AuraEnabled public String modalidadNota;   // aviso cuando la modalidad elegida no pudo filtrar
+        @AuraEnabled public Decimal costoBase;      // costo de la ruta sin km adicionales
+        @AuraEnabled public Decimal kmAdicionales;
+        @AuraEnabled public Decimal costoAdicional; // kmAdicionales x $/km de la fuente ganadora
+        @AuraEnabled public Boolean escalaPorKm;    // false en banda Local y respaldos globales
+        @AuraEnabled public Decimal bandaPromedioKm;  // $/km promedio simple de la banda usada
+        @AuraEnabled public Decimal bandaMedianaKm;   // $/km mediano (el que se usa para calcular)
+        @AuraEnabled public Decimal bandaPonderadoKm; // dinero total / km totales de la banda
     }
 
     // Hooks de prueba: el campo de compra no es escribible en todos los orgs
@@ -60,127 +73,168 @@ public with sharing class P2G_CotizadorCompra {
     @TestVisible private static List<Shipment__c> mockBanda;
 
     @AuraEnabled
-    public static Resultado cotizar(Id origenId, Id destinoId, Decimal kmManual) {
+    public static Resultado cotizar(Id origenId, Id destinoId, Decimal kmManual, String servicio, Id modalidadId, Decimal kmAdicionales) {
         if (origenId == null || destinoId == null) {
-            AuraHandledException ex = new AuraHandledException('Selecciona origen y destino');
-            ex.setMessage('Selecciona origen y destino');
-            throw ex;
+            throw aura('Selecciona origen y destino');
         }
+        String svc = normalizaServicio(servicio);
         DateTime corteReciente = DateTime.now().addMonths(-MESES_VENTANA_RECIENTE);
 
         // ---- Niveles 1-2: par exacto (bidireccional) ----
-        List<Viaje> par = aViajes(consultaPar(origenId, destinoId), corteReciente);
-        List<Viaje> parRecientes = filtraRecientes(par);
+        List<Shipment__c> par = consultaPar(origenId, destinoId, svc);
+        List<Shipment__c> parRec = recientesSp(par, corteReciente);
 
         // km de la ruta: manual > mediana del par reciente > mediana del par completo
+        // (los km salen del historial SIN filtrar por modalidad: la distancia no depende de la caja)
         Decimal km = kmManual;
-        if (km == null) { km = medianaKm(parRecientes); }
-        if (km == null) { km = medianaKm(par); }
+        if (km == null) { km = medianaKmSp(parRec); }
+        if (km == null) { km = medianaKmSp(par); }
 
-        if (parRecientes.size() >= MIN_PAR_RECIENTE) {
-            return arma(medianaBuy(parRecientes), 'Par exacto reciente (' + parRecientes.size() + ' viajes, últimos ' + MESES_VENTANA_RECIENTE + ' meses)', parRecientes.size(), km, 'Alta');
+        Resultado r;
+        SetNivel s1 = eligeFilas(parRec, modalidadId, MIN_PAR_RECIENTE);
+        SetNivel s2 = eligeFilas(par, modalidadId, MIN_PAR_HISTORICO);
+        if (s1.filas.size() >= MIN_PAR_RECIENTE) {
+            r = arma(medianaBuySp(s1.filas), 'Par exacto reciente (' + s1.filas.size() + ' viajes, últimos ' + MESES_VENTANA_RECIENTE + ' meses)', s1.filas.size(), km, 'Alta');
+            anotaModalidad(r, modalidadId, s1);
+        } else if (s2.filas.size() >= MIN_PAR_HISTORICO) {
+            r = arma(medianaBuySp(s2.filas), 'Par exacto histórico desde 2024 (' + s2.filas.size() + ' viajes)', s2.filas.size(), km, 'Media');
+            anotaModalidad(r, modalidadId, s2);
+        } else {
+            // ---- Niveles 3-4: zona metropolitana ----
+            Map<Id, Location__c> locs = new Map<Id, Location__c>(
+                [SELECT Id, Zona_Metropolitana__c FROM Location__c WHERE Id IN (:origenId, :destinoId)]);
+            Id zonaO = zonaEfectiva(locs.get(origenId), origenId);
+            Id zonaD = zonaEfectiva(locs.get(destinoId), destinoId);
+
+            List<Shipment__c> zona = consultaZona(zonaO, zonaD, svc);
+            List<Shipment__c> zonaRec = recientesSp(zona, corteReciente);
+            if (km == null) { km = medianaKmSp(zonaRec); }
+            if (km == null) { km = medianaKmSp(zona); }
+
+            SetNivel s3 = eligeFilas(zonaRec, modalidadId, MIN_ZONA_RECIENTE);
+            SetNivel s4 = eligeFilas(zona, modalidadId, MIN_ZONA_HISTORICO);
+            if (s3.filas.size() >= MIN_ZONA_RECIENTE) {
+                r = arma(medianaBuySp(s3.filas), 'Zona reciente (' + s3.filas.size() + ' viajes, últimos ' + MESES_VENTANA_RECIENTE + ' meses)', s3.filas.size(), km, 'Media');
+                anotaModalidad(r, modalidadId, s3);
+            } else if (s4.filas.size() >= MIN_ZONA_HISTORICO) {
+                r = arma(medianaBuySp(s4.filas), 'Zona histórico desde 2024 (' + s4.filas.size() + ' viajes)', s4.filas.size(), km, 'Baja');
+                anotaModalidad(r, modalidadId, s4);
+            } else {
+                // ---- Nivel 5: bandas de $/km sobre todo el flete del servicio ----
+                r = cotizaPorBanda(km, corteReciente, svc);
+                if (modalidadId != null) {
+                    r.modalidadNota = 'Las bandas de $/km no distinguen modalidad: son la referencia de todo el servicio.';
+                }
+            }
         }
-        if (par.size() >= MIN_PAR_HISTORICO) {
-            return arma(medianaBuy(par), 'Par exacto histórico desde 2024 (' + par.size() + ' viajes)', par.size(), km, 'Media');
-        }
-
-        // ---- Niveles 3-4: zona metropolitana ----
-        Map<Id, Location__c> locs = new Map<Id, Location__c>(
-            [SELECT Id, Zona_Metropolitana__c FROM Location__c WHERE Id IN (:origenId, :destinoId)]);
-        Id zonaO = zonaEfectiva(locs.get(origenId), origenId);
-        Id zonaD = zonaEfectiva(locs.get(destinoId), destinoId);
-
-        List<Viaje> zona = aViajes(consultaZona(zonaO, zonaD), corteReciente);
-        List<Viaje> zonaRecientes = filtraRecientes(zona);
-        if (km == null) { km = medianaKm(zonaRecientes); }
-        if (km == null) { km = medianaKm(zona); }
-
-        if (zonaRecientes.size() >= MIN_ZONA_RECIENTE) {
-            return arma(medianaBuy(zonaRecientes), 'Zona reciente (' + zonaRecientes.size() + ' viajes, últimos ' + MESES_VENTANA_RECIENTE + ' meses)', zonaRecientes.size(), km, 'Media');
-        }
-        if (zona.size() >= MIN_ZONA_HISTORICO) {
-            return arma(medianaBuy(zona), 'Zona histórico desde 2024 (' + zona.size() + ' viajes)', zona.size(), km, 'Baja');
-        }
-
-        // ---- Nivel 5: bandas de $/km sobre TODO el flete nacional reciente ----
-        return cotizaPorBanda(km, corteReciente);
+        r.servicio = svc;
+        aplicaAdicionales(r, kmAdicionales);
+        return finaliza(r);
     }
 
     // La banda Local cotiza con el costo COMPLETO mediano de sus viajes (un flete
     // local no escala por km); las demás con km x $/km mediano de la banda.
+    // La consulta trae TAMBIÉN viajes sin km: para servicios que no capturan
+    // kilómetros (T/M/CE/PQ) el respaldo global es el costo completo mediano.
     // Cache por transacción: cotizar() y explicar() comparten esta consulta gorda
     // (dos corridas de 40k filas reventarían el límite de 50k query rows).
     private static List<Shipment__c> baseBandaCache;
+    private static String baseBandaSvc;
 
-    private static Resultado cotizaPorBanda(Decimal km, DateTime corteReciente) {
-        if (baseBandaCache == null) {
+    private static List<Shipment__c> baseBanda(DateTime corteReciente, String svc) {
+        if (baseBandaCache == null || baseBandaSvc != svc) {
+            String patron = 'SP-' + svc + '%';
+            baseBandaSvc = svc;
             baseBandaCache = mockBanda != null ? mockBanda : [
                 SELECT Kms__c, Total_Services_Std_Buy_Amount__c
                 FROM Shipment__c
-                WHERE Name LIKE 'SP-FN%'
+                WHERE Name LIKE :patron
                   AND Total_Services_Std_Buy_Amount__c > 0
-                  AND Kms__c > 0
                   AND CreatedDate >= :corteReciente
                 LIMIT 40000
             ];
         }
-        List<Shipment__c> base = baseBandaCache;
+        return baseBandaCache;
+    }
+
+    private static Resultado cotizaPorBanda(Decimal km, DateTime corteReciente, String svc) {
+        List<Shipment__c> base = baseBanda(corteReciente, svc);
         if (km == null) {
-            // sin km no hay banda: respaldo global (mediana de flete completo)
+            // sin km no hay banda: respaldo global (mediana de flete completo, con o sin km)
             List<Decimal> todos = new List<Decimal>();
             for (Shipment__c s : base) { todos.add(s.Total_Services_Std_Buy_Amount__c); }
             Decimal respaldoGlobal = mediana(todos);
             Resultado r = new Resultado();
             r.costo = respaldoGlobal;
             r.viajes = todos.size();
+            r.escalaPorKm = false;
             r.fuente = respaldoGlobal == null
                 ? 'Sin datos: no hay historial del par ni de la zona; captura los km para estimar por banda'
-                : 'Global (respaldo, sin km): mediana de ' + todos.size() + ' fletes FN recientes';
+                : 'Global (respaldo, sin km): costo completo mediano de ' + todos.size() + ' fletes ' + svc + ' recientes';
             if (respaldoGlobal != null) { r.confianza = 'Baja'; }
-            return finaliza(r);
+            return r;
         }
 
         String etiquetaBanda = nombreBanda(km);
         List<Decimal> costosBanda = new List<Decimal>();
         List<Decimal> porKmBanda = new List<Decimal>();
         List<Decimal> costosGlobal = new List<Decimal>();
+        Decimal sumaPorKm = 0;
+        Decimal sumaBuyBanda = 0;
+        Decimal sumaKmBanda = 0;
         for (Shipment__c s : base) {
             costosGlobal.add(s.Total_Services_Std_Buy_Amount__c);
+            if (s.Kms__c == null || s.Kms__c <= 0) { continue; }
             Boolean mismaBanda = (km < KM_LOCAL && s.Kms__c < KM_LOCAL)
                 || (km >= KM_LOCAL && km < KM_CORTA && s.Kms__c >= KM_LOCAL && s.Kms__c < KM_CORTA)
                 || (km >= KM_CORTA && km < KM_MEDIA && s.Kms__c >= KM_CORTA && s.Kms__c < KM_MEDIA)
                 || (km >= KM_MEDIA && s.Kms__c >= KM_MEDIA);
             if (mismaBanda) {
                 costosBanda.add(s.Total_Services_Std_Buy_Amount__c);
-                porKmBanda.add(s.Total_Services_Std_Buy_Amount__c / s.Kms__c);
+                Decimal pk = s.Total_Services_Std_Buy_Amount__c / s.Kms__c;
+                porKmBanda.add(pk);
+                sumaPorKm += pk;
+                sumaBuyBanda += s.Total_Services_Std_Buy_Amount__c;
+                sumaKmBanda += s.Kms__c;
             }
         }
 
         Resultado r = new Resultado();
         r.km = km;
         if (!costosBanda.isEmpty()) {
-            r.costo = km < KM_LOCAL ? mediana(costosBanda) : (km * mediana(porKmBanda)).setScale(2);
+            if (km < KM_LOCAL) {
+                r.costo = mediana(costosBanda);
+                r.escalaPorKm = false;
+            } else {
+                r.bandaMedianaKm = mediana(porKmBanda);
+                r.bandaPromedioKm = (sumaPorKm / porKmBanda.size()).setScale(2, RoundingMode.HALF_UP);
+                if (sumaKmBanda > 0) { r.bandaPonderadoKm = (sumaBuyBanda / sumaKmBanda).setScale(2, RoundingMode.HALF_UP); }
+                r.costo = (km * r.bandaMedianaKm).setScale(2);
+                r.escalaPorKm = true;
+            }
             r.viajes = costosBanda.size();
-            r.fuente = 'Estimado por banda ' + etiquetaBanda + ' (' + costosBanda.size() + ' fletes FN de referencia, sin historial del par)';
+            r.fuente = 'Estimado por banda ' + etiquetaBanda + ' (' + costosBanda.size() + ' fletes ' + svc + ' de referencia, sin historial del par)';
         } else {
             r.costo = mediana(costosGlobal);
             r.viajes = costosGlobal.size();
+            r.escalaPorKm = false;
             r.fuente = r.costo == null
-                ? 'Sin datos: no hay fletes FN recientes para estimar'
-                : 'Global (respaldo): mediana de ' + costosGlobal.size() + ' fletes FN recientes (banda ' + etiquetaBanda + ' vacía)';
+                ? 'Sin datos: no hay fletes ' + svc + ' recientes para estimar'
+                : 'Global (respaldo): costo completo mediano de ' + costosGlobal.size() + ' fletes ' + svc + ' recientes (banda ' + etiquetaBanda + ' vacía)';
         }
         if (r.costo != null && km > 0) { r.costoPorKm = (r.costo / km).setScale(2); }
         if (r.costo != null) { r.confianza = 'Baja'; }
-        return finaliza(r);
+        return r;
     }
 
-    private static List<Shipment__c> consultaPar(Id origenId, Id destinoId) {
+    private static List<Shipment__c> consultaPar(Id origenId, Id destinoId, String svc) {
         if (mockPar != null) { return mockPar; }
+        String patron = 'SP-' + svc + '%';
         return [
             SELECT Name, Kms__c, Total_Services_Std_Buy_Amount__c, CreatedDate,
-                   Site_of_Load__c, Carrier__r.Name
+                   Site_of_Load__c, Carrier__r.Name, Container_Type__c
             FROM Shipment__c
-            WHERE Name LIKE 'SP-FN%'
+            WHERE Name LIKE :patron
               AND Total_Services_Std_Buy_Amount__c > 0
               AND CreatedDate >= :INICIO_HISTORICO
               AND ((Site_of_Load__c = :origenId AND Site_of_Discharge__c = :destinoId)
@@ -191,13 +245,14 @@ public with sharing class P2G_CotizadorCompra {
 
     // Una localidad "pertenece" a la zona si su Zona_Metropolitana__c apunta a ella
     // o si ELLA MISMA es la zona (los viajes a "ZM De Guadalajara" van directo a la zona)
-    private static List<Shipment__c> consultaZona(Id zonaO, Id zonaD) {
+    private static List<Shipment__c> consultaZona(Id zonaO, Id zonaD, String svc) {
         if (mockZona != null) { return mockZona; }
+        String patron = 'SP-' + svc + '%';
         return [
             SELECT Name, Kms__c, Total_Services_Std_Buy_Amount__c, CreatedDate,
-                   Site_of_Load__c, Site_of_Load__r.Zona_Metropolitana__c, Carrier__r.Name
+                   Site_of_Load__c, Site_of_Load__r.Zona_Metropolitana__c, Carrier__r.Name, Container_Type__c
             FROM Shipment__c
-            WHERE Name LIKE 'SP-FN%'
+            WHERE Name LIKE :patron
               AND Total_Services_Std_Buy_Amount__c > 0
               AND CreatedDate >= :INICIO_HISTORICO
               AND (((Site_of_Load__c = :zonaO OR Site_of_Load__r.Zona_Metropolitana__c = :zonaO)
@@ -212,18 +267,56 @@ public with sharing class P2G_CotizadorCompra {
         return (loc != null && loc.Zona_Metropolitana__c != null) ? loc.Zona_Metropolitana__c : fallback;
     }
 
-    private static List<Viaje> aViajes(List<Shipment__c> sps, DateTime corteReciente) {
-        List<Viaje> viajes = new List<Viaje>();
-        for (Shipment__c s : sps) {
-            viajes.add(new Viaje(s.Total_Services_Std_Buy_Amount__c, s.Kms__c, s.CreatedDate >= corteReciente));
-        }
-        return viajes;
+    // ---- Modalidad: filtra solo si quedan suficientes viajes; si no, todas y se dice ----
+
+    private class SetNivel {
+        List<Shipment__c> filas;
+        Boolean modalidadAplicada;
     }
 
-    private static List<Viaje> filtraRecientes(List<Viaje> viajes) {
-        List<Viaje> recientes = new List<Viaje>();
-        for (Viaje v : viajes) { if (v.reciente) { recientes.add(v); } }
-        return recientes;
+    private static SetNivel eligeFilas(List<Shipment__c> filas, Id modalidadId, Integer minimo) {
+        SetNivel s = new SetNivel();
+        if (modalidadId == null) {
+            s.filas = filas;
+            s.modalidadAplicada = false;
+            return s;
+        }
+        List<Shipment__c> filtradas = new List<Shipment__c>();
+        for (Shipment__c x : filas) {
+            if (x.Container_Type__c == modalidadId) { filtradas.add(x); }
+        }
+        if (filtradas.size() >= minimo) {
+            s.filas = filtradas;
+            s.modalidadAplicada = true;
+        } else {
+            s.filas = filas;
+            s.modalidadAplicada = false;
+        }
+        return s;
+    }
+
+    private static void anotaModalidad(Resultado r, Id modalidadId, SetNivel s) {
+        if (modalidadId == null) { return; }
+        if (s.modalidadAplicada) {
+            r.fuente += ', solo la modalidad elegida';
+        } else {
+            r.modalidadNota = 'Sin historial suficiente de esa modalidad en la ruta: se usó el de todas las modalidades.';
+        }
+    }
+
+    // ---- Km adicionales: al $/km de la MISMA fuente que dio el precio ----
+
+    private static void aplicaAdicionales(Resultado r, Decimal kmAdicionales) {
+        r.costoBase = r.costo;
+        if (kmAdicionales == null || kmAdicionales <= 0 || r.costo == null) { return; }
+        if (r.escalaPorKm == true && r.costoPorKm != null && r.costoPorKm > 0) {
+            r.kmAdicionales = kmAdicionales;
+            r.costoAdicional = (kmAdicionales * r.costoPorKm).setScale(2, RoundingMode.HALF_UP);
+            r.costo = r.costoBase + r.costoAdicional;
+            r.fuente += ' + ' + kmAdicionales + ' km adicionales a $' + r.costoPorKm + '/km';
+        } else {
+            r.fuente += ' (los ' + kmAdicionales + ' km adicionales no se aplicaron: esta fuente no escala por km)';
+        }
     }
 
     private static Resultado arma(Decimal costo, String fuente, Integer n, Decimal km, String confianza) {
@@ -233,8 +326,9 @@ public with sharing class P2G_CotizadorCompra {
         r.viajes = n;
         r.km = km;
         if (costo != null && km != null && km > 0) { r.costoPorKm = (costo / km).setScale(2); }
+        r.escalaPorKm = (r.costoPorKm != null);
         r.confianza = confianza;
-        return finaliza(r);
+        return r;
     }
 
     // Capa de venta y bandera de proveedor. La venta es sugerencia: el precio
@@ -248,16 +342,18 @@ public with sharing class P2G_CotizadorCompra {
         return r;
     }
 
-    private static Decimal medianaBuy(List<Viaje> viajes) {
-        List<Decimal> valores = new List<Decimal>();
-        for (Viaje v : viajes) { valores.add(v.buy); }
-        return mediana(valores);
+    private static String normalizaServicio(String servicio) {
+        String svc = String.isBlank(servicio) ? 'FN' : servicio.trim().toUpperCase();
+        if (!SERVICIOS.contains(svc)) {
+            throw aura('Servicio no soportado: ' + servicio);
+        }
+        return svc;
     }
 
-    private static Decimal medianaKm(List<Viaje> viajes) {
-        List<Decimal> valores = new List<Decimal>();
-        for (Viaje v : viajes) { if (v.km != null && v.km > 0) { valores.add(v.km); } }
-        return mediana(valores);
+    private static AuraHandledException aura(String msg) {
+        AuraHandledException ex = new AuraHandledException(msg);
+        ex.setMessage(msg);
+        return ex;
     }
 
     @TestVisible
@@ -283,6 +379,7 @@ public with sharing class P2G_CotizadorCompra {
         @AuraEnabled public Decimal porKm;
         @AuraEnabled public String veredicto;
         @AuraEnabled public Boolean usado;
+        @AuraEnabled public String nota; // qué pasó con la modalidad en este nivel
     }
 
     public class ViajeMuestra implements Comparable {
@@ -317,12 +414,13 @@ public with sharing class P2G_CotizadorCompra {
     }
 
     @AuraEnabled
-    public static Explicacion explicar(Id origenId, Id destinoId, Decimal kmManual) {
+    public static Explicacion explicar(Id origenId, Id destinoId, Decimal kmManual, String servicio, Id modalidadId, Decimal kmAdicionales) {
         Explicacion ex = new Explicacion();
-        ex.resultado = cotizar(origenId, destinoId, kmManual);
+        ex.resultado = cotizar(origenId, destinoId, kmManual, servicio, modalidadId, kmAdicionales);
+        String svc = ex.resultado.servicio;
 
         DateTime corteReciente = DateTime.now().addMonths(-MESES_VENTANA_RECIENTE);
-        List<Shipment__c> par = consultaPar(origenId, destinoId);
+        List<Shipment__c> par = consultaPar(origenId, destinoId, svc);
         List<Shipment__c> parRec = recientesSp(par, corteReciente);
 
         Map<Id, Location__c> locs = new Map<Id, Location__c>([
@@ -330,7 +428,7 @@ public with sharing class P2G_CotizadorCompra {
             FROM Location__c WHERE Id IN (:origenId, :destinoId)]);
         Id zonaO = zonaEfectiva(locs.get(origenId), origenId);
         Id zonaD = zonaEfectiva(locs.get(destinoId), destinoId);
-        List<Shipment__c> zona = consultaZona(zonaO, zonaD);
+        List<Shipment__c> zona = consultaZona(zonaO, zonaD, svc);
         List<Shipment__c> zonaRec = recientesSp(zona, corteReciente);
 
         // km: misma resolución que cotizar, pero diciendo de dónde salieron
@@ -347,35 +445,43 @@ public with sharing class P2G_CotizadorCompra {
         String rutaPar = nomO + ' ⇄ ' + nomD;
         String rutaZona = etiquetaZona(locs.get(origenId)) + ' ⇄ ' + etiquetaZona(locs.get(destinoId));
 
+        SetNivel s1 = eligeFilas(parRec, modalidadId, MIN_PAR_RECIENTE);
+        SetNivel s2 = eligeFilas(par, modalidadId, MIN_PAR_HISTORICO);
+        SetNivel s3 = eligeFilas(zonaRec, modalidadId, MIN_ZONA_RECIENTE);
+        SetNivel s4 = eligeFilas(zona, modalidadId, MIN_ZONA_HISTORICO);
+
         Integer ganador = 5;
-        if (parRec.size() >= MIN_PAR_RECIENTE) { ganador = 1; }
-        else if (par.size() >= MIN_PAR_HISTORICO) { ganador = 2; }
-        else if (zonaRec.size() >= MIN_ZONA_RECIENTE) { ganador = 3; }
-        else if (zona.size() >= MIN_ZONA_HISTORICO) { ganador = 4; }
+        if (s1.filas.size() >= MIN_PAR_RECIENTE) { ganador = 1; }
+        else if (s2.filas.size() >= MIN_PAR_HISTORICO) { ganador = 2; }
+        else if (s3.filas.size() >= MIN_ZONA_RECIENTE) { ganador = 3; }
+        else if (s4.filas.size() >= MIN_ZONA_HISTORICO) { ganador = 4; }
 
         ex.niveles = new List<NivelExplicado>{
-            nivel(1, 'Par exacto reciente (últimos ' + MESES_VENTANA_RECIENTE + ' meses)', rutaPar, parRec, MIN_PAR_RECIENTE, ganador, 'Alta'),
-            nivel(2, 'Par exacto histórico (desde 2024)', rutaPar, par, MIN_PAR_HISTORICO, ganador, 'Media'),
-            nivel(3, 'Zona reciente (últimos ' + MESES_VENTANA_RECIENTE + ' meses)', rutaZona, zonaRec, MIN_ZONA_RECIENTE, ganador, 'Media'),
-            nivel(4, 'Zona histórico (desde 2024)', rutaZona, zona, MIN_ZONA_HISTORICO, ganador, 'Baja')
+            nivel(1, 'Par exacto reciente (últimos ' + MESES_VENTANA_RECIENTE + ' meses)', rutaPar, s1, MIN_PAR_RECIENTE, ganador, 'Alta', modalidadId),
+            nivel(2, 'Par exacto histórico (desde 2024)', rutaPar, s2, MIN_PAR_HISTORICO, ganador, 'Media', modalidadId),
+            nivel(3, 'Zona reciente (últimos ' + MESES_VENTANA_RECIENTE + ' meses)', rutaZona, s3, MIN_ZONA_RECIENTE, ganador, 'Media', modalidadId),
+            nivel(4, 'Zona histórico (desde 2024)', rutaZona, s4, MIN_ZONA_HISTORICO, ganador, 'Baja', modalidadId)
         };
 
-        Resultado banda = cotizaPorBanda(km, corteReciente);
+        Resultado banda = cotizaPorBanda(km, corteReciente, svc);
         NivelExplicado n5 = new NivelExplicado();
         n5.nivel = 5;
-        n5.nombre = 'Banda $/km (todo el flete FN reciente)';
-        n5.queBusco = km == null ? 'Sin km no hay banda (respaldo global)' : 'Banda ' + nombreBanda(km);
+        n5.nombre = 'Precio promedio por km (banda de todo el flete ' + svc + ')';
+        n5.queBusco = km == null ? 'Sin km no hay banda (respaldo global a costo completo)' : 'Banda ' + nombreBanda(km);
         n5.viajes = banda.viajes;
         n5.mediana = banda.costo;
         n5.porKm = banda.costoPorKm;
         n5.usado = (ganador == 5);
         n5.veredicto = !n5.usado ? 'no se usó (ganó el nivel ' + ganador + ')'
             : (banda.costo == null ? 'sin datos' : 'USADO · confianza Baja');
+        if (banda.bandaMedianaKm != null) {
+            n5.nota = '$/km de la banda: promedio ' + banda.bandaPromedioKm + ' · mediana ' + banda.bandaMedianaKm + ' (la usada) · ponderado ' + banda.bandaPonderadoKm;
+        }
         ex.niveles.add(n5);
 
         // Muestra, ida/vuelta y dispersión: solo aplican a los niveles por ruta (1-4)
         if (ganador <= 4) {
-            List<Shipment__c> filas = ganador == 1 ? parRec : (ganador == 2 ? par : (ganador == 3 ? zonaRec : zona));
+            List<Shipment__c> filas = ganador == 1 ? s1.filas : (ganador == 2 ? s2.filas : (ganador == 3 ? s3.filas : s4.filas));
             Boolean porZona = ganador >= 3;
             Id refOrigen = porZona ? zonaO : origenId;
             List<ViajeMuestra> todos = new List<ViajeMuestra>();
@@ -417,25 +523,28 @@ public with sharing class P2G_CotizadorCompra {
         } else {
             ex.notaMuestra = (banda.viajes == null || banda.viajes == 0)
                 ? 'Sin viajes de referencia.'
-                : 'La banda usa ' + banda.viajes + ' fletes FN de referencia de todo el país; no hay muestra por ruta.';
+                : 'El respaldo usa ' + banda.viajes + ' fletes ' + svc + ' de referencia de todo el país; no hay muestra por ruta.';
         }
         return ex;
     }
 
-    private static NivelExplicado nivel(Integer num, String nombre, String queBusco, List<Shipment__c> filas, Integer minimo, Integer ganador, String confianza) {
+    private static NivelExplicado nivel(Integer num, String nombre, String queBusco, SetNivel s, Integer minimo, Integer ganador, String confianza, Id modalidadId) {
         NivelExplicado n = new NivelExplicado();
         n.nivel = num;
         n.nombre = nombre;
         n.queBusco = queBusco;
-        n.viajes = filas.size();
+        n.viajes = s.filas.size();
         n.minimo = minimo;
-        n.mediana = medianaBuySp(filas);
-        Decimal kmNivel = medianaKmSp(filas);
+        n.mediana = medianaBuySp(s.filas);
+        Decimal kmNivel = medianaKmSp(s.filas);
         if (n.mediana != null && kmNivel != null && kmNivel > 0) { n.porKm = (n.mediana / kmNivel).setScale(2); }
         n.usado = (ganador == num);
         if (n.usado) { n.veredicto = 'USADO · confianza ' + confianza; }
-        else if (filas.size() < minimo) { n.veredicto = 'no alcanza (' + filas.size() + ' de ' + minimo + ')'; }
+        else if (s.filas.size() < minimo) { n.veredicto = 'no alcanza (' + s.filas.size() + ' de ' + minimo + ')'; }
         else { n.veredicto = 'no se usó (ganó el nivel ' + ganador + ')'; }
+        if (modalidadId != null) {
+            n.nota = s.modalidadAplicada ? 'solo la modalidad elegida' : 'todas las modalidades (la elegida no alcanza sola)';
+        }
         return n;
     }
 
