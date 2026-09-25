@@ -46,32 +46,63 @@
     },
     //IMPORT PROD2
      CreateRecordProd: function (component, event, helper) {
+      //todo el handler bajo try/catch: un TypeError aqui dentro se lo tragaba
+      //Aura y dejaba el spinner prendido PARA SIEMPRE, sin toast ni peticion
+      try {
+        console.log('[CargaProductos] click recibido');
         component.find("Id_spinner").set("v.class" , 'slds-show');
         //un archivo nuevo empieza limpio: fuera el reporte de la carga anterior
         component.set("v.mostrarErrores", false);
         component.set("v.erroresCarga", []);
         var fileInput = component.get("v.fileToBeUploadedProd");
+        console.log('[CargaProductos] fileInput typeof=' + typeof fileInput + ' len=' + (fileInput ? fileInput.length : 'na') + ' | [0] typeof=' + (fileInput && fileInput.length > 0 ? typeof fileInput[0] : 'na'));
+        //el atributo puede traer el File ENVUELTO ([0][0]) o DIRECTO ([0]) segun
+        //la version del componente: aceptar ambas y, si ninguna, leer del input
+        var file = null;
         if (fileInput && fileInput.length > 0) {
-            var file = fileInput[0][0];
+            var primero = fileInput[0];
+            file = (primero && primero.name) ? primero : ((primero && primero[0] && primero[0].name) ? primero[0] : null);
+        }
+        if (!file) {
+            try {
+                var archivosDelInput = component.find("inputArchivo").get("v.files");
+                console.log('[CargaProductos] respaldo v.files len=' + (archivosDelInput ? archivosDelInput.length : 'na'));
+                if (archivosDelInput && archivosDelInput.length > 0 && archivosDelInput[0] && archivosDelInput[0].name) {
+                    file = archivosDelInput[0];
+                }
+            } catch (errRespaldo) {
+                console.log('[CargaProductos] respaldo fallo: ' + errRespaldo);
+            }
+        }
+        if (file) {
+            console.log('[CargaProductos] archivo=' + file.name + ' bytes=' + file.size);
             var array = file.name.split(".");
             //toLowerCase: 'RUTAS.CSV' de Windows es un csv perfectamente valido
             var ext = array[array.length - 1].toLowerCase();
             console.log('ext: ' + ext);
             if(ext == "csv"){
                 var reader = new FileReader();
-                reader.readAsText(file, "UTF-8");
+                //manejadores registrados ANTES de arrancar la lectura
                 reader.onload = $A.getCallback(function (evt) {
+                  try {
                     var csv = evt.target.result;
-                    //el mapeo de columnas es POR NOMBRE: si falta un encabezado, avisar
-                    //aqui mismo (antes la columna se ignoraba en silencio)
+                    console.log('[CargaProductos] archivo leido, chars=' + (csv ? csv.length : 'na'));
+                    //el mapeo de columnas es POR NOMBRE: si falta o SOBRA un
+                    //encabezado, avisar aqui mismo (una columna del template
+                    //repetida y vacia pisa el valor bueno al mapear)
                     var faltan = helper.encabezadosFaltantes(csv);
-                    if (faltan.length > 0) {
+                    var repetidos = helper.encabezadosRepetidos(csv);
+                    if (faltan.length > 0 || repetidos.length > 0) {
                         component.find("Id_spinner").set("v.class", 'slds-hide');
+                        helper.limpiaInputArchivo(component);
+                        var detalle = '';
+                        if (faltan.length > 0) { detalle += 'Faltan (el nombre debe ser idéntico): ' + faltan.join(', ') + '. '; }
+                        if (repetidos.length > 0) { detalle += 'Vienen REPETIDAS (borra las columnas duplicadas): ' + repetidos.join(', ') + '.'; }
                         var toastHdr = $A.get("e.force:showToast");
                         toastHdr.setParams({
                             mode: 'sticky',
-                            title: "El archivo no trae " + faltan.length + " columna(s) del template",
-                            message: "Faltan (el nombre debe ser idéntico): " + faltan.join(', '),
+                            title: "El archivo no coincide con las 16 columnas del template",
+                            message: detalle,
                             type: "error"
                         });
                         toastHdr.fire();
@@ -81,12 +112,26 @@
                    // result = result.replace(/"__c"/,"");
                     console.log('@@@ result = ' + result);
                     helper.CreateLines(component, result,"c.cargarTarifario");
+                  } catch (errLectura) {
+                    console.log('[CargaProductos] ERROR procesando el archivo: ' + (errLectura && errLectura.message ? errLectura.message : errLectura));
+                    component.find("Id_spinner").set("v.class", 'slds-hide');
+                    helper.limpiaInputArchivo(component);
+                    var toastLectura = $A.get("e.force:showToast");
+                    toastLectura.setParams({
+                        mode: 'sticky',
+                        title: "Error procesando el archivo",
+                        message: '' + (errLectura && errLectura.message ? errLectura.message : errLectura),
+                        type: "error"
+                    });
+                    toastLectura.fire();
+                  }
                 });
                 //$A.getCallback: el evento del FileReader llega fuera del ciclo de
                 //Aura; y el spinner SIEMPRE se apaga (antes quedaba girando)
                 reader.onerror = $A.getCallback(function (evt) {
                     console.log("error reading file");
                     component.find("Id_spinner").set("v.class" , 'slds-hide');
+                    helper.limpiaInputArchivo(component);
                     var toastEvent = $A.get("e.force:showToast");
                     toastEvent.setParams({
                         mode: 'sticky',
@@ -96,8 +141,10 @@
                     });
                     toastEvent.fire();
                 });
+                reader.readAsText(file, "UTF-8");
             }else{
                 component.find("Id_spinner").set("v.class" , 'slds-hide');
+                helper.limpiaInputArchivo(component);
                 var toastEvent = $A.get("e.force:showToast");
                 toastEvent.setParams({
                     mode: 'sticky',
@@ -108,10 +155,33 @@
                 toastEvent.fire();
             }
         }else{
+            //ni envuelto, ni directo, ni en el input: avisar en vez de morir mudo
+            console.log('[CargaProductos] sin archivo utilizable');
             component.find("Id_spinner").set("v.class" , 'slds-hide');
-            alert("Seleccionar un archivo .csv para procesar");
+            helper.limpiaInputArchivo(component);
+            var toastSinArchivo = $A.get("e.force:showToast");
+            toastSinArchivo.setParams({
+                mode: 'sticky',
+                title: "No se pudo leer el archivo seleccionado",
+                message: "Vuelve a elegir el archivo .csv. Si sigue pasando, manda una foto de la consola (F12).",
+                type: "error"
+            });
+            toastSinArchivo.fire();
         }
-
+      } catch (errorInesperado) {
+        //pase lo que pase: spinner apagado y el error A LA VISTA
+        console.log('[CargaProductos] ERROR INESPERADO: ' + (errorInesperado && errorInesperado.message ? errorInesperado.message : errorInesperado));
+        try { component.find("Id_spinner").set("v.class", 'slds-hide'); } catch (ig1) {}
+        try { helper.limpiaInputArchivo(component); } catch (ig2) {}
+        var toastInesperado = $A.get("e.force:showToast");
+        toastInesperado.setParams({
+            mode: 'sticky',
+            title: "Error inesperado en la carga",
+            message: '' + (errorInesperado && errorInesperado.message ? errorInesperado.message : errorInesperado),
+            type: "error"
+        });
+        toastInesperado.fire();
+      }
     },
     //Descarga el reporte de errores como CSV (con 95 renglones un toast no sirve)
     descargarErrores: function (component, event, helper) {

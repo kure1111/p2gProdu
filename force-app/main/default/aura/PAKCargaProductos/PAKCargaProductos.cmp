@@ -23,7 +23,7 @@
                     Carga de manera sencilla tus rutas, puedes descargar el template de ejemplo.
             </div>
             <div class="slds-align_absolute-center">
-                <lightning:input messageWhenTypeMismatch="Cargar solamente archivo soportado" type="file" label="" multiple="false"
+                <lightning:input aura:id="inputArchivo" messageWhenTypeMismatch="Cargar solamente archivo soportado" type="file" label="" multiple="false"
                                  name="file" accept=".csv" onchange="{! c.CreateRecordProd }" files="{!v.fileToBeUploadedProd}" />
             </div>
                <div class="slds-m-top_medium">

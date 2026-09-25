@@ -56,12 +56,15 @@
         var json = JSON.stringify(jsonObj);
         return json;
     },
+    columnasDelTemplate: function () {
+        return ['paisOrigen', 'estadoOrigen', 'ciudadOrigen', 'paisDestino', 'estadoDestino', 'ciudadDestino',
+                'cantidad', 'frecuencia', 'modalidad', 'unidadPorFrecuencia', 'tipoDeMercancia', 'pesoDeCarga',
+                'tiempoDeCarga', 'tiempoDeDescarga', 'direccionDeCarga', 'direccionDeDescarga'];
+    },
     // las columnas se mapean POR NOMBRE de encabezado: uno renombrado se ignoraba
     // EN SILENCIO y todas sus celdas llegaban vacias al servidor
     encabezadosFaltantes: function (csv) {
-        var esperados = ['paisOrigen', 'estadoOrigen', 'ciudadOrigen', 'paisDestino', 'estadoDestino', 'ciudadDestino',
-                         'cantidad', 'frecuencia', 'modalidad', 'unidadPorFrecuencia', 'tipoDeMercancia', 'pesoDeCarga',
-                         'tiempoDeCarga', 'tiempoDeDescarga', 'direccionDeCarga', 'direccionDeDescarga'];
+        var esperados = this.columnasDelTemplate();
         var filas = this.parseCsv(csv);
         if (filas.length === 0) { return esperados; }
         var presentes = {};
@@ -71,6 +74,30 @@
             if (!presentes[esperados[k]]) { faltan.push(esperados[k]); }
         }
         return faltan;
+    },
+    // una columna del template REPETIDA (paso real: archivo con 19 columnas y
+    // tiempoDeDescarga duplicada vacia al final) pisa el valor bueno al mapear:
+    // mejor rechazar el archivo con el nombre exacto de las repetidas
+    encabezadosRepetidos: function (csv) {
+        var esperados = this.columnasDelTemplate();
+        var filas = this.parseCsv(csv);
+        if (filas.length === 0) { return []; }
+        var conteo = {};
+        for (var j = 0; j < filas[0].length; j++) {
+            var h = filas[0][j].trim();
+            conteo[h] = (conteo[h] || 0) + 1;
+        }
+        var repetidos = [];
+        for (var k = 0; k < esperados.length; k++) {
+            if (conteo[esperados[k]] > 1) { repetidos.push(esperados[k]); }
+        }
+        return repetidos;
+    },
+    // sin esto, reelegir el MISMO archivo no dispara 'change' y el reintento del
+    // usuario es MUDO (el navegador no emite el evento si el value no cambio)
+    limpiaInputArchivo: function (component) {
+        try { component.find("inputArchivo").set("v.value", ""); } catch (ignorar) {}
+        try { component.set("v.fileToBeUploadedProd", []); } catch (ignorar2) {}
     },
     CreateLines : function (component,jsonstr,funApex){
           //  jsonstr = jsonstr.replace(/__c/,"");
@@ -82,8 +109,10 @@
         });
         action.setCallback(this, function(response) {
             component.find("Id_spinner").set("v.class", "slds-hide");
+            this.limpiaInputArchivo(component);
             var toastEvent = $A.get("e.force:showToast");
             var state = response.getState();
+            console.log('[CargaProductos] respuesta del servidor state=' + state);
             if (state === "SUCCESS") {
                 var res = response.getReturnValue();
                 if(res == "ok"){
