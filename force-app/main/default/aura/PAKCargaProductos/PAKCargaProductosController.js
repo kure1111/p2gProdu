@@ -85,7 +85,13 @@
                 //manejadores registrados ANTES de arrancar la lectura
                 reader.onload = $A.getCallback(function (evt) {
                   try {
-                    var csv = evt.target.result;
+                    //LA CAUSA RAIZ de 5 dias de cuelgues: bajo Locker (apiVersion
+                    //52) el evento llega SIN target utilizable y evt.target.result
+                    //tronaba; el reader del closure siempre tiene el contenido
+                    var csv = (evt && evt.target && evt.target.result != null) ? evt.target.result : reader.result;
+                    if (csv == null) {
+                        throw new Error('El navegador no entregó el contenido del archivo');
+                    }
                     console.log('[CargaProductos] archivo leido, chars=' + (csv ? csv.length : 'na'));
                     //el mapeo de columnas es POR NOMBRE: si falta o SOBRA un
                     //encabezado, avisar aqui mismo (una columna del template
