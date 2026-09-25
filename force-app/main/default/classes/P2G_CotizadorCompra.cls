@@ -171,7 +171,7 @@ public with sharing class P2G_CotizadorCompra {
             r.fuente = respaldoGlobal == null
                 ? 'Sin datos: no hay historial del par ni de la zona; captura los km para estimar por banda'
                 : 'Global (respaldo, sin km): costo completo mediano de ' + todos.size() + ' fletes ' + svc + ' recientes';
-            if (respaldoGlobal != null) { r.confianza = 'Baja'; }
+            if (respaldoGlobal != null) { r.confianza = 'Mala'; }
             return r;
         }
 
@@ -223,7 +223,9 @@ public with sharing class P2G_CotizadorCompra {
                 : 'Global (respaldo): costo completo mediano de ' + costosGlobal.size() + ' fletes ' + svc + ' recientes (banda ' + etiquetaBanda + ' vacía)';
         }
         if (r.costo != null && km > 0) { r.costoPorKm = (r.costo / km).setScale(2); }
-        if (r.costo != null) { r.confianza = 'Baja'; }
+        // Mala (debajo de Baja): el numero sale del promedio general del servicio,
+        // no de viajes de la ruta ni de su zona (decision de Alberto 2026-09-25)
+        if (r.costo != null) { r.confianza = 'Mala'; }
         return r;
     }
 
@@ -334,7 +336,9 @@ public with sharing class P2G_CotizadorCompra {
     // Capa de venta y bandera de proveedor. La venta es sugerencia: el precio
     // final SIEMPRE lo decide el humano en pantalla.
     private static Resultado finaliza(Resultado r) {
-        r.pedirProveedor = (r.costo == null || r.confianza == 'Baja');
+        // Al reves a proposito: pide proveedor TODO lo que no sea Alta o Media.
+        // Asi un nivel nuevo (como Mala) nunca se escapa del aviso por olvido.
+        r.pedirProveedor = (r.costo == null || (r.confianza != 'Alta' && r.confianza != 'Media'));
         if (r.costo != null) {
             r.margenPct = MARGEN_VENTA_DEFAULT;
             r.ventaSugerida = (r.costo / (1 - MARGEN_VENTA_DEFAULT / 100)).setScale(2, RoundingMode.HALF_UP);
@@ -473,7 +477,7 @@ public with sharing class P2G_CotizadorCompra {
         n5.porKm = banda.costoPorKm;
         n5.usado = (ganador == 5);
         n5.veredicto = !n5.usado ? 'no se usó (ganó el nivel ' + ganador + ')'
-            : (banda.costo == null ? 'sin datos' : 'USADO · confianza Baja');
+            : (banda.costo == null ? 'sin datos' : 'USADO · confianza Mala');
         if (banda.bandaMedianaKm != null) {
             n5.nota = '$/km de la banda: promedio ' + banda.bandaPromedioKm + ' · mediana ' + banda.bandaMedianaKm + ' (la usada) · ponderado ' + banda.bandaPonderadoKm;
         }

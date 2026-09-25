@@ -151,8 +151,8 @@ public class P2G_CotizadorCompraTest {
 
         System.assert(media.fuente.contains('banda Media'), 'Fuente: ' + media.fuente);
         System.assertEquals(27500, media.costo, '550 km x $50/km mediano de la banda');
-        System.assertEquals('Baja', media.confianza, 'Banda = confianza baja');
-        System.assertEquals(true, media.pedirProveedor);
+        System.assertEquals('Mala', media.confianza, 'Banda = Mala: promedio general, no viajes de la ruta');
+        System.assertEquals(true, media.pedirProveedor, 'CANDADO: Mala SIEMPRE pide proveedor (no regresar esto a == Baja)');
         System.assertNotEquals(null, media.ventaSugerida, 'Aun con confianza baja se sugiere venta');
         System.assertEquals('FN', media.servicio, 'Sin servicio explícito se asume FN');
         System.assertEquals(50.00, media.bandaMedianaKm, 'La banda expone su $/km mediano (el usado)');
@@ -161,6 +161,8 @@ public class P2G_CotizadorCompraTest {
         // km<100 sin fletes locales: cae al respaldo global (mediana de flete completo)
         System.assert(local.fuente.contains('Global'), 'Fuente: ' + local.fuente);
         System.assertEquals(16500, local.costo);
+        System.assertEquals('Mala', local.confianza, 'El respaldo global también es Mala');
+        System.assertEquals(true, local.pedirProveedor, 'y también pide proveedor');
         // sin km ni historial del par: respaldo global sin banda
         System.assert(sinKm.fuente.contains('Global'), 'Fuente: ' + sinKm.fuente);
     }
